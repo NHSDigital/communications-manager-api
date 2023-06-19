@@ -1,5 +1,6 @@
 # This is an OpenAPI Specification (https://swagger.io/specification/)
 # for communications-manager owned by NHS Digital (https://digital.nhs.uk/)
+#
 openapi: 3.1.0
 x-stoplight:
   id: lk5n6pnuqlqlm
