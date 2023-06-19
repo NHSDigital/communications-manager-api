@@ -5,21 +5,28 @@ APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
     has_mock_auth: true
-  - name: internal-dev-sandbox
-    display_name: Internal Development Sandbox
   - name: internal-qa
     display_name: Internal QA
     has_mock_auth: true
+  - name: ref
+    display_name: Reference
+    has_mock_auth: true
+  - name: internal-dev-sandbox
+    display_name: Internal Development Sandbox
+    portal_visibility: false
+  - name: internal-qa
+    display_name: Internal QA
+    has_mock_auth: true
+    portal_visibility: false
   - name: internal-qa-sandbox
     display_name: Internal QA Sandbox
-#  - name: ref
-#    display_name: Reference
-#    has_mock_auth: true
-  # - name: sandbox
-  #   display_name: Sandbox
-  #   portal_visibility: false
-  # - name: int
-  #   display_name: Integration Testing
+    portal_visibility: false
+  - name: sandbox
+    display_name: Sandbox
+    portal_visibility: false
+  - name: int
+    display_name: Integration Testing
+    has_mock_auth: true
 ---
 meta:
   api:
