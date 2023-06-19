@@ -11,9 +11,6 @@ info:
     name: Communications Manager Service API Support
     url: 'https://digital.nhs.uk/developer/help-and-support'
     email: api.management@nhs.net
-  license:
-    name: Todo
-    url: 'https://license.com'
 servers:
   - url: 'https://sandbox.api.service.nhs.uk/communications-manager'
     description: Sandbox environment
