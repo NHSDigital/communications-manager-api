@@ -1,0 +1,54 @@
+parameters:
+  - name: full
+    type: boolean
+    default: false
+  - name: test_command
+    type: string
+    default: 'make test'
+  - name: smoketest_command
+    type: string
+    default: 'make smoketest'
+
+steps:
+  - bash: |
+      make install-python
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+    displayName: Setup pytests
+    condition: always()
+
+  - ${{ if parameters.full }}:
+    # In order to run tests in prod you must supply the unique ID of an Apigee app
+    # that has authorized access to your service proxy.
+    - bash: |
+        export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
+        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+        export APIGEE_APP_ID="MY APP ID"
+        export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
+        export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
+        ${{ parameters.test_command }}
+      workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+      displayName: Run full test suite
+    - task: PublishTestResults@2
+      displayName: 'Publish test results'
+      condition: always()
+      inputs:
+        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/test-report.xml'
+        failTaskOnFailedTests: true
+  - ${{ if not(parameters.full) }}:
+    # In order to run tests in prod you must supply the unique ID of an Apigee app
+    # that has authorized access to your service proxy.
+    - bash: |
+        export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
+        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+        export APIGEE_APP_ID="MY APP ID"
+        export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
+        export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
+        ${{ parameters.smoketest_command }}
+      workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+      displayName: Run smoketests
+    - task: PublishTestResults@2
+      displayName: 'Publish smoketest results'
+      condition: always()
+      inputs:
+        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/smoketest-report.xml'
+        failTaskOnFailedTests: true

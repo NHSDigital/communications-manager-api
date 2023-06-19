@@ -1,0 +1,8 @@
+variables:
+  - group: status-endpoint
+  - name: service_name
+    value: communications-manager
+  - name: short_service_name
+    value: cm
+  - name: service_base_path
+    value: communications-manager
