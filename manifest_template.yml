@@ -27,7 +27,7 @@ meta:
     guid: 1562bc1f-8261-485f-964c-e38f88f754bd
     spec_guids:
       - fa29e42a-8569-4db1-98d3-cb336fa666b1
-  schema_version: 1.3
+  schema_version: 1.0
 apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
@@ -67,9 +67,7 @@ apigee:
 {% if ENV.has_mock_auth | default(false) %}
           - identity-service-mock-{{ ENV.name }}
 {% endif %}
-        scopes:
-          - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
-          - 'urn:nhsd:apim:user-nhs-cis2:aal3:{{ SERVICE_NAME }}'
+        scopes: []
     specs:
       - name: {{ NAME }}
         path: {{ SERVICE_NAME }}.json
