@@ -30,32 +30,17 @@ extends:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
+    proxy_path: ''
     apigee_deployments:
       - environment: internal-dev
-        post_deploy:
-          - template: ./templates/run-tests.yml
-            parameters:
-              full: true
       - environment: internal-dev-sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-tests.yml
       - environment: internal-qa
-        post_deploy:
-          - template: ./templates/run-tests.yml
-            parameters:
-              full: true
       - environment: internal-qa-sandbox
-        proxy_path: sandbox
-        post_deploy:
-          - template: ./templates/run-tests.yml
-    #   - environment: ref
-    #     depends_on:
-    #       - internal_qa
-    #       - internal_qa_sandbox
-    #     post_deploy:
-    #       - template: ./templates/run-tests.yml
-    #   - environment: sandbox
+#      - environment: ref
+#        depends_on:
+#          - internal_qa
+#          - internal_qa_sandbox
+#      - environment: sandbox
     #     proxy_path: sandbox
     #     post_deploy:
     #       - template: ./templates/run-tests.yml
