@@ -35,5 +35,3 @@ extends:
     proxy_path: ''
     apigee_deployments:
       - environment: internal-dev
-      - environment: internal-dev-sandbox
-        proxy_path: sandbox
