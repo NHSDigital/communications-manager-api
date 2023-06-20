@@ -1,16 +1,10 @@
-SERVICE_NAME: communications-manager
-PRODUCT_DISPLAY_NAME: communications-manager
-DESCRIPTION: example description
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
-    has_mock_auth: true
   - name: internal-qa
     display_name: Internal QA
-    has_mock_auth: true
   - name: ref
     display_name: Reference
-    has_mock_auth: true
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
     portal_visibility: false
@@ -38,52 +32,9 @@ meta:
 apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
-{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + ENV.display_name + ' Environment)' %}
-{% set NAME = SERVICE_NAME + '-' + ENV.name %}
+{% set NAME = 'communications-manager-' + ENV.name %}
   - name: {{ ENV.name }}
-    products:
-      - name: {{ NAME }}
-        approvalType: auto
-        attributes:
-          - name: access
-            value: public
-            # For a parameterised example of rate limiting per environment,
-            # see https://github.com/NHSDigital/personal-demographics-service-api/blob/master/manifest_template.yml
-          - name: ratelimiting
-            value:
-              {{ NAME }}:
-                quota:
-                  enabled: true
-                  limit: 300
-                  interval: 1
-                  timeunit: minute
-                spikeArrest:
-                  enabled: true
-                  ratelimit: 600pm # 10 requests per second
-              app:
-                quota:
-                  enabled: false
-                spikeArrest:
-                  enabled: false
-        description: {{ DESCRIPTION }}
-        displayName: {{ TITLE }}
-        environments: [ {{ ENV.name }} ]
-        proxies:
-          - {{ NAME }}
-          - identity-service-{{ ENV.name }}
-{% if ENV.has_mock_auth | default(false) %}
-          - identity-service-mock-{{ ENV.name }}
-{% endif %}
-        scopes: []
     specs:
       - name: {{ NAME }}
-        path: {{ SERVICE_NAME }}.json
-    api_catalog:
-      - edgeAPIProductName: {{ NAME }}
-        anonAllowed: true
-        description: {{ DESCRIPTION }}
-        requireCallbackUrl: false
-        title: {{ TITLE }}
-        visibility: {{ ENV.portal_visibility | default(true) }}
-        specId: {{ NAME }}
+        path: communications-manager.json
 {% endfor %}

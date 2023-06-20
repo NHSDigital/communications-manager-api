@@ -7,7 +7,6 @@ install-python:
 #Installs dependencies using npm.
 install-node:
 	npm install --legacy-peer-deps
-	cd sandbox && npm install --legacy-peer-deps
 
 #Configures Git Hooks, which are scripts that run given a specified event.
 .git/hooks/pre-commit:
@@ -31,52 +30,13 @@ publish: clean
 	mkdir -p build
 	npm run publish 2> /dev/null
 
-#Runs build proxy script
-build-proxy:
-	scripts/build_proxy.sh
-
 #Files to loop over in release
-_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests"
+_dist_include="poetry.lock poetry.toml pyproject.toml Makefile build/."
 
 #Create /dist/ sub-directory and copy files into directory
-release: clean publish build-proxy
+release: clean publish
 	mkdir -p dist
 	for f in $(_dist_include); do cp -r $$f dist; done
-	cp ecs-proxies-deploy.yml dist/ecs-deploy-sandbox.yml
-	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-qa-sandbox.yml
-	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev-sandbox.yml
-
-#################
-# Test commands #
-#################
-
-TEST_CMD := @APIGEE_ACCESS_TOKEN=$(APIGEE_ACCESS_TOKEN) \
-		poetry run pytest -v \
-		--color=yes \
-		--api-name=communications-manager \
-		--proxy-name=$(PROXY_NAME) \
-		-s
-
-PROD_TEST_CMD := $(TEST_CMD) \
-		--apigee-app-id=$(APIGEE_APP_ID) \
-		--apigee-organization=nhsd-prod \
-		--status-endpoint-api-key=$(STATUS_ENDPOINT_API_KEY)
-
-#Command to run end-to-end smoketests post-deployment to verify the environment is working
-smoketest:
-	$(TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
 
 test:
-	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-
-smoketest-prod:
-	$(PROD_TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
-
-test-prod:
-	$(PROD_CMD) \
-	--junitxml=test-report.xml \
+	@echo no tests for spec-only API
