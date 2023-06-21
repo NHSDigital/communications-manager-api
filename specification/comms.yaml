@@ -1,0 +1,930 @@
+openapi: 3.0.0
+info:
+  title: Communications Manager API
+  version: '1.0'
+  description: Todo
+  contact:
+    name: Communications Manager Service API Support
+    url: 'https://digital.nhs.uk/developer/help-and-support'
+    email: api.management@nhs.net
+  license:
+    name: Todo
+    url: 'https://license.com'
+servers:
+  - url: 'https://sandbox.api.service.nhs.uk/comms'
+    description: Sandbox environment
+  - url: 'https://int.api.service.nhs.uk/comms'
+    description: Integration test environment
+  - url: 'https://api.service.nhs.uk/comms'
+    description: Production environment
+paths:
+  /v1/batches:
+    post:
+      summary: Create batch
+      operationId: create-batch
+      responses:
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+                example: 'https://api.service.nhs.uk/comms/v1/batches/0ujsszwN8NRY24YaXiTIE2VWDTS'
+              description: URI of batch
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+            ETag:
+              schema:
+                type: string
+              description: Identifier for the current version of the resource. To be used in updates with the `If-Match` header.
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchResponse'
+        '400':
+          description: Unprocessable Entity
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/UnableToProcessResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnableToProcessResponse'
+        '401':
+          description: Unauthorized
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessDeniedResponse'
+        '403':
+          description: Forbidden
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenResponse'
+        '404':
+          description: Not Found
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RoutingPlanNotFoundError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutingPlanNotFoundError'
+        '408':
+          description: Request Timeout
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ServiceTimeoutResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceTimeoutResponse'
+        '413':
+          description: Request Entity Too Large
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RequestEntityTooLargeResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestEntityTooLargeResponse'
+        '414':
+          description: Request-URI Too Long
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/URLTooLongResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/URLTooLongResponse'
+        '415':
+          description: Unsupported Media Type
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/UnsupportedMediaResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnsupportedMediaResponse'
+        '429':
+          description: Too Many Requests
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsResponse'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                format: duration
+                example: 5
+                minimum: 5
+                multipleOf: 1
+              description: Time to wait between requests in seconds
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+        '431':
+          description: Request Header Fields Too Large
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/HeadersTooLargeResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HeadersTooLargeResponse'
+        '503':
+          description: Service Unavailable
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                minimum: 5
+                multipleOf: 1
+                example: 5
+              description: Time to wait between requests in seconds
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/CreateBatch'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateBatch'
+        description: ''
+      security: []
+      parameters:
+        - schema:
+            type: string
+            format: '^Bearer [[:ascii:]]+$'
+            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
+          in: header
+          name: Authorization
+          description: |-
+            An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).
+            Required in all environments except sandbox.
+        - schema:
+            type: string
+            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+          in: header
+          name: X-Correlation-ID
+          description: |-
+            An optional ID which you can use to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
+            Mirrored back in a response header.
+      description: |-
+        ## Overview
+
+        Use this endpoint to send batches of messages to 1 or more NHS patients.
+components:
+  schemas:
+    CreateBatch:
+      title: Create batch
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+            - type
+            - attributes
+          properties:
+            type:
+              $ref: '#/components/schemas/Enum_Type_Batch'
+            attributes:
+              type: object
+              required:
+                - routingPlanId
+                - batchReference
+                - recipients
+              properties:
+                routingPlanId:
+                  type: string
+                  example: 2fd7f5c4-802e-4092-bd3d-276bb199df62
+                  description: |-
+                    This is the routing plan you wish your batch to use whilst sending messages to the recipients. The values available to you for this are setup during your onboarding process.
+
+                    If you send through an invalid routing plan you will receive a 404 response.
+                  format: uuid
+                batchReference:
+                  type: string
+                  description: |-
+                    This is your reference for this batch of recipients.
+
+                    This value is used internally to de-duplicate batches. If you send the same value through multiple times only one of the requests will be actioned.
+                  example: da0b1495-c7cb-468c-9d81-07dee089d728
+                  format: uuid
+                recipients:
+                  type: array
+                  minItems: 1
+                  uniqueItems: true
+                  items:
+                    $ref: '#/components/schemas/Recipient'
+      required:
+        - data
+    Recipient:
+      title: Recipient
+      type: object
+      properties:
+        recipientReference:
+          type: string
+          example: 703b8008-545d-4a04-bb90-1f2946ce1575
+          description: This reference needs to be unique per recipient within this batch. If there are duplicate values then a 400 exception will be thrown highlighting the values that have been duplicated.
+          format: uuid
+        nhsNumber:
+          type: string
+          minLength: 10
+          maxLength: 10
+          pattern: '^\d{10}$'
+          example: '1234567890'
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1982-03-17'
+          description: 'Date of birth in ISO-8601 format: YYYY-MM-DD.'
+        personalisation:
+          type: object
+      required:
+        - recipientReference
+        - nhsNumber
+        - dateOfBirth
+    BatchResponse:
+      title: Batch response
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: object
+          additionalProperties: false
+          properties:
+            type:
+              $ref: '#/components/schemas/Enum_Type_Batch'
+            id:
+              $ref: '#/components/schemas/Type_KSUID'
+            attributes:
+              type: object
+              additionalProperties: false
+              properties:
+                batchReference:
+                  type: string
+                  example: da0b1495-c7cb-468c-9d81-07dee089d728
+                  format: uuid
+            links:
+              type: object
+              additionalProperties: false
+              properties:
+                self:
+                  type: string
+                  format: uri
+                  example: 'https://api.service.nhs.uk/comms/v1/batches/0ujsszwN8NRY24YaXiTIE2VWDTS'
+    AccessDeniedResponse:
+      title: Access Denied
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_AccessDenied'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '401'
+                enum:
+                  - '401'
+              title:
+                type: string
+                example: Access denied
+                enum:
+                  - Access denied
+              detail:
+                type: string
+                example: 'Access token missing, invalid or expired, or calling application not configured for this operation.'
+                enum:
+                  - 'Access token missing, invalid or expired, or calling application not configured for this operation.'
+              source:
+                type: object
+                additionalProperties: false
+                properties:
+                  header:
+                    type: string
+                    example: Authorization
+                    enum:
+                      - Authorization
+    ForbiddenResponse:
+      title: Forbidden
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_Forbidden'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '403'
+                enum:
+                  - '403'
+              title:
+                type: string
+                example: Forbidden
+                enum:
+                  - Forbidden
+              detail:
+                type: string
+                example: Client not recognised or not yet onboarded.
+                enum:
+                  - Client not recognised or not yet onboarded.
+              source:
+                type: object
+                additionalProperties: false
+                properties:
+                  header:
+                    type: string
+                    example: Authorization
+                    enum:
+                      - Authorization
+    UnsupportedMediaResponse:
+      title: Unsupported Media
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_UnsupportedMedia'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '415'
+                enum:
+                  - '415'
+              title:
+                type: string
+                example: Unsupported media
+                enum:
+                  - Unsupported media
+              detail:
+                type: string
+                example: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
+                enum:
+                  - 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
+              source:
+                type: object
+                additionalProperties: false
+                properties:
+                  header:
+                    type: string
+                    example: Content-Type
+                    enum:
+                      - Content-Type
+    UnableToProcessResponse:
+      title: Request not processable
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_InvalidValue'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '400'
+                enum:
+                  - '400'
+              title:
+                type: string
+                example: Missing property
+                enum:
+                  - Missing property
+                  - Property cannot be null
+                  - Invalid value
+                  - Duplicate value
+              detail:
+                type: string
+                example: 'The property at the specified location is required, but was not present in the request.'
+                enum:
+                  - 'The property at the specified location is required, but was not present in the request.'
+                  - 'The property at the specified location is required, but a null value was passed in the request.'
+                  - The property at the specified location does not allow this value.
+                  - 'The property at the specified location is a duplicate, duplicated values are not allowed.'
+              source:
+                type: object
+                additionalProperties: false
+                properties:
+                  pointer:
+                    type: string
+                    example: /data/attributes/routingPlan
+                    enum:
+                      - /data/attributes/routingPlan
+                      - /data/attributes/reference
+                      - /data/attributes/recipients
+                      - /data/attributes/recipients/0/reference
+                      - /data/attributes/recipients/0/nhsNumber
+                      - /data/attributes/recipients/0/dateOfBirth
+    RequestEntityTooLargeResponse:
+      title: Request Too Large
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_TooLarge'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '413'
+                enum:
+                  - '413'
+              title:
+                type: string
+                example: Request too large
+                enum:
+                  - Request too large
+              detail:
+                type: string
+                example: Your request was too large as it contained too many recipients. Please reduce the size of your request body. The maximum request body size supported is 10mb.
+                enum:
+                  - Your request was too large as it contained too many recipients. Please reduce the size of your request body. The maximum request body size supported is 10mb.
+              source:
+                type: object
+                additionalProperties: false
+                properties:
+                  pointer:
+                    type: string
+                    example: /data/attributes/recipients
+                    enum:
+                      - /data/attributes/recipients
+    ServiceTimeoutResponse:
+      title: Service timeout
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_Timeout'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '408'
+                enum:
+                  - '408'
+              title:
+                type: string
+                example: Unable to call service
+                enum:
+                  - Unable to call service
+              detail:
+                type: string
+                example: The downstream service has not responded within the configured timeout period.
+                enum:
+                  - The downstream service has not responded within the configured timeout period.
+    TooManyRequestsResponse:
+      title: Too many requests
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_Quota'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '429'
+                enum:
+                  - '429'
+              title:
+                type: string
+                example: Too many requests
+                enum:
+                  - Too many requests
+              detail:
+                type: string
+                example: You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
+                enum:
+                  - You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
+    URLTooLongResponse:
+      title: URL too long
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_URLTooLong'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '414'
+                enum:
+                  - '414'
+              title:
+                type: string
+                example: URL too long
+                enum:
+                  - URL too long
+              detail:
+                type: string
+                example: The URL you have requested is too long. URLs sent to this service need to be 8192 characters or less in length.
+                enum:
+                  - The URL you have requested is too long. URLs sent to this service need to be 8192 characters or less in length.
+    HeadersTooLargeResponse:
+      title: Headers too large
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_HeadersTooLarge'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '431'
+                enum:
+                  - '431'
+              title:
+                type: string
+                example: Headers too large
+                enum:
+                  - Headers too large
+              detail:
+                type: string
+                example: The headers sent with this request are too large. Headers must total no more than 10240 bytes.
+                enum:
+                  - The headers sent with this request are too large. Headers must total no more than 10240 bytes.
+    RoutingPlanNotFoundError:
+      title: No such routing plan
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_NoSuchRoutingPlan'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '404'
+                enum:
+                  - '404'
+              title:
+                type: string
+                example: No such routing plan
+                enum:
+                  - No such routing plan
+              detail:
+                type: string
+                example: The routing plan specified either does not exist or is not in a usable state.
+                enum:
+                  - The routing plan specified either does not exist or is not in a usable state.
+              source:
+                type: object
+                properties:
+                  pointer:
+                    type: string
+                    enum:
+                      - /data/attributes/routingPlan
+                    example: /data/attributes/routingPlan
+    NotFoundError:
+      title: Resource not found
+      type: object
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          maxItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_NotFound'
+              links:
+                type: object
+                additionalProperties: false
+                minProperties: 1
+                properties:
+                  about:
+                    type: string
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+              status:
+                type: string
+                example: '404'
+                enum:
+                  - '404'
+              title:
+                type: string
+                example: Resource not found
+                enum:
+                  - Resource not found
+              detail:
+                type: string
+                example: The resource at the requested URI was not found.
+                enum:
+                  - The resource at the requested URI was not found.
+    Enum_Type_Batch:
+      title: Type_Batch
+      type: string
+      enum:
+        - batch
+    Type_KSUID:
+      title: Type_KSUID
+      type: string
+      example: 0ujsszwN8NRY24YaXiTIE2VWDTS
+      pattern: '^[a-zA-Z0-9]{27}$'
+      minLength: 27
+      maxLength: 27
+    Enum_Error_AccessDenied:
+      title: Enum_Error_AccessDenied
+      type: string
+      enum:
+        - CM_DENIED
+    Enum_Error_Forbidden:
+      title: Enum_Error_Forbidden
+      type: string
+      enum:
+        - CM_FORBIDDEN
+    Enum_Error_UnsupportedMedia:
+      title: Enum_Error_UnsupportedMedia
+      type: string
+      enum:
+        - CM_UNSUPPORTED_MEDIA
+    Enum_Error_InvalidValue:
+      title: Enum_Error_InvalidValue
+      type: string
+      enum:
+        - CM_INVALID_VALUE
+    Enum_Error_TooLarge:
+      title: Enum_Error_TooLarge
+      type: string
+      enum:
+        - CM_TOO_LARGE
+    Enum_Error_Timeout:
+      title: Enum_Error_Timeout
+      type: string
+      enum:
+        - CM_TIMEOUT
+    Enum_Error_Quota:
+      title: Enum_Error_Quota
+      type: string
+    Enum_Error_URLTooLong:
+      title: Enum_Error_URLTooLong
+      type: string
+      enum:
+        - CM_URL_TOO_LONG
+    Enum_Error_HeadersTooLarge:
+      title: Enum_Error_HeadersTooLarge
+      type: string
+      enum:
+        - CM_HEADERS_TOO_LARGE
+    Enum_Error_NoSuchRoutingPlan:
+      title: Enum_Error_NoSuchRoutingPlan
+      type: string
+      enum:
+        - CM_NO_SUCH_ROUTING_PLAN
+    Enum_Error_NotFound:
+      title: Enum_Error_NotFound
+      type: string
+      enum:
+        - CM_NOT_FOUND
+      example: CM_NOT_FOUND
+  securitySchemes: {}
