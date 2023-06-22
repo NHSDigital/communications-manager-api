@@ -1,8 +1,6 @@
 
 const request = require("supertest");
 const assert = require("chai").assert;
-// const expect = require("chai").expect;
-
 
 describe("app handler tests", function () {
     let server;
@@ -58,10 +56,207 @@ describe("app handler tests", function () {
             .expect("Content-Type", /json/, done);
     });
 
-    it("responds to /hello", (done) => {
-        request(server)
-            .get("/hello")
-            .expect(200, done);
+    describe('/api/v1/send', () => {
+        it('returns a 400 when body doesnt exist', (done) => {
+            request(server)
+                .post('/api/v1/send')
+                .expect(400, {
+                    message: 'Missing request body'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the sendingGroupId doesnt exist', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({})
+                .expect(400, {
+                    message: 'Missing sendingGroupId'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the sendingGroupId is null', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: null
+                })
+                .expect(400, {
+                    message: 'Missing sendingGroupId'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the requestRefId doesnt exist', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id'
+                })
+                .expect(400, {
+                    message: 'Missing requestRefId'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the requestRefId is null', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: null
+                })
+                .expect(400, {
+                    message: 'Missing requestRefId'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the data doesnt exist', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: 'request-ref-id'
+                })
+                .expect(400, {
+                    message: 'Missing data array'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the data is null', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: 'request-ref-id',
+                    data: null
+                })
+                .expect(400, {
+                    message: 'Missing data array'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the data is not an array', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: 'request-ref-id',
+                    data: 'invalid'
+                })
+                .expect(400, {
+                    message: 'Missing data array'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the data does not contain items with requestItemRefId', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            notARequestItemRefId : '1'
+                        }
+                    ]
+                })
+                .expect(400, {
+                    message: 'Missing requestItemRefIds'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the data contains duplicate requestItemRefIds', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '1'
+                        }
+                    ]
+                })
+                .expect(400, {
+                    message: 'Duplicate requestItemRefIds'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 404 when sendingGroupId is not found', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'sending-group-id',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(404, {
+                    message: 'Routing Config does not exist for sendingGroupId "sending-group-id"'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('can simulate a 500 error', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1',
+                    requestRefId: 'simulate-500',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(500, {
+                    message: 'Error writing request items to DynamoDB'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('responds with a 200 when the request is correctly formatted', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1',
+                    requestRefId: 'request-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(200)
+                .expect((res) => {
+                    assert.notEqual(res.body.requestId, undefined);
+                    assert.notEqual(res.body.requestId, null);
+                })
+                .expect("Content-Type", /json/, done);
+        });
     });
 });
 

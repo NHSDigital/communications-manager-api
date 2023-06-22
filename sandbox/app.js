@@ -123,10 +123,11 @@ function on_error(err, req, res, next) {
 
 const handlers = require("./handlers");
 app.use(before_request);
+app.use(express.json());
 app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);
-app.all("/hello", handlers.hello);
+app.post("/api/v1/send", handlers.batch_send);
 app.use(on_error)
 app.use(after_request);
 

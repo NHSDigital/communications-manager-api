@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:hotreload" : "nodemon index.js",
+    "test": "mocha"
   },
   "license": "Unlicense",
   "private": true,
   "dependencies": {
     "express": "^5.0.0-alpha.8",
     "loglevel": "^1.7.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "ksuid" : "^3.0.0"
   },
   "devDependencies": {
     "chai": "^4 .2.0",
