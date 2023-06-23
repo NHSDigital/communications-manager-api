@@ -132,21 +132,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RequestEntityTooLargeResponse'
-        '414':
-          description: Request-URI Too Long
-          headers:
-            X-Correlation-ID:
-              schema:
-                type: string
-                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
-          content:
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/URLTooLongResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/URLTooLongResponse'
         '415':
           description: Unsupported Media Type
           headers:
@@ -712,49 +697,6 @@ components:
                   - You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
       x-stoplight:
         id: 5hjxv90mqp59v
-    URLTooLongResponse:
-      title: URL too long
-      type: object
-      additionalProperties: false
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          uniqueItems: true
-          maxItems: 1
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/Enum_Error_URLTooLong'
-              links:
-                type: object
-                additionalProperties: false
-                minProperties: 1
-                properties:
-                  about:
-                    type: string
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-              status:
-                type: string
-                example: '414'
-                enum:
-                  - '414'
-              title:
-                type: string
-                example: URL too long
-                enum:
-                  - URL too long
-              detail:
-                type: string
-                example: The URL you have requested is too long. URLs sent to this service need to be 8192 characters or less in length.
-                enum:
-                  - The URL you have requested is too long. URLs sent to this service need to be 8192 characters or less in length.
-      x-stoplight:
-        id: xv900txqdbrsn
     HeadersTooLargeResponse:
       title: Headers too large
       type: object
@@ -955,13 +897,6 @@ components:
       type: string
       x-stoplight:
         id: gmlcrld1hxp2c
-    Enum_Error_URLTooLong:
-      title: Enum_Error_URLTooLong
-      type: string
-      enum:
-        - CM_URL_TOO_LONG
-      x-stoplight:
-        id: f7ek8lzvjh6xl
     Enum_Error_HeadersTooLarge:
       title: Enum_Error_HeadersTooLarge
       type: string
