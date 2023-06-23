@@ -7,7 +7,14 @@
         <Response/>
     </PostFlow>
     <PreFlow name="PreFlow">
-        <Request/>
+        <Request>
+          <Step>
+            <Name>RaiseFault.401Unauthorized</Name>
+            <Condition>
+              request.header.Authorization = "Bearer InvalidMockToken"
+            </Condition>
+          </Step>
+        </Request>
         <Response>
           <Step>
             <Name>AssignMessage.AddCors</Name>
