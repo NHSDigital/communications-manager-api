@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.406NotAcceptable">
+    <DisplayName>RaiseFault.406NotAcceptable</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>406</StatusCode>
+            <ReasonPhrase>Not Acceptable</ReasonPhrase>
+            <Payload contentType="application/vnd.api+json" variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_NOT_ACCEPTABLE",
+                            "links" : {
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status" : "406",
+                            "title" : "Not acceptable",
+                            "description" : "This service can only generate application/vnd.api+json or application/json.",
+                            "source" : {
+                                "header" : "Accept"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
