@@ -1,7 +1,80 @@
 <TargetEndpoint name="sandbox">
     <Description/>
     <FaultRules/>
-    <Flows/>
+    <Flows>
+        <Flow name="CreateMessageBatchEndpoint">
+            <Description>Handle create message batch</Description>
+            <Request>
+                <Step>
+                    <Name>JavaScript.MessageBatches.Create.Request</Name>
+                </Step>
+                <Step>
+                    <Name>AssignMessage.MessageBatches.Create.Request</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>ExtractVariables.MessageBatches.Create.Response</Name>
+                </Step>
+                <Step>
+                    <Name>AssignMessage.MessageBatches.Create.Response</Name>
+                </Step>
+            </Response>
+            <Condition>
+                (proxy.pathsuffix MatchesPath "/v1/message-batches") and (request.verb = "POST")
+            </Condition>
+        </Flow>
+    </Flows>
+    <FaultRules>
+        <FaultRule name="invalid_routing_plan">
+            <Step>
+                <Name>RaiseFault.404InvalidRoutingPlan</Name>
+            </Step>
+            <Condition>
+                response.status.code = 404 and response.content Like "*Routing Config does not exist for sendingGroupId*"
+            </Condition>
+        </FaultRule>
+        <FaultRule name="not_found">
+            <Step>
+                <Name>RaiseFault.404NotFound</Name>
+            </Step>
+            <Condition>
+                response.status.code = 404
+            </Condition>
+        </FaultRule>
+        <FaultRule name="backend_duplicate_requestItemRefIds">
+            <Step>
+                <Name>RaiseFault.400BackendException.DuplicateRequestItemRefIds</Name>
+            </Step>
+            <Condition>
+                response.status.code = 400 and response.content Like "*Duplicate requestItemRefIds*"
+            </Condition>
+        </FaultRule>
+        <FaultRule name="backend_missing_sendingGroupId">
+            <Step>
+                <Name>RaiseFault.400BackendException.MissingSendingGroupId</Name>
+            </Step>
+            <Condition>
+                response.status.code = 400 and response.content Like "*Missing sendingGroupId*"
+            </Condition>
+        </FaultRule>
+        <FaultRule name="backend_missing_requestRefId">
+            <Step>
+                <Name>RaiseFault.400BackendException.MissingRequestRefId</Name>
+            </Step>
+            <Condition>
+                response.status.code = 400 and response.content Like "*Missing requestRefId*"
+            </Condition>
+        </FaultRule>
+        <FaultRule name="backend_missing_data_array">
+            <Step>
+                <Name>RaiseFault.400BackendException.MissingDataArray</Name>
+            </Step>
+            <Condition>
+                response.status.code = 400 and response.content Like "*Missing data array*"
+            </Condition>
+        </FaultRule>
+    </FaultRules>
     <PostFlow name="PostFlow">
         <Request/>
         <Response/>
