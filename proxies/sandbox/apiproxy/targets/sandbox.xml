@@ -1,6 +1,5 @@
 <TargetEndpoint name="sandbox">
     <Description/>
-    <FaultRules/>
     <Flows>
         <Flow name="CreateMessageBatchEndpoint">
             <Description>Handle create message batch</Description>
@@ -74,6 +73,18 @@
                 response.status.code = 400 and response.content Like "*Missing data array*"
             </Condition>
         </FaultRule>
+        <FaultRule name="backend_gateway_timeout">
+            <Step>
+                <Name>RaiseFault.504GatewayTimeout</Name>
+            </Step>
+            <Condition>fault.name = "GatewayTimeout" or response.status.code = 504</Condition>
+        </FaultRule>
+        <FaultRule name="backend_request_timeout">
+            <Step>
+                <Name>RaiseFault.408RequestTimeout</Name>
+            </Step>
+            <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
+        </FaultRule>
     </FaultRules>
     <PostFlow name="PostFlow">
         <Request/>
@@ -95,6 +106,10 @@
         </Response>
     </PreFlow>
     <HTTPTargetConnection>
-      {{ HOSTED_TARGET_CONNECTION }}
+        {{ HOSTED_TARGET_CONNECTION }}
+        <Properties>
+            <!-- this is set to 2 seconds here to make it quicker to test, in live this should be 29 seconds -->
+            <Property name="io.timeout.millis">2000</Property>
+        </Properties>
     </HTTPTargetConnection>
 </TargetEndpoint>

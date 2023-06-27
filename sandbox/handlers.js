@@ -130,7 +130,36 @@ async function batch_send(req, res, next) {
     next();
 }
 
+async function trigger_timeout(req, res, next) {
+    let timeoutLength = 3000;
+
+    if (req.query.sleep) {
+        timeoutLength = parseInt(req.query.sleep);
+    }
+
+    setTimeout(() => {
+        res.status(200);
+        res.json({});
+        next();
+    }, timeoutLength);
+}
+
+async function backend_408(req, res, next) {
+    res.status(408);
+    res.send("408 Request Timeout");
+    next();
+}
+
+async function backend_504(req, res, next) {
+    res.status(504);
+    res.send("504 Gateway Timeout");
+    next();
+}
+
 module.exports = {
     status: status,
-    batch_send: batch_send
+    batch_send: batch_send,
+    trigger_timeout: trigger_timeout,
+    backend_408: backend_408,
+    backend_504: backend_504
 };

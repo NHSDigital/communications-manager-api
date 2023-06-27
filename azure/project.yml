@@ -6,3 +6,5 @@ variables:
     value: cm
   - name: service_base_path
     value: comms
+  - name: hosted_target_connection_path_suffix
+    value: '{requestpath}'
