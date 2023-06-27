@@ -5,4 +5,4 @@ variables:
   - name: short_service_name
     value: cm
   - name: service_base_path
-    value: communications-manager
+    value: comms

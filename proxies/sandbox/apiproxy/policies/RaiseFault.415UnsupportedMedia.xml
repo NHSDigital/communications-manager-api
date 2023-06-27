@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.415UnsupportedMedia">
+    <DisplayName>RaiseFault.415UnsupportedMedia</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>415</StatusCode>
+            <ReasonPhrase>Unsupported Media</ReasonPhrase>
+            <Payload contentType="application/vnd.api+json" variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_UNSUPPORTED_MEDIA",
+                            "links" : {
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status" : "415",
+                            "title" : "Unsupported media",
+                            "description" : "Invalid content-type, this API only supports application/vnd.api+json or application/json."
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

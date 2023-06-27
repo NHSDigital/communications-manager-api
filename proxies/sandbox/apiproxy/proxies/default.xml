@@ -39,7 +39,16 @@
       </Condition>
     </Flow>
   </Flows>
-  <PreFlow/>
+  <PreFlow name="PreFlow">
+    <Request>
+      <Step>
+          <Name>RaiseFault.415UnsupportedMedia</Name>
+          <Condition>
+              (request.verb = "POST" or request.verb = "PATCH" or request.verb = "PUT") and (request.header.Content-Type = null or (request.header.Content-Type != "application/json" and request.header.Content-Type != "application/vnd.api+json"))
+          </Condition>
+      </Step>
+    </Request>
+  </PreFlow>
   <PostClientFlow name="PostClientFlow">
     <Response>
       <Step>
