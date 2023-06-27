@@ -9,12 +9,16 @@ from os import getenv
 
 
 @pytest.mark.smoketest
+@pytest.mark.sandboxtest
+@pytest.mark.prodtest
 def test_ping(nhsd_apim_proxy_url):
     resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
     assert resp.status_code == 200
 
 
 @pytest.mark.smoketest
+@pytest.mark.sandboxtest
+@pytest.mark.prodtest
 def test_wait_for_ping(nhsd_apim_proxy_url):
     retries = 0
     resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
@@ -36,6 +40,8 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
 
 
 @pytest.mark.smoketest
+@pytest.mark.sandboxtest
+@pytest.mark.prodtest
 def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     resp = requests.get(
         f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers
@@ -45,6 +51,8 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
 
 
 @pytest.mark.smoketest
+@pytest.mark.sandboxtest
+@pytest.mark.prodtest
 def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
     retries = 0
     resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
@@ -69,12 +77,14 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
+@pytest.mark.prodtest
 def test_app_level0(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 401  # unauthorized
 
 
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.prodtest
 def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200
@@ -87,6 +97,7 @@ def test_app_level3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         "login_form": {"username": "656005750104"},
     }
 )
+@pytest.mark.prodtest
 def test_cis2_aal3(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=nhsd_apim_auth_headers)
     assert resp.status_code == 200

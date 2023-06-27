@@ -92,23 +92,38 @@
     </PostFlow>
     <PreFlow name="PreFlow">
         <Request>
-          <Step>
-            <Name>RaiseFault.401Unauthorized</Name>
-            <Condition>
-              request.header.Authorization = "Bearer InvalidMockToken"
-            </Condition>
-          </Step>
-          <Step>
-            <Name>RaiseFault.403Forbidden</Name>
-            <Condition>
-              request.header.Authorization = "Bearer ClientNotRecognised"
-            </Condition>
-          </Step>
+            <Step>
+                <Name>AssignMessage.AddDefaultRequestPath</Name>
+            </Step>
+            <Step>
+                <Name>RaiseFault.401Unauthorized</Name>
+                <Condition>
+                    request.header.Authorization = "Bearer InvalidMockToken"
+                </Condition>
+            </Step>
+            <Step>
+              <Name>RaiseFault.403Forbidden</Name>
+              <Condition>
+                request.header.Authorization = "Bearer ClientNotRecognised"
+              </Condition>
+            </Step>
+            <Step>
+                <Name>RaiseFault.406NotAcceptable</Name>
+                <Condition>
+                    (proxy.pathsuffix =| "/api" or proxy.pathsuffix =| "/v1") and request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json"
+                </Condition>
+            </Step>
+            <Step>
+                <Name>RaiseFault.415UnsupportedMedia</Name>
+                <Condition>
+                    (request.verb = "POST" or request.verb = "PATCH" or request.verb = "PUT") and (request.header.Content-Type = null or (request.header.Content-Type != "application/json" and request.header.Content-Type != "application/vnd.api+json"))
+                </Condition>
+            </Step>
         </Request>
         <Response>
-          <Step>
-            <Name>AssignMessage.AddCors</Name>
-          </Step>
+            <Step>
+                <Name>AssignMessage.AddCors</Name>
+            </Step>
         </Response>
     </PreFlow>
     <HTTPTargetConnection>

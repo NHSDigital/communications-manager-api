@@ -68,6 +68,11 @@ smoketest:
 	--junitxml=smoketest-report.xml \
 	-m smoketest
 
+sandboxtest:
+	$(TEST_CMD) \
+	--junitxml=sandboxtest-report.xml \
+	-m sandboxtest
+
 test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
@@ -78,5 +83,6 @@ smoketest-prod:
 	-m smoketest
 
 test-prod:
-	$(PROD_CMD) \
+	$(TEST_CMD) \
 	--junitxml=test-report.xml \
+	-m prodtest
