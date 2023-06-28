@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="JavaScript.MessageBatches.Create.Request">
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="1000" name="JavaScript.MessageBatches.Create.Request">
     <DisplayName>JavaScript.MessageBatches.Create.Request</DisplayName>
+    <Properties/>
     <ResourceURL>jsc://MessageBatches.Create.Request.js</ResourceURL>
 </Javascript>

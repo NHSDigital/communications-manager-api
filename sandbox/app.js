@@ -128,6 +128,9 @@ app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);
 app.post("/api/v1/send", handlers.batch_send);
+app.get("/_timeout", handlers.trigger_timeout);
+app.get("/_timeout_408", handlers.backend_408);
+app.get("/_timeout_504", handlers.backend_504);
 app.use(on_error)
 app.use(after_request);
 

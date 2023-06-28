@@ -29,6 +29,3 @@ context.setVariable("data.payload", JSON.stringify({
     "data" : messages
 }));
 context.setVariable("data.messageBatchReference", messageBatchReference);
-
-context.setVariable("target.copy.pathsuffix", true);
-context.setVariable("requestPath", "/api/v1/send");

@@ -146,10 +146,10 @@ paths:
           content:
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ServiceTimeoutResponse'
+                $ref: '#/components/schemas/RequestTimeoutResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/ServiceTimeoutResponse'
+                $ref: '#/components/schemas/RequestTimeoutResponse'
           headers:
             X-Correlation-ID:
               schema:
@@ -234,6 +234,21 @@ paths:
                 multipleOf: 1
                 example: 5
               description: Time to wait between requests in seconds
+        '504':
+          description: Gateway Timeout
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ServiceTimeoutResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceTimeoutResponse'
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
       security: []
       servers:
         - url: 'https://sandbox.api.service.nhs.uk/comms'
@@ -611,9 +626,9 @@ components:
         - CM_NOT_ACCEPTABLE
       title: Enum_Error_NotAcceptable
       example: CM_NOT_ACCEPTABLE
-    ServiceTimeoutResponse:
+    RequestTimeoutResponse:
       type: object
-      title: Service timeout
+      title: Request timeout
       additionalProperties: false
       properties:
         errors:
@@ -642,12 +657,12 @@ components:
                 example: '408'
               title:
                 enum:
-                  - Unable to call service
-                example: Unable to call service
+                  - Request timeout
+                example: Request timeout
               detail:
                 enum:
-                  - The downstream service has not responded within the configured timeout period.
-                example: The downstream service has not responded within the configured timeout period.
+                  - The service was unable to receive your request within the timeout period.
+                example: The service was unable to receive your request within the timeout period.
     Enum_Error_Timeout:
       enum:
         - CM_TIMEOUT
@@ -831,3 +846,40 @@ components:
       enum:
         - CM_HEADERS_TOO_LARGE
       title: Enum_Error_HeadersTooLarge
+    ServiceTimeoutResponse:
+      type: object
+      title: Service timeout
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 1
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_Timeout'
+              links:
+                type: object
+                additionalProperties: false
+                properties:
+                  about:
+                    enum:
+                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                    format: uri
+                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+                minProperties: 1
+              status:
+                enum:
+                  - '504'
+                example: '504'
+              title:
+                enum:
+                  - Unable to call service
+                example: Unable to call service
+              detail:
+                enum:
+                  - The downstream service has not responded within the configured timeout period.
+                example: The downstream service has not responded within the configured timeout period.

@@ -4,6 +4,14 @@
     <Properties/>
     <AssignTo createNew="false" transport="http" type="request"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignVariable>
+        <Name>target.copy.pathsuffix</Name>
+        <Value>false</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>requestpath</Name>
+        <Value>/api/v1/send</Value>
+    </AssignVariable>
     <Set>
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
         <Headers>
