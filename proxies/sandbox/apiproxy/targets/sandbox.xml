@@ -74,6 +74,12 @@
                 <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
             </Step>
         </FaultRule>
+        <FaultRule>
+          <Step>
+            <Name>RaiseFault.429TooManyRequests</Name>
+          </Step>
+          <Condition>fault.name = "SpikeArrestViolation"</Condition>
+        </FaultRule>
     </FaultRules>
     <PostFlow name="PostFlow">
         <Response>
