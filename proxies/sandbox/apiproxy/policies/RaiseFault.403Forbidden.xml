@@ -7,7 +7,7 @@
             <Headers/>
             <StatusCode>403</StatusCode>
             <ReasonPhrase>Forbidden</ReasonPhrase>
-            <Payload contentType="application/vnd.api+json" variablePrefix="@" variableSuffix="#">
+            <Payload variablePrefix="@" variableSuffix="#">
                 {
                     "errors" : [
                         {
