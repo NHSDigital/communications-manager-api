@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: Communications Manager API
-  description: Test for Leah
+  description: Test for Leah.
   contact:
     name: Communications Manager Service API Support
     url: 'https://digital.nhs.uk/developer/help-and-support'
