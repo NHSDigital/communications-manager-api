@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddDefaultRequestPath">
+    <DisplayName>AssignMessage.AddDefaultRequestPath</DisplayName>
+    <Properties/>
+    <AssignTo createNew="false" transport="http" type="request"/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignVariable>
+        <Name>requestpath</Name>
+        <Value></Value>
+    </AssignVariable>
+</AssignMessage>

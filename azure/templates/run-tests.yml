@@ -4,10 +4,13 @@ parameters:
     default: false
   - name: test_command
     type: string
-    default: 'make test'
+    default: 'make test-prod'
   - name: smoketest_command
     type: string
     default: 'make smoketest'
+  - name: sandboxtest_command
+    type: string
+    default: 'make sandboxtest'
 
 steps:
   - bash: |
@@ -43,12 +46,12 @@ steps:
         export APIGEE_APP_ID="MY APP ID"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
-        ${{ parameters.smoketest_command }}
+        ${{ parameters.sandboxtest_command }}
       workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-      displayName: Run smoketests
+      displayName: Run sandboxtest
     - task: PublishTestResults@2
-      displayName: 'Publish smoketest results'
+      displayName: 'Publish sandboxtest results'
       condition: always()
       inputs:
-        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/smoketest-report.xml'
+        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/sandboxtest-report.xml'
         failTaskOnFailedTests: true
