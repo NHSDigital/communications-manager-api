@@ -156,21 +156,6 @@ paths:
                 type: string
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
-        '413':
-          description: Request Entity Too Large
-          content:
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/RequestEntityTooLargeResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RequestEntityTooLargeResponse'
-          headers:
-            X-Correlation-ID:
-              schema:
-                type: string
-                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '415':
           description: Unsupported Media Type
           content:
@@ -667,55 +652,6 @@ components:
       enum:
         - CM_TIMEOUT
       title: Enum_Error_Timeout
-    RequestEntityTooLargeResponse:
-      type: object
-      title: Request Too Large
-      additionalProperties: false
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          maxItems: 1
-          uniqueItems: true
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/Enum_Error_TooLarge'
-              links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
-              status:
-                enum:
-                  - '413'
-                example: '413'
-              title:
-                enum:
-                  - Request too large
-                example: Request too large
-              detail:
-                enum:
-                  - Your request was too large as it contained too many messages. Please reduce the size of your request body. The maximum request body size supported is 9.5mb.
-                example: Your request was too large as it contained too many messages. Please reduce the size of your request body. The maximum request body size supported is 9.5mb.
-              source:
-                type: object
-                additionalProperties: false
-                properties:
-                  pointer:
-                    enum:
-                      - /data/attributes/messages
-                    example: /data/attributes/messages
-    Enum_Error_TooLarge:
-      enum:
-        - CM_TOO_LARGE
-      title: Enum_Error_TooLarge
     UnsupportedMediaResponse:
       type: object
       title: Unsupported Media
