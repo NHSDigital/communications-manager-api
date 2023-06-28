@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.413RequestTooLarge">
+    <DisplayName>RaiseFault.413RequestTooLarge</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <Payload contentType="application/vnd.api+json">
+              {
+                "errors": [
+                  {
+                    "id": "CM_TOO_LARGE",
+                    "links": {},
+                    "status": "413",
+                    "title": "Request too large",
+                    "detail": "Your request was too large as it contained too many messages. Please reduce the size of your request body. The maximum request body size supported is 9.5mb.",
+                    "source": {}
+                  }
+                ]
+              }
+            </Payload>
+            <StatusCode>413</StatusCode>
+            <ReasonPhrase>Request too large</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

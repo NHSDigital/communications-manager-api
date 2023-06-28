@@ -19,6 +19,12 @@
       </Step>
       <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
     </FaultRule>
+    <FaultRule name="request_too_large">
+      <Step>
+        <Name>RaiseFault.413RequestTooLarge</Name>
+      </Step>
+      <Condition>request.header.Content-Length > 9500000</Condition>
+    </FaultRule>
   </FaultRules>
   <!--
     To point to a named target server as this is how it SHOULD be implemented:
