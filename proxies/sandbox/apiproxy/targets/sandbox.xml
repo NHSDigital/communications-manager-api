@@ -80,6 +80,12 @@
           </Step>
           <Condition>fault.name = "SpikeArrestViolation"</Condition>
         </FaultRule>
+        <FaultRule name="too_many_requests">
+          <Step>
+            <Name>RaiseFault.429TooManyRequests</Name>
+          </Step>
+          <Condition>fault.name = "SpikeArrestViolation"</Condition>
+        </FaultRule>
     </FaultRules>
     <PostFlow name="PostFlow">
         <Response>
