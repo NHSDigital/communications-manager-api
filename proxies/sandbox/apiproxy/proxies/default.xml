@@ -39,6 +39,13 @@
       </Condition>
     </Flow>
   </Flows>
+  <PostFlow>
+    <Response>
+      <Step>
+        <Name>JavaScript.SetResponseContentType</Name>
+      </Step>
+    </Response>
+  </PostFlow>
   <PostClientFlow name="PostClientFlow">
     <Response>
       <Step>
@@ -64,7 +71,11 @@
   </RouteRule>
   <DefaultFaultRule>
     <Step>
+      <Name>JavaScript.SetResponseContentType</Name>
+    </Step>
+    <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
     </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
   </DefaultFaultRule>
 </ProxyEndpoint>

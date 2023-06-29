@@ -5,7 +5,7 @@
     <AssignTo createNew="true" transport="http" type="response"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <Set>
-        <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">
+        <Payload variablePrefix="%" variableSuffix="#">
             {
                 "data" : {
                     "type" : "MessageBatch",
@@ -16,9 +16,6 @@
                 }
             }
         </Payload>
-        <Headers>
-            <Header name="Content-Type">application/json</Header>
-        </Headers>
         <StatusCode>201</StatusCode>
     </Set>
 </AssignMessage>
