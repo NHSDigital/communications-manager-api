@@ -85,7 +85,7 @@
             </Step>
             <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
         </FaultRule>
-        <FaultRule>
+        <FaultRule name="too_many_requests">
           <Step>
             <Name>RaiseFault.429TooManyRequests</Name>
           </Step>
