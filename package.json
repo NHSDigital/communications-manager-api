@@ -13,7 +13,7 @@
   "homepage": "https://github.com/NHSDigital/communications-manager",
   "devDependencies": {
     "@redocly/cli": "^1.0.0-beta.129",
-    "apigeetool": "^0.5.4",
+    "apigeetool": "^0.16.1",
     "license-checker": "^25.0.1",
     "minimist": "^1.2.2",
     "react-is": "^16.13.1"
