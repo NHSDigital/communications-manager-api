@@ -111,6 +111,16 @@
                     (request.verb = "POST" or request.verb = "PATCH" or request.verb = "PUT") and (request.header.Content-Type = null or (request.header.Content-Type != "application/json" and request.header.Content-Type != "application/vnd.api+json"))
                 </Condition>
             </Step>
+            <Step>
+                <Name>JavaScript.MessageBatches.Create.Validate</Name>
+                <Condition>
+                    (proxy.pathsuffix MatchesPath "/v1/message-batches") and (request.verb = "POST")
+                </Condition>
+            </Step>
+            <Step>
+                <Name>RaiseFault.400BadRequest</Name>
+                <Condition>errors != null</Condition>
+            </Step>
         </Request>
         <Response>
             <Step>
