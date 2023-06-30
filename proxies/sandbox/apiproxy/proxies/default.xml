@@ -38,6 +38,15 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
+    <Flow name="RateLimitingFlow">
+      <Description/>
+      <Request>
+        <Step>
+          <Name>FlowCallout.ApplyRateLimiting</Name>
+        </Step>
+      </Request>
+      <Response/>
+    </Flow>
   </Flows>
   <PostFlow>
     <Response>
