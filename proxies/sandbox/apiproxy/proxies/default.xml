@@ -38,19 +38,15 @@
       <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))
       </Condition>
     </Flow>
-    <Flow name="ExampleFlowUsingRatelimit">
+    <Flow name="RateLimitingFlow">
       <Description/>
       <Request>
-<!--        <Step>-->
-<!--          <Name>OAuthV2.VerifyAccessToken</Name>-->
-<!--        </Step>-->
-        <!-- Must be after authorization policy! -->
         <Step>
           <Name>FlowCallout.ApplyRateLimiting</Name>
         </Step>
       </Request>
       <Response/>
-</Flow>
+    </Flow>
   </Flows>
   <PostFlow>
     <Response>
