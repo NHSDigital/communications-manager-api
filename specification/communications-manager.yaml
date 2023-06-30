@@ -3,6 +3,36 @@ info:
   version: '1.0'
   title: Communications Manager API
   description: Todo
+    ## Overview
+    TBC
+
+    ## Who can use this API
+    TBC
+
+    ## Related APIs
+    TBC
+
+    ## API status and roadmap
+    TBC 
+
+    ## Service Level 
+    TBC
+
+    ## Technology 
+    TBC
+
+    ## Network access
+    TBC 
+
+    ## Security and authorisation 
+    TBC 
+
+    ## Environments and testing 
+    TBC 
+
+    ## Onboarding
+    TBC 
+    
   contact:
     name: Communications Manager Service API Support
     url: 'https://digital.nhs.uk/developer/help-and-support'
