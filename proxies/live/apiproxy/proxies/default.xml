@@ -69,6 +69,15 @@
   <RouteRule name="communications-manager-target">
     <TargetEndpoint>communications-manager-target</TargetEndpoint>
   </RouteRule>
+
+  <FaultRules>
+   <FaultRule name="missing_parameter">
+      <Step>
+        <Name>RaiseFault.400BadRequest</Name>
+      </Step>
+      <Condition>(fault.name = "FailedToResolveAPIKey")</Condition>
+  </FaultRule>
+  </FaultRules>
   <DefaultFaultRule>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>

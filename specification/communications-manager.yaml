@@ -194,21 +194,6 @@ paths:
                 type: string
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
-        '431':
-          description: Request Header Fields Too Large
-          content:
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/HeadersTooLargeResponse'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HeadersTooLargeResponse'
-          headers:
-            X-Correlation-ID:
-              schema:
-                type: string
-                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
-              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '503':
           description: Service Unavailable
           headers:
@@ -741,47 +726,6 @@ components:
     Enum_Error_Quota:
       type: string
       title: Enum_Error_Quota
-    HeadersTooLargeResponse:
-      type: object
-      title: Headers too large
-      additionalProperties: false
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          maxItems: 1
-          uniqueItems: true
-          items:
-            type: object
-            properties:
-              id:
-                $ref: '#/components/schemas/Enum_Error_HeadersTooLarge'
-              links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
-              status:
-                enum:
-                  - '431'
-                example: '431'
-              title:
-                enum:
-                  - Headers too large
-                example: Headers too large
-              detail:
-                enum:
-                  - The headers sent with this request are too large. Headers must total no more than 10240 bytes.
-                example: The headers sent with this request are too large. Headers must total no more than 10240 bytes.
-    Enum_Error_HeadersTooLarge:
-      enum:
-        - CM_HEADERS_TOO_LARGE
-      title: Enum_Error_HeadersTooLarge
     ServiceTimeoutResponse:
       type: object
       title: Service timeout
