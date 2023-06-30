@@ -25,49 +25,42 @@ def __assert_403_error(resp, check_body=True):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_authorization()
 def test_403_forbidden_get(nhsd_apim_proxy_url):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_sandbox_authorization()
 def test_403_forbidden_post(nhsd_apim_proxy_url):
     resp = requests.post(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_authorization()
 def test_403_forbidden_put(nhsd_apim_proxy_url):
     resp = requests.put(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_authorization()
 def test_403_forbidden_patch(nhsd_apim_proxy_url):
     resp = requests.patch(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_authorization()
 def test_403_forbidden_delete(nhsd_apim_proxy_url):
     resp = requests.delete(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_authorization()
 def test_403_forbidden_head(nhsd_apim_proxy_url):
     resp = requests.head(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp, check_body=False)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.nhsd_apim_authorization()
 def test_403_forbidden_options(nhsd_apim_proxy_url):
     resp = requests.options(f"{nhsd_apim_proxy_url}", headers=FORBIDDEN_TOKEN)
     __assert_403_error(resp)
