@@ -30,7 +30,6 @@ def __assert_404_error(resp, check_body=True):
 def test_404_get(nhsd_apim_proxy_url, request_path):
     resp = requests.get(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "Accept": "*/*",
-        "Content-Type": "application/vnd.api+json"
     })
     __assert_404_error(resp)
 
