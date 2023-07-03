@@ -2,36 +2,36 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: Communications Manager API
-  description: Todo
+  description:  |
     ## Overview
-    TBC
+    'TBC'
 
     ## Who can use this API
-    TBC
+    'TBC'
 
     ## Related APIs
-    TBC
+    'TBC'
 
     ## API status and roadmap
-    TBC 
+    'TBC'
 
     ## Service Level 
-    TBC
+    'TBC'
 
     ## Technology 
-    TBC
+    'TBC'
 
     ## Network access
-    TBC 
+    'TBC'
 
     ## Security and authorisation 
-    TBC 
+    'TBC'
 
     ## Environments and testing 
-    TBC 
+    'TBC'
 
     ## Onboarding
-    TBC 
+    'TBC'
     
   contact:
     name: Communications Manager Service API Support
