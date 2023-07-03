@@ -11,8 +11,10 @@
                 {
                   "errors": [
                     {
-                      "id": "CM_QOTA",
-                      "links": {},
+                      "id": "CM_QUOTA",
+                      "links": {
+                        "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                      },
                       "status": "429",
                       "title": "Too many requests",
                       "detail": "You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header."
