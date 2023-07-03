@@ -7,7 +7,7 @@
             <Headers/>
             <StatusCode>429</StatusCode>
             <ReasonPhrase>Too many requests</ReasonPhrase>
-            <Payload contentType="application/vnd.api+json">
+            <Payload>
                 {
                   "errors": [
                     {
