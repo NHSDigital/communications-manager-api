@@ -60,6 +60,8 @@ extends:
         proxy_path: sandbox
         post_deploy:
           - template: ./templates/run-tests.yml
+            parameters:
+              sandboxtest_command: 'make sandboxtest-prod'
     # # Enable int environment when ready by uncommenting:
     #   - environment: int
     #     depends_on:

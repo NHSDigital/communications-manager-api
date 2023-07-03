@@ -73,6 +73,11 @@ sandboxtest:
 	--junitxml=sandboxtest-report.xml \
 	-m sandboxtest
 
+sandboxtest-prod:
+	$(PROD_TEST_CMD) \
+	--junitxml=sandboxtest-report.xml \
+	-m sandboxtest
+
 test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
