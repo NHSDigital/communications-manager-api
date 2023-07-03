@@ -1,0 +1,57 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge
+      endpoint: NHSDigital
+
+variables:
+  - template: project.yml
+
+jobs:
+  - job: teardown
+    displayName: PR Teardown
+    timeoutInMinutes: 30
+    pool:
+      name: 'AWS-ECS'
+      vmImage: 'ubuntu-latest'
+    steps:
+      - checkout: self
+
+      - bash: |
+          echo $(action_pr_number)
+          WORKSPACE="pr-"$(ACTION_PR_NUMBER)
+          echo $WORKSPACE
+          echo "##vso[task.setvariable variable=WORKSPACE]$WORKSPACE"
+          echo "##vso[task.setvariable variable=ACTION_PR_NUMBER]$(ACTION_PR_NUMBER)"
+        displayName: Set workspace tag
+
+      - template: "azure/components/aws-assume-role.yml@common"
+        parameters:
+            role: "auto-ops"
+            profile: "apim-dev"
+            aws_account: "dev"
+
+      - bash: |
+          echo "##vso[task.setvariable variable=AWS_DEFAULT_REGION]eu-west-2"
+        displayName: Set AWS default region
+
+      - bash: |
+          export AWS_PROFILE=apim-dev
+          account_id="$(aws sts get-caller-identity --query Account --output text)"
+
+          cd terraform
+          make init
+          # tf_vars has the client id, secret, and keycloak env required by default so we pass null values here to
+          # prevent terraform from hanging waiting for an input for these values
+          terraform workspace select $(WORKSPACE) && make init && terraform destroy -auto-approve -force /
+          -var="client_id=$(client_id)" -var="client_secret=$(client_secret)" /
+          -var="keycloak_environment=$(keycloak_environment)" && /
+          terraform workspace select default && terraform workspace delete $(WORKSPACE)
+        displayName: Destroy terraform PR workspace and linked resources
