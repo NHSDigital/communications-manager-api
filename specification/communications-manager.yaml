@@ -108,7 +108,23 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '401':
-          description: Unauthorized
+          description: |+
+            Your request was not authorized - you need to send a `Authorization` header with a valid `Bearer` token.
+
+            See the documentation on [how to generate a valid token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
+
+            ### Sandbox
+
+            It is possible to trigger this error in the sandbox by sending the header `Prefer` with a value of `code=401`.
+
+            Here is an example curl request to trigger a `401`:
+
+            ```
+              curl -X GET \
+                --header "Accept: */*" \
+                --header "Prefer: code=401" \
+                https://sandbox.api.service.nhs.uk/comms/
+            ```
           content:
             application/vnd.api+json:
               schema:
