@@ -21,6 +21,23 @@ info:
     ## Technology 
     TBC
 
+    ### Response Content Types
+
+    This API can generate responses in the following formats:
+
+    * `application/vnd.api+json` - see [JSON:API specification](https://jsonapi.org/format/#introduction)
+    * `application/json`
+
+    Both of these formats have the same structure - the API responds with a standard JSON document.
+
+    You can control which `Content-Type` is returned by using the `Accept` header. The following `Accept` headers are supported:
+
+    * `*/*` - responds with the default `application/vnd.api+json` content type
+    * `application/json`
+    * `application/vnd.api+json`
+
+    If an invalid `Accept` header is sent the API will return a `406 Not Acceptable` response.
+
     ## Network access
     TBC
 
@@ -153,7 +170,14 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '406':
-          description: Not Acceptable
+          description: |+
+            The request did not contain a valid `Accept` header value.
+
+            Valid values are:
+
+            * `*/*`
+            * `application/json`
+            * `application/vnd.api+json`
           content:
             application/json:
               schema:
