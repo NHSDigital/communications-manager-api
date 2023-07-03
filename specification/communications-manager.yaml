@@ -165,7 +165,28 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '408':
-          description: Request Timeout
+          description: |+
+            There has been a client side issue reading your request. This can occur when there are networking issues between your application and our service.
+
+            There may also be an issue within our backend where a `408` has been bubbled up and exposed.
+
+            This could be indicative of an ongoing infrastructure issue that is out of our (or your) control.
+
+            ### Sandbox
+
+            It is possible to simulate this error response by sending a request with a header of `Prefer` set to the value `code=408`.
+
+            Here is an example curl request to simulate this response:
+
+            ```
+              curl -X GET --header "Prefer: code=408" https://sandbox.api.service.nhs.uk/comms/
+            ```
+
+            To simulate a backend `408` exception bubbling upwards you can send this request:
+
+            ```
+              curl -X GET https://sandbox.api.service.nhs.uk/comms/_timeout_408
+            ```
           content:
             application/vnd.api+json:
               schema:
@@ -228,7 +249,26 @@ paths:
                 example: 5
               description: Time to wait between requests in seconds
         '504':
-          description: Gateway Timeout
+          description: |+
+            There is an issue communicating to our backend services. If this occurs it is a good idea to back off and retry the request at a later time - see the [Circuit Breaker pattern](https://microservices.io/patterns/reliability/circuit-breaker.html).
+
+            This error can occur if there is an issue with a dependent service and so may be bubbled up from a 3rd party HTTP call.
+
+            ### Sandbox
+
+            It is possible to simulate this error response by sending a request with a header of `Prefer` set to the value `code=504`.
+
+            Here is an example curl request to simulate this response:
+
+            ```
+              curl -X GET --header "Prefer: code=504" https://sandbox.api.service.nhs.uk/comms/
+            ```
+
+            To simulate a backend `504` exception bubbling upwards you can send this request:
+
+            ```
+              curl -X GET https://sandbox.api.service.nhs.uk/comms/_timeout_504
+            ```
           content:
             application/vnd.api+json:
               schema:
