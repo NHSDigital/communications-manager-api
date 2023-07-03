@@ -93,6 +93,14 @@
     <PreFlow name="PreFlow">
         <Request>
             <Step>
+                <Name>RaiseFault.408RequestTimeout</Name>
+                <Condition>request.header.Prefer = "code=408"</Condition>
+            </Step>
+            <Step>
+                <Name>RaiseFault.504GatewayTimeout</Name>
+                <Condition>request.header.Prefer = "code=504"</Condition>
+            </Step>
+            <Step>
                 <Name>AssignMessage.AddDefaultRequestPath</Name>
             </Step>
             <Step>
