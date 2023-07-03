@@ -2,12 +2,14 @@
 Server response with 404 when resource at requested URI could not be found
 
 Scenarios:
-Invalid URI
+- Invalid URI
+- Invalid Request Type
 """
 import requests
 import pytest
 
-REQUEST_PATH = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot"]
+
+REQUEST_PATH = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot", "/v1/message-batches"]
 
 
 def __assert_404_error(resp, check_body=True):
@@ -27,15 +29,32 @@ def __assert_404_error(resp, check_body=True):
 @pytest.mark.parametrize('request_path', REQUEST_PATH)
 def test_404_get(nhsd_apim_proxy_url, request_path):
     resp = requests.get(f"{nhsd_apim_proxy_url}{request_path}", headers={
-        "Accept": "*/*"
+        "Accept": "*/*",
     })
     __assert_404_error(resp)
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize('request_path', REQUEST_PATH)
-def test_404_post(nhsd_apim_proxy_url, request_path):
-    resp = requests.post(f"{nhsd_apim_proxy_url}{request_path}", headers={
+def test_404__invalid_url_one_post(nhsd_apim_proxy_url):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/ignore/i-dont-exist", headers={
+        "Accept": "*/*",
+        "Content-Type": "application/vnd.api+json"
+    })
+    __assert_404_error(resp)
+
+
+@pytest.mark.sandboxtest
+def test_404__invalid_url_two_post(nhsd_apim_proxy_url):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/api/fake-endpoint", headers={
+        "Accept": "*/*",
+        "Content-Type": "application/vnd.api+json"
+    })
+    __assert_404_error(resp)
+
+
+@pytest.mark.sandboxtest
+def test_404__invalid_url_three_post(nhsd_apim_proxy_url):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/im-a-teapot", headers={
         "Accept": "*/*",
         "Content-Type": "application/vnd.api+json"
     })
