@@ -123,7 +123,23 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '403':
-          description: Forbidden
+          description: |+
+            Your request contained an authentic bearer token in the `Authorization` header but you are not authorized to make the request.
+
+            This is due the onboarding process not having been completed. Refer to our [onboarding](#onboarding) section for more information.
+
+            ### Sandbox
+
+            It is possible to trigger this error in the sandbox by sending the header `Prefer` with a value of `code=403`.
+
+            Here is an example curl request to trigger a `403`:
+
+            ```
+              curl -X GET \
+                --header "Accept: */*" \
+                --header "Prefer: code=403" \
+                https://sandbox.api.service.nhs.uk/comms/
+            ```
           content:
             application/vnd.api+json:
               schema:
