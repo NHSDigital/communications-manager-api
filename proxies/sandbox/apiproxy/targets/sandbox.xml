@@ -98,7 +98,7 @@
             <Step>
                 <Name>RaiseFault.401Unauthorized</Name>
                 <Condition>
-                    request.header.Authorization = "Bearer InvalidMockToken"
+                    request.header.Authorization = "Bearer InvalidMockToken" or request.header.Prefer = "code=401"
                 </Condition>
             </Step>
             <Step>
