@@ -11,7 +11,7 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_INVALID_VALUE",
+                            "id" : "CM_DUPLICATE_VALUE",
                             "links" : {
                                 "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
                             },

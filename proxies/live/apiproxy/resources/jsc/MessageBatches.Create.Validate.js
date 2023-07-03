@@ -158,9 +158,9 @@ function pushError(error) {
 }
 
 
-function createErrorObject(title, detail, pointer) {
+function createErrorObject(code, title, detail, pointer) {
   return {
-    "id": "CM_INVALID_VALUE",
+    "id": code,
     "links": {
       "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
     },
@@ -175,6 +175,7 @@ function createErrorObject(title, detail, pointer) {
 
 function missingError(pointer) {
   return createErrorObject(
+    "CM_MISSING_VALUE",
     "Missing property",
     "The property at the specified location is required, but was not present in the request.",
     pointer
@@ -183,6 +184,7 @@ function missingError(pointer) {
 
 function nullError(pointer) {
   return createErrorObject(
+    "CM_NULL_VALUE",
     "Property cannot be null",
     "The property at the specified location is required, but a null value was passed in the request.",
     pointer
@@ -191,6 +193,7 @@ function nullError(pointer) {
 
 function invalidError(pointer) {
   return createErrorObject(
+    "CM_INVALID_VALUE",
     "Invalid value",
     "The property at the specified location does not allow this value.",
     pointer
@@ -199,6 +202,7 @@ function invalidError(pointer) {
 
 function duplicateError(pointer) {
   return createErrorObject(
+    "CM_DUPLICATE_VALUE",
     "Duplicate value",
     "The property at the specified location is a duplicate, duplicated values are not allowed.",
     pointer
@@ -207,6 +211,7 @@ function duplicateError(pointer) {
 
 function tooFewItemsError(pointer) {
   return createErrorObject(
+    "CM_TOO_FEW_ITEMS",
     "Too few items",
     "The property at the specified location contains too few items.",
     pointer

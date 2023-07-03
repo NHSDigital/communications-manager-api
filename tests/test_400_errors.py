@@ -71,7 +71,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer):
     data = new_dict_without_key(full_data, property)
 
     expected_error = {
-        "id": "CM_INVALID_VALUE",
+        "id": "CM_MISSING_VALUE",
         "links": {
             "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
         },
@@ -105,7 +105,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer):
 def test_data_null(nhsd_apim_proxy_url, property, pointer):
     data = new_dict_with_null_key(full_data, property)
     expected_error = {
-        "id": "CM_INVALID_VALUE",
+        "id": "CM_NULL_VALUE",
         "links": {
             "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
         },
@@ -186,7 +186,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer):
         }
     )
     expected_error = {
-        "id": "CM_INVALID_VALUE",
+        "id": "CM_DUPLICATE_VALUE",
         "links": {
             "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
         },
@@ -217,7 +217,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer):
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer):
     data = new_dict_with_new_value(full_data, property, [])
     expected_error = {
-        "id": "CM_INVALID_VALUE",
+        "id": "CM_TOO_FEW_ITEMS",
         "links": {
             "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
         },
