@@ -725,7 +725,7 @@ components:
                 example: You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
     Enum_Error_Quota:
       type: string
-      title: Enum_Error_Quota
+      title: CM_QOTA
     ServiceTimeoutResponse:
       type: object
       title: Service timeout
