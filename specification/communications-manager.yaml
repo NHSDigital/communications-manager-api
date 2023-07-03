@@ -49,6 +49,25 @@ paths:
 
         Use this endpoint to send a batch of messages to 1 or more NHS patients.
 
+        ### References
+
+        You must provide two reference values within the payload to this endpoint:
+
+        * A message batch reference
+        * A per message reference
+
+        Both of these references must be a [Universal Unique Identifier (UUID)](https://en.wikipedia.org/wiki/Universally_unique_identifier).
+
+        The message batch reference (`messageBatchReference`) is unique for you. If you send the same message batch reference multiple times we will automatically deduplicate the requests - actioning only the first payload that has been sent. This value can be used to store an internal reference for this batch of messages.
+
+        The per message reference (`messageReference`) needs to be unique within the message batch.
+
+        ### Personalisation
+
+        You will be required to send through specific personalisation fields based upon the routing plan (`routingPlanId`). These will have been setup during your [onboarding](#overview--onboarding) process.
+
+        These are not validated when we store your message batch, but will be validated when we attempt to send the messages according to the routing plan. If there are values missing from this then the messages will fail to send.
+
         ### Sandbox
 
         When sending this request on sandbox you must use one of the 5 preconfigured routing plan identifiers:
@@ -98,7 +117,10 @@ paths:
               $ref: '#/components/schemas/CreateMessageBatch'
       responses:
         '201':
-          description: Created
+          description: |+
+            Your message batch has been created. The backend service will process the messages contained within it according to the routing plan identified in the request.
+
+            The response includes both your `messageBatchReference` and our message batch `id`. You should store this `id` in your database.
           content:
             application/vnd.api+json:
               schema:
