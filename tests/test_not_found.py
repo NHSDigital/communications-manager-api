@@ -9,7 +9,7 @@ import requests
 import pytest
 
 
-REQUEST_PATH = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot", "v1/message-batches"]
+REQUEST_PATH = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot", "/v1/message-batches"]
 
 
 def __assert_404_error(resp, check_body=True):
