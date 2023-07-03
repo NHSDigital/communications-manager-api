@@ -40,6 +40,15 @@ info:
 
     If an invalid `Accept` header is sent the API will return a `406 Not Acceptable` response.
 
+    ### Request Content Types
+
+    This API will accept request payloads of the following types:
+
+    * `application/vnd.api+json` - see [JSON:API specification](https://jsonapi.org/format/#introduction)
+    * `application/json`
+
+    If you attempt to send a payload without the `Content-Type` header set to either of these values then the API will respond with a `415 Unsupported Media Type` response.
+
     ## Network access
     TBC
 
@@ -319,7 +328,11 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '415':
-          description: Unsupported Media Type
+          description: |+
+            The `Content-Type` of the request is not supported. This endpoint supports:
+
+            * `application/vnd.api+json`
+            * `application/json`
           content:
             application/vnd.api+json:
               schema:
