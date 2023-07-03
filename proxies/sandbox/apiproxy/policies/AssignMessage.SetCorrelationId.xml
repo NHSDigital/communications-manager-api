@@ -1,0 +1,8 @@
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SetCorrelationId">
+    <AssignTo createNew="false" transport="http" type="response"/>
+    <Set>
+        <Headers>
+            <Header name="X-Correlation-Id">{request.headers.x-correlation-id}</Header>
+        </Headers>
+    </Set>
+</AssignMessage>
