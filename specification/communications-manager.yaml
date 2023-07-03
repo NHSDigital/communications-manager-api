@@ -70,7 +70,22 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '400':
-          description: Unprocessable Entity
+          description: |+
+            A validation error has occurred with the request body sent. Up to 100 validation errors will be returned, if there are more than 100 validation errors then the first 100 will be returned.
+
+            The following validation errors can occur:
+
+            | Error code | Title | Description |
+            | ---------- | ----- | ----------- |
+            | `CM_MISSING_VALUE` | Missing property | The property at the specified location is required, but was not present in the request. |
+            | `CM_NULL_VALUE` | Property cannot be null | The property at the specified location is required, but a null value was passed in the request. |
+            | `CM_INVALID_VALUE` | Invalid value | The property at the specified location does not allow this value. |
+            | `CM_DUPLICATE_VALUE` | Duplicate value | The property at the specified location is a duplicate, duplicated values are not allowed. |
+            | `CM_TOO_FEW_ITEMS` | Too few items | The property at the specified location contains too few items. |
+
+            Within each error is a source object which details the location of the error within your request body.
+
+            This is done using a pointer that uses the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) as per the [JSON:API Error Specification](https://jsonapi.org/format/#errors).
           content:
             application/vnd.api+json:
               schema:
@@ -398,7 +413,11 @@ components:
                     example: /data/attributes/routingPlanId
     Enum_Error_InvalidValue:
       enum:
+        - CM_MISSING_VALUE
+        - CM_NULL_VALUE
         - CM_INVALID_VALUE
+        - CM_DUPLICATE_VALUE
+        - CM_TOO_FEW_ITEMS
       title: Enum_Error_InvalidValue
     AccessDeniedResponse:
       type: object
