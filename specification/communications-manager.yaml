@@ -749,6 +749,8 @@ components:
     Enum_Error_Quota:
       type: string
       title: Enum_Error_Quota
+      enum:
+        - CM_QUOTA
     ServiceTimeoutResponse:
       type: object
       title: Service timeout
