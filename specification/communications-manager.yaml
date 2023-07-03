@@ -19,7 +19,9 @@ info:
     The Communications Manager API is currently not in an integration or production environment.
 
     ## Technology 
-    TBC
+    This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) API.
+    
+    We follow the [JSON:API](https://jsonapi.org/) standard for our request and response schemas. 
 
     ## Network access
     TBC
