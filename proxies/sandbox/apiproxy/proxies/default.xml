@@ -41,10 +41,6 @@
     <Flow name="ExampleFlowUsingRatelimit">
       <Description/>
       <Request>
-<!--        <Step>-->
-<!--          <Name>OAuthV2.VerifyAccessToken</Name>-->
-<!--        </Step>-->
-        <!-- Must be after authorization policy! -->
         <Step>
           <Name>FlowCallout.ApplyRateLimiting</Name>
         </Step>

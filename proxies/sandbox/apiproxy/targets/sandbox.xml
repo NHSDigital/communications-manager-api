@@ -60,6 +60,12 @@
                 </Condition>
             </Step>
             <Step>
+              <Name>RaiseFault.429TooManyRequests</Name>
+              <Condition>
+               fault.name = "SpikeArrestViolation" or request.header.Prefer = "code=429"
+              </Condition>
+            </Step>
+            <Step>
                 <Name>RaiseFault.400BackendException.MissingDataArray</Name>
                 <Condition>
                     response.status.code = 400 and response.content Like "*Missing data array*"
@@ -73,12 +79,6 @@
                 <Name>RaiseFault.408RequestTimeout</Name>
                 <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
             </Step>
-        </FaultRule>
-        <FaultRule name="too_many_requests">
-          <Step>
-            <Name>RaiseFault.429TooManyRequests</Name>
-          </Step>
-          <Condition>fault.name = "SpikeArrestViolation"</Condition>
         </FaultRule>
         <FaultRule name="too_many_requests">
           <Step>
