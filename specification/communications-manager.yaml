@@ -446,6 +446,7 @@ components:
             type:
               $ref: '#/components/schemas/Enum_Type_MessageBatch'
             attributes:
+              description: MessageBatch attributes
               type: object
               properties:
                 routingPlanId:
@@ -494,6 +495,7 @@ components:
           $ref: '#/components/schemas/Recipient'
         personalisation:
           type: object
+          description: The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).
       required:
         - messageReference
         - recipient
@@ -507,6 +509,7 @@ components:
           minLength: 10
           maxLength: 10
           example: '1234567890'
+          description: The NHS number of the recipient. This will be used to lookup the recipients details with the [Personal Demographics Service](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir).
         dateOfBirth:
           type: string
           description: 'Date of birth in ISO-8601 format: YYYY-MM-DD.'
@@ -528,13 +531,14 @@ components:
               $ref: '#/components/schemas/Enum_Type_MessageBatch'
             id:
               $ref: '#/components/schemas/Type_KSUID'
+              description: Identifier for this MessageBatch. You should store this identifier for later lookups.
             attributes:
               type: object
               additionalProperties: false
               properties:
                 messageBatchReference:
                   type: string
-                  description: This is a client-supplied unique reference for this batch of messages.
+                  description: Your unique message batch reference, provided within the payload to create the batch of messages.
                   format: uuid
                   example: da0b1495-c7cb-468c-9d81-07dee089d728
     Type_KSUID:
