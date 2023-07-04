@@ -13,7 +13,10 @@ info:
     TBC
 
     ## API status and roadmap
-    TBC
+
+    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
+    
+    You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/355852/communications-manager-api).
 
     ## Service Level 
     The Communications Manager API is currently not in an integration or production environment.
