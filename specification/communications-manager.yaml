@@ -10,15 +10,20 @@ info:
     TBC
 
     ## Related APIs
-    TBC
+
+    The following API is related to this one:
+
+    * [Personal Demographics Service - FHIR API (PDS)](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir) - used for enrichment of patient details
 
     ## API status and roadmap
     TBC
 
     ## Service Level 
+
     The Communications Manager API is currently not in an integration or production environment.
 
     ## Technology 
+
     This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) API.
     
     We follow the [JSON:API](https://jsonapi.org/) standard for our request and response schemas. 
