@@ -205,7 +205,7 @@ paths:
           description: |+
             Your request contained an authentic bearer token in the `Authorization` header but you are not authorized to make the request.
 
-            This is due the onboarding process not having been completed. Refer to our [onboarding](#onboarding) section for more information.
+            This is due the onboarding process not having been completed. Refer to our [onboarding](#overview--onboarding) section for more information.
 
             ### Sandbox
 
@@ -236,7 +236,7 @@ paths:
           description: |+
             The routing plan identifier passed in the body has not been found.
 
-            When you [onboarded](#onboarding) onto the service a number of valid routing plan identifiers were issued to you. You must use one of these valid routing plan identifiers when requesting for a batch of messages to be sent.
+            When you [onboarded](#overview--onboarding) onto the service a number of valid routing plan identifiers were issued to you. You must use one of these valid routing plan identifiers when requesting for a batch of messages to be sent.
 
             ### Sandbox
 
