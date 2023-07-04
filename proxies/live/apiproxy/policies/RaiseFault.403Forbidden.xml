@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.401Unauthorized">
-    <DisplayName>RaiseFault.401Unauthorized</DisplayName>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.403Forbidden">
+    <DisplayName>RaiseFault.403Forbidden</DisplayName>
     <Properties/>
     <FaultResponse>
         <Set>
             <Headers/>
-            <StatusCode>401</StatusCode>
-            <ReasonPhrase>Unauthorized</ReasonPhrase>
+            <StatusCode>403</StatusCode>
+            <ReasonPhrase>Forbidden</ReasonPhrase>
             <Payload variablePrefix="@" variableSuffix="#">
                 {
                     "errors" : [
                         {
-                            "id" : "CM_DENIED",
+                            "id" : "CM_FORBIDDEN",
                             "links" : {
                                 "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
                             },
-                            "status" : "401",
-                            "title" : "Access denied",
-                            "description" : "Access token missing, invalid or expired, or calling application not configured for this operation.",
+                            "status" : "403",
+                            "title" : "Forbidden",
+                            "description" : "Client not recognised or not yet onboarded.",
                             "source" : {
                                 "header" : "Authorization"
                             }

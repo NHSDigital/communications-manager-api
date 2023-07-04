@@ -76,7 +76,7 @@
         <Name>RaiseFault.400BadRequest</Name>
       </Step>
       <Condition>(fault.name = "FailedToResolveAPIKey")</Condition>
-  </FaultRule>
+    </FaultRule>
   </FaultRules>
   <DefaultFaultRule>
     <Step>

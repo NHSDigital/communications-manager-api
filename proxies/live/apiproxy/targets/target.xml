@@ -15,15 +15,47 @@
       </Step>
     </Request>
   </PreFlow>
+  <Flows>
+    <Flow name="add_authentication_details">
+      <Request>
+        <Step>
+          <Name>AssignMessage.AuthenticationDetails</Name>
+        </Step>
+      </Request>
+    </Flow>
+  </Flows>
   <FaultRules>
-    <FaultRule name="access_token_expired">
+    <FaultRule name="unauthorized">
       <Step>
-        <Name>ExtractVariables.OAuthErrorFaultString</Name>
+          <Name>RaiseFault.401Unauthorized</Name>
       </Step>
+      <Condition>
+        oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
+      </Condition>
+    </FaultRule>
+    <FaultRule name="forbidden">
       <Step>
-        <Name>AssignMessage.OAuthPolicyErrorResponse</Name>
+          <Name>RaiseFault.403Forbidden</Name>
       </Step>
-      <Condition>oauthV2.OauthV2.VerifyAccessToken.failed</Condition>
+      <Condition>
+        fault.name = "InvalidAPICallAsNoApiProductMatchFound" or fault.name = "InsufficientScope"
+      </Condition>
+    </FaultRule>
+    <FaultRule name="backend_unauthorized">
+      <Step>
+          <Name>RaiseFault.401Unauthorized</Name>
+      </Step>
+      <Condition>
+        response.status.code = 401
+      </Condition>
+    </FaultRule>
+    <FaultRule name="backend_forbidden">
+      <Step>
+        <Name>RaiseFault.403Forbidden</Name>
+      </Step>
+      <Condition>
+        response.status.code = 403
+      </Condition>
     </FaultRule>
     <FaultRule name="400-unprocessable-entity">
         <Step>
@@ -45,11 +77,6 @@
     </HTTPTargetConnection>
   -->
   <HTTPTargetConnection>
-    <URL>http://mocktarget.apigee.net</URL>
-    <Properties>
-      <Property name="supports.http10">true</Property>
-      <Property name="request.retain.headers">User-Agent,Referer,Accept-Language</Property>
-      <Property name="retain.queryparams">apikey</Property>
-    </Properties>
+    <URL>https://comms-apim.de-apim.communications.national.nhs.uk</URL>
   </HTTPTargetConnection>
 </TargetEndpoint>
