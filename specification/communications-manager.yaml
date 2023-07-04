@@ -455,7 +455,7 @@ components:
 
                     If you send through an invalid routing plan you will receive a 404 response.
                   format: uuid
-                  example: 2fd7f5c4-802e-4092-bd3d-276bb199df62
+                  example: b838b13c-f98c-4def-93f0-515d4e4f4ee1
                 messageBatchReference:
                   type: string
                   description: |-
@@ -478,9 +478,11 @@ components:
       required:
         - data
     Enum_Type_MessageBatch:
+      type: string
       enum:
         - MessageBatch
       title: Type_MessageBatch
+      example: MessageBatch
     Message:
       type: object
       title: Message
@@ -559,20 +561,14 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_InvalidValue'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '400'
                 example: '400'
               title:
+                type: string
                 enum:
                   - Missing property
                   - Property cannot be null
@@ -581,6 +577,7 @@ components:
                   - Too few items
                 example: Missing property
               detail:
+                type: string
                 enum:
                   - 'The property at the specified location is required, but was not present in the request.'
                   - 'The property at the specified location is required, but a null value was passed in the request.'
@@ -593,6 +590,7 @@ components:
                 additionalProperties: false
                 properties:
                   pointer:
+                    type: string
                     enum:
                       - /data/type
                       - /data/attributes
@@ -604,12 +602,14 @@ components:
                       - /data/attributes/messages/0/messageReference
                     example: /data/attributes/routingPlanId
     Enum_Error_InvalidValue:
+      type: string
       enum:
         - CM_MISSING_VALUE
         - CM_NULL_VALUE
         - CM_INVALID_VALUE
         - CM_DUPLICATE_VALUE
         - CM_TOO_FEW_ITEMS
+      example: CM_MISSING_VALUE
       title: Enum_Error_InvalidValue
     AccessDeniedResponse:
       type: object
@@ -627,24 +627,19 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_AccessDenied'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '401'
                 example: '401'
               title:
+                type: string
                 enum:
                   - Access denied
                 example: Access denied
               detail:
+                type: string
                 enum:
                   - 'Access token missing, invalid or expired, or calling application not configured for this operation.'
                 example: 'Access token missing, invalid or expired, or calling application not configured for this operation.'
@@ -653,12 +648,15 @@ components:
                 additionalProperties: false
                 properties:
                   header:
+                    type: string
                     enum:
                       - Authorization
                     example: Authorization
     Enum_Error_AccessDenied:
+      type: string
       enum:
         - CM_DENIED
+      example: CM_DENIED
       title: Enum_Error_AccessDenied
     ForbiddenResponse:
       type: object
@@ -676,24 +674,19 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_Forbidden'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '403'
                 example: '403'
               title:
+                type: string
                 enum:
                   - Forbidden
                 example: Forbidden
               detail:
+                type: string
                 enum:
                   - Client not recognised or not yet onboarded.
                 example: Client not recognised or not yet onboarded.
@@ -702,12 +695,15 @@ components:
                 additionalProperties: false
                 properties:
                   header:
+                    type: string
                     enum:
                       - Authorization
                     example: Authorization
     Enum_Error_Forbidden:
+      type: string
       enum:
         - CM_FORBIDDEN
+      example: CM_FORBIDDEN
       title: Enum_Error_Forbidden
     RoutingPlanNotFoundError:
       type: object
@@ -725,24 +721,19 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_NoSuchRoutingPlan'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '404'
                 example: '404'
               title:
+                type: string
                 enum:
                   - No such routing plan
                 example: No such routing plan
               detail:
+                type: string
                 enum:
                   - The routing plan specified either does not exist or is not in a usable state.
                 example: The routing plan specified either does not exist or is not in a usable state.
@@ -750,12 +741,15 @@ components:
                 type: object
                 properties:
                   pointer:
+                    type: string
                     enum:
                       - /data/attributes/routingPlan
                     example: /data/attributes/routingPlan
     Enum_Error_NoSuchRoutingPlan:
+      type: string
       enum:
         - CM_NO_SUCH_ROUTING_PLAN
+      example: CM_NO_SUCH_ROUTING_PLAN
       title: Enum_Error_NoSuchRoutingPlan
     NotAcceptable:
       type: object
@@ -773,24 +767,19 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_NotAcceptable'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '406'
                 example: '406'
               title:
+                type: string
                 enum:
                   - Not acceptable
                 example: Not acceptable
               detail:
+                type: string
                 enum:
                   - This service can only generate application/vnd.api+json or application/json.
                 example: This service can only generate application/vnd.api+json or application/json.
@@ -799,10 +788,12 @@ components:
                 additionalProperties: false
                 properties:
                   header:
+                    type: string
                     enum:
                       - Accept
                     example: Accept
     Enum_Error_NotAcceptable:
+      type: string
       enum:
         - CM_NOT_ACCEPTABLE
       title: Enum_Error_NotAcceptable
@@ -823,31 +814,28 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_Timeout'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '408'
                 example: '408'
               title:
+                type: string
                 enum:
                   - Request timeout
                 example: Request timeout
               detail:
+                type: string
                 enum:
                   - The service was unable to receive your request within the timeout period.
                 example: The service was unable to receive your request within the timeout period.
     Enum_Error_Timeout:
+      type: string
       enum:
         - CM_TIMEOUT
       title: Enum_Error_Timeout
+      example: CM_TIMEOUT
     UnsupportedMediaResponse:
       type: object
       title: Unsupported Media
@@ -864,24 +852,19 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_UnsupportedMedia'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '415'
                 example: '415'
               title:
+                type: string
                 enum:
                   - Unsupported media
                 example: Unsupported media
               detail:
+                type: string
                 enum:
                   - 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
                 example: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
@@ -890,13 +873,16 @@ components:
                 additionalProperties: false
                 properties:
                   header:
+                    type: string
                     enum:
                       - Content-Type
                     example: Content-Type
     Enum_Error_UnsupportedMedia:
+      type: string
       enum:
         - CM_UNSUPPORTED_MEDIA
       title: Enum_Error_UnsupportedMedia
+      example: CM_UNSUPPORTED_MEDIA
     TooManyRequestsResponse:
       type: object
       title: Too many requests
@@ -913,24 +899,19 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_Quota'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '429'
                 example: '429'
               title:
+                type: string
                 enum:
                   - Too many requests
                 example: Too many requests
               detail:
+                type: string
                 enum:
                   - You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
                 example: You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
@@ -939,6 +920,7 @@ components:
       title: Enum_Error_Quota
       enum:
         - CM_QUOTA
+      example: CM_QUOTA
     ServiceTimeoutResponse:
       type: object
       title: Service timeout
@@ -955,24 +937,30 @@ components:
               id:
                 $ref: '#/components/schemas/Enum_Error_Timeout'
               links:
-                type: object
-                additionalProperties: false
-                properties:
-                  about:
-                    enum:
-                      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                    format: uri
-                    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-                minProperties: 1
+                $ref: '#/components/schemas/Links_Error'
               status:
+                type: string
                 enum:
                   - '504'
                 example: '504'
               title:
+                type: string
                 enum:
                   - Unable to call service
                 example: Unable to call service
               detail:
+                type: string
                 enum:
                   - The downstream service has not responded within the configured timeout period.
                 example: The downstream service has not responded within the configured timeout period.
+    Links_Error:
+      type: object
+      additionalProperties: false
+      properties:
+        about:
+          type: string
+          enum:
+            - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+          format: uri
+          example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+      minProperties: 1
