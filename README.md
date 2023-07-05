@@ -23,12 +23,15 @@ The contents of this repository are protected by Crown Copyright (C).
 
 ### Requirements
 * make
-* nodejs + npm/yarn
+* [nvm](https://github.com/nvm-sh/nvm)
+* [pyenv](https://github.com/pyenv/pyenv)
 * [poetry](https://github.com/python-poetry/poetry)
 * Java 8+
 
 ### Install
 ```
+$ nvm install && nvm use
+$ pyenv install -s && pyenv shell && pyenv local
 $ make install
 ```
 

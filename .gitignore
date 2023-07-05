@@ -20,3 +20,6 @@ env
 .dir-locals.el
 *.pyc
 test-report.xml
+.env
+*.key
+*.pem
