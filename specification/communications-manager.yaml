@@ -60,7 +60,15 @@ info:
 
     ## Onboarding
 
-    You need to get your software approved by us before it can go live with this API. You will also need to undertake Communications Manager onboarding process. 
+    You need to get your software approved by us before it can go live with this API. You will also need to undertake [Communications Manager onboarding process](#). 
+
+    As part of this process, you need to demonstrate your technical conformance to the requirements for this API. For more details according to your access mode, see:
+
+    * [Communications Manager API technical conformance](#) 
+
+    You also need to demonstrate that you can manage risks. This might impact the design of your software. For details, see [Onboarding support information](#).
+    
+    To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
     
   contact:
     name: Communications Manager Service API Support
