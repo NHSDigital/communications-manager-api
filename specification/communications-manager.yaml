@@ -78,6 +78,17 @@ info:
     |------------ | -------- |
     | Sandbox     | [https://sandbox.api.service.nhs.uk/comms/](https://sandbox.api.service.nhs.uk/comms/) |
 
+    ## Sandbox testing 
+
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
+
+    * is for early developer testing
+    * only covers a limited set of scenarios
+    * is stateless, so does not actually persist any updates
+    * is open access, so does not allow you to test authorisation
+
+    For details of sandbox test scenarios, or to try out sandbox using our our 'Try this API' feature, see the documentation for each endpoint.
+
     ## Onboarding
     TBC
     
