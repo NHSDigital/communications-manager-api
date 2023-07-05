@@ -53,7 +53,18 @@ info:
     TBC
 
     ## Security and authorisation 
-    TBC
+
+    This API is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis), meaning we authenticate the calling application but not the end user.
+    
+    The end user could be:
+    
+    * a healthcare worker - in which case you must ensure they are authenticated and suitably authorised locally
+    * a patient - in which case you must ensure they are authenticated locally
+    * not present at all - for example as part of a back end process to send communications to patients in bulk
+    
+    To access this API, use the following security pattern:
+
+    * [Application-restricted RESTful API - signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication)
 
     ## Environments and testing 
 
