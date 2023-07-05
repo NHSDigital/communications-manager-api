@@ -56,7 +56,10 @@ info:
     TBC
 
     ## Environments and testing 
-    TBC
+
+    | Environment | Base URL |
+    |------------ | -------- |
+    | Sandbox     | [https://sandbox.api.service.nhs.uk/comms/](https://sandbox.api.service.nhs.uk/comms/) |
 
     ## Onboarding
     TBC
