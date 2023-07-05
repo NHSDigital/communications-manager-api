@@ -27,7 +27,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number):
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": nhs_number,
-                            "dateOfBirth": "1982-1-11"
+                            "dateOfBirth": "1982-01-11"
                             },
                         "personalisation": {}
                         }
@@ -42,7 +42,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number):
     assert error.get("status") == "400"
     assert error.get("title") == "Invalid value"
     assert (error.get("description") == "The property at the specified location does not allow this value.")
-    assert error.get("source").get("pointer") == "/data/attributes/messages/0/recipient/dateOfBirth"
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0/recipient/nhsNumber"
 
 
 @pytest.mark.smoketest
@@ -74,7 +74,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob):
     assert error.get("status") == "400"
     assert error.get("title") == "Invalid value"
     assert (error.get("description") == "The property at the specified location does not allow this value.")
-    assert error.get("source").get("pointer") == "/data/attributes/messages/0/recipient/nhsNumber"
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0/recipient/dateOfBirth"
 
 
 @pytest.mark.smoketest
