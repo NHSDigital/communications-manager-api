@@ -11,15 +11,20 @@ info:
     This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You must demonstrate you have a valid use case as part of digital onboarding and complete Communications Manager Onboarding. 
 
     ## Related APIs
-    TBC
+
+    The following API is related to this one:
+
+    * [Personal Demographics Service - FHIR API (PDS)](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir) - used for enrichment of patient details
 
     ## API status and roadmap
     TBC
 
     ## Service Level 
+
     The Communications Manager API is currently not in an integration or production environment.
 
     ## Technology 
+
     This API is a [REST-based](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest) API.
     
     We follow the [JSON:API](https://jsonapi.org/) standard for our request and response schemas. 
