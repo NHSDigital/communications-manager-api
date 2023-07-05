@@ -9,7 +9,8 @@ import requests
 import pytest
 
 
-REQUEST_PATH = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot", "/v1/message-batches"]
+POST_PATHS = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot"]
+REQUEST_PATH = POST_PATHS + ["/v1/message-batches"]
 
 
 def __assert_404_error(resp, check_body=True):
@@ -25,8 +26,13 @@ def __assert_404_error(resp, check_body=True):
         )
 
 
+"""
+ GET 404 tests
+"""
+
+
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize('request_path', REQUEST_PATH)
+@pytest.mark.parametrize("request_path", REQUEST_PATH)
 def test_404_get(nhsd_apim_proxy_url, request_path):
     resp = requests.get(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "Accept": "*/*",
@@ -34,31 +40,41 @@ def test_404_get(nhsd_apim_proxy_url, request_path):
     __assert_404_error(resp)
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('request_path', REQUEST_PATH)
+def test_404_authenticated_get(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    resp = requests.get(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
+    __assert_404_error(resp)
+
+
+"""
+ POST 404 tests
+"""
+
+
 @pytest.mark.sandboxtest
-def test_404__invalid_url_one_post(nhsd_apim_proxy_url):
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/ignore/i-dont-exist", headers={
+@pytest.mark.parametrize('request_path', POST_PATHS)
+def test_404_post(nhsd_apim_proxy_url, request_path):
+    resp = requests.post(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "Accept": "*/*",
         "Content-Type": "application/vnd.api+json"
     })
     __assert_404_error(resp)
 
 
-@pytest.mark.sandboxtest
-def test_404__invalid_url_two_post(nhsd_apim_proxy_url):
-    resp = requests.post(f"{nhsd_apim_proxy_url}/api/fake-endpoint", headers={
-        "Accept": "*/*",
-        "Content-Type": "application/vnd.api+json"
-    })
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize("request_path", POST_PATHS)
+def test_404_authenticated_post(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    nhsd_apim_auth_headers["Content-Type"] = "application/vnd.api+json"
+    resp = requests.post(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
     __assert_404_error(resp)
 
 
-@pytest.mark.sandboxtest
-def test_404__invalid_url_three_post(nhsd_apim_proxy_url):
-    resp = requests.post(f"{nhsd_apim_proxy_url}/im-a-teapot", headers={
-        "Accept": "*/*",
-        "Content-Type": "application/vnd.api+json"
-    })
-    __assert_404_error(resp)
+"""
+ PUT 404 tests
+"""
 
 
 @pytest.mark.sandboxtest
@@ -71,6 +87,20 @@ def test_404_put(nhsd_apim_proxy_url, request_path):
     __assert_404_error(resp)
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('request_path', REQUEST_PATH)
+def test_404_authenticated_put(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    nhsd_apim_auth_headers["Content-Type"] = "application/vnd.api+json"
+    resp = requests.put(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
+    __assert_404_error(resp)
+
+
+"""
+ PATCH 404 tests
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('request_path', REQUEST_PATH)
 def test_404_patch(nhsd_apim_proxy_url, request_path):
@@ -79,6 +109,20 @@ def test_404_patch(nhsd_apim_proxy_url, request_path):
         "Content-Type": "application/vnd.api+json"
     })
     __assert_404_error(resp)
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('request_path', REQUEST_PATH)
+def test_404_authenticated_patch(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    nhsd_apim_auth_headers["Content-Type"] = "application/vnd.api+json"
+    resp = requests.patch(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
+    __assert_404_error(resp)
+
+
+"""
+ DELETE 404 tests
+"""
 
 
 @pytest.mark.sandboxtest
@@ -90,6 +134,20 @@ def test_404_delete(nhsd_apim_proxy_url, request_path):
     __assert_404_error(resp)
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('request_path', REQUEST_PATH)
+def test_404_authenticated_delete(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    nhsd_apim_auth_headers["Content-Type"] = "application/vnd.api+json"
+    resp = requests.delete(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
+    __assert_404_error(resp)
+
+
+"""
+ HEAD 404 tests
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('request_path', REQUEST_PATH)
 def test_404_head(nhsd_apim_proxy_url, request_path):
@@ -99,10 +157,31 @@ def test_404_head(nhsd_apim_proxy_url, request_path):
     __assert_404_error(resp, check_body=False)
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('request_path', REQUEST_PATH)
+def test_404_authenticated_head(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    resp = requests.head(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
+    __assert_404_error(resp, check_body=False)
+
+
+"""
+ OPTIONS 404 tests
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('request_path', REQUEST_PATH)
 def test_404_options(nhsd_apim_proxy_url, request_path):
     resp = requests.options(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "Accept": "*/*"
     })
+    __assert_404_error(resp)
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('request_path', REQUEST_PATH)
+def test_404_authenticated_options(nhsd_apim_proxy_url, nhsd_apim_auth_headers, request_path):
+    resp = requests.options(f"{nhsd_apim_proxy_url}{request_path}", headers=nhsd_apim_auth_headers)
     __assert_404_error(resp)

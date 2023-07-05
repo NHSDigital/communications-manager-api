@@ -69,7 +69,6 @@
   <RouteRule name="communications-manager-target">
     <TargetEndpoint>communications-manager-target</TargetEndpoint>
   </RouteRule>
-
   <FaultRules>
    <FaultRule name="missing_parameter">
       <Step>
