@@ -4,7 +4,14 @@ info:
   title: Communications Manager API
   description:  |
     ## Overview
-    TBC
+
+    Use this API to integrate with Communications Manager, a scalable, centralised and standardised way to send and manage communications direct to their intended recipients via Email, SMS, NHS App (notifications and messages) and Letters.
+
+    Communication Manager provides routing, Personal Demographics Service enrichment of messaging, accessibility and other optionality.
+
+    You can:
+
+    * Send requests into the Communications Manager solution for communications to be sent to their intended recipients
 
     ## Who can use this API
 
