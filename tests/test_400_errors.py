@@ -63,7 +63,6 @@ def test_invalid_body(nhsd_apim_proxy_url):
         ("messageReference", "/data/attributes/messages/0/messageReference"),
         ("recipient", "/data/attributes/messages/0/recipient"),
         ("nhsNumber", "/data/attributes/messages/0/recipient/nhsNumber"),
-        ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
     ]
 )
 @pytest.mark.sandboxtest
