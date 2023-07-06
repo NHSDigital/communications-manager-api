@@ -34,6 +34,10 @@
                 <Condition>request.headers.x-correlation-id != null</Condition>
             </Step>
             <Step>
+                <Name>AssignMessage.AddCorsResponse</Name>
+                <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
+            </Step>
+            <Step>
                 <Name>RaiseFault.404InvalidRoutingPlan</Name>
                 <Condition>
                     response.status.code = 404 and response.content Like "*Routing Config does not exist for sendingGroupId*"
@@ -87,6 +91,10 @@
             <Step>
                 <Name>AssignMessage.SetCorrelationId</Name>
                 <Condition>request.headers.x-correlation-id != null</Condition>
+            </Step>
+            <Step>
+                <Name>AssignMessage.AddCorsResponse</Name>
+                <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
             </Step>
         </Response>
     </PostFlow>
