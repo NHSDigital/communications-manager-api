@@ -81,7 +81,7 @@ if (all) {
         pushError(tooFewItemsError(pointer))
       } else {
 
-        // $.data.attributes.recipients.x
+        // $.data.attributes.messages.x
         data.attributes.messages.forEach((message, index) => {
           pointer = "/data/attributes/messages/" + index
           if (typeof message === "undefined") {
@@ -102,47 +102,47 @@ if (all) {
               pushError(invalidError(pointer))
             } else if (seenMessages.indexOf(message.messageReference) !== -1) {
               pushError(duplicateError(pointer))
+            } else {
+              seenMessages.push(message.messageReference)
             }
-            seenMessages.push(message.messageReference)
-          }
 
-          // $.data.attributes.messages.x.recipient
-          pointer = "/data/attributes/messages/" + index + "/recipient"
-          if (typeof message.recipient === "undefined") {
-            pushError(missingError(pointer))
-          } else if (typeof message.recipient !== 'object') {
-            pushError(invalidError(pointer))
-          } else if (message.recipient === null) {
-            pushError(nullError(pointer))
-          } else {
-
-            // $.data.attributes.messages.x.recipient.nhsNumber
-            pointer = "/data/attributes/messages/" + index + "/recipient/nhsNumber"
-            if (typeof message.recipient.nhsNumber === "undefined") {
+            // $.data.attributes.messages.x.recipient
+            pointer = "/data/attributes/messages/" + index + "/recipient"
+            if (typeof message.recipient === "undefined") {
               pushError(missingError(pointer))
-            } else if (message.recipient.nhsNumber === null) {
+            } else if (typeof message.recipient !== 'object') {
+              pushError(invalidError(pointer))
+            } else if (message.recipient === null) {
               pushError(nullError(pointer))
-            } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
-              pushError(invalidError(pointer))
-            }
+            } else {
 
-            // $.data.attributes.recipients.x.dateOfBirth
-            pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth"
-            if (typeof message.recipient.dateOfBirth === "undefined") {
-              pushError(missingError(pointer))
-            } else if (message.recipient.dateOfBirth === null) {
-              pushError(nullError(pointer))
-            } else if (typeof message.recipient.dateOfBirth !== "string" || !dobRegex.test(message.recipient.dateOfBirth)) {
-              pushError(invalidError(pointer))
-            }
+              // $.data.attributes.messages.x.recipient.nhsNumber
+              pointer = "/data/attributes/messages/" + index + "/recipient/nhsNumber"
+              if (typeof message.recipient.nhsNumber === "undefined") {
+                pushError(missingError(pointer))
+              } else if (message.recipient.nhsNumber === null) {
+                pushError(nullError(pointer))
+              } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
+                pushError(invalidError(pointer))
+              }
 
-            // $.data.attributes.messages.x.personalisation
-            pointer = "/data/attributes/messages/" + index + "/personalisation"
-            if (typeof message.personalisation !== "object") {
-              pushError(invalidError(pointer))
+              // $.data.attributes.recipients.x.dateOfBirth
+              pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth"
+              if (typeof message.recipient.dateOfBirth === "undefined") {
+                pushError(missingError(pointer))
+              } else if (message.recipient.dateOfBirth === null) {
+                pushError(nullError(pointer))
+              } else if (typeof message.recipient.dateOfBirth !== "string" || !dobRegex.test(message.recipient.dateOfBirth)) {
+                pushError(invalidError(pointer))
+              }
+
+              // $.data.attributes.messages.x.personalisation
+              pointer = "/data/attributes/messages/" + index + "/personalisation"
+              if (typeof message.personalisation !== "object") {
+                pushError(invalidError(pointer))
+              }
             }
           }
-
         })
       }
     }
