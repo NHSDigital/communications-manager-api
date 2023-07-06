@@ -594,7 +594,6 @@ components:
           example: '1982-03-17'
       required:
         - nhsNumber
-        - dateOfBirth
     MessageBatchResponse:
       type: object
       title: Message batch response
