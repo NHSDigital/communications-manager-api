@@ -126,15 +126,18 @@ if (all) {
                 pushError(invalidError(pointer))
               }
 
-              // $.data.attributes.recipients.x.dateOfBirth
-              pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth"
-              if (typeof message.recipient.dateOfBirth === "undefined") {
-                pushError(missingError(pointer))
-              } else if (message.recipient.dateOfBirth === null) {
-                pushError(nullError(pointer))
-              } else if (typeof message.recipient.dateOfBirth !== "string" || !dobRegex.test(message.recipient.dateOfBirth)) {
-                pushError(invalidError(pointer))
-              }
+            // $.data.attributes.recipients.x.dateOfBirth
+            pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth"
+            if (
+              typeof message.recipient.dateOfBirth !== "undefined"
+              && message.recipient.dateOfBirth !== null
+              && (
+                typeof message.recipient.dateOfBirth !== "string"
+                || !dobRegex.test(message.recipient.dateOfBirth)
+              )
+            ) {
+              pushError(invalidError(pointer))
+            }
 
               // $.data.attributes.messages.x.personalisation
               pointer = "/data/attributes/messages/" + index + "/personalisation"
