@@ -30,8 +30,18 @@
       </Request>
     </Flow>
   </Flows>
+  <PostFlow name="PostFlow">
+    <Response>
+      <Step>
+        <Name>JavaScript.SetResponseContentType</Name>
+      </Step>
+    </Response>
+  </PostFlow>
   <FaultRules>
     <FaultRule name="combined_backend_fault_handler">
+      <Step>
+        <Name>JavaScript.SetResponseContentType</Name>
+      </Step>
       <Step>
         <Name>RaiseFault.401Unauthorized</Name>
         <Condition>
