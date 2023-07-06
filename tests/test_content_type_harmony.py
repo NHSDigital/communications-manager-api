@@ -35,11 +35,32 @@ ACCEPT_HEADERS = [
 ]
 
 
+"""
+    GET
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
 def test_application_response_type_get(nhsd_apim_proxy_url, accept_headers):
     resp = requests.get(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_get(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.get(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+"""
+    POST
+"""
 
 
 @pytest.mark.sandboxtest
@@ -49,11 +70,43 @@ def test_application_response_type_post(nhsd_apim_proxy_url, accept_headers):
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_post(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+"""
+    PUT
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
 def test_application_response_type_put(nhsd_apim_proxy_url, accept_headers):
     resp = requests.put(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_put(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.put(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+"""
+    PATCH
+"""
 
 
 @pytest.mark.sandboxtest
@@ -63,11 +116,43 @@ def test_application_response_type_patch(nhsd_apim_proxy_url, accept_headers):
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_patch(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.patch(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+"""
+    DELETE
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
 def test_application_response_type_delete(nhsd_apim_proxy_url, accept_headers):
     resp = requests.delete(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_delete(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.delete(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+"""
+    HEAD
+"""
 
 
 @pytest.mark.sandboxtest
@@ -77,8 +162,35 @@ def test_application_response_type_head(nhsd_apim_proxy_url, accept_headers):
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_head(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.head(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+"""
+    OPTIONS
+"""
+
+
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
 def test_application_response_type_options(nhsd_apim_proxy_url, accept_headers):
     resp = requests.options(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
+    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+@pytest.mark.parametrize('accept_headers', ACCEPT_HEADERS)
+def test_application_response_type_authenticated_options(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.options(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
+        **accept_headers.get("headers")
+    })
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")

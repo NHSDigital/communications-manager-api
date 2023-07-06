@@ -6,7 +6,6 @@
       </Step>
     </Request>
   </PreFlow>
-
   <Flows>
     <Flow name="OptionsPreFlight">
       <Request/>
@@ -46,6 +45,13 @@
       </Condition>
     </Flow>
   </Flows>
+  <PostFlow>
+    <Response>
+      <Step>
+        <Name>JavaScript.SetResponseContentType</Name>
+      </Step>
+    </Response>
+  </PostFlow>
   <PostClientFlow name="PostClientFlow">
     <Response>
       <Step>
@@ -78,6 +84,9 @@
     </FaultRule>
   </FaultRules>
   <DefaultFaultRule>
+    <Step>
+      <Name>JavaScript.SetResponseContentType</Name>
+    </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>
     </Step>
