@@ -5,6 +5,12 @@
         <Name>OauthV2.VerifyAccessTokenAppLevel3OrCis2Aal3</Name>
       </Step>
       <Step>
+        <Name>RaiseFault.404NotFound</Name>
+        <Condition>
+          (proxy.pathsuffix != "/v1/message-batches") or (proxy.pathsuffix == "/v1/message-batches" and request.verb != "POST")
+        </Condition>
+      </Step>
+      <Step>
         <Name>JavaScript.MessageBatches.Create.Validate</Name>
         <Condition>
           (proxy.pathsuffix MatchesPath "/v1/message-batches") and (request.verb = "POST")
@@ -25,43 +31,41 @@
     </Flow>
   </Flows>
   <FaultRules>
-    <FaultRule name="unauthorized">
+    <FaultRule name="combined_backend_fault_handler">
       <Step>
-          <Name>RaiseFault.401Unauthorized</Name>
+        <Name>RaiseFault.401Unauthorized</Name>
+        <Condition>
+          oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
+        </Condition>
       </Step>
-      <Condition>
-        oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
-      </Condition>
-    </FaultRule>
-    <FaultRule name="forbidden">
-      <Step>
-          <Name>RaiseFault.403Forbidden</Name>
-      </Step>
-      <Condition>
-        fault.name = "InvalidAPICallAsNoApiProductMatchFound" or fault.name = "InsufficientScope"
-      </Condition>
-    </FaultRule>
-    <FaultRule name="backend_unauthorized">
-      <Step>
-          <Name>RaiseFault.401Unauthorized</Name>
-      </Step>
-      <Condition>
-        response.status.code = 401
-      </Condition>
-    </FaultRule>
-    <FaultRule name="backend_forbidden">
       <Step>
         <Name>RaiseFault.403Forbidden</Name>
+        <Condition>
+          fault.name = "InvalidAPICallAsNoApiProductMatchFound" or fault.name = "InsufficientScope"
+        </Condition>
       </Step>
-      <Condition>
-        response.status.code = 403
-      </Condition>
-    </FaultRule>
-    <FaultRule name="400-unprocessable-entity">
-        <Step>
-            <Name>RaiseFault.400BadRequest</Name>
-        </Step>
+      <Step>
+        <Name>RaiseFault.401Unauthorized</Name>
+        <Condition>
+          response.status.code = 401
+        </Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.403Forbidden</Name>
+        <Condition>
+          response.status.code = 403
+        </Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.404NotFound</Name>
+        <Condition>
+          response.status.code = 404
+        </Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.400BadRequest</Name>
         <Condition>errors != null</Condition>
+      </Step>
     </FaultRule>
   </FaultRules>
   <!--
