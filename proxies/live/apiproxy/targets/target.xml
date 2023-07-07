@@ -99,6 +99,11 @@
     </HTTPTargetConnection>
   -->
   <HTTPTargetConnection>
-    <URL>https://comms-apim.de-apim.communications.national.nhs.uk</URL>
+    <SSLInfo>
+      <Enabled>true</Enabled>
+    </SSLInfo>
+    <LoadBalancer>
+      <Server name="communications-manager-target" />
+    </LoadBalancer>
   </HTTPTargetConnection>
 </TargetEndpoint>
