@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageBatches.Create.Response">
+    <DisplayName>AssignMessage.MessageBatches.Create.Response</DisplayName>    
+    <Properties/>
+    <AssignTo createNew="true" transport="http" type="response"/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <Set>
+        <Payload variablePrefix="%" variableSuffix="#">
+            {
+                "data" : {
+                    "type" : "MessageBatch",
+                    "id" : "%data.requestId#",
+                    "attributes" : {
+                        "messageBatchReference" : "%data.messageBatchReference#"
+                    }
+                }
+            }
+        </Payload>
+        <StatusCode>201</StatusCode>
+    </Set>
+</AssignMessage>

@@ -22,12 +22,27 @@
     </Request>
   </PreFlow>
   <Flows>
-    <Flow name="add_authentication_details">
+    <Flow name="CreateMessageBatchEndpoint">
+      <Description>Handle create message batch</Description>
       <Request>
         <Step>
-          <Name>AssignMessage.AuthenticationDetails</Name>
+          <Name>JavaScript.MessageBatches.Create.Request</Name>
+        </Step>
+        <Step>
+          <Name>AssignMessage.MessageBatches.Create.Request</Name>
         </Step>
       </Request>
+      <Response>
+          <Step>
+            <Name>ExtractVariables.MessageBatches.Create.Response</Name>
+          </Step>
+          <Step>
+            <Name>AssignMessage.MessageBatches.Create.Response</Name>
+          </Step>
+      </Response>
+      <Condition>
+        (proxy.pathsuffix MatchesPath "/v1/message-batches") and (request.verb = "POST")
+      </Condition>
     </Flow>
   </Flows>
   <PostFlow name="PostFlow">
