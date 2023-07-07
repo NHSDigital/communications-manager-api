@@ -46,9 +46,9 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
       - environment: internal-qa
-        post_deploy:
         jinja_templates:
           NON_PROD_ENVIRONMENT: true
+        post_deploy:
         - template: ./templates/run-tests.yml
           parameters:
             full: true
