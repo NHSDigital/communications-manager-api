@@ -1,4 +1,0 @@
-<OAuthV2 async="false" continueOnError="false" enabled="true" name="OauthV2.VerifyAccessTokenAppLevel3OrCis2Aal3">
-  <Operation>VerifyAccessToken</Operation>
-  <Scopes>urn:nhsd:apim:app:level3:communications-manager urn:nhsd:apim:user-nhs-cis2:aal3:communications-manager</Scopes>
-</OAuthV2>

@@ -1,0 +1,4 @@
+<OAuthV2 async="false" continueOnError="false" enabled="true" name="OauthV2.VerifyAccessToken">
+  <Operation>VerifyAccessToken</Operation>
+  <Scopes>urn:nhsd:apim:app:level3:communications-manager</Scopes>
+</OAuthV2>
