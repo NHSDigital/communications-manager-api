@@ -35,11 +35,15 @@ extends:
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
     apigee_deployments:
       - environment: internal-dev
+        jinja_templates:
+          NON_PROD_ENVIRONMENT: true
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
               full: true
       - environment: internal-dev-sandbox
         proxy_path: sandbox
+        jinja_templates:
+          NON_PROD_ENVIRONMENT: true
         post_deploy:
           - template: ./templates/run-tests.yml

@@ -4,7 +4,11 @@
     <Properties/>
     <Set>
         <Headers>
-            <Header name="X-Client-Id">{developer.app.id}</Header>
+            {% if NON_PROD_ENVIRONMENT %}
+                <Header name="X-Client-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
+            {% else %}
+                <Header name="X-Client-Id">{developer.app.id}</Header>
+            {% endif %}
         </Headers>
     </Set>
     <Remove>
