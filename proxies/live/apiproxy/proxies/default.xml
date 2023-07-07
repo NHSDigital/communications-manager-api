@@ -50,6 +50,10 @@
       <Step>
         <Name>JavaScript.SetResponseContentType</Name>
       </Step>
+      <Step>
+      <Name>AssignMessage.AddCorsResponse</Name>
+        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
+      </Step>
     </Response>
   </PostFlow>
   <PostClientFlow name="PostClientFlow">
@@ -86,6 +90,10 @@
   <DefaultFaultRule>
     <Step>
       <Name>JavaScript.SetResponseContentType</Name>
+    </Step>
+    <Step>
+      <Name>AssignMessage.AddCorsResponse</Name>
+      <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
     </Step>
     <Step>
       <Name>AssignMessage.Errors.CatchAllMessage</Name>

@@ -35,12 +35,20 @@
       <Step>
         <Name>JavaScript.SetResponseContentType</Name>
       </Step>
+      <Step>
+        <Name>AssignMessage.AddCorsResponse</Name>
+        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
+      </Step>
     </Response>
   </PostFlow>
   <FaultRules>
     <FaultRule name="combined_backend_fault_handler">
       <Step>
         <Name>JavaScript.SetResponseContentType</Name>
+      </Step>
+      <Step>
+        <Name>AssignMessage.AddCorsResponse</Name>
+        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
       </Step>
       <Step>
         <Name>RaiseFault.401Unauthorized</Name>
