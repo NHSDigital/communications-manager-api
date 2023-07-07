@@ -115,5 +115,6 @@
   -->
   <HTTPTargetConnection>
     <URL>https://comms-apim.de-apim.communications.national.nhs.uk</URL>
+    <Path>{requestpath}</Path>
   </HTTPTargetConnection>
 </TargetEndpoint>
