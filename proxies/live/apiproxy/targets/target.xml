@@ -7,7 +7,13 @@
       <Step>
         <Name>RaiseFault.406NotAcceptable</Name>
         <Condition>
-            request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json"
+          request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json"
+        </Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.415UnsupportedMedia</Name>
+        <Condition>
+          (request.verb = "POST" or request.verb = "PATCH" or request.verb = "PUT") and (request.header.Content-Type = null or (request.header.Content-Type != "application/json" and request.header.Content-Type != "application/vnd.api+json"))
         </Condition>
       </Step>
       <Step>
