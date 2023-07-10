@@ -38,7 +38,7 @@ def test_201_message_batch_valid_accept_headers_sandbox(nhsd_apim_proxy_url, nhs
         headers={
             "Accept": accept_headers,
             "Content-Type": "application/json"
-        } | nhsd_apim_auth_headers,
+        }.update(nhsd_apim_auth_headers),
         json={
             "data": {
                 "type": "MessageBatch",
@@ -69,9 +69,9 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
     resp = requests.post(
       f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
       headers={
-                "Accept": accept_headers,
-                "Content-Type": "application/json"
-              } | nhsd_apim_auth_headers,
+          "Accept": accept_headers,
+          "Content-Type": "application/json"
+      }.update(nhsd_apim_auth_headers),
       json={
         "data": {
           "type": "MessageBatch",
