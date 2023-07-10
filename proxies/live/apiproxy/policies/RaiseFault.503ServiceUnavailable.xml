@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.503ServiceUnavailable">
+    <DisplayName>RaiseFault.504GatewayTimeout</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>504</StatusCode>
+            <ReasonPhrase>Gateway Timeout</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_SERVICE_UNAVAILABLE",
+                            "links" : {
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status" : "503",
+                            "title" : "The service is currently unavailable",
+                            "description" : "The service is currently not able to process this request, try again later."
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>
