@@ -44,7 +44,7 @@ info:
     
     We follow the [JSON:API](https://jsonapi.org/) standard for our request and response schemas. 
 
-    ### Response Content Types
+    ### Response content types
 
     This API can generate responses in the following formats:
 
