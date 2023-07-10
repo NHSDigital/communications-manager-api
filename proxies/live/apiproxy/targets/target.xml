@@ -2,7 +2,13 @@
   <PreFlow>
     <Request>
       <Step>
-        <Name>OauthV2.VerifyAccessTokenAppLevel3OrCis2Aal3</Name>
+        <Name>OauthV2.VerifyAccessToken</Name>
+      </Step>
+      <Step>
+        <Name>RaiseFault.403Forbidden</Name>
+        <Condition>
+          grant_type != "client_credentials"
+        </Condition>
       </Step>
       <Step>
         <Name>RaiseFault.406NotAcceptable</Name>
