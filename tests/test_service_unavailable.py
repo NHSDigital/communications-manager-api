@@ -13,8 +13,8 @@ def __assert_503_error(resp, check_body=True):
         assert error.get("id") == "CM_SERVICE_UNAVAILABLE"
         assert error.get("status") == "503"
         assert error.get("title") == "The service is currently unavailable"
-        assert error.get("detail") == "The service is currently not able to " \
-                                      "process this request, try again later."
+        assert error.get("description") == "The service is currently not able to "\
+            "process this request, try again later."
 
 
 @pytest.mark.sandboxtest
