@@ -32,9 +32,7 @@ def __assert_201_response(resp):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
-    # import pdb; pdb.set_trace()
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
         headers={
@@ -60,6 +58,39 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
                 }
             }
         }
+    )
+    __assert_201_response(resp)
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+    resp = requests.post(
+      f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
+      headers={
+                "Accept": accept_headers,
+                "Content-Type": "application/json"
+              } | nhsd_apim_auth_headers,
+      json={
+        "data": {
+          "type": "MessageBatch",
+          "attributes": {
+            "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+            "messages": [
+              {
+                "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                "recipient": {
+                  "nhsNumber": "1234567890",
+                  "dateOfBirth": "1982-03-17"
+                },
+                "personalisation": {}
+              }
+            ]
+          }
+        }
+      }
     )
     __assert_201_response(resp)
 

@@ -31,6 +31,9 @@
         <Step>
           <Name>AssignMessage.MessageBatches.Create.Request</Name>
         </Step>
+        <Step>
+          <Name>AssignMessage.AuthenticationDetails</Name>
+        </Step>
       </Request>
       <Response>
           <Step>
