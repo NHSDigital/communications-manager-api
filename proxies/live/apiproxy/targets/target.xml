@@ -72,6 +72,22 @@
     </Response>
   </PostFlow>
   <FaultRules>
+    <FaultRule name="unauthorized">
+      <Step>
+       <Name>RaiseFault.401Unauthorized</Name>
+      </Step>
+      <Condition>
+        response.status.code = 401
+      </Condition>
+    </FaultRule>
+    <FaultRule name="forbidden">
+      <Step>
+       <Name>RaiseFault.403Forbidden</Name>
+      </Step>
+      <Condition>
+        response.status.code = 403
+      </Condition>
+    </FaultRule>
     <FaultRule name="invalid_routing_plan">
       <Step>
         <Name>RaiseFault.404InvalidRoutingPlan</Name>
