@@ -84,7 +84,7 @@ info:
 
     | Environment | Base URL |
     |------------ | -------- |
-    | Sandbox     | [https://sandbox.api.service.nhs.uk/comms/](https://sandbox.api.service.nhs.uk/comms/) |
+    | Sandbox     | [https://sandbox.api.service.nhs.uk/comms](https://sandbox.api.service.nhs.uk/comms) |
 
     ## Sandbox testing 
 
