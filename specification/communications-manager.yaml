@@ -5,23 +5,28 @@ info:
   description:  |
     ## Overview
 
-    Use this API to integrate with Communications Manager, a scalable, centralised and standardised way to send and manage communications direct to their intended recipients via Email, SMS, NHS App (notifications and messages) and Letters.
+    The Communications Manager service is intended for programmes involved in direct care, where you have a legal basis to issue communications to citizens.
 
-    Communication Manager provides routing, Personal Demographics Service enrichment of messaging, accessibility and other optionality.
+    Use this API to integrate with Communications Manager, a scalable, centralised and standardised way to send and manage communications direct to their intended recipients via email, SMS, NHS App (notifications and messages) and letters.
 
-    You can:
+    Communications Manager provides:
 
-    * Send requests into the Communications Manager solution for communications to be sent to their intended recipients
+    * message templating
+    * message routing - via SMS, email, letters and NHS App notifications
+    * enrichment of recipient details
+    * support for accessible formats
+
+    For more information about this services capabilities, see [Communications Manager Service](https://digital.nhs.uk/services/communications-manager).
 
     ## Who can use this API
 
-    This API can only be used where there is a legal basis to do so. Make sure you have a valid use case before you go too far with your development. You must demonstrate you have a valid use case as part of digital onboarding and complete Communications Manager Onboarding. 
+    This API can only be used where you have a legal basis to issue communications to citizens.
 
     ## Related APIs
 
-    The following API is related to this one:
+    This service utilises the [Personal Demographics Service - FHIR API (PDS)](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir). This service is used to collect citizen details to determine how to contact recipients and to enrich the messages sent to them.
 
-    * [Personal Demographics Service - FHIR API (PDS)](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir) - used for enrichment of patient details
+    You do not need to onboard with this API, our service integrates with it on your behalf.
 
     ## API status and roadmap
 
@@ -48,13 +53,7 @@ info:
 
     Both of these formats have the same structure - the API responds with a standard JSON document.
 
-    You can control which `Content-Type` is returned by using the `Accept` header. The following `Accept` headers are supported:
-
-    * `*/*` - responds with the default `application/vnd.api+json` content type
-    * `application/json`
-    * `application/vnd.api+json`
-
-    If an invalid `Accept` header is sent the API will return a `406 Not Acceptable` response.
+    You can control which `Content-Type` is returned by using the `Accept` header.
 
     ### Request Content Types
 
@@ -74,12 +73,8 @@ info:
     ## Security and authorisation 
 
     This API is [application-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#application-restricted-apis), meaning we authenticate the calling application but not the end user.
-    
-    The end user could be:
-    
-    * a healthcare worker - in which case you must ensure they are authenticated and suitably authorised locally
-    * a patient - in which case you must ensure they are authenticated locally
-    * not present at all - for example as part of a back end process to send communications to patients in bulk
+
+    Authentication and authorisation of end users is the responsibility of your application.
     
     To access this API, use the following security pattern:
 
@@ -104,11 +99,9 @@ info:
 
     ## Onboarding
 
-    You need to get your software approved by us before it can go live with this API. You will also need to undertake [Communications Manager onboarding process](#). 
+    You need to get your software approved by us before it can go live with this API. You will also need to undertake the [Communications Manager onboarding process](#).
 
-    As part of this process, you need to demonstrate your technical conformance to the requirements for this API. For more details according to your access mode, see:
-
-    * [Communications Manager API technical conformance](#) 
+    As part of this process, you need to demonstrate your technical conformance to the requirements for this API. For more details according to your access mode, see [Communications Manager API technical conformance](#).
 
     You also need to demonstrate that you can manage risks. This might impact the design of your software. For details, see [Onboarding support information](#).
     
@@ -139,9 +132,9 @@ paths:
 
         Both of these references must be a [Universal Unique Identifier (UUID)](https://en.wikipedia.org/wiki/Universally_unique_identifier).
 
-        The message batch reference (`messageBatchReference`) is unique for you. If you send the same message batch reference multiple times we will automatically deduplicate the requests - actioning only the first payload that has been sent. This value can be used to store an internal reference for this batch of messages.
+        The message batch reference (`messageBatchReference`) is unique for you. If you send the same message batch reference multiple times we will automatically deduplicate the requests - actioning only the first payload that has been sent. This value is used to store your reference for this batch of messages.
 
-        The per message reference (`messageReference`) needs to be unique within the message batch.
+        The per message reference (`messageReference`) needs to be unique within the message batch. This value is used to store your reference for this specific message within the batch.
 
         ### Personalisation
 
@@ -158,6 +151,8 @@ paths:
         * `b402cd20-b62a-4357-8e02-2952959531c8`
         * `936e9d45-15de-4a95-bb36-ae163c33ae53`
         * `9ba00d23-cd6f-4aca-8688-00abc85a7980`
+
+        On other environments these values will be established as part of your [Communications Manager Service onboarding](#).
 
         Here is an example curl request which creates a message batch using one of these routing plan identifiers:
 
@@ -324,6 +319,8 @@ paths:
             * `9ba00d23-cd6f-4aca-8688-00abc85a7980`
 
             If you use a routing plan id that is not in this list then a `404 Not Found` error response will be triggered.
+
+            On other environments these values will be established as part of your [Communications Manager Service onboarding](#).
 
             Here is an example curl request to trigger a `404`:
 
@@ -527,7 +524,7 @@ components:
                 routingPlanId:
                   type: string
                   description: |-
-                    This is the routing plan you wish your batch to use whilst sending messages to the recipients. The values available to you for this are setup during your onboarding process.
+                    This is the routing plan you wish your batch to use whilst sending messages to the recipients. The values available to you for this are setup during your [onboarding process](#).
 
                     If you send through an invalid routing plan you will receive a 404 response.
                   format: uuid

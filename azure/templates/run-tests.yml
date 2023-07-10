@@ -13,6 +13,18 @@ parameters:
     default: 'make sandboxtest'
 
 steps:
+  - template: "azure/components/aws-assume-role.yml@common"
+    parameters:
+      role: "auto-ops"
+      profile: "apm_ptl"
+
+  - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+    parameters:
+      secret_file_ids:
+      - ptl/app-credentials/jwt_testing/non-prod/JWT_TESTING_PRIVATE_KEY
+      secret_ids:
+      - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
+
   - bash: |
       make install-python
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
@@ -25,7 +37,7 @@ steps:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
-        export APIGEE_APP_ID="MY APP ID"
+        export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
         ${{ parameters.test_command }}
@@ -43,7 +55,7 @@ steps:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
-        export APIGEE_APP_ID="MY APP ID"
+        export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
         ${{ parameters.sandboxtest_command }}
