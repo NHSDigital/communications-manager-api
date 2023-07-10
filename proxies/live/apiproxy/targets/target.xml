@@ -5,6 +5,12 @@
         <Name>OauthV2.VerifyAccessTokenAppLevel3OrCis2Aal3</Name>
       </Step>
       <Step>
+        <Name>RaiseFault.406NotAcceptable</Name>
+        <Condition>
+            request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json"
+        </Condition>
+      </Step>
+      <Step>
         <Name>RaiseFault.404NotFound</Name>
         <Condition>
           (proxy.pathsuffix != "/v1/message-batches") or (proxy.pathsuffix == "/v1/message-batches" and request.verb != "POST")
