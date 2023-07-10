@@ -72,50 +72,55 @@
     </Response>
   </PostFlow>
   <FaultRules>
-    <FaultRule name="combined_backend_fault_handler">
+    <FaultRule name="invalid_routing_plan">
       <Step>
-        <Name>JavaScript.SetResponseContentType</Name>
+        <Name>RaiseFault.404InvalidRoutingPlan</Name>
       </Step>
-      <Step>
-        <Name>AssignMessage.AddCorsResponse</Name>
-        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.401Unauthorized</Name>
-        <Condition>
-          oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.403Forbidden</Name>
-        <Condition>
-          fault.name = "InvalidAPICallAsNoApiProductMatchFound" or fault.name = "InsufficientScope"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.401Unauthorized</Name>
-        <Condition>
-          response.status.code = 401
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.403Forbidden</Name>
-        <Condition>
-          response.status.code = 403
-        </Condition>
-      </Step>
+      <Condition>
+        response.status.code = 404 and response.content Like "*Routing Config does not exist for sendingGroupId*"
+      </Condition>
+    </FaultRule>
+    <FaultRule name="not_found">
       <Step>
         <Name>RaiseFault.404NotFound</Name>
-        <Condition>
-          response.status.code = 404
-        </Condition>
       </Step>
-      <Step>
-        <Name>RaiseFault.400BadRequest</Name>
-        <Condition>errors != null</Condition>
-      </Step>
+      <Condition>
+        response.status.code = 404
+      </Condition>
     </FaultRule>
-  </FaultRules>
+    <FaultRule name="backend_duplicate_requestItemRefIds">
+      <Step>
+        <Name>RaiseFault.400BackendException.DuplicateRequestItemRefIds</Name>
+      </Step>
+      <Condition>
+        response.status.code = 400 and response.content Like "*Duplicate requestItemRefIds*"
+      </Condition>
+    </FaultRule>
+    <FaultRule name="backend_missing_sendingGroupId">
+      <Step>
+        <Name>RaiseFault.400BackendException.MissingSendingGroupId</Name>
+      </Step>
+      <Condition>
+        response.status.code = 400 and response.content Like "*Missing sendingGroupId*"
+      </Condition>
+    </FaultRule>
+    <FaultRule name="backend_missing_requestRefId">
+      <Step>
+        <Name>RaiseFault.400BackendException.MissingRequestRefId</Name>
+      </Step>
+      <Condition>
+        response.status.code = 400 and response.content Like "*Missing requestRefId*"
+      </Condition>
+    </FaultRule>
+    <FaultRule name="backend_missing_data_array">
+      <Step>
+        <Name>RaiseFault.400BackendException.MissingDataArray</Name>
+      </Step>
+      <Condition>
+        response.status.code = 400 and response.content Like "*Missing data array*"
+      </Condition>
+    </FaultRule>
+    </FaultRules>
   <!--
     To point to a named target server as this is how it SHOULD be implemented:
     For example:
