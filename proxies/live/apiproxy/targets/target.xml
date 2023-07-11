@@ -148,7 +148,7 @@
       </Step>
       <Condition>fault.name = "GatewayTimeout" or response.status.code = 504</Condition>
     </FaultRule>
-    <FaultRule>
+    <FaultRule name="backend_request_timeout">
       <Step>
         <Name>RaiseFault.408RequestTimeout</Name>
       </Step>
