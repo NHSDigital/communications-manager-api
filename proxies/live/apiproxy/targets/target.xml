@@ -102,6 +102,14 @@
         <Name>RaiseFault.400BadRequest</Name>
         <Condition>errors != null</Condition>
       </Step>
+      <Step>
+        <Name>RaiseFault.504GatewayTimeout</Name>
+        <Condition>fault.name = "GatewayTimeout" or response.status.code = 504</Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.408RequestTimeout</Name>
+        <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
+      </Step>
     </FaultRule>
   </FaultRules>
   <!--
