@@ -2,10 +2,10 @@
   <PreFlow>
     <Request>
       <Step>
-        <Name>AssignMessage.AuthenticationDetails</Name>
+        <Name>OauthV2.VerifyAccessToken</Name>
       </Step>
       <Step>
-        <Name>OauthV2.VerifyAccessToken</Name>
+        <Name>AssignMessage.AuthenticationDetails</Name>
       </Step>
       <Step>
         <Name>RaiseFault.403Forbidden</Name>
