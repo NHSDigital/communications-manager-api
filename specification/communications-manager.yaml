@@ -469,7 +469,27 @@ paths:
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '503':
-          description: Service Unavailable
+          description: |+
+            The service is currently not accepting requests,
+
+            This error can occur if any part of the system has gone offline.
+
+            ### sandbox-testing
+
+            It is possible to simulate this error response by sending a request with a header of `Prefer` set to the value `code=503`.
+
+            Here is an example curl request to simulate this response:
+
+            ```
+              curl -X GET --header "Prefer: code=503" https://sandbox.api.service.nhs.uk/comms/
+            ```
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailableResponse'
           headers:
             Retry-After:
               schema:
@@ -478,6 +498,11 @@ paths:
                 multipleOf: 1
                 example: 5
               description: Time to wait between requests in seconds
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '504':
           description: |+
             There is an issue communicating to our backend services. If this occurs it is a good idea to back off and retry the request at a later time - see the [Circuit Breaker pattern](https://microservices.io/patterns/reliability/circuit-breaker.html).
@@ -1010,6 +1035,44 @@ components:
       enum:
         - CM_QUOTA
       example: CM_QUOTA
+    ServiceUnavailableResponse:
+      type: object
+      title: Service unavailable
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 1
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_ServiceUnavailable'
+              links:
+                $ref: '#/components/schemas/Links_Error'
+              status:
+                type: string
+                enum:
+                  - '503'
+                example: '503'
+              title:
+                type: string
+                enum:
+                  - The service is currently unavailable
+                example: The service is currently unavailable
+              detail:
+                type: string
+                enum:
+                  - The service is currently not able to process this request, try again later.
+                example: The service is currently not able to process this request, try again later.
+    Enum_Error_ServiceUnavailable:
+      type: string
+      title: Enum_Error_ServiceUnavailable
+      enum:
+        - CM_SERVICE_UNAVAILABLE
+      example: CM_SERVICE_UNAVAILABLE
     ServiceTimeoutResponse:
       type: object
       title: Service timeout
