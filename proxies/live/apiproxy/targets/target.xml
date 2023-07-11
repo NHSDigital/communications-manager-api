@@ -2,7 +2,13 @@
   <PreFlow>
     <Request>
       <Step>
-        <Name>OauthV2.VerifyAccessTokenAppLevel3OrCis2Aal3</Name>
+        <Name>OauthV2.VerifyAccessToken</Name>
+      </Step>
+      <Step>
+        <Name>RaiseFault.403Forbidden</Name>
+        <Condition>
+          grant_type != "client_credentials"
+        </Condition>
       </Step>
       <Step>
         <Name>RaiseFault.406NotAcceptable</Name>
@@ -136,7 +142,19 @@
         response.status.code = 400 and response.content Like "*Missing data array*"
       </Condition>
     </FaultRule>
-    </FaultRules>
+    <FaultRule name="backend_gateway_timeout">
+      <Step>
+        <Name>RaiseFault.504GatewayTimeout</Name>
+      </Step>
+      <Condition>fault.name = "GatewayTimeout" or response.status.code = 504</Condition>
+    </FaultRule>
+    <FaultRule>
+      <Step>
+        <Name>RaiseFault.408RequestTimeout</Name>
+      </Step>
+      <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
+    </FaultRule>
+  </FaultRules>
   <!--
     To point to a named target server as this is how it SHOULD be implemented:
     For example:
