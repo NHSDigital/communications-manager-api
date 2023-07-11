@@ -177,5 +177,6 @@
     <LoadBalancer>
       <Server name="communications-manager-target" />
     </LoadBalancer>
+    <Path>{requestpath}</Path>
   </HTTPTargetConnection>
 </TargetEndpoint>
