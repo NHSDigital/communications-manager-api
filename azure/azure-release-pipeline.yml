@@ -33,9 +33,6 @@ extends:
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
     apigee_deployments:
       - environment: internal-dev
-        secret_file_ids:
-          - ptl/api-deployment/communications-manager/crt
-          - ptl/api-deployment/communications-manager/key
         jinja_templates:
           NON_PROD_ENVIRONMENT: true
         post_deploy:
@@ -49,15 +46,12 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
       - environment: internal-qa
-        secret_file_ids:
-          - ptl/api-deployment/communications-manager/crt
-          - ptl/api-deployment/communications-manager/key
         jinja_templates:
           NON_PROD_ENVIRONMENT: true
         post_deploy:
-        - template: ./templates/run-tests.yml
-          parameters:
-            full: true
+          - template: ./templates/run-tests.yml
+            parameters:
+              full: true
       - environment: internal-qa-sandbox
         proxy_path: sandbox
         jinja_templates:
@@ -78,14 +72,9 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               sandboxtest_command: 'make sandboxtest-prod'
-    # # Enable int environment when ready by uncommenting:
-    #   - environment: int
-    #     depends_on:
-    #       - internal_qa
-    #       - internal_qa_sandbox
-    #     post_deploy:
-    #       - template: ./templates/run-tests.yml
-    #         parameters:
-    #           full: true
-    #           test-command: prod
-    #           smoketest-command: prod
+      - environment: int
+        depends_on:
+          - internal_qa
+          - internal_qa_sandbox
+        jinja_templates:
+          NON_PROD_ENVIRONMENT: false
