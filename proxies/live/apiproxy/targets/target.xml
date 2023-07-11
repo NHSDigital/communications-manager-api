@@ -77,7 +77,7 @@
        <Name>RaiseFault.401Unauthorized</Name>
       </Step>
       <Condition>
-        response.status.code = 401
+        oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
       </Condition>
     </FaultRule>
     <FaultRule name="forbidden">
