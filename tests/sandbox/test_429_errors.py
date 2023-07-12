@@ -1,6 +1,3 @@
-"""
-Server responds with a 429 when too many requests are raised in a given timeframe
-"""
 import requests
 import pytest
 import uuid

@@ -1,10 +1,3 @@
-"""
-Server responds with a 400 response when invalid information is provided in the body of the request
-
-NHS Number must be 10 digits long
-DOB must be in the format of YYYY-MM-DD
-RoutingPlanId, MessageBatchReference and MessageReference must all be in GUID format
-"""
 import requests
 import pytest
 

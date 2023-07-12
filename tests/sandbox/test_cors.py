@@ -1,6 +1,3 @@
-"""
-Server correct CORS headers
-"""
 import requests
 import pytest
 

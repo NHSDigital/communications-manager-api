@@ -1,6 +1,3 @@
-"""
-Server returns a 403 when client is not recognised
-"""
 import requests
 import pytest
 import uuid

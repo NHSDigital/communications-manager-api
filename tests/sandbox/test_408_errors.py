@@ -1,7 +1,3 @@
-"""
-Server responds with a 408 when unable to recieve request in a specified time period
-"""
-
 import requests
 import pytest
 import uuid
