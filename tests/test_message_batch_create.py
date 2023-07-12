@@ -35,13 +35,13 @@ def __assert_201_response(resp):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
-def test_201_message_batch_valid_accept_headers_sandbox(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+def test_201_message_batch_valid_accept_headers_sandbox(nhsd_apim_proxy_url, accept_headers):
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
         headers={
             "Accept": accept_headers,
             "Content-Type": "application/json"
-        }.update(nhsd_apim_auth_headers),
+        },
         json={
             "data": {
                 "type": "MessageBatch",
