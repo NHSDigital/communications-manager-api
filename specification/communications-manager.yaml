@@ -16,8 +16,6 @@ info:
     * enrichment of recipient details
     * support for accessible formats
 
-    For more information about this services capabilities, see [Communications Manager Service](https://digital.nhs.uk/services/communications-manager).
-
     ## Who can use this API
 
     This API can only be used where you have a legal basis to issue communications to citizens.
@@ -162,7 +160,7 @@ paths:
         * `936e9d45-15de-4a95-bb36-ae163c33ae53`
         * `9ba00d23-cd6f-4aca-8688-00abc85a7980`
 
-        On other environments these values will be established as part of your [Communications Manager Service onboarding](#).
+        On other environments these values will be established as part of your [Communications Manager Service onboarding](#overview--onboarding).
 
         Here is an example curl request which creates a message batch using one of these routing plan identifiers:
 
@@ -330,7 +328,7 @@ paths:
 
             If you use a routing plan id that is not in this list then a `404 Not Found` error response will be triggered.
 
-            On other environments these values will be established as part of your [Communications Manager Service onboarding](#).
+            On other environments these values will be established as part of your [Communications Manager Service onboarding](#overview--onboarding).
 
             Here is an example curl request to trigger a `404`:
 
@@ -559,7 +557,7 @@ components:
                 routingPlanId:
                   type: string
                   description: |-
-                    This is the routing plan you wish your batch to use whilst sending messages to the recipients. The values available to you for this are setup during your [onboarding process](#).
+                    This is the routing plan you wish your batch to use whilst sending messages to the recipients. The values available to you for this are setup during your [onboarding process](#overview--onboarding).
 
                     If you send through an invalid routing plan you will receive a 404 response.
                   format: uuid
