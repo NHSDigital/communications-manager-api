@@ -28,6 +28,7 @@ def test_cors_options_sandbox(nhsd_apim_proxy_url, method):
     })
     _assert_cors_response(resp)
 
+
 @pytest.mark.prodtest
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

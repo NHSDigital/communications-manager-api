@@ -12,9 +12,6 @@
         <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
       </Step>
       <Step>
-        <Name>AssignMessage.AuthenticationDetails</Name>
-      </Step>
-      <Step>
         <Name>RaiseFault.403Forbidden</Name>
         <Condition>
           grant_type != "client_credentials"
@@ -39,12 +36,6 @@
         </Condition>
       </Step>
       <Step>
-        <Name>JavaScript.MessageBatches.Create.Validate</Name>
-        <Condition>
-          (proxy.pathsuffix MatchesPath "/v1/message-batches") and (request.verb = "POST")
-        </Condition>
-      </Step>
-      <Step>
         <Name>FlowCallout.ApplyRateLimiting</Name>
       </Step>
     </Request>
@@ -53,6 +44,13 @@
     <Flow name="CreateMessageBatchEndpoint">
       <Description>Handle create message batch</Description>
       <Request>
+        <Step>
+          <Name>JavaScript.MessageBatches.Create.Validate</Name>
+        </Step>
+        <Step>
+            <Name>RaiseFault.400BadRequest</Name>
+            <Condition>errors != null</Condition>
+        </Step>
         <Step>
           <Name>JavaScript.MessageBatches.Create.Request</Name>
         </Step>
@@ -144,18 +142,6 @@
       </Step>
     </FaultRule>
   </FaultRules>
-  <!--
-    To point to a named target server as this is how it SHOULD be implemented:
-    For example:
-    <HTTPTargetConnection>
-      <SSLInfo>
-        <Enabled>true</Enabled>
-      </SSLInfo>
-      <LoadBalancer>
-        <Server name="communications-manager" />
-      </LoadBalancer>
-    </HTTPTargetConnection>
-  -->
   <HTTPTargetConnection>
     <SSLInfo>
       <Enabled>true</Enabled>
