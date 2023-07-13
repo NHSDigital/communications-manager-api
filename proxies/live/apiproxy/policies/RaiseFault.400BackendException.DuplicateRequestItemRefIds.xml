@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400BackendException.DuplicateRequestItemRefIds">
+    <DisplayName>RaiseFault.400BackendException.DuplicateRequestItemRefIds</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Bad Request</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_DUPLICATE_VALUE",
+                            "links" : {
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status" : "400",
+                            "title" : "Duplicate value",
+                            "description" : "The property at the specified location is a duplicate, duplicated values are not allowed.",
+                            "source" : {
+                                "pointer" : "/data/attributes/messages"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

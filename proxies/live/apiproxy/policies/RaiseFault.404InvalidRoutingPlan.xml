@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.404InvalidRoutingPlan">
+    <DisplayName>RaiseFault.404InvalidRoutingPlan</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>404</StatusCode>
+            <ReasonPhrase>Not Found</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_NO_SUCH_ROUTING_PLAN",
+                            "links" : {
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status" : "404",
+                            "title" : "No such routing plan",
+                            "description" : "The routing plan specified either does not exist or is not in a usable state.",
+                            "source" : {
+                                "pointer" : "/data/attributes/routingPlanId"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>
