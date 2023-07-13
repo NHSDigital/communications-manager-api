@@ -102,7 +102,7 @@ async function batch_send(req, res, next) {
     }
 
     if (!validSendingGroupIds[req.body.sendingGroupId]) {
-        sendError(res, 404, `Routing Config does not exist for sendingGroupId "${req.body.sendingGroupId}"`);
+        sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.sendingGroupId}"`);
         next();
         return;
     }
