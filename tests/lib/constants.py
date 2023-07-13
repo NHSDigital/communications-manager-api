@@ -106,6 +106,22 @@ ERROR_NO_SUCH_ROUTING_PLAN = Error(
     "The routing plan specified either does not exist or is not in a usable state."
 )
 
+# missing routing plan
+ERROR_MISSING_ROUTING_PLAN_TEMPLATE = Error(
+    "CM_MISSING_ROUTING_PLAN_TEMPLATE",
+    "500",
+    "Templates missing",
+    "The templates required to use the routing plan were not found."
+)
+
+# duplicate routing plan
+ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE = Error(
+    "CM_ROUTING_PLAN_DUPLICATE_TEMPLATES",
+    "500",
+    "Duplicate templates",
+    "The routing plan specified contains duplicate templates."
+)
+
 # not found
 ERROR_NOT_FOUND = Error(
     "CM_NOT_FOUND",

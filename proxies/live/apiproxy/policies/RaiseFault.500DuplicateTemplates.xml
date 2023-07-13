@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.500DuplicateTemplates">
+    <DisplayName>RaiseFault.500DuplicateTemplates</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>500</StatusCode>
+            <ReasonPhrase>Internal Server Error</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_ROUTING_PLAN_DUPLICATE_TEMPLATES",
+                            "links" : {
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status" : "500",
+                            "title" : "Duplicate templates",
+                            "detail" : "The routing plan specified contains duplicate templates.",
+                            "source" : {
+                                "pointer" : "/data/attributes/routingPlanId"
+                            },
+                            "meta" : {
+                                "duplicateTemplates" : @data.duplicates#
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>
