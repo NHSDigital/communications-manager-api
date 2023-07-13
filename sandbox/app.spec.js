@@ -209,7 +209,7 @@ describe("app handler tests", function () {
                     ]
                 })
                 .expect(404, {
-                    message: 'Routing Config does not exist for sendingGroupId "sending-group-id"'
+                    message: 'Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "sending-group-id"'
                 })
                 .expect("Content-Type", /json/, done);
         });
