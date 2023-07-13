@@ -54,6 +54,31 @@ def test_404_post(nhsd_apim_proxy_url):
     __assert_404_error(resp)
 
 
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_404_prod_post(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": routing_plan_id,
+                "messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728",
+                "messages": [
+                    {
+                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                        "recipient": {
+                            "nhsNumber": "1234567890",
+                            "dateOfBirth": "1982-03-17"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+    __assert_404_error(resp)
+
+
 @pytest.mark.sandboxtest
 def test_404_with_correlation_id_post(nhsd_apim_proxy_url):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
