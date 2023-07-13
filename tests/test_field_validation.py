@@ -223,3 +223,221 @@ def test_null_value_under_messages(nhsd_apim_proxy_url):
     assert (error.get("detail") ==
             "The property at the specified location is required, but a null value was passed in the request.")
     assert error.get("source").get("pointer") == "/data/attributes/messages/0"
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("nhs_number", NHS_NUMBER)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_nhs_number_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers, nhs_number):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": nhs_number,
+                            "dateOfBirth": "1982-1-11"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    error = resp.json().get("errors")[0]
+    assert error.get("id") == "CM_INVALID_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Invalid value"
+    assert (error.get("detail") == "The property at the specified location does not allow this value.")
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0/recipient/nhsNumber"
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("dob", DOB)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_dob_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "0123456789",
+                            "dateOfBirth": dob
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    error = resp.json().get("errors")[0]
+    assert error.get("id") == "CM_INVALID_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Invalid value"
+    assert (error.get("detail") == "The property at the specified location does not allow this value.")
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0/recipient/dateOfBirth"
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_routing_plan_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "invalid",
+                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "0123456789",
+                            "dateOfBirth": "2000-01-01"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    error = resp.json().get("errors")[0]
+    assert error.get("id") == "CM_INVALID_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Invalid value"
+    assert (error.get("detail") == "The property at the specified location does not allow this value.")
+    assert error.get("source").get("pointer") == "/data/attributes/routingPlanId"
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_message_batch_reference_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": "invalid",
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "0123456789",
+                            "dateOfBirth": "2000-01-01"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    error = resp.json().get("errors")[0]
+    assert error.get("id") == "CM_INVALID_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Invalid value"
+    assert (error.get("detail") == "The property at the specified location does not allow this value.")
+    assert error.get("source").get("pointer") == "/data/attributes/messageBatchReference"
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_message_reference_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messages": [
+                    {
+                        "messageReference": "invalid",
+                        "recipient": {
+                            "nhsNumber": "0123456789",
+                            "dateOfBirth": "2000-01-01"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    error = resp.json().get("errors")[0]
+    assert error.get("id") == "CM_INVALID_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Invalid value"
+    assert (error.get("detail") == "The property at the specified location does not allow this value.")
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0/messageReference"
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_blank_value_under_messages_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers, invalid_value):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messages": [
+                    invalid_value
+                ],
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    errors = resp.json().get("errors")
+    assert len(errors) == 1
+    error = errors[0]
+    assert error.get("id") == "CM_INVALID_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Invalid value"
+    assert (error.get("detail") == "The property at the specified location does not allow this value.")
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0"
+
+
+@pytest.mark.prodtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_null_value_under_messages_prod(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers=nhsd_apim_auth_headers, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messages": [
+                    None
+                ],
+            }
+        }
+    })
+
+    assert resp.status_code == 400
+    errors = resp.json().get("errors")
+    assert len(errors) == 1
+    error = errors[0]
+    assert error.get("id") == "CM_NULL_VALUE"
+    assert error.get("status") == "400"
+    assert error.get("title") == "Property cannot be null"
+    assert (error.get("detail") ==
+            "The property at the specified location is required, but a null value was passed in the request.")
+    assert error.get("source").get("pointer") == "/data/attributes/messages/0"
