@@ -1,29 +1,11 @@
 import requests
 import pytest
+import uuid
 from lib import Assertions, Permutations, Generators
 
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
-}
-full_data = {
-  "data": {
-    "type": "MessageBatch",
-    "attributes": {
-      "routingPlanId": "2fd7f5c4-802e-4092-bd3d-276bb199df62",
-      "messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728",
-      "messages": [
-        {
-          "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-          "recipient": {
-            "nhsNumber": "1234567890",
-            "dateOfBirth": "1982-03-17"
-          },
-          "personalisation": {}
-        }
-      ]
-    }
-  }
 }
 CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
@@ -90,7 +72,10 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
             **headers,
             "X-Correlation-Id": correlation_id
         },
-        json=Permutations.new_dict_without_key(full_data, property),
+        json=Permutations.new_dict_without_key(
+            Generators.generate_valid_create_message_batch_body(),
+            property
+        ),
     )
 
     Assertions.assert_error_with_optional_correlation_id(
@@ -127,7 +112,10 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_
             **headers,
             "X-Correlation-Id": correlation_id
         },
-        json=Permutations.new_dict_with_null_key(full_data, property),
+        json=Permutations.new_dict_with_null_key(
+            Generators.generate_valid_create_message_batch_body(),
+            property
+        ),
     )
 
     Assertions.assert_error_with_optional_correlation_id(
@@ -170,7 +158,11 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nh
             **headers,
             "X-Correlation-Id": correlation_id
         },
-        json=Permutations.new_dict_with_new_value(full_data, property, "invalid string"),
+        json=Permutations.new_dict_with_new_value(
+            Generators.generate_valid_create_message_batch_body(),
+            property,
+            "invalid string"
+        ),
     )
 
     Assertions.assert_error_with_optional_correlation_id(
@@ -199,7 +191,7 @@ _duplicate_properties = [
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     # Add a duplicate message to the payload to trigger the duplicate error
-    data = full_data
+    data = Generators.generate_valid_create_message_batch_body()
     data["data"]["attributes"]["messages"].append(data["data"]["attributes"]["messages"][0])
 
     # Post the same message a 2nd time to trigger the duplicate error
@@ -245,7 +237,11 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
             **headers,
             "X-Correlation-Id": correlation_id
         },
-        json=Permutations.new_dict_with_new_value(full_data, property, []),
+        json=Permutations.new_dict_with_new_value(
+            Generators.generate_valid_create_message_batch_body(),
+            property,
+            []
+        ),
     )
 
     Assertions.assert_error_with_optional_correlation_id(
@@ -270,7 +266,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
@@ -307,7 +303,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_he
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
@@ -343,7 +339,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "invalid",
-                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
@@ -415,7 +411,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
                         "messageReference": "invalid",
@@ -452,7 +448,7 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     invalid_value
                 ],
@@ -481,7 +477,7 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id, nhsd_api
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     None
                 ],

@@ -1,7 +1,30 @@
+import uuid
 from .constants import *
 
 
 class Generators():
+    @staticmethod
+    def generate_valid_create_message_batch_body(prod=False):
+        return {
+            "data": {
+                "type": "MessageBatch",
+                "attributes": {
+                    "routingPlanId": VALID_ROUTING_PLAN_ID_PROD if prod else VALID_ROUTING_PLAN_ID_SANDBOX,
+                    "messageBatchReference": str(uuid.uuid1()),
+                    "messages": [
+                        {
+                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                            "recipient": {
+                                "nhsNumber": "1234567890",
+                                "dateOfBirth": "1982-03-17"
+                            },
+                            "personalisation": {}
+                        }
+                    ]
+                }
+            }
+        }
+
     @staticmethod
     def generate_invalid_value_error(pointer):
         return Generators.generate_error(ERROR_INVALID_VALUE, {
