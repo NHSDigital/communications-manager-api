@@ -19,6 +19,7 @@ keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
 python = "^3.8"
 pytest-nhsd-apim = "^3.3.2"
 pyjwt = {version = "2.3.0", extras = ["crypto"]}
+pytest-xdist = "^3.3.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"

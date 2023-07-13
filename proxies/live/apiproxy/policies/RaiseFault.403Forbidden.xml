@@ -17,7 +17,7 @@
                             },
                             "status" : "403",
                             "title" : "Forbidden",
-                            "description" : "Client not recognised or not yet onboarded.",
+                            "detail" : "Client not recognised or not yet onboarded.",
                             "source" : {
                                 "header" : "Authorization"
                             }

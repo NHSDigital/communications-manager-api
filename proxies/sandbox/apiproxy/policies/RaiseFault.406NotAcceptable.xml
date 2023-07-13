@@ -17,7 +17,7 @@
                             },
                             "status" : "406",
                             "title" : "Not acceptable",
-                            "description" : "This service can only generate application/vnd.api+json or application/json.",
+                            "detail" : "This service can only generate application/vnd.api+json or application/json.",
                             "source" : {
                                 "header" : "Accept"
                             }

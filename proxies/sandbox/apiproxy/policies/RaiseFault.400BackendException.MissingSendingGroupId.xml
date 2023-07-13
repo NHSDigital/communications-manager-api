@@ -17,7 +17,7 @@
                             },
                             "status" : "400",
                             "title" : "Invalid value",
-                            "description" : "The property at the specified location does not allow this value.",
+                            "detail" : "The property at the specified location does not allow this value.",
                             "source" : {
                                 "pointer" : "/data/attributes/routingPlanId"
                             }

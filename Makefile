@@ -54,8 +54,10 @@ release: clean publish build-proxy
 #################
 
 TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
+		PYTHONPATH=./tests \
 		poetry run pytest -v \
 		--color=yes \
+		-n 4 \
 		--api-name=communications-manager \
 		--proxy-name="$(PROXY_NAME)" \
 		-s
@@ -74,11 +76,13 @@ smoketest:
 sandboxtest:
 	$(TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
+	--ignore=tests/development
 	-m sandboxtest
 
 sandboxtest-prod:
 	$(PROD_TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
+	--ignore=tests/development
 	-m sandboxtest
 
 test:
@@ -90,7 +94,8 @@ smoketest-prod:
 	--junitxml=smoketest-report.xml \
 	-m smoketest
 
-test-prod:
+test-dev:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
-	-m prodtest
+	--ignore=tests/sandbox
+	-m devtest

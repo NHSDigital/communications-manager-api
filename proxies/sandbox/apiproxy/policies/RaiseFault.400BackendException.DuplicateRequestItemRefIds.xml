@@ -17,7 +17,7 @@
                             },
                             "status" : "400",
                             "title" : "Duplicate value",
-                            "description" : "The property at the specified location is a duplicate, duplicated values are not allowed.",
+                            "detail" : "The property at the specified location is a duplicate, duplicated values are not allowed.",
                             "source" : {
                                 "pointer" : "/data/attributes/messages"
                             }

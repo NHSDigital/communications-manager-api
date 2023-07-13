@@ -17,7 +17,7 @@
                             },
                             "status" : "408",
                             "title" : "Request timeout",
-                            "description" : "The service was unable to receive your request within the timeout period."
+                            "detail" : "The service was unable to receive your request within the timeout period."
                         }
                     ]
                 }
