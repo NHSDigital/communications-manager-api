@@ -133,6 +133,10 @@
         <Condition>response.status.code = 400 and response.content Like "*Missing data array*"</Condition>
       </Step>
       <Step>
+        <Name>RaiseFault.429TooManyRequests</Name>
+        <Condition>fault.name = "SpikeArrestViolation"</Condition>
+      </Step>
+      <Step>
         <Name>RaiseFault.503ServiceUnavailable</Name>
         <Condition>
           fault.name = "ProxyTunnelCreationFailed" or fault.name = "NoResolvedHost" or fault.name = "SslHandshakeFailed" or fault.name = "ServiceUnavailable" or fault.name = "NoActiveTargets" or response.status.code = 503
