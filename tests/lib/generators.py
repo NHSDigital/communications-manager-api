@@ -72,7 +72,7 @@ class Generators():
     def generate_duplicate_routing_plan_template_error():
         return Generators.generate_error(ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE, source={
             "pointer": "/data/attributes/routingPlanId"
-        }, meta={"duplicateTemplates" : [
+        }, meta={"duplicateTemplates": [
             {
                 "name": "EMAIL_TEMPLATE",
                 "type": "EMAIL"
@@ -80,7 +80,8 @@ class Generators():
             {
                 "name": "SMS_TEMPLATE",
                 "type": "SMS"
-            },{
+            },
+            {
                 "name": "LETTER_TEMPLATE",
                 "type": "LETTER"
             },
@@ -122,7 +123,7 @@ class Generators():
 
         if source:
             ret["source"] = source
-            
+
         if meta:
             ret["meta"] = meta
         return ret
