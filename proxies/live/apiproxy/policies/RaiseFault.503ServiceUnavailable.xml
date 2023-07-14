@@ -17,7 +17,7 @@
                             },
                             "status" : "503",
                             "title" : "The service is currently unavailable",
-                            "description" : "The service is currently not able to process this request, try again later."
+                            "detail" : "The service is currently not able to process this request, try again later."
                         }
                     ]
                 }

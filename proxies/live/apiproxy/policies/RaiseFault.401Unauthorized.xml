@@ -17,7 +17,7 @@
                             },
                             "status" : "401",
                             "title" : "Access denied",
-                            "description" : "Access token missing, invalid or expired, or calling application not configured for this operation.",
+                            "detail" : "Access token missing, invalid or expired, or calling application not configured for this operation.",
                             "source" : {
                                 "header" : "Authorization"
                             }

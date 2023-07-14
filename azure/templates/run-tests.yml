@@ -4,7 +4,7 @@ parameters:
     default: false
   - name: test_command
     type: string
-    default: 'make test-prod'
+    default: 'make test-dev'
   - name: smoketest_command
     type: string
     default: 'make smoketest'

@@ -17,7 +17,7 @@
                             },
                             "status" : "404",
                             "title" : "No such routing plan",
-                            "description" : "The routing plan specified either does not exist or is not in a usable state.",
+                            "detail" : "The routing plan specified either does not exist or is not in a usable state.",
                             "source" : {
                                 "pointer" : "/data/attributes/routingPlanId"
                             }

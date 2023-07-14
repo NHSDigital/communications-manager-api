@@ -17,7 +17,7 @@
                             },
                             "status" : "415",
                             "title" : "Unsupported media",
-                            "description" : "Invalid content-type, this API only supports application/vnd.api+json or application/json.",
+                            "detail" : "Invalid content-type, this API only supports application/vnd.api+json or application/json.",
                             "source" : {
                                 "header" : "Content-Type"
                             }

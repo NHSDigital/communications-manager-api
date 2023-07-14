@@ -19,7 +19,7 @@ smoketest-report.xml
 env
 .dir-locals.el
 *.pyc
-test-report.xml
+*-report.xml
 .env
 *.key
 *.pem

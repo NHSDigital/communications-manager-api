@@ -17,7 +17,7 @@
                             },
                             "status" : "404",
                             "title" : "Resource not found",
-                            "description" : "The resource at the requested URI was not found."
+                            "detail" : "The resource at the requested URI was not found."
                         }
                     ]
                 }

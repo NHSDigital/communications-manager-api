@@ -17,7 +17,7 @@
                             },
                             "status" : "504",
                             "title" : "Unable to call service",
-                            "description" : "The downstream service has not responded within the configured timeout period."
+                            "detail" : "The downstream service has not responded within the configured timeout period."
                         }
                     ]
                 }
