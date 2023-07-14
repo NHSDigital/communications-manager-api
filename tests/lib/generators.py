@@ -86,6 +86,18 @@ class Generators():
         })
 
     @staticmethod
+    def generate_missing_routing_plan_template_error():
+        return Generators.generate_error(ERROR_MISSING_ROUTING_PLAN_TEMPLATE, {
+            "pointer": "/data/attributes/routingPlanId"
+        })
+
+    @staticmethod
+    def generate_duplicate_routing_plan_template_error():
+        return Generators.generate_error(ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE, {
+            "pointer": "/data/attributes/routingPlanId"
+        })
+
+    @staticmethod
     def generate_not_found_error():
         return Generators.generate_error(ERROR_NOT_FOUND, None)
 
