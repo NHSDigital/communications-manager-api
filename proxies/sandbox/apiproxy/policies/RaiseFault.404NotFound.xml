@@ -13,7 +13,7 @@
                         {
                             "id" : "CM_NOT_FOUND",
                             "links" : {
-                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
                             },
                             "status" : "404",
                             "title" : "Resource not found",

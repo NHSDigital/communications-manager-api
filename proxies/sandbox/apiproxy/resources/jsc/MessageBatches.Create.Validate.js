@@ -165,7 +165,7 @@ function createErrorObject(code, title, detail, pointer) {
   return {
     "id": code,
     "links": {
-      "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+      "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
     },
     "status": "400",
     "title": title,

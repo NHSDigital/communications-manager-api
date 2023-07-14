@@ -13,7 +13,7 @@
                         {
                             "id" : "CM_DUPLICATE_VALUE",
                             "links" : {
-                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
                             },
                             "status" : "400",
                             "title" : "Duplicate value",
