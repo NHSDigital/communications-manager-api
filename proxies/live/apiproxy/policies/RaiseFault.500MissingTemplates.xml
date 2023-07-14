@@ -13,7 +13,7 @@
                         {
                             "id" : "CM_MISSING_ROUTING_PLAN_TEMPLATE",
                             "links" : {
-                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
                             },
                             "status" : "500",
                             "title" : "Templates missing",
