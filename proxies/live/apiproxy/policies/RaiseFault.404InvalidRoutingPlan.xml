@@ -13,7 +13,7 @@
                         {
                             "id" : "CM_NO_SUCH_ROUTING_PLAN",
                             "links" : {
-                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
                             },
                             "status" : "404",
                             "title" : "No such routing plan",

@@ -1106,7 +1106,7 @@ components:
         about:
           type: string
           enum:
-            - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+            - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager-api'
           format: uri
-          example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+          example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager-api'
       minProperties: 1

@@ -13,7 +13,7 @@
                         {
                             "id" : "CM_SERVICE_UNAVAILABLE",
                             "links" : {
-                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
                             },
                             "status" : "503",
                             "title" : "The service is currently unavailable",

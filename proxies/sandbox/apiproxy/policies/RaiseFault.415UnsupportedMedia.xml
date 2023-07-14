@@ -13,7 +13,7 @@
                         {
                             "id" : "CM_UNSUPPORTED_MEDIA",
                             "links" : {
-                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                                "about" : "https://digital.nhs.uk/developer/api-catalogue/communications-manager-api"
                             },
                             "status" : "415",
                             "title" : "Unsupported media",
