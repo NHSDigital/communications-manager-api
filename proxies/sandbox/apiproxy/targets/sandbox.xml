@@ -107,6 +107,13 @@
     <PreFlow name="PreFlow">
         <Request>
             <Step>
+              <Name>ExtractVariables.MessageBatches.Create.RoutingConfig</Name>
+            </Step>
+            <Step>
+                <Name>RaiseFault.400BackendException.InvalidRoutingConfig</Name>
+                <Condition>{routingPlanId} === "4ead415a-c033-4b39-9b05-326ac237a3be"</Condition>
+            </Step>
+            <Step>
                 <Name>RaiseFault.408RequestTimeout</Name>
                 <Condition>request.header.Prefer = "code=408"</Condition>
             </Step>
