@@ -17,7 +17,7 @@
                             },
                             "status" : "500",
                             "title" : "Templates missing",
-                            "description" : "The templates required to use the routing plan were not found.",
+                            "detail" : "The templates required to use the routing plan were not found.",
                             "source" : {
                                 "pointer" : "/data/attributes/routingPlanId"
                             }

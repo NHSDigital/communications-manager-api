@@ -17,7 +17,7 @@
                             },
                             "status" : "500",
                             "title" : "Duplicate templates",
-                            "description" : "The routing plan specified contains duplicate templates.",
+                            "detail" : "The routing plan specified contains duplicate templates.",
                             "source" : {
                                 "pointer" : "/data/attributes/routingPlanId"
                             },
