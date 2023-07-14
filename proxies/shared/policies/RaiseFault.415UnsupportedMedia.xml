@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.415UnsupportedMedia">
+    <DisplayName>RaiseFault.415UnsupportedMedia</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>415</StatusCode>
+            <ReasonPhrase>Unsupported Media</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_UNSUPPORTED_MEDIA",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "415",
+                            "title" : "Unsupported media",
+                            "detail" : "Invalid content-type, this API only supports application/vnd.api+json or application/json.",
+                            "source" : {
+                                "header" : "Content-Type"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

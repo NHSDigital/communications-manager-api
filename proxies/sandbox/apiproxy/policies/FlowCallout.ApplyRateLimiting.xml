@@ -1,4 +1,0 @@
-<FlowCallout async="false" continueOnError="false" enabled="true" name="FlowCallout.ApplyRateLimiting">
-  <DisplayName>Apply Rate Limiting</DisplayName>
-  <SharedFlowBundle>ApplyRateLimiting</SharedFlowBundle>
-</FlowCallout>

@@ -1,194 +1,29 @@
 <TargetEndpoint name="communications-manager-target">
-  <PreFlow>
-    <Request>
-      <Step>
-        <Name>OauthV2.VerifyAccessToken</Name>
-      </Step>
-      <Step>
-        <Name>JavaScript.SetResponseContentType</Name>
-      </Step>
-      <Step>
-        <Name>AssignMessage.AddCorsResponse</Name>
-        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.403Forbidden</Name>
-        <Condition>
-          grant_type != "client_credentials"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.406NotAcceptable</Name>
-        <Condition>
-          request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.415UnsupportedMedia</Name>
-        <Condition>
-          (request.verb = "POST" or request.verb = "PATCH" or request.verb = "PUT") and (request.header.Content-Type = null or (request.header.Content-Type != "application/json" and request.header.Content-Type != "application/vnd.api+json"))
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.404NotFound</Name>
-        <Condition>
-          (proxy.pathsuffix != "/v1/message-batches") or (proxy.pathsuffix == "/v1/message-batches" and request.verb != "POST")
-        </Condition>
-      </Step>
-      <Step>
-        <Name>FlowCallout.ApplyRateLimiting</Name>
-      </Step>
-    </Request>
-  </PreFlow>
-  <Flows>
-    <Flow name="CreateMessageBatchEndpoint">
-      <Description>Handle create message batch</Description>
-      <Request>
-        <Step>
-          <Name>JavaScript.MessageBatches.Create.Validate</Name>
-        </Step>
-        <Step>
-            <Name>RaiseFault.400BadRequest</Name>
-            <Condition>errors != null</Condition>
-        </Step>
-        <Step>
-          <Name>JavaScript.MessageBatches.Create.Request</Name>
-        </Step>
-        <Step>
-          <Name>AssignMessage.MessageBatches.Create.Request</Name>
-        </Step>
-        <Step>
-          <Name>AssignMessage.AuthenticationDetails</Name>
-        </Step>
-      </Request>
-      <Response>
-          <Step>
-            <Name>ExtractVariables.MessageBatches.Create.Response</Name>
-          </Step>
-          <Step>
-            <Name>AssignMessage.MessageBatches.Create.Response</Name>
-          </Step>
-      </Response>
-      <Condition>
-        (proxy.pathsuffix MatchesPath "/v1/message-batches") and (request.verb = "POST")
-      </Condition>
-    </Flow>
-  </Flows>
-  <PostFlow name="PostFlow">
-    <Response>
-      <Step>
-        <Name>JavaScript.SetResponseContentType</Name>
-      </Step>
-      <Step>
-        <Name>AssignMessage.AddCorsResponse</Name>
-        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
-      </Step>
-    </Response>
-  </PostFlow>
-  <FaultRules>
-    <FaultRule name="combined_backend_fault_handler">
-      <Step>
-        <Name>JavaScript.SetResponseContentType</Name>
-      </Step>
-      <Step>
-        <Name>AssignMessage.SetCorrelationId</Name>
-        <Condition>request.headers.x-correlation-id != null</Condition>
-      </Step>
-      <Step>
-        <Name>AssignMessage.AddCorsResponse</Name>
-        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
-      </Step>
-      <Step>
-       <Name>RaiseFault.401Unauthorized</Name>
-        <Condition>
-          oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.403Forbidden</Name>
-        <Condition>response.status.code = 403</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.404InvalidRoutingPlan</Name>
-        <Condition>
-          response.status.code = 404 and response.content Like "*Routing Config does not exist for clientId *" and response.content Like "* and sendingGroupId *"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.404NotFound</Name>
-        <Condition>response.status.code = 404</Condition>
-      </Step>
-      <Step>
-          <Name>RaiseFault.400BackendException.InvalidRoutingConfig</Name>
-          <Condition>response.status.code = 400 and response.content Like "*Invalid Routing Config*"</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.400BackendException.DuplicateRequestItemRefIds</Name>
-        <Condition>response.status.code = 400 and response.content Like "*Duplicate requestItemRefIds*"</Condition>
-      </Step>
-      <Step>
-          <Name>RaiseFault.400BackendException.MissingSendingGroupId</Name>
-          <Condition>response.status.code = 400 and response.content Like "*Missing sendingGroupId*"</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.400BackendException.MissingRequestRefId</Name>
-        <Condition>response.status.code = 400 and response.content Like "*Missing requestRefId*"</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.400BackendException.MissingDataArray</Name>
-        <Condition>response.status.code = 400 and response.content Like "*Missing data array*"</Condition>
-      </Step>
-      <Step>
-        <Name>JavaScript.500DuplicateTemplates.ExtractDuplicates</Name>
-        <Condition>
-          response.status.code = 400 and response.content Like "*Duplicate templates found: *"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.500DuplicateTemplates</Name>
-        <Condition>
-          response.status.code = 400 and response.content Like "*Duplicate templates found: *"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.500MissingTemplates</Name>
-        <Condition>
-          response.status.code = 400 and response.content Like "*Templates required in *" and response.content Like "* routing config not found*"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.500FailedWriteToDynamoDB</Name>
-        <Condition>
-          response.status.code = 500 and response.content Like "*Error writing request items to DynamoDB*"
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.429TooManyRequests</Name>
-        <Condition>fault.name = "SpikeArrestViolation"</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.503ServiceUnavailable</Name>
-        <Condition>
-          fault.name = "ProxyTunnelCreationFailed" or fault.name = "NoResolvedHost" or fault.name = "SslHandshakeFailed" or fault.name = "ServiceUnavailable" or fault.name = "NoActiveTargets" or response.status.code = 503
-        </Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.504GatewayTimeout</Name>
-        <Condition>fault.name = "GatewayTimeout" or response.status.code = 504</Condition>
-      </Step>
-      <Step>
-        <Name>RaiseFault.408RequestTimeout</Name>
-        <Condition>fault.name = "RequestTimeout" or response.status.code = 408</Condition>
-      </Step>
-    </FaultRule>
-  </FaultRules>
-  <HTTPTargetConnection>
-    <SSLInfo>
-      <Enabled>true</Enabled>
-    </SSLInfo>
-    <LoadBalancer>
-      <Server name="communications-manager-target" />
-    </LoadBalancer>
-    <Path>{requestpath}</Path>
-  </HTTPTargetConnection>
+    <PreFlow>
+        <Request>
+            [% include './partials/Partial.Target.PreFlowRequest.xml' %]
+        </Request>
+        <Response>
+            [% include './partials/Partial.Target.PreFlowResponse.xml' %]
+        </Response>
+    </PreFlow>
+    <Flows>
+        [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
+    </Flows>
+    [% include './partials/Partial.Target.PostFlow.xml' %]
+    <FaultRules>
+        [% include './partials/Partial.Target.FaultRules.xml' %]
+    </FaultRules>
+    <HTTPTargetConnection>
+        <SSLInfo>
+            <Enabled>true</Enabled>
+        </SSLInfo>
+        <LoadBalancer>
+            <Server name="communications-manager-target" />
+        </LoadBalancer>
+        <Path>{requestpath}</Path>
+        <Properties>
+            <Property name="io.timeout.millis">29000</Property>
+        </Properties>
+    </HTTPTargetConnection>
 </TargetEndpoint>

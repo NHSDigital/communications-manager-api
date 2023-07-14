@@ -1,0 +1,7 @@
+<PostClientFlow name="PostClientFlow">
+    <Response>
+        <Step>
+            <Name>FlowCallout.LogToSplunk</Name>
+        </Step>
+    </Response>
+</PostClientFlow>

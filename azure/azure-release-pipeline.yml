@@ -34,7 +34,8 @@ extends:
     apigee_deployments:
       - environment: internal-dev
         jinja_templates:
-          NON_PROD_ENVIRONMENT: true
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
@@ -42,12 +43,14 @@ extends:
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         jinja_templates:
-          NON_PROD_ENVIRONMENT: true
+          ENVIRONMENT_TYPE: 'sandbox'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
       - environment: internal-qa
         jinja_templates:
-          NON_PROD_ENVIRONMENT: true
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
@@ -55,7 +58,8 @@ extends:
       - environment: internal-qa-sandbox
         proxy_path: sandbox
         jinja_templates:
-          NON_PROD_ENVIRONMENT: true
+          ENVIRONMENT_TYPE: 'sandbox'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
     #   - environment: ref
@@ -67,7 +71,8 @@ extends:
       - environment: sandbox
         proxy_path: sandbox
         jinja_templates:
-          NON_PROD_ENVIRONMENT: false
+          ENVIRONMENT_TYPE: 'sandbox'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
@@ -77,4 +82,5 @@ extends:
           - internal_qa
           - internal_qa_sandbox
         jinja_templates:
-          NON_PROD_ENVIRONMENT: false
+          ENVIRONMENT_TYPE: 'production'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
