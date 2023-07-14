@@ -2,7 +2,7 @@ import requests
 import pytest
 import string
 import random
-from lib import Assertions
+from lib import Assertions, Generators
 
 VALID_ACCEPT_HEADERS = ["*/*", "application/json", "application/vnd.api+json"]
 VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
@@ -21,227 +21,79 @@ valid_nhs_number = ''.join(random.choices(string.digits, k=10))
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_headers):
+    data = Generators.generate_valid_create_message_batch_body()
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
         headers={
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
-        json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "1234567890",
-                                "dateOfBirth": "1982-03-17"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
+        json=data
     )
-    Assertions.assert_201_response(resp)
+    Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, content_type):
+    data = Generators.generate_valid_create_message_batch_body()
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             "Accept": "application/json",
             "Content-Type": content_type
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "1234567890",
-                                "dateOfBirth": "1982-03-17"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
+        }, json=data
     )
-    Assertions.assert_201_response(resp)
+    Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('routing_plan_id', VALID_ROUTING_PLAN_ID)
 def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_plan_id):
+    data = Generators.generate_valid_create_message_batch_body()
+    data["data"]["attributes"]["routingPlanId"] = routing_plan_id
+
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             "Accept": "application/json",
             "Content-Type": "application/json"
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": routing_plan_id,
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "1234567890",
-                                "dateOfBirth": "1982-03-17"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
+        }, json=data
     )
-    Assertions.assert_201_response(resp)
-
-
-@pytest.mark.sandboxtest
-def test_201_message_batch_valid_message_batch_reference(nhsd_apim_proxy_url):
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "1234567890",
-                                "dateOfBirth": "1982-03-17"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
-    )
-    Assertions.assert_201_response(resp)
-
-
-@pytest.mark.sandboxtest
-def test_201_message_batch_valid_message_batch(nhsd_apim_proxy_url):
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f78",
-                            "recipient": {
-                                "nhsNumber": "1234567890",
-                                "dateOfBirth": "1982-03-17"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
-    )
-    Assertions.assert_201_response(resp)
+    Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
 
 @pytest.mark.sandboxtest
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
+    data = Generators.generate_valid_create_message_batch_body()
+    data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = valid_nhs_number
+
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             "Accept": "application/json",
             "Content-Type": "application/json"
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": valid_nhs_number,
-                                "dateOfBirth": "1982-03-17"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
+        }, json=data
     )
-    Assertions.assert_201_response(resp)
+    Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('dob', VALID_DOB)
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
+    data = Generators.generate_valid_create_message_batch_body()
+    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
+
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             "Accept": "application/json",
             "Content-Type": "application/json"
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "0123456789",
-                                "dateOfBirth": dob
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        }
+        }, json=data
     )
-    Assertions.assert_201_response(resp)
+    Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
 
 @pytest.mark.sandboxtest
 def test_request_without_dob(nhsd_apim_proxy_url):
+    data = Generators.generate_valid_create_message_batch_body()
+    data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
+
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json"
-        }, json={
-            "data": {
-                "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": "0f58f589-db44-423c-85f7-0c0f0b5a3f77",
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "1234567890",
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
-            }
-        })
-    Assertions.assert_201_response(resp)
+        }, json=data
+    )
+    Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])

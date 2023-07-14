@@ -3,14 +3,15 @@ from .constants import *
 
 class Assertions():
     @staticmethod
-    def assert_201_response(resp):
+    def assert_201_response(resp, messageBatchReference):
         assert resp.status_code == 201
 
         response = resp.json().get("data")
         assert response.get("type") == "MessageBatch"
         assert response.get("id") is not None
         assert response.get("id") != ""
-        assert response.get("attributes").get("messageBatchReference") == "0f58f589-db44-423c-85f7-0c0f0b5a3f77"
+        assert response.get("attributes").get("messageBatchReference") is not None
+        assert response.get("attributes").get("messageBatchReference") == messageBatchReference
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):

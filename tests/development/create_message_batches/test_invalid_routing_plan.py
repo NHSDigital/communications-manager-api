@@ -19,7 +19,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": f"f{str(uuid.uuid1())[1:]}",
-                "messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728",
+                "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
