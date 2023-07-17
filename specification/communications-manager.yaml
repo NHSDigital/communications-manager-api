@@ -462,13 +462,66 @@ paths:
                 type: string
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+        '500':
+          description: |+
+            An error has occured that is stopping your request from being processed. These errors may be thrown while the system is still being configured for your use, or a misconfiguration has occurred.
+
+            The following errors can occur:
+
+            | Error code | Title | Description |
+            | ---------- | ----- | ----------- |
+            | `CM_MISSING_ROUTING_PLAN_TEMPLATE` | Templates missing | The templates required to use the routing plan were not found. |
+            | `CM_ROUTING_PLAN_DUPLICATE_TEMPLATES` | Duplicate templates | The routing plan specified contains duplicate templates. |
+
+            Within each error is a source object which details the location of the error within your request body.
+
+            Certain errors may include an extra set of metadata to assist you with resolving the problem.
+
+            This is done using a pointer that uses the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) as per the [JSON:API Error Specification](https://jsonapi.org/format/#errors).
+
+            ### Sandbox
+
+            It is possible to simulate these errors by sending requests with specific routing plan identifiers.
+
+            To trigger the `CM_MISSING_ROUTING_PLAN_TEMPLATE` error use routing plan id `c8857ccf-06ec-483f-9b3a-7fc732d9ad48`. Here is an example curl request to simulate the response:
+
+            ```
+              curl -X POST \
+                --header "Accept: */*" \
+                --header "Content-type: application/vnd.api+json" \
+                -d '{"data": {"type": "MessageBatch","attributes": {"routingPlanId": "c8857ccf-06ec-483f-9b3a-7fc732d9ad48","messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728","messages": [{"messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575","recipient": {"nhsNumber": "1234567890","dateOfBirth": "1982-03-17"},"personalisation": {}}]}}}' \
+                https://sandbox.api.service.nhs.uk/comms/v1/message-batches
+            ```
+
+            To trigger the `CM_ROUTING_PLAN_DUPLICATE_TEMPLATES` error use routing plan id `a3a4e55d-7a21-45a6-9286-8eb595c872a8`. Here is an example curl request to simulate the response:
+
+            ```
+              curl -X POST \
+                --header "Accept: */*" \
+                --header "Content-type: application/vnd.api+json" \
+                -d '{"data": {"type": "MessageBatch","attributes": {"routingPlanId": "a3a4e55d-7a21-45a6-9286-8eb595c872a8","messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728","messages": [{"messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575","recipient": {"nhsNumber": "1234567890","dateOfBirth": "1982-03-17"},"personalisation": {}}]}}}' \
+                https://sandbox.api.service.nhs.uk/comms/v1/message-batches
+            ```
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+          headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
         '503':
           description: |+
             The service is currently not accepting requests,
 
             This error can occur if any part of the system has gone offline.
 
-            ### sandbox-testing
+            ### Sandbox
 
             It is possible to simulate this error response by sending a request with a header of `Prefer` set to the value `code=503`.
 
@@ -719,6 +772,55 @@ components:
         - CM_TOO_FEW_ITEMS
       example: CM_MISSING_VALUE
       title: Enum_Error_InvalidValue
+    InternalServerError:
+      type: object
+      title: Internal server error
+      additionalProperties: false
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              id:
+                $ref: '#/components/schemas/Enum_Error_InternalServerError'
+              links:
+                $ref: '#/components/schemas/Links_Error'
+              status:
+                type: string
+                enum:
+                  - '500'
+                example: '500'
+              title:
+                type: string
+                enum:
+                  - Templates missing
+                  - Duplicate templates
+                example: Templates missing
+              detail:
+                type: string
+                enum:
+                  - 'The templates required to use the routing plan were not found.'
+                  - 'The routing plan specified contains duplicate templates.'
+                example: 'The templates required to use the routing plan were not found.'
+              source:
+                type: object
+                additionalProperties: false
+                properties:
+                  pointer:
+                    type: string
+                    enum:
+                      - /data/attributes/routingPlanId
+                    example: /data/attributes/routingPlanId
+    Enum_Error_InternalServerError:
+      type: string
+      enum:
+        - CM_ROUTING_PLAN_DUPLICATE_TEMPLATES
+        - CM_MISSING_ROUTING_PLAN_TEMPLATE
+      example: CM_MISSING_ROUTING_PLAN_TEMPLATE
+      title: Enum_Error_InternalServerError
     AccessDeniedResponse:
       type: object
       title: Access Denied
@@ -1106,7 +1208,7 @@ components:
         about:
           type: string
           enum:
-            - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager-api'
+            - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
           format: uri
-          example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager-api'
+          example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
       minProperties: 1
