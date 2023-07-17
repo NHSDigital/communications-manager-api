@@ -1,7 +1,7 @@
 "use strict";
 
 const log = require("loglevel");
-const KSUID = require('ksuid')
+const KSUID = require("ksuid")
 
 const write_log = (res, log_level, options = {}) => {
     if (log.getLevel()>log.levels[log_level.toUpperCase()]) {
@@ -15,7 +15,7 @@ const write_log = (res, log_level, options = {}) => {
         level: log_level,
         correlation_id: res.locals.correlation_id
     }
-    if (typeof options === 'object') {
+    if (typeof options === "object") {
         options = Object.keys(options).reduce(function(obj, x) {
             let val = options[x]
             if (typeof val === "function") {
@@ -58,31 +58,57 @@ const validSendingGroupIds = {
     "b402cd20-b62a-4357-8e02-2952959531c8" : 1,
     "936e9d45-15de-4a95-bb36-ae163c33ae53" : 1,
     "9ba00d23-cd6f-4aca-8688-00abc85a7980" : 1,
-    "4ead415a-c033-4b39-9b05-326ac237a3be" : 1
+    "4ead415a-c033-4b39-9b05-326ac237a3be" : 1,
+    "c8857ccf-06ec-483f-9b3a-7fc732d9ad48" : 1,
+    "a3a4e55d-7a21-45a6-9286-8eb595c872a8" : 1
 };
 const invalidRoutingPlanId = "4ead415a-c033-4b39-9b05-326ac237a3be";
+const sendingGroupIdWithMissingTemplates = "c8857ccf-06ec-483f-9b3a-7fc732d9ad48";
+const sendingGroupIdWithDuplicateTemplates = "a3a4e55d-7a21-45a6-9286-8eb595c872a8";
+const duplicateTemplates = [
+    {
+        name: "EMAIL_TEMPLATE",
+        type: "EMAIL"
+    },
+    {
+        name: "SMS_TEMPLATE",
+        type: "SMS"
+    },
+    {
+        name: "LETTER_TEMPLATE",
+        type: "LETTER"
+    },
+    {
+        name: "LETTER_PDF_TEMPLATE",
+        type: "LETTER_PDF"
+    },
+    {
+        name: "NHSAPP_TEMPLATE",
+        type: "NHSAPP"
+    }
+];
 
 async function batch_send(req, res, next) {
     if (!req.body) {
-        sendError(res, 400, 'Missing request body');
+        sendError(res, 400, "Missing request body");
         next();
         return;
     }
 
     if (!req.body.sendingGroupId) {
-        sendError(res, 400, 'Missing sendingGroupId');
+        sendError(res, 400, "Missing sendingGroupId");
         next();
         return;
     }
 
     if (!req.body.requestRefId) {
-        sendError(res, 400, 'Missing requestRefId');
+        sendError(res, 400, "Missing requestRefId");
         next();
         return;
     }
 
     if (!Array.isArray(req.body.data)) {
-        sendError(res, 400, 'Missing data array');
+        sendError(res, 400, "Missing data array");
         next();
         return;
     }
@@ -110,13 +136,25 @@ async function batch_send(req, res, next) {
     }
 
     if (req.body.data.attributes.routingPlanId === invalidRoutingPlanId) {
-      sendError(res, 400, 'Invalid Routing Config');
+      sendError(res, 400, "Invalid Routing Config");
       next();
       return;
     }
 
-    if (req.body.requestRefId === 'simulate-500') {
-        sendError(res, 500, 'Error writing request items to DynamoDB');
+    if (req.body.sendingGroupId === sendingGroupIdWithMissingTemplates) {
+        sendError(res, 400, `Templates required in "${req.body.sendingGroupId}" routing config not found`);
+        next();
+        return;
+    }
+
+    if (req.body.sendingGroupId === sendingGroupIdWithDuplicateTemplates) {
+        sendError(res, 400, `Duplicate templates found: ${JSON.stringify(duplicateTemplates)}`);
+        next();
+        return;
+    }
+
+    if (req.body.requestRefId === "simulate-500") {
+        sendError(res, 500, "Error writing request items to DynamoDB");
         next();
         return;
     }

@@ -214,6 +214,48 @@ describe("app handler tests", function () {
                 .expect("Content-Type", /json/, done);
         });
 
+        it('returns a 400 when the sending group has missing templates', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'c8857ccf-06ec-483f-9b3a-7fc732d9ad48',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(400, {
+                    message: 'Templates required in "c8857ccf-06ec-483f-9b3a-7fc732d9ad48" routing config not found'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 400 when the sending group has duplicate templates', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'a3a4e55d-7a21-45a6-9286-8eb595c872a8',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(400, {
+                    message: 'Duplicate templates found: [{\"name\":\"EMAIL_TEMPLATE\",\"type\":\"EMAIL\"},{\"name\":\"SMS_TEMPLATE\",\"type\":\"SMS\"},{\"name\":\"LETTER_TEMPLATE\",\"type\":\"LETTER\"},{\"name\":\"LETTER_PDF_TEMPLATE\",\"type\":\"LETTER_PDF\"},{\"name\":\"NHSAPP_TEMPLATE\",\"type\":\"NHSAPP\"}]'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
         it('can simulate a 500 error', (done) => {
            request(server)
                 .post('/api/v1/send')

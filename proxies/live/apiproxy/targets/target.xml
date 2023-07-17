@@ -139,6 +139,24 @@
         <Condition>response.status.code = 400 and response.content Like "*Missing data array*"</Condition>
       </Step>
       <Step>
+        <Name>JavaScript.500DuplicateTemplates.ExtractDuplicates</Name>
+        <Condition>
+          response.status.code = 400 and response.content Like "*Duplicate templates found: *"
+        </Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.500DuplicateTemplates</Name>
+        <Condition>
+          response.status.code = 400 and response.content Like "*Duplicate templates found: *"
+        </Condition>
+      </Step>
+      <Step>
+        <Name>RaiseFault.500MissingTemplates</Name>
+        <Condition>
+          response.status.code = 400 and response.content Like "*Templates required in *" and response.content Like "* routing config not found*"
+        </Condition>
+      </Step>
+      <Step>
         <Name>RaiseFault.429TooManyRequests</Name>
         <Condition>fault.name = "SpikeArrestViolation"</Condition>
       </Step>
