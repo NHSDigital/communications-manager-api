@@ -39,7 +39,7 @@ build-proxy:
 	scripts/build_proxy.sh
 
 #Files to loop over in release
-_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests"
+_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox"
 
 #Create /dist/ sub-directory and copy files into directory
 release: clean publish build-proxy
@@ -67,19 +67,22 @@ PROD_TEST_CMD := $(TEST_CMD) \
 		--apigee-organization=nhsd-prod \
 		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)"
 
+.run-sandbox-unit-tests:
+	(cd sandbox; rm -rf node_modules; npm install --legacy-peer-deps; npm run test)
+
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
 	$(TEST_CMD) \
 	--junitxml=smoketest-report.xml \
 	-m smoketest
 
-sandboxtest:
+sandboxtest: .run-sandbox-unit-tests
 	$(TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
 	--ignore=tests/development
 	-m sandboxtest
 
-sandboxtest-prod:
+sandboxtest-prod: .run-sandbox-unit-tests
 	$(PROD_TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
 	--ignore=tests/development

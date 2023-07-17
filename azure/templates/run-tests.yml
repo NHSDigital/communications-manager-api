@@ -67,3 +67,9 @@ steps:
       inputs:
         testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/sandboxtest-report.xml'
         failTaskOnFailedTests: true
+    - task: PublishTestResults@2
+      displayName: 'Publish mock unit test results'
+      condition: always()
+      inputs:
+        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/sandbox/sandbox-unit-report.xml'
+        failTaskOnFailedTests: true

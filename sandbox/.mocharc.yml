@@ -2,3 +2,4 @@ spec: './*.spec.js'
 ui: bdd
 watch-files:
   - '**/*.js'
+timeout: 5000
