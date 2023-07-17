@@ -11,6 +11,9 @@ parameters:
   - name: sandboxtest_command
     type: string
     default: 'make sandboxtest'
+  - name: nightly
+    type: boolean
+    default: false
 
 steps:
   - template: "azure/components/aws-assume-role.yml@common"
@@ -26,14 +29,42 @@ steps:
       - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
 
   - bash: |
+      if [ "${{ parameters.nightly }}" != "True" ]; then
+        cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+      fi
       make install-python
-    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
     displayName: Setup pytests
     condition: always()
 
-  - ${{ if parameters.full }}:
-    # In order to run tests in prod you must supply the unique ID of an Apigee app
-    # that has authorized access to your service proxy.
+  - ${{ if parameters.nightly }}:
+    - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+      parameters:
+        secret_ids:
+          - ptl/azure-devops/apigee-nonprod/APIGEE_OTP_KEY
+          - ptl/azure-devops/apigee-nonprod/APIGEE_PASSWORD
+        config_ids:
+          - /ptl/azure-devops/apigee-nonprod/APIGEE_USERNAME
+    - template: "azure/components/get-mfa-code.yml@common"
+      parameters:
+        apigee_otp_key: $(APIGEE_OTP_KEY)
+    - template: "azure/components/get-access-token.yml@common"
+      parameters:
+        apigee_username: $(APIGEE_USERNAME)
+        apigee_password: $(APIGEE_PASSWORD)
+    - bash: |
+        export PROXY_NAME="communications-manager-internal-dev"
+        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+        export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
+        export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
+        ${{ parameters.test_command }}
+      displayName: Run full test suite
+    - task: PublishTestResults@2
+      displayName: 'Publish test results'
+      condition: always()
+      inputs:
+        testResultsFiles: 'test-report.xml'
+        failTaskOnFailedTests: true
+  - ${{ elseif parameters.full }}:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
@@ -49,9 +80,7 @@ steps:
       inputs:
         testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/test-report.xml'
         failTaskOnFailedTests: true
-  - ${{ if not(parameters.full) }}:
-    # In order to run tests in prod you must supply the unique ID of an Apigee app
-    # that has authorized access to your service proxy.
+  - ${{ else }}:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"

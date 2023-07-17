@@ -1,6 +1,8 @@
 # communications-manager
 
-![Build](https://github.com/NHSDigital/communications-manager/workflows/Build/badge.svg?branch=master)
+## Status
+
+* Nightly test status: [![Nightly test status](https://dev.azure.com/NHSD-APIM/API%20Platform/_apis/build/status%2FCommunications-Manager%2FCommunications-Manager-Nightly?repoName=NHSDigital%2Fcommunications-manager&branchName=master)](https://dev.azure.com/NHSD-APIM/API%20Platform/_build/latest?definitionId=622&repoName=NHSDigital%2Fcommunications-manager&branchName=master)
 
 This is a specification for the *communications-manager* API.
 
