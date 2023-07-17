@@ -111,7 +111,7 @@
             </Step>
             <Step>
                 <Name>RaiseFault.400BackendException.InvalidRoutingConfig</Name>
-                <Condition>({routingPlanId} == "4ead415a-c033-4b39-9b05-326ac237a3be")</Condition>
+                <Condition>response.status.code = 400 and response.content Like "*Invalid Routing Config*"</Condition>
             </Step>
             <Step>
                 <Name>RaiseFault.408RequestTimeout</Name>

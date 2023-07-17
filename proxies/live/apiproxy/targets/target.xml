@@ -120,9 +120,7 @@
       </Step>
       <Step>
           <Name>RaiseFault.400BackendException.InvalidRoutingConfig</Name>
-          <Condition>
-              response.status.code = 400 and response.content Like "*Invalid Routing Config*"
-          </Condition>
+          <Condition>response.status.code = 400 and response.content Like "*Invalid Routing Config*"</Condition>
       </Step>
       <Step>
         <Name>RaiseFault.400BackendException.DuplicateRequestItemRefIds</Name>
