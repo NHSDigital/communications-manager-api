@@ -18,12 +18,6 @@ info:
 
     The Communications Manager service is intended for services involved in direct care. This API can only be used where you have a legal basis to issue communications to citizens.
 
-    ## Related APIs
-
-    This service utilises the [Personal Demographics Service - FHIR API (PDS)](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir). This service is used to collect citizen details to determine how to contact recipients and to enrich the messages sent to them.
-
-    You do not need to onboard with this API, our service integrates with it on your behalf.
-
     ## API status and roadmap
 
     This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
