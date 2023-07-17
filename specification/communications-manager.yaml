@@ -5,26 +5,18 @@ info:
   description:  |
     ## Overview
 
-    The Communications Manager service is intended for programmes involved in direct care, where you have a legal basis to issue communications to citizens.
-
-    Use this API to integrate with Communications Manager, a scalable, centralised and standardised way to send and manage communications direct to their intended recipients via email, SMS, NHS App (notifications and messages) and letters.
-
+    Use this API to send messages to citizens via email, SMS, the NHS App or letter. 
+    
     Communications Manager provides:
 
     * message templating
-    * message routing - via SMS, email, letters and NHS App notifications
+    * message routing - via SMS, email, letter and NHS App
     * enrichment of recipient details
     * support for accessible formats
 
     ## Who can use this API
 
-    This API can only be used where you have a legal basis to issue communications to citizens.
-
-    ## Related APIs
-
-    This service utilises the [Personal Demographics Service - FHIR API (PDS)](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir). This service is used to collect citizen details to determine how to contact recipients and to enrich the messages sent to them.
-
-    You do not need to onboard with this API, our service integrates with it on your behalf.
+    The Communications Manager service is intended for services involved in direct care. This API can only be used where you have a legal basis to issue communications to citizens.
 
     ## API status and roadmap
 
