@@ -59,6 +59,7 @@ const validSendingGroupIds = {
     "936e9d45-15de-4a95-bb36-ae163c33ae53" : 1,
     "9ba00d23-cd6f-4aca-8688-00abc85a7980" : 1
 };
+const invalidRoutingPlanId = "4ead415a-c033-4b39-9b05-326ac237a3be";
 
 async function batch_send(req, res, next) {
     if (!req.body) {
@@ -105,6 +106,12 @@ async function batch_send(req, res, next) {
         sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.sendingGroupId}"`);
         next();
         return;
+    }
+
+    if (req.body.data.attributes.routingPlanId === invalidRoutingPlanId) {
+      sendError(res, 400, 'Invalid Routing Config');
+      next();
+      return;
     }
 
     if (req.body.requestRefId === 'simulate-500') {
