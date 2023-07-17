@@ -107,9 +107,6 @@
     <PreFlow name="PreFlow">
         <Request>
             <Step>
-              <Name>ExtractVariables.MessageBatches.Create.RoutingConfig</Name>
-            </Step>
-            <Step>
                 <Name>RaiseFault.400BackendException.InvalidRoutingConfig</Name>
                 <Condition>response.status.code = 400 and response.content Like "*Invalid Routing Config*"</Condition>
             </Step>
