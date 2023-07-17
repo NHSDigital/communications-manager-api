@@ -23,3 +23,5 @@ env
 .env
 *.key
 *.pem
+sandbox/coverage
+sandbox/.nyc_output
