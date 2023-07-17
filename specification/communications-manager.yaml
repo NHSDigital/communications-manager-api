@@ -5,20 +5,18 @@ info:
   description:  |
     ## Overview
 
-    The Communications Manager service is intended for programmes involved in direct care, where you have a legal basis to issue communications to citizens.
-
-    Use this API to integrate with Communications Manager, a scalable, centralised and standardised way to send and manage communications direct to their intended recipients via email, SMS, NHS App (notifications and messages) and letters.
-
+    Use this API to send messages to patients via email, SMS, the NHS App or letter. 
+    
     Communications Manager provides:
 
     * message templating
-    * message routing - via SMS, email, letters and NHS App notifications
+    * message routing - via SMS, email, letter and NHS App
     * enrichment of recipient details
     * support for accessible formats
 
     ## Who can use this API
 
-    This API can only be used where you have a legal basis to issue communications to citizens.
+    The Communications Manager service is intended for services involved in direct care. This API can only be used where you have a legal basis to issue communications to patients.
 
     ## Related APIs
 
