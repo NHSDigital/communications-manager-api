@@ -135,7 +135,7 @@ async function batch_send(req, res, next) {
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === invalidRoutingPlanId) {
+    if (req.body.sendingGroupId === invalidRoutingPlanId) {
       sendError(res, 400, "Invalid Routing Config");
       next();
       return;
