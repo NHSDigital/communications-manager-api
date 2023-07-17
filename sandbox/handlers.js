@@ -57,7 +57,8 @@ const validSendingGroupIds = {
     "49e43b98-70cb-47a9-a55e-fe70c9a6f77c" : 1,
     "b402cd20-b62a-4357-8e02-2952959531c8" : 1,
     "936e9d45-15de-4a95-bb36-ae163c33ae53" : 1,
-    "9ba00d23-cd6f-4aca-8688-00abc85a7980" : 1
+    "9ba00d23-cd6f-4aca-8688-00abc85a7980" : 1,
+    "4ead415a-c033-4b39-9b05-326ac237a3be" : 1
 };
 const invalidRoutingPlanId = "4ead415a-c033-4b39-9b05-326ac237a3be";
 
