@@ -260,7 +260,7 @@ describe("app handler tests", function () {
            request(server)
                 .post('/api/v1/send')
                 .send({
-                    sendingGroupId: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1',
+                    sendingGroupId: '3bb82e6a-9873-4683-b2b9-fdf33c9ba86f',
                     requestRefId: 'simulate-500',
                     data: [
                         {
