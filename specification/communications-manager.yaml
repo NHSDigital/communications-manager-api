@@ -117,7 +117,7 @@ servers:
 paths:
   /v1/message-batches:
     post:
-      summary: Create message batch
+      summary: Send messages
       description: |-
         ## Overview
 
