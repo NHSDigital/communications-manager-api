@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.500FailedWriteToDynamoDB">
+    <DisplayName>RaiseFault.500FailedWriteToDynamoDB</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>500</StatusCode>
+            <ReasonPhrase>Internal Server Error</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors": [
+                        {
+                            "id": "CM_INTERNAL_SERVER_ERROR",
+                            "links": {
+                                "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+                            },
+                            "status": "500",
+                            "title": "Error processing request",
+                            "detail": "There was an internal error whilst processing this request."
+                        }
+                ]
+            }
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

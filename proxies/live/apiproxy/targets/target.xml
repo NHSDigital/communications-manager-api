@@ -153,6 +153,12 @@
         </Condition>
       </Step>
       <Step>
+        <Name>RaiseFault.500FailedWriteToDynamoDB</Name>
+        <Condition>
+          response.status.code = 500 and response.content Like "*Error writing request items to DynamoDB*"
+        </Condition>
+      </Step>
+      <Step>
         <Name>RaiseFault.429TooManyRequests</Name>
         <Condition>fault.name = "SpikeArrestViolation"</Condition>
       </Step>
