@@ -19,8 +19,7 @@
                             "title": "Error processing request",
                             "detail": "There was an internal error whilst processing this request."
                         }
-                ]
-            }
+                    ]
                 }
             </Payload>
         </Set>

@@ -60,7 +60,8 @@ const validSendingGroupIds = {
     "9ba00d23-cd6f-4aca-8688-00abc85a7980" : 1,
     "4ead415a-c033-4b39-9b05-326ac237a3be" : 1,
     "c8857ccf-06ec-483f-9b3a-7fc732d9ad48" : 1,
-    "a3a4e55d-7a21-45a6-9286-8eb595c872a8" : 1
+    "a3a4e55d-7a21-45a6-9286-8eb595c872a8" : 1,
+    "3bb82e6a-9873-4683-b2b9-fdf33c9ba86f" : 1,
 };
 const trigger500SendingGroupId = "3bb82e6a-9873-4683-b2b9-fdf33c9ba86f";
 const sendingGroupIdWithMissingTemplates = "c8857ccf-06ec-483f-9b3a-7fc732d9ad48";
