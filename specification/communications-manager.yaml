@@ -235,6 +235,20 @@ paths:
             Within each error is a source object which details the location of the error within your request body.
 
             This is done using a pointer that uses the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) as per the [JSON:API Error Specification](https://jsonapi.org/format/#errors).
+            
+            ### Sandbox
+
+            It is possible to simulate an invalid routing configuration errors by sending requests with a specific routing plan identifier.
+
+            To trigger the `CM_INVALID_VALUE` error for routing configuration use routing plan id `4ead415a-c033-4b39-9b05-326ac237a3be`. Here is an example curl request to simulate the response:
+
+            ```
+              curl -X POST \
+                --header "Accept: */*" \
+                --header "Content-type: application/vnd.api+json" \
+                -d '{"data": {"type": "MessageBatch","attributes": {"routingPlanId": "4ead415a-c033-4b39-9b05-326ac237a3be","messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728","messages": [{"messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575","recipient": {"nhsNumber": "1234567890","dateOfBirth": "1982-03-17"},"personalisation": {}}]}}}' \
+                https://sandbox.api.service.nhs.uk/comms/v1/message-batches
+            ```
           content:
             application/vnd.api+json:
               schema:
