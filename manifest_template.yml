@@ -18,8 +18,8 @@ APIGEE_ENVIRONMENTS:
     display_name: Internal QA Sandbox
   - name: sandbox
     display_name: Sandbox
-      # - name: int
-  #   display_name: Integration Testing
+  - name: int
+    display_name: Integration Testing
 ---
 meta:
   api:
