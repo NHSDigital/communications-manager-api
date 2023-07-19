@@ -1,0 +1,5 @@
+type: string
+enum:
+  - CM_DENIED
+example: CM_DENIED
+title: Enum_Error_AccessDenied

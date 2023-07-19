@@ -1,0 +1,40 @@
+type: object
+title: Unsupported Media
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: enums/EnumErrorUnsupportedMedia.yml
+        links:
+          $ref: LinksError.yml
+        status:
+          type: string
+          enum:
+            - '415'
+          example: '415'
+        title:
+          type: string
+          enum:
+            - Unsupported media
+          example: Unsupported media
+        detail:
+          type: string
+          enum:
+            - 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
+          example: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            header:
+              type: string
+              enum:
+                - Content-Type
+              example: Content-Type

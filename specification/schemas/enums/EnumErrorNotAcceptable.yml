@@ -1,0 +1,5 @@
+type: string
+enum:
+  - CM_NOT_ACCEPTABLE
+title: Enum_Error_NotAcceptable
+example: CM_NOT_ACCEPTABLE

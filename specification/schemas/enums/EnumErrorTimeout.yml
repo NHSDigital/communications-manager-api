@@ -1,0 +1,5 @@
+type: string
+enum:
+  - CM_TIMEOUT
+title: Enum_Error_Timeout
+example: CM_TIMEOUT

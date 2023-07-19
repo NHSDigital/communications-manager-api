@@ -1,0 +1,5 @@
+type: string
+enum:
+  - CM_NO_SUCH_ROUTING_PLAN
+example: CM_NO_SUCH_ROUTING_PLAN
+title: Enum_Error_NoSuchRoutingPlan

@@ -1,0 +1,5 @@
+type: string
+enum:
+  - CM_FORBIDDEN
+example: CM_FORBIDDEN
+title: Enum_Error_Forbidden
