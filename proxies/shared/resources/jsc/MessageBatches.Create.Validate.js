@@ -2,6 +2,7 @@
 const uuidRegex = /^[0-9a-f]{8}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{12}$/i
 const nhsNumberRegex = /^[0-9]{10}$/i
 const dobRegex = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/i
+const messageId = context.getVariable("messageid");
 
 var content = context.getVariable("request.content")
 var errors = []
@@ -163,7 +164,8 @@ function pushError(error) {
 
 function createErrorObject(code, title, detail, pointer) {
   return {
-    "id": code,
+    "id" : messageId + "." + errors.length,
+    "code": code,
     "links": {
       "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
     },

@@ -11,6 +11,8 @@ properties:
       type: object
       properties:
         id:
+          $ref: TypeErrorIdentifier.yml
+        code:
           $ref: enums/EnumErrorAccessDenied.yml
         links:
           $ref: LinksError.yml

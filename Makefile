@@ -12,6 +12,7 @@ install-node:
 #Configures Git Hooks, which are scripts that run given a specified event.
 .git/hooks/pre-commit:
 	cp scripts/pre-commit .git/hooks/pre-commit
+	chmod +x .git/hooks/pre-commit
 
 #Condensed Target to run all targets above.
 install: install-node install-python .git/hooks/pre-commit

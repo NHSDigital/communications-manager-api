@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_DUPLICATE_VALUE",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_DUPLICATE_VALUE",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },
