@@ -464,6 +464,7 @@ paths:
             | ---------- | ----- | ----------- |
             | `CM_MISSING_ROUTING_PLAN_TEMPLATE` | Templates missing | The templates required to use the routing plan were not found. |
             | `CM_ROUTING_PLAN_DUPLICATE_TEMPLATES` | Duplicate templates | The routing plan specified contains duplicate templates. |
+            | `CM_INTERNAL_SERVER_ERROR` | Error processing request | There was an internal error whilst processing this request. |
 
             Within each error is a source object which details the location of the error within your request body.
 
@@ -494,6 +495,15 @@ paths:
                 -d '{"data": {"type": "MessageBatch","attributes": {"routingPlanId": "a3a4e55d-7a21-45a6-9286-8eb595c872a8","messageBatchReference": "da0b1495-c7cb-468c-9d81-07dee089d728","messages": [{"messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575","recipient": {"nhsNumber": "1234567890","dateOfBirth": "1982-03-17"},"personalisation": {}}]}}}' \
                 https://sandbox.api.service.nhs.uk/comms/v1/message-batches
             ```
+            
+            It is possible to trigger the `CM_INTERNAL_SERVER_ERROR` on the sandbox by using the `Prefer` header with a value of `code=500`.
+
+            Here is an example curl request to trigger a `500`:
+
+            ```
+              curl -X GET --header "Prefer: code=500" https://sandbox.api.service.nhs.uk/comms/
+            ```
+            
           content:
             application/vnd.api+json:
               schema:
