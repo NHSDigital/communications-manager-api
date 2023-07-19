@@ -1,0 +1,13 @@
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddUserIdHeader">
+    <Add>
+        <Headers>
+            {% if ENVIRONMENT_TYPE == 'sandbox' %}
+                <Header name="NHSD-Identity-UUID">{jwt.DecodeJWT.FromJWTHeader.claim.subject}</Header>
+            {% else %}
+                <Header name="NHSD-Identity-UUID">{accesstoken.id_token-subject}</Header>
+            {% endif %}
+        </Headers>
+    </Add>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

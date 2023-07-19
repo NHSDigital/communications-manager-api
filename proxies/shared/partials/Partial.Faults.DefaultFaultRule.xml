@@ -1,0 +1,17 @@
+<DefaultFaultRule>
+    <Step>
+        <Name>JavaScript.SetResponseContentType</Name>
+    </Step>
+    <Step>
+        <Name>AssignMessage.SetCorrelationId</Name>
+        <Condition>request.headers.x-correlation-id != null</Condition>
+    </Step>
+    <Step>
+        <Name>AssignMessage.AddCorsResponse</Name>
+        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
+    </Step>
+    <Step>
+        <Name>AssignMessage.Errors.CatchAllMessage</Name>
+    </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
+</DefaultFaultRule>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.401Unauthorized">
+    <DisplayName>RaiseFault.401Unauthorized</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>401</StatusCode>
+            <ReasonPhrase>Unauthorized</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_DENIED",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "401",
+                            "title" : "Access denied",
+                            "detail" : "Access token missing, invalid or expired, or calling application not configured for this operation.",
+                            "source" : {
+                                "header" : "Authorization"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

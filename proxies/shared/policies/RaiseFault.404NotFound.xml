@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.404NotFound">
+    <DisplayName>RaiseFault.404NotFound</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>404</StatusCode>
+            <ReasonPhrase>Not Found</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_NOT_FOUND",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "404",
+                            "title" : "Resource not found",
+                            "detail" : "The resource at the requested URI was not found."
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

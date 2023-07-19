@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AuthenticationDetails">
+    <DisplayName>AssignMessage.AuthenticationDetails</DisplayName>
+    <Properties/>
+    <Set>
+        <Headers>
+            {% if ENVIRONMENT_TYPE == 'internal' %}
+                <Header name="X-Client-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
+            {% else %}
+                <Header name="X-Client-Id">{developer.app.id}</Header>
+            {% endif %}
+        </Headers>
+    </Set>
+    <Remove>
+        <Headers>
+            <Header name="Authorization"/>
+        </Headers>
+    </Remove>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

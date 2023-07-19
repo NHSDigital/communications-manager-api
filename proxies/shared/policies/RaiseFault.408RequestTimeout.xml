@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.408RequestTimeout">
+    <DisplayName>RaiseFault.408RequestTimeout</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>408</StatusCode>
+            <ReasonPhrase>Request Timeout</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_TIMEOUT",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "408",
+                            "title" : "Request timeout",
+                            "detail" : "The service was unable to receive your request within the timeout period."
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

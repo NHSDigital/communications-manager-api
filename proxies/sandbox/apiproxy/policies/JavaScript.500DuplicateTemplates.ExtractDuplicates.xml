@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Javascript async="false" continueOnError="false" enabled="true" timeLimit="1000" name="JavaScript.500DuplicateTemplates.ExtractDuplicates">
-    <DisplayName>JavaScript.500DuplicateTemplates.ExtractDuplicates</DisplayName>
-    <Properties/>
-    <ResourceURL>jsc://500DuplicateTemplates.ExtractDuplicates.js</ResourceURL>
-</Javascript>

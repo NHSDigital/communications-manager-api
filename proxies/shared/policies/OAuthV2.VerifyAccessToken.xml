@@ -1,0 +1,6 @@
+<OAuthV2 async="false" continueOnError="false" enabled="true" name="OauthV2.VerifyAccessToken">
+    <Operation>VerifyAccessToken</Operation>
+    {% if ENVIRONMENT_TYPE != 'sandbox' %}
+        <Scopes>urn:nhsd:apim:app:level3:communications-manager</Scopes>
+    {% endif %}
+</OAuthV2>

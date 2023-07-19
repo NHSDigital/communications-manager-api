@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.500MissingTemplates">
+    <DisplayName>RaiseFault.500MissingTemplates</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>500</StatusCode>
+            <ReasonPhrase>Internal Server Error</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "CM_MISSING_ROUTING_PLAN_TEMPLATE",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "500",
+                            "title" : "Templates missing",
+                            "detail" : "The templates required to use the routing plan were not found.",
+                            "source" : {
+                                "pointer" : "/data/attributes/routingPlanId"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

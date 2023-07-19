@@ -1,0 +1,8 @@
+<Flow name="OptionsPreFlight">
+    <Response>
+        <Step>
+            <Name>AssignMessage.AddCors</Name>
+        </Step>
+    </Response>
+    <Condition>(request.verb = "OPTIONS") and (request.header.origin != null) and (request.header.Access-Control-Request-Method != null)</Condition>
+</Flow>

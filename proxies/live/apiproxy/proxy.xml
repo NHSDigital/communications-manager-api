@@ -1,4 +1,4 @@
 <APIProxy name="cm">
-  <!-- This is the root of the application -->
-  <Description>"communications-manager"</Description>
+    <!-- This is the root of the application -->
+    <Description>Communications manager API</Description>
 </APIProxy>
