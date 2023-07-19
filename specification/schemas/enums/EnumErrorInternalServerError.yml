@@ -1,0 +1,6 @@
+type: string
+enum:
+  - CM_ROUTING_PLAN_DUPLICATE_TEMPLATES
+  - CM_MISSING_ROUTING_PLAN_TEMPLATE
+example: CM_MISSING_ROUTING_PLAN_TEMPLATE
+title: Enum_Error_InternalServerError

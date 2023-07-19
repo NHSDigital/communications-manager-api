@@ -1,0 +1,9 @@
+type: string
+enum:
+  - CM_MISSING_VALUE
+  - CM_NULL_VALUE
+  - CM_INVALID_VALUE
+  - CM_DUPLICATE_VALUE
+  - CM_TOO_FEW_ITEMS
+example: CM_MISSING_VALUE
+title: Enum_Error_InvalidValue

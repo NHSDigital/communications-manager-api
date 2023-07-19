@@ -1,0 +1,40 @@
+type: object
+title: Forbidden
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: enums/EnumErrorForbidden.yml
+        links:
+          $ref: LinksError.yml
+        status:
+          type: string
+          enum:
+            - '403'
+          example: '403'
+        title:
+          type: string
+          enum:
+            - Forbidden
+          example: Forbidden
+        detail:
+          type: string
+          enum:
+            - Client not recognised or not yet onboarded.
+          example: Client not recognised or not yet onboarded.
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            header:
+              type: string
+              enum:
+                - Authorization
+              example: Authorization

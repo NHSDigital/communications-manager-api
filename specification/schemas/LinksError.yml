@@ -1,0 +1,10 @@
+type: object
+additionalProperties: false
+properties:
+  about:
+    type: string
+    enum:
+      - 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+    format: uri
+    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+minProperties: 1
