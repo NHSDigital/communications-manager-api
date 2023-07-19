@@ -177,3 +177,12 @@ This file defines 2 dictionaries of fields that are required for the Apigee depl
 This template uses poetry for python dependency management, and uses these files: poetry.lock, poetry.toml, pyproject.toml.
 
 Node dependencies of this template project and some npm scripts are listed in: package.json, package-lock.json.
+
+#### Postman:
+Included in this repo is a postman collection that allows the user to interact with the API directly. 
+
+To use the collection:
+- Download the json files located in the postman directory
+- Import the files into postman
+- Select a target environment in postman (Note: a token must be generated to use development)
+- Run the collection
