@@ -1,10 +1,157 @@
 {
 	"info": {
 		"_postman_id": "eeb332a8-23ac-4c44-8769-a2a03a439c54",
-		"name": "Communications Manager",
+		"name": "CommunicationsManager",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Generate Token",
+			"item": [
+				{
+					"name": "Generate token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// JWT generation script adapted from\r",
+									"// https://gist.github.com/corbanb/db03150abbe899285d6a86cc480f674d\r",
+									"var privateKey = pm.environment.get('private_key') || '';\r",
+									"var api_key_value = pm.environment.get('api_key') || '';\r",
+									"var auth_url = pm.environment.get('auth_url') || '';\r",
+									"var navigator = {};\r",
+									"var window = {};\r",
+									"\r",
+									"function generate() {    \r",
+									"    eval(pm.globals.get(\"jsrsasign-js\"));\r",
+									"\r",
+									"    // Set headers for JWT\r",
+									"    var header = {\r",
+									"        'typ': 'JWT',\r",
+									"        'alg': 'RS512',\r",
+									"        'kid': 'local'\r",
+									"    };\r",
+									"\r",
+									"    // Prepare timestamp in seconds\r",
+									"    var currentTimestamp = Math.floor(Date.now() / 1000)\r",
+									"    var uuid = require('uuid');\r",
+									"    var jti_value = uuid.v4();\r",
+									"    var data = {\r",
+									"        'sub': api_key_value,\r",
+									"        'iss': api_key_value,\r",
+									"        'jti': jti_value,\r",
+									"        'aud': auth_url,\r",
+									"        'exp': currentTimestamp + 180, // expiry time is 180 seconds from time of creation\r",
+									"    }\r",
+									"\r",
+									"    var sJWT = KJUR.jws.JWS.sign(header.alg, JSON.stringify(header), JSON.stringify(data), privateKey);\r",
+									"\r",
+									"    return new Promise((resolve, reject) => {\r",
+									"        pm.sendRequest({\r",
+									"            url: auth_url,\r",
+									"            method: \"POST\",\r",
+									"            header: {\r",
+									"                \"Content-Type\": \"application/x-www-form-urlencoded\"\r",
+									"            },\r",
+									"            body: {\r",
+									"                mode: \"urlencoded\",\r",
+									"                urlencoded: [\r",
+									"                    {\r",
+									"                        key: \"grant_type\",\r",
+									"                        value: \"client_credentials\"\r",
+									"                    },\r",
+									"                    {\r",
+									"                        key: \"client_assertion_type\",\r",
+									"                        value: \"urn:ietf:params:oauth:client-assertion-type:jwt-bearer\",\r",
+									"                    },\r",
+									"                    {\r",
+									"                        key: \"client_assertion\",\r",
+									"                        value: sJWT\r",
+									"                    }\r",
+									"                ]\r",
+									"            }\r",
+									"        }, (err, res) => {            \r",
+									"            if (err) {\r",
+									"                return reject(err);\r",
+									"            }\r",
+									"\r",
+									"            pm.environment.set('authorization_header_value', `Bearer ${res.json().access_token}`);\r",
+									"\r",
+									"            return resolve();\r",
+									"        });\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"return new Promise((resolve, reject) => {\r",
+									"    if (pm.globals.has('jsrsasign-js')) {\r",
+									"        return resolve();\r",
+									"    }\r",
+									"\r",
+									"    pm.sendRequest(\r",
+									"        'https://kjur.github.io/jsrsasign/jsrsasign-all-min.js',\r",
+									"        function (err, res) {\r",
+									"            if (err) {\r",
+									"                return reject(err);\r",
+									"            }\r",
+									"\r",
+									"            pm.globals.set('jsrsasign-js', res.text());\r",
+									"            return resolve();                \r",
+									"        }\r",
+									"    );\r",
+									"}).then(() => {    \r",
+									"    return generate();\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.environment.name !== 'Sandbox') {\r",
+									"    postman.setNextRequest('200 - Cors')\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\" : {\r\n        \"type\" : \"MessageBatch\",\r\n        \"attributes\" : {                      \r\n            \"messageBatchReference\" : null,  \r\n            \"messages\" : [\r\n                {\r\n                    \"messageReference\" : null,\r\n                    \"recipient\" : {\r\n                        \"nhsNumber\" : \"0123456789\"\r\n                    },\r\n                    \"personalisation\" : {}\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/comms/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"comms",
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Sandbox Only",
 			"item": [
@@ -29,7 +176,8 @@
 								"exec": [
 									"pm.test(\"Status code is 401\", () => {\r",
 									"    pm.response.to.have.status(401);\r",
-									"});"
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -103,7 +251,8 @@
 								"exec": [
 									"pm.test(\"Status code is 403\", () => {\r",
 									"    pm.response.to.have.status(403);\r",
-									"});"
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -177,7 +326,8 @@
 								"exec": [
 									"pm.test(\"Status code is 408\", () => {\r",
 									"    pm.response.to.have.status(408);\r",
-									"});"
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -254,7 +404,8 @@
 								"exec": [
 									"pm.test(\"Status code is 429\", () => {\r",
 									"    pm.response.to.have.status(429);\r",
-									"});"
+									"});\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -387,978 +538,997 @@
 			]
 		},
 		{
-			"name": "200 - Cors",
-			"event": [
+			"name": "Requests",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", () => {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"Response Header Contains Access-Control-Request-Method Provided\", () => {\r",
-							"    pm.expect(pm.response.headers.get('Access-Control-Request-Method')).to.eql(\"DELETE\");\r",
-							"})\r",
-							"pm.test(\"Response Header Contains Origin Provided\", () => {\r",
-							"    pm.expect(pm.response.headers.get('Origin')).to.eql(\"https://my.website\");\r",
-							"})\r",
-							"pm.test(\"Response Header Contains Origin Provided\", () => {\r",
-							"    pm.expect(pm.response.headers.get('Origin')).to.eql(\"https://my.website\");\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "OPTIONS",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Origin",
-						"value": "https://my.website",
-						"type": "default"
-					},
-					{
-						"key": "Access-Control-Request-Method",
-						"value": "DELETE",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "201",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", () => {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "400 - Bad Request - Duplicate Data",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    },\r\n                                        {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "201 - Accept",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", () => {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"pm.test(\"Accept header returns Content-Type application/vnd.api+json\", () => {\r",
-							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql(\"application/vnd.api+json\");\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "200 - Cors",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response Header Contains Access-Control-Request-Method Provided\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Access-Control-Request-Method')).to.eql(\"DELETE\");\r",
+									"})\r",
+									"pm.test(\"Response Header Contains Origin Provided\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Origin')).to.eql(\"https://my.website\");\r",
+									"})\r",
+									"pm.test(\"Response Header Contains Origin Provided\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Origin')).to.eql(\"https://my.website\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
 					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "201 - Content-Type",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Origin",
+								"value": "https://my.website",
+								"type": "default"
+							},
+							{
+								"key": "Access-Control-Request-Method",
+								"value": "DELETE",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
 						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", () => {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"pm.test(\"Content-Type header returns application/vnd.api+json\", () => {\r",
-							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql(\"application/vnd.api+json\");\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "201 - X-Correlation-Id",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 201\", () => {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Correlation-Id",
-						"value": "68c431f3-e9f2-4102-929a-36599c759190",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "400 -  Bad Request - Too Few Items",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "400 - Bad Request - Null Data",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": null,\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": null,\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "400 - Bad Request - Invalid Data",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"invalid\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"invalid\",\r\n                \"messageBatchReference\": \"invalid\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"invalid\",\r\n                        \"recipient\": \"invalid\",\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "400 - Bad Request - Missing Property",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "400 - Bad Request - Invalid Body",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 400\", () => {\r",
-							"    pm.response.to.have.status(400);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "404 - Not Found - Invalid URL",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 404\", () => {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/nonesense",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"nonesense"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "404 - Not Found - Invalid Routing Plan Id",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 404\", () => {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"c118b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "406 - Not Acceptable",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 406\", () => {\r",
-							"    pm.response.to.have.status(406);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "junk/junk",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{base_url}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "415 - Unsupported Media",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"var uuid = require('uuid');\r",
-							"var messageBatchReferenceUuid = uuid.v4();\r",
-							"\r",
-							"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 415\", () => {\r",
-							"    pm.response.to.have.status(415);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "junk/junk",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/vnd.api+json",
-						"type": "default"
-					},
-					{
-						"key": "Authorization",
-						"value": "{{token}}",
-						"type": "default"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}/v1/message-batches",
-					"host": [
-						"{{base_url}}"
+				{
+					"name": "201",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"v1",
-						"message-batches"
-					]
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 - Accept",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Accept header returns Content-Type application/vnd.api+json\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql(\"application/vnd.api+json\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 - Content-Type",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Content-Type header returns application/vnd.api+json\", () => {\r",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.eql(\"application/vnd.api+json\");\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "201 - X-Correlation-Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "68c431f3-e9f2-4102-929a-36599c759190",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 -  Bad Request - Too Few Items",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 - Bad Request - Duplicate Data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    },\r\n                                        {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 - Bad Request - Null Data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": null,\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": null,\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 - Bad Request - Invalid Data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"invalid\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"invalid\",\r\n                \"messageBatchReference\": \"invalid\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"invalid\",\r\n                        \"recipient\": \"invalid\",\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 - Bad Request - Missing Property",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "400 - Bad Request - Invalid Body",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", () => {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 - Not Found - Invalid URL",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/nonesense",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"nonesense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "404 - Not Found - Invalid Routing Plan Id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", () => {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"c118b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "406 - Not Acceptable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 406\", () => {\r",
+									"    pm.response.to.have.status(406);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "junk/junk",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{base_url}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "415 - Unsupported Media",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uuid = require('uuid');\r",
+									"var messageBatchReferenceUuid = uuid.v4();\r",
+									"\r",
+									"pm.environment.set(\"messageBatchReference\", messageBatchReferenceUuid)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 415\", () => {\r",
+									"    pm.response.to.have.status(415);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "junk/junk",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "application/vnd.api+json",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{authorization_header_value}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"1234567890\",\r\n                            \"dateOfBirth\": \"1982-03-17\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/v1/message-batches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"v1",
+								"message-batches"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
