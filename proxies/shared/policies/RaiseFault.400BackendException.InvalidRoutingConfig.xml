@@ -11,7 +11,8 @@
                 {
                     "errors": [
                         {
-                            "id": "CM_INVALID_VALUE",
+                            "id" : "@messageid#.0",
+                            "code": "CM_INVALID_VALUE",
                             "links": {
                                 "about": "{{ ERROR_ABOUT_LINK }}"
                             },

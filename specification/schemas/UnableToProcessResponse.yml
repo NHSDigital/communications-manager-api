@@ -10,6 +10,8 @@ properties:
       type: object
       properties:
         id:
+          $ref: TypeErrorIdentifier.yml
+        code:
           $ref: enums/EnumErrorInvalidValue.yml
         links:
           $ref: LinksError.yml

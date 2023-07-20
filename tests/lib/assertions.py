@@ -16,8 +16,24 @@ class Assertions():
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         assert resp.status_code == code
+
         if error is not None:
-            assert error in resp.json().get("errors")
+            # ensure that all errors contain an identifier
+            response_errors = resp.json().get("errors")
+            current_identifier_num = 0
+            for e in response_errors:
+                assert e.get("id") is not None
+
+                # extract the identifier num
+                assert int(e.get("id").split(".")[-1]) == current_identifier_num
+
+                # then remove it as its a unique value that we do not know ahead of time
+                e.pop("id")
+                current_identifier_num += 1
+
+            # validate the error is present
+            assert error in response_errors
+
         assert resp.headers.get("X-Correlation-Id") == correlation_id
 
     @staticmethod

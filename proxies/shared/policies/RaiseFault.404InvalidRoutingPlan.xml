@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_NO_SUCH_ROUTING_PLAN",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_NO_SUCH_ROUTING_PLAN",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },

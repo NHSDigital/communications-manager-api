@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_UNSUPPORTED_MEDIA",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_UNSUPPORTED_MEDIA",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },

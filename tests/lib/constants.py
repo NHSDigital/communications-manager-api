@@ -10,8 +10,8 @@ VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
 
 
 class Error():
-    def __init__(self, id, status, title, detail):
-        self.id = id
+    def __init__(self, code, status, title, detail):
+        self.code = code
         self.status = status
         self.title = title
         self.detail = detail

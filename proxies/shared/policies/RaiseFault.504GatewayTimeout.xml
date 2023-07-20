@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_TIMEOUT",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_TIMEOUT",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },

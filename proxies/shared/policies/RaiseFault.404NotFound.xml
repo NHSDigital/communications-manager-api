@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_NOT_FOUND",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_NOT_FOUND",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },

@@ -137,7 +137,7 @@ class Generators():
     @staticmethod
     def generate_error(error, source=None, meta=None):
         ret = {
-            "id": error.id,
+            "code": error.code,
             "links": error.links,
             "status": error.status,
             "title": error.title,

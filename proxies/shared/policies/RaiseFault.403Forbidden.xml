@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_FORBIDDEN",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_FORBIDDEN",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },

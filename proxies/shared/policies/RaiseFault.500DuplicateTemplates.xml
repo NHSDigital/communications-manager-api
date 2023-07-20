@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_ROUTING_PLAN_DUPLICATE_TEMPLATES",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_ROUTING_PLAN_DUPLICATE_TEMPLATES",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },

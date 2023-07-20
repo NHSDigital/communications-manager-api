@@ -11,7 +11,8 @@
                 {
                     "errors": [
                         {
-                            "id": "CM_INTERNAL_SERVER_ERROR",
+                            "id" : "@messageid#.0",
+                            "code": "CM_INTERNAL_SERVER_ERROR",
                             "links": {
                                 "about": "{{ ERROR_ABOUT_LINK }}"
                             },

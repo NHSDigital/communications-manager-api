@@ -606,6 +606,8 @@ components:
       $ref: schemas/MessageBatchResponse.yml
     Type_KSUID:
       $ref: schemas/TypeKSUID.yml
+    Type_ErrorIdentifier:
+      $ref: schemas/TypeErrorIdentifier.yml
     UnableToProcessResponse:
       $ref: schemas/UnableToProcessResponse.yml
     InternalServerError:

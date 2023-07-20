@@ -11,7 +11,8 @@
                 {
                     "errors" : [
                         {
-                            "id" : "CM_SERVICE_UNAVAILABLE",
+                            "id" : "@messageid#.0",
+                            "code" : "CM_SERVICE_UNAVAILABLE",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },
