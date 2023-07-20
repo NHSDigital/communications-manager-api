@@ -89,6 +89,12 @@ sandboxtest-prod: .run-sandbox-unit-tests
 	--ignore=tests/development
 	-m sandboxtest
 
+inttest:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/development
+	-m inttest
+
 test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
