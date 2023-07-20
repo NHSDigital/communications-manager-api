@@ -1,3 +1,4 @@
+INT_URL = "https://int.api.service.nhs.uk/comms"
 CORS_METHODS = "GET, PUT, POST, PATCH, DELETE"
 CORS_MAX_AGE = "3628800"
 CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
@@ -7,6 +8,9 @@ CORS_EXPOSE_HEADERS = "x-correlation-id"
 
 VALID_ROUTING_PLAN_ID_PROD = "0e38317f-1670-480a-9aa9-b711fb136610"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
+TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
+METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
+CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 
 
 class Error():

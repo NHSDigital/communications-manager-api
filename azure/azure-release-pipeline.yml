@@ -101,3 +101,7 @@ extends:
         jinja_templates:
           ENVIRONMENT_TYPE: 'production'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make test-int'
