@@ -28,7 +28,7 @@ info:
 
     ## Service level 
 
-    The Communications Manager API is currently not in an integration or production environment.
+    The Communications Manager API is currently not in a production environment.
 
     For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
@@ -79,6 +79,8 @@ info:
     | Environment | Base URL |
     |------------ | -------- |
     | Sandbox     | [https://sandbox.api.service.nhs.uk/comms](https://sandbox.api.service.nhs.uk/comms) |
+    | Integration test | [https://int.api.service.nhs.uk/comms](https://int.api.service.nhs.uk/comms) |
+    | Production | Not yet available |
 
     ## Sandbox testing 
 
