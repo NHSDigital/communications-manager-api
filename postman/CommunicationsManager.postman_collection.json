@@ -101,6 +101,8 @@
 									"    );\r",
 									"}).then(() => {    \r",
 									"    return generate();\r",
+									"}).catch((e) => {\r",
+									"    console.log(e.message);\r",
 									"});"
 								],
 								"type": "text/javascript"
