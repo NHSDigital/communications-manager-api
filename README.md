@@ -245,5 +245,8 @@ Included in this repo is a postman collection that allows the user to interact w
 To use the collection:
 - Download the json files located in the postman directory
 - Import the files into postman
-- Select a target environment in postman (Note: a token must be generated to use development)
+- Select a target environment in postman
+- Set the environment variables 'api-key' and 'private-key' for the desired environment (this does not apply for sandbox)
 - Run the collection
+
+The collection is ordered so that the first request ran when running a collection is 'Generate token', this generates an authorization header that is re-used for subsequent requests in the collection. The authorization header expires after 10 minutes, so if you are using this collection to manually execute requests and get an unexpected '401' execute the 'Generate token' request again to refresh your token.
