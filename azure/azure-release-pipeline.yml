@@ -43,6 +43,7 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               full: true
+
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         jinja_templates:
@@ -50,9 +51,10 @@ extends:
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
+
       - environment: internal-qa
         depends_on:
-          - internal-dev
+          - internal_dev
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -60,20 +62,23 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               full: true
+
       - environment: internal-qa-sandbox
         proxy_path: sandbox
         depends_on:
-          - internal-dev-sandbox
+          - internal_dev_sandbox
         jinja_templates:
           ENVIRONMENT_TYPE: 'sandbox'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
+
       - environment: manual-approval
         stage_name: manual_approval_sandbox
         depends_on:
           - internal_qa
           - internal_qa_sandbox
+
       - environment: sandbox
         depends_on:
           - manual_approval_sandbox
@@ -85,11 +90,13 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               sandboxtest_command: 'make sandboxtest-prod'
+
       - environment: manual-approval
         stage_name: manual_approval_int
         depends_on:
           - internal_qa
           - internal_qa_sandbox
+
       - environment: int
         depends_on:
           - manual_approval_int
