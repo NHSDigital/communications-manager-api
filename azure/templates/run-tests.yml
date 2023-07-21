@@ -36,6 +36,21 @@ steps:
     displayName: Setup pytests
     condition: always()
 
+  - bash: |
+      proxyResponse=$(
+      curl --request GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-batches' \
+           --header 'Content-Type: application/vnd.api+json'
+      )
+      echo "$proxyResponse"
+      errorResponse=$($proxyResponse | jq ".errors[0]")
+      if [[ $($errorResponse | jq ".status") == "404" && $($errorResponse | jq ".code") == "CM_NOT_FOUND" ]]; then
+        exit 0
+      fi
+      exit 1
+    displayName: Wait for proxy to deploy
+    condition: always()
+    retryCountOnTaskFailure: 3
+
   - ${{ if parameters.nightly }}:
     - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
       parameters:
