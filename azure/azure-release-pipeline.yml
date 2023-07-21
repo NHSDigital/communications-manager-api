@@ -76,7 +76,6 @@ extends:
       - environment: manual-approval
         stage_name: manual_approval_sandbox
         depends_on:
-          - internal_qa
           - internal_qa_sandbox
 
       - environment: sandbox
@@ -95,7 +94,6 @@ extends:
         stage_name: manual_approval_int
         depends_on:
           - internal_qa
-          - internal_qa_sandbox
 
       - environment: int
         depends_on:
