@@ -88,8 +88,8 @@ def calculate_version(base_major=1, base_minor=0, base_revision=0, base_pre="alp
     if status_sets:
         most_recent_message = status_sets[0].message.strip()
 
-        if most_recent_message.startswith("+setstatus "):
-            pre = most_recent_message.split(" ")[
+        if "+setstatus " in most_recent_message:
+            pre = most_recent_message.split("+setstatus ")[
                 1
             ]  # Take the first string after the command
 
