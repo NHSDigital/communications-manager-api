@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/CCM-1179-release-process
+      ref: refs/heads/CCM-1179-multiple-build-pipelines
       endpoint: NHSDigital
   pipelines:
   - pipeline: tagged_build_pipeline
@@ -38,6 +38,10 @@ extends:
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
+    ${{ if eq(variables['Resources.TriggeringAlias'], 'tagged_build_pipeline') }}:
+      build_pipeline_name: tagged_build_pipeline
+    ${{ else }}:
+      build_pipeline_name: rc_build_pipeline
     apigee_deployments:
       - environment: internal-dev
         jinja_templates:
