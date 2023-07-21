@@ -22,7 +22,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/CCM-1179-multiple-build-pipelines
+      ref: refs/heads/CCM-1179-release-process
       endpoint: NHSDigital
 
 variables:
