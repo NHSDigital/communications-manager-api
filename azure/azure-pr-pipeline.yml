@@ -17,7 +17,11 @@ resources:
       branches:
         exclude:
           - master
+          - release
+          - hotfix
           - refs/heads/master
+          - refs/heads/release
+          - refs/heads/hotfix
           - refs/tags/v*
 
 pool:
