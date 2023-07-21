@@ -42,9 +42,11 @@ steps:
            --header 'Content-Type: application/vnd.api+json'
       )
       echo "$proxyResponse"
-      errorResponse=$($proxyResponse | jq ".errors[0]")
-      if [[ $($errorResponse | jq ".status") == "404" && $($errorResponse | jq ".code") == "CM_NOT_FOUND" ]]; then
-        exit 0
+      errorResponse=$(echo $proxyResponse | jq ".errors[0]")
+      if [[ $(echo $errorResponse | jq ".status") == "404" ]]; then
+        if [[ $(echo $errorResponse | jq ".code") == "CM_NOT_FOUND" ]]; then
+          exit 0
+        fi
       fi
       exit 1
     displayName: Wait for proxy to deploy
