@@ -11,12 +11,19 @@ resources:
       ref: refs/heads/CCM-1179-release-process
       endpoint: NHSDigital
   pipelines:
-  - pipeline: build_pipeline
+  - pipeline: tagged_build_pipeline
     source: "Communications-Manager-Build"
     trigger:
       branches:
         include:
           - refs/tags/v*
+  - pipeline: rc_build_pipeline
+    source: "Communications-Manager-Build"
+    trigger:
+      branches:
+        include:
+          - release
+          - hotfix
 
 pool:
   name: 'AWS-ECS'
@@ -68,19 +75,23 @@ extends:
     #       - internal_qa_sandbox
     #     post_deploy:
     #       - template: ./templates/run-tests.yml
-      - environment: sandbox
-        proxy_path: sandbox
-        jinja_templates:
-          ENVIRONMENT_TYPE: 'sandbox'
-          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
-        post_deploy:
-          - template: ./templates/run-tests.yml
-            parameters:
-              sandboxtest_command: 'make sandboxtest-prod'
-      - environment: int
-        depends_on:
-          - internal_qa
-          - internal_qa_sandbox
-        jinja_templates:
-          ENVIRONMENT_TYPE: 'production'
-          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+      - ${{ if eq(variables['Resources.TriggeringAlias'], 'tagged_build_pipeline') }}:
+        - environment: sandbox
+          depends_on:
+            - internal_qa
+            - internal_qa_sandbox
+          proxy_path: sandbox
+          jinja_templates:
+            ENVIRONMENT_TYPE: 'sandbox'
+            ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+          post_deploy:
+            - template: ./templates/run-tests.yml
+              parameters:
+                sandboxtest_command: 'make sandboxtest-prod'
+        - environment: int
+          depends_on:
+            - internal_qa
+            - internal_qa_sandbox
+          jinja_templates:
+            ENVIRONMENT_TYPE: 'production'
+            ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
