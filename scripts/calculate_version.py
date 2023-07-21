@@ -87,7 +87,7 @@ def calculate_version(base_major=1, base_minor=0, base_revision=0, base_pre="alp
                 1
             ]  # Take the first string after the command
 
-        if most_recent_message == "+clearstatus":
+        if "+clearstatus" in most_recent_message:
             pre = None
 
     # If there are any +major in commit messages, increment the counter
