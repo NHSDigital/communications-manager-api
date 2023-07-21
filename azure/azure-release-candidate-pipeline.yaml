@@ -15,14 +15,9 @@ resources:
     source: "Communications-Manager-Build"
     trigger:
       branches:
-        exclude:
-          - master
-          - refs/heads/master
-          - release
+        include:
           - refs/heads/release
-          - hotfix
           - refs/heads/hotfix
-          - refs/tags/v*
 
 pool:
   name: 'AWS-ECS'
@@ -47,6 +42,21 @@ extends:
             parameters:
               full: true
       - environment: internal-dev-sandbox
+        proxy_path: sandbox
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'sandbox'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+      - environment: internal-qa
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              full: true
+      - environment: internal-qa-sandbox
         proxy_path: sandbox
         jinja_templates:
           ENVIRONMENT_TYPE: 'sandbox'
