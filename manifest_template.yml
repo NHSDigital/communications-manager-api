@@ -1,6 +1,6 @@
 SERVICE_NAME: communications-manager
-PRODUCT_DISPLAY_NAME: communications-manager
-DESCRIPTION: example description
+PRODUCT_DISPLAY_NAME: Communications Manager
+DESCRIPTION: Use this API to send messages to citizens via email, SMS, the NHS App or letter.
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
