@@ -1,0 +1,65 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge
+      endpoint: NHSDigital
+  pipelines:
+  - pipeline: build_pipeline
+    source: "Communications-Manager-Build"
+    trigger:
+      branches:
+        include:
+          - refs/heads/release
+          - refs/heads/hotfix
+
+pool:
+  name: 'AWS-ECS'
+
+variables:
+  - template: project.yml
+
+extends:
+  template: azure/common/apigee-deployment.yml@common
+  parameters:
+    service_name: ${{ variables.service_name }}
+    short_service_name: ${{ variables.short_service_name }}
+    service_base_path: ${{ variables.service_base_path }}
+    hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
+    apigee_deployments:
+      - environment: internal-dev
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              full: true
+      - environment: internal-dev-sandbox
+        proxy_path: sandbox
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'sandbox'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+      - environment: internal-qa
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              full: true
+      - environment: internal-qa-sandbox
+        proxy_path: sandbox
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'sandbox'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
