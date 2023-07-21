@@ -11,6 +11,7 @@ Commands can be included in commit messages like '+major APM-123 Do thing'
 Commands:
     +major                 Increment the major version
     +minor                 Increment the minor version
+    +patch                 Increment the patch version
     +setstatus <status>    Set the prerelease status to <status>
     +clearstatus           Clear the prerelease status
     +startversioning       Reset version to v1.0.0-alpha
@@ -51,6 +52,11 @@ def is_major_inc(commit):
 def is_minor_inc(commit):
     """Returns true if commit.message contains a minor inc command"""
     return "+minor" in commit.message
+
+
+def is_patch_inc(commit):
+    """Returns true if commit.message contains a patch inc command"""
+    return "+patch" in commit.message
 
 
 def without_empty(commits):
@@ -107,10 +113,14 @@ def calculate_version(base_major=1, base_minor=0, base_revision=0, base_pre="alp
         minor += len(minor_incs)
         patch = 0
 
-    # Now increment patch number for every commit since the last patch
-    commits = list(itertools.takewhile(lambda c: not is_minor_inc(c), commits))
+    # If there are any +patch in commit messages, increment the counter
+    # We only care about commits after the last minor increment
+    commits = list(itertools.takewhile(lambda c: is_minor_inc(c), commits))
     commits = list(without_empty(commits))
-    patch = len(commits)
+    patch_incs = [c for c in commits if is_minor_inc(c)]
+
+    if patch_incs:
+        patch += len(patch_incs)
 
     return "v" + str(semver.VersionInfo(major, minor, patch, pre))
 

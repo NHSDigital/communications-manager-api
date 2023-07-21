@@ -16,8 +16,8 @@ resources:
     trigger:
       branches:
         include:
-          - refs/heads/release
-          - refs/heads/hotfix
+          - release
+          - hotfix
 
 pool:
   name: 'AWS-ECS'

@@ -7,6 +7,8 @@ trigger:
   branches:
     include:
       - tags/refs/v*
+      - refs/heads/release
+      - refs/heads/hotfix
   tags:
     include:
       - v*
