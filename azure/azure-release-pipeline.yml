@@ -33,6 +33,7 @@ extends:
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
+    manual_approval_env: manual-approval-ptl
     apigee_deployments:
       - environment: internal-dev
         jinja_templates:
