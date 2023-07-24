@@ -80,13 +80,15 @@ smoketest:
 sandboxtest: .run-sandbox-unit-tests
 	$(TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
-	--ignore=tests/development
+	--ignore=tests/development \
+	--ignore=tests/integration \
 	-m sandboxtest
 
 sandboxtest-prod: .run-sandbox-unit-tests
 	$(PROD_TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
-	--ignore=tests/development
+	--ignore=tests/development \
+	--ignore=tests/integration \
 	-m sandboxtest
 
 test:
@@ -101,5 +103,13 @@ smoketest-prod:
 test-dev:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox
+	--ignore=tests/sandbox \
+	--ignore=tests/integration \
 	-m devtest
+
+test-int:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/development \
+	-m inttest

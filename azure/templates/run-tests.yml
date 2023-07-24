@@ -11,7 +11,7 @@ parameters:
   - name: sandboxtest_command
     type: string
     default: 'make sandboxtest'
-  - name: nightly
+  - name: nightly 
     type: boolean
     default: false
 
