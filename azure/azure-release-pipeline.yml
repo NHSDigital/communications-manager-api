@@ -105,3 +105,4 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: 'make test-int'
+              full: true
