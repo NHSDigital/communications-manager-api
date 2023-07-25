@@ -23,3 +23,6 @@ def test_too_many_requests_get(nhsd_apim_proxy_url, correlation_id, method):
         Generators.generate_quota_error() if method not in ["options", "head"] else None,
         correlation_id
     )
+
+    assert "Retry-After" in resp.headers
+    assert resp.headers.get("Retry-After") == "5"
