@@ -82,7 +82,7 @@ info:
     | Integration test | [https://int.api.service.nhs.uk/comms](https://int.api.service.nhs.uk/comms) |
     | Production | Not yet available |
 
-    ## Sandbox testing 
+    ### Sandbox testing
 
     Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing):
 
@@ -92,6 +92,26 @@ info:
     * is open access, so does not allow you to test authorisation
 
     For details of sandbox test scenarios, or to try out sandbox using our our 'Try this API' feature, see the documentation for each endpoint.
+
+    Alternatively, you can try out the sandbox using our Postman collection:
+
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/28740466-ec078d1e-d4d7-4460-92b9-7d79d51f967a?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D28740466-ec078d1e-d4d7-4460-92b9-7d79d51f967a%26entityType%3Dcollection%26workspaceId%3D3664098f-4f8b-4edf-874d-ed33e1eea8ed)
+
+    You can find our postman collection source in our [public repository on github](https://github.com/NHSDigital/communications-manager/tree/master/postman).
+
+    ### Integration testing
+
+    Our integration test environment:
+
+    * is for formal integration sandbox-testing
+    * is stateful, so persists updates
+    * includes authorisation via [signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication)
+
+    You can try out our integration environment using our Postman collection. This Postman collection contains the signed JWT authentication mechanism, allowing you to test our integration environment without writing any code:
+
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923%26entityType%3Dcollection%26workspaceId%3D3664098f-4f8b-4edf-874d-ed33e1eea8ed#?env%5BIntegration%5D=W3sia2V5IjoiYXBpX2tleSIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6InNlY3JldCIsInNlc3Npb25WYWx1ZSI6IldPekdrM1dFWDBjVU9pbmhsNkdvdVd2N0RXTEhWaUNOIiwic2Vzc2lvbkluZGV4IjowfSx7ImtleSI6InByaXZhdGVfa2V5IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoic2VjcmV0Iiwic2Vzc2lvblZhbHVlIjoiLS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tIE1JSUpRZ0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQ1N3d2dna29BZ0VBQW9JQ0FRQ2lPZWtqZlJYTWt0cDguLi4iLCJzZXNzaW9uSW5kZXgiOjF9LHsia2V5IjoiYXV0aG9yaXphdGlvbl9oZWFkZXJfdmFsdWUiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJzZWNyZXQiLCJzZXNzaW9uVmFsdWUiOiJCZWFyZXIgTmxrd2Z0S3lQYWNXVjcza3VBZ1FVR2pEdkZlcCIsInNlc3Npb25JbmRleCI6Mn0seyJrZXkiOiJjb3JyZWxhdGlvbl9pZCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6ImRlZmF1bHQiLCJzZXNzaW9uVmFsdWUiOiI1OTMzOGVhOC1iYjQ0LTRhM2EtOTIwYS0xN2ZiMGEzNTVmNTUiLCJzZXNzaW9uSW5kZXgiOjN9LHsia2V5IjoibWltZV90eXBlIiwidmFsdWUiOiJhcHBsaWNhdGlvbi92bmQuYXBpK2pzb24iLCJlbmFibGVkIjp0cnVlLCJ0eXBlIjoiZGVmYXVsdCIsInNlc3Npb25WYWx1ZSI6ImFwcGxpY2F0aW9uL3ZuZC5hcGkranNvbiIsInNlc3Npb25JbmRleCI6NH0seyJrZXkiOiJtZXNzYWdlX2JhdGNoX3JlZmVyZW5jZSIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6ImRlZmF1bHQiLCJzZXNzaW9uVmFsdWUiOiJmNjI1Yjc4OS04YTZlLTQ1ODEtOGM1Zi03ZWExMWMyNTRiNmYiLCJzZXNzaW9uSW5kZXgiOjV9XQ==)
+
+    Alternatively you can find our postman collection source in our [public repository on github](https://github.com/NHSDigital/communications-manager/tree/master/postman).
 
     ## Onboarding
 
