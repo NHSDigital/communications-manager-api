@@ -11,6 +11,7 @@ VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
 TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
+NUM_MAX_ERRORS = 100
 
 
 class Error():

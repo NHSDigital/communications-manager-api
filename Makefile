@@ -80,12 +80,14 @@ smoketest:
 	--junitxml=smoketest-report.xml \
 	-m smoketest
 
-sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox
+.sandboxtest:
 	$(TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	-m sandboxtest
+
+sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest
 
 sandboxtest-prod: .run-sandbox-unit-tests
 	$(PROD_TEST_CMD) \
