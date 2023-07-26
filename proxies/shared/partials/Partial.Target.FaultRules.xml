@@ -77,7 +77,7 @@
     <Step>
         <Name>RaiseFault.500Generic</Name>
         <Condition>
-            response.status.code = 500
+            response.status.code = 500 or fault.name = "ScriptExecutionFailed"
         </Condition>
     </Step>
     <Step>
