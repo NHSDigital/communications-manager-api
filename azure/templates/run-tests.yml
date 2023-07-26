@@ -55,7 +55,7 @@ steps:
       fi
     workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
     displayName: Check proxy is deployed
-    retryCountOnTaskFailure: 3
+    retryCountOnTaskFailure: 10
 
   - ${{ if parameters.nightly }}:
     - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
