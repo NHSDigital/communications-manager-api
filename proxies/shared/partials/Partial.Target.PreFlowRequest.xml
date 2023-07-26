@@ -2,6 +2,9 @@
     <Name>JavaScript.SetResponseContentType</Name>
 </Step>
 <Step>
+    <Name>JavaScript.SetBackendCorrelationId</Name>
+</Step>
+<Step>
     <Name>AssignMessage.AddDefaultRequestPath</Name>
 </Step>
 <Step>
