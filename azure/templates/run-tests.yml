@@ -48,7 +48,7 @@ steps:
       status=$(echo $errorResponse | jq -r ".status")
       code=$(echo $errorResponse | jq -r ".code")
 
-      if [[ ($status == "404" && $code == "CM_NOT_FOUND") || ($status == "401" && $code == "") ]]; then
+      if [[ ($status == "404" && $code == "CM_NOT_FOUND") || ($status == "401" && $code == "CM_DENIED") ]]; then
           exit 0
       else
           exit 1
