@@ -37,20 +37,24 @@ steps:
     condition: always()
 
   - bash: |
+      proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
       proxyResponse=$(
-      curl --request GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-batches' \
-           --header 'Content-Type: application/vnd.api+json'
+      curl --request GET $proxyURL \
+           --header 'Content-Type: application/vnd.api+json' \
+           --header 'Authorization: Bearer $bearerToken'
       )
       echo "$proxyResponse"
       errorResponse=$(echo $proxyResponse | jq ".errors[0]")
-      if [[ $(echo $errorResponse | jq ".status") == "404" ]]; then
-        if [[ $(echo $errorResponse | jq ".code") == "CM_NOT_FOUND" ]]; then
+      status=$(echo $errorResponse | jq -r ".status")
+      code=$(echo $errorResponse | jq -r ".code")
+
+      if [[ ($status == "404" && $code == "CM_NOT_FOUND") || ($status == "401" && $code == "") ]]; then
           exit 0
-        fi
+      else
+          exit 1
       fi
-      exit 1
-    displayName: Wait for proxy to deploy
-    condition: always()
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+    displayName: Check proxy is deployed
     retryCountOnTaskFailure: 3
 
   - ${{ if parameters.nightly }}:
