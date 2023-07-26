@@ -30,3 +30,4 @@ extends:
   template: ./templates/run-tests.yml
   parameters:
     nightly: true
+    test_command: 'make test-dev'

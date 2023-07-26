@@ -1,16 +1,9 @@
 parameters:
-  - name: full
-    type: boolean
-    default: false
   - name: test_command
     type: string
-    default: 'make test-dev'
-  - name: smoketest_command
+  - name: unit_test_report_name
     type: string
-    default: 'make smoketest'
-  - name: sandboxtest_command
-    type: string
-    default: 'make sandboxtest'
+    default: ''
   - name: nightly 
     type: boolean
     default: false
@@ -25,8 +18,10 @@ steps:
     parameters:
       secret_file_ids:
       - ptl/app-credentials/jwt_testing/non-prod/JWT_TESTING_PRIVATE_KEY
+      - ptl/api-deployment/communications-manager/INTEGRATION_PRIVATE_KEY
       secret_ids:
       - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
+      - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
 
   - bash: |
       if [ "${{ parameters.nightly }}" != "True" ]; then
@@ -94,28 +89,12 @@ steps:
         export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         ${{ parameters.test_command }}
-      displayName: Run full test suite
+      displayName: Run nightly test suite
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       condition: always()
       inputs:
         testResultsFiles: 'test-report.xml'
-        failTaskOnFailedTests: true
-  - ${{ elseif parameters.full }}:
-    - bash: |
-        export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
-        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
-        export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
-        export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
-        export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
-        ${{ parameters.test_command }}
-      workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-      displayName: Run full test suite
-    - task: PublishTestResults@2
-      displayName: 'Publish test results'
-      condition: always()
-      inputs:
-        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/test-report.xml'
         failTaskOnFailedTests: true
   - ${{ else }}:
     - bash: |
@@ -124,18 +103,21 @@ steps:
         export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
-        ${{ parameters.sandboxtest_command }}
+        export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
+        export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+        ${{ parameters.test_command }}
       workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-      displayName: Run sandboxtest
+      displayName: Run test suite
     - task: PublishTestResults@2
-      displayName: 'Publish sandboxtest results'
+      displayName: 'Publish test results'
       condition: always()
       inputs:
-        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/sandboxtest-report.xml'
+        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/test-report.xml'
         failTaskOnFailedTests: true
-    - task: PublishTestResults@2
-      displayName: 'Publish mock unit test results'
-      condition: always()
-      inputs:
-        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/sandbox/sandbox-unit-report.xml'
-        failTaskOnFailedTests: true
+    - ${{ if ne(parameters.unit_test_report_name, '') }}:
+      - task: PublishTestResults@2
+        displayName: 'Publish unit test results'
+        condition: always()
+        inputs:
+          testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/${{ parameters.unit_test_report_name }}'
+          failTaskOnFailedTests: true
