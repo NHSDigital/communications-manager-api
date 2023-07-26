@@ -24,136 +24,140 @@ if (all) {
 
   var pointer;
 
-  // $.data
-  pointer = "/data";
-  if (isUndefined(data)) {
-    pushError(missingError(pointer));
-  } else if (data === null) {
-    pushError(nullError(pointer));
-  } else if (typeof data !== "object") {
-    pushError(invalidError(pointer));
-  } else {
-
-    // $.data.type
-    pointer = "/data/type";
-    if (isUndefined(data.type)) {
+  try {
+    // $.data
+    pointer = "/data";
+    if (isUndefined(data)) {
       pushError(missingError(pointer));
-    } else if (data.type === null) {
+    } else if (data === null) {
       pushError(nullError(pointer));
-    } else if (data.type !== "MessageBatch") {
-      pushError(invalidError(pointer));
-    }
-
-    // $.data.attributes
-    pointer = "/data/attributes";
-    if (isUndefined(data.attributes)) {
-      pushError(missingError(pointer));
-    } else if (data.attributes === null) {
-      pushError(nullError(pointer));
-    } else if (typeof data.attributes !== "object") {
+    } else if (typeof data !== "object") {
       pushError(invalidError(pointer));
     } else {
 
-      // $.data.attributes.routingPlanId
-      pointer = "/data/attributes/routingPlanId";
-      if (isUndefined(data.attributes.routingPlanId)) {
+      // $.data.type
+      pointer = "/data/type";
+      if (isUndefined(data.type)) {
         pushError(missingError(pointer));
-      } else if (data.attributes.routingPlanId === null) {
+      } else if (data.type === null) {
         pushError(nullError(pointer));
-      } else if (typeof data.attributes.routingPlanId !== "string" || !uuidRegex.test(data.attributes.routingPlanId)) {
+      } else if (data.type !== "MessageBatch") {
         pushError(invalidError(pointer));
       }
 
-      // $.data.attributes.messageBatchReference
-      pointer = "/data/attributes/messageBatchReference";
-      if (isUndefined(data.attributes.messageBatchReference)) {
+      // $.data.attributes
+      pointer = "/data/attributes";
+      if (isUndefined(data.attributes)) {
         pushError(missingError(pointer));
-      } else if (data.attributes.messageBatchReference === null) {
+      } else if (data.attributes === null) {
         pushError(nullError(pointer));
-      } else if (typeof data.attributes.messageBatchReference !== "string" || !uuidRegex.test(data.attributes.messageBatchReference)) {
+      } else if (typeof data.attributes !== "object") {
         pushError(invalidError(pointer));
-      }
-
-      // $.data.attributes.messages
-      pointer = "/data/attributes/messages";
-      if (isUndefined(data.attributes.messages)) {
-        pushError(missingError(pointer));
-      } else if (data.attributes.messages === null) {
-        pushError(nullError(pointer));
-      } else if (!Array.isArray(data.attributes.messages)) {
-        pushError(invalidError(pointer));
-      } else if (data.attributes.messages.length === 0) {
-        pushError(tooFewItemsError(pointer));
       } else {
 
-        // $.data.attributes.messages.x
-        data.attributes.messages.forEach((message, index) => {
-          pointer = "/data/attributes/messages/" + index;
-          if (isUndefined(message)) {
-            pushError(missingError(pointer));
-          } else if (message === null) {
-            pushError(nullError(pointer));
-          } else if (typeof message !== "object" || Array.isArray(message)) {
-            pushError(invalidError(pointer));
-          } else {
+        // $.data.attributes.routingPlanId
+        pointer = "/data/attributes/routingPlanId";
+        if (isUndefined(data.attributes.routingPlanId)) {
+          pushError(missingError(pointer));
+        } else if (data.attributes.routingPlanId === null) {
+          pushError(nullError(pointer));
+        } else if (typeof data.attributes.routingPlanId !== "string" || !uuidRegex.test(data.attributes.routingPlanId)) {
+          pushError(invalidError(pointer));
+        }
 
-            // $.data.attributes.messages.x.messageReference
-            pointer = "/data/attributes/messages/" + index + "/messageReference";
-            if (isUndefined(message.messageReference)) {
+        // $.data.attributes.messageBatchReference
+        pointer = "/data/attributes/messageBatchReference";
+        if (isUndefined(data.attributes.messageBatchReference)) {
+          pushError(missingError(pointer));
+        } else if (data.attributes.messageBatchReference === null) {
+          pushError(nullError(pointer));
+        } else if (typeof data.attributes.messageBatchReference !== "string" || !uuidRegex.test(data.attributes.messageBatchReference)) {
+          pushError(invalidError(pointer));
+        }
+
+        // $.data.attributes.messages
+        pointer = "/data/attributes/messages";
+        if (isUndefined(data.attributes.messages)) {
+          pushError(missingError(pointer));
+        } else if (data.attributes.messages === null) {
+          pushError(nullError(pointer));
+        } else if (!Array.isArray(data.attributes.messages)) {
+          pushError(invalidError(pointer));
+        } else if (data.attributes.messages.length === 0) {
+          pushError(tooFewItemsError(pointer));
+        } else {
+
+          // $.data.attributes.messages.x
+          data.attributes.messages.forEach((message, index) => {
+            pointer = "/data/attributes/messages/" + index;
+            if (isUndefined(message)) {
               pushError(missingError(pointer));
-            } else if (message.messageReference === null) {
+            } else if (message === null) {
               pushError(nullError(pointer));
-            } else if (typeof message.messageReference !== "string" || !uuidRegex.test(message.messageReference)) {
+            } else if (typeof message !== "object" || Array.isArray(message)) {
               pushError(invalidError(pointer));
-            } else if (seenMessages[message.messageReference]) {
-              pushError(duplicateError(pointer));
-            } else {
-              seenMessages[message.messageReference] = 1;
-            }
-
-            // $.data.attributes.messages.x.recipient
-            pointer = "/data/attributes/messages/" + index + "/recipient";
-            if (isUndefined(message.recipient)) {
-              pushError(missingError(pointer));
-            } else if (typeof message.recipient !== 'object') {
-              pushError(invalidError(pointer));
-            } else if (message.recipient === null) {
-              pushError(nullError(pointer));
             } else {
 
-              // $.data.attributes.messages.x.recipient.nhsNumber
-              pointer = "/data/attributes/messages/" + index + "/recipient/nhsNumber";
-              if (isUndefined(message.recipient.nhsNumber)) {
+              // $.data.attributes.messages.x.messageReference
+              pointer = "/data/attributes/messages/" + index + "/messageReference";
+              if (isUndefined(message.messageReference)) {
                 pushError(missingError(pointer));
-              } else if (message.recipient.nhsNumber === null) {
+              } else if (message.messageReference === null) {
                 pushError(nullError(pointer));
-              } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
+              } else if (typeof message.messageReference !== "string" || !uuidRegex.test(message.messageReference)) {
                 pushError(invalidError(pointer));
+              } else if (seenMessages[message.messageReference]) {
+                pushError(duplicateError(pointer));
+              } else {
+                seenMessages[message.messageReference] = 1;
               }
 
-            // $.data.attributes.recipients.x.dateOfBirth
-            pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth";
-            if (
-              !isUndefined(message.recipient.dateOfBirth)
-              && message.recipient.dateOfBirth !== null
-              && (
-                typeof message.recipient.dateOfBirth !== "string"
-                || !dobRegex.test(message.recipient.dateOfBirth)
-              )
-            ) {
-              pushError(invalidError(pointer));
-            }
-
-              // $.data.attributes.messages.x.personalisation
-              pointer = "/data/attributes/messages/" + index + "/personalisation";
-              if (typeof message.personalisation !== "object") {
+              // $.data.attributes.messages.x.recipient
+              pointer = "/data/attributes/messages/" + index + "/recipient";
+              if (isUndefined(message.recipient)) {
+                pushError(missingError(pointer));
+              } else if (typeof message.recipient !== 'object') {
                 pushError(invalidError(pointer));
+              } else if (message.recipient === null) {
+                pushError(nullError(pointer));
+              } else {
+
+                // $.data.attributes.messages.x.recipient.nhsNumber
+                pointer = "/data/attributes/messages/" + index + "/recipient/nhsNumber";
+                if (isUndefined(message.recipient.nhsNumber)) {
+                  pushError(missingError(pointer));
+                } else if (message.recipient.nhsNumber === null) {
+                  pushError(nullError(pointer));
+                } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
+                  pushError(invalidError(pointer));
+                }
+
+                // $.data.attributes.recipients.x.dateOfBirth
+                pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth";
+                if (
+                  !isUndefined(message.recipient.dateOfBirth)
+                  && message.recipient.dateOfBirth !== null
+                  && (
+                    typeof message.recipient.dateOfBirth !== "string"
+                    || !dobRegex.test(message.recipient.dateOfBirth)
+                  )
+                ) {
+                  pushError(invalidError(pointer));
+                }
+
+                // $.data.attributes.messages.x.personalisation
+                pointer = "/data/attributes/messages/" + index + "/personalisation";
+                if (typeof message.personalisation !== "object") {
+                  pushError(invalidError(pointer));
+                }
               }
             }
-          }
-        });
+          });
+        }
       }
     }
+  } catch (err) {
+    console.log(err);
   }
 }
 
@@ -161,9 +165,10 @@ function pushError(error) {
   // Limit the amount of errors returned to 100 entries
   if (errors.length <= 100) {
     errors.push(error);
+  } else {
+    throw new Error("Maximum number of error entries reached.");
   }
 }
-
 
 function createErrorObject(code, title, detail, pointer) {
   return {
