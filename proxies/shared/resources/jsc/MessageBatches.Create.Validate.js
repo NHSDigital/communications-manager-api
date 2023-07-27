@@ -18,13 +18,13 @@ const isUndefined = (val) => {
     return typeof val === "undefined";
 }
 
-if (all) {
-  var seenMessages = {};
-  var data = all.data;
+const validate = () => {
+  if (all) {
+    var seenMessages = {};
+    var data = all.data;
 
-  var pointer;
+    var pointer;
 
-  try {
     // $.data
     pointer = "/data";
     if (isUndefined(data)) {
@@ -90,7 +90,10 @@ if (all) {
           // $.data.attributes.messages.x
           data.attributes.messages.forEach((message, index) => {
             pointer = "/data/attributes/messages/" + index;
-            if (isUndefined(message)) {
+            // Limit the amount of errors returned to 100 entries
+            if (errors.length > 100) {
+              return null;
+            } else if (isUndefined(message)) {
               pushError(missingError(pointer));
             } else if (message === null) {
               pushError(nullError(pointer));
@@ -156,18 +159,11 @@ if (all) {
         }
       }
     }
-  } catch (err) {
-    console.log(err);
   }
 }
 
 function pushError(error) {
-  // Limit the amount of errors returned to 100 entries
-  if (errors.length <= 100) {
-    errors.push(error);
-  } else {
-    throw new Error("Maximum number of error entries reached.");
-  }
+  errors.push(error);
 }
 
 function createErrorObject(code, title, detail, pointer) {
@@ -229,7 +225,9 @@ function tooFewItemsError(pointer) {
     "The property at the specified location contains too few items.",
     pointer
   )
-};
+}
+
+validate();
 
 if (errors.length > 0) {
   context.setVariable("errors", JSON.stringify(errors));
