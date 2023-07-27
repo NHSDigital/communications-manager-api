@@ -131,6 +131,10 @@ class Generators():
         return Generators.generate_error(ERROR_REQUEST_TIMEOUT)
 
     @staticmethod
+    def generate_service_unavailable_error():
+        return Generators.generate_error(ERROR_SERVICE_UNAVAILABLE)
+
+    @staticmethod
     def generate_service_timeout_error():
         return Generators.generate_error(ERROR_SERVICE_TIMEOUT)
 

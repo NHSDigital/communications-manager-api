@@ -152,6 +152,14 @@ ERROR_REQUEST_TIMEOUT = Error(
     "The service was unable to receive your request within the timeout period."
 )
 
+# service unavailable
+ERROR_SERVICE_UNAVAILABLE = Error(
+    "CM_SERVICE_UNAVAILABLE",
+    "503",
+    "The service is currently unavailable",
+    "The service is currently not able to process this request, try again later."
+)
+
 # service timeout
 ERROR_SERVICE_TIMEOUT = Error(
     "CM_TIMEOUT",
