@@ -1,5 +1,9 @@
 FROM node:12
 
+RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
+
+USER nonroot
+
 COPY . /sandbox
 
 WORKDIR /sandbox
