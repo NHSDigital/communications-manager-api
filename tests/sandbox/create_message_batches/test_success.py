@@ -1,7 +1,5 @@
 import requests
 import pytest
-import string
-import random
 from lib import Assertions, Generators
 
 VALID_ACCEPT_HEADERS = ["*/*", "application/json", "application/vnd.api+json"]
@@ -15,7 +13,7 @@ VALID_ROUTING_PLAN_ID = [
     "9ba00d23-cd6f-4aca-8688-00abc85a7980"
 ]
 VALID_DOB = ["0000-01-01", "2023-01-01", None]
-valid_nhs_number = ''.join(random.choices(string.digits, k=10))
+valid_nhs_number = "0123456789"
 
 
 @pytest.mark.sandboxtest
