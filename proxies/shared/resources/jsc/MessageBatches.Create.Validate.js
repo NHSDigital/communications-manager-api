@@ -91,7 +91,7 @@ const validate = () => {
           data.attributes.messages.forEach((message, index) => {
             pointer = "/data/attributes/messages/" + index;
             // Limit the amount of errors returned to 100 entries
-            if (errors.length > 100) {
+            if (errors.length >= 100) {
               return null;
             } else if (isUndefined(message)) {
               pushError(missingError(pointer));
