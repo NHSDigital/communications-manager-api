@@ -2,6 +2,7 @@
 
 const express = require("express");
 const app = express();
+app.disable("x-powered-by");
 const log = require("loglevel");
 const uuid = require('uuid');
 
