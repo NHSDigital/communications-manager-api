@@ -1,12 +1,12 @@
 FROM node:12
 
-USER node
-
 COPY . /sandbox
 
 WORKDIR /sandbox
 
 RUN npm install
+
+USER node
 
 EXPOSE 9000
 
