@@ -1,8 +1,6 @@
 FROM node:12
 
-RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
-
-USER nonroot
+USER node
 
 COPY . /sandbox
 
