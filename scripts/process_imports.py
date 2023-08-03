@@ -11,7 +11,8 @@ def main():
         block_start_string='[%',
         block_end_string='%]',
         variable_start_string='[[',
-        variable_end_string=']]'
+        variable_end_string=']]',
+        autoescape=True
     )
 
     for template in environment.list_templates():
