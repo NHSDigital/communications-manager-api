@@ -8,14 +8,14 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/edge
+      ref: refs/heads/edge-fixed
       endpoint: NHSDigital
 
 schedules:
   - cron: 0 2 * * *
     displayName: 2am daily
     branches:
-      include: ['master']
+      include: ['release']
     always: true
 
 pool:

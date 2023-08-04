@@ -22,7 +22,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/edge
+      ref: refs/heads/edge-fixed
       endpoint: NHSDigital
 
 variables:
