@@ -92,8 +92,11 @@ const validate = () => {
             pointer = "/data/attributes/messages/" + index;
             // Limit the amount of errors returned to 100 entries
             if (errors.length >= 100) {
+              errors = errors.slice(0, 100);
               return null;
-            } else if (isUndefined(message)) {
+            }
+
+            if (isUndefined(message)) {
               pushError(missingError(pointer));
             } else if (message === null) {
               pushError(nullError(pointer));

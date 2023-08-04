@@ -2,6 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
+from lib.constants import NUM_MAX_ERRORS
 
 headers = {
     "Accept": "application/json",
@@ -470,7 +471,7 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("number_of_errors", [99, 100, 101, 150, 200])
-def test_validation_returns_at_100_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
+def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
     duplicate_message_reference = str(uuid.uuid4())
     data = {
         "data": {
@@ -499,4 +500,4 @@ def test_validation_returns_at_100_errors(nhsd_apim_proxy_url, correlation_id, n
         },
         json=data,
     )
-    assert len(resp.json().get("errors")) <= 100
+    assert len(resp.json().get("errors")) <= NUM_MAX_ERRORS
