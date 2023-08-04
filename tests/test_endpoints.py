@@ -55,7 +55,16 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
         f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers
     )
     assert resp.status_code == 200
-    # Make some additional assertions about your status response here!
+
+
+@pytest.mark.smoketest
+@pytest.mark.sandboxtest
+@pytest.mark.devtest
+def test_401_status_without_apikey(nhsd_apim_proxy_url):
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/_status"
+    )
+    assert resp.status_code == 401
 
 
 @pytest.mark.smoketest
