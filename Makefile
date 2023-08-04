@@ -40,7 +40,7 @@ build-proxy:
 	scripts/build_proxy.sh
 
 #Files to loop over in release
-_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox"
+_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman"
 
 #Create /dist/ sub-directory and copy files into directory
 release: clean publish build-proxy
@@ -71,22 +71,27 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-sandbox-unit-tests:
 	(cd sandbox; rm -rf node_modules; npm install --legacy-peer-deps; npm run test)
 
+.run-postman-sandbox: 
+	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
+
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
 	$(TEST_CMD) \
 	--junitxml=smoketest-report.xml \
 	-m smoketest
 
-sandboxtest: .run-sandbox-unit-tests
+sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox
 	$(TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
-	--ignore=tests/development
+	--ignore=tests/development \
+	--ignore=tests/integration \
 	-m sandboxtest
 
 sandboxtest-prod: .run-sandbox-unit-tests
 	$(PROD_TEST_CMD) \
 	--junitxml=sandboxtest-report.xml \
-	--ignore=tests/development
+	--ignore=tests/development \
+	--ignore=tests/integration \
 	-m sandboxtest
 
 test:
@@ -101,5 +106,13 @@ smoketest-prod:
 test-dev:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox
+	--ignore=tests/sandbox \
+	--ignore=tests/integration \
 	-m devtest
+
+test-int:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/development \
+	-m inttest

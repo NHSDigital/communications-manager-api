@@ -2,6 +2,7 @@
 
 const express = require("express");
 const app = express();
+app.disable("x-powered-by");
 const log = require("loglevel");
 const uuid = require('uuid');
 
@@ -123,7 +124,7 @@ function on_error(err, req, res, next) {
 
 const handlers = require("./handlers");
 app.use(before_request);
-app.use(express.json());
+app.use(express.json({limit: '10mb'}));
 app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);

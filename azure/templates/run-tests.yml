@@ -11,7 +11,7 @@ parameters:
   - name: sandboxtest_command
     type: string
     default: 'make sandboxtest'
-  - name: nightly
+  - name: nightly 
     type: boolean
     default: false
 
@@ -35,6 +35,27 @@ steps:
       make install-python
     displayName: Setup pytests
     condition: always()
+
+  - bash: |
+      proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
+      proxyResponse=$(
+      curl --request GET $proxyURL \
+           --header 'Content-Type: application/vnd.api+json' \
+           --header 'Authorization: Bearer $bearerToken'
+      )
+      echo "$proxyResponse"
+      errorResponse=$(echo $proxyResponse | jq ".errors[0]")
+      status=$(echo $errorResponse | jq -r ".status")
+      code=$(echo $errorResponse | jq -r ".code")
+
+      if [[ ($status == "404" && $code == "CM_NOT_FOUND") || ($status == "401" && $code == "CM_DENIED") ]]; then
+          exit 0
+      else
+          exit 1
+      fi
+    workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
+    displayName: Check proxy is deployed
+    retryCountOnTaskFailure: 10
 
   - ${{ if parameters.nightly }}:
     - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"

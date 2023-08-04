@@ -4,7 +4,13 @@
     <Properties/>
     <FaultResponse>
         <Set>
-            <Headers/>
+            {% if ENVIRONMENT_TYPE == 'sandbox' %}
+                <Headers>
+                    <Header name="Retry-After">5</Header>
+                </Headers>
+            {% else %}
+                <Headers/>
+            {% endif %}
             <StatusCode>429</StatusCode>
             <ReasonPhrase>Too many requests</ReasonPhrase>
             <Payload variablePrefix="@" variableSuffix="#">

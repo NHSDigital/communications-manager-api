@@ -21,6 +21,10 @@ This code is dual licensed under the MIT license and the OGL (Open Government Li
 
 The contents of this repository are protected by Crown Copyright (C).
 
+## Releasing
+
+Our release process is [documented here](https://github.com/NHSDigital/communications-manager/blob/release/RELEASING.md).
+
 ## Development
 
 ### Requirements

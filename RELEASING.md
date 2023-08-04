@@ -1,0 +1,77 @@
+# Release process
+
+We store our release candidate within the [release branch](https://github.com/NHSDigital/communications-manager) - this is the default branch for the repository.
+
+## Create a release
+
+To create a new release:
+
+* Create a PR from release into master
+* Push a commit into release that increments the version number - see release versioning commands.
+* Review the changes to be included in the release
+* Get approval on the PR and merge into master
+* The new release will be generated and uploaded to github
+* The release will run through the CI/CD pipeline, automatically deploying into `internal-dev`, `internal-dev-sandbox`, `internal-qa` and `internal-qa-sandbox`.
+* The release will be held at this point, ready for deployment into our production environments
+
+## Promote a release to production environments
+
+It is possible to self service promoting the release into the `sandbox` and `int` (integration) environments. The process for this is:
+
+* Access the release CI/CD pipeline for the specific release
+* Approve the manual approval gates for `sandbox` and `int`
+
+We do not have a `prod` environment yet.
+
+## Release versioning commands
+
+To increment the version number you need to add a command string into a commit message. The commit should include no changes other than the commit message.
+
+The following commands can be used to control the version number:
+
+* `+major`
+* `+minor`
+* `+patch`
+* `+setstatus {status}`
+* `+clearstatus`
+* `+startversioning`
+
+For the standard release process you will use either `+major`, `+minor` or `+patch`.
+
+You can view the calculated version by running the `scripts/calculate_version.py` script:
+
+```
+$> python3 ./scripts/calculate_version.py
+v3.2.0
+```
+
+### Examples
+
+The following examples should provide commands that can be used in most situations.
+
+#### Bump major version
+
+To bump a major version - `1.2.3` to `2.0.0` - you can add an empty commit with the `+major` command in it:
+
+```
+$> git commit -m '+major' --allow-empty
+$> git push origin release
+```
+
+#### Bump minor version
+
+To bump a minor version - `1.2.3` to `1.3.0` - you can add an empty commit with the `+minor` command in it:
+
+```
+$> git commit -m '+minor' --allow-empty
+$> git push origin release
+```
+
+#### Bump patch version
+
+To bump a patch version - `1.2.3` to `1.2.4` - you can add an empty commit with the `+patch` command in it:
+
+```
+$> git commit -m '+patch' --allow-empty
+$> git push origin release
+```

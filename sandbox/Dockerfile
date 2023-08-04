@@ -4,7 +4,9 @@ COPY . /sandbox
 
 WORKDIR /sandbox
 
-RUN npm install
+RUN npm install --ignore-scripts
+
+USER node
 
 EXPOSE 9000
 

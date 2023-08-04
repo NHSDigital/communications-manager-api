@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/CCM-1179-release-process
+      ref: refs/heads/edge
       endpoint: NHSDigital
   pipelines:
     - pipeline: build_pipeline
@@ -101,3 +101,8 @@ extends:
         jinja_templates:
           ENVIRONMENT_TYPE: 'production'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make test-int'
+              full: true
