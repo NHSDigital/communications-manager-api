@@ -1,0 +1,56 @@
+env:
+  contexts:
+    - name: context
+      urls:
+        - https://sandbox.api.service.nhs.uk/comms
+        - https://int.api.service.nhs.uk/comms
+  parameters:
+    failOnError: true
+    failOnWarning: true
+    progressToStdout: true
+
+jobs:
+  - type: openapi
+    parameters:
+      apiFile: '/zap/wrk/build/communications-manager.json'
+  - type: passiveScan-config
+    parameters:
+      maxAlertsPerRule: 10
+      scanOnlyInScope: true
+  - type: activeScan
+    #policyDefinition:
+    #  rules:
+    #  - id: 10104
+    #    name: User Agent Fuzzer
+    #    strength: Low
+    #    threshold: Off
+  - type: report
+    parameters:
+      template: 'traditional-html'
+      reportDir: '/zap/tmp'
+      reportFile: 'zap-report.html'
+    risks:
+      - high
+      - medium
+      - low
+      - info
+    confidences:
+      - high
+      - medium
+      - low
+      - falsepositive
+  - type: report
+    parameters:
+      template: 'traditional-json'
+      reportDir: '/zap/tmp'
+      reportFile: 'zap-report.json'
+    risks:
+      - high
+      - medium
+      - low
+      - info
+    confidences:
+      - high
+      - medium
+      - low
+      - falsepositive

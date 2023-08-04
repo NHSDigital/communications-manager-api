@@ -136,6 +136,8 @@ info:
 servers:
   - url: 'https://sandbox.api.service.nhs.uk/comms'
     description: Sandbox environment
+  - url: 'https://int.api.service.nhs.uk/comms'
+    description: Integration test environment
 paths:
   /v1/message-batches:
     post:
@@ -608,14 +610,6 @@ paths:
                 type: string
                 pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
               description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
-      security: []
-      servers:
-        - url: 'https://sandbox.api.service.nhs.uk/comms'
-          description: Sandbox environment
-        - url: 'https://int.api.service.nhs.uk/comms'
-          description: Integration test environment
-        - url: 'https://api.service.nhs.uk/comms'
-          description: Production environment
 components:
   schemas:
     CreateMessageBatch:
