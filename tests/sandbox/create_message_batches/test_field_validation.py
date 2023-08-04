@@ -465,3 +465,38 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
         Generators.generate_null_value_error("/data/attributes/messages/0"),
         correlation_id
     )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("number_of_errors", [99, 100, 101, 150, 200])
+def test_validation_returns_at_100_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
+    duplicate_message_reference = str(uuid.uuid4())
+    data = {
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": duplicate_message_reference,
+                        "recipient": {
+                            "nhsNumber": "1234567890",
+                            "dateOfBirth": "1982-03-17"
+                        },
+                        "personalisation": {}
+                    } for _ in range(number_of_errors)
+                ],
+            }
+        }
+    }
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        headers={
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data,
+    )
+    assert len(resp.json().get("errors")) <= 100
