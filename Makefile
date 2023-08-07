@@ -85,6 +85,7 @@ smoketest:
 	--junitxml=sandboxtest-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
+	--ignore=tests/mtls \
 	-m sandboxtest
 
 sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest
@@ -94,6 +95,7 @@ sandboxtest-prod: .run-sandbox-unit-tests
 	--junitxml=sandboxtest-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
+	--ignore=tests/mtls \
 	-m sandboxtest
 
 test:
@@ -118,3 +120,19 @@ test-int:
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
 	-m inttest
+
+test-prod:
+	$(PROD_TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/development \
+	--ignore=tests/integration \
+	-m prodtest
+
+test-mtls:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/integration \
+	--ignore=tests/development \
+	-m mtlstest
