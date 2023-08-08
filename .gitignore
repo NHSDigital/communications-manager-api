@@ -25,3 +25,8 @@ env
 *.pem
 sandbox/coverage
 sandbox/.nyc_output
+zap-report/
+zap-report.json
+zap-report.xml
+zap-report.html
+tmp/

@@ -1,0 +1,91 @@
+<test-run
+    id="1"
+    name="Zap test"
+    start-time="{{@generated}}">
+    {{#each site}}
+        {{#if passed}}
+            <test-suite
+                id="{{@index}}-passed"
+                type="Assembly"
+                name="{{[@name]}}"
+                result="Passed"
+                failed="0"
+            >
+                {{#each passed.passive}}
+                    <test-case
+                        id="{{@index}}-passive"
+                        name="Passive - {{id}} - {{name}}"
+                        result="Passed"
+                        fullname="Passive - {{id}} - {{name}}"
+                        time="1"
+                    >
+                        <properties>
+                            <property name="Description" value="More details available here: {{url}}" />
+                            <property name="Category" value="passive" />
+                            <property name="RuleId" value="{{id}}" />
+                            <property name="Threshold" value="{{threshold}}" />
+                            <property name="Strength" value="{{strength}}" />
+                        </properties>
+                    </test-case>
+                {{/each}}
+                {{#each passed.active}}
+                    <test-case
+                        id="{{@index}}-active"
+                        name="Active - {{id}} - {{name}}"
+                        result="Passed"
+                        fullname="Active - {{id}} - {{name}}"
+                        time="1"
+                    >
+                        <properties>
+                            <property name="Description" value="More details available here: {{url}}" />
+                            <property name="Category" value="active" />
+                            <property name="RuleId" value="{{id}}" />
+                            <property name="Threshold" value="{{threshold}}" />
+                            <property name="Strength" value="{{strength}}" />
+                        </properties>
+                    </test-case>
+                {{/each}}
+            </test-suite>
+        {{/if}}
+        {{#if alerts}}
+            <test-suite
+                id="{{@index}}"
+                type="Assembly"
+                name="{{[@name]}}-failures"
+                result="Failed"
+                failed="{{alerts.length}}"
+            >
+                {{#each alerts}}
+                    <test-case
+                        id="{{@index}}"
+                        name="{{alert}}"
+                        result="Failed"
+                        fullname="{{alert}}"
+                        time="1"
+                    >
+                        <failure>
+                            <message>
+                                <![CDATA[{{{desc}}}]]>
+                            </message>
+                            <stack-trace>
+                                <![CDATA[
+                                    Solution:
+                                    {{{solution}}}
+
+                                    Reference:
+                                    {{{reference}}}
+
+                                    instances:{{#each instances}}
+                                        * {{uri}}
+                                        - {{method}}
+                                        {{#if evidence}}- {{{evidence}}}{{/if}}
+                                    {{/each}}
+                                ]]>
+                            </stack-trace>
+                        </failure>
+                    </test-case>
+                {{/each}}
+            </test-suite>
+        {{/if}}
+    {{/each}}
+</test-run>

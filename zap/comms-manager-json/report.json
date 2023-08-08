@@ -1,0 +1,74 @@
+{
+	"@programName": [[${programName}]],
+	"@version": [[${zapVersion}]],
+	"@generated": [[${generatedString}]],
+	"site":[ [#th:block th:each="site, siteState: ${reportData.sites}"][#th:block th:if="${! siteState.first}"],[/th:block]
+		{
+			"@name": "[(${helper.legacyEscapeText(site, true)})]",
+			"@host": "[(${helper.legacyEscapeText(helper.getHostForSite(site), true)})]",
+			"@port": "[(${helper.getPortForSite(site)})]",
+			"@ssl": "[(${helper.isSslSite(site)})]",
+			"alerts": [ [#th:block th:each="alert, alertState: ${helper.getAlertsForSite(alertTree, site)}" th:with="instances=${helper.getAlertInstancesForSite(alertTree, site, alert.name, alert.risk)}"]
+				{
+					"pluginid": "[(${alert.pluginId})]",
+					"alertRef": "[(${alert.alertRef})]",
+					"alert": "[(${helper.legacyEscapeText(alert.name, true)})]",
+					"name": "[(${helper.legacyEscapeText(alert.name, true)})]",
+					"riskcode": "[(${alert.risk})]",
+					"confidence": "[(${alert.confidence})]",
+					"riskdesc": "[(${helper.legacyEscapeText(helper.getRiskString(alert.risk) + ' (' + helper.getConfidenceString(alert.confidence) + ')', true)})]",
+					"desc": "[(${helper.legacyEscapeParagraph(alert.description, true)})]",
+					"instances":[ [#th:block th:each="instance, instState: ${instances}"][#th:block th:if="${! instState.first}"],[/th:block]
+						{
+							"uri": "[(${helper.legacyEscapeText(instance.uri, true)})]",
+							"method": "[(${helper.legacyEscapeText(instance.method, true)})]",
+							"param": "[(${helper.legacyEscapeTextAlertParam(instance, true)})]",
+							"attack": "[(${helper.legacyEscapeText(instance.attack, true)})]",
+							"evidence": "[(${helper.legacyEscapeText(instance.evidence, true)})]",
+							"otherinfo": "[(${helper.legacyEscapeText(instance.otherinfo, true)})]"
+						}[/th:block]
+					],
+					"count": "[(${instances.size})]",
+					"solution": "[(${helper.legacyEscapeParagraph(alert.solution, true)})]",
+					"otherinfo": "[(${helper.legacyEscapeParagraph(alert.otherinfo, true)})]",
+					"reference": "[(${helper.legacyEscapeParagraph(alert.reference, true)})]",
+					"cweid": "[(${alert.cweid})]",
+					"wascid": "[(${alert.wascid})]",
+					"sourceid": "[(${alert.sourceHistoryId})]"
+				}[#th:block th:if="${! alertState.last}"],[/th:block][/th:block]
+			],
+            "passed" : {
+                "passive" : [
+                    [#th:block th:each="pscan, pscanState : ${reportData.reportObjects.get('passiveScanData').allRuleData}"]
+                        [#th:block th:if="${alertCountsByRule.get(pscan.id) == null}"]
+                            {
+                                "id": "[(${pscan.id})]",
+                                "url" : "[(${'https://www.zaproxy.org/docs/alerts/' + pscan.id + '/'})]",
+                                "type" : "passive",
+                                "name" : "[(${helper.legacyEscapeText(pscan.name, true)})]",
+                                "timetaken" : [(${pscan.timeTakenMs})],
+                                "threshold" : "[(${pscan.threshold})]",
+                                "strength" : null
+                            }[#th:block th:if="${! pscanState.last}"],[/th:block]
+                        [/th:block]
+                    [/th:block]
+                ],
+                "active" : [
+                    [#th:block th:each="ascan, ascanState : ${reportData.reportObjects.get('activeScanData').allRuleData}"]
+                        [#th:block th:if="${alertCountsByRule.get(ascan.id) == null}"]
+                            {
+                                "id": "[(${ascan.id})]",
+                                "url" : "[(${'https://www.zaproxy.org/docs/alerts/' + ascan.id + '/'})]",
+                                "type" : "active",
+                                "name" : "[(${helper.legacyEscapeText(ascan.name, true)})]",
+                                "timetaken" : [(${ascan.timeTakenMs})],
+                                "threshold" : "[(${ascan.threshold})]",
+                                "strength" : "[(${ascan.strength})]"
+                            }[#th:block th:if="${! ascanState.last}"],[/th:block]
+                        [/th:block]
+                    [/th:block]
+                ]
+            }
+		}[/th:block]
+	]
+}

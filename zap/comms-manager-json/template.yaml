@@ -1,0 +1,4 @@
+name: Communications Manager JSON report
+format: JSON
+mode: TEXT
+extension: json
