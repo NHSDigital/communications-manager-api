@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy assigns a default (empty) value to the requestpath variable.
+
+ If this is not done then the HTTP Target Connection configuration will fail to execute correctly.
+-->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddDefaultRequestPath">
     <DisplayName>AssignMessage.AddDefaultRequestPath</DisplayName>
     <Properties/>

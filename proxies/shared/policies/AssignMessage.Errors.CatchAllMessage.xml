@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy populates the body of the response with the content of the error flow variable.
+
+ It is used as a generic error response policy.
+
+ Since the payload is JSON we can't use the standard {variable.name} syntax for Apigee flow variables, this is where we use the variablePrefix and variableSuffix attributes.
+
+ For more information see the following resources:
+    * https://docs.apigee.com/api-platform/reference/variables-reference#error
+    * https://docs.apigee.com/api-platform/reference/policies/assign-message-policy#set-payload
+-->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.Errors.CatchAllMessage">
     <Set>
         <Payload variablePrefix="%" variableSuffix="#">%error.content#</Payload>

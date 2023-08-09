@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy takes the requestId value from the JSON payload of the request and stores it within the Apigee flow variable data.requestId. This value is thus accessible from other policies in the proxy, referencing it with {data.requestId}.
+
+ For more information, see the following resources:
+    * https://docs.apigee.com/api-platform/fundamentals/introduction-flow-variables
+-->
 <ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.MessageBatches.Create.Response">
     <VariablePrefix>data</VariablePrefix>
     <Source>response</Source>
     <JSONPayload>
         <Variable name="requestId" type="string">
             <JSONPath>$.requestId</JSONPath>
-        </Variable>        
+        </Variable>
     </JSONPayload>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </ExtractVariables>

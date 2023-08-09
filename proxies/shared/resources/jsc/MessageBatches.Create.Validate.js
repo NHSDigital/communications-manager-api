@@ -1,3 +1,13 @@
+/**
+ * This script validates the data in the body of a POST request to the /v1/message-batches endpoint, returning an
+ * array of up to 100 error responses to be returned by Apigee as a 400 error response.
+ *
+ * It is called by the JavaScript.MessageBatches.Create.Validate policy.
+ *
+ * For more information see the 400 response in the specification linked below:
+ * https://github.com/NHSDigital/communications-manager/blob/release/specification/communications-manager.yaml#L237
+ */
+
 // Regex to validate the id is a valid UUID
 const uuidRegex = /^[0-9a-f]{8}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{12}$/i
 const nhsNumberRegex = /^[0-9]{10}$/i

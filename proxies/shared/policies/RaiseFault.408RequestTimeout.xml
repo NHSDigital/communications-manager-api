@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 408 error response for a request timeout.
+
+ This is a client side issue in reading the request, it can occur when there are networking issues between the calling application and the backend service.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
 <RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.408RequestTimeout">
     <DisplayName>RaiseFault.408RequestTimeout</DisplayName>
     <Properties/>

@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy adds the X-APIM-Application-Id header onto requests going to the target service backend.
+
+ This value is used for identifying the calling application within the backend service.
+
+ Within the internal-dev and internal-qa environments a hardcoded value is used. This is due to the NHSD pytest framework issuing a new apigee application identifier with each test run.
+-->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AuthenticationDetails">
     <DisplayName>AssignMessage.AuthenticationDetails</DisplayName>
     <Properties/>

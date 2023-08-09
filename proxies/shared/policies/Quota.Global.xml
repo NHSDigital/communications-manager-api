@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy enforces our global quota of 6000 requests per minute.
+
+ For more information on Quota policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/quota-policy
+
+For more information on rate limiting, see the following resources:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/Rate+limiting
+-->
 <Quota async="false" continueOnError="false" enabled="true" name="Quota.Global">
     <DisplayName>Quota.Global</DisplayName>
     <Interval>1</Interval>

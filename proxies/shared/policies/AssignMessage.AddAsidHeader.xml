@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy adds the NHSD-ASID header to a request before it reaches the backend.
+
+ ASID, or Accredited System Identifier, represents a deployed piece of software which has been accredited to support a set of business operations.
+
+ For more information, see this document:
+    * https://nhsd-confluence.digital.nhs.uk/pages/viewpage.action?pageId=114037475
+ -->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddAsidHeader">
     <Add>
         <Headers>

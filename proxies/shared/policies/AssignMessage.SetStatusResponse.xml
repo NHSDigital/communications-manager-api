@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy populates the body of the response with metadata, returned in response to a GET request to the /_status endpoint.
+
+ For more information, see the following document:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/_status+endpoint
+-->
 <AssignMessage continueOnError="false" enabled="true" name="AssignMessage.SetStatusResponse" async="false">
     <Set>
         <Payload>{"status": "pass","version":"{{ DEPLOYED_VERSION }}","revision":"{apiproxy.revision}","releaseId":"{{ RELEASE_RELEASEID }}","commitId":"{{ SOURCE_COMMIT_ID }}"}</Payload>
