@@ -12,6 +12,9 @@ TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 NUM_MAX_ERRORS = 100
+DEV_API_GATEWAY_URL = "https://comms-apim.internal-dev.communications.national.nhs.uk"
+INT_API_GATEWAY_URL = "https://comms-apim.int.communications.national.nhs.uk"
+PROD_API_GATEWAY_URL = "https://comms-apim.prod.communications.national.nhs.uk"
 
 
 class Error():
