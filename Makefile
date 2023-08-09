@@ -61,7 +61,11 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		-n 4 \
 		--api-name=communications-manager \
 		--proxy-name="$(PROXY_NAME)" \
-		-s
+		-s \
+		--reruns 5 \
+		--reruns-delay 5 \
+		--only-rerun 'AssertionError: Unexpected 429'
+
 
 PROD_TEST_CMD := $(TEST_CMD) \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
