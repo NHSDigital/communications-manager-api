@@ -78,15 +78,9 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-postman-sandbox: 
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
-#Command to run end-to-end smoketests post-deployment to verify the environment is working
-smoketest:
-	$(TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
-
 .sandboxtest:
 	$(TEST_CMD) \
-	--junitxml=sandboxtest-report.xml \
+	--junitxml=test-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
@@ -94,22 +88,15 @@ smoketest:
 
 sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest
 
-sandboxtest-prod: .run-sandbox-unit-tests
+.sandboxtest-prod:
 	$(PROD_TEST_CMD) \
-	--junitxml=sandboxtest-report.xml \
+	--junitxml=test-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
 	-m sandboxtest
 
-test:
-	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-
-smoketest-prod:
-	$(PROD_TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
+sandboxtest-prod: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest-prod
 
 test-dev:
 	$(TEST_CMD) \
