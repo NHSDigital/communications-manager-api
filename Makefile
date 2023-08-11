@@ -61,7 +61,11 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		-n 4 \
 		--api-name=communications-manager \
 		--proxy-name="$(PROXY_NAME)" \
-		-s
+		-s \
+		--reruns 5 \
+		--reruns-delay 5 \
+		--only-rerun 'AssertionError: Unexpected 429'
+
 
 PROD_TEST_CMD := $(TEST_CMD) \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
@@ -85,7 +89,7 @@ smoketest:
 
 .sandboxtest:
 	$(TEST_CMD) \
-	--junitxml=sandboxtest-report.xml \
+	--junitxml=test-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
@@ -93,22 +97,15 @@ smoketest:
 
 sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .run-locust-tests .sandboxtest
 
-sandboxtest-prod: .run-sandbox-unit-tests
+.sandboxtest-prod:
 	$(PROD_TEST_CMD) \
-	--junitxml=sandboxtest-report.xml \
+	--junitxml=test-report.xml \
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
 	-m sandboxtest
 
-test:
-	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-
-smoketest-prod:
-	$(PROD_TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
+sandboxtest-prod: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest-prod
 
 test-dev:
 	$(TEST_CMD) \

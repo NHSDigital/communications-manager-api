@@ -42,7 +42,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              full: true
+              test_command: 'make test-dev'
 
       - environment: internal-dev-sandbox
         proxy_path: sandbox
@@ -51,6 +51,9 @@ extends:
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make sandboxtest'
+              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: internal-qa
         depends_on:
@@ -61,7 +64,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              full: true
+              test_command: 'make test-dev'
 
       - environment: internal-qa-sandbox
         proxy_path: sandbox
@@ -72,6 +75,9 @@ extends:
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
           - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make sandboxtest'
+              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: manual-approval
         stage_name: manual_approval_sandbox
@@ -88,7 +94,8 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              sandboxtest_command: 'make sandboxtest-prod'
+              test_command: 'make sandboxtest-prod'
+              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: manual-approval
         stage_name: manual_approval_int
@@ -105,4 +112,3 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: 'make test-int'
-              full: true

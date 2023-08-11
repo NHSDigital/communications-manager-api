@@ -4,6 +4,9 @@ from .constants import *
 class Assertions():
     @staticmethod
     def assert_201_response(resp, messageBatchReference):
+        if (resp.status_code == 429):
+            raise AssertionError('Unexpected 429')
+
         assert resp.status_code == 201
 
         response = resp.json().get("data")
@@ -15,6 +18,9 @@ class Assertions():
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
+        if (code != 429 and resp.status_code == 429):
+            raise AssertionError('Unexpected 429')
+
         assert resp.status_code == code
 
         if error is not None:
@@ -38,6 +44,9 @@ class Assertions():
 
     @staticmethod
     def assert_cors_response(resp, website):
+        if resp.status_code == 429:
+            raise AssertionError('Unexpected 429')
+
         assert resp.status_code == 200
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Allow-Methods") == CORS_METHODS
