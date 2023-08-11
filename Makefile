@@ -79,7 +79,7 @@ PROD_TEST_CMD := $(TEST_CMD) \
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
 .run-locust-tests:
-	(locust -f tests/locust/locustfile.py --headless -u 100 -r 5 -t 1m)
+	(poetry run locust -f tests/locust/locustfile.py --headless -u 100 -r 5 -t 1m)
 
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
