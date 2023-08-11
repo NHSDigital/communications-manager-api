@@ -114,12 +114,6 @@ steps:
       inputs:
         testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/test-report.xml'
         failTaskOnFailedTests: true
-    - task: PublishTestResults@2
-      displayName: 'Publish locust test results'
-      condition: always()
-      inputs:
-        testResultsFiles: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/locust-report.html'
-        failTaskOnFailedTests: true
     - ${{ if ne(parameters.unit_test_report_name, '') }}:
       - task: PublishTestResults@2
         displayName: 'Publish unit test results'
