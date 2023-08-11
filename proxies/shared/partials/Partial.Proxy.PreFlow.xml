@@ -1,6 +1,14 @@
 <PreFlow>
     <Request>
         <Step>
+            <Name>SpikeArrest.Global</Name>
+        </Step>
+        {% if ENVIRONMENT_TYPE != 'sandbox' %}
+            <Step>
+                <Name>SpikeArrest.PerApp</Name>
+            </Step>
+        {% end %}
+        <Step>
             <Name>FlowCallout.GetEnvironmentKeyValueMapData</Name>
         </Step>
     </Request>
