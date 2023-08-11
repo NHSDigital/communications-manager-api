@@ -3,9 +3,15 @@
         <Step>
             <Name>SpikeArrest.Global</Name>
         </Step>
+        <Step>
+            <Name>Quota.Global</Name>
+        </Step>
         {% if ENVIRONMENT_TYPE != 'sandbox' %}
             <Step>
                 <Name>SpikeArrest.PerApp</Name>
+            </Step>
+            <Step>
+                <Name>Quota.PerApp</Name>
             </Step>
         {% end %}
         <Step>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Quota async="false" continueOnError="false" enabled="true" name="Quota.PerApp">
+    <DisplayName>Quota.PerApp</DisplayName>
+    <Interval>1</Interval>
+    <TimeUnit>minute</TimeUnit>
+    <Allow count="1200"/>
+    <AsynchronousConfiguration>
+        <SyncMessageCount>50</SyncMessageCount>
+    </AsynchronousConfiguration>
+    <Identifier ref="developer.app.id" />
+</Quota>
