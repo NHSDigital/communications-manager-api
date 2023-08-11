@@ -1,10 +1,11 @@
 import time
-from locust import HttpUser, task, TaskSet
+from locust import HttpUser, task, constant
 
 
 class TestRateLimit(HttpUser):
-    wait_time = time.sleep
+    wait_time = constant(1)
+    host = "https://internal-dev-sandbox.api.service.nhs.uk/comms"
 
     @task
     def hit_endpoint(self):
-        self.client.options("https://internal-dev-sandbox.api.service.nhs.uk/comms/_ping")
+        self.client.get("/_ping")

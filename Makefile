@@ -74,6 +74,9 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-postman-sandbox: 
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
+.run-locust-tests:
+	(locust -f tests/locust/locustfile.py --headless -u 100 -r 5 -t 1m)
+
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
 	$(TEST_CMD) \
@@ -88,7 +91,7 @@ smoketest:
 	--ignore=tests/mtls \
 	-m sandboxtest
 
-sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest
+sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .run-locust-tests .sandboxtest
 
 sandboxtest-prod: .run-sandbox-unit-tests
 	$(PROD_TEST_CMD) \
