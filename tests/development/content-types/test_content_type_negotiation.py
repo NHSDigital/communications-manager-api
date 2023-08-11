@@ -33,4 +33,8 @@ def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method, 
         **nhsd_apim_auth_headers,
         **accept_headers.get("headers")
     })
+
+    if (resp.status_code == 429):
+        raise AssertionError('Unexpected 429')
+
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
