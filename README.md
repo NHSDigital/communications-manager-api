@@ -1,33 +1,42 @@
-# communications-manager
+# Communications Manager API
 
-## Status
+![Build](https://github.com/NHSDigital/communications-manager/workflows/Build/badge.svg?branch=release)
 
-* Nightly test status: [![Nightly test status](https://dev.azure.com/NHSD-APIM/API%20Platform/_apis/build/status%2FCommunications-Manager%2FCommunications-Manager-Nightly?repoName=NHSDigital%2Fcommunications-manager&branchName=master)](https://dev.azure.com/NHSD-APIM/API%20Platform/_build/latest?definitionId=622&repoName=NHSDigital%2Fcommunications-manager&branchName=master)
+This is the RESTful API for the [*Communications Manager Service*](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
 
-This is a specification for the *communications-manager* API.
+It includes:
 
-* `specification/` This [Open API Specification](https://swagger.io/docs/specification/about/) describes the endpoints, methods and messages exchanged by the API. Use it to generate interactive documentation; the contract between the API and its consumers.
-* `sandbox/` This NodeJS application implements a mock implementation of the service. Use it as a back-end service to the interactive documentation to illustrate interactions and concepts. It is not intended to provide an exhaustive/faithful environment suitable for full development and testing.
-* `scripts/` Utilities helpful to developers of this specification.
-* `proxies/` Live (connecting to another service) and sandbox (using the sandbox container) Apigee API Proxy definitions.
+* `specification/` - This [Open API Specification](https://swagger.io/docs/specification/about/) describes the endpoints, methods and messages exchanged by the API. Use it to generate interactive documentation; the contract between the API and its consumers.
+* `sandbox/` - This NodeJS application implements a mock implementation of the service. Use it as a back-end service to the interactive documentation to illustrate interactions and concepts. It is not intended to provide an exhaustive/faithful environment suitable for full development and testing.
+* `scripts/` - Utilities helpful to developers of this specification.
+* `proxies/` - Live (connecting to another service) and sandbox (using the sandbox container) Apigee API Proxy definitions.
+* `azure/` - Azure Devops pipeline definitions.
+* `zap/` - Zap security scan configuration.
+* `tests/` - Integration test suites.
+* `postman/` - Postman collections.
 
-Consumers of the API will find developer documentation on the [NHS Digital Developer Hub](https://digital.nhs.uk/developer).
+Consumers of the API will find developer documentation on the [Communications Manager API entry](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
+
+This repo does not include the Communications Manager back-end that is not currently open source.
 
 ## Contributing
-Contributions to this project are welcome from anyone, providing that they conform to the [guidelines for contribution](https://github.com/NHSDigital/communications-manager/blob/master/CONTRIBUTING.md) and the [community code of conduct](https://github.com/NHSDigital/communications-manager/blob/master/CODE_OF_CONDUCT.md).
+
+Contributions to this project are welcome from anyone, providing that they conform to the [guidelines for contribution](https://github.com/NHSDigital/communications-manager/blob/release/CONTRIBUTING.md) and the [community code of conduct](https://github.com/NHSDigital/communications-manager/blob/release/CODE_OF_CONDUCT.md).
 
 ### Licensing
+
 This code is dual licensed under the MIT license and the OGL (Open Government License). Any new work added to this repository must conform to the conditions of these licenses. In particular this means that this project may not depend on GPL-licensed or AGPL-licensed libraries, as these would violate the terms of those libraries' licenses.
 
 The contents of this repository are protected by Crown Copyright (C).
 
-## Releasing
-
-Our release process is [documented here](https://github.com/NHSDigital/communications-manager/blob/release/RELEASING.md).
-
 ## Development
 
+N.B. that some functionality requires environment variables to be set, these are described lower down in the readme.
+
+Windows users should install [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install). Any distro is fine, though ubuntu/debian are recommended.
+
 ### Requirements
+
 * make
 * [nvm](https://github.com/nvm-sh/nvm)
 * [pyenv](https://github.com/pyenv/pyenv)
@@ -35,6 +44,7 @@ Our release process is [documented here](https://github.com/NHSDigital/communica
 * Java 8+
 
 ### Install
+
 ```
 $ nvm install && nvm use
 $ pyenv install -s && pyenv shell && pyenv local
@@ -42,64 +52,118 @@ $ make install
 ```
 
 #### Updating hooks
-You can install some pre-commit hooks to ensure you can't commit invalid spec changes by accident. These are also run
-in CI, but it's useful to run them locally too.
+
+You can install some pre-commit hooks to ensure you can't commit invalid spec changes by accident. These are also run in CI, but it's useful to run them locally too.
 
 ```
 $ make install-hooks
 ```
 
+There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found [here](https://github.com/NHSDigital/communications-manager/blob/release/nhsd-git-secrets/README.md).
+
 ### Environment Variables
+
 Various scripts and commands rely on environment variables being set. These are documented with the commands.
 
-:bulb: Consider using [direnv](https://direnv.net/) to manage your environment variables during development and maintaining your own `.envrc` file - the values of these variables will be specific to you and/or sensitive.
+There is an example `.env` file [here](https://github.com/NHSDigital/communications-manager/blob/release/example.env).
+
+To create your own version:
+
+```
+$ cp example.env .env
+```
+
+To use your local `.env` file make sure to source it:
+
+```
+$ source .env
+```
 
 ### Make commands
+
 There are `make` commands that alias some of this functionality:
- * `lint` -- Lints the spec and code
- * `publish` -- Outputs the specification as a **single file** into the `build/` directory
- * `serve` -- Serves a preview of the specification in human-readable format
+
+* `lint` -- Lints the spec and code
+* `publish` -- Outputs the specification as a **single file** into the `build/` directory
+* `serve` -- Serves a preview of the specification in human-readable format - your browser will automatically open the documentation
 
 ### Testing
-Each API and team is unique. We encourage you to use a `test/` folder in the root of the project, and use whatever testing frameworks or apps your team feels comfortable with. It is important that the URL your test points to be configurable. We have included some stubs in the Makefile for running tests.
+
+There are:
+
+* Sandbox mock unit tests
+* Integration tests
+* Zap security scan tests
+* Postman collection tests
+
+#### Node unit tests
+
+These tests live within the `/sandbox` folder and can be executed by:
+
+```
+$ cd sandbox
+$ npm i
+$ npm run test
+```
+
+Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
+
+#### Integration tests
+
+There are several integration test suites configured within the `pytest.ini`:
+
+* sandboxtest
+* devtest
+* inttest
+* prodtest
+* mtlstest
 
 ##### Set up
-Before running your tests you need to generate an [apigee access token](https://nhsd-confluence.digital.nhs.uk/display/APM/Test+Utils+2.0%3A+Running+tests). To generate a token run the following command, you will then be prompted to log in to apigee with your username, password and MFA code.
+
+Before running the integration tests you need to generate an [apigee access token](https://nhsd-confluence.digital.nhs.uk/display/APM/Test+Utils+2.0%3A+Running+tests). To generate a token run the following command, you will then be prompted to log in to apigee with your username, password and MFA code.
 
 ```
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)
 ```
 
 Set the `PROXY_NAME` environment variable to the environment you want to run the tests on. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager', this will show you a list of available proxies, eg:
-- communications-manager-internal-dev
-- communications-manager-internal-dev-sandbox
-- communications-manager-pr-{num}
-- communications-manager-pr-{num}-sandbox
+
+* communications-manager-internal-dev
+* communications-manager-internal-dev-sandbox
+* communications-manager-pr-{num}
+* communications-manager-pr-{num}-sandbox
 
 Before running any tests you will need to build up your local environment to have access to the resources you need to successfully run tests, to do this run the `poetry install` command. This will populate the .venv directory. To source the .venv file, run source .venv/bin/activate in your shell type of choice
 
-- bash/zsh: `source .venv/bin/activate`
-- csh: `source .venv/bin/activate.csh`
-- fish: `source .venv/bin/activate.fish`
-- nushell: `source .venv/bin/activate.nu`
-- powershell: `. .venv/bin/activate.ps1`
+* bash/zsh: `source .venv/bin/activate`
+* csh: `source .venv/bin/activate.csh`
+* fish: `source .venv/bin/activate.fish`
+* nushell: `source .venv/bin/activate.nu`
+* powershell: `. .venv/bin/activate.ps1`
 
-##### Run tests through make command
+For running tests against the integration and prod environments you must have created a client application within the [NHS onboarding portal](https://onboarding.prod.api.platform.nhs.uk/).
+
+You must then configure the following environmental variables:
+
+* `INTEGRATION_API_KEY` - the API key for your integration environment application
+* `INTEGRATION_PRIVATE_KEY` - the private key for your integration environment application
+* `PRODUCTION_API_KEY` - the API key for your production environment application
+* `PRODUCTION_PRIVATE_KEY` - the private key for your production environment application
+
+Once these are set you can run the relevant integration or production test suite.
+
+##### Running with make
+
 In the root folder run the following command:
 
-Run a subset of tests marked 'devtest'
+* devtest - `make internal-dev-test`
+* sandboxtest - `make internal-sandbox-test` or `make prod-sandbox-test` depending on the environment
+* inttest - `make integration-test`
+* prodtest - `make production-test`
+* mtlstest - `make mtls-test`
 
-`make dev-test`
+##### Running with poetry
 
-Run a subset of tests marked 'smoketest'
-
-`make smoketest`
-
-Run a subset of tests marked 'sandboxtest'
-
-`make sandboxtest`
-
-##### Running tests through command line 
 In the root folder run the following command
 
 ```
@@ -117,125 +181,125 @@ PYTHONPATH=./tests poetry run pytest -v -m <TAG> <Path to file> --api-name=commu
 - `--color=yes` - Displays logs in an easy to read format (Optional)
 - `--junitxml=test-report.xml` - Sets the output of the test run, this will be located in the python path root directory for the tests
 
-##### Troubleshooting:
-If your apigee access token does not refresh when generating a new token, try clearing cache before reattempting
+##### Troubleshooting
+
+If your apigee access token does not refresh when generating a new token, try clearing cache before reattempting:
 
 ```export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)```
 
-```export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)```
+#### Zap security scanner
 
-### VS Code Plugins
+You can run the Zap security scanner using the `zap-security-scan` make command:
 
- * [openapi-lint](https://marketplace.visualstudio.com/items?itemName=mermade.openapi-lint) resolves links and validates entire spec with the 'OpenAPI Resolve and Validate' command
- * [OpenAPI (Swagger) Editor](https://marketplace.visualstudio.com/items?itemName=42Crunch.vscode-openapi) provides sidebar navigation
+```
+$ make zap-security-scan
+```
 
+The project uses the [Zap automation framework](https://www.zaproxy.org/docs/automate/automation-framework/). The configuration for this is held in the `zap/` folder.
 
-### Emacs Plugins
+#### Postman collection tests
 
- * [**openapi-yaml-mode**](https://github.com/esc-emacs/openapi-yaml-mode) provides syntax highlighting, completion, and path help
+You can test the postman collections by using the `postman-test` make command:
 
-### Speccy
+```
+$ make postman-test
+```
 
-> [Speccy](http://speccy.io/) *A handy toolkit for OpenAPI, with a linter to enforce quality rules, documentation rendering, and resolution.*
-
-Speccy does the lifting for the following npm scripts:
-
- * `test` -- Lints the definition
- * `publish` -- Outputs the specification as a **single file** into the `build/` directory
- * `serve` -- Serves a preview of the specification in human-readable format
-
-(Workflow detailed in a [post](https://developerjack.com/blog/2018/maintaining-large-design-first-api-specs/) on the *developerjack* blog.)
-
-:bulb: The `publish` command is useful when uploading to Apigee which requires the spec as a single file.
+The postman collections can be found in the `postman/` folder.
 
 ### Caveats
 
-#### Swagger UI
-Swagger UI unfortunately doesn't correctly render `$ref`s in examples, so use `speccy serve` instead.
-
 #### Apigee Portal
+
 The Apigee portal will not automatically pull examples from schemas, you must specify them manually.
 
-### Platform setup
-
-As currently defined in your `proxies` folder, your proxies do pretty much nothing.
-Telling Apigee how to connect to your backend requires a *Target Server*, which you should call named `communications-manager-target`.
-Our *Target Servers* defined in the [api-management-infrastructure](https://github.com/NHSDigital/api-management-infrastructure) repository.
-
-:bulb: For Sandbox-running environments (`test`) these need to be present for successful deployment but can be set to empty/dummy values.
-
 ### Detailed folder walk through
-To get started developing your API use this template repo alongside guidance provided by the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Deliver+your+API)
 
 #### `/.github`:
 
 This folder contains templates that can be customised for items such as opening pull requests or issues within the repo
 
 `/.github/workflows`: This folder contains templates for github action workflows such as:
-- `pr-lint.yaml`: This workflow template shows how to link Pull Request's to Jira tickets and runs when a pull request is opened.
-- `continuous-integration.yml`: This workflow template shows how to publish a Github release when pushing to master.
+
+* `pr-lint.yaml`: This workflow links PRs to the relevant Jira ticket
+* `continuous-integration.yml`: This workflow handles the publishing of new releases
+* `build.yml`: This workflow builds and lints the project, its status drives the badge in the readme
 
 #### `/azure`:
 
 Contains templates defining Azure Devops pipelines. By default the following pipelines are available:
--  `azure-build-pipeline.yml`: Assembles the contents of your repository into a single file ("artifact") on Azure Devops and pushes any containers to our Docker registry. By default this pipeline is enabled for all branches.
-- `azure-pr-pipeline.yml`: Deploys ephemeral versions of your proxy/spec to Apigee (and docker containers on AWS) to internal environments. You can run automated and manual tests against these while you develop. By default this pipeline will deploy to internal-dev, but the template can be amended to add other environments as required.
-- `azure-release-pipeline.yml`: Deploys the long-lived version of your pipeline to internal and external environments, typically when you merge to master.
 
-The `project.yml` file needs to be populated with your service names to make them available to the pipelines
+*  `azure-build-pipeline.yml` - Assembles the contents of the repository into a single file ("artifact") on Azure Devops and pushes any containers to the APIM Docker registry. By default this pipeline is enabled for all branches apart from master.
+* `azure-pr-pipeline.yml` - Deploys ephemeral versions of the proxy/spec to Apigee (and docker containers on AWS) to internal environments. You can run automated and manual tests against these while you develop. By default this pipeline will deploy to internal-dev, but the template can be amended to add other environments as required.
+* `azure-release-pipeline.yml` - Deploys the long-lived version of the pipeline to internal and external environments - this is run on releases and on merges into release
+* `nightly-int-dev-pipeline.yml` - Runs the `dev-test` suite of tests against the internal-dev environment every night. Failures can be subscribed to on the azure devops CI.
+* `periodic-mtls-pipeline.yml` - Runs the `mtls-test` suite of tests against the internal-dev, integration and production load balancer targets to ensure that mutual TLS is being enforced. This pipeline runs every 10 minutes. Failures can be subscribed to on the azure devops CI.
 
-`/azure/templates`: Here you can define reusable actions, such as running tests, and call these actions during Azure Devops pipelines. 
+`/azure/templates`: Contains our re-usable actions, including:
+* `run-tests.yml`: The standard pipeline template for running our test suites.
 
 #### `/proxies`:
 
-This folder contains files relating to your Apigee API proxy.
+This folder contains files relating to the Communications Manager Apigee API proxy.
 
-There are 2 folders `/live` and `/sandbox` allowing you to define a different proxy for sandbox use. By default, this sandbox proxy is implemented to route to the sandbox target server (code for this sandbox is found under /sandbox of this template repo)
+There are 2 proxy folders `/live` and `/sandbox`. The `/live` folder contains the configuration that is specific to all none sandbox proxy instances - `/sandbox` contains the sandbox proxy definition.
 
-Within the `live/apiproxy` and `sandbox/apiproxy` folders are:
+The `/shared` folder contains policies, partials and resources that are used within both the live and sandbox proxies. These are used to build the live and sandbox proxies, the process for which is set out in the `/scripts/build_proxy.sh` script. The build process allows the use of jinja2 template commands, with the following configured wrapper values:
 
-`/proxies/default.xml`: Defines the proxy's Flows. Flows define how the proxy should handle different requests. By default, _ping and _status endpoint flows are defined.
-See the APM confluence for more information on how the [_ping](https://nhsd-confluence.digital.nhs.uk/display/APM/_ping+endpoint) and [_status](https://nhsd-confluence.digital.nhs.uk/display/APM/_status+endpoint) endpoints work.
-
-`/policies`: Populated with a set of standard XML Apigee policies that can be used in flows.
-
-`/resources/jsc`: Snippets of javascript code that are used in Apigee Javascript policies. For more info about Javascript policies see [here](https://docs.apigee.com/api-platform/reference/policies/javascript-policy)
-
-`/targets`: The XMLs within these folders set up target definitions which allow connections to external target servers. The sandbox target definition is implemented to route to the sandbox target server (code for this sandbox is found under /sandbox of this template repo). For more info on setting up a target server see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Setting+up+a+target+server)
+* `[% ... %]` - block start and end
+* `[[ ... ]]` - variable start and end
 
 #### `/sandbox`:
 
-This folder contains a template for a sandbox API. This example is a NodeJs application running in Docker. The application handles a few simple endpoints such as: /_ping, /health, /_status, /hello and some logging logic.
-For more information about building sandbox APIs see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Setting+up+your+API+sandbox ).
+This folder contains the sandbox mock application. This is a basic express application that mirrors the responses from the existing backend service.
+
+The sandbox mock contains the following npm run commands:
+
+* `start` - run the sandbox mock
+* `start:hotreload` - runs the sandbox mock with hotreloading enables
+* `test` - run the sandbox mock unit test suite
 
 #### `/scripts`:
 
-Contains useful scripts that are used throughout the project, for example in Makefile and Github workflows
+Contains useful scripts that are used throughout the project, these are:
+
+* `build_proxy.sh` - builds the final live and sandbox proxy configurations
+* `calculate_version.py` - scans git history to determine the version of the API
+* `check_python_licenses.sh` - scans python libraries for license issues
+* `generate_bearer_token.py` - generates a bearer token using the env vars `API_KEY` and `API_ENVIRONMENT`
+* `pre-commit` - the pre-commit script
+* `process_imports.py` - processes the imports for building the proxies, called by `build_proxy.sh`
+* `run_zap.sh` - runs the zap security scanner
+* `set_version.py` - sets the version number within the OAS spec file during build time
+* `sync_postman_collections.sh` - synchronises the postman collections into the repo
+* `yaml2json.py` - converts yaml to json
 
 #### `/specification`:
 
-Create an OpenAPI Specification to document your API. For more information about developing specifications see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Documenting+your+API).
+This folder contains the Open API specification for the Communications Manager API. The specification is broken down into multiple files to aid readability and reuse.
 
 #### `/tests`:
 
-End to End tests. These tests are written in Python and use the PyTest test runner. Before running these tests you will need to set environment variables. The `test_endpoint.py` file provides a template of how to set up tests which test your api endpoints. For more information about testing your API see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Testing+your+API ).
-
-#### `Makefile`:
-Useful make targets to get started including: installing dependencies and running smoke tests.
+The integration test suite, see the previous testing section for more information on running the test suites.
 
 #### `ecs-proxies-containers.yml ` and `ecs-proxies-deploy.yml`:
 
-These files are required to deploy containers alongside your Apigee proxy during the Azure Devops `azure-build-pipeline`. In this template repo we are deploying our sandbox container which is used as the target server for the sandbox proxy.
+These files define the sandbox mock application container deployment to ECS:
 
-`ecs-proxies-containers.yml`: The path to a container's Dockerfile is defined here. This path needs to be defined to allow containers to be pushed to our repository during the `azure-build-pipeline`.
+* `ecs-proxies-containers.yml`: The path to a container's Dockerfile is defined here.
+* `ecs-proxies-deploy.yml` : Configuration for the ECS deployment.
 
-`ecs-proxies-deploy.yml` : Here you can define config for your container deployment.  
-
-For more information about deploying ECS containers see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Developing+ECS+proxies#DevelopingECSproxies-Buildingandpushingdockercontainers ).
+For more information about deploying ECS containers see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Developing+ECS+proxies#DevelopingECSproxies-Buildingandpushingdockercontainers).
 
 #### `manifest_template.yml`:
 
-This file defines 2 dictionaries of fields that are required for the Apigee deployment. For more info see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Manifest.yml+reference ).
+This defines the Apigee API, including:
+
+* service name
+* display name on the NHS onboarding portal
+* description of the API
+* environments supported by the API
+* rate limiting & quotas
 
 #### Package management:
 
@@ -244,13 +308,20 @@ This template uses poetry for python dependency management, and uses these files
 Node dependencies of this template project and some npm scripts are listed in: package.json, package-lock.json.
 
 #### Postman:
-Included in this repo is a postman collection that allows the user to interact with the API directly. 
 
-To use the collection:
-- Download the json files located in the postman directory
-- Import the files into postman
-- Select a target environment in postman
-- Set the environment variables 'api-key' and 'private-key' for the desired environment (this does not apply for sandbox)
-- Run the collection
+Included in this repo are postman collections that allows the user to interact with the sandbox and integration APIs.
 
-The collection is ordered so that the first request ran when running a collection is 'Generate token', this generates an authorization header that is re-used for subsequent requests in the collection. The authorization header expires after 10 minutes, so if you are using this collection to manually execute requests and get an unexpected '401' execute the 'Generate token' request again to refresh your token.
+To use the collections:
+
+* Download the json files located in the postman directory
+* Import the files into postman
+* Select a target environment in postman
+* Set the environment variables 'api-key' and 'private-key' for the desired environment (this does not apply for sandbox)
+* Run the collection
+
+The collections must be kept in sync manually, this is done by setting the `INTEGRATION_COLLECTION_API_KEY` and `SANDBOX_COLLECTION_API_KEY` environment variables then running the `scripts/sync_postman_collections.sh` script.
+
+## Releasing
+
+Our release process is [documented here](https://github.com/NHSDigital/communications-manager/blob/release/RELEASING.md).
+

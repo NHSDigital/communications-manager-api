@@ -18,7 +18,7 @@ To create a new release:
 
 It is possible to self service promoting the release into the `sandbox` and `int` (integration) environments. The process for this is:
 
-* Access the release CI/CD pipeline for the specific release
+* Access the [release CI/CD pipeline](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=620) for the specific release
 * Approve the manual approval gates for `sandbox` and `int`
 
 We do not have a `prod` environment yet.

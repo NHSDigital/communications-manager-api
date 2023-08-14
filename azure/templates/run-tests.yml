@@ -60,7 +60,7 @@ steps:
 
   - ${{ if parameters.nightly }}:
     - bash: |
-        npm run zap-api-scan
+        make zap-security-scan
       displayName: Run OWASP zap scan
     - task: PublishTestResults@2
       displayName: 'Publish OWASP zap results'
