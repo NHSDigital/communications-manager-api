@@ -21,7 +21,7 @@ install: install-node install-python .git/hooks/pre-commit
 install-hooks: .git/hooks/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint:
+lint: .check-licenses
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
 
@@ -40,7 +40,7 @@ build-proxy:
 	scripts/build_proxy.sh
 
 #Files to loop over in release
-_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman"
+_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman scripts"
 
 #Create /dist/ sub-directory and copy files into directory
 release: clean publish build-proxy
@@ -49,6 +49,18 @@ release: clean publish build-proxy
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-sandbox.yml
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-qa-sandbox.yml
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev-sandbox.yml
+
+#Serve the OAS specification
+serve:
+	(sleep 5; python3 -m webbrowser http://127.0.0.1:5000) &
+	npm run serve
+
+#Check dependencies for licensing issues
+.check-licenses:
+	npm run check-licenses
+	scripts/check_python_licenses.sh
+
+check-licenses: .check-licenses
 
 #################
 # Test commands #
@@ -92,7 +104,9 @@ smoketest:
 	--junitxml=smoketest-report.xml \
 	-m smoketest
 
-.sandboxtest:
+postman-test: .run-postman-sandbox
+
+.internal-sandbox-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/development \
@@ -100,9 +114,9 @@ smoketest:
 	--ignore=tests/mtls \
 	-m sandboxtest
 
-sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .run-locust-tests .sandboxtest
+internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .run-locust-tests .internal-sandbox-test
 
-.sandboxtest-prod:
+.prod-sandbox-test:
 	$(PROD_TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/development \
@@ -110,23 +124,27 @@ sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox .run-locust-tests .san
 	--ignore=tests/mtls \
 	-m sandboxtest
 
-sandboxtest-prod: .run-sandbox-unit-tests .run-postman-sandbox .sandboxtest-prod
+prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
 
-test-dev:
+.internal-dev-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
 	-m devtest
 
-test-int:
+internal-dev-test: .internal-dev-test
+
+.integration-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
 	-m inttest
 
-test-prod:
+integration-test: .integration-test
+
+.production-test:
 	$(PROD_TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
@@ -134,10 +152,15 @@ test-prod:
 	--ignore=tests/integration \
 	-m prodtest
 
-test-mtls:
+production-test: .production-test
+
+mtls-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
 	--ignore=tests/development \
 	-m mtlstest
+
+zap-security-scan:
+	npm run zap-security-scan

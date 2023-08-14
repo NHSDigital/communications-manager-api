@@ -1591,13 +1591,13 @@ files = [
 
 [[package]]
 name = "pip-licenses"
-version = "2.3.0"
+version = "3.5.5"
 description = "Dump the software license list of Python packages installed with pip."
 optional = false
-python-versions = "~=3.5"
+python-versions = "~=3.7"
 files = [
-    {file = "pip-licenses-2.3.0.tar.gz", hash = "sha256:630f7e1b51ac0751c9c218e2ed76bb982e769301510a0bcca0dd4a47d05198fd"},
-    {file = "pip_licenses-2.3.0-py3-none-any.whl", hash = "sha256:b3922fc71e819c1a155460116d2fcf15eca85a22ebe057cd1e1dedb951b1199f"},
+    {file = "pip-licenses-3.5.5.tar.gz", hash = "sha256:748cfd7aca6e05032f9fa85691301295f4d943e87955be6914ca49abe3c075a4"},
+    {file = "pip_licenses-3.5.5-py3-none-any.whl", hash = "sha256:6129c116bab2b202d90d6e3a96092df4ad84c0c4d57bb70192fc03f8bf06d181"},
 ]
 
 [package.dependencies]
@@ -2603,4 +2603,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "bd8e410190e4d0ce4cf73922e9e27b8575b9785a34f523b077eae241f783eaa1"
+content-hash = "2231a54d9fd9e61871e663a76a6d2619cb71b81c0c1e15b74f5027fbdb08a941"
