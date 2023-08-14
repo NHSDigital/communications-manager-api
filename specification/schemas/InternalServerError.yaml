@@ -10,11 +10,11 @@ properties:
       type: object
       properties:
         id:
-          $ref: TypeErrorIdentifier.yml
+          $ref: TypeErrorIdentifier.yaml
         code:
-          $ref: enums/EnumErrorInternalServerError.yml
+          $ref: enums/EnumErrorInternalServerError.yaml
         links:
-          $ref: LinksError.yml
+          $ref: LinksError.yaml
         status:
           type: string
           enum:

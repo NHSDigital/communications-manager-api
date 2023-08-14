@@ -1,5 +1,5 @@
 type: object
-title: Forbidden
+title: Not Acceptable
 additionalProperties: false
 properties:
   errors:
@@ -11,26 +11,26 @@ properties:
       type: object
       properties:
         id:
-          $ref: TypeErrorIdentifier.yml
+          $ref: TypeErrorIdentifier.yaml
         code:
-          $ref: enums/EnumErrorForbidden.yml
+          $ref: enums/EnumErrorNotAcceptable.yaml
         links:
-          $ref: LinksError.yml
+          $ref: LinksError.yaml
         status:
           type: string
           enum:
-            - '403'
-          example: '403'
+            - '406'
+          example: '406'
         title:
           type: string
           enum:
-            - Forbidden
-          example: Forbidden
+            - Not acceptable
+          example: Not acceptable
         detail:
           type: string
           enum:
-            - Client not recognised or not yet onboarded.
-          example: Client not recognised or not yet onboarded.
+            - This service can only generate application/vnd.api+json or application/json.
+          example: This service can only generate application/vnd.api+json or application/json.
         source:
           type: object
           additionalProperties: false
@@ -38,5 +38,5 @@ properties:
             header:
               type: string
               enum:
-                - Authorization
-              example: Authorization
+                - Accept
+              example: Accept

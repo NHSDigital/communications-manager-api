@@ -1,5 +1,5 @@
 type: object
-title: Unsupported Media
+title: Forbidden
 additionalProperties: false
 properties:
   errors:
@@ -11,26 +11,26 @@ properties:
       type: object
       properties:
         id:
-          $ref: TypeErrorIdentifier.yml
+          $ref: TypeErrorIdentifier.yaml
         code:
-          $ref: enums/EnumErrorUnsupportedMedia.yml
+          $ref: enums/EnumErrorForbidden.yaml
         links:
-          $ref: LinksError.yml
+          $ref: LinksError.yaml
         status:
           type: string
           enum:
-            - '415'
-          example: '415'
+            - '403'
+          example: '403'
         title:
           type: string
           enum:
-            - Unsupported media
-          example: Unsupported media
+            - Forbidden
+          example: Forbidden
         detail:
           type: string
           enum:
-            - 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
-          example: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
+            - Client not recognised or not yet onboarded.
+          example: Client not recognised or not yet onboarded.
         source:
           type: object
           additionalProperties: false
@@ -38,5 +38,5 @@ properties:
             header:
               type: string
               enum:
-                - Content-Type
-              example: Content-Type
+                - Authorization
+              example: Authorization

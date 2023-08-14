@@ -25,6 +25,9 @@ lint: .check-licenses
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
 
+static-analysis:
+	npm run static-analysis
+
 #Removes build/ + dist/ directories
 clean:
 	rm -rf build
