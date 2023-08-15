@@ -94,7 +94,11 @@ PROD_TEST_CMD := $(TEST_CMD) \
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
 .run-locust-tests:
-	(poetry run locust -f tests/locust/test_no_errors.py --headless)
+	(poetry run locust -f tests/locust/test_no_errors.py --headless; \
+	sleep 60; \
+	poetry run locust -f tests/locust/test_over_spike_arrest.py --headless; \
+	sleep 60; \
+	poetry run locust -f tests/locust/test_over_quota.py --headless;)
 
 
 postman-test: .run-postman-sandbox
@@ -107,7 +111,7 @@ postman-test: .run-postman-sandbox
 	--ignore=tests/mtls \
 	-m sandboxtest
 
-internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .run-locust-tests .internal-sandbox-test
+internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
 
 .prod-sandbox-test:
 	$(PROD_TEST_CMD) \
