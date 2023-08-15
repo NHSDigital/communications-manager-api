@@ -273,8 +273,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
                         "recipient": {
                             "nhsNumber": nhs_number,
                             "dateOfBirth": "1982-1-11"
-                        },
-                        "personalisation": {}
+                        }
                     }
                 ]
             }
