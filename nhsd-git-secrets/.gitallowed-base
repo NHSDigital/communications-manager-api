@@ -7,3 +7,4 @@
 .*assembly: AssemblyVersion*
 .*assembly: AssemblyFileVersion*
 .*Version=*
+perform-static-analsis.sh
