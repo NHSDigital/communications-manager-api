@@ -7,6 +7,9 @@ from lib.constants import NUM_MAX_ERRORS
 NUM_MESSAGES = 50000
 
 
+"""
+Disabled as the backend system doesn't yet clear down test data.
+
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_valid_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
@@ -30,6 +33,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url, nhsd_apim_auth
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
+"""
 
 
 @pytest.mark.devtest
