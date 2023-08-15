@@ -30,3 +30,4 @@ zap-report.json
 zap-report.xml
 zap-report.html
 tmp/
+.zap

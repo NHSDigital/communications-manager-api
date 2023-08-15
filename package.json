@@ -6,9 +6,9 @@
     "lint": "redocly lint specification/communications-manager.yaml",
     "publish": "mkdir -p build && redocly bundle specification/communications-manager.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/communications-manager.json",
     "serve": "redocly preview-docs -p 5000 build/communications-manager.json",
-    "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL",
+    "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL --failOn AGPL",
     "sandbox-postman-collection": "newman run postman/CommunicationsManager.Sandbox.postman_collection.json",
-    "zap-api-scan": "./scripts/run_zap.sh"
+    "zap-security-scan": "./scripts/run_zap.sh"
   },
   "author": "NHS Digital",
   "license": "MIT",

@@ -45,7 +45,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              test_command: 'make test-dev'
+              test_command: 'make internal-dev-test'
       - environment: internal-dev-sandbox
         proxy_path: sandbox
         jinja_templates:
@@ -54,5 +54,5 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              test_command: 'make sandboxtest'
+              test_command: 'make internal-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'

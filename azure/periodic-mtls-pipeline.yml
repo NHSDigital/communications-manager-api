@@ -28,4 +28,4 @@ variables:
 
 steps:
   - bash: |
-      make install-python && make test-mtls
+      make install-python && make mtls-test
