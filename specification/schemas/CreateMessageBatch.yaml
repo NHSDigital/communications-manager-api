@@ -5,7 +5,7 @@ properties:
     type: object
     properties:
       type:
-        $ref: enums/EnumTypeMessageBatch.yml
+        $ref: enums/EnumTypeMessageBatch.yaml
       attributes:
         description: MessageBatch attributes
         type: object
@@ -29,7 +29,7 @@ properties:
           messages:
             type: array
             items:
-              $ref: Message.yml
+              $ref: Message.yaml
         required:
           - routingPlanId
           - messageBatchReference

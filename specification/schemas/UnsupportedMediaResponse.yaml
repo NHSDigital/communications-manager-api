@@ -1,5 +1,5 @@
 type: object
-title: Not Acceptable
+title: Unsupported Media
 additionalProperties: false
 properties:
   errors:
@@ -11,26 +11,26 @@ properties:
       type: object
       properties:
         id:
-          $ref: TypeErrorIdentifier.yml
+          $ref: TypeErrorIdentifier.yaml
         code:
-          $ref: enums/EnumErrorNotAcceptable.yml
+          $ref: enums/EnumErrorUnsupportedMedia.yaml
         links:
-          $ref: LinksError.yml
+          $ref: LinksError.yaml
         status:
           type: string
           enum:
-            - '406'
-          example: '406'
+            - '415'
+          example: '415'
         title:
           type: string
           enum:
-            - Not acceptable
-          example: Not acceptable
+            - Unsupported media
+          example: Unsupported media
         detail:
           type: string
           enum:
-            - This service can only generate application/vnd.api+json or application/json.
-          example: This service can only generate application/vnd.api+json or application/json.
+            - 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
+          example: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.'
         source:
           type: object
           additionalProperties: false
@@ -38,5 +38,5 @@ properties:
             header:
               type: string
               enum:
-                - Accept
-              example: Accept
+                - Content-Type
+              example: Content-Type

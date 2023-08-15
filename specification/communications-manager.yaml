@@ -613,38 +613,38 @@ paths:
 components:
   schemas:
     CreateMessageBatch:
-      $ref: schemas/CreateMessageBatch.yml
+      $ref: schemas/CreateMessageBatch.yaml
     Message:
-      $ref: schemas/Message.yml
+      $ref: schemas/Message.yaml
     Recipient:
-      $ref: schemas/Recipient.yml
+      $ref: schemas/Recipient.yaml
     MessageBatchResponse:
-      $ref: schemas/MessageBatchResponse.yml
+      $ref: schemas/MessageBatchResponse.yaml
     Type_KSUID:
-      $ref: schemas/TypeKSUID.yml
+      $ref: schemas/TypeKSUID.yaml
     Type_ErrorIdentifier:
-      $ref: schemas/TypeErrorIdentifier.yml
+      $ref: schemas/TypeErrorIdentifier.yaml
     UnableToProcessResponse:
-      $ref: schemas/UnableToProcessResponse.yml
+      $ref: schemas/UnableToProcessResponse.yaml
     InternalServerError:
-      $ref: schemas/InternalServerError.yml
+      $ref: schemas/InternalServerError.yaml
     AccessDeniedResponse:
-      $ref: schemas/AccessDeniedResponse.yml
+      $ref: schemas/AccessDeniedResponse.yaml
     ForbiddenResponse:
-      $ref: schemas/ForbiddenResponse.yml
+      $ref: schemas/ForbiddenResponse.yaml
     RoutingPlanNotFoundError:
-      $ref: schemas/RoutingPlanNotFoundError.yml
+      $ref: schemas/RoutingPlanNotFoundError.yaml
     NotAcceptable:
-      $ref: schemas/NotAcceptable.yml
+      $ref: schemas/NotAcceptable.yaml
     RequestTimeoutResponse:
-      $ref: schemas/RequestTimeoutResponse.yml
+      $ref: schemas/RequestTimeoutResponse.yaml
     UnsupportedMediaResponse:
-      $ref: schemas/UnsupportedMediaResponse.yml
+      $ref: schemas/UnsupportedMediaResponse.yaml
     TooManyRequestsResponse:
-      $ref: schemas/TooManyRequestsResponse.yml
+      $ref: schemas/TooManyRequestsResponse.yaml
     ServiceUnavailableResponse:
-      $ref: schemas/ServiceUnavailableResponse.yml
+      $ref: schemas/ServiceUnavailableResponse.yaml
     ServiceTimeoutResponse:
-      $ref: schemas/ServiceTimeoutResponse.yml
+      $ref: schemas/ServiceTimeoutResponse.yaml
     Links_Error:
-      $ref: schemas/LinksError.yml
+      $ref: schemas/LinksError.yaml

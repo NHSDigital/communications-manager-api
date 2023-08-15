@@ -13,7 +13,6 @@ class UserTasks(TaskSet):
                 response.failure("Unexpected status returned: ", response.status_code)
 
 
-
 class ApiUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]

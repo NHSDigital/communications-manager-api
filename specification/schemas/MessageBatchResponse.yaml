@@ -7,9 +7,9 @@ properties:
     additionalProperties: false
     properties:
       type:
-        $ref: enums/EnumTypeMessageBatch.yml
+        $ref: enums/EnumTypeMessageBatch.yaml
       id:
-        $ref: TypeKSUID.yml
+        $ref: TypeKSUID.yaml
         description: Identifier for this MessageBatch. You should store this identifier for later lookups.
       attributes:
         type: object

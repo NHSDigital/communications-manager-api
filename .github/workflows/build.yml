@@ -61,6 +61,11 @@ jobs:
       - name: Lint
         run: make lint
 
+      - name: Static analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: make static-analysis
+
       - name: Compile spec
         run: make publish
 

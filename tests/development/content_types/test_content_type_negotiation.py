@@ -1,7 +1,5 @@
 import requests
 import pytest
-from lib import Authentication
-from lib.constants import INT_URL
 
 ACCEPT_HEADERS = [
     {
@@ -26,16 +24,13 @@ ACCEPT_HEADERS = [
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 
 
-@pytest.mark.inttest
+@pytest.mark.devtest
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
-def test_application_response_type(accept_headers, method):
-    resp = getattr(requests, method)(f"{INT_URL}", headers={
-        "Authorization": f"{Authentication.generate_int_authentication()}",
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method, nhsd_apim_auth_headers):
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
+        **nhsd_apim_auth_headers,
         **accept_headers.get("headers")
     })
-
-    if (resp.status_code == 429):
-        raise AssertionError('Unexpected 429')
-
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
