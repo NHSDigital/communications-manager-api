@@ -12,12 +12,14 @@ env:
 jobs:
   - type: openapi
     parameters:
-      apiFile: '/zap/wrk/build/communications-manager.json'
+      apiFile: '/zap/wrk/build/communications-manager-zap.json'
   - type: passiveScan-config
     parameters:
       maxAlertsPerRule: 10
       scanOnlyInScope: true
   - type: activeScan
+    parameters:
+      scanHeadersAllRequests: true
     policyDefinition:
       rules:
       - id: 10104

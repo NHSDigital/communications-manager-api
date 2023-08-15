@@ -10,6 +10,9 @@ echo "Storing reports in $TEMP_DIR"
 # make sure we have published the spec
 npm run publish
 
+# we need to generate a zap compatible version of the spec
+npm run publish:zap-compatible
+
 # run zap in a container
 docker container run \
     -v $(pwd):/zap/wrk/:rw \
@@ -20,3 +23,6 @@ docker container run \
 
 # generate our nunit report from the zap JSON report
 ./node_modules/.bin/hbs --data $TEMP_DIR/zap-report.json zap/nunit-template.hbs -s > zap-report.xml
+
+# delete our zap compatible report
+rm build/communications-manager-zap.json
