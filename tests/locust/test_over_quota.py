@@ -10,7 +10,7 @@ class UserTasks(TaskSet):
 class QuotaUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
-    host = "https://internal-dev-sandbox.api.service.nhs.uk/comms"
+    host = "https://internal-dev-sandbox.api.service.nhs.uk/comms-pr-171"
 
 
 class OverQuotaLoadShape(LoadTestShape):
