@@ -28,4 +28,4 @@ variables:
 
 steps:
   - bash: |
-      make .run-locust-tests
+      make install-python && make .run-locust-tests
