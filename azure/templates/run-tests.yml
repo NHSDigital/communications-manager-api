@@ -60,6 +60,8 @@ steps:
 
   - ${{ if parameters.nightly }}:
     - bash: |
+        export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
+        export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
         make zap-security-scan
       displayName: Run OWASP zap scan
     - task: PublishTestResults@2
