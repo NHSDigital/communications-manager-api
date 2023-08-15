@@ -96,11 +96,6 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-locust-tests:
 	(poetry run locust -f tests/locust/test_no_errors.py)
 
-#Command to run end-to-end smoketests post-deployment to verify the environment is working
-smoketest:
-	$(TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
 
 postman-test: .run-postman-sandbox
 

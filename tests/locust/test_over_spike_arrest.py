@@ -5,9 +5,9 @@ class UserTasks(TaskSet):
     @task
     def hit_endpoint(self):
         with self.client.get("/_ping", catch_response=True) as response:
-            if response.status_code == "200":
+            if response.status_code == 200:
                 pass
-            elif response.status_code == "429":
+            elif response.status_code == 429:
                 response.success("Expected 429 error returned")
             else:
                 response.failure("Unexpected status returned: ", response.status_code)
