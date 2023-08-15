@@ -1,24 +1,74 @@
 env:
   contexts:
-    - name: context
+    - name: Sandbox
       urls:
         - https://sandbox.api.service.nhs.uk/comms
+    - name: IntegrationUnauthenticated
+      urls:
         - https://int.api.service.nhs.uk/comms
+    - name: IntegrationAuthenticated
+      urls:
+        - https://int.api.service.nhs.uk/comms
+      authentication:
+        method: 'script'
+        parameters:
+          url: https://int.api.service.nhs.uk/oauth2/token
+          script: 'scripts/authentication/get_bearer_token.js'
+          scriptEngine: 'Graal.js'
+        verification:
+          method: 'response'
+          loggedOutRegex: '401 Unauthorized'
+      users:
+        - name: Integration
+          credentials:
+            api_key: "${INTEGRATION_API_KEY}"
+            private_key: "${INTEGRATION_PRIVATE_KEY_CONTENTS}"
   parameters:
     failOnError: true
     failOnWarning: true
     progressToStdout: true
 
 jobs:
+  # load our authentication and httpsender script
+  - type: script
+    parameters:
+      action: 'add'
+      type: 'httpsender'
+      engine: 'Graal.js'
+      name: 'add_bearer_token'
+      file: 'scripts/httpsender/add_bearer_token.js'
+  - type: script
+    parameters:
+      action: 'add'
+      type: 'authentication'
+      engine: 'Graal.js'
+      name: 'get_bearer_token'
+      file: 'scripts/authentication/get_bearer_token.js'
+
+  # load the zap specific openapi specification
   - type: openapi
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      context: Sandbox
+  - type: openapi
+    parameters:
+      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      context: IntegrationUnauthenticated
+  - type: openapi
+    parameters:
+      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      context: IntegrationAuthenticated
+
+  # configure the passive scan
   - type: passiveScan-config
     parameters:
       maxAlertsPerRule: 10
       scanOnlyInScope: true
+
+  # run an active scan on sandbox
   - type: activeScan
     parameters:
+      context: Sandbox
       scanHeadersAllRequests: true
     policyDefinition:
       rules:
@@ -26,6 +76,33 @@ jobs:
         name: User Agent Fuzzer
         strength: Low
         threshold: Off
+
+  # run an active scan on integration, using unauthenticated calls
+  - type: activeScan
+    parameters:
+      context: IntegrationUnauthenticated
+      scanHeadersAllRequests: true
+    policyDefinition:
+      rules:
+      - id: 10104
+        name: User Agent Fuzzer
+        strength: Low
+        threshold: Off
+
+  # run an active scan on integration, using authenticated calls
+  - type: activeScan
+    parameters:
+      context: IntegrationAuthenticated
+      user: Integration
+      scanHeadersAllRequests: true
+    policyDefinition:
+      rules:
+      - id: 10104
+        name: User Agent Fuzzer
+        strength: Low
+        threshold: Off
+
+  # generate our custom JSON report
   - type: report
     parameters:
       template: 'comms-manager-json'

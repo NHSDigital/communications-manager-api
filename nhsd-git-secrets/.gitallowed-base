@@ -8,3 +8,4 @@
 .*assembly: AssemblyFileVersion*
 .*Version=*
 perform-static-analsis.sh
+get_bearer_token.js:*
