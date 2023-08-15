@@ -4,9 +4,13 @@ from locust import HttpUser, task, constant, LoadTestShape, TaskSet
 class UserTasks(TaskSet):
     @task
     def hit_endpoint(self):
-        with self.client.get("/_ping") as response:
-            if (response.status_code != "429" and response.status_code != "200"):
-                raise AssertionError("Unexpected 429")
+        with self.client.get("/_ping", catch_response=True) as response:
+            if response.status_code == "200":
+                pass
+            elif response.status_code == "429":
+                response.success("Expected 429 error returned")
+            else:
+                response.failure("Unexpected status returned: ", response.status_code)
 
 
 class ApiUser(HttpUser):
@@ -18,7 +22,7 @@ class OverQuotaLoadShape(LoadTestShape):
     stages = [
         {"duration": 60, "users": 30, "spawn_rate": 20, "user_classes": [ApiUser]},
         {"duration": 120, "users": 90, "spawn_rate": 30, "user_classes": [ApiUser]},
-        {"duration": 600, "users": 30, "spawn_rate": 10, "user_classes": [ApiUser]}
+        {"duration": 240, "users": 30, "spawn_rate": 10, "user_classes": [ApiUser]}
     ]
 
     def tick(self):

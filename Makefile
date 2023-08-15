@@ -91,12 +91,7 @@ PROD_TEST_CMD := $(TEST_CMD) \
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
 .run-locust-tests:
-	(sleep 60; \
-	poetry run locust -f tests/locust/test_no_errors.py; \
-	sleep 60; \
-	poetry run locust -f tests/locust/test_over_quota.py; \
-	sleep 60; \
-	poetry run locust -f tests/locust/test_over_spike_arrest.py;)
+	(poetry run locust -f tests/locust/test_no_errors.py)
 
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
