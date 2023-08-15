@@ -94,7 +94,7 @@ PROD_TEST_CMD := $(TEST_CMD) \
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
 .run-locust-tests:
-	(poetry run locust -f tests/locust/test_no_errors.py -h "https://internal-dev-sandbox.api.service.nhs.uk/comms")
+	(poetry run locust -f tests/locust/test_no_errors.py --headless)
 
 
 postman-test: .run-postman-sandbox

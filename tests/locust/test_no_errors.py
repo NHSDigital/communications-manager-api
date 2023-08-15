@@ -16,6 +16,7 @@ class UserTasks(TaskSet):
 class ApiUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
+    host = "https://internal-dev-sandbox.api.service.nhs.uk/comms"
 
 
 class StagesShape(LoadTestShape):
