@@ -9,16 +9,16 @@ class UserTasks(TaskSet):
                 raise AssertionError("Unexpected 429")
 
 
-class WebsiteUser(HttpUser):
+class ApiUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
 
 
 class StagesShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 20, "spawn_rate": 20, "wait_time": 1},
-        {"duration": 120, "users": 60, "spawn_rate": 30, "wait_time": 1},
-        {"duration": 240, "users": 49, "spawn_rate": 33, "wait_time": 1}
+        {"duration": 60, "users": 20, "spawn_rate": 20, "wait_time": 1, "user_classes": [ApiUser]},
+        {"duration": 120, "users": 60, "spawn_rate": 30, "wait_time": 1, "user_classes": [ApiUser]},
+        {"duration": 240, "users": 49, "spawn_rate": 33, "wait_time": 1, "user_classes": [ApiUser]}
     ]
 
     def tick(self):

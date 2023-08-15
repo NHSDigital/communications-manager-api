@@ -5,20 +5,20 @@ class UserTasks(TaskSet):
     @task
     def hit_endpoint(self):
         with self.client.get("/_ping") as response:
-            if (response.status_code == "429"):
+            if (response.status_code != "429" and response.status_code != "200"):
                 raise AssertionError("Unexpected 429")
 
 
-class WebsiteUser(HttpUser):
+class ApiUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
 
 
 class OverQuotaLoadShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 30, "spawn_rate": 20},
-        {"duration": 120, "users": 90, "spawn_rate": 30},
-        {"duration": 240, "users": 30, "spawn_rate": 10}
+        {"duration": 60, "users": 30, "spawn_rate": 20, "user_classes": [ApiUser]},
+        {"duration": 120, "users": 90, "spawn_rate": 30, "user_classes": [ApiUser]},
+        {"duration": 600, "users": 30, "spawn_rate": 10, "user_classes": [ApiUser]}
     ]
 
     def tick(self):

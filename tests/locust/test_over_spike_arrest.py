@@ -9,16 +9,16 @@ class UserTasks(TaskSet):
                 raise AssertionError("Unexpected 429")
 
 
-class WebsiteUser(HttpUser):
+class ApiUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
 
 
 class OverSpikeArrestLoadShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 99, "spawn_rate": 3},
-        {"duration": 120, "users": 110, "spawn_rate": 10},
-        {"duration": 240, "users": 80, "spawn_rate": 20}
+        {"duration": 60, "users": 99, "spawn_rate": 3, "user_classes": [ApiUser]},
+        {"duration": 120, "users": 110, "spawn_rate": 10, "user_classes": [ApiUser]},
+        {"duration": 240, "users": 80, "spawn_rate": 20, "user_classes": [ApiUser]}
     ]
 
     def tick(self):
