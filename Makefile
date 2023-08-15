@@ -80,11 +80,11 @@ PROD_TEST_CMD := $(TEST_CMD) \
 
 .run-locust-tests:
 	(sleep 60; \
-	poetry run locust -f tests/locust/test_no_errors.py --config .locust.conf; \
+	poetry run locust -f tests/locust/test_no_errors.py --host $(PROXY_NAME) \
 	sleep 60; \
-	poetry run locust -f tests/locust/test_over_quota.py --config .locust.conf; \
+	poetry run locust -f tests/locust/test_over_quota.py --host $(PROXY_NAME) \
 	sleep 60; \
-	poetry run locust -f tests/locust/test_over_spike_arrest.py --config .locust.conf;)
+	poetry run locust -f tests/locust/test_over_spike_arrest.py --host $(PROXY_NAME) )
 
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
