@@ -13,16 +13,16 @@ class UserTasks(TaskSet):
                 response.failure("Unexpected status returned: ", response.status_code)
 
 
-class ApiUser(HttpUser):
+class SpikeArrestUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
 
 
 class OverSpikeArrestLoadShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 99, "spawn_rate": 3, "user_classes": [ApiUser]},
-        {"duration": 120, "users": 110, "spawn_rate": 10, "user_classes": [ApiUser]},
-        {"duration": 240, "users": 80, "spawn_rate": 20, "user_classes": [ApiUser]}
+        {"duration": 60, "users": 99, "spawn_rate": 3, "user_classes": [SpikeArrestUser]},
+        {"duration": 120, "users": 110, "spawn_rate": 10, "user_classes": [SpikeArrestUser]},
+        {"duration": 240, "users": 80, "spawn_rate": 20, "user_classes": [SpikeArrestUser]}
     ]
 
     def tick(self):

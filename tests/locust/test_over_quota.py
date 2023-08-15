@@ -13,16 +13,16 @@ class UserTasks(TaskSet):
                 response.failure("Unexpected status returned: ", response.status_code)
 
 
-class ApiUser(HttpUser):
+class QuotaUser(HttpUser):
     wait_time = constant(1)
     tasks = [UserTasks]
 
 
 class OverQuotaLoadShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 30, "spawn_rate": 20, "user_classes": [ApiUser]},
-        {"duration": 120, "users": 90, "spawn_rate": 30, "user_classes": [ApiUser]},
-        {"duration": 240, "users": 30, "spawn_rate": 10, "user_classes": [ApiUser]}
+        {"duration": 60, "users": 30, "spawn_rate": 20, "user_classes": [QuotaUser]},
+        {"duration": 120, "users": 90, "spawn_rate": 30, "user_classes": [QuotaUser]},
+        {"duration": 240, "users": 30, "spawn_rate": 10, "user_classes": [QuotaUser]}
     ]
 
     def tick(self):
