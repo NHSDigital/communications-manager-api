@@ -92,11 +92,11 @@ PROD_TEST_CMD := $(TEST_CMD) \
 
 .run-locust-tests:
 	(sleep 60; \
-	poetry run locust -f tests/locust/test_no_errors.py --host $(PROXY_NAME) \
+	poetry run locust -f tests/locust/test_no_errors.py --host https://internal-dev-sandbox.api.service.nhs.uk/comms \
 	sleep 60; \
-	poetry run locust -f tests/locust/test_over_quota.py --host $(PROXY_NAME) \
+	poetry run locust -f tests/locust/test_over_quota.py --host https://internal-dev-sandbox.api.service.nhs.uk/comms \
 	sleep 60; \
-	poetry run locust -f tests/locust/test_over_spike_arrest.py --host $(PROXY_NAME) )
+	poetry run locust -f tests/locust/test_over_spike_arrest.py --host https://internal-dev-sandbox.api.service.nhs.uk/comms )
 
 #Command to run end-to-end smoketests post-deployment to verify the environment is working
 smoketest:
