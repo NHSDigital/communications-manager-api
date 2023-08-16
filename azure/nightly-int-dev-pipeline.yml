@@ -30,4 +30,5 @@ extends:
   template: ./templates/run-tests.yml
   parameters:
     nightly: true
+    environment: 'internal-dev'
     test_command: 'make internal-dev-test'
