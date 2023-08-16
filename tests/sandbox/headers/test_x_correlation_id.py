@@ -20,4 +20,8 @@ def test_request_with_x_correlation_id(
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "x-correlation-id": correlation_id
     })
+
+    if resp.status_code == 429:
+        raise AssertionError('Unexpected 429')
+
     assert resp.headers.get("x-correlation-id") == correlation_id

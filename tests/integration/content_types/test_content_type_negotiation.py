@@ -34,4 +34,8 @@ def test_application_response_type(accept_headers, method):
         "Authorization": f"{Authentication.generate_int_authentication()}",
         **accept_headers.get("headers")
     })
+
+    if resp.status_code == 429:
+        raise AssertionError('Unexpected 429')
+
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
