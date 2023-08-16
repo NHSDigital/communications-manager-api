@@ -93,6 +93,9 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-postman-sandbox: 
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
+.run-locust-tests: 
+	scripts/run_locust.sh
+
 postman-test: .run-postman-sandbox
 
 .internal-sandbox-test:
