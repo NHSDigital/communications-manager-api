@@ -98,6 +98,9 @@ run-locust-tests:
 
 postman-test: .run-postman-sandbox
 
+zap-security-scan:
+	(rm -rf node_modules; npm install --legacy-peer-deps; npm run zap-security-scan)
+
 .internal-sandbox-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
@@ -159,6 +162,3 @@ mtls-test:
 	--ignore=tests/development \
 	--ignore=tests/locust \
 	-m mtlstest
-
-zap-security-scan:
-	npm run zap-security-scan

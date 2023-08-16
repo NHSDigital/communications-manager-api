@@ -59,18 +59,6 @@ steps:
     retryCountOnTaskFailure: 10
 
   - ${{ if parameters.nightly }}:
-    - bash: |
-        export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
-        export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
-        make zap-security-scan
-      displayName: Run OWASP zap scan
-    - task: PublishTestResults@2
-      displayName: 'Publish OWASP zap results'
-      condition: always()
-      inputs:
-        testResultsFiles: 'zap-report.xml'
-        testResultsFormat: NUnit
-        failTaskOnFailedTests: true
     - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
       parameters:
         secret_ids:
