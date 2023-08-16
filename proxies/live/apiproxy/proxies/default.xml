@@ -8,6 +8,9 @@
     </Flows>
     [% include './partials/Partial.Proxy.PostFlow.xml' %]
     [% include './partials/Partial.Proxy.PostClientFlow.xml' %]
+    <FaultRules>
+        [% include './partials/Partial.Proxy.FaultRules.xml' %]
+    </FaultRules>
     <HTTPProxyConnection>
         <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>

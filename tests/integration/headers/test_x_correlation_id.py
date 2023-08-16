@@ -20,4 +20,8 @@ def test_request_with_x_correlation_id(
         "Authorization": f"{Authentication.generate_int_authentication()}",
         "x-correlation-id": correlation_id
     })
+
+    if resp.status_code == 429:
+        raise AssertionError('Unexpected 429')
+
     assert resp.headers.get("x-correlation-id") == correlation_id

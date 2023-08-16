@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SpikeArrest async="false" continueOnError="false" enabled="true" name="SpikeArrest.PerApp">
+    <DisplayName>SpikeArrest.PerApp</DisplayName>
+    <Identifier ref="developer.app.id" />
+    <Rate>100ps</Rate>
+    <UseEffectiveCount>true</UseEffectiveCount>
+</SpikeArrest>
