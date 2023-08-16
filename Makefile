@@ -93,6 +93,9 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-postman-sandbox: 
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
+run-locust-tests: 
+	scripts/run_locust.sh
+
 postman-test: .run-postman-sandbox
 
 .internal-sandbox-test:
@@ -101,6 +104,7 @@ postman-test: .run-postman-sandbox
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
+	--ignore=tests/locust \
 	-m sandboxtest
 
 internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
@@ -111,6 +115,7 @@ internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sa
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
+	--ignore=tests/locust \
 	-m sandboxtest
 
 prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
@@ -120,6 +125,7 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
+	--ignore=tests/locust \
 	-m devtest
 
 internal-dev-test: .internal-dev-test
@@ -129,6 +135,7 @@ internal-dev-test: .internal-dev-test
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
+	--ignore=tests/locust \
 	-m inttest
 
 integration-test: .integration-test
@@ -139,6 +146,7 @@ integration-test: .integration-test
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
 	--ignore=tests/integration \
+	--ignore=tests/locust \
 	-m prodtest
 
 production-test: .production-test
@@ -149,6 +157,7 @@ mtls-test:
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
 	--ignore=tests/development \
+	--ignore=tests/locust \
 	-m mtlstest
 
 zap-security-scan:

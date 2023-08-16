@@ -22,6 +22,7 @@ pyjwt = {version = "2.3.0", extras = ["crypto"]}
 pytest-xdist = "^3.3.1"
 pre-commit = "^3.3.3"
 pytest-rerunfailures = "^12.0"
+locust = "^2.16.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.7.9"
