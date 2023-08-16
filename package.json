@@ -6,8 +6,10 @@
     "lint": "redocly lint specification/communications-manager.yaml",
     "publish": "mkdir -p build && redocly bundle specification/communications-manager.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/communications-manager.json",
     "serve": "redocly preview-docs -p 5000 build/communications-manager.json",
-    "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL",
-    "sandbox-postman-collection": "newman run postman/CommunicationsManager.Sandbox.postman_collection.json"
+    "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL --failOn AGPL",
+    "sandbox-postman-collection": "newman run postman/CommunicationsManager.Sandbox.postman_collection.json",
+    "static-analysis": "./scripts/perform-static-analysis.sh",
+    "zap-security-scan": "./scripts/run_zap.sh"
   },
   "author": "NHS Digital",
   "license": "MIT",
@@ -15,10 +17,12 @@
   "devDependencies": {
     "@redocly/cli": "^1.0.0-beta.129",
     "apigeetool": "^0.16.1",
+    "hbs-cli": "^1.4.1",
     "license-checker": "^25.0.1",
     "minimist": "^1.2.2",
     "newman": "^5.3.2",
-    "react-is": "^16.13.1"
+    "react-is": "^18.2.0",
+    "sinon": "^15.2.0"
   },
   "dependencies": {
     "jsrsasign": "^10.8.6",

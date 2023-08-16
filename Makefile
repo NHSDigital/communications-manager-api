@@ -21,9 +21,12 @@ install: install-node install-python .git/hooks/pre-commit
 install-hooks: .git/hooks/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint:
+lint: .check-licenses
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
+
+static-analysis:
+	npm run static-analysis
 
 #Removes build/ + dist/ directories
 clean:
@@ -40,7 +43,7 @@ build-proxy:
 	scripts/build_proxy.sh
 
 #Files to loop over in release
-_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman"
+_dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman scripts"
 
 #Create /dist/ sub-directory and copy files into directory
 release: clean publish build-proxy
@@ -49,6 +52,18 @@ release: clean publish build-proxy
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-sandbox.yml
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-qa-sandbox.yml
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev-sandbox.yml
+
+#Serve the OAS specification
+serve:
+	(sleep 5; python3 -m webbrowser http://127.0.0.1:5000) &
+	npm run serve
+
+#Check dependencies for licensing issues
+.check-licenses:
+	npm run check-licenses
+	scripts/check_python_licenses.sh
+
+check-licenses: .check-licenses
 
 #################
 # Test commands #
@@ -61,7 +76,11 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		-n 4 \
 		--api-name=communications-manager \
 		--proxy-name="$(PROXY_NAME)" \
-		-s
+		-s \
+		--reruns 5 \
+		--reruns-delay 5 \
+		--only-rerun 'AssertionError: Unexpected 429'
+
 
 PROD_TEST_CMD := $(TEST_CMD) \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
@@ -74,45 +93,72 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-postman-sandbox: 
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
-#Command to run end-to-end smoketests post-deployment to verify the environment is working
-smoketest:
-	$(TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
+run-locust-tests: 
+	scripts/run_locust.sh
 
-sandboxtest: .run-sandbox-unit-tests .run-postman-sandbox
-	$(TEST_CMD) \
-	--junitxml=sandboxtest-report.xml \
-	--ignore=tests/development \
-	--ignore=tests/integration \
-	-m sandboxtest
+postman-test: .run-postman-sandbox
 
-sandboxtest-prod: .run-sandbox-unit-tests
-	$(PROD_TEST_CMD) \
-	--junitxml=sandboxtest-report.xml \
-	--ignore=tests/development \
-	--ignore=tests/integration \
-	-m sandboxtest
-
-test:
+.internal-sandbox-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
+	--ignore=tests/development \
+	--ignore=tests/integration \
+	--ignore=tests/mtls \
+	--ignore=tests/locust \
+	-m sandboxtest
 
-smoketest-prod:
+internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
+
+.prod-sandbox-test:
 	$(PROD_TEST_CMD) \
-	--junitxml=smoketest-report.xml \
-	-m smoketest
+	--junitxml=test-report.xml \
+	--ignore=tests/development \
+	--ignore=tests/integration \
+	--ignore=tests/mtls \
+	--ignore=tests/locust \
+	-m sandboxtest
 
-test-dev:
+prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
+
+.internal-dev-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
+	--ignore=tests/locust \
 	-m devtest
 
-test-int:
+internal-dev-test: .internal-dev-test
+
+.integration-test:
 	$(TEST_CMD) \
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
+	--ignore=tests/locust \
 	-m inttest
+
+integration-test: .integration-test
+
+.production-test:
+	$(PROD_TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/development \
+	--ignore=tests/integration \
+	--ignore=tests/locust \
+	-m prodtest
+
+production-test: .production-test
+
+mtls-test:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/integration \
+	--ignore=tests/development \
+	--ignore=tests/locust \
+	-m mtlstest
+
+zap-security-scan:
+	npm run zap-security-scan

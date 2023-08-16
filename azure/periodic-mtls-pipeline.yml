@@ -1,0 +1,31 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge
+      endpoint: NHSDigital
+
+schedules:
+  - cron: '*/10 * * * *'
+    displayName: every 10 minutes
+    branches:
+      include: ['release']
+    always: true
+
+pool:
+  name: 'AWS-ECS'
+
+variables:
+  - template: project.yml
+  - name: SERVICE_ARTIFACT_NAME
+    value: ''
+
+steps:
+  - bash: |
+      make install-python && make mtls-test

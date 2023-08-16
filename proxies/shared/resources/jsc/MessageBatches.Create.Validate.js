@@ -14,153 +14,160 @@ try {
   pushError(invalidError("/"))
 }
 
-if (all) {
-  var seenMessages = []
-  var data = all.data;
+const isUndefined = (val) => {
+    return typeof val === "undefined";
+}
 
-  var pointer
+const validate = () => {
+  if (all) {
+    var seenMessages = {};
+    var data = all.data;
 
-  // $.data
-  pointer = "/data"
-  if (typeof data === "undefined") {
-    pushError(missingError(pointer))
-  } else if (data === null) {
-    pushError(nullError(pointer))
-  } else if (typeof data !== "object") {
-    pushError(invalidError(pointer))
-  } else {
+    var pointer;
 
-    // $.data.type
-    pointer = "/data/type"
-    if (typeof data.type === "undefined") {
-      pushError(missingError(pointer))
-    } else if (data.type === null) {
-      pushError(nullError(pointer))
-    } else if (data.type !== "MessageBatch") {
-      pushError(invalidError(pointer))
-    }
-
-    // $.data.attributes
-    pointer = "/data/attributes"
-    if (typeof data.attributes === "undefined") {
-      pushError(missingError(pointer))
-    } else if (data.attributes === null) {
-      pushError(nullError(pointer))
-    } else if (typeof data.attributes !== "object") {
-      pushError(invalidError(pointer))
+    // $.data
+    pointer = "/data";
+    if (isUndefined(data)) {
+      pushError(missingError(pointer));
+    } else if (data === null) {
+      pushError(nullError(pointer));
+    } else if (typeof data !== "object") {
+      pushError(invalidError(pointer));
     } else {
 
-      // $.data.attributes.routingPlanId
-      pointer = "/data/attributes/routingPlanId"
-      if (typeof data.attributes.routingPlanId === "undefined") {
-        pushError(missingError(pointer))
-      } else if (data.attributes.routingPlanId === null) {
-        pushError(nullError(pointer))
-      } else if (typeof data.attributes.routingPlanId !== "string" || !uuidRegex.test(data.attributes.routingPlanId)) {
-        pushError(invalidError(pointer))
+      // $.data.type
+      pointer = "/data/type";
+      if (isUndefined(data.type)) {
+        pushError(missingError(pointer));
+      } else if (data.type === null) {
+        pushError(nullError(pointer));
+      } else if (data.type !== "MessageBatch") {
+        pushError(invalidError(pointer));
       }
 
-      // $.data.attributes.messageBatchReference
-      pointer = "/data/attributes/messageBatchReference"
-      if (typeof data.attributes.messageBatchReference === "undefined") {
-        pushError(missingError(pointer))
-      } else if (data.attributes.messageBatchReference === null) {
-        pushError(nullError(pointer))
-      } else if (typeof data.attributes.messageBatchReference !== "string" || !uuidRegex.test(data.attributes.messageBatchReference)) {
-        pushError(invalidError(pointer))
-      }
-
-      // $.data.attributes.messages
-      pointer = "/data/attributes/messages"
-      if (typeof data.attributes.messages === "undefined") {
-        pushError(missingError(pointer))
-      } else if (data.attributes.messages === null) {
-        pushError(nullError(pointer))
-      } else if (!Array.isArray(data.attributes.messages)) {
-        pushError(invalidError(pointer))
-      } else if (data.attributes.messages.length === 0) {
-        pushError(tooFewItemsError(pointer))
+      // $.data.attributes
+      pointer = "/data/attributes";
+      if (isUndefined(data.attributes)) {
+        pushError(missingError(pointer));
+      } else if (data.attributes === null) {
+        pushError(nullError(pointer));
+      } else if (typeof data.attributes !== "object") {
+        pushError(invalidError(pointer));
       } else {
 
-        // $.data.attributes.messages.x
-        data.attributes.messages.forEach((message, index) => {
-          pointer = "/data/attributes/messages/" + index
-          if (typeof message === "undefined") {
-            pushError(missingError(pointer))
-          } else if (message === null) {
-            pushError(nullError(pointer))
-          } else if (typeof message !== "object" || Array.isArray(message)) {
-            pushError(invalidError(pointer))
-          } else {
+        // $.data.attributes.routingPlanId
+        pointer = "/data/attributes/routingPlanId";
+        if (isUndefined(data.attributes.routingPlanId)) {
+          pushError(missingError(pointer));
+        } else if (data.attributes.routingPlanId === null) {
+          pushError(nullError(pointer));
+        } else if (typeof data.attributes.routingPlanId !== "string" || !uuidRegex.test(data.attributes.routingPlanId)) {
+          pushError(invalidError(pointer));
+        }
 
-            // $.data.attributes.messages.x.messageReference
-            pointer = "/data/attributes/messages/" + index + "/messageReference"
-            if (typeof message.messageReference === "undefined") {
-              pushError(missingError(pointer))
-            } else if (message.messageReference === null) {
-              pushError(nullError(pointer))
-            } else if (typeof message.messageReference !== "string" || !uuidRegex.test(message.messageReference)) {
-              pushError(invalidError(pointer))
-            } else if (seenMessages.indexOf(message.messageReference) !== -1) {
-              pushError(duplicateError(pointer))
-            } else {
-              seenMessages.push(message.messageReference)
+        // $.data.attributes.messageBatchReference
+        pointer = "/data/attributes/messageBatchReference";
+        if (isUndefined(data.attributes.messageBatchReference)) {
+          pushError(missingError(pointer));
+        } else if (data.attributes.messageBatchReference === null) {
+          pushError(nullError(pointer));
+        } else if (typeof data.attributes.messageBatchReference !== "string" || !uuidRegex.test(data.attributes.messageBatchReference)) {
+          pushError(invalidError(pointer));
+        }
+
+        // $.data.attributes.messages
+        pointer = "/data/attributes/messages";
+        if (isUndefined(data.attributes.messages)) {
+          pushError(missingError(pointer));
+        } else if (data.attributes.messages === null) {
+          pushError(nullError(pointer));
+        } else if (!Array.isArray(data.attributes.messages)) {
+          pushError(invalidError(pointer));
+        } else if (data.attributes.messages.length === 0) {
+          pushError(tooFewItemsError(pointer));
+        } else {
+
+          // $.data.attributes.messages.x
+          data.attributes.messages.forEach((message, index) => {
+            pointer = "/data/attributes/messages/" + index;
+            // Limit the amount of errors returned to 100 entries
+            if (errors.length >= 100) {
+              errors = errors.slice(0, 100);
+              return null;
             }
 
-            // $.data.attributes.messages.x.recipient
-            pointer = "/data/attributes/messages/" + index + "/recipient"
-            if (typeof message.recipient === "undefined") {
-              pushError(missingError(pointer))
-            } else if (typeof message.recipient !== 'object') {
-              pushError(invalidError(pointer))
-            } else if (message.recipient === null) {
-              pushError(nullError(pointer))
+            if (isUndefined(message)) {
+              pushError(missingError(pointer));
+            } else if (message === null) {
+              pushError(nullError(pointer));
+            } else if (typeof message !== "object" || Array.isArray(message)) {
+              pushError(invalidError(pointer));
             } else {
 
-              // $.data.attributes.messages.x.recipient.nhsNumber
-              pointer = "/data/attributes/messages/" + index + "/recipient/nhsNumber"
-              if (typeof message.recipient.nhsNumber === "undefined") {
-                pushError(missingError(pointer))
-              } else if (message.recipient.nhsNumber === null) {
-                pushError(nullError(pointer))
-              } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
-                pushError(invalidError(pointer))
+              // $.data.attributes.messages.x.messageReference
+              pointer = "/data/attributes/messages/" + index + "/messageReference";
+              if (isUndefined(message.messageReference)) {
+                pushError(missingError(pointer));
+              } else if (message.messageReference === null) {
+                pushError(nullError(pointer));
+              } else if (typeof message.messageReference !== "string" || !uuidRegex.test(message.messageReference)) {
+                pushError(invalidError(pointer));
+              } else if (seenMessages[message.messageReference]) {
+                pushError(duplicateError(pointer));
+              } else {
+                seenMessages[message.messageReference] = 1;
               }
 
-            // $.data.attributes.recipients.x.dateOfBirth
-            pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth"
-            if (
-              typeof message.recipient.dateOfBirth !== "undefined"
-              && message.recipient.dateOfBirth !== null
-              && (
-                typeof message.recipient.dateOfBirth !== "string"
-                || !dobRegex.test(message.recipient.dateOfBirth)
-              )
-            ) {
-              pushError(invalidError(pointer))
-            }
+              // $.data.attributes.messages.x.recipient
+              pointer = "/data/attributes/messages/" + index + "/recipient";
+              if (isUndefined(message.recipient)) {
+                pushError(missingError(pointer));
+              } else if (typeof message.recipient !== 'object') {
+                pushError(invalidError(pointer));
+              } else if (message.recipient === null) {
+                pushError(nullError(pointer));
+              } else {
 
-              // $.data.attributes.messages.x.personalisation
-              pointer = "/data/attributes/messages/" + index + "/personalisation"
-              if (typeof message.personalisation !== "object") {
-                pushError(invalidError(pointer))
+                // $.data.attributes.messages.x.recipient.nhsNumber
+                pointer = "/data/attributes/messages/" + index + "/recipient/nhsNumber";
+                if (isUndefined(message.recipient.nhsNumber)) {
+                  pushError(missingError(pointer));
+                } else if (message.recipient.nhsNumber === null) {
+                  pushError(nullError(pointer));
+                } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
+                  pushError(invalidError(pointer));
+                }
+
+                // $.data.attributes.recipients.x.dateOfBirth
+                pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth";
+                if (
+                  !isUndefined(message.recipient.dateOfBirth)
+                  && message.recipient.dateOfBirth !== null
+                  && (
+                    typeof message.recipient.dateOfBirth !== "string"
+                    || !dobRegex.test(message.recipient.dateOfBirth)
+                  )
+                ) {
+                  pushError(invalidError(pointer));
+                }
+
+                // $.data.attributes.messages.x.personalisation
+                pointer = "/data/attributes/messages/" + index + "/personalisation";
+                if (!isUndefined(message.personalisation) && typeof message.personalisation !== "object") {
+                  pushError(invalidError(pointer));
+                }
               }
             }
-          }
-        })
+          });
+        }
       }
     }
   }
 }
 
-
 function pushError(error) {
-  // Limit the amount of errors returned to 100 entries
-  if (errors.length <= 100) {
-    errors.push(error)
-  }
+  errors.push(error);
 }
-
 
 function createErrorObject(code, title, detail, pointer) {
   return {
@@ -175,7 +182,7 @@ function createErrorObject(code, title, detail, pointer) {
     "source": {
       "pointer": pointer
     }
-  }
+  };
 }
 
 function missingError(pointer) {
@@ -184,7 +191,7 @@ function missingError(pointer) {
     "Missing property",
     "The property at the specified location is required, but was not present in the request.",
     pointer
-  )
+  );
 }
 
 function nullError(pointer) {
@@ -193,7 +200,7 @@ function nullError(pointer) {
     "Property cannot be null",
     "The property at the specified location is required, but a null value was passed in the request.",
     pointer
-  )
+  );
 }
 
 function invalidError(pointer) {
@@ -202,7 +209,7 @@ function invalidError(pointer) {
     "Invalid value",
     "The property at the specified location does not allow this value.",
     pointer
-  )
+  );
 }
 
 function duplicateError(pointer) {
@@ -211,7 +218,7 @@ function duplicateError(pointer) {
     "Duplicate value",
     "The property at the specified location is a duplicate, duplicated values are not allowed.",
     pointer
-  )
+  );
 }
 
 function tooFewItemsError(pointer) {
@@ -223,8 +230,10 @@ function tooFewItemsError(pointer) {
   )
 }
 
+validate();
+
 if (errors.length > 0) {
-  context.setVariable("errors", JSON.stringify(errors))
+  context.setVariable("errors", JSON.stringify(errors));
 } else {
-  context.setVariable("errors", null)
+  context.setVariable("errors", null);
 }
