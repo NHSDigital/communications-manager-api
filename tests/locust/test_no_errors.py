@@ -4,11 +4,7 @@ from locust import HttpUser, TaskSet, task, constant, LoadTestShape
 class UserTasks(TaskSet):
     @task
     def hit_endpoint(self):
-        with self.client.get("/_ping", catch_response=True) as response:
-            if response.status_code == 429:
-                pass
-            else:
-                response.failure
+        self.client.get("/_ping")
 
 
 class ApiUser(HttpUser):
