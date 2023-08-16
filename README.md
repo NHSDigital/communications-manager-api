@@ -214,7 +214,7 @@ These tests live within the `/locust` folder and can be executed by:
 
 ```
 $ export HOST_URL=<target_url>
-$ make .run-locust-tests
+$ make run-locust-tests
 ```
 
 A report will be generated for each test ran available in the locust directory
