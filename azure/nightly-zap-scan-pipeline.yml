@@ -1,0 +1,51 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge-fixed
+      endpoint: NHSDigital
+
+schedules:
+  - cron: 0 2 * * *
+    displayName: 2am daily
+    branches:
+      include: ['release']
+    always: true
+
+pool:
+  name: 'AWS-ECS'
+
+variables:
+  - template: project.yml
+  - name: SERVICE_ARTIFACT_NAME
+    value: ''
+
+steps:
+  - template: "azure/components/aws-assume-role.yml@common"
+    parameters:
+      role: "auto-ops"
+      profile: "apm_ptl"
+  - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+    parameters:
+      secret_file_ids:
+      - ptl/api-deployment/communications-manager/INTEGRATION_PRIVATE_KEY
+      secret_ids:
+      - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
+  - bash: |
+      export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
+      export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+      make install-python && make zap-security-scan    
+    displayName: Run OWASP zap scan
+  - task: PublishTestResults@2
+    displayName: 'Publish OWASP zap results'
+    condition: always()
+    inputs:
+      testResultsFiles: 'zap-report.xml'
+      testResultsFormat: NUnit
+      failTaskOnFailedTests: true
