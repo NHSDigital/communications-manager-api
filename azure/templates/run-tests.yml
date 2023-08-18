@@ -7,6 +7,9 @@ parameters:
   - name: nightly 
     type: boolean
     default: false
+  - name: environment
+    type: string
+    default: internal-dev
 
 steps:
   - template: "azure/components/aws-assume-role.yml@common"
@@ -36,7 +39,7 @@ steps:
       if [ "${{ parameters.nightly }}" != "True" ]; then
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       else
-        export APIGEE_ENVIRONMENT="internal-dev"
+        export APIGEE_ENVIRONMENT="${{parameters.environment}}"
       fi
 
       proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
@@ -74,7 +77,7 @@ steps:
         apigee_username: $(APIGEE_USERNAME)
         apigee_password: $(APIGEE_PASSWORD)
     - bash: |
-        export PROXY_NAME="communications-manager-internal-dev"
+        export PROXY_NAME="communications-manager-${{parameters.environment}}"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
         export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
