@@ -377,6 +377,8 @@ paths:
             * `*/*`
             * `application/json`
             * `application/vnd.api+json`
+
+            Where no `Accept` header is present, this will default to `application/vnd.api+json`
           content:
             application/json:
               schema:
