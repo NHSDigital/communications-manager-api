@@ -3,7 +3,7 @@ import pytest
 from lib import Assertions, Generators
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
-HEADER_VALUE = ["application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
 REQUEST_PATH = ["/v1/ignore", "/api/ignore"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
