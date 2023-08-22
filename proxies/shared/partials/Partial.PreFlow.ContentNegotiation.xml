@@ -1,7 +1,7 @@
 <Step>
     <Name>RaiseFault.406NotAcceptable</Name>
     <Condition>
-        request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json"
+        (request.header.Accept != null) and (request.header.Accept != "*/*" and request.header.Accept != "application/json" and request.header.Accept != "application/vnd.api+json")
     </Condition>
 </Step>
 <Step>

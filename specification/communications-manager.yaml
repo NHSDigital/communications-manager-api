@@ -49,6 +49,14 @@ info:
 
     You can control which `Content-Type` is returned by using the `Accept` header.
 
+    The `Accept` header can contain the following values:
+
+    * `*/*`
+    * `application/json`
+    * `application/vnd.api+json`
+
+    Where no `Accept` header is present, this will default to `application/vnd.api+json`
+
     ### Request Content Types
 
     This API will accept request payloads of the following types:
@@ -377,6 +385,8 @@ paths:
             * `*/*`
             * `application/json`
             * `application/vnd.api+json`
+
+            Where no `Accept` header is present, this will default to `application/vnd.api+json`
           content:
             application/json:
               schema:
