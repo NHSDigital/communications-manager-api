@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy adds the successful 201 response body to the response returned from the backend.
+
+ Since the payload is JSON we can't use the standard {variable.name} syntax for Apigee flow variables, this is where we use the variablePrefix and variableSuffix attributes.
+
+ For more information see the following resources:
+    * https://docs.apigee.com/api-platform/reference/policies/assign-message-policy#set-payload
+-->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageBatches.Create.Response">
-    <DisplayName>AssignMessage.MessageBatches.Create.Response</DisplayName>    
+    <DisplayName>AssignMessage.MessageBatches.Create.Response</DisplayName>
     <Properties/>
     <AssignTo createNew="true" transport="http" type="response"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>

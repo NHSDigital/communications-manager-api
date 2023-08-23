@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy makes a call to the healthcheck service as part of the /_status endpoint.
+
+ This can be configured to call either a target server as the template does or you can call out to a URL.
+
+ For more information, see the following resources:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/_status+endpoint
+-->
 <ServiceCallout async="false" continueOnError="true" enabled="true" name="ServiceCallout.CallHealthcheckEndpoint">
     <DisplayName>ServiceCallout.CallHealthcheckEndpoint</DisplayName>
     <Properties/>

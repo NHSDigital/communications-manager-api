@@ -1,15 +1,5 @@
 <FaultRule name="combined_backend_fault_handler">
-    <Step>
-        <Name>JavaScript.SetResponseContentType</Name>
-    </Step>
-    <Step>
-        <Name>AssignMessage.SetCorrelationId</Name>
-        <Condition>request.headers.x-correlation-id != null</Condition>
-    </Step>
-    <Step>
-        <Name>AssignMessage.AddCorsResponse</Name>
-        <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
-    </Step>
+    [% include './partials/Partial.Component.SetResponseDefaults.xml' %]
     {% if ENVIRONMENT_TYPE != 'sandbox' %}
         <Step>
             <Name>RaiseFault.401Unauthorized</Name>
@@ -51,10 +41,6 @@
     <Step>
         <Name>RaiseFault.400BackendException.MissingDataArray</Name>
         <Condition>response.status.code = 400 and response.content Like "*Missing data array*"</Condition>
-    </Step>
-    <Step>
-        <Name>RaiseFault.429TooManyRequests</Name>
-        <Condition>fault.name = "SpikeArrestViolation"</Condition>
     </Step>
     <Step>
         <Name>JavaScript.500DuplicateTemplates.ExtractDuplicates</Name>

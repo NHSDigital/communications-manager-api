@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy enforces our per application quota of 1200 requests per minute.
+
+ Applications are identified via the value within developer.app.id
+
+ For more information on Quota policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/quota-policy
+
+ For more information on rate limiting, see the following resources:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/Rate+limiting
+-->
 <Quota async="false" continueOnError="false" enabled="true" name="Quota.PerApp">
     <DisplayName>Quota.PerApp</DisplayName>
     <Interval>1</Interval>

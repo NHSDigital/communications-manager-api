@@ -1,3 +1,14 @@
+<!--
+ This policy verifies that an access token submitted to Apigee Edge is valid.
+
+ If a valid access token is found, a large number of flow variables are populated in the proxy's context related to the access token.
+
+ For the production sandbox environment we also specify which scopes the policy should enforce, in this case it is the Application-Restricted Level 3 scope. This value must be a "hard coded" scope name - we can't use variables for this attribute.
+
+ For more information, see the following resources:
+    * https://docs.apigee.com/api-platform/reference/policies/oauthv2-policy#flowvariables-verifyaccesstokenoperation
+    * https://docs.apigee.com/api-platform/reference/policies/oauthv2-policy#scopeelement
+-->
 <OAuthV2 async="false" continueOnError="false" enabled="true" name="OauthV2.VerifyAccessToken">
     <Operation>VerifyAccessToken</Operation>
     {% if ENVIRONMENT_TYPE != 'sandbox' %}

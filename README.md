@@ -264,6 +264,8 @@ The `/shared` folder contains policies, partials and resources that are used wit
 * `[% ... %]` - block start and end
 * `[[ ... ]]` - variable start and end
 
+The proxy has been documented [here](https://github.com/NHSDigital/communications-manager/blob/release/proxies/PROXIES.md).
+
 #### `/sandbox`:
 
 This folder contains the sandbox mock application. This is a basic express application that mirrors the responses from the existing backend service.

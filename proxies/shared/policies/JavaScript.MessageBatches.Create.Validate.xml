@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy executes a JavaScript file in the resources directory.
+
+ For more information on JavaScript policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
+
+ In this instance the JavaScript file validates the data in the body of a POST request to the /v1/message-batches endpoint, returning an array of up to 100 error responses to be returned by Apigee as a 400 error response.
+-->
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.MessageBatches.Create.Validate">
     <DisplayName>JavaScript.MessageBatches.Create.Validate</DisplayName>
     <Properties/>

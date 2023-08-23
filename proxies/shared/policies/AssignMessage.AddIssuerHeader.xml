@@ -1,3 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy populates the NHSD-Identity-IdP header with an issuer claim value pulled from the access token.
+
+ In the sandbox environment no access token is needed so this value is instead pulled from a JWT header.
+
+ For more information on JWT claims, see this resource:
+    * https://www.oauth.com/oauth2-servers/openid-connect/id-tokens/
+-->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.AddIssuerHeader">
     <Add>
         <Headers>
