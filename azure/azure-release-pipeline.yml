@@ -34,6 +34,7 @@ extends:
     service_base_path: ${{ variables.service_base_path }}
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
     manual_approval_env: manual-approval-ptl
+    prod_producer_approval: true
     apigee_deployments:
       - environment: internal-dev
         jinja_templates:
@@ -112,3 +113,15 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: 'make integration-test'
+
+      - environment: prod
+        depends_on:
+          - int
+          - sandbox
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'production'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make production-test'
