@@ -21,6 +21,7 @@ APIGEE_ENVIRONMENTS:
     display_name: Integration Testing
   - name: prod
     display_name: Production
+    approval_type: manual
 ---
 meta:
   api:
@@ -37,7 +38,7 @@ apigee:
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
-        approvalType: auto
+        approvalType: {{ ENV.approval_type | default('auto') }}
         attributes:
           - name: access
             value: public
