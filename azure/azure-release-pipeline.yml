@@ -35,6 +35,8 @@ extends:
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
     manual_approval_env: manual-approval-ptl
     prod_producer_approval: true
+    enable_monitoring: true
+    enable_status_monitoring: true
     apigee_deployments:
       - environment: internal-dev
         jinja_templates:
