@@ -42,7 +42,10 @@ steps:
         export APIGEE_ENVIRONMENT="${{parameters.environment}}"
       fi
 
-      proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
+      if [$APIGEE_ENVIRONMENT == 'prod']
+        proxyURL="https://api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status
+      else
+        proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
       proxyResponse=$(
       curl --request GET $proxyURL \
            --header 'Content-Type: application/vnd.api+json' \
@@ -84,7 +87,7 @@ steps:
           export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
-    - ${{ else }}:
+    - ${{ elseif eq(parameters.environment, 'int') }}:
       - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
         parameters:
           secret_file_ids:
@@ -94,6 +97,18 @@ steps:
       - bash: |
           export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+          make install-python && ${{ parameters.test_command }}
+        displayName: Run nightly test suite
+    - ${{ else }}:
+      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+        parameters:
+          secret_file_ids:
+          - ptl/api-deployment/communications-manager/PRODUCTION_PRIVATE_KEY
+          secret_ids:
+          - ptl/api-deployment/communications-manager/PRODUCTION_API_KEY
+      - bash: |
+          export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
+          export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
           make install-python && ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - task: PublishTestResults@2
