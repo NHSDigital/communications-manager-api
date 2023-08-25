@@ -18,7 +18,7 @@ def test_201_message_batch_valid_accept_headers(accept_headers):
     resp = requests.post(
       f"{INT_URL}{REQUEST_PATH}",
       headers={
-          "Authorization": f"{Authentication.generate_int_authentication()}",
+          "Authorization": Authentication.generate_authentication("int"),
           "Accept": accept_headers,
           "Content-Type": "application/json"
       },
@@ -33,7 +33,7 @@ def test_201_message_batch_valid_content_type_headers(content_type):
     data = Generators.generate_valid_create_message_batch_body("int")
 
     resp = requests.post(f"{INT_URL}{REQUEST_PATH}", headers={
-            "Authorization": f"{Authentication.generate_int_authentication()}",
+            "Authorization": Authentication.generate_authentication("int"),
             "Accept": "application/json",
             "Content-Type": content_type
         }, json=data
@@ -46,7 +46,7 @@ def test_201_message_batch_valid_nhs_number():
     data = Generators.generate_valid_create_message_batch_body("int")
 
     resp = requests.post(f"{INT_URL}{REQUEST_PATH}", headers={
-            "Authorization": f"{Authentication.generate_int_authentication()}",
+            "Authorization": Authentication.generate_authentication("int"),
             "Accept": "application/json",
             "Content-Type": "application/json"
         }, json=data
@@ -61,7 +61,7 @@ def test_201_message_batch_valid_dob(dob):
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
 
     resp = requests.post(f"{INT_URL}{REQUEST_PATH}", headers={
-            "Authorization": f"{Authentication.generate_int_authentication()}",
+            "Authorization": Authentication.generate_authentication("int"),
             "Accept": "application/json",
             "Content-Type": "application/json"
         }, json=data
@@ -75,7 +75,7 @@ def test_request_without_dob():
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
 
     resp = requests.post(f"{INT_URL}{REQUEST_PATH}", headers={
-        "Authorization": f"{Authentication.generate_int_authentication()}",
+        "Authorization": Authentication.generate_authentication("int"),
         "Accept": "application/json",
         "Content-Type": "application/json"
         }, json=data

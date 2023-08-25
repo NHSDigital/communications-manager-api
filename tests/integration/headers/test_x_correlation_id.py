@@ -17,7 +17,7 @@ def test_request_with_x_correlation_id(
     method,
 ):
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
-        "Authorization": f"{Authentication.generate_int_authentication()}",
+        "Authorization": f"{Authentication.generate_authentication('int')}",
         "x-correlation-id": correlation_id
     })
 

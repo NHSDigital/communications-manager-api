@@ -23,7 +23,7 @@ def test_415_invalid(
     method
 ):
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
-        "Authorization": f"{Authentication.generate_int_authentication()}",
+        "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "application/json",
         content_type_name: content_type_value,
         "X-Correlation-Id": correlation_id

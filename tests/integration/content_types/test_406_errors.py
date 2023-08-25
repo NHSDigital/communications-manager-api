@@ -24,7 +24,7 @@ def test_406(
     resp = getattr(requests, method)(f"{INT_URL}/{request_path}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id,
-        "Authorization": f"{Authentication.generate_int_authentication()}"
+        "Authorization": f"{Authentication.generate_authentication('int')}"
     })
 
     Assertions.assert_error_with_optional_correlation_id(
