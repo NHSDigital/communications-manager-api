@@ -26,7 +26,7 @@ def test_create_messages_large_invalid_payload():
     resp = requests.post(f"{INT_URL}/v1/message-batches", headers={
         "Accept": CONTENT_TYPE,
         "Content-Type": CONTENT_TYPE,
-        "Authorization": f"{Authentication.generate_int_authentication()}"
+        "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
@@ -52,7 +52,7 @@ def test_create_messages_large_not_unique_payload():
     resp = requests.post(f"{INT_URL}/v1/message-batches", headers={
         "Accept": CONTENT_TYPE,
         "Content-Type": CONTENT_TYPE,
-        "Authorization": f"{Authentication.generate_int_authentication()}"
+        "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)

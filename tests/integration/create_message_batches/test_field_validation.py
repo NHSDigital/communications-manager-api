@@ -25,7 +25,7 @@ def test_invalid_body(correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         },
         data="{}SF{}NOTVALID",
     )
@@ -55,7 +55,7 @@ def test_property_missing(property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         },
         json=Permutations.new_dict_without_key(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -88,7 +88,7 @@ def test_data_null(property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         },
         json=Permutations.new_dict_with_null_key(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -121,7 +121,7 @@ def test_data_invalid(property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -160,7 +160,7 @@ def test_data_duplicate(property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         },
         json=data,
     )
@@ -190,7 +190,7 @@ def test_data_too_few_items(property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -214,7 +214,7 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -250,7 +250,7 @@ def test_invalid_dob(dob, correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -285,7 +285,7 @@ def test_invalid_routing_plan(correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -320,7 +320,7 @@ def test_invalid_message_batch_reference(correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -355,7 +355,7 @@ def test_invalid_message_reference(correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -391,7 +391,7 @@ def test_blank_value_under_messages(invalid_value, correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -419,7 +419,7 @@ def test_null_value_under_messages(correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_int_authentication()}"
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",

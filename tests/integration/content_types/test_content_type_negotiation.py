@@ -31,7 +31,7 @@ ACCEPT_HEADERS = [
 @pytest.mark.parametrize("method", METHODS)
 def test_application_response_type(accept_headers, method):
     resp = getattr(requests, method)(f"{INT_URL}", headers={
-        "Authorization": f"{Authentication.generate_int_authentication()}",
+        "Authorization": f"{Authentication.generate_authentication('int')}",
         **accept_headers.get("headers")
     })
 
