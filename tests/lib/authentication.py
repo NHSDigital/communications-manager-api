@@ -4,20 +4,25 @@ import os
 import jwt
 import requests
 import json
-import sys
 
-int_token = None
+tokens = {}
 
 
 class Authentication():
     @staticmethod
-    def generate_int_authentication():
-        global int_token
+    def generate_authentication(env="int"):
+        global tokens
 
-        if int_token is None:
+        if env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
+            url = "https://int.api.service.nhs.uk/oauth2/token"
+        else:
+            api_key = os.environ.get("PRODUCTION_API_KEY")
+            private_key = os.environ.get("PRODUCTION_PRIVATE_KEY")
+            url = "https://api.service.nhs.uk/oauth2/token"
 
+        if tokens.get(env, None) is None:
             pk_pem = None
             with open(private_key, "r") as f:
                 pk_pem = f.read()
@@ -26,7 +31,7 @@ class Authentication():
                 "sub": api_key,
                 "iss": api_key,
                 "jti": str(uuid.uuid4()),
-                "aud": "https://int.api.service.nhs.uk/oauth2/token",
+                "aud": url,
                 "exp": int(time()) + 180,
             }
             additional_headers = {"kid": "local"}
@@ -35,7 +40,7 @@ class Authentication():
                 claims, pk_pem, algorithm="RS512", headers=additional_headers
             )
 
-            resp = requests.post("https://int.api.service.nhs.uk/oauth2/token", headers={
+            resp = requests.post(url, headers={
                 "Content-Type": "application/x-www-form-urlencoded"
             }, data={
                 "grant_type": "client_credentials",
@@ -45,6 +50,6 @@ class Authentication():
             )
             details = json.loads(resp.content)
 
-            int_token = (f"Bearer {details.get('access_token')}")
+            tokens[env] = (f"Bearer {details.get('access_token')}")
 
-        return int_token
+        return tokens.get(env)
