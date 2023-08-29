@@ -14,6 +14,8 @@ info:
     * enrichment of recipient details
     * support for accessible formats
 
+    For more information about this services capabilities, see [Communications Manager Service](https://digital.nhs.uk/services/communications-manager).
+
     ## Who can use this API
 
     The Communications Manager service is intended for services involved in direct care. This API can only be used where you have a legal basis to issue communications to citizens.
