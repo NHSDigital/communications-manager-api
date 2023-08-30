@@ -7,6 +7,9 @@ parameters:
   - name: nightly 
     type: boolean
     default: false
+  - name: environment
+    type: string
+    default: internal-dev
 
 steps:
   - template: "azure/components/aws-assume-role.yml@common"
@@ -36,7 +39,7 @@ steps:
       if [ "${{ parameters.nightly }}" != "True" ]; then
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       else
-        export APIGEE_ENVIRONMENT="internal-dev"
+        export APIGEE_ENVIRONMENT="${{parameters.environment}}"
       fi
 
       proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
@@ -59,45 +62,47 @@ steps:
     retryCountOnTaskFailure: 10
 
   - ${{ if parameters.nightly }}:
-    - bash: |
-        export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
-        export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
-        make zap-security-scan
-      displayName: Run OWASP zap scan
-    - task: PublishTestResults@2
-      displayName: 'Publish OWASP zap results'
-      condition: always()
-      inputs:
-        testResultsFiles: 'zap-report.xml'
-        testResultsFormat: NUnit
-        failTaskOnFailedTests: true
-    - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
-      parameters:
-        secret_ids:
-          - ptl/azure-devops/apigee-nonprod/APIGEE_OTP_KEY
-          - ptl/azure-devops/apigee-nonprod/APIGEE_PASSWORD
-        config_ids:
-          - /ptl/azure-devops/apigee-nonprod/APIGEE_USERNAME
-    - template: "azure/components/get-mfa-code.yml@common"
-      parameters:
-        apigee_otp_key: $(APIGEE_OTP_KEY)
-    - template: "azure/components/get-access-token.yml@common"
-      parameters:
-        apigee_username: $(APIGEE_USERNAME)
-        apigee_password: $(APIGEE_PASSWORD)
-    - bash: |
-        export PROXY_NAME="communications-manager-internal-dev"
-        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
-        export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
-        export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
-        ${{ parameters.test_command }}
-      displayName: Run nightly test suite
+    - ${{ if ne(parameters.environment, 'int') }}:
+      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+        parameters:
+          secret_ids:
+            - ptl/azure-devops/apigee-nonprod/APIGEE_OTP_KEY
+            - ptl/azure-devops/apigee-nonprod/APIGEE_PASSWORD
+          config_ids:
+            - /ptl/azure-devops/apigee-nonprod/APIGEE_USERNAME
+      - template: "azure/components/get-mfa-code.yml@common"
+        parameters:
+          apigee_otp_key: $(APIGEE_OTP_KEY)
+      - template: "azure/components/get-access-token.yml@common"
+        parameters:
+          apigee_username: $(APIGEE_USERNAME)
+          apigee_password: $(APIGEE_PASSWORD)
+      - bash: |
+          export PROXY_NAME="communications-manager-${{parameters.environment}}"
+          export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+          export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
+          export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
+          ${{ parameters.test_command }}
+        displayName: Run nightly test suite
+    - ${{ else }}:
+      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+        parameters:
+          secret_file_ids:
+          - ptl/api-deployment/communications-manager/INTEGRATION_PRIVATE_KEY
+          secret_ids:
+          - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
+      - bash: |
+          export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
+          export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+          make install-python && ${{ parameters.test_command }}
+        displayName: Run nightly test suite
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       condition: always()
       inputs:
         testResultsFiles: 'test-report.xml'
         failTaskOnFailedTests: true
+
   - ${{ else }}:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"

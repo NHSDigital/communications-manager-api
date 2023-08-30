@@ -1,3 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy takes the fault.faultstring value from the JSON payload of the response returned from an OAuthV2 policy error and stores it within the Apigee flow variable faultstring. This value is thus accessible from other policies in the proxy, referencing it with {faultstring}.
+
+ We use this policy to intercept the default error response returned by Apigee when an invalid Access Token is sent and OAuthV2.VerifyAccessToken fails, so we can then serve our own error message in line with the specification.
+
+ In this case the OAuth fault response will be returned from the OAuthV2.VerifyAccessToken operation, see an example response below:
+
+ {
+   {
+      "fault":{
+         "faultstring":"Invalid Access Token",
+         "detail":{
+            "errorcode":"keymanagement.service.invalid_access_token"
+         }
+      }
+   }
+ }
+
+ For more information, see the following resources:
+    * https://docs.apigee.com/api-platform/reference/policies/oauthv2-policy?hl=en#flowvariables-verifyaccesstokenoperation
+    * https://docs.apigee.com/api-platform/fundamentals/introduction-flow-variables
+-->
 <ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.OAuthErrorFaultString">
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <JSONPayload>

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy calls the LogToSplunk shared flow, adding splunk logging to the proxy.
+
+ This proxy step/policy is included as part of the template repository.
+
+ For more information, see the following resources:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/Logging+to+Splunk
+-->
 <FlowCallout async="false" continueOnError="false" enabled="true" name="FlowCallout.LogToSplunk">
     <DisplayName>FlowCallout.LogToSplunk</DisplayName>
     <FaultRules/>

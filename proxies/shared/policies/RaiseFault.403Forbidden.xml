@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 403 error response an unauthorized access token, that is, an access token without the correct scope or claims for the environment's backend.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
 <RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.403Forbidden">
     <DisplayName>RaiseFault.403Forbidden</DisplayName>
     <Properties/>

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy executes a JavaScript file in the resources directory.
+
+ For more information on JavaScript policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
+
+ In this instance the JavaScript file extracts duplicate templates from the body of a 400 error response and stores them in the Apigee flow variable {data.duplicates} before we trigger a RaiseFault to serve our custom error response.
+-->
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="1000" name="JavaScript.500DuplicateTemplates.ExtractDuplicates">
     <DisplayName>JavaScript.500DuplicateTemplates.ExtractDuplicates</DisplayName>
     <Properties/>

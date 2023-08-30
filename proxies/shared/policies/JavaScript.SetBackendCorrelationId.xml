@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy executes a JavaScript file in the resources directory.
+
+ For more information on JavaScript policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
+
+ In this instance the JavaScript file combines the x-correlation-id header value and the messageid value and sets this '.' delimited value as the backendCorrelationId in the context.
+-->
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="JavaScript.SetBackendCorrelationId">
     <DisplayName>JavaScript.SetBackendCorrelationId</DisplayName>
     <Properties/>

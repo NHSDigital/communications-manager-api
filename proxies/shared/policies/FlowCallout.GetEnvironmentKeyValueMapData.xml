@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy is used to call the GetEnvironmentKeyValueMapData Shared Flow, which retrieves values from a key value map managed by the APIM infrastructure repo (https://github.com/NHSDigital/api-management-infrastructure).
+
+ This proxy step/policy is included as part of the template repository.
+
+ For more information, see the following resources:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/Per-environment+configuration
+-->
 <FlowCallout async="false" continueOnError="false" enabled="true" name="FlowCallout.GetEnvironmentKeyValueMapData">
     <DisplayName>FlowCallout.GetEnvironmentKeyValueMapData</DisplayName>
     <Parameters>

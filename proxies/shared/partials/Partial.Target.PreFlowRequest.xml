@@ -1,15 +1,9 @@
-<Step>
-    <Name>JavaScript.SetResponseContentType</Name>
-</Step>
+[% include './partials/Partial.Component.SetResponseDefaults.xml' %]
 <Step>
     <Name>JavaScript.SetBackendCorrelationId</Name>
 </Step>
 <Step>
     <Name>AssignMessage.AddDefaultRequestPath</Name>
-</Step>
-<Step>
-    <Name>AssignMessage.AddCorsResponse</Name>
-    <Condition>(request.header.origin != null) and (request.verb != "OPTIONS")</Condition>
 </Step>
 {% if ENVIRONMENT_TYPE == 'sandbox' %}
     <Step>
