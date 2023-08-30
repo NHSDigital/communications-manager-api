@@ -13,7 +13,7 @@ valid_nhs_number = "0123456789"
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(
       f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
       headers={
@@ -30,7 +30,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
             "Accept": "application/json",
@@ -43,7 +43,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = valid_nhs_number
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
@@ -59,7 +59,7 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_
 @pytest.mark.parametrize('dob', VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
@@ -74,7 +74,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={

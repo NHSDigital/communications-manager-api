@@ -39,7 +39,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url, nhsd_apim_auth
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
@@ -65,7 +65,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_au
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    data = Generators.generate_valid_create_message_batch_body(True)
+    data = Generators.generate_valid_create_message_batch_body("dev")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
