@@ -6,7 +6,6 @@ from lib import Assertions, Generators
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-MISSING_ROUTING_PLAN_TEMPLATE_ID = "c8857ccf-06ec-483f-9b3a-7fc732d9ad48"
 DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "a3a4e55d-7a21-45a6-9286-8eb595c872a8"
 INVALID_ROUTING_CONFIG_ID = "4ead415a-c033-4b39-9b05-326ac237a3be"
 
@@ -112,14 +111,18 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_500_missing_routing_plan(nhsd_apim_proxy_url, correlation_id):
+@pytest.mark.parametrize("routing_plan_id", [
+    "c8857ccf-06ec-483f-9b3a-7fc732d9ad48",
+    "aeb16ab8-cb9c-4d23-92e9-87c78119175c"
+])
+def test_500_missing_routing_plan(nhsd_apim_proxy_url, correlation_id, routing_plan_id):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
             "type": "MessageBatch",
             "attributes": {
-                "routingPlanId": MISSING_ROUTING_PLAN_TEMPLATE_ID,
+                "routingPlanId": routing_plan_id,
                 "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
