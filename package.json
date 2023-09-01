@@ -1,7 +1,7 @@
 {
   "name": "communications-manager",
   "version": "0.0.1",
-  "description": "OAS (Swagger v3) API Definition for Template API",
+  "description": "Public facing API for the Communications Manager service",
   "scripts": {
     "lint": "redocly lint specification/communications-manager.yaml",
     "publish": "mkdir -p build && redocly bundle specification/communications-manager.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/communications-manager.json",
@@ -14,7 +14,10 @@
   },
   "author": "NHS Digital",
   "license": "MIT",
-  "homepage": "https://github.com/NHSDigital/communications-manager",
+  "homepage": "https://digital.nhs.uk/developer/api-catalogue/communications-manager",
+  "bugs" : {
+    "url" : "https://github.com/NHSDigital/communications-manager/issues"
+  },
   "devDependencies": {
     "@redocly/cli": "^1.0.0-beta.129",
     "apigeetool": "^0.16.1",
