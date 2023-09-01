@@ -62,6 +62,7 @@ serve:
 .check-licenses:
 	npm run check-licenses
 	scripts/check_python_licenses.sh
+	cd sandbox && npm run check-licenses
 
 check-licenses: .check-licenses
 
