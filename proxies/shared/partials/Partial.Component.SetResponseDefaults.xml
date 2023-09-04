@@ -1,5 +1,5 @@
 <Step>
-    <Name>JavaScript.SetResponseContentType</Name>
+    <Name>JavaScript.SetResponseHeaders</Name>
 </Step>
 <Step>
     <Name>AssignMessage.SetCorrelationId</Name>
