@@ -4,15 +4,15 @@ python = "^3.8"
 [tool.poetry]
 name = "communications-manager"
 version = "0.0.1-alpha"
-description = "TODO"
+description = "Public facing API for the Communications Manager service"
 authors = [
-    #TODO add authors
+    "NHS Digital"
 ]
-readme = 'README.md'
+readme = "README.md"
 license = "MIT"
 repository = "https://github.com/NHSDigital/communications-manager"
-homepage = ""
-keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
+homepage = "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
 
 [tool.poetry.dependencies]
