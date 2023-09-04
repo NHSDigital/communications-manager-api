@@ -162,9 +162,9 @@ Source: [proxies/shared/partials/Partial.Component.SetResponseDefaults.xml](http
 
 ```mermaid
 flowchart LR
-    S[Start] --> SRCT["Set response content type
+    S[Start] --> SRCT["Set response headers
 
-    <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/JavaScript.SetResponseContentType.xml'>JavaScript.SetResponseContentType</a></em>"]
+    <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/JavaScript.SetResponseHeaders.xml'>JavaScript.SetResponseHeaders</a></em>"]
     SRCT --> Q1{Correlation id present?}
     Q1 --> |Yes| SCI["Set correlation id
 

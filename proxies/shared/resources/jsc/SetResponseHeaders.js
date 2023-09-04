@@ -8,3 +8,5 @@ if (acceptHeader === "application/json") {
 
 context.setVariable("response.header.content-type", responseType);
 context.setVariable("error.header.content-type", responseType);
+context.setVariable("response.header.X-Content-Type-Options", "nosniff");
+context.setVariable("error.header.X-Content-Type-Options", "nosniff");
