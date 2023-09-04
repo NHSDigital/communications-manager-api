@@ -18,6 +18,9 @@ mv .python-version.ignore .python-version
 # open the contents in INTEGRATION_PRIVATE_KEY and put it into INTEGRATION_PRIVATE_KEY_CONTENTS
 export INTEGRATION_PRIVATE_KEY_CONTENTS=$(cat $INTEGRATION_PRIVATE_KEY)
 
+# pull the latest version
+docker pull softwaresecurityproject/zap-stable
+
 # run zap in a container
 docker container run \
     --env INTEGRATION_PRIVATE_KEY_CONTENTS="$INTEGRATION_PRIVATE_KEY_CONTENTS" \
@@ -26,7 +29,7 @@ docker container run \
     -v $TEMP_DIR:/zap/tmp/:rw \
     -v $(pwd)/zap/comms-manager-json/:/home/zap/.ZAP/reports/comms-manager-json/:rw \
     -t softwaresecurityproject/zap-stable \
-    bash -c "./zap.sh -addoninstall openapi -cmd -autorun /zap/wrk/zap/zap.yaml"
+    bash -c "./zap.sh -addoninstallall -cmd -autorun /zap/wrk/zap/zap.yaml"
 
 # generate our nunit report from the zap JSON report
 ./node_modules/.bin/hbs --data $TEMP_DIR/zap-report.json zap/nunit-template.hbs -s > zap-report.xml

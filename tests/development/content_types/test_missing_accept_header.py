@@ -1,6 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
+from lib.constants import UNEXPECTED_429
 
 REQUEST_PATH = "/v1/message-batches"
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
@@ -30,7 +31,7 @@ def test_missing_accept_header(
     )
 
     if resp.status_code == 429:
-        raise AssertionError('Unexpected 429')
+        raise UNEXPECTED_429
 
     Assertions.assert_201_response(
         resp, data["data"]["attributes"]["messageBatchReference"]
