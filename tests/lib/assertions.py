@@ -19,6 +19,9 @@ class Assertions():
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
 
+        # ensure we have our cache-control set correctly
+        assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
+
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         if (code != 429 and resp.status_code == 429):
@@ -47,6 +50,9 @@ class Assertions():
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
+
+        # ensure we have our cache-control set correctly
+        assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
     def assert_cors_response(resp, website):
