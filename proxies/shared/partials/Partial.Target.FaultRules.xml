@@ -45,19 +45,25 @@
     <Step>
         <Name>JavaScript.500DuplicateTemplates.ExtractDuplicates</Name>
         <Condition>
-            response.status.code = 400 and response.content Like "*Duplicate templates found: *"
+            response.status.code = 500 and response.content Like "*Duplicate templates found: *"
         </Condition>
         </Step>
     <Step>
         <Name>RaiseFault.500DuplicateTemplates</Name>
         <Condition>
-            response.status.code = 400 and response.content Like "*Duplicate templates found: *"
+            response.status.code = 500 and response.content Like "*Duplicate templates found: *"
         </Condition>
     </Step>
     <Step>
         <Name>RaiseFault.500MissingTemplates</Name>
         <Condition>
-            response.status.code = 400 and response.content Like "*Templates required in *" and response.content Like "* routing config not found*"
+            response.status.code = 500 and (
+                (
+                    response.content Like "*Templates required in *" and response.content Like "* routing config not found*"
+                ) or (
+                    response.content Like "*NHS App Template does not exist with internalTemplateId:*"
+                )
+            )
         </Condition>
     </Step>
     <Step>
