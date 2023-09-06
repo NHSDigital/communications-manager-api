@@ -1,9 +1,0 @@
-<Flow name="RateLimitingFlow">
-    <Description/>
-    <Request>
-        <Step>
-            <Name>FlowCallout.ApplyRateLimiting</Name>
-        </Step>
-    </Request>
-    <Response/>
-</Flow>
