@@ -14,7 +14,6 @@ repository = "https://github.com/NHSDigital/communications-manager-api"
 homepage = "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
-
 [tool.poetry.dependencies]
 python = "^3.8"
 pytest-nhsd-apim = "^3.3.8"

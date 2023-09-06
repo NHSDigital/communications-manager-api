@@ -111,6 +111,21 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 run-locust-tests: 
 	scripts/run_locust.sh
 
+run-locust-load-test: 
+	scripts/run_locust_load.sh
+
+run-locust-capacity-test: 
+	scripts/run_locust_capacity.sh
+
+run-locust-stress-test: 
+	scripts/run_locust_stress.sh
+
+run-locust-surge-test: 
+	scripts/run_locust_surge.sh			
+
+run-locust-soak-test: 
+	scripts/run_locust_soak.sh		
+
 sandbox-postman-test: .run-postman-sandbox
 
 int-postman-test: .run-postman-int
