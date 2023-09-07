@@ -9,7 +9,7 @@ NUM_MESSAGES = 50000
 
 @pytest.mark.inttest
 def test_create_messages_large_invalid_payload():
-    data = Generators.generate_valid_create_message_batch_body()
+    data = Generators.generate_valid_create_message_batch_body("int")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
@@ -34,7 +34,7 @@ def test_create_messages_large_invalid_payload():
 
 @pytest.mark.inttest
 def test_create_messages_large_not_unique_payload():
-    data = Generators.generate_valid_create_message_batch_body()
+    data = Generators.generate_valid_create_message_batch_body("int")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []

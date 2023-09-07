@@ -73,7 +73,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
             "X-Correlation-Id": correlation_id
         },
         json=Permutations.new_dict_without_key(
-            Generators.generate_valid_create_message_batch_body(),
+            Generators.generate_valid_create_message_batch_body("dev"),
             property
         ),
     )
@@ -113,7 +113,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_
             "X-Correlation-Id": correlation_id
         },
         json=Permutations.new_dict_with_null_key(
-            Generators.generate_valid_create_message_batch_body(),
+            Generators.generate_valid_create_message_batch_body("dev"),
             property
         ),
     )
@@ -159,7 +159,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nh
             "X-Correlation-Id": correlation_id
         },
         json=Permutations.new_dict_with_new_value(
-            Generators.generate_valid_create_message_batch_body(),
+            Generators.generate_valid_create_message_batch_body("dev"),
             property,
             "invalid string"
         ),
@@ -191,7 +191,7 @@ _duplicate_properties = [
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     # Add a duplicate message to the payload to trigger the duplicate error
-    data = Generators.generate_valid_create_message_batch_body()
+    data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"].append(data["data"]["attributes"]["messages"][0])
 
     # Post the same message a 2nd time to trigger the duplicate error
@@ -238,7 +238,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
             "X-Correlation-Id": correlation_id
         },
         json=Permutations.new_dict_with_new_value(
-            Generators.generate_valid_create_message_batch_body(),
+            Generators.generate_valid_create_message_batch_body("dev"),
             property,
             []
         ),

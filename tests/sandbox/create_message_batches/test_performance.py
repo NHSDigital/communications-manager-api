@@ -9,7 +9,7 @@ NUM_MESSAGES = 50000
 
 @pytest.mark.sandboxtest
 def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
-    data = Generators.generate_valid_create_message_batch_body()
+    data = Generators.generate_valid_create_message_batch_body("sandbox")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
@@ -32,7 +32,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
 
 @pytest.mark.sandboxtest
 def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
-    data = Generators.generate_valid_create_message_batch_body()
+    data = Generators.generate_valid_create_message_batch_body("sandbox")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
@@ -56,7 +56,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
 
 @pytest.mark.sandboxtest
 def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
-    data = Generators.generate_valid_create_message_batch_body()
+    data = Generators.generate_valid_create_message_batch_body("sandbox")
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []

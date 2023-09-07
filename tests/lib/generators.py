@@ -4,12 +4,19 @@ from .constants import *
 
 class Generators():
     @staticmethod
-    def generate_valid_create_message_batch_body(prod=False):
+    def generate_valid_create_message_batch_body(environment="sandbox"):
+        if environment == "sandbox":
+            routingPlan = VALID_ROUTING_PLAN_ID_SANDBOX
+        elif environment == "int":
+            routingPlan = VALID_ROUTING_PLAN_ID_INT
+        else:
+            routingPlan = VALID_ROUTING_PLAN_ID_PROD
+
         return {
             "data": {
                 "type": "MessageBatch",
                 "attributes": {
-                    "routingPlanId": VALID_ROUTING_PLAN_ID_PROD if prod else VALID_ROUTING_PLAN_ID_SANDBOX,
+                    "routingPlanId": routingPlan,
                     "messageBatchReference": str(uuid.uuid1()),
                     "messages": [
                         {
