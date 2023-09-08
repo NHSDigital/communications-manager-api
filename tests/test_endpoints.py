@@ -5,6 +5,7 @@ for more ideas on how to test the authorization of your API.
 """
 import requests
 import pytest
+import time
 from os import getenv
 
 
@@ -37,6 +38,7 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
             and resp.status_code == 200):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_ping")
         deployed_commitId = resp.json().get("commitId")
+        time.sleep(1)
         retries += 1
 
     if resp.status_code == 429:
@@ -92,6 +94,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
             and resp.json().get("version")):
         resp = requests.get(f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers)
         deployed_commitId = resp.json().get("commitId")
+        time.sleep(1)
         retries += 1
 
     if resp.status_code == 429:
