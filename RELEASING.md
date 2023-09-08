@@ -16,12 +16,12 @@ To create a new release:
 
 ## Promote a release to production environments
 
-It is possible to self service promoting the release into the `sandbox` and `int` (integration) environments. The process for this is:
+It is possible to self service promoting the release into the `sandbox`, `int` (integration) and `prod` environments. The process for this is:
 
 * Access the [release CI/CD pipeline](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=620) for the specific release
-* Approve the manual approval gates for `sandbox` and `int`
+* Approve the manual approval gates for `sandbox`, `int` or `prod` - to deploy the selected environment.
 
-We do not have a `prod` environment yet.
+For `prod` to be released to both `sandbox` and `int` must have been released to successfully first.
 
 ## Release versioning commands
 
