@@ -49,8 +49,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,
-            "X-Correlation-Id": correlation_id,
-            "x-client-id": "066d2c65-8322-48c5-b3cb-5c9e97a4d405"
+            "X-Correlation-Id": correlation_id
         }, json={
         "data": {
             "type": "MessageBatch",

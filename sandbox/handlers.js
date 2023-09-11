@@ -158,7 +158,7 @@ async function batch_send(req, res, next) {
     }
 
     if (req.body.sendingGroupId === sendingGroupIdWithDuplicateTemplates) {
-        sendError(res, 500, `Duplicate templates found: ${JSON.stringify(duplicateTemplates)}`);
+        sendError(res, 500, `Duplicate templates in routing config: ${JSON.stringify(duplicateTemplates)}`);
         next();
         return;
     }
