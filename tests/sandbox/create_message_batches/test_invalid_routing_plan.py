@@ -104,7 +104,28 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         500,
-        Generators.generate_duplicate_routing_plan_template_error(),
+        Generators.generate_duplicate_routing_plan_template_error([
+            {
+                "name": "EMAIL_TEMPLATE",
+                "type": "EMAIL"
+            },
+            {
+                "name": "SMS_TEMPLATE",
+                "type": "SMS"
+            },
+            {
+                "name": "LETTER_TEMPLATE",
+                "type": "LETTER"
+            },
+            {
+                "name": "LETTER_PDF_TEMPLATE",
+                "type": "LETTER_PDF"
+            },
+            {
+                "name": "NHSAPP_TEMPLATE",
+                "type": "NHSAPP"
+            }
+        ]),
         correlation_id
     )
 

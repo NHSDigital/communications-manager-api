@@ -107,31 +107,16 @@ class Generators():
         })
 
     @staticmethod
-    def generate_duplicate_routing_plan_template_error():
-        return Generators.generate_error(constants.ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE, source={
-            "pointer": constants.ROUTING_PLAN_ID_PATH
-        }, meta={"duplicateTemplates": [
-            {
-                "name": "EMAIL_TEMPLATE",
-                "type": "EMAIL"
+    def generate_duplicate_routing_plan_template_error(expectedDuplicates):
+        return Generators.generate_error(
+            constants.ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE,
+            source={
+                "pointer": constants.ROUTING_PLAN_ID_PATH
             },
-            {
-                "name": "SMS_TEMPLATE",
-                "type": "SMS"
-            },
-            {
-                "name": "LETTER_TEMPLATE",
-                "type": "LETTER"
-            },
-            {
-                "name": "LETTER_PDF_TEMPLATE",
-                "type": "LETTER_PDF"
-            },
-            {
-                "name": "NHSAPP_TEMPLATE",
-                "type": "NHSAPP"
+            meta={
+                "duplicateTemplates": expectedDuplicates
             }
-        ]})
+        )
 
     @staticmethod
     def generate_not_found_error():
