@@ -17,7 +17,7 @@ keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter
 
 [tool.poetry.dependencies]
 python = "^3.8"
-pytest-nhsd-apim = "^3.3.2"
+pytest-nhsd-apim = "^3.3.8"
 pyjwt = {version = "2.3.0", extras = ["crypto"]}
 pytest-xdist = "^3.3.1"
 pre-commit = "^3.4.0"
