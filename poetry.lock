@@ -1865,13 +1865,13 @@ testing = ["coverage (>=6.2)", "flaky (>=3.5.0)", "hypothesis (>=5.7.1)", "mypy 
 
 [[package]]
 name = "pytest-nhsd-apim"
-version = "3.3.7"
+version = "3.3.8"
 description = "Pytest plugin accessing NHSDigital's APIM proxies"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-nhsd-apim-3.3.7.tar.gz", hash = "sha256:0872b5b13f7ecd59cd9a2eb9d09475b947647bd8a68a1af26cf56da6476fe06f"},
-    {file = "pytest_nhsd_apim-3.3.7-py3-none-any.whl", hash = "sha256:b9f32d3bd2567fd21cf19ff04a22799dc1a2a89916032795bd6df1627fa99484"},
+    {file = "pytest-nhsd-apim-3.3.8.tar.gz", hash = "sha256:44e39a75b289dc1f73c9af64f737070eabd870a1c5e0276c743d5722fe535415"},
+    {file = "pytest_nhsd_apim-3.3.8-py3-none-any.whl", hash = "sha256:cc9bf3d444840c36fd00ee70dcf5451d88d722d716a8c18d16dc45c298c68d1c"},
 ]
 
 [package.dependencies]
@@ -2455,4 +2455,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "2747a5538a0a292752f17f4e7f97802008586d471b4f1ac80ab6e00ee302e6eb"
+content-hash = "598bf022972595eb1e41a51cdc0538c2b2241810385a57fe77d79cb5235ad478"
