@@ -4,15 +4,15 @@ python = "^3.8"
 [tool.poetry]
 name = "communications-manager"
 version = "0.0.1-alpha"
-description = "TODO"
+description = "Public facing API for the Communications Manager service"
 authors = [
-    #TODO add authors
+    "NHS Digital"
 ]
-readme = 'README.md'
+readme = "README.md"
 license = "MIT"
 repository = "https://github.com/NHSDigital/communications-manager"
-homepage = ""
-keywords = ["healthcare", "uk", "nhs"] #TODO add additional keywords
+homepage = "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
 
 [tool.poetry.dependencies]
@@ -20,7 +20,7 @@ python = "^3.8"
 pytest-nhsd-apim = "^3.3.2"
 pyjwt = {version = "2.3.0", extras = ["crypto"]}
 pytest-xdist = "^3.3.1"
-pre-commit = "^3.3.3"
+pre-commit = "^3.4.0"
 pytest-rerunfailures = "^12.0"
 locust = "^2.16.1"
 
@@ -33,7 +33,7 @@ pyyaml = "^6.0"
 docopt = "^0.6.2"
 jsonpath-rw = "^1.4.0"
 semver = "^3.0.1"
-gitpython = "^3.1.30"
+gitpython = "^3.1.35"
 pytest = "^6.1.2"
 coverage = "^7.3"
 aiohttp = "^3.8.5"

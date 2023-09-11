@@ -42,28 +42,7 @@ apigee:
         attributes:
           - name: access
             value: public
-            # For a parameterised example of rate limiting per environment,
-            # see https://github.com/NHSDigital/personal-demographics-service-api/blob/master/manifest_template.yml
-          - name: ratelimiting
-            value:
-              {{ NAME }}:
-                quota:
-                  enabled: true
-                  limit: 600
-                  interval: 1
-                  timeunit: minute
-                spikeArrest:
-                  enabled: true
-                  ratelimit: 1200pm # 20 requests per second
-              app:
-                quota:
-                  enabled: true
-                  limit: 600
-                  interval: 1
-                  timeunit: minute
-                spikeArrest:
-                  enabled: true
-                  ratelimit: 1200pm # 20 requests per second
+            # rate limiting is handled within the proxy policies directly
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]

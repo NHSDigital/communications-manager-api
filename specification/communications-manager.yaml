@@ -512,7 +512,7 @@ paths:
 
             It is possible to simulate these errors by sending requests with specific routing plan identifiers.
 
-            To trigger the `CM_MISSING_ROUTING_PLAN_TEMPLATE` error use routing plan id `c8857ccf-06ec-483f-9b3a-7fc732d9ad48`. Here is an example curl request to simulate the response:
+            To trigger the `CM_MISSING_ROUTING_PLAN_TEMPLATE` error use routing plan id `c8857ccf-06ec-483f-9b3a-7fc732d9ad48` or `aeb16ab8-cb9c-4d23-92e9-87c78119175c`. Here is an example curl request to simulate the response:
 
             ```
               curl -X POST \

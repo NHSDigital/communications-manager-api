@@ -162,9 +162,9 @@ Source: [proxies/shared/partials/Partial.Component.SetResponseDefaults.xml](http
 
 ```mermaid
 flowchart LR
-    S[Start] --> SRCT["Set response content type
+    S[Start] --> SRCT["Set response headers
 
-    <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/JavaScript.SetResponseContentType.xml'>JavaScript.SetResponseContentType</a></em>"]
+    <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/JavaScript.SetResponseHeaders.xml'>JavaScript.SetResponseHeaders</a></em>"]
     SRCT --> Q1{Correlation id present?}
     Q1 --> |Yes| SCI["Set correlation id
 
@@ -450,7 +450,7 @@ flowchart
 
     <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/RaiseFault.400BackendException.MissingDataArray.xml'>RaiseFault.400BackendException.MissingDataArray</a></em>"]
     400MissingData --> E9[End]
-    Q10 --> |No| Q11{Backend 400 & duplicate templates?}
+    Q10 --> |No| Q11{Backend 500 & duplicate templates?}
     Q11 --> |Yes| 500DuplicatesExtract["Extract duplicate templates
 
     <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/JavaScript.500DuplicateTemplates.ExtractDuplicates.xml'>JavaScript.500DuplicateTemplates.ExtractDuplicates</a></em>"]
@@ -458,7 +458,7 @@ flowchart
 
     <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/RaiseFault.500DuplicateTemplates.xml'>RaiseFault.500DuplicateTemplates</a></em>"]
     500DuplicatesError --> E10[End]
-    Q11 --> |No| Q12{Backend 400 & templates missing?}
+    Q11 --> |No| Q12{Backend 500 & templates missing?}
     Q12 --> |Yes| 500MissingTemplates["Raise 500 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager/blob/release/proxies/shared/policies/RaiseFault.500MissingTemplates.xml'>RaiseFault.500MissingTemplates</a></em>"]

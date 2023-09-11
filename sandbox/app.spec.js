@@ -214,7 +214,28 @@ describe("app handler tests", function () {
                 .expect("Content-Type", /json/, done);
         });
 
-        it('returns a 400 when the sending group has missing templates', (done) => {
+        it('returns a 400 when routing plan is invalid', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: '4ead415a-c033-4b39-9b05-326ac237a3be',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(400, {
+                    message: 'Invalid Routing Config'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 500 when the sending group has missing templates', (done) => {
            request(server)
                 .post('/api/v1/send')
                 .send({
@@ -229,13 +250,13 @@ describe("app handler tests", function () {
                         }
                     ]
                 })
-                .expect(400, {
+                .expect(500, {
                     message: 'Templates required in "c8857ccf-06ec-483f-9b3a-7fc732d9ad48" routing config not found'
                 })
                 .expect("Content-Type", /json/, done);
         });
 
-        it('returns a 400 when the sending group has duplicate templates', (done) => {
+        it('returns a 500 when the sending group has duplicate templates', (done) => {
            request(server)
                 .post('/api/v1/send')
                 .send({
@@ -250,8 +271,29 @@ describe("app handler tests", function () {
                         }
                     ]
                 })
-                .expect(400, {
+                .expect(500, {
                     message: 'Duplicate templates found: [{\"name\":\"EMAIL_TEMPLATE\",\"type\":\"EMAIL\"},{\"name\":\"SMS_TEMPLATE\",\"type\":\"SMS\"},{\"name\":\"LETTER_TEMPLATE\",\"type\":\"LETTER\"},{\"name\":\"LETTER_PDF_TEMPLATE\",\"type\":\"LETTER_PDF\"},{\"name\":\"NHSAPP_TEMPLATE\",\"type\":\"NHSAPP\"}]'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
+        it('returns a 500 when the sending group has missing NHS templates', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'aeb16ab8-cb9c-4d23-92e9-87c78119175c',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(500, {
+                    message: 'NHS App Template does not exist with internalTemplateId: invalid-template'
                 })
                 .expect("Content-Type", /json/, done);
         });

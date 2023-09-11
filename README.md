@@ -289,7 +289,6 @@ Contains useful scripts that are used throughout the project, these are:
 * `run_zap.sh` - runs the zap security scanner
 * `set_version.py` - sets the version number within the OAS spec file during build time
 * `sync_postman_collections.sh` - synchronises the postman collections into the repo
-* `yaml2json.py` - converts yaml to json
 
 #### `/specification`:
 

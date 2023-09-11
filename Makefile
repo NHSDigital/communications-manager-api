@@ -62,6 +62,7 @@ serve:
 .check-licenses:
 	npm run check-licenses
 	scripts/check_python_licenses.sh
+	cd sandbox && npm run check-licenses
 
 check-licenses: .check-licenses
 
@@ -93,10 +94,16 @@ PROD_TEST_CMD := $(TEST_CMD) \
 .run-postman-sandbox: 
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
+.run-postman-int: 
+	(rm -rf node_modules; npm install --legacy-peer-deps; \
+	npm run integration-postman-collection)
+
 run-locust-tests: 
 	scripts/run_locust.sh
 
-postman-test: .run-postman-sandbox
+sandbox-postman-test: .run-postman-sandbox
+
+int-postman-test: .run-postman-int
 
 zap-security-scan:
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run zap-security-scan)
@@ -141,7 +148,7 @@ internal-dev-test: .internal-dev-test
 	--ignore=tests/locust \
 	-m inttest
 
-integration-test: .integration-test
+integration-test: .run-postman-int .integration-test
 
 .production-test:
 	$(PROD_TEST_CMD) \
