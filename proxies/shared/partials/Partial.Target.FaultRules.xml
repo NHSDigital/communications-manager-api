@@ -45,13 +45,13 @@
     <Step>
         <Name>JavaScript.500DuplicateTemplates.ExtractDuplicates</Name>
         <Condition>
-            response.status.code = 500 and response.content Like "*Duplicate templates found: *"
+            response.status.code = 500 and response.content Like "*Duplicate templates in routing config: *"
         </Condition>
         </Step>
     <Step>
         <Name>RaiseFault.500DuplicateTemplates</Name>
         <Condition>
-            response.status.code = 500 and response.content Like "*Duplicate templates found: *"
+            response.status.code = 500 and response.content Like "*Duplicate templates in routing config: *"
         </Condition>
     </Step>
     <Step>
