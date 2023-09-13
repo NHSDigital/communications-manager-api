@@ -17,7 +17,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
         data["data"]["attributes"]["messages"].append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {
-                "nhsNumber": "1234567890"
+                "nhsNumber": "9990548609"
             },
             "personalisation": {}
         })

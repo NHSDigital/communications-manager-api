@@ -22,7 +22,7 @@ class Generators():
                         {
                             "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                             "recipient": {
-                                "nhsNumber": "1234567890",
+                                "nhsNumber": "9990548609",
                                 "dateOfBirth": "1982-03-17"
                             },
                             "personalisation": {}
