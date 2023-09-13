@@ -1,6 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
+from lib.constants import DEFAULT_CONTENT_TYPE
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
 HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
@@ -37,3 +38,5 @@ def test_406(
         Generators.generate_not_acceptable_error() if method not in ["options", "head"] else None,
         correlation_id
     )
+
+    assert resp.headers.get("Content-Type") == DEFAULT_CONTENT_TYPE

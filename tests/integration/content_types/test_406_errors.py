@@ -33,3 +33,5 @@ def test_406(
         Generators.generate_not_acceptable_error() if method not in ["options", "head"] else None,
         correlation_id
     )
+
+    assert resp.headers.get("Content-Type") == DEFAULT_CONTENT_TYPE
