@@ -7,7 +7,7 @@ VALID_ACCEPT_HEADERS = ["*/*", "application/json", "application/vnd.api+json"]
 VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
 REQUEST_PATH = "/v1/message-batches"
 VALID_DOB = ["0000-01-01", "2023-01-01", None]
-valid_nhs_number = "0123456789"
+valid_nhs_number = "9990548609"
 
 
 @pytest.mark.inttest

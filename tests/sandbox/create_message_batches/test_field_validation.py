@@ -293,7 +293,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": dob
                         },
                         "personalisation": {}
@@ -327,7 +327,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "2000-01-01"
                         },
                         "personalisation": {}
@@ -361,7 +361,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "2000-01-01"
                         },
                         "personalisation": {}
@@ -395,7 +395,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "invalid",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "2000-01-01"
                         },
                         "personalisation": {}
@@ -483,7 +483,7 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
                     {
                         "messageReference": duplicate_message_reference,
                         "recipient": {
-                            "nhsNumber": "1234567890",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "1982-03-17"
                         },
                         "personalisation": {}
