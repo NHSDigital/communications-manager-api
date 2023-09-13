@@ -390,7 +390,7 @@ paths:
 
             Where no `Accept` header is present, this will default to `application/vnd.api+json`
           content:
-            application/json:
+            application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/NotAcceptable'
           headers:
