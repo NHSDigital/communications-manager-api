@@ -25,6 +25,25 @@ const isUndefined = (val) => {
     return typeof val === "undefined";
 }
 
+const validateNhsNumber = (nhsNumber, nhsNumberRegex) => {
+  if (!nhsNumberRegex.test(nhsNumber)) {
+    return false
+  }
+
+  const identifier = nhsNumber.slice(0, -1);
+  const checkDigit = nhsNumber.slice(-1);
+  const digits = identifier.split('');
+
+  var total = 0;
+  digits.forEach((digit, i) => {
+    total += parseInt(digit) * (10 - i)
+  })
+
+  const remainder = total % 11;
+  return (11 - remainder) % 11 === parseInt(checkDigit);
+}
+
+
 const validate = () => {
   if (all) {
     var seenMessages = {};
@@ -141,8 +160,8 @@ const validate = () => {
                   pushError(missingError(pointer));
                 } else if (message.recipient.nhsNumber === null) {
                   pushError(nullError(pointer));
-                } else if (typeof message.recipient.nhsNumber !== "string" || !nhsNumberRegex.test(message.recipient.nhsNumber)) {
-                  pushError(invalidError(pointer));
+                } else if (typeof message.recipient.nhsNumber !== "string" || validateNhsNumber(message.recipient.nhsNumber, nhsNumberRegex)) {
+                  pushError(invalidError(pointer)); // TODO: Change to new error
                 }
 
                 // $.data.attributes.recipients.x.dateOfBirth
