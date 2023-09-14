@@ -9,7 +9,7 @@ headers = {
     "Content-Type": "application/json"
 }
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-NHS_NUMBER = ["012345678", "01234567890", "abcdefghij", "", [], {}, 5, 0.1]
+NHS_NUMBER = ["012345678", "9990548609", "abcdefghij", "", [], {}, 5, 0.1]
 DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 
