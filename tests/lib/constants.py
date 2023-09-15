@@ -9,6 +9,7 @@ CORS_EXPOSE_HEADERS = "x-correlation-id"
 VALID_ROUTING_PLAN_ID_PROD = "0e38317f-1670-480a-9aa9-b711fb136610"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
 VALID_ROUTING_PLAN_ID_INT = "119bdd50-783c-4161-a765-792785e46851"
+VALID_ROUTING_PLAN_ID_DEV = "0e38317f-1670-480a-9aa9-b711fb136610"
 TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
@@ -17,6 +18,48 @@ DEV_API_GATEWAY_URL = "https://comms-apim.internal-dev.communications.national.n
 INT_API_GATEWAY_URL = "https://comms-apim.int.communications.national.nhs.uk"
 PROD_API_GATEWAY_URL = "https://comms-apim.prod.communications.national.nhs.uk"
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
+UNEXPECTED_429 = AssertionError('Unexpected 429')
+
+ROUTING_PLAN_ID_PATH = "/data/attributes/routingPlanId"
+MESSAGE_BATCH_REFERENCE_PATH = "/data/attributes/messageBatchReference"
+MESSAGES_PATH = "/data/attributes/messages"
+FIRST_MESSAGE_REFERENCE_PATH = "/data/attributes/messages/0/messageReference"
+FIRST_MESSAGE_RECIPIENT_PATH = "/data/attributes/messages/0/recipient"
+FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH = "/data/attributes/messages/0/recipient/nhsNumber"
+
+MISSING_PROPERTIES_PATHS = [
+    ("data", "/data"),
+    ("type", "/data/type"),
+    ("attributes", "/data/attributes"),
+    ("routingPlanId", ROUTING_PLAN_ID_PATH),
+    ("messageBatchReference", MESSAGE_BATCH_REFERENCE_PATH),
+    ("messages", MESSAGES_PATH),
+    ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
+    ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
+    ("nhsNumber", FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
+]
+NULL_PROPERTIES_PATHS = [
+    ("data", "/data"),
+    ("attributes", "/data/attributes"),
+    ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
+]
+INVALID_PROPERTIES_PATHS = [
+    ("type", "/data/type"),
+    ("routingPlanId", ROUTING_PLAN_ID_PATH),
+    ("messageBatchReference", MESSAGE_BATCH_REFERENCE_PATH),
+    ("messages", MESSAGES_PATH),
+    ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
+    ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
+    ("nhsNumber", FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
+    ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
+    ("personalisation", "/data/attributes/messages/0/personalisation"),
+]
+DUPLICATE_PROPERTIES_PATHS = [
+    ("messageReference", "/data/attributes/messages/1/messageReference"),
+]
+TOO_FEW_PROPERTIES_PATHS = [
+    ("messages", MESSAGES_PATH),
+]
 
 
 class Error():

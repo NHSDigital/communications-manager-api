@@ -53,7 +53,7 @@ function before_request(req, res, next) {
 const _health_endpoints = ["/_ping", "/health"];
 
 function after_request(req, res, next) {
-    if (_health_endpoints.includes(req.path) && !('log' in Object.assign({}, req.query))) {
+    if (_health_endpoints.includes(req.path) && !('log' in { ...req.query })) {
         // don't log ping / health by default
         return next();
     }

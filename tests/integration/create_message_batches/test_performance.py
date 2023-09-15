@@ -5,6 +5,7 @@ from lib import Assertions, Generators, Authentication
 from lib.constants import NUM_MAX_ERRORS, INT_URL
 
 NUM_MESSAGES = 50000
+CONTENT_TYPE = "application/json"
 
 
 @pytest.mark.inttest
@@ -13,7 +14,7 @@ def test_create_messages_large_invalid_payload():
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {
@@ -23,8 +24,8 @@ def test_create_messages_large_invalid_payload():
         })
 
     resp = requests.post(f"{INT_URL}/v1/message-batches", headers={
-        "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Accept": CONTENT_TYPE,
+        "Content-Type": CONTENT_TYPE,
         "Authorization": f"{Authentication.generate_int_authentication()}"
         }, json=data
     )
@@ -39,7 +40,7 @@ def test_create_messages_large_not_unique_payload():
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
     reference = str(uuid.uuid1())
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": reference,
             "recipient": {
@@ -49,8 +50,8 @@ def test_create_messages_large_not_unique_payload():
         })
 
     resp = requests.post(f"{INT_URL}/v1/message-batches", headers={
-        "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Accept": CONTENT_TYPE,
+        "Content-Type": CONTENT_TYPE,
         "Authorization": f"{Authentication.generate_int_authentication()}"
         }, json=data
     )

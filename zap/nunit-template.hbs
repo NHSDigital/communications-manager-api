@@ -58,9 +58,9 @@
                 {{#each alerts}}
                     <test-case
                         id="{{@index}}"
-                        name="{{alert}}"
+                        name="{{pluginid}} - {{alertRef}} - {{alert}}"
                         result="Failed"
-                        fullname="{{alert}}"
+                        fullname="{{pluginid}} - {{alertRef}} - {{alert}}"
                         time="1"
                     >
                         <failure>
@@ -69,6 +69,10 @@
                             </message>
                             <stack-trace>
                                 <![CDATA[
+                                    PluginId: {{{pluginid}}}
+                                    Reference: {{{alertRef}}}
+                                    Name: {{{alert}}}
+
                                     Solution:
                                     {{{solution}}}
 
