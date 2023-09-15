@@ -9,8 +9,8 @@ headers = {
     "Content-Type": "application/json"
 }
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-NHS_NUMBER = ["012345678", "9990548609", "abcdefghij", "", [], {}, 5, 0.1]
-DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
+INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
+INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 """
 Invalid body 400 tests
@@ -208,7 +208,7 @@ def test_data_too_few_items(property, pointer, correlation_id):
 
 
 @pytest.mark.inttest
-@pytest.mark.parametrize("nhs_number", NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_nhs_number(nhs_number, correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
@@ -226,7 +226,7 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": nhs_number,
-                            "dateOfBirth": "1982-1-11"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
@@ -244,7 +244,7 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
 
 
 @pytest.mark.inttest
-@pytest.mark.parametrize("dob", DOB)
+@pytest.mark.parametrize("dob", INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_dob(dob, correlation_id):
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
@@ -297,7 +297,7 @@ def test_invalid_routing_plan(correlation_id):
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
@@ -332,7 +332,7 @@ def test_invalid_message_batch_reference(correlation_id):
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
@@ -367,7 +367,7 @@ def test_invalid_message_reference(correlation_id):
                         "messageReference": "invalid",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
