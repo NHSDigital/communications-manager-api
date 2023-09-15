@@ -30,17 +30,16 @@ const isUndefined = (val) => {
 
 const validateNhsNumber = (nhsNumber, nhsNumberRegex) => {
   if (!nhsNumberRegex.test(nhsNumber)) {
-    return false
+    return false;
   }
 
-  const identifier = nhsNumber.slice(0, -1);
-  const checkDigit = nhsNumber.slice(-1);
-  const digits = identifier.split('');
+  const checkDigit = nhsNumber.substring(9);
 
   var total = 0;
-  digits.forEach((digit, i) => {
-    total += parseInt(digit) * (10 - i)
-  })
+  for (var i = 0; i <= 8; i++) {
+    var digit = (parseInt(nhsNumber.substring(i, i+1)))
+    total += (digit * (10 - i))
+  }
 
   const remainder = total % 11;
   return (11 - remainder) % 11 === parseInt(checkDigit);
@@ -163,7 +162,7 @@ const validate = () => {
                   pushError(missingError(pointer));
                 } else if (message.recipient.nhsNumber === null) {
                   pushError(nullError(pointer));
-                } else if (typeof message.recipient.nhsNumber !== "string" || validateNhsNumber(message.recipient.nhsNumber, nhsNumberRegex)) {
+                } else if (typeof message.recipient.nhsNumber !== "string" || !validateNhsNumber(message.recipient.nhsNumber, nhsNumberRegex)) {
                   pushError(invalidError(pointer)); // TODO: Change to new error
                 }
 
