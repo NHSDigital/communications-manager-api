@@ -22,9 +22,11 @@ steps:
       secret_file_ids:
       - ptl/app-credentials/jwt_testing/non-prod/JWT_TESTING_PRIVATE_KEY
       - ptl/api-deployment/communications-manager/INTEGRATION_PRIVATE_KEY
+      - ptl/azure-devops/communications-manager/PRODUCTION_PRIVATE_KEY
       secret_ids:
       - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
       - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
+      - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
 
   - bash: |
       if [ "${{ parameters.nightly }}" != "True" ]; then
@@ -43,6 +45,11 @@ steps:
       fi
 
       proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
+
+      if [ "$APIGEE_ENVIRONMENT" == "prod" ]; then
+        proxyURL="https://api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"
+      fi
+
       proxyResponse=$(
       curl --request GET $proxyURL \
            --header 'Content-Type: application/vnd.api+json' \
@@ -62,7 +69,19 @@ steps:
     retryCountOnTaskFailure: 10
 
   - ${{ if parameters.nightly }}:
-    - ${{ if ne(parameters.environment, 'int') }}:
+    - ${{ if eq(parameters.environment, 'prod') }}:
+      - bash: |
+          export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
+          export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
+          ${{ parameters.test_command }}
+        displayName: Run nightly test suite
+    - ${{ elseif eq(parameters.environment, 'int') }}:
+      - bash: |
+          export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
+          export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+          ${{ parameters.test_command }}
+        displayName: Run nightly test suite
+    - ${{ else }}:
       - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
         parameters:
           secret_ids:
@@ -84,18 +103,8 @@ steps:
           export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
-    - ${{ else }}:
-      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
-        parameters:
-          secret_file_ids:
-          - ptl/api-deployment/communications-manager/INTEGRATION_PRIVATE_KEY
-          secret_ids:
-          - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
-      - bash: |
-          export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
-          export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
-          make install-python && ${{ parameters.test_command }}
-        displayName: Run nightly test suite
+
+
     - task: PublishTestResults@2
       displayName: 'Publish test results'
       condition: always()
