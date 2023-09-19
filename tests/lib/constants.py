@@ -1,4 +1,5 @@
 INT_URL = "https://int.api.service.nhs.uk/comms"
+PROD_URL = "https://api.service.nhs.uk/comms"
 CORS_METHODS = "GET, PUT, POST, PATCH, DELETE"
 CORS_MAX_AGE = "3628800"
 CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \

@@ -10,19 +10,25 @@ tokens = {}
 
 class Authentication():
     @staticmethod
-    def generate_authentication(env="int"):
+    def generate_authentication(env):
         global tokens
 
         if env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
             url = "https://int.api.service.nhs.uk/oauth2/token"
-        else:
+            kid = "local"
+        elif env == "prod":
             api_key = os.environ.get("PRODUCTION_API_KEY")
             private_key = os.environ.get("PRODUCTION_PRIVATE_KEY")
             url = "https://api.service.nhs.uk/oauth2/token"
+            kid = "prod-1"
+        else:
+            raise ValueError("Unknown value: ", env)
 
-        if tokens.get(env, None) is None:
+        call_time = None
+
+        if tokens.get(env, None) is None or (call_time is None or call_time + 595 < int(time())):
             pk_pem = None
             with open(private_key, "r") as f:
                 pk_pem = f.read()
@@ -34,7 +40,7 @@ class Authentication():
                 "aud": url,
                 "exp": int(time()) + 180,
             }
-            additional_headers = {"kid": "local"}
+            additional_headers = {"kid": kid}
 
             j = jwt.encode(
                 claims, pk_pem, algorithm="RS512", headers=additional_headers
@@ -51,5 +57,6 @@ class Authentication():
             details = json.loads(resp.content)
 
             tokens[env] = (f"Bearer {details.get('access_token')}")
+            call_time = int(time())
 
         return tokens.get(env)

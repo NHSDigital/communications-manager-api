@@ -83,7 +83,17 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--only-rerun 'AssertionError: Unexpected 429'
 
 
-PROD_TEST_CMD := $(TEST_CMD) \
+PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
+		PYTHONPATH=./tests \
+		poetry run pytest -v \
+		--color=yes \
+		-n 1 \
+		--api-name=communications-manager \
+		--proxy-name="$(PROXY_NAME)" \
+		-s \
+		--reruns 5 \
+		--reruns-delay 5 \
+		--only-rerun 'AssertionError: Unexpected 429' \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
 		--apigee-organization=nhsd-prod \
 		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)"
