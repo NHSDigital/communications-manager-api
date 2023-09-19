@@ -19,9 +19,10 @@ function authenticate(helper, paramsValues, credentials) {
 
     const token_endpoint = paramsValues.get("url");
     const api_key = credentials.getParam("api_key");
+    const kid = credentials.getParam("kid");
 
     const api_private_key = Base64.getDecoder().decode(
-        credentials.getParam("private_key").replace(/[ \-\n]/g, "").replace("BEGINPRIVATEKEY", "").replace("ENDPRIVATEKEY", "")
+        credentials.getParam("private_key").replace(/[ \-\n]/g, "").replace("BEGINPRIVATEKEY", "").replace("ENDPRIVATEKEY", "").replace("BEGINRSAPRIVATEKEY", "").replace("ENDRSAPRIVATEKEY", "")
     );
     const spec = new PKCS8EncodedKeySpec(api_private_key);
     const rsaFact = KeyFactory.getInstance("RSA");
@@ -34,7 +35,7 @@ function authenticate(helper, paramsValues, credentials) {
         JSON.stringify({
             typ: "JWT",
             alg: "RS512",
-            kid: "local"
+            kid: kid
         }).getBytes()
     );
     const token = encoder.encodeToString(

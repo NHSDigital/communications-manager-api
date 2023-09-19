@@ -21,8 +21,30 @@ env:
       users:
         - name: Integration
           credentials:
+            kid: local
             api_key: "${INTEGRATION_API_KEY}"
             private_key: "${INTEGRATION_PRIVATE_KEY_CONTENTS}"
+    - name: ProdUnauthenticated
+      urls:
+        - https://api.service.nhs.uk/comms
+    - name: ProdAuthenticated
+      urls:
+        - https://api.service.nhs.uk/comms
+      authentication:
+        method: 'script'
+        parameters:
+          url: https://api.service.nhs.uk/oauth2/token
+          script: 'scripts/authentication/get_bearer_token.js'
+          scriptEngine: 'Graal.js'
+        verification:
+          method: 'response'
+          loggedOutRegex: '401 Unauthorized'
+      users:
+        - name: Prod
+          credentials:
+            kid: prod-1
+            api_key: "${PRODUCTION_API_KEY}"
+            private_key: "${PRODUCTION_PRIVATE_KEY_CONTENTS}"
   parameters:
     failOnError: true
     failOnWarning: true
@@ -58,6 +80,14 @@ jobs:
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
       context: IntegrationAuthenticated
+  - type: openapi
+    parameters:
+      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      context: ProdUnauthenticated
+  - type: openapi
+    parameters:
+      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      context: ProdAuthenticated
 
   # configure the passive scan
   - type: passiveScan-config
@@ -77,6 +107,8 @@ jobs:
     parameters:
       context: Sandbox
       scanHeadersAllRequests: true
+      delayInMs: 1000
+      threadPerHost: 1
     policyDefinition:
       rules:
       - id: 10104
@@ -93,6 +125,8 @@ jobs:
     parameters:
       context: IntegrationUnauthenticated
       scanHeadersAllRequests: true
+      delayInMs: 1000
+      threadPerHost: 1
     policyDefinition:
       rules:
       - id: 10104
@@ -110,6 +144,45 @@ jobs:
       context: IntegrationAuthenticated
       user: Integration
       scanHeadersAllRequests: true
+      delayInMs: 1000
+      threadPerHost: 1
+    policyDefinition:
+      rules:
+      - id: 10104
+        name: User Agent Fuzzer
+        strength: Low
+        threshold: Off
+      - id: 40040
+        name: CORS Misconfiguration
+        strength: Low
+        threshold: Off
+
+   # run an active scan on prod, using unauthenticated calls
+  - type: activeScan
+    parameters:
+      context: ProdUnauthenticated
+      scanHeadersAllRequests: true
+      delayInMs: 1000
+      threadPerHost: 1
+    policyDefinition:
+      rules:
+      - id: 10104
+        name: User Agent Fuzzer
+        strength: Low
+        threshold: Off
+      - id: 40040
+        name: CORS Misconfiguration
+        strength: Low
+        threshold: Off
+
+  # run an active scan on prod, using authenticated calls
+  - type: activeScan
+    parameters:
+      context: ProdAuthenticated
+      user: Prod
+      scanHeadersAllRequests: true
+      delayInMs: 1000
+      threadPerHost: 1
     policyDefinition:
       rules:
       - id: 10104
