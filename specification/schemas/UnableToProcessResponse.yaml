@@ -50,7 +50,6 @@ properties:
                 - /data/attributes/messageBatchReference
                 - /data/attributes/routingPlanId
                 - /data/attributes/messages
-                - /data/attributes/messages/0/recipient/nhsNumber
                 - /data/attributes/messages/0/recipient/dateOfBirth
                 - /data/attributes/messages/0/messageReference
               example: /data/attributes/routingPlanId

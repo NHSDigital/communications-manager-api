@@ -25,7 +25,7 @@ const isUndefined = (val) => {
     return typeof val === "undefined";
 }
 
-const validateNhsNumber = (nhsNumber, nhsNumberRegex) => {
+const isValidNhsNumber = (nhsNumber, nhsNumberRegex) => {
   if (!nhsNumberRegex.test(nhsNumber)) {
     return false;
   }
@@ -159,8 +159,8 @@ const validate = () => {
                   pushError(missingError(pointer));
                 } else if (message.recipient.nhsNumber === null) {
                   pushError(nullError(pointer));
-                } else if (typeof message.recipient.nhsNumber !== "string" || !validateNhsNumber(message.recipient.nhsNumber, nhsNumberRegex)) {
-                  pushError(invalidError(pointer)); // TODO: Change to new error
+                } else if (typeof message.recipient.nhsNumber !== "string" || !isValidNhsNumber(message.recipient.nhsNumber, nhsNumberRegex)) {
+                  pushError(invalidNhsNumberError(pointer));
                 }
 
                 // $.data.attributes.recipients.x.dateOfBirth
@@ -253,6 +253,15 @@ function tooFewItemsError(pointer) {
     "The property at the specified location contains too few items.",
     pointer
   )
+}
+
+function invalidNhsNumberError(pointer) {
+  return createErrorObject(
+    "CM_INVALID_NHS_NUMBER",
+    "Invalid nhs number",
+    "The value provided in the nhs number property is not a valid length or does not contain valid checksum.",
+    pointer
+  );
 }
 
 validate();

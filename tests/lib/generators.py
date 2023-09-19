@@ -41,6 +41,12 @@ class Generators():
         })
 
     @staticmethod
+    def generate_invalid_nhs_number_error(pointer):
+        return Generators.generate_error(constants.ERROR_INVALID_NHS_NUMBER, source={
+            "pointer": pointer
+        })
+
+    @staticmethod
     def generate_missing_value_error(pointer):
         return Generators.generate_error(constants.ERROR_MISSING_VALUE, source={
             "pointer": pointer
