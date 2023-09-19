@@ -50,7 +50,6 @@ INVALID_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),
     ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
     ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-    ("nhsNumber", FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
     ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
     ("personalisation", "/data/attributes/messages/0/personalisation"),
 ]
@@ -79,6 +78,14 @@ ERROR_INVALID_VALUE = Error(
     "400",
     "Invalid value",
     "The property at the specified location does not allow this value."
+)
+
+# invalid nhs number constants
+ERROR_INVALID_NHS_NUMBER = Error(
+    "CM_INVALID_NHS_NUMBER",
+    "400",
+    "Invalid nhs number",
+    "The value provided in the nhs number property is not a valid length or does not contain valid checksum."
 )
 
 # missing value constants

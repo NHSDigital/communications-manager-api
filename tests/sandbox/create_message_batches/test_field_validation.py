@@ -132,7 +132,6 @@ _invalid_properties = [
     ("messages", "/data/attributes/messages"),
     ("messageReference", "/data/attributes/messages/0/messageReference"),
     ("recipient", "/data/attributes/messages/0/recipient"),
-    ("nhsNumber", "/data/attributes/messages/0/recipient/nhsNumber"),
     ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
     ("personalisation", "/data/attributes/messages/0/personalisation"),
 ]
@@ -271,7 +270,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error("/data/attributes/messages/0/recipient/nhsNumber"),
+        Generators.generate_invalid_nhs_number_error("/data/attributes/messages/0/recipient/nhsNumber"),
         correlation_id
     )
 
