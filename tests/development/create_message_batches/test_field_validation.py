@@ -245,7 +245,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error(constants.FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
+        Generators.generate_invalid_nhs_number_error(constants.FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
         correlation_id
     )
 
