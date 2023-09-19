@@ -5,6 +5,7 @@ from lib import Assertions, Generators
 from lib.constants import NUM_MAX_ERRORS
 
 NUM_MESSAGES = 50000
+CONTENT_TYPE = "application/json"
 
 
 """
@@ -17,19 +18,19 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url, nhsd_apim_auth
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {
-                "nhsNumber": "1234567890"
+                "nhsNumber": "9990548609"
             },
             "personalisation": {}
         })
 
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
         **nhsd_apim_auth_headers,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Accept": CONTENT_TYPE,
+        "Content-Type": CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
@@ -43,7 +44,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_au
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {
@@ -54,8 +55,8 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_au
 
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
         **nhsd_apim_auth_headers,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Accept": CONTENT_TYPE,
+        "Content-Type": CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
@@ -70,7 +71,7 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, nhsd_apim
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
     reference = str(uuid.uuid1())
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": reference,
             "recipient": {
@@ -81,8 +82,8 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, nhsd_apim
 
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
         **nhsd_apim_auth_headers,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Accept": CONTENT_TYPE,
+        "Content-Type": CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)

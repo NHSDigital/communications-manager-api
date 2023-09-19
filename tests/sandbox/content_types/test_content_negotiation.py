@@ -1,5 +1,6 @@
 import requests
 import pytest
+from lib.constants import METHODS, UNEXPECTED_429
 
 ACCEPT_HEADERS = [
     {
@@ -21,7 +22,6 @@ ACCEPT_HEADERS = [
         "expect": "application/json"
     }
 ]
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 
 
 @pytest.mark.sandboxtest
@@ -31,6 +31,6 @@ def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method):
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
 
     if resp.status_code == 429:
-        raise AssertionError('Unexpected 429')
+        raise UNEXPECTED_429
 
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")

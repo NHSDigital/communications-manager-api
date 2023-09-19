@@ -1,20 +1,21 @@
 import requests
 import pytest
 from lib import Authentication
-from lib.constants import INT_URL
+from lib.constants import INT_URL, METHODS, UNEXPECTED_429
 
+DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 ACCEPT_HEADERS = [
     {
         "headers": {
-            "Accept": "application/vnd.api+json"
+            "Accept": DEFAULT_CONTENT_TYPE
         },
-        "expect": "application/vnd.api+json"
+        "expect": DEFAULT_CONTENT_TYPE
     },
     {
         "headers": {
             "Accept": "*/*"
         },
-        "expect": "application/vnd.api+json"
+        "expect": DEFAULT_CONTENT_TYPE
     },
     {
         "headers": {
@@ -23,7 +24,6 @@ ACCEPT_HEADERS = [
         "expect": "application/json"
     }
 ]
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 
 
 @pytest.mark.inttest
@@ -36,6 +36,6 @@ def test_application_response_type(accept_headers, method):
     })
 
     if resp.status_code == 429:
-        raise AssertionError('Unexpected 429')
+        raise UNEXPECTED_429
 
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")

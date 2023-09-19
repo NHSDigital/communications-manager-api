@@ -272,7 +272,7 @@ describe("app handler tests", function () {
                     ]
                 })
                 .expect(500, {
-                    message: 'Duplicate templates found: [{\"name\":\"EMAIL_TEMPLATE\",\"type\":\"EMAIL\"},{\"name\":\"SMS_TEMPLATE\",\"type\":\"SMS\"},{\"name\":\"LETTER_TEMPLATE\",\"type\":\"LETTER\"},{\"name\":\"LETTER_PDF_TEMPLATE\",\"type\":\"LETTER_PDF\"},{\"name\":\"NHSAPP_TEMPLATE\",\"type\":\"NHSAPP\"}]'
+                    message: 'Duplicate templates found: [{"name":"EMAIL_TEMPLATE","type":"EMAIL"},{"name":"SMS_TEMPLATE","type":"SMS"},{"name":"LETTER_TEMPLATE","type":"LETTER"},{"name":"LETTER_PDF_TEMPLATE","type":"LETTER_PDF"},{"name":"NHSAPP_TEMPLATE","type":"NHSAPP"}]'
                 })
                 .expect("Content-Type", /json/, done);
         });

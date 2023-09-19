@@ -1,11 +1,11 @@
-from .constants import *
+from .constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, UNEXPECTED_429
 
 
 class Assertions():
     @staticmethod
-    def assert_201_response(resp, messageBatchReference):
+    def assert_201_response(resp, message_batch_reference):
         if (resp.status_code == 429):
-            raise AssertionError('Unexpected 429')
+            raise UNEXPECTED_429
 
         assert resp.status_code == 201
 
@@ -14,7 +14,7 @@ class Assertions():
         assert response.get("id") is not None
         assert response.get("id") != ""
         assert response.get("attributes").get("messageBatchReference") is not None
-        assert response.get("attributes").get("messageBatchReference") == messageBatchReference
+        assert response.get("attributes").get("messageBatchReference") == message_batch_reference
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
@@ -25,7 +25,7 @@ class Assertions():
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         if (code != 429 and resp.status_code == 429):
-            raise AssertionError('Unexpected 429')
+            raise UNEXPECTED_429
 
         assert resp.status_code == code
 
@@ -57,7 +57,7 @@ class Assertions():
     @staticmethod
     def assert_cors_response(resp, website):
         if resp.status_code == 429:
-            raise AssertionError('Unexpected 429')
+            raise UNEXPECTED_429
 
         assert resp.status_code == 200
         assert resp.headers.get("Access-Control-Allow-Origin") == website

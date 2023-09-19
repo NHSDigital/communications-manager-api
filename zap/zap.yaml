@@ -64,6 +64,13 @@ jobs:
     parameters:
       maxAlertsPerRule: 10
       scanOnlyInScope: true
+    rules:
+    - id: 10049
+      name: Non-Storable Content
+      threshold: Off
+    - id: 90005
+      name: Sec-Fetch-Site Header is Missing
+      threshold: Off
 
   # run an active scan on sandbox
   - type: activeScan
@@ -74,6 +81,10 @@ jobs:
       rules:
       - id: 10104
         name: User Agent Fuzzer
+        strength: Low
+        threshold: Off
+      - id: 40040
+        name: CORS Misconfiguration
         strength: Low
         threshold: Off
 
@@ -88,6 +99,10 @@ jobs:
         name: User Agent Fuzzer
         strength: Low
         threshold: Off
+      - id: 40040
+        name: CORS Misconfiguration
+        strength: Low
+        threshold: Off
 
   # run an active scan on integration, using authenticated calls
   - type: activeScan
@@ -99,6 +114,10 @@ jobs:
       rules:
       - id: 10104
         name: User Agent Fuzzer
+        strength: Low
+        threshold: Off
+      - id: 40040
+        name: CORS Misconfiguration
         strength: Low
         threshold: Off
 

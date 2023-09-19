@@ -2,12 +2,12 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
+import lib.constants as constants
 
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
 NHS_NUMBER = ["012345678", "01234567890", "abcdefghij", "", [], {}, 5, 0.1]
 DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
@@ -19,7 +19,7 @@ Invalid body 400 tests
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(
@@ -44,25 +44,13 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_header
 Missing property 400 test
 """
 
-_missing_properties = [
-    ("data", "/data"),
-    ("type", "/data/type"),
-    ("attributes", "/data/attributes"),
-    ("routingPlanId", "/data/attributes/routingPlanId"),
-    ("messageBatchReference", "/data/attributes/messageBatchReference"),
-    ("messages", "/data/attributes/messages"),
-    ("messageReference", "/data/attributes/messages/0/messageReference"),
-    ("recipient", "/data/attributes/messages/0/recipient"),
-    ("nhsNumber", "/data/attributes/messages/0/recipient/nhsNumber"),
-]
-
 
 @pytest.mark.devtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _missing_properties
+    constants.MISSING_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(
@@ -90,19 +78,13 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
 Null data 400 test
 """
 
-_null_properties = [
-    ("data", "/data"),
-    ("attributes", "/data/attributes"),
-    ("recipient", "/data/attributes/messages/0/recipient"),
-]
-
 
 @pytest.mark.devtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _null_properties
+    constants.NULL_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(
@@ -130,25 +112,13 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_
 Invalid data 400 test
 """
 
-_invalid_properties = [
-    ("type", "/data/type"),
-    ("routingPlanId", "/data/attributes/routingPlanId"),
-    ("messageBatchReference", "/data/attributes/messageBatchReference"),
-    ("messages", "/data/attributes/messages"),
-    ("messageReference", "/data/attributes/messages/0/messageReference"),
-    ("recipient", "/data/attributes/messages/0/recipient"),
-    ("nhsNumber", "/data/attributes/messages/0/recipient/nhsNumber"),
-    ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
-    ("personalisation", "/data/attributes/messages/0/personalisation"),
-]
-
 
 @pytest.mark.devtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _invalid_properties
+    constants.INVALID_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(
@@ -177,17 +147,13 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nh
 Duplicate data 400 test
 """
 
-_duplicate_properties = [
-    ("messageReference", "/data/attributes/messages/1/messageReference"),
-]
-
 
 @pytest.mark.devtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _duplicate_properties
+    constants.DUPLICATE_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     # Add a duplicate message to the payload to trigger the duplicate error
@@ -217,17 +183,13 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, 
 Too few items 400 test
 """
 
-_too_few_properties = [
-    ("messages", "/data/attributes/messages"),
-]
-
 
 @pytest.mark.devtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _too_few_properties
+    constants.TOO_FEW_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(
@@ -254,7 +216,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("nhs_number", NHS_NUMBER)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
@@ -283,14 +245,14 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error("/data/attributes/messages/0/recipient/nhsNumber"),
+        Generators.generate_invalid_value_error(constants.FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
         correlation_id
     )
 
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("dob", DOB)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
@@ -307,7 +269,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_he
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": dob
                         },
                         "personalisation": {}
@@ -326,7 +288,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_he
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
@@ -343,7 +305,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "2000-01-01"
                         },
                         "personalisation": {}
@@ -356,13 +318,13 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error("/data/attributes/routingPlanId"),
+        Generators.generate_invalid_value_error(constants.ROUTING_PLAN_ID_PATH),
         correlation_id
     )
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
@@ -379,7 +341,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id, nh
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "2000-01-01"
                         },
                         "personalisation": {}
@@ -392,13 +354,13 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id, nh
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error("/data/attributes/messageBatchReference"),
+        Generators.generate_invalid_value_error(constants.MESSAGE_BATCH_REFERENCE_PATH),
         correlation_id
     )
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
@@ -415,7 +377,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
                     {
                         "messageReference": "invalid",
                         "recipient": {
-                            "nhsNumber": "0123456789",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "2000-01-01"
                         },
                         "personalisation": {}
@@ -428,14 +390,14 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error("/data/attributes/messages/0/messageReference"),
+        Generators.generate_invalid_value_error(constants.FIRST_MESSAGE_REFERENCE_PATH),
         correlation_id
     )
 
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
@@ -464,7 +426,7 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={

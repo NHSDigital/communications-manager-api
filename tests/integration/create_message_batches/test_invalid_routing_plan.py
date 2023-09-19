@@ -25,7 +25,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "1234567890",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "1982-03-17"
                         },
                         "personalisation": {}
@@ -61,7 +61,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlatio
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "1234567890",
+                            "nhsNumber": "9990548609",
                             "dateOfBirth": "1982-03-17"
                         },
                         "personalisation": {}

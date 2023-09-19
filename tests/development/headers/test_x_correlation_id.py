@@ -1,5 +1,6 @@
 import requests
 import pytest
+from lib.constants import UNEXPECTED_429
 
 
 CORRELATION_IDS = [None, "a17669c8-219a-11ee-ba86-322b0407c489"]
@@ -25,6 +26,6 @@ def test_request_with_x_correlation_id(
     })
 
     if resp.status_code == 429:
-        raise AssertionError('Unexpected 429')
+        raise UNEXPECTED_429
 
     assert resp.headers.get("x-correlation-id") == correlation_id

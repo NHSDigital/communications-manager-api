@@ -2,11 +2,12 @@ import requests
 import pytest
 from lib import Assertions, Generators
 
-VALID_ACCEPT_HEADERS = ["*/*", "application/json", "application/vnd.api+json"]
-VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
+DEFAULT_CONTENT_TYPE = "application/json"
+VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
+VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
 REQUEST_PATH = "/v1/message-batches"
 VALID_DOB = ["0000-01-01", "2023-01-01", None]
-valid_nhs_number = "0123456789"
+valid_nhs_number = "9990548609"
 
 
 @pytest.mark.devtest
@@ -19,7 +20,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
       headers={
           **nhsd_apim_auth_headers,
           "Accept": accept_headers,
-          "Content-Type": "application/json"
+          "Content-Type": DEFAULT_CONTENT_TYPE
       },
       json=data
     )
@@ -33,7 +34,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_
     data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
-            "Accept": "application/json",
+            "Accept": DEFAULT_CONTENT_TYPE,
             "Content-Type": content_type
         }, json=data
     )
@@ -48,8 +49,8 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Accept": DEFAULT_CONTENT_TYPE,
+            "Content-Type": DEFAULT_CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
@@ -64,8 +65,8 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
-            "Accept": "application/json",
-            "Content-Type": "application/json"
+            "Accept": DEFAULT_CONTENT_TYPE,
+            "Content-Type": DEFAULT_CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
@@ -79,8 +80,8 @@ def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
         **nhsd_apim_auth_headers,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Accept": DEFAULT_CONTENT_TYPE,
+        "Content-Type": DEFAULT_CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
