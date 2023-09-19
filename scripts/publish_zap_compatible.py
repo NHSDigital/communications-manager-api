@@ -28,6 +28,22 @@ specification = None
 with open('build/communications-manager.json') as f:
     specification = json.load(f)
 
+# set the servers - this allows us to test unpublished environments
+specification["servers"] = [
+    {
+        "url": "https://sandbox.api.service.nhs.uk/comms",
+        "description": "Sandbox environment"
+    },
+    {
+        "url": "https://int.api.service.nhs.uk/comms",
+        "description": "Integration test environment"
+    },
+    {
+        "url": "https://api.service.nhs.uk/comms",
+        "description": "Production environment"
+    }
+]
+
 with open('build/communications-manager-zap.json', 'w') as f:
     json.dump(
         scan_and_remove(
