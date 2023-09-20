@@ -19,7 +19,7 @@
     "url" : "https://github.com/NHSDigital/communications-manager-api/issues"
   },
   "devDependencies": {
-    "@redocly/cli": "^1.0.0-beta.129",
+    "@redocly/cli": "^1.2.0",
     "apigeetool": "^0.16.1",
     "hbs-cli": "^1.4.1",
     "license-checker": "^25.0.1",
