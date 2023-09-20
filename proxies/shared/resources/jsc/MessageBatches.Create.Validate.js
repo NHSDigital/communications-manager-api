@@ -197,13 +197,11 @@ function pushError(error) {
   errors.push(error);
 }
 
-function createErrorObject(code, title, detail, pointer) {
+function createErrorObject(code, title, detail, pointer, links) {
   return {
     "id" : messageId + "." + errors.length,
     "code": code,
-    "links": {
-      "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
-    },
+    "links": Object.assign({}, {"about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"}, links),
     "status": "400",
     "title": title,
     "detail": detail,
@@ -218,7 +216,8 @@ function missingError(pointer) {
     "CM_MISSING_VALUE",
     "Missing property",
     "The property at the specified location is required, but was not present in the request.",
-    pointer
+    pointer,
+    {}
   );
 }
 
@@ -227,7 +226,8 @@ function nullError(pointer) {
     "CM_NULL_VALUE",
     "Property cannot be null",
     "The property at the specified location is required, but a null value was passed in the request.",
-    pointer
+    pointer,
+    {}
   );
 }
 
@@ -236,7 +236,8 @@ function invalidError(pointer) {
     "CM_INVALID_VALUE",
     "Invalid value",
     "The property at the specified location does not allow this value.",
-    pointer
+    pointer,
+    {}
   );
 }
 
@@ -245,7 +246,8 @@ function duplicateError(pointer) {
     "CM_DUPLICATE_VALUE",
     "Duplicate value",
     "The property at the specified location is a duplicate, duplicated values are not allowed.",
-    pointer
+    pointer,
+    {}
   );
 }
 
@@ -254,7 +256,8 @@ function tooFewItemsError(pointer) {
     "CM_TOO_FEW_ITEMS",
     "Too few items",
     "The property at the specified location contains too few items.",
-    pointer
+    pointer,
+    {}
   )
 }
 
@@ -262,8 +265,9 @@ function invalidNhsNumberError(pointer) {
   return createErrorObject(
     "CM_INVALID_NHS_NUMBER",
     "Invalid nhs number",
-    "The value provided in the nhs number property is not a valid length or does not contain valid checksum.",
-    pointer
+    "The value provided in this nhsNumber field is not a valid NHS number.",
+    pointer,
+    {"nhsNumbers": "https://www.datadictionary.nhs.uk/attributes/nhs_number.html"}
   );
 }
 
