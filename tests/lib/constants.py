@@ -50,7 +50,6 @@ INVALID_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),
     ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
     ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-    ("nhsNumber", FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
     ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
     ("personalisation", "/data/attributes/messages/0/personalisation"),
 ]
@@ -63,13 +62,14 @@ TOO_FEW_PROPERTIES_PATHS = [
 
 
 class Error():
-    def __init__(self, code, status, title, detail):
+    def __init__(self, code, status, title, detail, links={}):
         self.code = code
         self.status = status
         self.title = title
         self.detail = detail
         self.links = {
-            "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+            **{"about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"},
+            **links
         }
 
 
@@ -79,6 +79,15 @@ ERROR_INVALID_VALUE = Error(
     "400",
     "Invalid value",
     "The property at the specified location does not allow this value."
+)
+
+# invalid nhs number constants
+ERROR_INVALID_NHS_NUMBER = Error(
+    "CM_INVALID_NHS_NUMBER",
+    "400",
+    "Invalid nhs number",
+    "The value provided in this nhsNumber field is not a valid NHS number.",
+    {"nhsNumbers": "https://www.datadictionary.nhs.uk/attributes/nhs_number.html"}
 )
 
 # missing value constants

@@ -25,7 +25,7 @@ class Generators():
                             "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                             "recipient": {
                                 "nhsNumber": "9990548609",
-                                "dateOfBirth": "1982-03-17"
+                                "dateOfBirth": "2023-01-01"
                             },
                             "personalisation": {}
                         }
@@ -37,6 +37,12 @@ class Generators():
     @staticmethod
     def generate_invalid_value_error(pointer):
         return Generators.generate_error(constants.ERROR_INVALID_VALUE, source={
+            "pointer": pointer
+        })
+
+    @staticmethod
+    def generate_invalid_nhs_number_error(pointer):
+        return Generators.generate_error(constants.ERROR_INVALID_NHS_NUMBER, source={
             "pointer": pointer
         })
 

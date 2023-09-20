@@ -9,8 +9,8 @@ headers = {
     "Content-Type": "application/json"
 }
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-NHS_NUMBER = ["012345678", "01234567890", "abcdefghij", "", [], {}, 5, 0.1]
-DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
+INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
+INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 
 """
@@ -215,7 +215,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("nhs_number", NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhsd_apim_auth_headers):
@@ -234,7 +234,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": nhs_number,
-                            "dateOfBirth": "1982-1-11"
+                            "dateOfBirth": "2023-01-01"
                         }
                     }
                 ]
@@ -245,13 +245,13 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error(constants.FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
+        Generators.generate_invalid_nhs_number_error(constants.FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
         correlation_id
     )
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("dob", DOB)
+@pytest.mark.parametrize("dob", INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_headers):
@@ -306,7 +306,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
@@ -342,7 +342,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id, nh
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
@@ -378,7 +378,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
                         "messageReference": "invalid",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
+                            "dateOfBirth": "2023-01-01"
                         },
                         "personalisation": {}
                     }
