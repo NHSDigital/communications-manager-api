@@ -1,19 +1,5 @@
 <PreFlow>
     <Request>
-        {% if ENVIRONMENT_TYPE != 'sandbox' %}
-            <Step>
-                <Name>SpikeArrest.PerApp</Name>
-            </Step>
-            <Step>
-                <Name>Quota.PerApp</Name>
-            </Step>
-        {% endif %}
-        <Step>
-            <Name>SpikeArrest.Global</Name>
-        </Step>
-        <Step>
-            <Name>Quota.Global</Name>
-        </Step>
         <Step>
             <Name>FlowCallout.GetEnvironmentKeyValueMapData</Name>
         </Step>
