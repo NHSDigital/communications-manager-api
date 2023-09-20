@@ -62,13 +62,14 @@ TOO_FEW_PROPERTIES_PATHS = [
 
 
 class Error():
-    def __init__(self, code, status, title, detail):
+    def __init__(self, code, status, title, detail, links={}):
         self.code = code
         self.status = status
         self.title = title
         self.detail = detail
         self.links = {
-            "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+            **{"about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"},
+            **links
         }
 
 
@@ -85,7 +86,8 @@ ERROR_INVALID_NHS_NUMBER = Error(
     "CM_INVALID_NHS_NUMBER",
     "400",
     "Invalid nhs number",
-    "The value provided in the nhs number property is not a valid length or does not contain valid checksum."
+    "The value provided in this nhsNumber field is not a valid NHS number.",
+    {"nhsNumbers": "https://www.datadictionary.nhs.uk/attributes/nhs_number.html"}
 )
 
 # missing value constants
