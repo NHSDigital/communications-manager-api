@@ -12,7 +12,7 @@ const duplicateRef = uuid.v4();
 const genDuplicateMessage = () => {
     return {
         messageReference: duplicateRef,
-        recipient: { nhsNumber: "1234567890" },
+        recipient: { nhsNumber: "9990548609" },
         personalisation: {}
     }
 };
@@ -26,7 +26,7 @@ const genDuplicateFlipFlopMessage = () => {
 
     const ret = {
         messageReference: flipFlopRef + "",
-        recipient: { nhsNumber: "1234567890" },
+        recipient: { nhsNumber: "9990548609" },
         personalisation: {}
     };
 
@@ -42,7 +42,7 @@ const genDuplicateFlipFlopMessage = () => {
 const genMessage = () => {
     return {
         messageReference: uuid.v4(),
-        recipient: { nhsNumber: "1234567890" },
+        recipient: { nhsNumber: "9990548609" },
         personalisation: {}
     }
 };
