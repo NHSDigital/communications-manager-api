@@ -4,233 +4,246 @@
 		"name": "Communications Manager - Integration",
 		"description": "This collection enables you to make requests against our integration test environment.\n\nThis environment requires you to be authenticated and authorised to make these requests, plus you must have completed (or be in the progress of) onboarding onto the Communications Manager Service.\n\nFor more information on the Communications Manager API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager).\n\n## Authentication\n\nThis collection will carry out the [signed JWT authentication flow](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) for you automatically.\n\nYou must provide your API key and private key within the environment variables.\n\nIf you have not yet created an API client with an API key and private key, then please [refer to the documentation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication). Instructions are given here on how to create an application and how to generate a key pair for generating bearer tokens.\n\nMake sure to create your API application in the `Integration Testing` environment, and to request access to the `Communications Manager (Integration Testing)` API. Your API application will be granted access to this API automatically.\n\nOnce you have your API key and your private key, put these into the `api_key` and `private_key` variables within the `Integration` environment.\n\nRequests will now have a bearer token attached to them automatically, authenticating your requests.\n\nIf you have not yet started the onboarding process with the Communications Manager service then your requests, although authenticated, will return a `403 - Forbidden` response.\n\n**Ensure that your API key and private key are kept secret at all times!**\n\n**If you publish/share your API key or private key you must revoke them via the** [NHS onboarding portal](https://onboarding.prod.api.platform.nhs.uk/) **immediately.**\n\nLeaking these credentials will allow other people to generate tokens to call the API on your behalf.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28715873",
-		"_collection_link": "https://www.postman.com/nhs-communications-manager/workspace/communications-manager/collection/28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923?action=share&source=collection_link&creator=28715873"
-	},
-	"item": [
-		{
-			"name": "Send Messages",
-			"item": [
+		"uid": "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
+		"updatedAt": "2023-08-30T11:56:06.000Z"
+ },
+ "item": [
+	{
+		"name": "Send Messages",
+		 "id": "f5ca3438-8247-4f80-a0f2-29dfb6ee85d3",
+		 "item": [
 				{
 					"name": "201 - Message Batch Created",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Correlation identifier is returned\", () => {\r",
-									"    pm.response.to.have.header(\"x-correlation-id\");\r",
-									"    pm.response.to.be.header(\"x-correlation-id\", pm.environment.get(\"correlation_id\"));\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Content-negotiation was successful\", () => {\r",
-									"    pm.response.to.have.header(\"content-type\");\r",
-									"    pm.response.to.be.header(\"content-type\", pm.environment.get(\"mime_type\"));\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Status code is 201\", () => {\r",
-									"    pm.response.to.have.status(201);\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
+					 "event": [
 							{
-								"key": "Content-Type",
-								"value": "{{mime_type}}",
-								"type": "default"
+								 "listen": "prerequest",
+								 "script": {
+										"exec": [
+											 ""
+										],
+										"id": "832ce22d-e604-4477-8b49-6add91920812",
+										"type": "text/javascript"
+								 }
 							},
 							{
-								"key": "Accept",
-								"value": "{{mime_type}}",
-								"type": "default"
-							},
-							{
-								"key": "Authorization",
-								"value": "{{authorization_header_value}}",
-								"type": "default"
-							},
-							{
-								"key": "X-Correlation-Id",
-								"value": "{{correlation_id}}",
-								"type": "text"
+								 "listen": "test",
+								 "script": {
+										"exec": [
+											 "pm.test(\"Correlation identifier is returned\", () => {\r",
+											 "    pm.response.to.have.header(\"x-correlation-id\");\r",
+											 "    pm.response.to.be.header(\"x-correlation-id\", pm.environment.get(\"correlation_id\"));\r",
+											 "});\r",
+											 "\r",
+											 "pm.test(\"Content-negotiation was successful\", () => {\r",
+											 "    pm.response.to.have.header(\"content-type\");\r",
+											 "    pm.response.to.be.header(\"content-type\", pm.environment.get(\"mime_type\"));\r",
+											 "});\r",
+											 "\r",
+											 "pm.test(\"Status code is 201\", () => {\r",
+											 "    pm.response.to.have.status(201);\r",
+											 "});"
+										],
+										"id": "59dadc53-94c6-4329-8f96-668bd304968b",
+										"type": "text/javascript"
+								 }
 							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"data\": {\r\n        \"type\": \"MessageBatch\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n            \"messages\": [\r\n                {\r\n                    \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                    \"recipient\": {\r\n                        \"nhsNumber\": \"9990548609\",\r\n                        \"dateOfBirth\": \"1932-01-06\"\r\n                    },\r\n                    \"personalisation\": {\r\n                        \"custom\" : \"value\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/v1/message-batches",
-							"host": [
-								"{{base_url}}"
+					 ],
+					 "id": "1c5c08e7-9088-4ab8-aa82-75bcf21a805d",
+					 "protocolProfileBehavior": {
+							"disableBodyPruning": true
+					 },
+					 "request": {
+							"method": "POST",
+							"header": [
+								 {
+										"key": "Content-Type",
+										"value": "{{mime_type}}",
+										"type": "default"
+								 },
+								 {
+										"key": "Accept",
+										"value": "{{mime_type}}",
+										"type": "default"
+								 },
+								 {
+										"key": "Authorization",
+										"value": "{{authorization_header_value}}",
+										"type": "default"
+								 },
+								 {
+										"key": "X-Correlation-Id",
+										"value": "{{correlation_id}}",
+										"type": "text"
+								 }
 							],
-							"path": [
-								"v1",
-								"message-batches"
-							]
-						},
-						"description": "Sends a request to create a message batch.\n\nIt is possible to toggle the mime type used for sending and receiving data by changing the `mime_type` environment variable. Valid values for this can be found in [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches).\n\nA random `X-Correlation-Id` header and `messageBatchReference` body value will be generated for each request in the pre-request script."
-					},
-					"response": []
+							"body": {
+								"mode": "raw",
+								"raw": "{\r\n    \"data\": {\r\n        \"type\": \"MessageBatch\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n            \"messages\": [\r\n                {\r\n                    \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                    \"recipient\": {\r\n                        \"nhsNumber\": \"9990548609\",\r\n                        \"dateOfBirth\": \"1932-01-06\"\r\n                    },\r\n                    \"personalisation\": {\r\n                        \"custom\" : \"value\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}",
+								"options": {
+									 "raw": {
+											"language": "json"
+									 }
+								}
+						 },
+							"url": {
+								"raw": "{{base_url}}/v1/message-batches",
+								 "host": [
+										"{{base_url}}"
+								 ],
+								 "path": [
+										"v1",
+										"message-batches"
+								 ]
+							},
+							"description": "Sends a request to create a message batch.\n\nIt is possible to toggle the mime type used for sending and receiving data by changing the `mime_type` environment variable. Valid values for this can be found in [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches).\n\nA random `X-Correlation-Id` header and `messageBatchReference` body value will be generated for each request in the pre-request script."
+					 },
+					 "response": [],
+					 "uid": "28740466-1c5c08e7-9088-4ab8-aa82-75bcf21a805d"
 				}
-			],
-			"description": "These example calls show how to use the send messages endpoint. This endpoint allows you to create a `MessageBatch`.\n\nFor more information on this endpoint [refer to the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches)."
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					"var uuid = require('uuid');",
-					"",
-					"var privateKey = pm.environment.get('private_key') || '';",
-					"var api_key_value = pm.environment.get('api_key') || '';",
-					"",
-					"if (!privateKey) {",
-					"    throw new Error(\"Variable private_key must be set with your private key for signed JWT authentication.\");",
-					"}",
-					"",
-					"if (!api_key_value) {",
-					"    throw new Error(\"Variable api_key must be set with your integration testing application API key.\");",
-					"}",
-					"",
-					"var auth_url = 'https://int.api.service.nhs.uk/oauth2/token';",
-					"var navigator = {};",
-					"var window = {};",
-					"const interval = setTimeout(() => {}, 2147483647);",
-					"",
-					"return new Promise((resolve, reject) => {        ",
-					"    if (pm.globals.has('jsrsasign-js') && pm.globals.get('jsrsasign-js') !== \"\") {",
-					"        return resolve();",
-					"    }",
-					"",
-					"    pm.sendRequest(",
-					"        {",
-					"            url: 'https://kjur.github.io/jsrsasign/jsrsasign-all-min.js',",
-					"            method: 'GET'",
-					"        }, function (err, res) {",
-					"            if (err) {",
-					"                return reject(err);",
-					"            }",
-					"",
-					"            pm.globals.set('jsrsasign-js', res.text());            ",
-					"            return resolve();",
-					"        }",
-					"    );",
-					"}).then(() => {             ",
-					"    eval(pm.globals.get(\"jsrsasign-js\"));        ",
-					"",
-					"    // Set headers for JWT",
-					"    var header = {",
-					"        'typ': 'JWT',",
-					"        'alg': 'RS512',",
-					"        'kid': 'local'",
-					"    };",
-					"",
-					"    // Prepare timestamp in seconds",
-					"    var currentTimestamp = Math.floor(Date.now() / 1000)",
-					"    var uuid = require('uuid');",
-					"    var jti_value = uuid.v4();",
-					"    var data = {",
-					"        'sub': api_key_value,",
-					"        'iss': api_key_value,",
-					"        'jti': jti_value,",
-					"        'aud': auth_url,",
-					"        'exp': currentTimestamp + 180, // expiry time is 180 seconds from time of creation",
-					"    }    ",
-					"",
-					"    var sJWT = KJUR.jws.JWS.sign(header.alg, JSON.stringify(header), JSON.stringify(data), privateKey);    ",
-					"    return new Promise((resolve, reject) => {                              ",
-					"        pm.sendRequest({",
-					"            url: auth_url,",
-					"            method: \"POST\",",
-					"            header: {",
-					"                \"Content-Type\": \"application/x-www-form-urlencoded\"",
-					"            },",
-					"            body: {",
-					"                mode: \"urlencoded\",",
-					"                urlencoded: [",
-					"                    {",
-					"                        key: \"grant_type\",",
-					"                        value: \"client_credentials\"",
-					"                    },",
-					"                    {",
-					"                        key: \"client_assertion_type\",",
-					"                        value: \"urn:ietf:params:oauth:client-assertion-type:jwt-bearer\",",
-					"                    },",
-					"                    {",
-					"                        key: \"client_assertion\",",
-					"                        value: sJWT",
-					"                    }",
-					"                ]",
-					"            }",
-					"        }, function (err, res) {                                            ",
-					"            if (err) {",
-					"                return reject(err);",
-					"            }",
-					"",
-					"            //assign the authorization header value",
-					"            pm.environment.set('authorization_header_value', `Bearer ${res.json().access_token}`);",
-					"",
-					"            //assign the message batch reference",
-					"            pm.environment.set(\"message_batch_reference\", uuid.v4());",
-					"",
-					"            //generate a correlation identifier",
-					"            pm.environment.set(\"correlation_id\", uuid.v4());",
-					"",
-					"            return resolve();",
-					"        });        ",
-					"    });",
-					"}).then(() => {    ",
-					"    clearTimeout(interval);",
-					"}).catch((err) => {     ",
-					"    console.error(err); ",
-					"    clearTimeout(interval);    ",
-					"});"
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "base_url",
-			"value": "https://int.api.service.nhs.uk/comms",
-			"type": "string"
-		},
-		{
-			"key": "routing_plan_id",
-			"value": "119bdd50-783c-4161-a765-792785e46851",
-			"type": "string"
-		}
-	]
+		 ],
+		 "description": "These example calls show how to use the send messages endpoint. This endpoint allows you to create a `MessageBatch`.\n\nFor more information on this endpoint [refer to the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches).",
+		 "uid": "28740466-f5ca3438-8247-4f80-a0f2-29dfb6ee85d3"
+	}
+],
+   "collection": {
+      "event": [
+         {
+            "listen": "prerequest",
+            "script": {
+							"type": "text/javascript",
+               "exec": [
+                  "var uuid = require('uuid');",
+                  "",
+                  "var privateKey = pm.environment.get('private_key') || '';",
+                  "var api_key_value = pm.environment.get('api_key') || '';",
+                  "",
+                  "if (!privateKey) {",
+                  "    throw new Error(\"Variable private_key must be set with your private key for signed JWT authentication.\");",
+                  "}",
+                  "",
+                  "if (!api_key_value) {",
+                  "    throw new Error(\"Variable api_key must be set with your integration testing application API key.\");",
+                  "}",
+                  "",
+                  "var auth_url = 'https://int.api.service.nhs.uk/oauth2/token';",
+                  "var navigator = {};",
+                  "var window = {};",
+                  "const interval = setTimeout(() => {}, 2147483647);",
+                  "",
+                  "return new Promise((resolve, reject) => {        ",
+                  "    if (pm.globals.has('jsrsasign-js') && pm.globals.get('jsrsasign-js') !== \"\") {",
+                  "        return resolve();",
+                  "    }",
+                  "",
+                  "    pm.sendRequest(",
+                  "        {",
+                  "            url: 'https://kjur.github.io/jsrsasign/jsrsasign-all-min.js',",
+                  "            method: 'GET'",
+                  "        }, function (err, res) {",
+                  "            if (err) {",
+                  "                return reject(err);",
+                  "            }",
+                  "",
+                  "            pm.globals.set('jsrsasign-js', res.text());            ",
+                  "            return resolve();",
+                  "        }",
+                  "    );",
+                  "}).then(() => {             ",
+                  "    eval(pm.globals.get(\"jsrsasign-js\"));        ",
+                  "",
+                  "    // Set headers for JWT",
+                  "    var header = {",
+                  "        'typ': 'JWT',",
+                  "        'alg': 'RS512',",
+                  "        'kid': 'local'",
+                  "    };",
+                  "",
+                  "    // Prepare timestamp in seconds",
+                  "    var currentTimestamp = Math.floor(Date.now() / 1000)",
+                  "    var uuid = require('uuid');",
+                  "    var jti_value = uuid.v4();",
+                  "    var data = {",
+                  "        'sub': api_key_value,",
+                  "        'iss': api_key_value,",
+                  "        'jti': jti_value,",
+                  "        'aud': auth_url,",
+                  "        'exp': currentTimestamp + 180, // expiry time is 180 seconds from time of creation",
+                  "    }    ",
+                  "",
+                  "    var sJWT = KJUR.jws.JWS.sign(header.alg, JSON.stringify(header), JSON.stringify(data), privateKey);    ",
+                  "    return new Promise((resolve, reject) => {                              ",
+                  "        pm.sendRequest({",
+                  "            url: auth_url,",
+                  "            method: \"POST\",",
+                  "            header: {",
+                  "                \"Content-Type\": \"application/x-www-form-urlencoded\"",
+                  "            },",
+                  "            body: {",
+                  "                mode: \"urlencoded\",",
+                  "                urlencoded: [",
+                  "                    {",
+                  "                        key: \"grant_type\",",
+                  "                        value: \"client_credentials\"",
+                  "                    },",
+                  "                    {",
+                  "                        key: \"client_assertion_type\",",
+                  "                        value: \"urn:ietf:params:oauth:client-assertion-type:jwt-bearer\",",
+                  "                    },",
+                  "                    {",
+                  "                        key: \"client_assertion\",",
+                  "                        value: sJWT",
+                  "                    }",
+                  "                ]",
+                  "            }",
+                  "        }, function (err, res) {                                            ",
+                  "            if (err) {",
+                  "                return reject(err);",
+                  "            }",
+                  "",
+                  "            //assign the authorization header value",
+                  "            pm.environment.set('authorization_header_value', `Bearer ${res.json().access_token}`);",
+                  "",
+                  "            //assign the message batch reference",
+                  "            pm.environment.set(\"message_batch_reference\", uuid.v4());",
+                  "",
+                  "            //generate a correlation identifier",
+                  "            pm.environment.set(\"correlation_id\", uuid.v4());",
+                  "",
+                  "            return resolve();",
+                  "        });        ",
+                  "    });",
+                  "}).then(() => {    ",
+                  "    clearTimeout(interval);",
+                  "}).catch((err) => {     ",
+                  "    console.error(err); ",
+                  "    clearTimeout(interval);    ",
+                  "});"
+               ],
+               "id": "54ae2f7a-af6b-4377-a224-64beba6e5a5c"
+            }
+         },
+         {
+            "listen": "test",
+            "script": {
+							"type": "text/javascript",
+               "exec": [
+                  ""
+               ],
+               "id": "fa4f1b40-c1f6-443d-b4f5-500081b7522e"
+            }
+         }
+      ],
+      "variable": [
+         {
+            "key": "base_url",
+            "value": "https://int.api.service.nhs.uk/comms",
+            "type": "string"
+         },
+         {
+            "key": "routing_plan_id",
+            "value": "119bdd50-783c-4161-a765-792785e46851",
+            "type": "string"
+         }
+      ]
+   }
 }
