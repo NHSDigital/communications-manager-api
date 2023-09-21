@@ -1,6 +1,6 @@
 # Release process
 
-We store our release candidate within the [release branch](https://github.com/NHSDigital/communications-manager) - this is the default branch for the repository.
+We store our release candidate within the [release branch](https://github.com/NHSDigital/communications-manager-api) - this is the default branch for the repository.
 
 ## Create a release
 
