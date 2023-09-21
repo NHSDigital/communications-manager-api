@@ -10,7 +10,7 @@ authors = [
 ]
 readme = "README.md"
 license = "MIT"
-repository = "https://github.com/NHSDigital/communications-manager"
+repository = "https://github.com/NHSDigital/communications-manager-api"
 homepage = "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 

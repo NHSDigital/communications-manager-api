@@ -1,6 +1,6 @@
 # Communications Manager API
 
-![Build](https://github.com/NHSDigital/communications-manager/workflows/Build/badge.svg?branch=release)
+![Build](https://github.com/NHSDigital/communications-manager-api/workflows/Build/badge.svg?branch=release)
 
 This is the RESTful API for the [*Communications Manager Service*](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
 
@@ -21,7 +21,7 @@ This repo does not include the Communications Manager back-end that is not curre
 
 ## Contributing
 
-Contributions to this project are welcome from anyone, providing that they conform to the [guidelines for contribution](https://github.com/NHSDigital/communications-manager/blob/release/CONTRIBUTING.md) and the [community code of conduct](https://github.com/NHSDigital/communications-manager/blob/release/CODE_OF_CONDUCT.md).
+Contributions to this project are welcome from anyone, providing that they conform to the [guidelines for contribution](https://github.com/NHSDigital/communications-manager-api/blob/release/CONTRIBUTING.md) and the [community code of conduct](https://github.com/NHSDigital/communications-manager-api/blob/release/CODE_OF_CONDUCT.md).
 
 ### Licensing
 
@@ -59,13 +59,13 @@ You can install some pre-commit hooks to ensure you can't commit invalid spec ch
 $ make install-hooks
 ```
 
-There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found [here](https://github.com/NHSDigital/communications-manager/blob/release/nhsd-git-secrets/README.md).
+There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found [here](https://github.com/NHSDigital/communications-manager-api/blob/release/nhsd-git-secrets/README.md).
 
 ### Environment Variables
 
 Various scripts and commands rely on environment variables being set. These are documented with the commands.
 
-There is an example `.env` file [here](https://github.com/NHSDigital/communications-manager/blob/release/example.env).
+There is an example `.env` file [here](https://github.com/NHSDigital/communications-manager-api/blob/release/example.env).
 
 To create your own version:
 
@@ -264,7 +264,7 @@ The `/shared` folder contains policies, partials and resources that are used wit
 * `[% ... %]` - block start and end
 * `[[ ... ]]` - variable start and end
 
-The proxy has been documented [here](https://github.com/NHSDigital/communications-manager/blob/release/proxies/PROXIES.md).
+The proxy has been documented [here](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md).
 
 #### `/sandbox`:
 
@@ -339,5 +339,5 @@ The collections must be kept in sync manually, this is done by setting the `INTE
 
 ## Releasing
 
-Our release process is [documented here](https://github.com/NHSDigital/communications-manager/blob/release/RELEASING.md).
+Our release process is [documented here](https://github.com/NHSDigital/communications-manager-api/blob/release/RELEASING.md).
 

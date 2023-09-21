@@ -3,9 +3,6 @@
  * array of up to 100 error responses to be returned by Apigee as a 400 error response.
  *
  * It is called by the JavaScript.MessageBatches.Create.Validate policy.
- *
- * For more information see the 400 response in the specification linked below:
- * https://github.com/NHSDigital/communications-manager/blob/release/specification/communications-manager.yaml#L237
  */
 
 // Regex to validate the id is a valid UUID
