@@ -9,7 +9,7 @@ resources:
       type: github
       name: NHSDigital/api-management-utils
       ref: refs/heads/edge-fixed
-      endpoint: NHSDigital
+      endpoint: NHSDigital (63)
 
 schedules:
   - cron: 0 2 * * *
