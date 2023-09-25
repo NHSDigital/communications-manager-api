@@ -1,10 +1,5 @@
 from locust import HttpUser, task, constant, LoadTestShape, TaskSet
-
-
-class UserTasks(TaskSet):
-    @task
-    def hit_endpoint(self):
-        self.client.get("/_ping")
+from user_tasks import UserTasks
 
 
 class QuotaUser(HttpUser):
