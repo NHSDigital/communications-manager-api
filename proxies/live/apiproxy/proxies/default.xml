@@ -1,10 +1,10 @@
 <ProxyEndpoint name="default">
     [% include './partials/Partial.Proxy.PreFlow.xml' %]
     <Flows>
+        [% include './partials/Partial.Flows.RateLimiting.xml' %]
         [% include './partials/Partial.Flows.OptionsPreFlight.xml' %]
         [% include './partials/Partial.Flows.AddPayloadToPing.xml' %]
         [% include './partials/Partial.Flows.StatusEndpoint.xml' %]
-        [% include './partials/Partial.Flows.RateLimiting.xml' %]
     </Flows>
     [% include './partials/Partial.Proxy.PostFlow.xml' %]
     [% include './partials/Partial.Proxy.PostClientFlow.xml' %]
