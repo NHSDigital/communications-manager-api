@@ -6,6 +6,7 @@ import requests
 import json
 
 tokens = {}
+call_time = None
 
 
 class Authentication():
@@ -25,8 +26,6 @@ class Authentication():
             kid = "prod-1"
         else:
             raise ValueError("Unknown value: ", env)
-
-        call_time = None
 
         if tokens.get(env, None) is None or (call_time is None or call_time + 595 < int(time())):
             pk_pem = None
