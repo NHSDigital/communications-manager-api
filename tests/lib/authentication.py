@@ -6,12 +6,14 @@ import requests
 import json
 
 tokens = {}
+call_time = None
 
 
 class Authentication():
     @staticmethod
     def generate_authentication(env):
         global tokens
+        global call_time
 
         if env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
@@ -25,8 +27,6 @@ class Authentication():
             kid = "prod-1"
         else:
             raise ValueError("Unknown value: ", env)
-
-        call_time = None
 
         if tokens.get(env, None) is None or (call_time is None or call_time + 595 < int(time())):
             pk_pem = None
