@@ -15,6 +15,7 @@
         <Headers>
             <Header name="Access-Control-Allow-Origin">{request.header.origin}</Header>
             <Header name="Access-Control-Expose-Headers">x-correlation-id</Header>
+            <Header name="Cross-Origin-Resource-Policy">cross-origin</Header>
         </Headers>
     </Set>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
