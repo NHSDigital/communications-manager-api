@@ -67,5 +67,8 @@ class Assertions():
 
     @staticmethod
     def assert_cors_headers(resp, website):
+        if resp.status_code == 429:
+            raise UNEXPECTED_429
+
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS
