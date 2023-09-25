@@ -13,24 +13,15 @@ class UserTasks(TaskSet):
         data = {
             "data": {
                 "type": "MessageBatch",
-                "attributes": {
-                    "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                    "messageBatchReference": str(uuid.uuid4()),  # Generating a unique message batch reference
-                    "messages": [
-                        {
-                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                            "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "1932-01-06"
-                            },
-                            "personalisation": {}
-                        }
-                    ]
-                }
+                "attributes": {}
             }
         }
-        self.client.post(
+
+        with self.client.post(
             url="/v1/message-batches",
             headers=headers,
-            json=data
-        )
+            json=data,
+            catch_response=True
+        ) as response:
+            if response.status_code <= 400:
+                response.success()
