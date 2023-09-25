@@ -6,6 +6,7 @@ CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
                      "content-type, nhsd-session-urid, " \
                      "x-correlation-id, authorization"
 CORS_EXPOSE_HEADERS = "x-correlation-id"
+CORS_POLICY = "cross-origin"
 
 VALID_ROUTING_PLAN_ID_PROD = "0e38317f-1670-480a-9aa9-b711fb136610"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
