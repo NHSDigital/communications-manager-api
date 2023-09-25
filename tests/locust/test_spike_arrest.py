@@ -1,10 +1,5 @@
 from locust import HttpUser, task, constant, LoadTestShape, TaskSet
-
-
-class UserTasks(TaskSet):
-    @task
-    def hit_endpoint(self):
-        self.client.get("/_ping")
+from user_tasks import UserTasks
 
 
 class SpikeArrestUser(HttpUser):
@@ -14,9 +9,9 @@ class SpikeArrestUser(HttpUser):
 
 class OverSpikeArrestLoadShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 99, "spawn_rate": 3, "user_classes": [SpikeArrestUser]},
-        {"duration": 120, "users": 110, "spawn_rate": 10, "user_classes": [SpikeArrestUser]},
-        {"duration": 180, "users": 80, "spawn_rate": 20, "user_classes": [SpikeArrestUser]}
+        {"duration": 60, "users": 120, "spawn_rate": 3, "user_classes": [SpikeArrestUser]},
+        {"duration": 120, "users": 150, "spawn_rate": 10, "user_classes": [SpikeArrestUser]},
+        {"duration": 180, "users": 100, "spawn_rate": 20, "user_classes": [SpikeArrestUser]}
     ]
 
     def tick(self):

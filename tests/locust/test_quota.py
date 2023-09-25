@@ -1,10 +1,5 @@
 from locust import HttpUser, task, constant, LoadTestShape, TaskSet
-
-
-class UserTasks(TaskSet):
-    @task
-    def hit_endpoint(self):
-        self.client.get("/_ping")
+from user_tasks import UserTasks
 
 
 class QuotaUser(HttpUser):
@@ -14,9 +9,9 @@ class QuotaUser(HttpUser):
 
 class OverQuotaLoadShape(LoadTestShape):
     stages = [
-        {"duration": 60, "users": 15, "spawn_rate": 20, "user_classes": [QuotaUser]},
-        {"duration": 120, "users": 20, "spawn_rate": 30, "user_classes": [QuotaUser]},
-        {"duration": 180, "users": 5, "spawn_rate": 10, "user_classes": [QuotaUser]}
+        {"duration": 60, "users": 50, "spawn_rate": 20, "user_classes": [QuotaUser]},
+        {"duration": 120, "users": 120, "spawn_rate": 80, "user_classes": [QuotaUser]},
+        {"duration": 180, "users": 20, "spawn_rate": 10, "user_classes": [QuotaUser]}
     ]
 
     def tick(self):
