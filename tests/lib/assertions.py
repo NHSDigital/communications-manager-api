@@ -1,4 +1,4 @@
-from .constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, UNEXPECTED_429
+from .constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY, UNEXPECTED_429
 
 
 class Assertions():
@@ -64,6 +64,7 @@ class Assertions():
         assert resp.headers.get("Access-Control-Allow-Methods") == CORS_METHODS
         assert resp.headers.get("Access-Control-Max-Age") == CORS_MAX_AGE
         assert resp.headers.get("Access-Control-Allow-Headers") == CORS_ALLOW_HEADERS
+        assert resp.headers.get("Cross-Origin-Resource-Policy") == CORS_POLICY
 
     @staticmethod
     def assert_cors_headers(resp, website):
@@ -72,3 +73,4 @@ class Assertions():
 
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS
+        assert resp.headers.get("Cross-Origin-Resource-Policy") == CORS_POLICY
