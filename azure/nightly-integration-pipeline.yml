@@ -15,7 +15,7 @@ schedules:
   - cron: 0 2 * * *
     displayName: 2am daily
     branches:
-      include: ['release']
+      include: ['master']
     always: true
 
 pool:
