@@ -8,3 +8,4 @@
 * [POST /v1/message-batches](post_v1_message-batches/index.md)
   * [Validation Tests](post_v1_message-batches/validation.md)
   * [Performance Tests](post_v1_message-batches/performance.md)
+  * [Invalid Routing Plans](post_v1_message-batches/invalid_routing_plans.md)

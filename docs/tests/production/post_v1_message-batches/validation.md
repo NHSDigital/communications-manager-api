@@ -1,6 +1,6 @@
 # Validation Tests
 
-### production.create_message_batches.test_field_validation.DOB *= ['1990-10-1', '1990-1-10', '90-10-10', '10-12-1990', '1-MAY-2000', '1990/01/01', '', [], {}, 5, 0.1]*
+### production.create_message_batches.test_field_validation.INVALID_DOB *= ['1990-10-1', '1990-1-10', '90-10-10', '10-12-1990', '1-MAY-2000', '1990/01/01', '', [], {}, 5, 0.1]*
 
 Invalid body 400 tests
 

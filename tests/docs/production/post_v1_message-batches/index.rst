@@ -6,3 +6,4 @@ POST /v1/message-batches
 
    validation
    performance
+   invalid_routing_plans
