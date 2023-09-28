@@ -10,6 +10,9 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_too_many_requests_get(nhsd_apim_proxy_url, correlation_id, method):
+    """
+    .. py:function:: Test mock 429 responses
+    """
     resp = getattr(requests, method)(nhsd_apim_proxy_url, headers={
         "Prefer": "code=429",
         "Accept": "*/*",

@@ -22,6 +22,9 @@ Invalid body 400 tests
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_body(correlation_id):
+    """
+    .. py:function:: Test invalid body
+    """
     resp = requests.post(
         f"{PROD_URL}/v1/message-batches",
         headers={
@@ -64,6 +67,9 @@ _missing_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_property_missing(property, pointer, correlation_id):
+    """
+    .. py:function:: Test missing properties
+    """
     resp = requests.post(
         f"{PROD_URL}/v1/message-batches",
         headers={
@@ -103,6 +109,9 @@ _null_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_null(property, pointer, correlation_id):
+    """
+    .. py:function:: Test null properties
+    """
     resp = requests.post(
         f"{PROD_URL}/v1/message-batches",
         headers={
@@ -148,6 +157,9 @@ _invalid_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_invalid(property, pointer, correlation_id):
+    """
+    .. py:function:: Test invalid properties
+    """
     resp = requests.post(
         f"{PROD_URL}/v1/message-batches",
         headers={
@@ -186,6 +198,9 @@ _duplicate_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_duplicate(property, pointer, correlation_id):
+    """
+    .. py:function:: Test duplicate data
+    """
     # Add a duplicate message to the payload to trigger the duplicate error
     data = Generators.generate_valid_create_message_batch_body()
     data["data"]["attributes"]["messages"].append(data["data"]["attributes"]["messages"][0])
@@ -225,6 +240,9 @@ _too_few_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_too_few_items(property, pointer, correlation_id):
+    """
+    .. py:function:: Test too few items
+    """
     resp = requests.post(
         f"{PROD_URL}/v1/message-batches",
         headers={
@@ -251,6 +269,9 @@ def test_data_too_few_items(property, pointer, correlation_id):
 @pytest.mark.parametrize("nhs_number", NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhs_number, correlation_id):
+    """
+    .. py:function:: Test invalid NHS numbers
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
@@ -287,6 +308,9 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
 @pytest.mark.parametrize("dob", DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(dob, correlation_id):
+    """
+    .. py:function:: Test invalid dates of births
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
@@ -322,6 +346,9 @@ def test_invalid_dob(dob, correlation_id):
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_routing_plan(correlation_id):
+    """
+    .. py:function:: Test invalid routing plan identifier
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
@@ -357,6 +384,9 @@ def test_invalid_routing_plan(correlation_id):
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_batch_reference(correlation_id):
+    """
+    .. py:function:: Test invalid message batch reference value
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
@@ -392,6 +422,9 @@ def test_invalid_message_batch_reference(correlation_id):
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_reference(correlation_id):
+    """
+    .. py:function:: Test invalid message reference value
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
@@ -428,6 +461,9 @@ def test_invalid_message_reference(correlation_id):
 @pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_blank_value_under_messages(invalid_value, correlation_id):
+    """
+    .. py:function:: Test blank messages value
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
@@ -456,6 +492,9 @@ def test_blank_value_under_messages(invalid_value, correlation_id):
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_null_value_under_messages(correlation_id):
+    """
+    .. py:function:: Test null messages value
+    """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id,

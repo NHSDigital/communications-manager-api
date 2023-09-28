@@ -11,6 +11,9 @@ POST_PATHS = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot"]
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_404_not_found(request_path, correlation_id, method):
+    """
+    .. py:function:: Test 404 response
+    """
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "X-Correlation-Id": correlation_id,

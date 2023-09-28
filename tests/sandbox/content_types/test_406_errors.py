@@ -24,6 +24,9 @@ def test_406(
     correlation_id,
     method
 ):
+    """
+    .. py:function:: Test 406 responses
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{request_path}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id

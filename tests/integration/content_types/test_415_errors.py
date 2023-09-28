@@ -22,6 +22,9 @@ def test_415_invalid(
     correlation_id,
     method
 ):
+    """
+    .. py:function:: Test 415 response
+    """
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "application/json",

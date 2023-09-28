@@ -30,6 +30,9 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
 def test_application_response_type(accept_headers, method):
+    """
+    .. py:function:: Test content type negotiation
+    """
     resp = getattr(requests, method)(f"{PROD_URL}", headers={
         "Authorization": f"{Authentication.generate_authentication('prod')}",
         **accept_headers.get("headers")

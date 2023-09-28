@@ -16,6 +16,9 @@ def test_request_with_x_correlation_id(
     correlation_id,
     method
 ):
+    """
+    .. py:function:: Test correlation id response
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "x-correlation-id": correlation_id
     })

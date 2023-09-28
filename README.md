@@ -14,6 +14,7 @@ It includes:
 * `zap/` - Zap security scan configuration.
 * `tests/` - Integration test suites.
 * `postman/` - Postman collections.
+* `docs/` - [Documentation for the project](docs/index.md)
 
 Consumers of the API will find developer documentation on the [Communications Manager API entry](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
 
@@ -21,7 +22,7 @@ This repo does not include the Communications Manager back-end that is not curre
 
 ## Contributing
 
-Contributions to this project are welcome from anyone, providing that they conform to the [guidelines for contribution](https://github.com/NHSDigital/communications-manager-api/blob/release/CONTRIBUTING.md) and the [community code of conduct](https://github.com/NHSDigital/communications-manager-api/blob/release/CODE_OF_CONDUCT.md).
+Contributions to this project are welcome from anyone, providing that they conform to the [guidelines for contribution](CONTRIBUTING.md) and the [community code of conduct](CODE_OF_CONDUCT.md).
 
 ### Licensing
 
@@ -59,7 +60,7 @@ You can install some pre-commit hooks to ensure you can't commit invalid spec ch
 $ make install-hooks
 ```
 
-There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found [here](https://github.com/NHSDigital/communications-manager-api/blob/release/nhsd-git-secrets/README.md).
+There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found [here](nhsd-git-secrets/README.md).
 
 ### Environment Variables
 
@@ -86,8 +87,11 @@ There are `make` commands that alias some of this functionality:
 * `lint` -- Lints the spec and code
 * `publish` -- Outputs the specification as a **single file** into the `build/` directory
 * `serve` -- Serves a preview of the specification in human-readable format - your browser will automatically open the documentation
+* `build-test-documentation` -- Builds the test documentation that is checked into the repository under `docs/tests`
 
 ### Testing
+
+You can view the documentation about all of the test cases that are covered with the test suites in the [test documentation](docs/tests/index.md).
 
 There are:
 
@@ -264,7 +268,7 @@ The `/shared` folder contains policies, partials and resources that are used wit
 * `[% ... %]` - block start and end
 * `[[ ... ]]` - variable start and end
 
-The proxy has been documented [here](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md).
+The proxy has been documented [here](docs/proxies.md).
 
 #### `/sandbox`:
 
@@ -339,5 +343,5 @@ The collections must be kept in sync manually, this is done by setting the `INTE
 
 ## Releasing
 
-Our release process is [documented here](https://github.com/NHSDigital/communications-manager-api/blob/release/RELEASING.md).
+Our release process is [documented here](RELEASING.md).
 

@@ -28,6 +28,9 @@ ACCEPT_HEADERS = [
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
 def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method):
+    """
+    .. py:function:: Test content negotiation
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
 
     if resp.status_code == 429:

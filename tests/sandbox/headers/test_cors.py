@@ -10,6 +10,9 @@ TEST_METHODS = ["get", "post", "put", "delete"]
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("method", METHODS)
 def test_cors_options(nhsd_apim_proxy_url, method):
+    """
+    .. py:function:: Test OPTIONS CORS response
+    """
     resp = requests.options(f"{nhsd_apim_proxy_url}", headers={
         "Accept": "*/*",
         "Origin": "https://my.website",
@@ -21,6 +24,9 @@ def test_cors_options(nhsd_apim_proxy_url, method):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("method", TEST_METHODS)
 def test_cors(nhsd_apim_proxy_url, method):
+    """
+    .. py:function:: Test CORS response
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         "Accept": "*/*",
         "Origin": "https://my.website"

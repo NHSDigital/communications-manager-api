@@ -18,6 +18,9 @@ def test_missing_accept_header(
     content_type,
     nhsd_apim_auth_headers
 ):
+    """
+    .. py:function:: Test missing accept headers
+    """
     data = Generators.generate_valid_create_message_batch_body("dev")
 
     resp = requests.post(

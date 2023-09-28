@@ -12,6 +12,9 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_404_not_found(nhsd_apim_proxy_url, request_path, correlation_id, method):
+    """
+    .. py:function:: Test 404 response
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "X-Correlation-Id": correlation_id,
         "Accept": "*/*",

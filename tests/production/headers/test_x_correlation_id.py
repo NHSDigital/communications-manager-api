@@ -16,6 +16,9 @@ def test_request_with_x_correlation_id(
     correlation_id,
     method,
 ):
+    """
+    .. py:function:: Test correlation identifier responses
+    """
     resp = getattr(requests, method)(f"{PROD_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('prod')}",
         "x-correlation-id": correlation_id

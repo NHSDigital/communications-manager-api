@@ -22,6 +22,9 @@ Invalid body 400 tests
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. py:function:: Test invalid body
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -63,6 +66,9 @@ _missing_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. py:function:: Test missing properties
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -101,6 +107,9 @@ _null_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. py:function:: Test null data
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -144,6 +153,9 @@ _invalid_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. py:function:: Test invalid values
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -181,6 +193,9 @@ _duplicate_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. py:function:: Test duplicate message references
+    """
     # Add a duplicate message to the payload to trigger the duplicate error
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"].append(data["data"]["attributes"]["messages"][0])
@@ -219,6 +234,9 @@ _too_few_properties = [
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. py:function:: Test no messages defined
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -244,6 +262,9 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 @pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
+    """
+    .. py:function:: Test invalid NHS numbers
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -279,6 +300,9 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 @pytest.mark.parametrize("dob", INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
+    """
+    .. py:function:: Test invalid dates of birth
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -313,6 +337,9 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. py:function:: Test invalid routing plans
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -347,6 +374,9 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. py:function:: Test invalid message batch reference
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -381,6 +411,9 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. py:function:: Test invalid message reference
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -416,6 +449,9 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
+    """
+    .. py:function:: Test invalid messages value
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -443,6 +479,9 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. py:function:: Test null messages value
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -471,6 +510,9 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("number_of_errors", [99, 100, 101, 150, 200])
 def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
+    """
+    .. py:function:: Test max errors response
+    """
     duplicate_message_reference = str(uuid.uuid4())
     data = {
         "data": {

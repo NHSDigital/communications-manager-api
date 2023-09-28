@@ -12,6 +12,9 @@ ORIGIN = "https://my.website"
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_cors_options(nhsd_apim_proxy_url, method, nhsd_apim_auth_headers):
+    """
+    .. py:function:: Test OPTIONS CORS response
+    """
     resp = requests.options(f"{nhsd_apim_proxy_url}", headers={
         **nhsd_apim_auth_headers,
         "Accept": "*/*",
@@ -25,6 +28,9 @@ def test_cors_options(nhsd_apim_proxy_url, method, nhsd_apim_auth_headers):
 @pytest.mark.parametrize("method", TEST_METHODS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_cors(nhsd_apim_proxy_url, method, nhsd_apim_auth_headers):
+    """
+    .. py:function:: Test CORS headers
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         **nhsd_apim_auth_headers,
         "Accept": "*/*",

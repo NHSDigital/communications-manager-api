@@ -21,7 +21,7 @@ install: install-node install-python .git/hooks/pre-commit
 install-hooks: .git/hooks/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint: .check-licenses
+lint: .check-licenses .ensure-test-documentation-validity
 	npm run lint
 	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
 
@@ -41,6 +41,12 @@ publish: clean
 #Runs build proxy script
 build-proxy:
 	scripts/build_proxy.sh
+
+.ensure-test-documentation-validity:
+	cd tests/docs && ./build-docs.sh --verify && cd ../../
+
+build-test-documentation:
+	cd tests/docs && ./build-docs.sh --build-only && cd ../../
 
 #Files to loop over in release
 _dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman scripts"
@@ -80,7 +86,9 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		-s \
 		--reruns 5 \
 		--reruns-delay 5 \
-		--only-rerun 'AssertionError: Unexpected 429'
+		--only-rerun 'AssertionError: Unexpected 429' \
+		--ignore=tests/docs \
+		--ignore=tests/locust
 
 
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
@@ -96,7 +104,9 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
 		--apigee-organization=nhsd-prod \
-		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)"
+		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)" \
+		--ignore=tests/docs \
+		--ignore=tests/locust
 
 .run-sandbox-unit-tests:
 	(cd sandbox; rm -rf node_modules; npm install --legacy-peer-deps; npm run test)
@@ -124,7 +134,6 @@ zap-security-scan:
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
-	--ignore=tests/locust \
 	-m sandboxtest
 
 internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
@@ -135,7 +144,6 @@ internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sa
 	--ignore=tests/development \
 	--ignore=tests/integration \
 	--ignore=tests/mtls \
-	--ignore=tests/locust \
 	-m sandboxtest
 
 prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
@@ -145,7 +153,6 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
-	--ignore=tests/locust \
 	-m devtest
 
 internal-dev-test: .internal-dev-test
@@ -155,7 +162,6 @@ internal-dev-test: .internal-dev-test
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
-	--ignore=tests/locust \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
@@ -166,7 +172,6 @@ integration-test: .run-postman-int .integration-test
 	--ignore=tests/sandbox \
 	--ignore=tests/development \
 	--ignore=tests/integration \
-	--ignore=tests/locust \
 	-m prodtest
 
 production-test: .production-test
@@ -177,5 +182,4 @@ mtls-test:
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
 	--ignore=tests/development \
-	--ignore=tests/locust \
 	-m mtlstest
