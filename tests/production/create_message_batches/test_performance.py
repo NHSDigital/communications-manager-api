@@ -9,6 +9,9 @@ NUM_MESSAGES = 50000
 
 @pytest.mark.prodtest
 def test_create_messages_large_invalid_payload():
+    """
+    .. py:function:: Test large (50k) invalid payload
+    """
     data = Generators.generate_valid_create_message_batch_body()
 
     # around 50k messages gives us close to our max body size
@@ -34,6 +37,9 @@ def test_create_messages_large_invalid_payload():
 
 @pytest.mark.prodtest
 def test_create_messages_large_not_unique_payload():
+    """
+    .. py:function:: Test large (50k) duplicate message references payload
+    """
     data = Generators.generate_valid_create_message_batch_body()
 
     # around 50k messages gives us close to our max body size

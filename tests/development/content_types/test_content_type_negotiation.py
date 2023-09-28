@@ -30,6 +30,9 @@ ACCEPT_HEADERS = [
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method, nhsd_apim_auth_headers):
+    """
+    .. py:function:: Test content negotiation
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         **nhsd_apim_auth_headers,
         **accept_headers.get("headers")

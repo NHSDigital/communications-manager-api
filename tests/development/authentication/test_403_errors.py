@@ -18,6 +18,9 @@ CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_user_token_get(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id, method):
+    """
+    .. py:function:: Test 403 user token not acceptable
+    """
     resp = requests.get(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
         **nhsd_apim_auth_headers,
         "X-Correlation-Id": correlation_id

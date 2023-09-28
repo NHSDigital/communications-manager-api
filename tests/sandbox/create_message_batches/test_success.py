@@ -19,6 +19,9 @@ valid_nhs_number = "9990548609"
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_headers):
+    """
+    .. py:function:: Test valid accept headers
+    """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
@@ -34,6 +37,9 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, content_type):
+    """
+    .. py:function:: Test valid content type headers
+    """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             "Accept": "application/json",
@@ -46,6 +52,9 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, conte
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('routing_plan_id', VALID_ROUTING_PLAN_ID)
 def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_plan_id):
+    """
+    .. py:function:: Test valid routing plans
+    """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["routingPlanId"] = routing_plan_id
 
@@ -59,6 +68,9 @@ def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_pl
 
 @pytest.mark.sandboxtest
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
+    """
+    .. py:function:: Test valid NHS numbers
+    """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = valid_nhs_number
 
@@ -73,6 +85,9 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('dob', VALID_DOB)
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
+    """
+    .. py:function:: Test valid dates of birth
+    """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
 
@@ -86,6 +101,9 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
 
 @pytest.mark.sandboxtest
 def test_request_without_dob(nhsd_apim_proxy_url):
+    """
+    .. py:function:: Test that date of birth is none mandatory
+    """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
 

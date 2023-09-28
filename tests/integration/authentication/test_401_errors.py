@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from tests.lib.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
+from lib.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
 
 
 @pytest.mark.inttest
@@ -9,6 +9,9 @@ from tests.lib.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid(invalid_token, correlation_id, method):
+    """
+    .. py:function:: Test 401 response
+    """
     resp = getattr(requests, method)(INT_URL, headers={
         "Authorization": invalid_token,
         "X-Correlation-Id": correlation_id

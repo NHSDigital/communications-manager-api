@@ -21,6 +21,9 @@ def test_406(
     correlation_id,
     method,
 ):
+    """
+    .. py:function:: Test 406 response
+    """
     resp = getattr(requests, method)(f"{PROD_URL}/{request_path}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id,

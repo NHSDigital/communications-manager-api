@@ -11,6 +11,9 @@ TEST_METHODS = ["get", "post", "put", "delete"]
 @pytest.mark.inttest
 @pytest.mark.parametrize("method", METHODS)
 def test_cors_options(method):
+    """
+    .. py:function:: Test OPTIONS CORS headers
+    """
     resp = requests.options(f"{INT_URL}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "*/*",
@@ -23,6 +26,9 @@ def test_cors_options(method):
 @pytest.mark.inttest
 @pytest.mark.parametrize("method", TEST_METHODS)
 def test_cors(method):
+    """
+    .. py:function:: Test CORS headers
+    """
     resp = getattr(requests, method)(f"{INT_URL}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "*/*",
