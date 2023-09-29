@@ -121,6 +121,8 @@ steps:
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
         export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
         export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+        export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
+        export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
         ${{ parameters.test_command }}
       workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       displayName: Run test suite
