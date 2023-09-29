@@ -22,15 +22,15 @@ info:
 
     ## API status and roadmap
 
-    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
+    This API is [in production](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
     
-    You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/suggestions/355852/communications-manager-api).
+    You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/?order=popular&filter=allexceptdone&tag=communications-manager-api).
 
     If you have any other queries, [contact us](https://digital.nhs.uk/developer/help-and-support).
 
     ## Service level 
 
-    The Communications Manager API is currently not in a production environment.
+    This service is a [silver](https://digital.nhs.uk/services/reference-guide#service-levels) service, meaning it is available 24 hours a day, 365 days a year and supported from 8am to 6pm, Monday to Friday excluding bank holidays.
 
     For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
@@ -88,9 +88,9 @@ info:
 
     | Environment | Base URL |
     |------------ | -------- |
-    | Sandbox     | [https://sandbox.api.service.nhs.uk/comms](https://sandbox.api.service.nhs.uk/comms) |
-    | Integration test | [https://int.api.service.nhs.uk/comms](https://int.api.service.nhs.uk/comms) |
-    | Production | Not yet available |
+    | Sandbox     | `https://sandbox.api.service.nhs.uk/comms` |
+    | Integration test | `https://int.api.service.nhs.uk/comms` |
+    | Production | `https://api.service.nhs.uk/comms` |
 
     ### Sandbox testing
 
@@ -123,6 +123,12 @@ info:
 
     Alternatively you can find our postman collection source in our [public repository on github](https://github.com/NHSDigital/communications-manager-api/tree/master/postman).
 
+    ### Production smoke testing
+
+    You must not send communications to real patients for smoke testing in the production environment.
+
+    Rather, use the [production test patient for PDS](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir/pds-fhir-api-test-data#production-smoke-testing).
+
     ## Onboarding
 
     You need to get your software approved by us before it can go live with this API. You will also need to undertake the Communications Manager onboarding process which is still being defined. Further details will follow.
@@ -148,6 +154,8 @@ servers:
     description: Sandbox environment
   - url: 'https://int.api.service.nhs.uk/comms'
     description: Integration test environment
+  - url: 'https://api.service.nhs.uk/comms'
+    description: Production environment
 paths:
   /v1/message-batches:
     post:
