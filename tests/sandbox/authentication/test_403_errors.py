@@ -1,12 +1,11 @@
 import requests
 import pytest
 from lib import Assertions, Generators
+from lib.constants import METHODS, CORRELATION_IDS
 
 FORBIDDEN_TOKEN = {
     "Authorization": "Bearer ClientNotRecognised"
 }
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 
 
 @pytest.mark.sandboxtest

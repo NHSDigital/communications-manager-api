@@ -8,3 +8,4 @@ POST /v1/message-batches
    invalid_routing_plans
    performance
    happy_path
+   service_ban

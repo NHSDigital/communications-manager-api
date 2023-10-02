@@ -93,6 +93,12 @@ const duplicateTemplates = [
 ];
 
 async function batch_send(req, res, next) {
+    if (req.headers["authorization"] === "banned") {
+        sendError(res, 403, "Request rejected because client service ban is in effect");
+        next();
+        return;
+    }
+
     if (!req.body) {
         sendError(res, 400, "Missing request body");
         next();
