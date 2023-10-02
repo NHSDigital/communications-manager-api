@@ -14,7 +14,20 @@ CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 @pytest.mark.parametrize("method", METHODS)
 def test_403_forbidden(nhsd_apim_proxy_url, correlation_id, method):
     """
-    .. py:function:: Test 403 responses
+    .. py:function:: Scenario: An API consumer submitting a request with a \
+        forbidden authorization token receives a 403 'Forbidden' response
+
+        | **Given** the API consumer provides an forbidden authorization token
+        | **When** the request is submitted
+        | **Then** the response is a 403 forbidden error
+
+    **Asserts**
+    - Response returns a 403 'Forbidden' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/methods.rst
+    .. include:: ../../partials/correlation_ids.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         **FORBIDDEN_TOKEN,
@@ -34,9 +47,21 @@ def test_403_forbidden(nhsd_apim_proxy_url, correlation_id, method):
 @pytest.mark.parametrize("method", METHODS)
 def test_403_forbidden_prefer(nhsd_apim_proxy_url, correlation_id, method):
     """
-    .. py:function:: Test mocked 403 responses
-    """
+    .. py:function:: Scenario: An API comsumer submitting a request with a \
+        403 prefer header receives a 403 'Forbidden' response
 
+        | **Given** the API consumer provides a 403 prefer header
+        | **When** the request is submitted
+        | **Then** the response is a 403 forbidden error
+
+    **Asserts**
+    - Response returns a 403 'Forbidden' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/methods.rst
+    .. include:: ../../partials/correlation_ids.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         "Prefer": "code=403",
         "X-Correlation-Id": correlation_id
