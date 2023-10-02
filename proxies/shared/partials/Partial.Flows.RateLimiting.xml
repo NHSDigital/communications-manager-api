@@ -1,6 +1,6 @@
 <Flow name="RateLimiting">
     <Request>
-      {% if ENVIRONMENT_TYPE != 'sandbox' %}
+        {% if ENVIRONMENT_TYPE != 'sandbox' %}
             <Step>
                 <Name>SpikeArrest.PerApp</Name>
             </Step>

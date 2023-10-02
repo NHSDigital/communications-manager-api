@@ -1,4 +1,3 @@
-
 const request = require("supertest");
 const assert = require("chai").assert;
 
@@ -57,6 +56,16 @@ describe("app handler tests", function () {
     });
 
     describe('/api/v1/send', () => {
+        it('returns a service ban (403) when the user is banned', (done) => {
+            request(server)
+                .post('/api/v1/send')
+                .set({ Authorization: 'banned' })
+                .expect(403, {
+                    message: 'Request rejected because client service ban is in effect'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
         it('returns a 400 when body doesnt exist', (done) => {
             request(server)
                 .post('/api/v1/send')

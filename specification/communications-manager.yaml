@@ -318,18 +318,31 @@ paths:
           description: |+
             Your request contained an authentic bearer token in the `Authorization` header but you are not authorized to make the request.
 
-            This is due the onboarding process not having been completed. Refer to our [onboarding](#overview--onboarding) section for more information.
+            If the error code in the response is `CM_FORBIDDEN` then this could be due to the onboarding process not having been completed. Refer to our [onboarding](#overview--onboarding) section for more information.
+
+            If the response contains the error `CM_SERVICE_BAN` then there is a ban in effect on your account.
 
             ### Sandbox
 
-            It is possible to trigger this error in the sandbox by sending the header `Prefer` with a value of `code=403`.
+            It is possible to trigger the `CM_FORBIDDEN` error in the sandbox by sending the header `Prefer` with a value of `code=403`.
 
-            Here is an example curl request to trigger a `403`:
+            Here is an example curl request to trigger a `CM_FORBIDDEN`:
 
             ```
               curl -X GET \
                 --header "Accept: */*" \
                 --header "Prefer: code=403" \
+                https://sandbox.api.service.nhs.uk/comms/
+            ```
+
+            To trigger the `CM_SERVICE_BAN` error in the sandbox by sending the header `Prefer` with a value of `code=403.1`.
+
+            Here is an example curl request to trigger a `CM_FORBIDDEN`:
+
+            ```
+              curl -X GET \
+                --header "Accept: */*" \
+                --header "Prefer: code=403.1" \
                 https://sandbox.api.service.nhs.uk/comms/
             ```
           content:

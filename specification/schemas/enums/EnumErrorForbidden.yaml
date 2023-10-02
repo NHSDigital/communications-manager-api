@@ -1,5 +1,6 @@
 type: string
 enum:
   - CM_FORBIDDEN
+  - CM_SERVICE_BAN
 example: CM_FORBIDDEN
 title: Enum_Error_Forbidden

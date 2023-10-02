@@ -13,26 +13,26 @@ The following diagram details the proxy flow:
 
 ```mermaid
 flowchart
-    S[Request] --> QSA["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#quotas--spike-arrests'>Quotas & Spike Arrests</a>"]
+    S[Request] --> QSA["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#quotas--spike-arrests'>Quotas & Spike Arrests</a>"]
     QSA --> E1{Exception thrown?}
-    QSA --> OPF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#options-preflight'>Options PreFlight</a>"]
+    QSA --> OPF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#options-preflight'>Options PreFlight</a>"]
     OPF --> E1
-    OPF --> APTP["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#add-payload-to-ping-ping-endpoint'>Add Payload to Ping</a>"]
+    OPF --> APTP["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#add-payload-to-ping-ping-endpoint'>Add Payload to Ping</a>"]
     APTP --> E1
-    APTP --> SE["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#status-endpoint'>Status Endpoint</a>"]
+    APTP --> SE["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#status-endpoint'>Status Endpoint</a>"]
     SE --> E1
-    SE --> RT["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#request-routing'>Follow endpoint routing config</a>"]
+    SE --> RT["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#request-routing'>Follow endpoint routing config</a>"]
     RT --> E1
-    RT --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#set-response-defaults'>Set Response Defaults</a>"]
-    RT --> CALL["Callout to <a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#target-definition'>communications-manager-target</a>"]
+    RT --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set Response Defaults</a>"]
+    RT --> CALL["Callout to <a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-definition'>communications-manager-target</a>"]
     SRD --> E1
-    E1 --> |Yes| PRF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#proxy-fault-rules'>Proxy Fault Rules</a>"]
+    E1 --> |Yes| PRF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#proxy-fault-rules'>Proxy Fault Rules</a>"]
     PRF --> E2{Exception handled?}
     SRD --> R[Response]
     E2 --> |Yes| R
-    E2 --> |No| PDFR["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#proxy-default-fault-rule'>Proxy Default Fault Rule</a>"]
+    E2 --> |No| PDFR["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#proxy-default-fault-rule'>Proxy Default Fault Rule</a>"]
     PDFR --> R
-    R --> PCF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#post-client-flow'>Post Client Flow</a>"]
+    R --> PCF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#post-client-flow'>Post Client Flow</a>"]
     PCF --> E[End]
 ```
 
@@ -46,16 +46,16 @@ This diagram details the target definition flow:
 
 ```mermaid
 flowchart
-    S[Request] --> TPFR["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#target-preflow-request'>Target PreFlow Request</a>"]
+    S[Request] --> TPFR["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-preflow-request'>Target PreFlow Request</a>"]
     TPFR --> E1{Exception thrown?}
-    TPFR --> CMB["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#create-message-batch'>Create Message Batch</a>"]
+    TPFR --> CMB["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#create-message-batch'>Create Message Batch</a>"]
     CMB --> E1
-    CMB --> TPFRESP["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#target-preflow-response'>Target PreFlow Response</a>"]
+    CMB --> TPFRESP["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-preflow-response'>Target PreFlow Response</a>"]
     TPFRESP --> E1
-    TPFRESP --> TPOSTF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#target-post-flow'>Target Post Flow</a>"]
+    TPFRESP --> TPOSTF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-post-flow'>Target Post Flow</a>"]
     TPOSTF --> E1
     TPOSTF --> E[End]
-    E1 --> |Yes| TFR["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#target-fault-rules'>Target Fault Rules</a>"]
+    E1 --> |Yes| TFR["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-fault-rules'>Target Fault Rules</a>"]
     TFR --> E
 ```
 
@@ -188,7 +188,7 @@ Source: [proxies/shared/partials/Partial.Proxy.FaultRules.xml](https://github.co
 
 ```mermaid
 flowchart LR
-    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#set-response-defaults'>Set response defaults</a>"]
+    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set response defaults</a>"]
     SRD --> Q1{Is SpikeArrestViolation?}
     Q1 --> |Yes| 429["Throw 429
 
@@ -207,7 +207,7 @@ Source: [proxies/shared/partials/Partial.Faults.DefaultFaultRule.xml](https://gi
 
 ```mermaid
 flowchart LR
-    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#set-response-defaults'>Set response defaults</a>"]
+    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set response defaults</a>"]
     SRD --> CAM["Error message catch all
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.Errors.CatchAllMessage.xml'>AssignMessage.Errors.CatchAllMessage</a></em>"]
@@ -242,7 +242,7 @@ flowchart LR
     Q2 --> |Yes| NR
     Q2 --> |No| Q3{Is status endpoint?}
     Q3 --> |Yes| NR
-    Q3 --> |No| TS[Call <a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#target-definition'>communications-manager-target</a>]
+    Q3 --> |No| TS[Call <a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-definition'>communications-manager-target</a>]
     NR --> E[End]
     TS --> E[End]
 ```
@@ -276,7 +276,7 @@ Source: [proxies/shared/partials/Partial.Target.PreFlowRequest.xml](https://gith
 
 ```mermaid
 flowchart
-    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#set-response-defaults'>Set response defaults</a>"]
+    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set response defaults</a>"]
     SRD --> SBCI["Set the backend request correlation id
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.SetBackendCorrelationId.xml'>JavaScript.SetBackendCorrelationId</a></em>"]
@@ -309,7 +309,12 @@ flowchart
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.403Forbidden.xml'>RaiseFault.403Forbidden</a></em>"]
     403 --> E
-    Q6 --> |No| CN["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#content-negotiation'>Content Negotiation</a>"]
+    Q6 --> |No| Q6.1{Prefer 403.1 error?}
+    Q6.1 --> |Yes| 403.1["Raise 403 service ban error
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.403ServiceBan.xml'>RaiseFault.403ServiceBan</a></em>"]
+    403.1 --> E
+    Q6.1 --> |No| CN["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#content-negotiation'>Content Negotiation</a>"]
     Q1 --> |No| VAT["Verify access token
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/OauthV2.VerifyAccessToken.xml'>OauthV2.VerifyAccessToken</a></em>"]
@@ -390,7 +395,7 @@ Source: [proxies/shared/partials/Partial.Target.PostFlow.xml](https://github.com
 
 ```mermaid
 flowchart LR
-    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#set-response-defaults'>Set response defaults</a>"]
+    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set response defaults</a>"]
     SRD --> E[End]
 ```
 
@@ -402,7 +407,7 @@ Source: [proxies/shared/partials/Partial.Target.FaultRules.xml](https://github.c
 
 ```mermaid
 flowchart
-    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/PROXIES.md#set-response-defaults'>Set response defaults</a>"]
+    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set response defaults</a>"]
     SRD --> Q1{Is sandbox environment?}
     Q1 --> |No| Q2{Token verification failure?}
     Q2 --> |Yes| 401["Raise 401 error
@@ -410,12 +415,17 @@ flowchart
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.401Unauthorized.xml'>RaiseFault.401Unauthorized</a></em>"]
     401 --> E1[End]
     Q2 --> |No| Q3{Backend 403 response?}
-    Q3 --> |Yes| 403["Raise 403 error
+    Q3 --> |Yes| Q3.1{Service ban?}
+    Q3.1 --> |Yes| 403ServiceBan["Raise 403 service ban error
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.403ServiceBan.xml'>RaiseFault.403ServiceBan</a></em>"]
+    403ServiceBan --> E2[End]
+    Q3.1 --> |No| 403["Raise 403 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.403Forbidden.xml'>RaiseFault.403Forbidden</a></em>"]
     403 --> E2[End]
     Q3 --> |No| Q4{Backend 404 & invalid routing plan?}
-    Q1 --> |Yes| Q4
+    Q1 --> |Yes| Q3
     Q4 --> |Yes| 404Invalid["Raise 404 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.404InvalidRoutingPlan.xml'>RaiseFault.404InvalidRoutingPlan</a></em>"]

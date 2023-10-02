@@ -144,6 +144,14 @@ ERROR_FORBIDDEN = Error(
     "Client not recognised or not yet onboarded."
 )
 
+# service ban
+ERROR_SERVICE_BAN = Error(
+    "CM_SERVICE_BAN",
+    "403",
+    "Service ban in effect",
+    "A service ban is in effect on your account."
+)
+
 # not acceptable
 ERROR_NOT_ACCEPTABLE = Error(
     "CM_NOT_ACCEPTABLE",

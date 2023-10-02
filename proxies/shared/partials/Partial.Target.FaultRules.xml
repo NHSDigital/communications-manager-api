@@ -7,11 +7,15 @@
                 oauthV2.OauthV2.VerifyAccessToken.failed = true or fault.name = "access_token_expired" or fault.name = "invalid_access_token" or fault.name = "InvalidAccessToken" or fault.name = "access_token_not_approved" or fault.name = "apiresource_doesnot_exist" or fault.name = "InvalidAPICallAsNo" or fault.name = "ApiProductMatchFound"
             </Condition>
         </Step>
-        <Step>
-            <Name>RaiseFault.403Forbidden</Name>
-            <Condition>response.status.code = 403</Condition>
-        </Step>
     {% endif %}
+    <Step>
+        <Name>RaiseFault.403ServiceBan</Name>
+        <Condition>response.status.code = 403 and response.content like "*Request rejected because client service ban is in effect*"</Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.403Forbidden</Name>
+        <Condition>response.status.code = 403</Condition>
+    </Step>
     <Step>
         <Name>RaiseFault.404InvalidRoutingPlan</Name>
         <Condition>
