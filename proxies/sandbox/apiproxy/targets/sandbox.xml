@@ -9,6 +9,7 @@
     </PreFlow>
     <Flows>
         [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
+        [% include './partials/Partial.Flows.CreateMessageEndpoint.xml' %]
     </Flows>
     [% include './partials/Partial.Target.PostFlow.xml' %]
     <FaultRules>
