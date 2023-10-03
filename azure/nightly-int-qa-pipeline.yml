@@ -1,0 +1,34 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge-fixed
+      endpoint: NHSDigital (63)
+
+schedules:
+  - cron: 0 2 * * *
+    displayName: 2am daily
+    branches:
+      include: ['release']
+    always: true
+
+pool:
+  name: 'AWS-ECS'
+
+variables:
+  - template: project.yml
+  - name: SERVICE_ARTIFACT_NAME
+    value: ''
+
+extends:
+  template: ./templates/run-tests.yml
+  parameters:
+    nightly: true
+    environment: 'internal-qa'
+    test_command: 'make internal-qa-test'
