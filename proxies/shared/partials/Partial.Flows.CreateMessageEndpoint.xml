@@ -1,0 +1,32 @@
+<Flow name="CreateMessageEndpoint">
+    <Description>Handle create message</Description>
+    <Request>
+        <Step>
+            <Name>JavaScript.Messages.Create.Validate</Name>
+        </Step>
+        <Step>
+            <Name>RaiseFault.400BadRequest</Name>
+            <Condition>errors != null</Condition>
+        </Step>
+        <Step>
+            <Name>JavaScript.Messages.Create.Request</Name>
+        </Step>
+        <Step>
+            <Name>AssignMessage.Messages.Create.Request</Name>
+        </Step>
+        <Step>
+            <Name>AssignMessage.AuthenticationDetails</Name>
+        </Step>
+    </Request>
+    <Response>
+        <Step>
+            <Name>JavaScript.Messages.Create.Response</Name>
+        </Step>
+        <Step>
+            <Name>AssignMessage.Messages.Create.Response</Name>
+        </Step>
+    </Response>
+    <Condition>
+        (proxy.pathsuffix MatchesPath "/v1/messages") and (request.verb = "POST")
+    </Condition>
+</Flow>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy executes a JavaScript file in the resources directory.
+
+ For more information on JavaScript policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
+
+ In this instance the JavaScript file modifies the response from the POST /api/v1/messages proxy target call so it is compatible
+ with the API definition.
+-->
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.Messages.Create.Response">
+    <DisplayName>JavaScript.Messages.Create.Response</DisplayName>
+    <Properties/>
+    <ResourceURL>jsc://Messages.Create.Response.js</ResourceURL>
+</Javascript>

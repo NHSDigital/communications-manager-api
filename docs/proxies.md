@@ -50,7 +50,9 @@ flowchart
     TPFR --> E1{Exception thrown?}
     TPFR --> CMB["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#create-message-batch'>Create Message Batch</a>"]
     CMB --> E1
-    CMB --> TPFRESP["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-preflow-response'>Target PreFlow Response</a>"]
+    CMB --> CM["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#create-message'>Create Message</a>"]
+    CM --> E1
+    CM --> TPFRESP["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-preflow-response'>Target PreFlow Response</a>"]
     TPFRESP --> E1
     TPFRESP --> TPOSTF["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#target-post-flow'>Target Post Flow</a>"]
     TPOSTF --> E1
@@ -384,6 +386,43 @@ flowchart
     ERES --> MRESP["Convert response
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.MessageBatches.Create.Response.xml'>AssignMessage.MessageBatches.Create.Response</a></em>"]
+    MRESP --> E
+```
+
+### Create Message
+
+This flow manages the validating of incoming create message requests, plus mapping the incoming request and outgoing response so they match the schemas set out in the specification.
+
+Source: [proxies/shared/partials/Partial.Flows.CreateMessageEndpoint.xml](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/partials/Partial.Flows.CreateMessageEndpoint.xml)
+
+```mermaid
+flowchart
+    S[Start] --> Q1{Matches create message endpoint?}
+    Q1 --> |No| E[End]
+    Q1 --> |Yes| V["Validate incoming request payload
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.Messages.Create.Validate.xml'>JavaScript.Messages.Create.Validate</a></em>"]
+    V --> Q2{Validation errors found?}
+    Q2 --> |Yes| 400["Raise 400 error
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.400BadRequest.xml'>RaiseFault.400BadRequest</a></em>"]
+    400 --> E
+    Q2 --> |No| MREQ["Convert request payload
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.Messages.Create.Request.xml'>JavaScript.Messages.Create.Request</a></em>"]
+    MREQ --> CR["Create backend request
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.Messages.Create.Request.xml'>AssignMessage.Messages.Create.Request</a></em>"]
+    CR --> AD["Assign authentication credentials
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.AuthenticationDetails.xml'>AssignMessage.AuthenticationDetails</a></em>"]
+    AD --> SEND["Send request to backend"]
+    SEND --> ERES["Extract variables from response
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.Messages.Create.Response.xml'>JavaScript.Messages.Create.Response</a></em>"]
+    ERES --> MRESP["Convert response
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.MessageBatches.Create.Response.xml'>AssignMessage.Messages.Create.Response</a></em>"]
     MRESP --> E
 ```
 
