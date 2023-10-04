@@ -31,7 +31,19 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("method", METHODS)
 def test_application_response_type(accept_headers, method):
     """
-    .. py:function:: Test content type negotiation
+    .. py:function:: Scenario: An API consumer submitting a request with a valid accept header \
+        receives a response containing the expected accept header
+
+        | **Given** the API consumer provides a valid accept header
+        | **When** the request is submitted
+        | **Then** the response returned is in the format requested
+
+    **Asserts**
+    - Response returns the expected accept header
+
+    .. include:: ../../partials/valid_accept_headers.rst
+    .. include:: ../../partials/methods.rst
+
     """
     resp = getattr(requests, method)(f"{PROD_URL}", headers={
         "Authorization": f"{Authentication.generate_authentication('prod')}",

@@ -14,7 +14,15 @@ valid_nhs_number = "9990548609"
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
 def test_201_message_batch_valid_accept_headers(accept_headers):
     """
-    .. py:function:: Test 201 valid accept headers
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid accept header receives a 201 response
+
+        | **Given** the API consumer provides a valid accept header when creating a batch of messages
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -34,7 +42,15 @@ def test_201_message_batch_valid_accept_headers(accept_headers):
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 def test_201_message_batch_valid_content_type_headers(content_type):
     """
-    .. py:function:: Test 201 valid content types
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid content type header receives a 201 response
+
+        | **Given** the API consumer provides a valid content type header when creating a batch of messages
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -50,7 +66,15 @@ def test_201_message_batch_valid_content_type_headers(content_type):
 @pytest.mark.inttest
 def test_201_message_batch_valid_nhs_number():
     """
-    .. py:function:: Test 201 valid NHS number
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid NHS number receives a 201 response
+
+        | **Given** the API consumer provides a valid NHS number for a recipient in their new message batch
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -67,7 +91,15 @@ def test_201_message_batch_valid_nhs_number():
 @pytest.mark.parametrize('dob', VALID_DOB)
 def test_201_message_batch_valid_dob(dob):
     """
-    .. py:function:: Test 201 valid date of birth
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid date of birth receives a 201 response
+
+        | **Given** the API consumer provides a valid date of birth for a recipient in their new message batch
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
@@ -84,7 +116,15 @@ def test_201_message_batch_valid_dob(dob):
 @pytest.mark.inttest
 def test_request_without_dob():
     """
-    .. py:function:: Test 201 date of birth is none mandatory
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        date of birth receives a 201 response
+
+        | **Given** the API consumer does not provide a date of birth for a recipient in their new message batch
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")

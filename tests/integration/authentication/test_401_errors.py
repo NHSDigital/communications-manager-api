@@ -10,7 +10,20 @@ from lib.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid(invalid_token, correlation_id, method):
     """
-    .. py:function:: Test 401 response
+    .. py:function:: Scenario: An API consumer submitting a request with an \
+        invalid authentication token receives a 401 'Access Denied' response
+
+        | **Given** the API consumer provides an invalid authentication token
+        | **When** the request is submitted
+        | **Then** the response is a 401 access denied error
+
+    **Asserts**
+    - Response returns a 401 'Access Denied' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/methods.rst
+    .. include:: ../../partials/correlation_ids.rst
     """
     resp = getattr(requests, method)(INT_URL, headers={
         "Authorization": invalid_token,

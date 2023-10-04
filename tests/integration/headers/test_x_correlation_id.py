@@ -17,7 +17,21 @@ def test_request_with_x_correlation_id(
     method,
 ):
     """
-    .. py:function:: Test correlation identifier response
+    .. py:function:: Scenario: An API consumer submitting a request with to a request with an 'X-Correlation-Id' \
+        header receives a response reflecting the X-Correlation-Id value
+
+        | **Given** the API consumer provides an x-correlation-id header
+        | **When** the request is submitted
+        | **Then** the response is contains an x-correlation-id header
+
+    **Asserts**
+    - Response returns a 504 status code
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/methods.rst
+    .. include:: ../../partials/correlation_ids.rst
+
     """
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",

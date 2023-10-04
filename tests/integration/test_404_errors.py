@@ -12,7 +12,20 @@ POST_PATHS = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot"]
 @pytest.mark.parametrize("method", METHODS)
 def test_404_not_found(request_path, correlation_id, method):
     """
-    .. py:function:: Test 404 response
+    .. py:function:: Scenario: An API consumer submitting a request to an unknown endpoint \
+        receives a 404 'Not Found' response
+
+        | **Given** the API consumer does not know how to identify the resource they want to fetch
+        | **When** the request is submitted to an unknown resource
+        | **Then** the service responds with a 404 not found response, telling the user the resource does not exist
+
+    **Asserts**
+    - Response returns a 404 'Not Found' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/methods.rst
+    .. include:: ../../partials/correlation_ids.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
