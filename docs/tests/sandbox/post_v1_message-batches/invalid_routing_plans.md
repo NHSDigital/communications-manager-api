@@ -1,7 +1,7 @@
 # Invalid Routing Plans
 
 
-### Scenario: An API consumer submitting a request with a routing plan         referencing the same template twice receives a 500 'Duplicate Routing Plan' response
+## Scenario: An API consumer submitting a request with a routing plan referencing the same template twice receives a 500 ‘Duplicate Routing Plan’ response
 
 **Given** the API consumer provides a message body containing a reference to the same template twice
 <br/>
@@ -25,7 +25,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with a routing plan         referencing a missing template receives a 500 'Missing Routing Plan' response
+## Scenario: An API consumer submitting a request with a routing plan referencing a missing template receives a 500 ‘Missing Routing Plan’ response
 
 **Given** the API consumer provides a message body with a routing plan referencing a missing template
 <br/>
@@ -49,7 +49,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request where the         routing plan identifier is not a properly formed UUID receives a 400 'No Such Routing Plan' response
+## Scenario: An API consumer submitting a request with an invalid routing plan receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides a message body with a routing plan referencing an invalid template
 <br/>
@@ -73,7 +73,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an unknown routing plan         receives a 404 'No Such Routing Plan' response
+## Scenario: An API consumer submitting a request with an unknown routing plan receives a 404 ‘No Such Routing Plan’ response
 
 **Given** the API consumer provides a message body with an unknown routing plan
 <br/>

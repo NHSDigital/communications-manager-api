@@ -14,7 +14,7 @@ INVALID_ROUTING_PLAN = "ae0f772e-6660-4829-8f11-1ed8a3fc68c2"
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test missing routing plan
+    .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,
@@ -52,7 +52,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test accessing another users routing plan
+    .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,
@@ -90,7 +90,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlatio
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test duplicate templates in routing plan
+    .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,
@@ -144,7 +144,7 @@ def test_routing_plan_missing_templates(
     nhsd_apim_auth_headers
 ):
     """
-    .. py:function:: Test missing routing plan templates
+    .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,

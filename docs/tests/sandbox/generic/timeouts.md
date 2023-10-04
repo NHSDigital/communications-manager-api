@@ -3,7 +3,7 @@
 ## Server timeouts
 
 
-### Scenario: An API consumer submitting a request with a         503 prefer header receives a 503 'Service Unavailable' response
+### Scenario: An API consumer submitting a request with a 503 prefer header receives a 503 ‘Service Unavailable’ response
 
 **Given** the API consumer provides a 503 prefer header
 <br/>
@@ -27,7 +27,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request         when the backend service responds with a 504 timeout             receives a 504 'Timeout' response
+### Scenario: An API consumer submitting a request when the backend service responds with a 504 timeout receives a 504 ‘Timeout’ response
 
 **Given** the backend service is too slow to be reached
 <br/>
@@ -51,7 +51,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with a         code 504 Prefer header receives a 504 'Timeout' error response
+### Scenario: An API consumer submitting a request with a code 504 Prefer header receives a 504 ‘Timeout’ error response
 
 **Given** the API consumer provides a code 504 prefer header
 <br/>
@@ -75,7 +75,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request         when the backend service responds with a 504 timeout after 3 seconds             receives a 504 'Timeout' response
+### Scenario: An API consumer submitting a request when the backend service responds with a 504 timeout after 3 seconds receives a 504 ‘Timeout’ response
 
 **Given** the backend service is too slow to be reached
 <br/>
@@ -101,7 +101,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 ## Client timeouts
 
 
-### Scenario: An API consumer submitting a request         when the backend service responds with a 408 timeout             receives a 408 'Timeout' response
+### Scenario: An API consumer submitting a request when the backend service responds with a 408 timeout receives a 408 ‘Timeout’ response
 
 **Given** the backend service takes too long to respond
 <br/>
@@ -125,7 +125,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with a         408 prefer header receives a 408 'Timeout' response
+### Scenario: An API consumer submitting a request with a 408 prefer header receives a 408 ‘Timeout’ response
 
 **Given** the API consumer provides a 408 prefer header
 <br/>

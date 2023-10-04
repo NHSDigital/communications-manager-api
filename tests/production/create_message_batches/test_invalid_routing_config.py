@@ -13,7 +13,9 @@ INVALID_ROUTING_PLAN = "acd3d4b9-de96-49ef-9ab9-8ce03e678082"
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_no_such_routing_plan(correlation_id):
     """
-    .. py:function:: Test no such routing plan
+    ..py:function:: test_no_such_routing_plan
+
+    .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             "Authorization": f"{Authentication.generate_authentication('prod')}",
@@ -50,7 +52,7 @@ def test_no_such_routing_plan(correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_routing_plan_not_belonging_to_client_id(correlation_id):
     """
-    .. py:function:: Test using someone elses routing plan
+    .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
             "Authorization": f"{Authentication.generate_authentication('prod')}",

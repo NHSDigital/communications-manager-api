@@ -1,7 +1,9 @@
 # Quota Tests
 
+## 429 - Quota
 
-### Scenario: An API consumer submitting a request with a         429 Prefer header receives a 429 'Quota' response
+
+### Scenario: An API consumer submitting a request with a 429 Prefer header receives a 429 ‘Quota’ response
 
 **Given** the API consumer provides a 429 prefer header
 <br/>

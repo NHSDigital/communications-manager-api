@@ -1,9 +1,9 @@
 # Content Types
 
-## Not acceptable
+## 406 - Not Acceptable
 
 
-### Scenario: An API consumer submitting a request with         an invalid accept header receives a 406 'Not Acceptable' response
+### Scenario: An API consumer submitting a request with an invalid accept header receives a 406 ‘Not Acceptable’ response
 
 **Given** the API consumer provides an invalid accept header
 <br/>
@@ -73,10 +73,10 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
-## Invalid content type
+## 415 - Unsupported Media
 
 
-### Scenario: An API consumer submitting a request with         an invalid content type receives a 415 'Unsupported Media' response
+### Scenario: An API consumer submitting a request with an invalid content type receives a 415 ‘Unsupported Media’ response
 
 **Given** the API consumer provides an invalid content type header
 <br/>
@@ -149,7 +149,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 ## Content negotiation
 
 
-### Scenario: An API consumer submitting a request with a valid accept header         receives a response containing the expected accept header
+### Scenario: An API consumer submitting a request with a valid accept header receives a response containing the expected accept header
 
 **Given** the API consumer provides a valid accept header
 <br/>

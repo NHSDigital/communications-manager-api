@@ -22,7 +22,7 @@ def test_406(
     method,
 ):
     """
-    .. py:function:: Test 406 response
+    .. include:: ../../partials/content_types/test_406.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}/{request_path}", headers={
         accept_header_name: accept_header_value,

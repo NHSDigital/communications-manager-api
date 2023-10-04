@@ -11,7 +11,7 @@ CONTENT_TYPE = "application/json"
 @pytest.mark.inttest
 def test_create_messages_large_invalid_payload():
     """
-    .. py:function:: Test large (50k) invalid payload
+    .. include:: ../../partials/performance/test_create_messages_large_valid_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -39,7 +39,7 @@ def test_create_messages_large_invalid_payload():
 @pytest.mark.inttest
 def test_create_messages_large_not_unique_payload():
     """
-    .. py:function:: Test large (50k) none unique message reference payload
+    .. include:: ../../partials/performance/test_create_messages_large_not_unique_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 

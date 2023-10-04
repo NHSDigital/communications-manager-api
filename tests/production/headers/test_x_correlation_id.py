@@ -17,7 +17,7 @@ def test_request_with_x_correlation_id(
     method,
 ):
     """
-    .. py:function:: Test correlation identifier responses
+    .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('prod')}",

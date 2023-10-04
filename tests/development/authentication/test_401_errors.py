@@ -10,7 +10,7 @@ from lib.constants import CORRELATION_IDS, METHODS, TOKENS
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid_level(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id, method):
     """
-    .. py:function:: Test 401 application has invalid level
+    .. include:: ../../partials/authentication/test_401_invalid_level.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         **nhsd_apim_auth_headers,
@@ -31,7 +31,7 @@ def test_401_invalid_level(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlat
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid(nhsd_apim_proxy_url, invalid_token, correlation_id, method):
     """
-    .. py:function:: Test 401 invalid token
+    .. include:: ../../partials/authentication/test_401_invalid.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         "Authorization": invalid_token,

@@ -21,7 +21,9 @@ def test_request_with_x_correlation_id(
     nhsd_apim_auth_headers
 ):
     """
-    .. py:function:: Test correlation identifier is returned
+    ..py:function:: test_request_with_x_correlation_id
+
+    .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         **nhsd_apim_auth_headers,

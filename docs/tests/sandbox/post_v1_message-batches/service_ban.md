@@ -1,7 +1,7 @@
 # Service Ban
 
 
-### Scenario: An API consumer has been banned from the service,         when making requests they fail with a service ban response
+## Scenario: An API consumer has been banned from the service, when making requests they fail with a service ban response
 
 **Given** the API consumer has been banned
 <br/>
@@ -25,7 +25,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer wants to test the service ban         error message on the sandbox environment
+## Scenario: An API consumer wants to test the service ban error message on the sandbox environment
 
 **Given** the API consumer provides a code 403.1 prefer header
 <br/>

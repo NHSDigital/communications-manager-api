@@ -1,15 +1,15 @@
 Content Types
 ====================
 
-Not acceptable
---------------
+406 - Not Acceptable
+--------------------
 
 .. automodule:: sandbox.content_types.test_406_errors
     :noindex:
     :members:
 
-Invalid content type
---------------------
+415 - Unsupported Media
+-----------------------
 
 .. automodule:: sandbox.content_types.test_415_errors
     :noindex:

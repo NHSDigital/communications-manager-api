@@ -1,7 +1,7 @@
 Authentication Tests
 ====================
 
-401 - Unauthenticated
+401 - Access Denied
 ---------------------
 
 .. automodule:: development.authentication.test_401_errors

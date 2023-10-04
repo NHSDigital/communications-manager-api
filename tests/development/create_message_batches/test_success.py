@@ -15,7 +15,7 @@ valid_nhs_number = "9990548609"
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
     """
-    .. py:function:: Test 201 accept headers
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_accept_headers.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(
@@ -35,7 +35,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
     """
-    .. py:function:: Test 201 content type headers
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_content_type_headers.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
@@ -51,7 +51,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test 201 valid NHS numbers
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_nhs_number.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = valid_nhs_number
@@ -70,7 +70,7 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
     """
-    .. py:function:: Test 201 valid date of birth
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
@@ -88,7 +88,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test 201 date of birth none mandatory
+    .. include:: ../../partials/happy_path/test_request_without_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")

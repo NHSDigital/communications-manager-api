@@ -18,19 +18,7 @@ INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000",
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request without a request body \
-        receives a 400 'Invalid Value' response
-
-        | **Given** the API consumer provides an empty message body
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_invalid_body.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
@@ -57,20 +45,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request without a required attribute \
-        in the request body receives a 400 'Missing Value' response
-
-        | **Given** the API consumer provides an message body with a missing required attribute
-        | **When** the request is submitted
-        | **Then** the response returns a 400 missing value error
-
-    **Asserts**
-    - Response returns a 400 'Missing Value' error
-    - Response returns the expected error message body with references to the missing attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/request_properties.rst
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_property_missing.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
@@ -100,21 +75,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an empty required attribute \
-        in the request body receives a 400 'Null Value' response
-
-        | **Given** the API consumer provides an message body with a null attribute
-        | **When** the request is submitted
-        | **Then** the response returns a 400 null value error
-
-    **Asserts**
-    - Response returns a 400 'Null Value' error
-    - Response returns the expected error message body with references to the null attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/request_properties.rst
-    .. include:: ../../partials/correlation_ids.rst
-
+    .. include:: ../../partials/validation/test_data_null.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
@@ -144,20 +105,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid required attribute \
-        in the request body receives a 400 'Invalid Value' response
-
-        | **Given** the API consumer provides an message body with an invalid attribute
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/request_properties.rst
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_data_invalid.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
@@ -188,20 +136,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a duplicate attribute \
-        in the request body receives a 400 'Duplicate Value' response
-
-        | **Given** the API consumer provides an message body with duplicate attributes
-        | **When** the request is submitted
-        | **Then** the response returns a 400 duplicate value error
-
-    **Asserts**
-    - Response returns a 400 'Duplicate Value' error
-    - Response returns the expected error message body with references to the duplicate attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/request_properties.rst
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_data_duplicate.rst
     """
     # Add a duplicate message to the payload to trigger the duplicate error
     data = Generators.generate_valid_create_message_batch_body("sandbox")
@@ -233,20 +168,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with too few attributes \
-        in the request body receives a 400 'Invalid Value' response
-
-        | **Given** the API consumer provides an message body with too few attributes
-        | **When** the request is submitted
-        | **Then** the response returns a 400 too few items error
-
-    **Asserts**
-    - Response returns a 400 'Too Few Items' error
-    - Response returns the expected error message body with references to the removed attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/request_properties.rst
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_data_too_few_items.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
@@ -274,23 +196,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid \
-        NHS number receives a 400 'Invalid NHS Number' response
-
-        An NHS Number is a 10 digit number used to identify patients, for more \
-            information on the structure of NHS numbers look \
-                `here <https://www.datadictionary.nhs.uk/attributes/nhs_number.html>`__
-
-        | **Given** the API consumer provides an message body with an invalid NHS number
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid nhs number error
-
-    **Asserts**
-    - Response returns a 400 'Invalid NHS Number' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -328,21 +234,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid \
-        date of birth receives a 400 'Invalid Value' response
-
-        A valid date of birth must be structured in this format: YYYY-MM-dd
-
-        | **Given** the API consumer provides an message body with an invalid date of birth
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -379,22 +271,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid \
-       routing plan receives a 400 'Invalid Value' response
-
-        The routing plan must be in a UUID format, for more information on UUID, \
-            look `here <https://en.wikipedia.org/wiki/Universally_unique_identifier>`__
-
-        | **Given** the API consumer provides an message body with an invalid routing plan
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -431,22 +308,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid \
-        message batch reference receives a 400 'Invalid Value' response
-
-        The message batch reference must be in a UUID format, for more information on UUID, \
-            look `here <https://en.wikipedia.org/wiki/Universally_unique_identifier>`__
-
-        | **Given** the API consumer provides an message body with an invalid message batch reference
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -483,22 +345,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid \
-        message reference receives a 400 'Invalid Value' response
-
-        The message reference must be in a UUID format, for more information on UUID, \
-            look `here <https://en.wikipedia.org/wiki/Universally_unique_identifier>`__
-
-        | **Given** the API consumer provides an message body with an invalid message reference
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -536,19 +383,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an invalid \
-        message value receives a 400 'Invalid Value' response
-
-        | **Given** the API consumer provides an message body with an invalid message value
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body with references to the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -578,19 +413,7 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a null \
-        message value receives a 400 'Null Value' response
-
-        | **Given** the API consumer provides an message body with a null message value
-        | **When** the request is submitted
-        | **Then** the response returns a 400 null value error
-
-    **Asserts**
-    - Response returns a 400 'Null Value' error
-    - Response returns the expected error message body with references to the null attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
@@ -621,19 +444,7 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("number_of_errors", [99, 100, 101, 150, 200])
 def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with that will generate a set number of errors \
-        will receive a response containing references to each error up to 100 occurences
-
-        | **Given** the API consumer provides an message body with that will generate a given number of errors
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value response
-        | **And** the response returns a message body referencing up to 100 errors
-
-    **Asserts**
-    - Response returns the expected number of errors
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/validation/test_validation_returns_at_max_errors.rst
     """
     duplicate_message_reference = str(uuid.uuid4())
     data = {

@@ -14,7 +14,7 @@ valid_nhs_number = "9990548609"
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
 def test_201_message_batch_valid_accept_headers(accept_headers):
     """
-    .. py:function:: Test 201 valid accept headers
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_accept_headers.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -34,7 +34,7 @@ def test_201_message_batch_valid_accept_headers(accept_headers):
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 def test_201_message_batch_valid_content_type_headers(content_type):
     """
-    .. py:function:: Test 201 valid content types
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_content_type_headers.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -50,7 +50,7 @@ def test_201_message_batch_valid_content_type_headers(content_type):
 @pytest.mark.inttest
 def test_201_message_batch_valid_nhs_number():
     """
-    .. py:function:: Test 201 valid NHS number
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_nhs_number.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
@@ -67,7 +67,7 @@ def test_201_message_batch_valid_nhs_number():
 @pytest.mark.parametrize('dob', VALID_DOB)
 def test_201_message_batch_valid_dob(dob):
     """
-    .. py:function:: Test 201 valid date of birth
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
@@ -84,7 +84,7 @@ def test_201_message_batch_valid_dob(dob):
 @pytest.mark.inttest
 def test_request_without_dob():
     """
-    .. py:function:: Test 201 date of birth is none mandatory
+    .. include:: ../../partials/happy_path/test_request_without_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")

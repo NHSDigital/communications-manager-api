@@ -3,7 +3,7 @@
 ## CORS Responses
 
 
-### Scenario: An API consumer submitting a request with an 'Origin' header receives     the expected cors headers in response
+### Scenario: An API consumer submitting a request with an ‘Origin’ header receives the expected cors headers in response
 
 CORS allows the API to be used whilst within a web browser, from websites that are hosted on a different domain to that of the API. This is important as users utilising our API documentation must be able to send test requests from that page using the ‘try it now’ functionality.
 
@@ -34,7 +34,7 @@ This test makes use of different HTTP methods, if the method is either HEAD or O
 | OPTIONS |
 
 
-### Scenario: An API consumer submitting a request with cors         headers receives a response reflecting the cors headers values
+### Scenario: An API consumer submitting a request with cors headers receives a response reflecting the cors headers values
 
 CORS allows the API to be used whilst within a web browser, from websites that are hosted on a different domain to that of the API. This is important as users utilising our API documentation must be able to send test requests from that page using the ‘try it now’ functionality.
 
@@ -49,14 +49,14 @@ CORS allows the API to be used whilst within a web browser, from websites that a
 - Response returns 200 status code
 - Response contains ‘Access-Control-Allow-Origin’ header matching the provided value
 - Response contains ‘Access-Control-Allow-Methods’ header matching the provided HTTP method supplied
-- Response contains ‘Access-Control-Max-Age’ headers matching the maximum age allow methods and headers         can be cached (42 days)
+- Response contains ‘Access-Control-Max-Age’ headers matching the maximum age allow methods and headers can be cached (42 days)
 - Response contains ‘Access-Control-Allow-Headers’ headers matching the API’s allowed headers
 - Response contains ‘Cross-Origin-Resource-Policy’ header matching ‘cross-origin’
 
 ## Correlation Id
 
 
-### Scenario: An API consumer submitting a request with to a request with an 'X-Correlation-Id'         header receives a response reflecting the X-Correlation-Id value
+### Scenario: An API consumer submitting a request with to a request with an ‘X-Correlation-Id’ header receives a response reflecting the X-Correlation-Id value
 
 **Given** the API consumer provides an x-correlation-id header
 <br/>

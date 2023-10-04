@@ -1,7 +1,7 @@
 # Validation Tests
 
 
-### Scenario: An API consumer submitting a request with an invalid         message value receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with an invalid message value receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an message body with an invalid message value
 <br/>
@@ -25,7 +25,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with a duplicate attribute         in the request body receives a 400 'Duplicate Value' response
+## Scenario: An API consumer submitting a request with a duplicate attribute in the request body receives a 400 ‘Duplicate Value’ response
 
 **Given** the API consumer provides an message body with duplicate attributes
 <br/>
@@ -67,7 +67,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an invalid required attribute         in the request body receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with an invalid required attribute in the request body receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an message body with an invalid attribute
 <br/>
@@ -109,7 +109,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an empty required attribute         in the request body receives a 400 'Null Value' response
+## Scenario: An API consumer submitting a request with an empty required attribute in the request body receives a 400 ‘Null Value’ response
 
 **Given** the API consumer provides an message body with a null attribute
 <br/>
@@ -151,7 +151,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with too few attributes         in the request body receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with too few attributes in the request body receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an message body with too few attributes
 <br/>
@@ -193,7 +193,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request without a request body         receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request without a request body receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an empty message body
 <br/>
@@ -217,7 +217,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an invalid         date of birth receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with an invalid date of birth receives a 400 ‘Invalid Value’ response
 
 A valid date of birth must be structured in this format: YYYY-MM-dd
 
@@ -243,9 +243,9 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an invalid         message batch reference receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with an invalid message batch reference receives a 400 ‘Invalid Value’ response
 
-The message batch reference must be in a UUID format, for more information on UUID,             look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
+The message batch reference must be in a UUID format, for more information on UUID, look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
 **Given** the API consumer provides an message body with an invalid message batch reference
 <br/>
@@ -269,9 +269,9 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an invalid         message reference receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with an invalid message reference receives a 400 ‘Invalid Value’ response
 
-The message reference must be in a UUID format, for more information on UUID,             look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
+The message reference must be in a UUID format, for more information on UUID, look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
 **Given** the API consumer provides an message body with an invalid message reference
 <br/>
@@ -295,9 +295,9 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an invalid         NHS number receives a 400 'Invalid NHS Number' response
+## Scenario: An API consumer submitting a request with an invalid NHS number receives a 400 ‘Invalid NHS Number’ response
 
-An NHS Number is a 10 digit number used to identify patients, for more             information on the structure of NHS numbers look                 [here](https://www.datadictionary.nhs.uk/attributes/nhs_number.html)
+An NHS Number is a 10 digit number used to identify patients, for more information on the structure of NHS numbers look [here](https://www.datadictionary.nhs.uk/attributes/nhs_number.html)
 
 **Given** the API consumer provides an message body with an invalid NHS number
 <br/>
@@ -321,9 +321,9 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with an invalid        routing plan receives a 400 'Invalid Value' response
+## Scenario: An API consumer submitting a request with an invalid routing plan receives a 400 ‘Invalid Value’ response
 
-The routing plan must be in a UUID format, for more information on UUID,             look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
+The routing plan must be in a UUID format, for more information on UUID, look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
 **Given** the API consumer provides an message body with an invalid routing plan
 <br/>
@@ -347,7 +347,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with a null         message value receives a 400 'Null Value' response
+## Scenario: An API consumer submitting a request with a null message value receives a 400 ‘Null Value’ response
 
 **Given** the API consumer provides an message body with a null message value
 <br/>
@@ -371,7 +371,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request without a required attribute         in the request body receives a 400 'Missing Value' response
+## Scenario: An API consumer submitting a request without a required attribute in the request body receives a 400 ‘Missing Value’ response
 
 **Given** the API consumer provides an message body with a missing required attribute
 <br/>
@@ -413,7 +413,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-### Scenario: An API consumer submitting a request with that will generate a set number of errors         will receive a response containing references to each error up to 100 occurences
+## Scenario: An API consumer submitting a request with that will generate a set number of errors will receive a response containing references to each error up to 100 occurences
 
 **Given** the API consumer provides an message body with that will generate a given number of errors
 <br/>

@@ -10,7 +10,7 @@ from lib.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid(invalid_token, correlation_id, method):
     """
-    .. py:function:: Test 401 response
+    .. include:: ../../partials/authentication/test_401_invalid.rst
     """
     resp = getattr(requests, method)(INT_URL, headers={
         "Authorization": invalid_token,
