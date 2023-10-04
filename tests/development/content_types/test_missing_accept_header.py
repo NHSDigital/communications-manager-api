@@ -19,7 +19,19 @@ def test_missing_accept_header(
     nhsd_apim_auth_headers
 ):
     """
-    .. py:function:: Test missing accept headers
+    .. py:function:: Scenario: An API consumer submitting a request without an accept header \
+        receives a successful response
+
+        | **Given** the API consumer does not provide an accept header
+        | **When** the request is submitted
+        | **Then** the response returned is successful
+
+    **Asserts**
+    - Response returns a 201 success
+
+    .. include:: ../../partials/valid_accept_headers.rst
+    .. include:: ../../partials/methods.rst
+
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 

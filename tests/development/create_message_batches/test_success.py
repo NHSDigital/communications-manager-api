@@ -15,7 +15,15 @@ valid_nhs_number = "9990548609"
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
     """
-    .. py:function:: Test 201 accept headers
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid accept header receives a 201 response
+
+        | **Given** the API consumer provides a valid accept header when creating a batch of messages
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(
@@ -35,7 +43,15 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
     """
-    .. py:function:: Test 201 content type headers
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid content type header receives a 201 response
+
+        | **Given** the API consumer provides a valid content type header when creating a batch of messages
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
@@ -51,7 +67,15 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test 201 valid NHS numbers
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid NHS number receives a 201 response
+
+        | **Given** the API consumer provides a valid NHS number for a recipient in their new message batch
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = valid_nhs_number
@@ -70,7 +94,15 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
     """
-    .. py:function:: Test 201 valid date of birth
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        valid date of birth receives a 201 response
+
+        | **Given** the API consumer provides a valid date of birth for a recipient in their new message batch
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
@@ -88,7 +120,15 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test 201 date of birth none mandatory
+    .. py:function:: Scenario: An API consumer creating a batch of messages with a \
+        date of birth receives a 201 response
+
+        | **Given** the API consumer does not provide a date of birth for a recipient in their new message batch
+        | **When** the request is submitted
+        | **Then** the response is a 201 success
+
+    **Asserts**
+    - Response returns a 201 status code
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")

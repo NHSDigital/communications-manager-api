@@ -14,7 +14,19 @@ INVALID_ROUTING_PLAN = "ae0f772e-6660-4829-8f11-1ed8a3fc68c2"
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test missing routing plan
+    .. py:function:: Scenario: An API consumer submitting a request with an unknown routing plan \
+        receives a 404 'No Such Routing Plan' response
+
+        | **Given** the API consumer provides a message body with an unknown routing plan
+        | **When** the request is submitted
+        | **Then** the response returns a 404 no such routing plan error
+
+    **Asserts**
+    - Response returns a 404 'No Such Routing Plan' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/correlation_ids.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,
@@ -52,7 +64,19 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test accessing another users routing plan
+    .. py:function:: Scenario: An API consumer submitting a request with a routing plan \
+        not belonging to the associated client ID receives a 404 'No Such Routing Plan' response
+
+        | **Given** the API consumer provides a routing plan not associated to a client ID
+        | **When** the request is submitted
+        | **Then** the response returns a 404 no such routing plan error
+
+    **Asserts**
+    - Response returns a 404 'No Such Routing Plan' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/correlation_ids.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **nhsd_apim_auth_headers,

@@ -19,7 +19,20 @@ CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 @pytest.mark.parametrize("method", METHODS)
 def test_user_token_get(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id, method):
     """
-    .. py:function:: Test 403 user token not acceptable
+    .. py:function:: Scenario: An API consumer submitting a request with user level authentication when \
+        the API accepts application level authentication only, receives a 403 'Forbidden' response
+
+        | **Given** the API consumer provides user level authentication
+        | **When** the request is submitted
+        | **Then** the response is a 403 forbidden error
+
+    **Asserts**
+    - Response returns a 403 'Forbidden' error
+    - Response returns the expected error message body
+    - Response returns the 'X-Correlation-Id' header if provided
+
+    .. include:: ../../partials/methods.rst
+    .. include:: ../../partials/correlation_ids.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
         **nhsd_apim_auth_headers,

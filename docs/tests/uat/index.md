@@ -1,6 +1,6 @@
-# Development test suite
+# UAT test suite
 
-The Development Test Suite is a collection of tests ran against the internal-dev environment. These tests are ran as part of the [pull request pipeline](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=619), [release pipeline](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=620) and the [nightly internal development integration test run](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=622)
+The UAT Test Suite is a collection of tests ran against the internal-qa environment which is connected to the UAT backend of the communications manager service. These tests are ran as part of the [release pipeline](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=620) and the [nightly internal qa integration test run](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=643&_a=summary)
 
 * [Generic Tests](generic/index.md)
   * [Authentication Tests](generic/authentication.md)
