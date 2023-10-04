@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Assertions, Generators
+from lib import Assertions, Generators, Error_Handler
 
 CORRELATION_IDS = [None, "0f160ae2-9b62-47bf-bdf0-c6a844d59488"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
@@ -34,6 +34,8 @@ def test_too_many_requests_get(nhsd_apim_proxy_url, correlation_id, method):
         "Content-Type": "application/json",
         "X-Correlation-Id": correlation_id
     })
+
+    Error_Handler.handle_504_retry(resp)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,

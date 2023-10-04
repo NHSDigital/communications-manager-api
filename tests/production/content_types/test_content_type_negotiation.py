@@ -1,7 +1,7 @@
 import requests
 import pytest
-from lib import Authentication
-from lib.constants import *
+from lib import Authentication, Error_Handler
+from lib.constants import METHODS, PROD_URL
 
 ACCEPT_HEADERS = [
     {
@@ -23,7 +23,6 @@ ACCEPT_HEADERS = [
         "expect": "application/json"
     }
 ]
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 
 
 @pytest.mark.prodtest
@@ -38,7 +37,6 @@ def test_application_response_type(accept_headers, method):
         **accept_headers.get("headers")
     })
 
-    if resp.status_code == 429:
-        raise AssertionError('Unexpected 429')
+    Error_Handler.handle_retry(resp)
 
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")

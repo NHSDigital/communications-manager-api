@@ -1,7 +1,7 @@
 import requests
 import pytest
-from lib import Authentication
-from lib.constants import INT_URL, METHODS, UNEXPECTED_429
+from lib import Authentication, Error_Handler
+from lib.constants import INT_URL, METHODS
 
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 ACCEPT_HEADERS = [
@@ -38,7 +38,6 @@ def test_application_response_type(accept_headers, method):
         **accept_headers.get("headers")
     })
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")

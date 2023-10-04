@@ -1,11 +1,11 @@
-from .constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY, UNEXPECTED_429
+from .constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
+from .error_handler import Error_Handler
 
 
 class Assertions():
     @staticmethod
     def assert_201_response(resp, message_batch_reference):
-        if (resp.status_code == 429):
-            raise UNEXPECTED_429
+        Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201
 
@@ -24,8 +24,12 @@ class Assertions():
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
-        if (code != 429 and resp.status_code == 429):
-            raise UNEXPECTED_429
+        if code == 429:
+            Error_Handler.handle_504_retry(resp)
+        elif code == 504:
+            Error_Handler.handle_429_retry(resp)
+        else:
+            Error_Handler.handle_retry(resp)
 
         assert resp.status_code == code
 
@@ -56,8 +60,7 @@ class Assertions():
 
     @staticmethod
     def assert_cors_response(resp, website):
-        if resp.status_code == 429:
-            raise UNEXPECTED_429
+        Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 200
         assert resp.headers.get("Access-Control-Allow-Origin") == website
@@ -68,8 +71,7 @@ class Assertions():
 
     @staticmethod
     def assert_cors_headers(resp, website):
-        if resp.status_code == 429:
-            raise UNEXPECTED_429
+        Error_Handler.handle_retry(resp)
 
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS

@@ -1,7 +1,7 @@
 import requests
 import pytest
-from lib.constants import CORRELATION_IDS, METHODS, UNEXPECTED_429
-
+from lib.constants import CORRELATION_IDS, METHODS
+from lib import Error_Handler
 
 REQUEST_PATH = ["", "/", "/api/v1/send", "/v1/message-batches", "/v1/message-batches/"]
 
@@ -37,7 +37,6 @@ def test_request_with_x_correlation_id(
         "x-correlation-id": correlation_id
     })
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     assert resp.headers.get("x-correlation-id") == correlation_id
