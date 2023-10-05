@@ -12,8 +12,8 @@ resources:
       endpoint: NHSDigital (63)
 
 schedules:
-  - cron: 0 2 * * *
-    displayName: 2am daily
+  - cron: 0 3 * * *
+    displayName: 3am daily
     branches:
       include: ['release']
     always: true
