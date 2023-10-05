@@ -24,7 +24,7 @@
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
         <Headers>
             <Header name="Content-Type">application/json</Header>
-            <Header name="X-Idempotency-Key">{developer.app.id}-{data.messageBatchReference}</Header>
+            <Header name="X-Idempotency-Key">{developer.app.id}-MessageBatch-{data.messageBatchReference}</Header>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
         </Headers>
         <Verb>POST</Verb>
