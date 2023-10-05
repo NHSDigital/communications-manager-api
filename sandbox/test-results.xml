@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.734" tests="25" failures="3">
+  <testsuite name="Root Suite" timestamp="2023-10-05T14:50:04" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="backend_408" timestamp="2023-10-05T14:50:04" tests="1" file="/Users/sean.marjason/Documents/Repos/01_CovidRiskStratification/communications-manager-api/sandbox/__test__/backend_408.spec.js" time="0.070" failures="0">
+    <testcase name="backend_408 can mock a 408 response type" time="0.026" classname="can mock a 408 response type">
+    </testcase>
+  </testsuite>
+  <testsuite name="backend_504" timestamp="2023-10-05T14:50:04" tests="1" file="/Users/sean.marjason/Documents/Repos/01_CovidRiskStratification/communications-manager-api/sandbox/__test__/backend_504.spec.js" time="0.009" failures="0">
+    <testcase name="backend_504 can mock a 504 response type" time="0.005" classname="can mock a 504 response type">
+    </testcase>
+  </testsuite>
+  <testsuite name="/api/v1/send" timestamp="2023-10-05T14:50:04" tests="18" file="/Users/sean.marjason/Documents/Repos/01_CovidRiskStratification/communications-manager-api/sandbox/__test__/batch_send.spec.js" time="0.134" failures="0">
+    <testcase name="/api/v1/send returns a service ban (403) when the user is banned" time="0.011" classname="returns a service ban (403) when the user is banned">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when body doesnt exist" time="0.005" classname="returns a 400 when body doesnt exist">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the sendingGroupId doesnt exist" time="0.019" classname="returns a 400 when the sendingGroupId doesnt exist">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the sendingGroupId is null" time="0.010" classname="returns a 400 when the sendingGroupId is null">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the requestRefId doesnt exist" time="0.004" classname="returns a 400 when the requestRefId doesnt exist">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the requestRefId is null" time="0.004" classname="returns a 400 when the requestRefId is null">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the data doesnt exist" time="0.005" classname="returns a 400 when the data doesnt exist">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the data is null" time="0.005" classname="returns a 400 when the data is null">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the data is not an array" time="0.006" classname="returns a 400 when the data is not an array">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the data does not contain items with requestItemRefId" time="0.006" classname="returns a 400 when the data does not contain items with requestItemRefId">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when the data contains duplicate requestItemRefIds" time="0.005" classname="returns a 400 when the data contains duplicate requestItemRefIds">
+    </testcase>
+    <testcase name="/api/v1/send returns a 404 when sendingGroupId is not found" time="0.007" classname="returns a 404 when sendingGroupId is not found">
+    </testcase>
+    <testcase name="/api/v1/send returns a 400 when routing plan is invalid" time="0.005" classname="returns a 400 when routing plan is invalid">
+    </testcase>
+    <testcase name="/api/v1/send returns a 500 when the sending group has missing templates" time="0.005" classname="returns a 500 when the sending group has missing templates">
+    </testcase>
+    <testcase name="/api/v1/send returns a 500 when the sending group has duplicate templates" time="0.008" classname="returns a 500 when the sending group has duplicate templates">
+    </testcase>
+    <testcase name="/api/v1/send returns a 500 when the sending group has missing NHS templates" time="0.004" classname="returns a 500 when the sending group has missing NHS templates">
+    </testcase>
+    <testcase name="/api/v1/send can simulate a 500 error" time="0.004" classname="can simulate a 500 error">
+    </testcase>
+    <testcase name="/api/v1/send responds with a 200 when the request is correctly formatted" time="0.011" classname="responds with a 200 when the request is correctly formatted">
+    </testcase>
+  </testsuite>
+  <testsuite name="status" timestamp="2023-10-05T14:50:04" tests="3" file="/Users/sean.marjason/Documents/Repos/01_CovidRiskStratification/communications-manager-api/sandbox/__test__/status.spec.js" time="0.005" failures="3">
+    <testcase name="status responds to /_ping" time="0.000" classname="responds to /_ping">
+      <failure message="version_info is not defined" type="ReferenceError"><![CDATA[ReferenceError: version_info is not defined
+    at Context.<anonymous> (__test__/status.spec.js:32:22)
+    at process.processImmediate (node:internal/timers:478:21)]]></failure>
+    </testcase>
+    <testcase name="status responds to /_status" time="0.000" classname="responds to /_status">
+      <failure message="version_info is not defined" type="ReferenceError"><![CDATA[ReferenceError: version_info is not defined
+    at Context.<anonymous> (__test__/status.spec.js:44:22)
+    at process.processImmediate (node:internal/timers:478:21)]]></failure>
+    </testcase>
+    <testcase name="status responds to /health" time="0.000" classname="responds to /health">
+      <failure message="version_info is not defined" type="ReferenceError"><![CDATA[ReferenceError: version_info is not defined
+    at Context.<anonymous> (__test__/status.spec.js:56:22)
+    at process.processImmediate (node:internal/timers:478:21)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="trigger_timeout can simulate a long request" timestamp="2023-10-05T14:50:04" tests="2" file="/Users/sean.marjason/Documents/Repos/01_CovidRiskStratification/communications-manager-api/sandbox/__test__/trigger_timeout.spec.js" time="3.515" failures="0">
+    <testcase name="trigger_timeout can simulate a long request using a default 3 second delay" time="3.007" classname="using a default 3 second delay">
+    </testcase>
+    <testcase name="trigger_timeout can simulate a long request using a custom delay" time="0.506" classname="using a custom delay">
+    </testcase>
+  </testsuite>
+</testsuites>
