@@ -1,8 +1,8 @@
 Authentication Tests
 ====================
 
-401 - Unauthenticated
----------------------
+401 - Access Denied
+-------------------
 
 .. automodule:: sandbox.authentication.test_401_errors
     :noindex:

@@ -27,7 +27,7 @@ def test_406(
     nhsd_apim_auth_headers
 ):
     """
-    .. py:function:: Test 406 responses
+    .. include:: ../../partials/content_types/test_406.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{request_path}", headers={
         **nhsd_apim_auth_headers,

@@ -12,7 +12,7 @@ CONTENT_TYPE = "application/json"
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test large (50k) invalid payload
+    .. include:: ../../partials/performance/test_create_messages_large_valid_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 
@@ -41,7 +41,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_au
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test large (50k) none unique payload
+    .. include:: ../../partials/performance/test_create_messages_large_not_unique_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 

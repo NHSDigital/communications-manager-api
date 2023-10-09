@@ -14,7 +14,7 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_404_not_found(nhsd_apim_proxy_url, request_path, correlation_id, method, nhsd_apim_auth_headers):
     """
-    .. py:function:: Test 404 response
+    .. include:: ../../partials/not_found/test_404_not_found.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         **nhsd_apim_auth_headers,

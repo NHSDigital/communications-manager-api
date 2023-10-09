@@ -12,16 +12,12 @@ INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
 INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
 INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
-"""
-Invalid body 400 tests
-"""
-
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_body(correlation_id):
     """
-    .. py:function:: Test invalid body
+    .. include:: ../../partials/validation/test_invalid_body.rst
     """
     resp = requests.post(
         f"{constants.INT_URL}/v1/message-batches",
@@ -41,11 +37,6 @@ def test_invalid_body(correlation_id):
     )
 
 
-"""
-Missing property 400 test
-"""
-
-
 @pytest.mark.inttest
 @pytest.mark.parametrize(
     "property, pointer",
@@ -54,7 +45,7 @@ Missing property 400 test
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_property_missing(property, pointer, correlation_id):
     """
-    .. py:function:: Test missing properties
+    .. include:: ../../partials/validation/test_property_missing.rst
     """
     resp = requests.post(
         f"{constants.INT_URL}/v1/message-batches",
@@ -77,11 +68,6 @@ def test_property_missing(property, pointer, correlation_id):
     )
 
 
-"""
-Null data 400 test
-"""
-
-
 @pytest.mark.inttest
 @pytest.mark.parametrize(
     "property, pointer",
@@ -90,7 +76,7 @@ Null data 400 test
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_null(property, pointer, correlation_id):
     """
-    .. py:function:: Test null data
+    .. include:: ../../partials/validation/test_data_null.rst
     """
     resp = requests.post(
         f"{constants.INT_URL}/v1/message-batches",
@@ -113,11 +99,6 @@ def test_data_null(property, pointer, correlation_id):
     )
 
 
-"""
-Invalid data 400 test
-"""
-
-
 @pytest.mark.inttest
 @pytest.mark.parametrize(
     "property, pointer",
@@ -126,7 +107,7 @@ Invalid data 400 test
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_invalid(property, pointer, correlation_id):
     """
-    .. py:function:: Test invalid data
+    .. include:: ../../partials/validation/test_data_invalid.rst
     """
     resp = requests.post(
         f"{constants.INT_URL}/v1/message-batches",
@@ -150,11 +131,6 @@ def test_data_invalid(property, pointer, correlation_id):
     )
 
 
-"""
-Duplicate data 400 test
-"""
-
-
 @pytest.mark.inttest
 @pytest.mark.parametrize(
     "property, pointer",
@@ -163,7 +139,7 @@ Duplicate data 400 test
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_duplicate(property, pointer, correlation_id):
     """
-    .. py:function:: Test duplicate properties
+    .. include:: ../../partials/validation/test_data_duplicate.rst
     """
     # Add a duplicate message to the payload to trigger the duplicate error
     data = Generators.generate_valid_create_message_batch_body("int")
@@ -188,11 +164,6 @@ def test_data_duplicate(property, pointer, correlation_id):
     )
 
 
-"""
-Too few items 400 test
-"""
-
-
 @pytest.mark.inttest
 @pytest.mark.parametrize(
     "property, pointer",
@@ -201,7 +172,7 @@ Too few items 400 test
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_too_few_items(property, pointer, correlation_id):
     """
-    .. py:function:: Test missing items
+    .. include:: ../../partials/validation/test_data_too_few_items.rst
     """
     resp = requests.post(
         f"{constants.INT_URL}/v1/message-batches",
@@ -230,7 +201,7 @@ def test_data_too_few_items(property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_nhs_number(nhs_number, correlation_id):
     """
-    .. py:function:: Test invalid NHS numbers
+    .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
@@ -269,7 +240,7 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_dob(dob, correlation_id):
     """
-    .. py:function:: Test invalid dates of birth
+    .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
@@ -307,7 +278,7 @@ def test_invalid_dob(dob, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_routing_plan(correlation_id):
     """
-    .. py:function:: Test invalid routing plan identifier
+    .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
@@ -345,7 +316,7 @@ def test_invalid_routing_plan(correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_message_batch_reference(correlation_id):
     """
-    .. py:function:: Test invalid message batch reference
+    .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
@@ -383,7 +354,7 @@ def test_invalid_message_batch_reference(correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_message_reference(correlation_id):
     """
-    .. py:function:: Test invalid message reference
+    .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
@@ -422,7 +393,7 @@ def test_invalid_message_reference(correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_blank_value_under_messages(invalid_value, correlation_id):
     """
-    .. py:function:: Test blank messages value
+    .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,
@@ -453,7 +424,7 @@ def test_blank_value_under_messages(invalid_value, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_null_value_under_messages(correlation_id):
     """
-    .. py:function:: Test null messages value
+    .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
     resp = requests.post(f"{constants.INT_URL}/v1/message-batches", headers={
             **headers,

@@ -23,7 +23,7 @@ def test_415_invalid(
     method
 ):
     """
-    .. py:function:: Test 415 response
+    .. include:: ../../partials/content_types/test_415_invalid.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",

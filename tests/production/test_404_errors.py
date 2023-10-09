@@ -14,7 +14,7 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("method", METHODS)
 def test_404_not_found(request_path, correlation_id, method):
     """
-    .. py:function:: Test 404 responses
+    .. include:: ../../partials/not_found/test_404_not_found.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{request_path}", headers={
         "Authorization": f"{Authentication.generate_authentication('prod')}",

@@ -14,19 +14,7 @@ INVALID_ROUTING_CONFIG_ID = "4ead415a-c033-4b39-9b05-326ac237a3be"
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with an unknown routing plan \
-        receives a 404 'No Such Routing Plan' response
-
-        | **Given** the API consumer provides a message body with an unknown routing plan
-        | **When** the request is submitted
-        | **Then** the response returns a 404 no such routing plan error
-
-    **Asserts**
-    - Response returns a 404 'No Such Routing Plan' error
-    - Response returns the expected error message body
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
@@ -62,19 +50,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request where the \
-        routing plan identifier is not a properly formed UUID receives a 400 'No Such Routing Plan' response
-
-        | **Given** the API consumer provides a message body with a routing plan referencing an invalid template
-        | **When** the request is submitted
-        | **Then** the response returns a 400 invalid value error
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' error
-    - Response returns the expected error message body referencing the invalid attribute
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/invalid_routing_plans/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
@@ -110,19 +86,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a routing plan \
-        referencing the same template twice receives a 500 'Duplicate Routing Plan' response
-
-        | **Given** the API consumer provides a message body containing a reference to the same template twice
-        | **When** the request is submitted
-        | **Then** the response returns a 500 duplicate routing plan error
-
-    **Asserts**
-    - Response returns a 500 'Duplicate Routing Plan' error
-    - Response returns the expected error message body referencing the duplicate template values
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
@@ -183,19 +147,7 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
 ])
 def test_500_missing_routing_plan(nhsd_apim_proxy_url, correlation_id, routing_plan_id):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a routing plan \
-        referencing a missing template receives a 500 'Missing Routing Plan' response
-
-        | **Given** the API consumer provides a message body with a routing plan referencing a missing template
-        | **When** the request is submitted
-        | **Then** the response returns a 500 missing routing plan template error
-
-    **Asserts**
-    - Response returns a 500 'Missing Routing Plan Template' error
-    - Response returns the expected error message body
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/correlation_ids.rst
+    .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id

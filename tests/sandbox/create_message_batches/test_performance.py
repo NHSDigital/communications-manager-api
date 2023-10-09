@@ -10,16 +10,7 @@ NUM_MESSAGES = 50000
 @pytest.mark.sandboxtest
 def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a \
-        request body containing 50,000 messages receives a 201 response
-
-        | **Given** the API consumer provides a message body of around 50k messages
-        | **When** the request is submitted
-        | **Then** the response is a 201 success
-        | **And** the response takes less than 29 seconds
-
-    **Asserts**
-    - Response returns a 201 status code
+    .. include:: ../../partials/performance/test_create_messages_large_valid_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
 
@@ -45,20 +36,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
 @pytest.mark.sandboxtest
 def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a \
-        request body containing 50,000 invalid messages receives a 400 status code \
-        and response body containing the first 100 instances of errors
-
-        | **Given** the API consumer provides a message body of 50,000 invalid messages
-        | **When** the request is submitted
-        | **Then** the response is a 400 invalid value error
-        | **And** the response body contains 100 errors
-        | **And** the response takes less than 29 seconds
-
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' status code
-    - Response returns 100 error message blocks
+    .. include:: ../../partials/performance/test_create_messages_large_valid_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
 
@@ -85,18 +63,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
 @pytest.mark.sandboxtest
 def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a \
-        large request body containing 50,000 duplicate messages receives a 400 response
-
-        | **Given** the API consumer provides a message body of 50,000 duplicate messages
-        | **When** the request is submitted
-        | **Then** the response is a 400 invalid value error
-        | **And** the response body contains 100 errors
-        | **And** the response takes less than 29 seconds
-
-    **Asserts**
-    - Response returns a 400 'Invalid Value' status code
-    - Response returns 100 error message blocks
+    .. include:: ../../partials/performance/test_create_messages_large_not_unique_payload.rst
     """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
 

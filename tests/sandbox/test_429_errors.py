@@ -11,22 +11,7 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("method", METHODS)
 def test_too_many_requests_get(nhsd_apim_proxy_url, correlation_id, method):
     """
-    .. py:function:: Scenario: An API consumer submitting a request with a \
-        429 Prefer header receives a 429 'Quota' response
-
-        | **Given** the API consumer provides a 429 prefer header
-        | **When** the request is submitted
-        | **Then** the response is a 429 quota error
-
-    **Asserts**
-    - Response returns a 429 'Quota' error
-    - Response returns 'Retry-After' header
-    - Response returns the expected error message body
-    - Response returns the 'X-Correlation-Id' header if provided
-
-    .. include:: ../../partials/methods.rst
-    .. include:: ../../partials/correlation_ids.rst
-
+    .. include:: ../../partials/timeouts/test_too_many_requests_get.rst
     """
     resp = getattr(requests, method)(nhsd_apim_proxy_url, headers={
         "Prefer": "code=429",
