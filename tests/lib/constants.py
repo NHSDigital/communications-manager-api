@@ -203,6 +203,16 @@ ERROR_NOT_FOUND = Error(
     "The resource at the requested URI was not found."
 )
 
+# retry too early
+ERROR_RETRY_TOO_EARLY = Error(
+    "CM_RETRY_TOO_EARLY",
+    "425",
+    "Retried too early",
+    "You have retried this request too early, the previous "
+    "request is still being processed. Re-send the request "
+    "after the time (in seconds) specified `Retry-After` header."
+)
+
 # over quota
 ERROR_QUOTA = Error(
     "CM_QUOTA",

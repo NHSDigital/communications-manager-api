@@ -133,6 +133,10 @@ class Generators():
         return Generators.generate_error(constants.ERROR_QUOTA)
 
     @staticmethod
+    def generate_retry_too_early_error():
+        return Generators.generate_error(constants.ERROR_RETRY_TOO_EARLY)
+
+    @staticmethod
     def generate_request_timeout_error():
         return Generators.generate_error(constants.ERROR_REQUEST_TIMEOUT)
 

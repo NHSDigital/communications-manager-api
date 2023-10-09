@@ -13,3 +13,4 @@
   * [Performance Tests](post_v1_message-batches/performance.md)
   * [Happy Path Tests](post_v1_message-batches/happy_path.md)
   * [Service Ban](post_v1_message-batches/service_ban.md)
+  * [Retry Too Early](post_v1_message-batches/retry_too_early.md)

@@ -316,23 +316,28 @@ flowchart
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.403ServiceBan.xml'>RaiseFault.403ServiceBan</a></em>"]
     403.1 --> E
-    Q6.1 --> |No| CN["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#content-negotiation'>Content Negotiation</a>"]
+    Q6.1 --> |No| Q7{Prefer 425 error?}
+    Q7 --> |Yes| 425["Raise 425 Retry Too Early
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.425RetryTooEarly.xml'>RaiseFault.425RetryTooEarly</a></em>"]
+    425 --> E
+    Q7 --> |No| CN["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#content-negotiation'>Content Negotiation</a>"]
     Q1 --> |No| VAT["Verify access token
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/OauthV2.VerifyAccessToken.xml'>OauthV2.VerifyAccessToken</a></em>"]
-    VAT --> Q7{Is client credentials?}
-    Q7 --> |No| 403
-    Q7 --> |Yes| CN
-    CN --> Q8{Is sandbox environment?}
-    Q8 --> |Yes| Q9{Prefer 429 error?}
-    Q9 --> |Yes| 429["Raise 429 error
+    VAT --> Q8{Is client credentials?}
+    Q8 --> |No| 403
+    Q8 --> |Yes| CN
+    CN --> Q9{Is sandbox environment?}
+    Q9 --> |Yes| Q10{Prefer 429 error?}
+    Q10 --> |Yes| 429["Raise 429 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.429TooManyRequests.xml'>RaiseFault.429TooManyRequests</a></em>"]
     429 --> E
-    Q9 --> |No| E
-    Q8 --> |No| Q10{Is request on a known resource?}
-    Q10 --> |Yes| E
-    Q10 --> |No| 404["Raise 404 error
+    Q10 --> |No| E
+    Q9 --> |No| Q11{Is request on a known resource?}
+    Q11 --> |Yes| E
+    Q11 --> |No| 404["Raise 404 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.404NotFound.xml'>RaiseFault.404NotFound</a></em>"]
     404 --> E
@@ -499,38 +504,43 @@ flowchart
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.400BackendException.MissingDataArray.xml'>RaiseFault.400BackendException.MissingDataArray</a></em>"]
     400MissingData --> E9[End]
-    Q10 --> |No| Q11{Backend 500 & duplicate templates?}
-    Q11 --> |Yes| 500DuplicatesExtract["Extract duplicate templates
+    Q10 --> |No| Q11{Backend 425 response?}
+    Q11 --> |Yes| 425RetryTooEarly["Raise 425 error
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.400BackendException.MissingDataArray.xml'>RaiseFault.425RetryTooEarly</a></em>"]
+    425RetryTooEarly --> E10[End]
+    Q11 --> |No| Q12{Backend 500 & duplicate templates?}
+    Q12 --> |Yes| 500DuplicatesExtract["Extract duplicate templates
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.500DuplicateTemplates.ExtractDuplicates.xml'>JavaScript.500DuplicateTemplates.ExtractDuplicates</a></em>"]
     500DuplicatesExtract --> 500DuplicatesError["Raise 500 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.500DuplicateTemplates.xml'>RaiseFault.500DuplicateTemplates</a></em>"]
-    500DuplicatesError --> E10[End]
-    Q11 --> |No| Q12{Backend 500 & templates missing?}
-    Q12 --> |Yes| 500MissingTemplates["Raise 500 error
+    500DuplicatesError --> E11[End]
+    Q12 --> |No| Q13{Backend 500 & templates missing?}
+    Q13 --> |Yes| 500MissingTemplates["Raise 500 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.500MissingTemplates.xml'>RaiseFault.500MissingTemplates</a></em>"]
-    500MissingTemplates --> E11[End]
-    Q12 --> |No| Q13{Other 500 exception?}
-    Q13 --> |Yes| 500["Raise 500 error
+    500MissingTemplates --> E12[End]
+    Q13 --> |No| Q14{Other 500 exception?}
+    Q14 --> |Yes| 500["Raise 500 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.500Generic.xml'>RaiseFault.500Generic</a></em>"]
-    500 --> E12[End]
-    Q13 --> |No| Q14{Backend service unavailable?}
-    Q14 --> |Yes| 503["Raise 503 error
+    500 --> E13[End]
+    Q14 --> |No| Q15{Backend service unavailable?}
+    Q15 --> |Yes| 503["Raise 503 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.503ServiceUnavailable.xml'>RaiseFault.503ServiceUnavailable</a></em>"]
-    503 --> E13[End]
-    Q14 --> |No| Q15{Backend 504 or gateway timeout?}
-    Q15 --> |Yes| 504["Raise 504 error
+    503 --> E14[End]
+    Q15 --> |No| Q16{Backend 504 or gateway timeout?}
+    Q16 --> |Yes| 504["Raise 504 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.504GatewayTimeout.xml'>RaiseFault.504GatewayTimeout</a></em>"]
-    504 --> E14[End]
-    Q15 --> |No| Q16{Backend 408 or request timeout?}
-    Q16 --> |Yes| 408["Raise 408 error
+    504 --> E15[End]
+    Q16 --> |No| Q17{Backend 408 or request timeout?}
+    Q17 --> |Yes| 408["Raise 408 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.408RequestTimeout.xml'>RaiseFault.408RequestTimeout</a></em>"]
-    408 --> E15[End]
-    Q16 --> |No| E15
+    408 --> E16[End]
+    Q17 --> |No| E16
 ```
