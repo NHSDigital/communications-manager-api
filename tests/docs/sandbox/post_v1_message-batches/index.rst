@@ -9,3 +9,4 @@ POST /v1/message-batches
    performance
    happy_path
    service_ban
+   retry_too_early

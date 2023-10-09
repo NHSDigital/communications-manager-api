@@ -1,0 +1,5 @@
+type: string
+title: Enum_Error_Retry_Too_Early
+enum:
+  - CM_RETRY_TOO_EARLY
+example: CM_RETRY_TOO_EARLY

@@ -244,6 +244,27 @@ describe("app handler tests", function () {
                 .expect("Content-Type", /json/, done);
         });
 
+        it('returns a 425 when a repeat request is sent too early', (done) => {
+           request(server)
+                .post('/api/v1/send')
+                .send({
+                    sendingGroupId: 'd895ade5-0029-4fc3-9fb5-86e1e5370854',
+                    requestRefId: 'request-ref-id',
+                    data: [
+                        {
+                            requestItemRefId : '1'
+                        },
+                        {
+                            requestItemRefId : '2'
+                        }
+                    ]
+                })
+                .expect(425, {
+                    message: 'Message with this idempotency key is already being processed'
+                })
+                .expect("Content-Type", /json/, done);
+        });
+
         it('returns a 500 when the sending group has missing templates', (done) => {
            request(server)
                 .post('/api/v1/send')

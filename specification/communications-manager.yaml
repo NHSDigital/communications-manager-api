@@ -337,7 +337,7 @@ paths:
 
             To trigger the `CM_SERVICE_BAN` error in the sandbox by sending the header `Prefer` with a value of `code=403.1`.
 
-            Here is an example curl request to trigger a `CM_FORBIDDEN`:
+            Here is an example curl request to trigger a `CM_SERVICE_BAN`:
 
             ```
               curl -X GET \
@@ -471,6 +471,40 @@ paths:
               schema:
                 $ref: '#/components/schemas/UnsupportedMediaResponse'
           headers:
+            X-Correlation-ID:
+              schema:
+                type: string
+                pattern: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+              description: 'The X-Correlation-ID from the request header, if supplied, mirrored back.'
+        '425':
+          description: |+
+            You have retried this request too early, the previous request is still being processed. Re-send the request after the time (in seconds) specified `Retry-After` header.
+
+            ### Sandbox
+
+            It is possible to trigger this on the sandbox by using the `Prefer` header with a value of `code=425`.
+
+            Here is an example curl request to trigger a `425`:
+
+            ```
+              curl -X GET --header "Prefer: code=425" https://sandbox.api.service.nhs.uk/comms/
+            ```
+          content:
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/RetryTooEarlyResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetryTooEarlyResponse'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+                format: duration
+                minimum: 300
+                multipleOf: 1
+                example: 300
+              description: Time to wait before retrying the request.
             X-Correlation-ID:
               schema:
                 type: string
@@ -676,6 +710,8 @@ components:
       $ref: schemas/UnsupportedMediaResponse.yaml
     TooManyRequestsResponse:
       $ref: schemas/TooManyRequestsResponse.yaml
+    RetryTooEarlyResponse:
+      $ref: schemas/RetryTooEarlyResponse.yaml
     ServiceUnavailableResponse:
       $ref: schemas/ServiceUnavailableResponse.yaml
     ServiceTimeoutResponse:

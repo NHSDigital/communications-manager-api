@@ -47,6 +47,10 @@
         <Condition>response.status.code = 400 and response.content Like "*Missing data array*"</Condition>
     </Step>
     <Step>
+        <Name>RaiseFault.425RetryTooEarly</Name>
+        <Condition>response.status.code = 425</Condition>
+    </Step>
+    <Step>
         <Name>JavaScript.500DuplicateTemplates.ExtractDuplicates</Name>
         <Condition>
             response.status.code = 500 and response.content Like "*Duplicate templates in routing config: *"
