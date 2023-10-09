@@ -34,3 +34,4 @@ tmp/
 .zap
 tests/locust/*.html
 postman/Integration.test.postman_environment.json
+sandbox/test-results.xml
