@@ -88,6 +88,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--reruns 5 \
 		--reruns-delay 5 \
 		--only-rerun 'AssertionError: Unexpected 429' \
+		--only-rerun 'AssertionError: Unexpected 504' \
 		--ignore=tests/docs \
 		--ignore=tests/locust
 
@@ -103,6 +104,7 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--reruns 5 \
 		--reruns-delay 5 \
 		--only-rerun 'AssertionError: Unexpected 429' \
+		--only-rerun 'AssertionError: Unexpected 504' \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
 		--apigee-organization=nhsd-prod \
 		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)" \

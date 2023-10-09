@@ -7,7 +7,7 @@ import requests
 import pytest
 import time
 from os import getenv
-from lib.constants import UNEXPECTED_429
+from lib import Error_Handler
 
 
 def determine_expected_commit_id(deployed_commit_id):
@@ -42,8 +42,7 @@ def test_wait_for_ping(nhsd_apim_proxy_url):
         time.sleep(5)
         retries += 1
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     if resp.status_code != 200:
         pytest.fail(f"Status code {resp.status_code}, expecting 200")
@@ -61,8 +60,7 @@ def test_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
         f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers
     )
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     assert resp.status_code == 200
 
@@ -75,8 +73,7 @@ def test_401_status_without_apikey(nhsd_apim_proxy_url):
         f"{nhsd_apim_proxy_url}/_status"
     )
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     assert resp.status_code == 401
 
@@ -98,8 +95,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers):
         time.sleep(5)
         retries += 1
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     if resp.status_code != 200:
         pytest.fail(f"Status code {resp.status_code}, expecting 200")
