@@ -14,3 +14,5 @@
   * [Happy Path Tests](post_v1_message-batches/happy_path.md)
   * [Service Ban](post_v1_message-batches/service_ban.md)
   * [Retry Too Early](post_v1_message-batches/retry_too_early.md)
+* [POST /v1/messages](post_v1_messages/index.md)
+  * [Invalid Routing Plans](post_v1_messages/invalid_routing_plans.md)
