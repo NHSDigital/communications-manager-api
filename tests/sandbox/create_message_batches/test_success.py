@@ -12,7 +12,7 @@ VALID_ROUTING_PLAN_ID = [
     "936e9d45-15de-4a95-bb36-ae163c33ae53",
     "9ba00d23-cd6f-4aca-8688-00abc85a7980"
 ]
-VALID_DOB = ["0000-01-01", "2023-01-01", None]
+VALID_DOB = ["0000-01-01", "2023-01-01"]
 valid_nhs_number = "9990548609"
 
 

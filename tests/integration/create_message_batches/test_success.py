@@ -6,7 +6,7 @@ from lib.constants import *
 VALID_ACCEPT_HEADERS = ["*/*", "application/json", "application/vnd.api+json"]
 VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
 REQUEST_PATH = "/v1/message-batches"
-VALID_DOB = ["0000-01-01", "2023-01-01", None]
+VALID_DOB = ["0000-01-01", "2023-01-01"]
 valid_nhs_number = "9990548609"
 
 
