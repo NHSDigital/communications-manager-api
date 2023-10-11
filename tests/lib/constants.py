@@ -64,6 +64,17 @@ TOO_FEW_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),
 ]
 
+INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
+
+INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
+VALID_NHS_NUMBER = "9990548609"
+
+INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1, None]
+VALID_DOB = ["0000-01-01", "2023-01-01"]
+
+VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
+VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
+
 
 class Error():
     def __init__(self, code, status, title, detail, links={}):
