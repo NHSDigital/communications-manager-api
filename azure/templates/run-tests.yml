@@ -27,7 +27,8 @@ steps:
       - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
       - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
       - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
-
+      - ptl/azure-devops/communications-manager/ALERTS_DEV_API_WEBHOOK_URI
+      - ptl/azure-devops/communications-manager/ALERTS_PROD_API_WEBHOOK_URI
   - bash: |
       if [ "${{ parameters.nightly }}" != "True" ]; then
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
@@ -42,6 +43,8 @@ steps:
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       else
         export APIGEE_ENVIRONMENT="${{parameters.environment}}"
+        export ALERTS_DEV_API_WEBHOOK_URI="$(ALERTS_DEV_API_WEBHOOK_URI)"
+        export ALERTS_PROD_API_WEBHOOK_URI="$(ALERTS_PROD_API_WEBHOOK_URI)"
       fi
 
       proxyURL="https://$APIGEE_ENVIRONMENT.api.service.nhs.uk/$SERVICE_BASE_PATH/comms/_status"

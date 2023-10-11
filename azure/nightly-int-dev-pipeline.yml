@@ -26,9 +26,14 @@ variables:
   - name: SERVICE_ARTIFACT_NAME
     value: ''
 
-extends:
-  template: ./templates/run-tests.yml
-  parameters:
-    nightly: true
-    environment: 'internal-dev'
-    test_command: 'make internal-dev-test'
+steps:
+  - template: ./templates/run-tests.yml
+    parameters:
+      nightly: true
+      environment: 'internal-dev'
+      test_command: 'make internal-dev-test'
+    
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Internal Dev'
+      environment: 'dev'

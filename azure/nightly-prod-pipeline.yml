@@ -26,9 +26,13 @@ variables:
   - name: SERVICE_ARTIFACT_NAME
     value: ''
 
-extends:
-  template: ./templates/run-tests.yml
-  parameters:
-    nightly: true
-    environment: 'prod'
-    test_command: 'make production-test'
+steps:
+  - template: ./templates/run-tests.yml
+    parameters:
+      nightly: true
+      environment: 'prod'
+      test_command: 'make production-test'
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Production'
+      environment: 'prod'

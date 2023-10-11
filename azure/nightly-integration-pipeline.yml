@@ -26,9 +26,13 @@ variables:
   - name: SERVICE_ARTIFACT_NAME
     value: ''
 
-extends:
-  template: ./templates/run-tests.yml
-  parameters:
-    nightly: true
-    environment: 'int'
-    test_command: 'make integration-test'
+steps:
+  - template: ./templates/run-tests.yml
+    parameters:
+      nightly: true
+      environment: 'int'
+      test_command: 'make integration-test'
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Integration'
+      environment: 'prod'

@@ -53,3 +53,7 @@ steps:
       testResultsFiles: 'zap-report.xml'
       testResultsFormat: NUnit
       failTaskOnFailedTests: true
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Zap Security Scan'
+      environment: 'dev'

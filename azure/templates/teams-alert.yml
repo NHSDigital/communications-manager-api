@@ -1,0 +1,44 @@
+parameters:
+  - name: environment
+    type: string
+    default: dev
+  - name: title
+    type: string
+    default: 'Internal Dev'
+
+steps:
+  - bash: |
+      if [ "${{ parameters.environment }}" == "prod" ]; then
+          export TEAMS_WEBHOOK_URI=$(ALERTS_PROD_API_WEBHOOK_URI)
+      elif ["${{ parameters.environment }} == "dev" ]; then
+          export TEAMS_WEBHOOK_URI=$(ALERTS_DEV_API_WEBHOOK_URI
+      else
+          printf "Invalid environment value provided"
+          exit 1
+      fi
+
+      curl -X POST $TEAMS_WEBHOOK_URI \
+      -H 'Content-Type: application/json' \
+      -d @- << EOF
+      {
+          "@type": "MessageCard",
+          "@context": "http://schema.org/extensions",
+          "themeColor": "ff0000",
+          "title": "Nightly "${{parameters.title}}" Test Run Failed",
+          "potentialAction": [
+              {
+                  "@type": "OpenUri",
+                  "name": "View Build",
+                  "targets": [
+                      {
+                          "os": "default",
+                          "uri": "https://dev.azure.com/NHSD-APIM/API%20Platform/_build/results?buildId='$(build.buildid)'&view=results"
+                      }
+                  ]
+              }
+          ],
+          "text": "The Nightly "${{parameters.title}}" Test Run has failed, investigate and review if an action is required to correct the issue."
+      }
+      EOF
+    condition: failed()
+    displayName: Post to Teams
