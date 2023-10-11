@@ -2,26 +2,21 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.constants import NUM_MAX_ERRORS
+import lib.constants as constants
 
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
 CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
-INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
-INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
-
-
-"""
-Invalid body 400 tests
-"""
 
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_body.rst
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -39,30 +34,16 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
     )
 
 
-"""
-Missing property 400 test
-"""
-
-_missing_properties = [
-    ("data", "/data"),
-    ("type", "/data/type"),
-    ("attributes", "/data/attributes"),
-    ("routingPlanId", "/data/attributes/routingPlanId"),
-    ("messageBatchReference", "/data/attributes/messageBatchReference"),
-    ("messages", "/data/attributes/messages"),
-    ("messageReference", "/data/attributes/messages/0/messageReference"),
-    ("recipient", "/data/attributes/messages/0/recipient"),
-    ("nhsNumber", "/data/attributes/messages/0/recipient/nhsNumber"),
-]
-
-
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _missing_properties
+    constants.MISSING_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_property_missing.rst
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -83,24 +64,16 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
     )
 
 
-"""
-Null data 400 test
-"""
-
-_null_properties = [
-    ("data", "/data"),
-    ("attributes", "/data/attributes"),
-    ("recipient", "/data/attributes/messages/0/recipient"),
-]
-
-
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _null_properties
+    constants.NULL_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_data_null.rst
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -121,29 +94,16 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
     )
 
 
-"""
-Invalid data 400 test
-"""
-
-_invalid_properties = [
-    ("type", "/data/type"),
-    ("routingPlanId", "/data/attributes/routingPlanId"),
-    ("messageBatchReference", "/data/attributes/messageBatchReference"),
-    ("messages", "/data/attributes/messages"),
-    ("messageReference", "/data/attributes/messages/0/messageReference"),
-    ("recipient", "/data/attributes/messages/0/recipient"),
-    ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
-    ("personalisation", "/data/attributes/messages/0/personalisation"),
-]
-
-
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _invalid_properties
+    constants.INVALID_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_data_invalid.rst
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -165,22 +125,16 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
     )
 
 
-"""
-Duplicate data 400 test
-"""
-
-_duplicate_properties = [
-    ("messageReference", "/data/attributes/messages/1/messageReference"),
-]
-
-
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _duplicate_properties
+    constants.DUPLICATE_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_data_duplicate.rst
+    """
     # Add a duplicate message to the payload to trigger the duplicate error
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"].append(data["data"]["attributes"]["messages"][0])
@@ -203,22 +157,16 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
     )
 
 
-"""
-Too few items 400 test
-"""
-
-_too_few_properties = [
-    ("messages", "/data/attributes/messages"),
-]
-
-
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    _too_few_properties
+    constants.TOO_FEW_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_data_too_few_items.rst
+    """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}/v1/message-batches",
         headers={
@@ -241,9 +189,12 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_nhs_number.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -276,9 +227,12 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
+@pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_dob.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -313,6 +267,9 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_routing_plan.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -347,6 +304,9 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -381,6 +341,9 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_message_reference.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -413,9 +376,12 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
+@pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_blank_value_under_messages.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -443,6 +409,9 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_null_value_under_messages.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -471,6 +440,9 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("number_of_errors", [99, 100, 101, 150, 200])
 def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
+    """
+    .. include:: ../../partials/validation/test_validation_returns_at_max_errors.rst
+    """
     duplicate_message_reference = str(uuid.uuid4())
     data = {
         "data": {
@@ -499,4 +471,4 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
         },
         json=data,
     )
-    assert len(resp.json().get("errors")) <= NUM_MAX_ERRORS
+    assert len(resp.json().get("errors")) <= constants.NUM_MAX_ERRORS

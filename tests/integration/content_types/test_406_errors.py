@@ -21,6 +21,9 @@ def test_406(
     correlation_id,
     method,
 ):
+    """
+    .. include:: ../../partials/content_types/test_406.rst
+    """
     resp = getattr(requests, method)(f"{INT_URL}/{request_path}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id,

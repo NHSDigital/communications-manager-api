@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib.constants import UNEXPECTED_429
+from lib import Error_Handler
 
 
 CORRELATION_IDS = [None, "a17669c8-219a-11ee-ba86-322b0407c489"]
@@ -20,12 +20,16 @@ def test_request_with_x_correlation_id(
     method,
     nhsd_apim_auth_headers
 ):
+    """
+    ..py:function:: test_request_with_x_correlation_id
+
+    .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         **nhsd_apim_auth_headers,
         "x-correlation-id": correlation_id
     })
 
-    if resp.status_code == 429:
-        raise UNEXPECTED_429
+    Error_Handler.handle_retry(resp)
 
     assert resp.headers.get("x-correlation-id") == correlation_id

@@ -1,12 +1,11 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import DEFAULT_CONTENT_TYPE
+from lib.constants import *
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
 HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
 REQUEST_PATH = ["/v1/ignore", "/api/ignore"]
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 
 
@@ -24,6 +23,9 @@ def test_406(
     correlation_id,
     method
 ):
+    """
+    .. include:: ../../partials/content_types/test_406.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{request_path}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id

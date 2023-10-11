@@ -25,6 +25,9 @@ def test_415_invalid(
     method,
     nhsd_apim_auth_headers
 ):
+    """
+    .. include:: ../../partials/content_types/test_415_invalid.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         **nhsd_apim_auth_headers,
         "Accept": "application/json",

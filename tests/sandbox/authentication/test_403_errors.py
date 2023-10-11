@@ -1,18 +1,20 @@
 import requests
 import pytest
 from lib import Assertions, Generators
+from lib.constants import METHODS, CORRELATION_IDS
 
 FORBIDDEN_TOKEN = {
     "Authorization": "Bearer ClientNotRecognised"
 }
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_403_forbidden(nhsd_apim_proxy_url, correlation_id, method):
+    """
+    .. include:: ../../partials/authentication/test_403_forbidden.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         **FORBIDDEN_TOKEN,
         "X-Correlation-Id": correlation_id
@@ -30,6 +32,9 @@ def test_403_forbidden(nhsd_apim_proxy_url, correlation_id, method):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_403_forbidden_prefer(nhsd_apim_proxy_url, correlation_id, method):
+    """
+    .. include:: ../../partials/authentication/test_403_forbidden_prefer.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         "Prefer": "code=403",
         "X-Correlation-Id": correlation_id

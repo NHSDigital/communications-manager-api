@@ -1,0 +1,13 @@
+Scenario: An API consumer submitting a request with a 503 prefer header receives a 503 'Service Unavailable' response
+=====================================================================================================================
+
+| **Given** the API consumer provides a 503 prefer header
+| **When** the request is submitted
+| **Then** the response is a 503 service unavailable error
+
+**Asserts**
+- Response returns a 503 'Service Unavailable' error
+- Response returns the expected error message body
+- Response returns the 'X-Correlation-Id' header if provided
+
+.. include:: ../../partials/correlation_ids.rst

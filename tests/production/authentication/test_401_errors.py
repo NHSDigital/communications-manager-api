@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from tests.lib.constants import *
+from lib.constants import *
 
 
 @pytest.mark.prodtest
@@ -9,6 +9,9 @@ from tests.lib.constants import *
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid(invalid_token, correlation_id, method):
+    """
+    .. include:: ../../partials/authentication/test_401_invalid.rst
+    """
     resp = getattr(requests, method)(PROD_URL, headers={
         "Authorization": invalid_token,
         "X-Correlation-Id": correlation_id

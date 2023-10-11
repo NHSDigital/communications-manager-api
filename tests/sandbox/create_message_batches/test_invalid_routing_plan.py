@@ -13,6 +13,9 @@ INVALID_ROUTING_CONFIG_ID = "4ead415a-c033-4b39-9b05-326ac237a3be"
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
         }, json={
@@ -46,6 +49,9 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_invalid_routing_plan.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
         }, json={
@@ -79,6 +85,9 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
         }, json={
@@ -137,6 +146,9 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
     "aeb16ab8-cb9c-4d23-92e9-87c78119175c"
 ])
 def test_500_missing_routing_plan(nhsd_apim_proxy_url, correlation_id, routing_plan_id):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
+    """
     resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
             "X-Correlation-Id": correlation_id
         }, json={

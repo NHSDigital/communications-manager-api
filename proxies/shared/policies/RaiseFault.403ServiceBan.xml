@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 403 error response due to there being a service ban in place on the consumers account.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.403ServiceBan">
+    <DisplayName>RaiseFault.403ServiceBan</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>403</StatusCode>
+            <ReasonPhrase>Forbidden</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "@messageid#.0",
+                            "code" : "CM_SERVICE_BAN",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "403",
+                            "title" : "Service ban in effect",
+                            "detail" : "A service ban is in effect on your account.",
+                            "source" : {
+                                "header" : "Authorization"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>

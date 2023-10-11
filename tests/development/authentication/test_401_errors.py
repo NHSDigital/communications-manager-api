@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from tests.lib.constants import CORRELATION_IDS, METHODS, TOKENS
+from lib.constants import CORRELATION_IDS, METHODS, TOKENS
 
 
 @pytest.mark.devtest
@@ -9,6 +9,9 @@ from tests.lib.constants import CORRELATION_IDS, METHODS, TOKENS
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid_level(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id, method):
+    """
+    .. include:: ../../partials/authentication/test_401_invalid_level.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         **nhsd_apim_auth_headers,
         "X-Correlation-Id": correlation_id
@@ -27,6 +30,9 @@ def test_401_invalid_level(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlat
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 def test_401_invalid(nhsd_apim_proxy_url, invalid_token, correlation_id, method):
+    """
+    .. include:: ../../partials/authentication/test_401_invalid.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
         "Authorization": invalid_token,
         "X-Correlation-Id": correlation_id

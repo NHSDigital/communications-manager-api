@@ -30,6 +30,16 @@
         request.header.Authorization = "Bearer ClientNotRecognised" or request.header.Prefer = "code=403"
       </Condition>
     </Step>
+    <Step>
+      <Name>RaiseFault.403ServiceBan</Name>
+      <Condition>
+        request.header.Prefer = "code=403.1"
+      </Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.425RetryTooEarly</Name>
+        <Condition>request.header.Prefer = "code=425"</Condition>
+    </Step>
 {% else %}
     <Step>
         <Name>OauthV2.VerifyAccessToken</Name>

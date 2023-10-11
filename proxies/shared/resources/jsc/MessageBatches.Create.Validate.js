@@ -167,9 +167,9 @@ const validate = () => {
                 pointer = "/data/attributes/messages/" + index + "/recipient/dateOfBirth";
                 if (
                   !isUndefined(message.recipient.dateOfBirth)
-                  && message.recipient.dateOfBirth !== null
                   && (
-                    typeof message.recipient.dateOfBirth !== "string"
+                    message.recipient.dateOfBirth === null
+                    || typeof message.recipient.dateOfBirth !== "string"
                     || !dobRegex.test(message.recipient.dateOfBirth)
                   )
                 ) {

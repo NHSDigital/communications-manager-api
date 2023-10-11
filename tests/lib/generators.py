@@ -83,6 +83,12 @@ class Generators():
         })
 
     @staticmethod
+    def generate_service_ban_error():
+        return Generators.generate_error(constants.ERROR_SERVICE_BAN, source={
+            "header": "Authorization"
+        })
+
+    @staticmethod
     def generate_not_acceptable_error():
         return Generators.generate_error(constants.ERROR_NOT_ACCEPTABLE, source={
             "header": "Accept"
@@ -125,6 +131,10 @@ class Generators():
     @staticmethod
     def generate_quota_error():
         return Generators.generate_error(constants.ERROR_QUOTA)
+
+    @staticmethod
+    def generate_retry_too_early_error():
+        return Generators.generate_error(constants.ERROR_RETRY_TOO_EARLY)
 
     @staticmethod
     def generate_request_timeout_error():

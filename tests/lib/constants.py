@@ -6,6 +6,7 @@ CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
                      "content-type, nhsd-session-urid, " \
                      "x-correlation-id, authorization"
 CORS_EXPOSE_HEADERS = "x-correlation-id"
+CORS_POLICY = "cross-origin"
 
 VALID_ROUTING_PLAN_ID_PROD = "0e38317f-1670-480a-9aa9-b711fb136610"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
@@ -18,8 +19,10 @@ NUM_MAX_ERRORS = 100
 DEV_API_GATEWAY_URL = "https://comms-apim.internal-dev.communications.national.nhs.uk"
 INT_API_GATEWAY_URL = "https://comms-apim.int.communications.national.nhs.uk"
 PROD_API_GATEWAY_URL = "https://comms-apim.prod.communications.national.nhs.uk"
+UAT_API_GATEWAY_URL = "https://comms-apim.uat.communications.national.nhs.uk"
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 UNEXPECTED_429 = AssertionError('Unexpected 429')
+UNEXPECTED_504 = AssertionError('Unexpected 504')
 
 ROUTING_PLAN_ID_PATH = "/data/attributes/routingPlanId"
 MESSAGE_BATCH_REFERENCE_PATH = "/data/attributes/messageBatchReference"
@@ -60,6 +63,17 @@ DUPLICATE_PROPERTIES_PATHS = [
 TOO_FEW_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),
 ]
+
+INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
+
+INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
+VALID_NHS_NUMBER = "9990548609"
+
+INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1, None]
+VALID_DOB = ["0000-01-01", "2023-01-01"]
+
+VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
+VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
 
 
 class Error():
@@ -143,6 +157,14 @@ ERROR_FORBIDDEN = Error(
     "Client not recognised or not yet onboarded."
 )
 
+# service ban
+ERROR_SERVICE_BAN = Error(
+    "CM_SERVICE_BAN",
+    "403",
+    "Service ban in effect",
+    "A service ban is in effect on your account."
+)
+
 # not acceptable
 ERROR_NOT_ACCEPTABLE = Error(
     "CM_NOT_ACCEPTABLE",
@@ -191,6 +213,16 @@ ERROR_NOT_FOUND = Error(
     "404",
     "Resource not found",
     "The resource at the requested URI was not found."
+)
+
+# retry too early
+ERROR_RETRY_TOO_EARLY = Error(
+    "CM_RETRY_TOO_EARLY",
+    "425",
+    "Retried too early",
+    "You have retried this request too early, the previous "
+    "request is still being processed. Re-send the request "
+    "after the time (in seconds) specified `Retry-After` header."
 )
 
 # over quota

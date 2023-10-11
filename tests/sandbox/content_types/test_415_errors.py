@@ -23,6 +23,9 @@ def test_415_invalid(
     correlation_id,
     method
 ):
+    """
+    .. include:: ../../partials/content_types/test_415_invalid.rst
+    """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
         "Accept": "application/json",
         content_type_name: content_type_value,
