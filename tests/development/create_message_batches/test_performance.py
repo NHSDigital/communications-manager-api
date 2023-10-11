@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
-from lib.constants import NUM_MAX_ERRORS
+from lib.constants.constants import NUM_MAX_ERRORS
 
 NUM_MESSAGES = 50000
 CONTENT_TYPE = "application/json"
@@ -31,7 +31,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_au
         **nhsd_apim_auth_headers,
         "Accept": CONTENT_TYPE,
         "Content-Type": CONTENT_TYPE
-        }, json=data
+    }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
     assert len(resp.json().get("errors")) == NUM_MAX_ERRORS
@@ -61,7 +61,7 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, nhsd_apim
         **nhsd_apim_auth_headers,
         "Accept": CONTENT_TYPE,
         "Content-Type": CONTENT_TYPE
-        }, json=data
+    }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
     assert len(resp.json().get("errors")) == NUM_MAX_ERRORS

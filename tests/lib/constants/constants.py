@@ -24,45 +24,8 @@ DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 UNEXPECTED_429 = AssertionError('Unexpected 429')
 UNEXPECTED_504 = AssertionError('Unexpected 504')
 
-ROUTING_PLAN_ID_PATH = "/data/attributes/routingPlanId"
-MESSAGE_BATCH_REFERENCE_PATH = "/data/attributes/messageBatchReference"
-MESSAGES_PATH = "/data/attributes/messages"
-FIRST_MESSAGE_REFERENCE_PATH = "/data/attributes/messages/0/messageReference"
-FIRST_MESSAGE_RECIPIENT_PATH = "/data/attributes/messages/0/recipient"
-FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH = "/data/attributes/messages/0/recipient/nhsNumber"
-
-MISSING_PROPERTIES_PATHS = [
-    ("data", "/data"),
-    ("type", "/data/type"),
-    ("attributes", "/data/attributes"),
-    ("routingPlanId", ROUTING_PLAN_ID_PATH),
-    ("messageBatchReference", MESSAGE_BATCH_REFERENCE_PATH),
-    ("messages", MESSAGES_PATH),
-    ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
-    ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-    ("nhsNumber", FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
-]
-NULL_PROPERTIES_PATHS = [
-    ("data", "/data"),
-    ("attributes", "/data/attributes"),
-    ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-]
-INVALID_PROPERTIES_PATHS = [
-    ("type", "/data/type"),
-    ("routingPlanId", ROUTING_PLAN_ID_PATH),
-    ("messageBatchReference", MESSAGE_BATCH_REFERENCE_PATH),
-    ("messages", MESSAGES_PATH),
-    ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
-    ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-    ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
-    ("personalisation", "/data/attributes/messages/0/personalisation"),
-]
-DUPLICATE_PROPERTIES_PATHS = [
-    ("messageReference", "/data/attributes/messages/1/messageReference"),
-]
-TOO_FEW_PROPERTIES_PATHS = [
-    ("messages", MESSAGES_PATH),
-]
+VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
+VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
 
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
 
@@ -71,9 +34,6 @@ VALID_NHS_NUMBER = "9990548609"
 
 INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1, None]
 VALID_DOB = ["0000-01-01", "2023-01-01"]
-
-VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
-VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
 
 
 class Error():

@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
+from lib.constants.constants import TOKENS, CORRELATION_IDS, METHODS, INT_URL
 
 
 @pytest.mark.inttest

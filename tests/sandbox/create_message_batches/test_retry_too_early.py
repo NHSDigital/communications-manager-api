@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
-from lib.constants import CORRELATION_IDS
+from lib.constants.constants import CORRELATION_IDS
 
 FORBIDDEN_TOKEN = {"Authorization": "Bearer ClientNotRecognised"}
 TRIGGER_425_ROUTING_CONFIG_ID = "d895ade5-0029-4fc3-9fb5-86e1e5370854"

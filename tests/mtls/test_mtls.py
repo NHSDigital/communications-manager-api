@@ -18,7 +18,7 @@ They are also run every 10 minutes, with failures sent to Teams.
 
 import requests
 import pytest
-from lib.constants import *
+from lib.constants.constants import *
 
 
 @pytest.mark.mtlstest

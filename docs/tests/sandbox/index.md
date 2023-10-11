@@ -15,4 +15,5 @@
   * [Service Ban](post_v1_message-batches/service_ban.md)
   * [Retry Too Early](post_v1_message-batches/retry_too_early.md)
 * [POST /v1/messages](post_v1_messages/index.md)
+  * [Validation Tests](post_v1_messages/validation.md)
   * [Invalid Routing Plans](post_v1_messages/invalid_routing_plans.md)

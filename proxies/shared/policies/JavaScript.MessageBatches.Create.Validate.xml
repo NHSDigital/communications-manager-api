@@ -10,5 +10,7 @@
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.MessageBatches.Create.Validate">
     <DisplayName>JavaScript.MessageBatches.Create.Validate</DisplayName>
     <Properties/>
+    <IncludeURL>jsc://helpers/validationErrors.js</IncludeURL>
+    <IncludeURL>jsc://helpers/validationChecks.js</IncludeURL>
     <ResourceURL>jsc://MessageBatches.Create.Validate.js</ResourceURL>
 </Javascript>

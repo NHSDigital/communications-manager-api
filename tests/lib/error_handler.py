@@ -1,4 +1,4 @@
-import lib.constants as constants
+import lib.constants.constants as constants
 
 
 class Error_Handler():
