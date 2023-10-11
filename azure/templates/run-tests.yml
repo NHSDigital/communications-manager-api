@@ -27,7 +27,6 @@ steps:
       - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
       - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
       - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
-
   - bash: |
       if [ "${{ parameters.nightly }}" != "True" ]; then
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)

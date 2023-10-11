@@ -39,6 +39,9 @@ steps:
       secret_ids:
       - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
       - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
+  - template: ./templates/teams-alert-setup.yml
+    parameters:
+      webhook_uri: 'ALERTS_DEV_API_WEBHOOK_URI'
   - bash: |
       export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
       export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
@@ -53,3 +56,7 @@ steps:
       testResultsFiles: 'zap-report.xml'
       testResultsFormat: NUnit
       failTaskOnFailedTests: true
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Zap Security Scan'
+      webhook_uri: 'ALERTS_DEV_API_WEBHOOK_URI'

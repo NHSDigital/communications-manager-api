@@ -1,0 +1,17 @@
+parameters:
+  - name: title
+    type: string
+    default: 'Internal Dev'
+  - name: webhook_uri
+    type: string
+    default: 'ALERTS_DEV_API_WEBHOOK_URI'
+
+steps:
+  - bash: |
+      export TEAMS_WEBHOOK_URI="$(${{parameters.webhook_uri}})"	
+
+      curl -g -v POST $TEAMS_WEBHOOK_URI \
+      -H 'Content-Type: application/json' \
+      -d '{"@type": "MessageCard","@context": "http://schema.org/extensions","themeColor": "ff0000","title": "Nightly ${{parameters.title}} Test Run Failed","potentialAction":[{"@type": "OpenUri","name":"View Build","targets":[{"os": "default","uri": "https://dev.azure.com/NHSD-APIM/API%20Platform/_build/results?buildId='$(build.buildid)'&view=results"}]}],"text": "The Nightly ${{parameters.title}} Test Run has failed, investigate and review if an action is required to correct the issue."}'
+    displayName: Post to Teams
+    condition: failed()
