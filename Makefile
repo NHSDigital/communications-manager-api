@@ -160,7 +160,13 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 
 internal-dev-test: .internal-dev-test
 
-internal-qa-test: .internal-dev-test
+internal-qa-test:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/integration \
+	-m devtest \
+	-m uattest
 
 .integration-test:
 	$(TEST_CMD) \

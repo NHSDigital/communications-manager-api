@@ -52,3 +52,14 @@ def test_mtls_connection_reset_by_peer_prod():
     with pytest.raises(Exception) as e:
         requests.get(PROD_API_GATEWAY_URL, headers={"X-Client-Id": "hello"})
     assert "Connection reset by peer" in str(e.value)
+
+
+@pytest.mark.mtlstest
+@pytest.mark.uattest
+def test_mtls_connection_reset_by_peer_uat():
+    """
+    Ensures that mTLS is enabled on the UAT, API backend service.
+    """
+    with pytest.raises(Exception) as e:
+        requests.get(UAT_API_GATEWAY_URL, headers={"X-Client-Id": "hello"})
+    assert "Connection reset by peer" in str(e.value)
