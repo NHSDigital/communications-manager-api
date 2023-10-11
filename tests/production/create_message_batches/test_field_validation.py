@@ -8,9 +8,6 @@ headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-INVALID_NHS_NUMBER = ["012345678", "01234567890", "abcdefghij", "", [], {}, 5, 0.1]
-INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 
 @pytest.mark.prodtest
@@ -197,7 +194,7 @@ def test_data_too_few_items(property, pointer, correlation_id):
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_nhs_number(nhs_number, correlation_id):
     """
@@ -236,7 +233,7 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
+@pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_dob(dob, correlation_id):
     """
@@ -389,7 +386,7 @@ def test_invalid_message_reference(correlation_id):
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
+@pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_blank_value_under_messages(invalid_value, correlation_id):
     """

@@ -2,16 +2,13 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.constants import *
+import lib.constants as constants
 
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
 CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
-INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
-INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 
 @pytest.mark.sandboxtest
@@ -40,7 +37,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    MISSING_PROPERTIES_PATHS
+    constants.MISSING_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id):
@@ -70,7 +67,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    NULL_PROPERTIES_PATHS
+    constants.NULL_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
@@ -100,7 +97,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    INVALID_PROPERTIES_PATHS
+    constants.INVALID_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
@@ -131,7 +128,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    DUPLICATE_PROPERTIES_PATHS
+    constants.DUPLICATE_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
@@ -163,7 +160,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize(
     "property, pointer",
-    TOO_FEW_PROPERTIES_PATHS
+    constants.TOO_FEW_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id):
@@ -192,7 +189,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     """
@@ -230,7 +227,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
+@pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
     """
@@ -379,7 +376,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
+@pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
     """
@@ -474,4 +471,4 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
         },
         json=data,
     )
-    assert len(resp.json().get("errors")) <= NUM_MAX_ERRORS
+    assert len(resp.json().get("errors")) <= constants.NUM_MAX_ERRORS

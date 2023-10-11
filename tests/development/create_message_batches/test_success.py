@@ -1,17 +1,13 @@
 import requests
 import pytest
 from lib import Assertions, Generators
+import lib.constants as constants
 
-DEFAULT_CONTENT_TYPE = "application/json"
-VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
-VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
 REQUEST_PATH = "/v1/message-batches"
-VALID_DOB = ["0000-01-01", "2023-01-01", None]
-valid_nhs_number = "9990548609"
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
+@pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
     """
@@ -23,7 +19,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
       headers={
           **nhsd_apim_auth_headers,
           "Accept": accept_headers,
-          "Content-Type": DEFAULT_CONTENT_TYPE
+          "Content-Type": constants.DEFAULT_CONTENT_TYPE
       },
       json=data
     )
@@ -31,7 +27,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
+@pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
     """
@@ -40,7 +36,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_
     data = Generators.generate_valid_create_message_batch_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
-            "Accept": DEFAULT_CONTENT_TYPE,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": content_type
         }, json=data
     )
@@ -54,19 +50,19 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_
     .. include:: ../../partials/happy_path/test_201_message_batch_valid_nhs_number.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
-    data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = valid_nhs_number
+    data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
-            "Accept": DEFAULT_CONTENT_TYPE,
-            "Content-Type": DEFAULT_CONTENT_TYPE
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize('dob', VALID_DOB)
+@pytest.mark.parametrize('dob', constants.VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
     """
@@ -77,8 +73,8 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
             **nhsd_apim_auth_headers,
-            "Accept": DEFAULT_CONTENT_TYPE,
-            "Content-Type": DEFAULT_CONTENT_TYPE
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
@@ -95,8 +91,8 @@ def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
         **nhsd_apim_auth_headers,
-        "Accept": DEFAULT_CONTENT_TYPE,
-        "Content-Type": DEFAULT_CONTENT_TYPE
+        "Accept": constants.DEFAULT_CONTENT_TYPE,
+        "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])

@@ -8,9 +8,6 @@ headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
-INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
-INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 
 @pytest.mark.devtest
@@ -203,7 +200,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhsd_apim_auth_headers):
@@ -242,7 +239,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
+@pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_headers):
@@ -399,7 +396,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
+@pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id, nhsd_apim_auth_headers):
