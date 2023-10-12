@@ -1,6 +1,6 @@
 Performance Tests
 =================
 
-.. automodule:: development.create_message_batches.test_performance
+.. automodule:: development.message_batches.create_message_batches.test_performance
     :noindex:
     :members:
