@@ -1,6 +1,6 @@
 Service Ban
 ===========
 
-.. automodule:: sandbox.create_message_batches.test_service_ban
+.. automodule:: sandbox.message_batches.create_message_batches.test_service_ban
     :noindex:
     :members:
