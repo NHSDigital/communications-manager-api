@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib.constants import CORRELATION_IDS, METHODS
+from lib.constants.constants import CORRELATION_IDS, METHODS
 from lib import Error_Handler
 
 REQUEST_PATH = ["", "/", "/api/v1/send", "/v1/message-batches", "/v1/message-batches/"]

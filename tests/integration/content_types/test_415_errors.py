@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators, Authentication
-from lib.constants import INT_URL, CORRELATION_IDS
+from lib.constants.constants import INT_URL, CORRELATION_IDS
 
 CONTENT_TYPE_NAME = ["content-type", "CONTENT_TYPE", "Content_Type", "conTENT_tYpe"]
 CONTENT_TYPE_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]

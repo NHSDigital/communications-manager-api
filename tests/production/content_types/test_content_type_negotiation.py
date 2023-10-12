@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Authentication, Error_Handler
-from lib.constants import METHODS, PROD_URL
+from lib.constants.constants import METHODS, PROD_URL
 
 ACCEPT_HEADERS = [
     {

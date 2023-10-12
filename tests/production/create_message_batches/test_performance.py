@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators, Authentication
-from lib.constants import *
+from lib.constants.constants import *
 
 NUM_MESSAGES = 50000
 
@@ -29,7 +29,7 @@ def test_create_messages_large_invalid_payload():
         "Accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": f"{Authentication.generate_authentication('prod')}"
-        }, json=data
+    }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
     assert len(resp.json().get("errors")) == NUM_MAX_ERRORS
@@ -58,7 +58,7 @@ def test_create_messages_large_not_unique_payload():
         "Accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": f"{Authentication.generate_authentication('prod')}"
-        }, json=data
+    }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
     assert len(resp.json().get("errors")) == NUM_MAX_ERRORS

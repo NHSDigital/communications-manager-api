@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Authentication, Error_Handler
-from lib.constants import METHODS, PROD_URL
+from lib.constants.constants import METHODS, PROD_URL
 
 CORRELATION_IDS = [None, "a17669c8-219a-11ee-ba86-322b0407c489"]
 REQUEST_PATH = ["", "/", "/api/v1/send", "/v1/message-batches", "/v1/message-batches/"]

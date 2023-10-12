@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators, Authentication
-import lib.constants as constants
+import lib.constants.constants as constants
 
 REQUEST_PATH = "/v1/message-batches"
 
@@ -15,13 +15,13 @@ def test_201_message_batch_valid_accept_headers(accept_headers):
     data = Generators.generate_valid_create_message_batch_body("int")
 
     resp = requests.post(
-      f"{constants.INT_URL}{REQUEST_PATH}",
-      headers={
-          "Authorization": Authentication.generate_authentication("int"),
-          "Accept": accept_headers,
-          "Content-Type": "application/json"
-      },
-      json=data
+        f"{constants.INT_URL}{REQUEST_PATH}",
+        headers={
+            "Authorization": Authentication.generate_authentication("int"),
+            "Accept": accept_headers,
+            "Content-Type": "application/json"
+        },
+        json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
@@ -35,10 +35,10 @@ def test_201_message_batch_valid_content_type_headers(content_type):
     data = Generators.generate_valid_create_message_batch_body("int")
 
     resp = requests.post(f"{constants.INT_URL}{REQUEST_PATH}", headers={
-            "Authorization": Authentication.generate_authentication("int"),
-            "Accept": "application/json",
-            "Content-Type": content_type
-        }, json=data
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": content_type
+    }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
@@ -51,10 +51,10 @@ def test_201_message_batch_valid_nhs_number():
     data = Generators.generate_valid_create_message_batch_body("int")
 
     resp = requests.post(f"{constants.INT_URL}{REQUEST_PATH}", headers={
-            "Authorization": Authentication.generate_authentication("int"),
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }, json=data
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
@@ -69,10 +69,10 @@ def test_201_message_batch_valid_dob(dob):
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
 
     resp = requests.post(f"{constants.INT_URL}{REQUEST_PATH}", headers={
-            "Authorization": Authentication.generate_authentication("int"),
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }, json=data
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
 
@@ -89,6 +89,6 @@ def test_request_without_dob():
         "Authorization": Authentication.generate_authentication("int"),
         "Accept": "application/json",
         "Content-Type": "application/json"
-        }, json=data
+    }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])

@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Authentication
-from lib.constants import *
+from lib.constants.constants import *
 
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]

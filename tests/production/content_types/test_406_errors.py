@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators, Authentication
-from lib.constants import *
+from lib.constants.constants import *
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
 HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]

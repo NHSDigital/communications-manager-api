@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators, Authentication
-from lib.constants import PROD_URL
+from lib.constants.constants import PROD_URL
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
@@ -18,9 +18,9 @@ def test_no_such_routing_plan(correlation_id):
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
-            "Authorization": f"{Authentication.generate_authentication('prod')}",
-            "X-Correlation-Id": correlation_id
-        }, json={
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
+        "X-Correlation-Id": correlation_id
+    }, json={
         "data": {
             "type": "MessageBatch",
             "attributes": {
@@ -55,9 +55,9 @@ def test_routing_plan_not_belonging_to_client_id(correlation_id):
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{PROD_URL}/v1/message-batches", headers={
-            "Authorization": f"{Authentication.generate_authentication('prod')}",
-            "X-Correlation-Id": correlation_id
-        }, json={
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
+        "X-Correlation-Id": correlation_id
+    }, json={
         "data": {
             "type": "MessageBatch",
             "attributes": {

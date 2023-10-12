@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import CORRELATION_IDS, METHODS
+from lib.constants.constants import CORRELATION_IDS, METHODS
 
 
 MOCK_TOKEN = {

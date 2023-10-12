@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators, Authentication
-from lib.constants import *
+from lib.constants.constants import *
 
 POST_PATHS = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot"]
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]

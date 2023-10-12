@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib.constants import METHODS
+from lib.constants.constants import METHODS
 from lib import Error_Handler
 
 ACCEPT_HEADERS = [

@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-import lib.constants as constants
+import lib.constants.constants as constants
 
 REQUEST_PATH = "/v1/message-batches"
 

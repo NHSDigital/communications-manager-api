@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import *
+from lib.constants.constants import *
 
 
 @pytest.mark.prodtest

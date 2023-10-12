@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Authentication, Error_Handler
-from lib.constants import INT_URL, METHODS
+from lib.constants.constants import INT_URL, METHODS
 
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 ACCEPT_HEADERS = [

@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import METHODS, CORRELATION_IDS
+from lib.constants.constants import METHODS, CORRELATION_IDS
 
 FORBIDDEN_TOKEN = {
     "Authorization": "Bearer ClientNotRecognised"
