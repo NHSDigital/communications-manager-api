@@ -2,6 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
+from lib.constants import MESSAGES_ENDPOINT
 
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
@@ -14,7 +15,7 @@ def test_500_routing_plan_with_duplicate_templates(nhsd_apim_proxy_url, correlat
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/messages", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
         "X-Correlation-Id": correlation_id
     }, json={
         "data": {
@@ -70,7 +71,7 @@ def test_500_routing_plan_with_missing_template(nhsd_apim_proxy_url, correlation
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/messages", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
         "X-Correlation-Id": correlation_id
     }, json={
         "data": {

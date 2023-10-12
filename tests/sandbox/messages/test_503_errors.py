@@ -1,6 +1,7 @@
 import pytest
 import requests
 from lib import Assertions, Generators
+from lib.constants import MESSAGES_ENDPOINT
 
 
 CORRELATION_IDS = [None, "b1ad9302-5df9-4066-bcd2-b274cfab1e72"]
@@ -12,7 +13,7 @@ def test_503_service_unavailable(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/timeouts/test_503_service_unavailable.rst
     """
-    resp = requests.get(f"{nhsd_apim_proxy_url}", headers={
+    resp = requests.get(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
         "Prefer": "code=503",
         "X-Correlation-Id": correlation_id
     })

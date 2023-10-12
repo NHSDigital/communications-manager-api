@@ -1,15 +1,33 @@
 Authentication Tests
 ====================
 
-401 - Access Denied
+/v1/message-batches
 -------------------
 
-.. automodule:: sandbox.authentication.test_401_errors
+401 - Access Denied
+--------------------
+
+.. automodule:: sandbox.message_batches.authentication.test_401_errors
     :noindex:
     :members:
 
 403 - Forbidden
 ---------------
 
-.. automodule:: sandbox.authentication.test_403_errors
+.. automodule:: sandbox.message_batches.authentication.test_403_errors
+    :members:
+
+/v1/messages
+============
+
+401 - Access Denied
+-------------------
+
+.. automodule:: sandbox.messages.authentication.test_401_errors
+    :noindex:
+    :members:
+
+403 - Forbidden
+---------------
+.. automodule:: sandbox.messages.authentication.test_403_errors
     :members:

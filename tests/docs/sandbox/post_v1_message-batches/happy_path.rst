@@ -6,6 +6,6 @@ These tests target the API endpoint v1/message-batches testing successful respon
 201 - Success
 -------------
 
-.. automodule:: sandbox.create_message_batches.test_success
+.. automodule:: sandbox.message_batches.create_message_batches.test_success
     :noindex:
     :members:

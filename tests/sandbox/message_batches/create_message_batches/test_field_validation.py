@@ -18,7 +18,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
     .. include:: ../../partials/validation/test_invalid_body.rst
     """
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -45,7 +45,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
     .. include:: ../../partials/validation/test_property_missing.rst
     """
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -75,7 +75,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
     .. include:: ../../partials/validation/test_data_null.rst
     """
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -105,7 +105,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
     .. include:: ../../partials/validation/test_data_invalid.rst
     """
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -141,7 +141,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
 
     # Post the same message a 2nd time to trigger the duplicate error
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -168,7 +168,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
     .. include:: ../../partials/validation/test_data_too_few_items.rst
     """
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id
@@ -195,7 +195,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -233,7 +233,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -270,7 +270,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -307,7 +307,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -344,7 +344,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -382,7 +382,7 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
     """
     .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -412,7 +412,7 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id
         }, json={
@@ -464,7 +464,7 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
         }
     }
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
             "X-Correlation-Id": correlation_id

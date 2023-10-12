@@ -3,7 +3,6 @@ import pytest
 from lib import Assertions, Generators
 import lib.constants as constants
 
-REQUEST_PATH = "/v1/message-batches"
 VALID_ROUTING_PLAN_ID = [
     "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
     "49e43b98-70cb-47a9-a55e-fe70c9a6f77c",
@@ -21,7 +20,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
     """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}{REQUEST_PATH}",
+        f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Accept": accept_headers,
             "Content-Type": "application/json"
@@ -38,7 +37,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, conte
     .. include:: ../../partials/happy_path/test_201_message_batch_valid_content_type_headers.rst
     """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             "Accept": "application/json",
             "Content-Type": content_type
         }, json=data
@@ -55,7 +54,7 @@ def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_pl
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["routingPlanId"] = routing_plan_id
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             "Accept": "application/json",
             "Content-Type": "application/json"
         }, json=data
@@ -71,7 +70,7 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             "Accept": "application/json",
             "Content-Type": "application/json"
         }, json=data
@@ -88,7 +87,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
             "Accept": "application/json",
             "Content-Type": "application/json"
         }, json=data
@@ -104,7 +103,7 @@ def test_request_without_dob(nhsd_apim_proxy_url):
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}{REQUEST_PATH}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{constants.MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json"
         }, json=data

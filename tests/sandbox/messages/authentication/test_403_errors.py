@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import METHODS, CORRELATION_IDS
+from lib.constants import METHODS, CORRELATION_IDS, MESSAGES_ENDPOINT
 
 FORBIDDEN_TOKEN = {
     "Authorization": "Bearer ClientNotRecognised"
@@ -15,7 +15,7 @@ def test_403_forbidden(nhsd_apim_proxy_url, correlation_id, method):
     """
     .. include:: ../../partials/authentication/test_403_forbidden.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
         **FORBIDDEN_TOKEN,
         "X-Correlation-Id": correlation_id
     })
@@ -35,7 +35,7 @@ def test_403_forbidden_prefer(nhsd_apim_proxy_url, correlation_id, method):
     """
     .. include:: ../../partials/authentication/test_403_forbidden_prefer.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
         "Prefer": "code=403",
         "X-Correlation-Id": correlation_id
     })

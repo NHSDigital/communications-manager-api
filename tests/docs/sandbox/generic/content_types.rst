@@ -1,23 +1,50 @@
 Content Types
 ====================
 
+/v1/message-batches
+===================
+
 406 - Not Acceptable
 --------------------
 
-.. automodule:: sandbox.content_types.test_406_errors
+.. automodule:: sandbox.message_batches.content_types.test_406_errors
     :noindex:
     :members:
 
 415 - Unsupported Media
 -----------------------
 
-.. automodule:: sandbox.content_types.test_415_errors
+.. automodule:: sandbox.message_batches.content_types.test_415_errors
     :noindex:
     :members:
 
 Content negotiation
 -------------------
 
-.. automodule:: sandbox.content_types.test_content_negotiation
+.. automodule:: sandbox.message_batches.content_types.test_content_negotiation
+    :noindex:
+    :members:
+
+/v1/messages
+============
+
+406 - Not Acceptable
+--------------------
+
+.. automodule:: sandbox.messages.content_types.test_406_errors
+    :noindex:
+    :members:
+
+415 - Unsupported Media
+-----------------------
+
+.. automodule:: sandbox.messages.content_types.test_415_errors
+    :noindex:
+    :members:
+
+Content negotiation
+-------------------
+
+.. automodule:: sandbox.messages.content_types.test_content_negotiation
     :noindex:
     :members:

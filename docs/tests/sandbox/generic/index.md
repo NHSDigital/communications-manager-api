@@ -1,8 +1,17 @@
 # Generic Tests
 
 * [Authentication Tests](authentication.md)
+* [/v1/messages](authentication.md#v1-messages)
 * [Content Types](content_types.md)
+* [/v1/message-batches](content_types.md#v1-message-batches)
+* [/v1/messages](content_types.md#v1-messages)
 * [Header Tests](headers.md)
+* [/v1/message-batches](headers.md#v1-message-batches)
+* [/v1/messages](headers.md#v1-messages)
 * [Not Found Tests](not_found.md)
 * [Quota Tests](quotas.md)
+* [/v1/message-batches](quotas.md#v1-message-batches)
+* [/v1/messages](quotas.md#v1-messages)
 * [Timeout Tests](timeouts.md)
+* [/v1/message-batches](timeouts.md#v1-message-batches)
+* [/v1/messages](timeouts.md#v1-messages)

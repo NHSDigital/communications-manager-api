@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
-from lib.constants import CORRELATION_IDS
+from lib.constants import CORRELATION_IDS, MESSAGE_BATCHES_ENDPOINT
 
 FORBIDDEN_TOKEN = {"Authorization": "Bearer ClientNotRecognised"}
 TRIGGER_425_ROUTING_CONFIG_ID = "d895ade5-0029-4fc3-9fb5-86e1e5370854"
@@ -28,7 +28,7 @@ def test_425_retry_too_early(nhsd_apim_proxy_url, correlation_id):
     """
 
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Content-Type": "application/json",
             "X-Correlation-Id": correlation_id,
@@ -80,7 +80,7 @@ def test_prefer_425_retry_too_early(nhsd_apim_proxy_url, correlation_id):
     """
 
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Prefer": "code=425",
             "Content-Type": "application/json",

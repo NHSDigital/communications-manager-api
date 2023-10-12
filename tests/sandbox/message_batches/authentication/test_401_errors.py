@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import CORRELATION_IDS, METHODS
+from lib.constants import CORRELATION_IDS, METHODS, MESSAGE_BATCHES_ENDPOINT
 
 
 MOCK_TOKEN = {
@@ -16,7 +16,7 @@ def test_401_invalid(nhsd_apim_proxy_url, correlation_id, method):
     """
     .. include:: ../../partials/authentication/test_401_invalid.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **MOCK_TOKEN,
         "X-Correlation-Id": correlation_id
     })
@@ -36,7 +36,7 @@ def test_401_invalid_prefer(nhsd_apim_proxy_url, correlation_id, method):
     """
     ..include:: ../../partials/authentication/test_401_invalid_prefer.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers={
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Prefer": "code=401",
         "X-Correlation-Id": correlation_id
     })

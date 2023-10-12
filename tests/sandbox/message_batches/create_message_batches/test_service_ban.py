@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants import CORRELATION_IDS
+from lib.constants import CORRELATION_IDS, MESSAGE_BATCHES_ENDPOINT
 
 FORBIDDEN_TOKEN = {
     "Authorization": "Bearer ClientNotRecognised"
@@ -16,7 +16,7 @@ def test_403_service_ban(nhsd_apim_proxy_url, correlation_id):
     """
 
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Authorization": "banned",
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ def test_prefer_403_service_ban(nhsd_apim_proxy_url, correlation_id):
     """
 
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}/v1/message-batches",
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Prefer": "code=403.1",
             "Content-Type": "application/json",

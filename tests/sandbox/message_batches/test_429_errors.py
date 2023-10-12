@@ -1,6 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators, Error_Handler
+from lib.constants import MESSAGE_BATCHES_ENDPOINT
 
 CORRELATION_IDS = [None, "0f160ae2-9b62-47bf-bdf0-c6a844d59488"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
@@ -13,7 +14,7 @@ def test_too_many_requests_get(nhsd_apim_proxy_url, correlation_id, method):
     """
     .. include:: ../../partials/timeouts/test_too_many_requests_get.rst
     """
-    resp = getattr(requests, method)(nhsd_apim_proxy_url, headers={
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Prefer": "code=429",
         "Accept": "*/*",
         "Content-Type": "application/json",

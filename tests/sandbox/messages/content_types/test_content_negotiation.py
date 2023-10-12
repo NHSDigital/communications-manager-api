@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib.constants import METHODS
+from lib.constants import METHODS, MESSAGES_ENDPOINT
 from lib import Error_Handler
 
 ACCEPT_HEADERS = [
@@ -32,7 +32,7 @@ def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method):
     """
     .. include:: ../../partials/content_types/test_application_response_type.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}", headers=accept_headers.get("headers"))
+    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers=accept_headers.get("headers"))
 
     Error_Handler.handle_retry(resp)
 

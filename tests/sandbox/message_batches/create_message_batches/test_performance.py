@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
-from lib.constants import NUM_MAX_ERRORS
+from lib.constants import NUM_MAX_ERRORS, MESSAGE_BATCHES_ENDPOINT
 
 NUM_MESSAGES = 50000
 
@@ -25,7 +25,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
             "personalisation": {}
         })
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json"
         }, json=data
@@ -51,7 +51,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
             "personalisation": {}
         })
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json"
         }, json=data
@@ -79,7 +79,7 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
             "personalisation": {}
         })
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json"
         }, json=data

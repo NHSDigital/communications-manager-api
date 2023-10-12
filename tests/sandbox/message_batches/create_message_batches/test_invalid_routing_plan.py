@@ -2,6 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
+from lib.constants import MESSAGE_BATCHES_ENDPOINT
 
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
@@ -16,7 +17,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -52,7 +53,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_invalid_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -88,7 +89,7 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -149,7 +150,7 @@ def test_500_missing_routing_plan(nhsd_apim_proxy_url, correlation_id, routing_p
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}/v1/message-batches", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
