@@ -4,13 +4,13 @@ Header Tests
 CORS Responses
 --------------
 
-.. automodule:: production.message_batches.headers.test_cors
+.. automodule:: production.headers.test_cors
     :noindex:
     :members:
 
 Correlation Id
 --------------
 
-.. automodule:: production.message_batches.headers.test_x_correlation_id
+.. automodule:: production.headers.test_x_correlation_id
     :noindex:
     :members:
