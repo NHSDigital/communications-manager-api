@@ -1,7 +1,7 @@
 
 from lib.constants.shared_paths import ROUTING_PLAN_ID_PATH
 
-
+MESSAGES_ENDPOINT = "/v1/messages"
 MESSAGE_REFERENCE_PATH = "/data/attributes/messageReference"
 MESSAGE_RECIPIENT_PATH = "/data/attributes/recipient"
 MESSAGE_RECIPIENT_NHSNUMBER_PATH = "/data/attributes/recipient/nhsNumber"

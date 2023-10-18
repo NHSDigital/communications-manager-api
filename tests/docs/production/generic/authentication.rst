@@ -4,6 +4,6 @@ Authentication Tests
 401 - Access Denied
 ---------------------
 
-.. automodule:: production.authentication.test_401_errors
+.. automodule:: production.message_batches.authentication.test_401_errors
     :noindex:
     :members:

@@ -1,6 +1,6 @@
 from lib.constants.shared_paths import ROUTING_PLAN_ID_PATH
 
-
+MESSAGE_BATCHES_ENDPOINT = "/v1/message-batches"
 MESSAGE_BATCH_REFERENCE_PATH = "/data/attributes/messageBatchReference"
 MESSAGES_PATH = "/data/attributes/messages"
 FIRST_MESSAGE_REFERENCE_PATH = "/data/attributes/messages/0/messageReference"
