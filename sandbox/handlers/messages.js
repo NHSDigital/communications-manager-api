@@ -6,6 +6,7 @@ const {
   sendingGroupIdWithDuplicateTemplates,
   duplicateTemplates,
   trigger500SendingGroupId,
+  validSendingGroupIds,
 } = require('./config')
 
 async function messages(req, res, next) {
@@ -20,6 +21,13 @@ async function messages(req, res, next) {
     next();
     return;
   }
+
+  if (!validSendingGroupIds[req.body.data.attributes.routingPlanId]) {
+      sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.data.attributes.routingPlanId}"`);
+      next();
+      return;
+  }
+
   if (req.body.data.attributes.routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
     sendError(res, 500, `NHS App Template does not exist with internalTemplateId: invalid-template`);
     next();

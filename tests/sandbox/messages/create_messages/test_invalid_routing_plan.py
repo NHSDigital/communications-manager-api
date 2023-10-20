@@ -11,6 +11,37 @@ DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "a3a4e55d-7a21-45a6-9286-8eb595c872a8"
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": f"0{str(uuid.uuid1())[1:]}",
+                "messageReference": str(uuid.uuid1()),
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "1982-03-17"
+                },
+                "personalisation": {}
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        404,
+        Generators.generate_no_such_routing_plan_error(),
+        correlation_id
+    )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_500_routing_plan_with_duplicate_templates(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
