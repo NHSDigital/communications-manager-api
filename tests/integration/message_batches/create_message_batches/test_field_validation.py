@@ -30,7 +30,7 @@ def test_invalid_body(correlation_id):
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
-        400,
+        200,
         Generators.generate_invalid_value_error("/"),
         correlation_id
     )

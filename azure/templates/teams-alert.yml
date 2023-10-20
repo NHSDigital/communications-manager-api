@@ -11,7 +11,7 @@ steps:
       if [ "${{ parameters.environment }}" == "prod" ]; then
           export TEAMS_WEBHOOK_URI=$(ALERTS_PROD_API_WEBHOOK_URI)
       elif ["${{ parameters.environment }} == "dev" ]; then
-          export TEAMS_WEBHOOK_URI=$(ALERTS_DEV_API_WEBHOOK_URI
+          export TEAMS_WEBHOOK_URI=$(ALERTS_DEV_API_WEBHOOK_URI)
       else
           printf "Invalid environment value provided"
           exit 1
