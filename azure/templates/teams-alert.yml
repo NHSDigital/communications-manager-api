@@ -9,15 +9,15 @@ parameters:
 steps:
   - bash: |
       if [ "${{ parameters.environment }}" == "prod" ]; then
-          export TEAMS_WEBHOOK_URI=$(ALERTS_PROD_API_WEBHOOK_URI)
+          TEAMS_WEBHOOK_URI=$(ALERTS_PROD_API_WEBHOOK_URI)
       elif ["${{ parameters.environment }}" == "dev" ]; then
-          export TEAMS_WEBHOOK_URI=$(ALERTS_DEV_API_WEBHOOK_URI)
+          TEAMS_WEBHOOK_URI=$(ALERTS_DEV_API_WEBHOOK_URI)
       else
           printf "Invalid environment value provided"
           exit 1
       fi
 
-      curl -X POST $(TEAMS_WEBHOOK_URI) \
+      curl -X POST $TEAMS_WEBHOOK_URI \
       -H 'Content-Type: application/json' \
       -d @- << EOF
       {
