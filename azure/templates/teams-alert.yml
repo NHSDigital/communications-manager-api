@@ -17,7 +17,7 @@ steps:
           exit 1
       fi
 
-      curl -X POST $TEAMS_WEBHOOK_URI \
+      curl -X POST $(TEAMS_WEBHOOK_URI) \
       -H 'Content-Type: application/json' \
       -d @- << EOF
       {
