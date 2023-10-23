@@ -26,7 +26,7 @@
     "minimist": "^1.2.2",
     "newman": "^6.0.0",
     "react-is": "^18.2.0",
-    "sinon": "^16.1.0"
+    "sinon": "^17.0.0"
   },
   "dependencies": {
     "jsrsasign": "^10.8.6",
