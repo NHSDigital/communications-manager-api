@@ -22,7 +22,7 @@ info:
 
     ## API status and roadmap
 
-    This API is [in production](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
+    This API is [in production, beta](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
     
     You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/?order=popular&filter=allexceptdone&tag=communications-manager-api).
 
