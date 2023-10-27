@@ -64,6 +64,30 @@ describe('/api/v1/messages', () => {
             })
             .expect("Content-Type", /json/, done);
     });
+
+    it('returns a 404 when the sending group is not found or not accessible to the client', (done) => {
+        request(server)
+            .post('/api/v1/messages')
+            .send({
+                data: {
+                    type: "Message",
+                    attributes: {
+                        routingPlanId: 'sending-group-id',
+                        messageReference: 'request-ref-id',
+                        recipient: {
+                            nhsNumber: "999999999",
+                            dateOfBirth: "2000-01-01"
+                        },
+                        personalisation: {}
+                    }
+                }
+            })
+            .expect(404, {
+              message: 'Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "sending-group-id"'
+            })
+            .expect("Content-Type", /json/, done);
+    });
+
     it('returns a 500 when the sending group has missing templates', (done) => {
         request(server)
             .post('/api/v1/messages')
