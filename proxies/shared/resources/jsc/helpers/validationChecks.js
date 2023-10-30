@@ -7,6 +7,7 @@ const messageId = context.getVariable("messageid");
 const isUndefined = (val) => {
     return typeof val === "undefined";
 }
+
 const isValidNhsNumber = (nhsNumber, nhsNumberRegex) => {
     if (!nhsNumberRegex.test(nhsNumber)) {
         return false;
@@ -24,7 +25,7 @@ const isValidNhsNumber = (nhsNumber, nhsNumberRegex) => {
     return (11 - remainder) % 11 === parseInt(checkDigit);
 }
 
-// validate field value and push any errors 
+// validate field value and push any errors
 const validateObject = (errors, fieldValue, fieldPointer) => {
     if (isUndefined(fieldValue)) {
         errors.push(missingError(fieldPointer));
@@ -34,7 +35,7 @@ const validateObject = (errors, fieldValue, fieldPointer) => {
         errors.push(nullError(fieldPointer));
         return false
     }
-    if (typeof fieldValue !== "object") {
+    if (typeof fieldValue !== "object" || Array.isArray(fieldValue)) {
         errors.push(invalidError(fieldPointer));
         return false
     }
