@@ -1,0 +1,15 @@
+parameters:
+  - name: webhook_uri
+    type: string
+    default: 'ALERTS_DEV_API_WEBHOOK_URI'
+
+steps:
+  - template: "azure/components/aws-assume-role.yml@common"
+    parameters:
+      role: "auto-ops"
+      profile: "apm_ptl"
+
+  - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+    parameters:
+      secret_ids:
+      - ptl/azure-devops/communications-manager/${{parameters.webhook_uri}}
