@@ -1,5 +1,6 @@
 from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
 from .error_handler import Error_Handler
+from datetime import datetime
 
 
 class Assertions():
@@ -21,6 +22,21 @@ class Assertions():
 
         # ensure we have our cache-control set correctly
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
+
+    @staticmethod
+    def assert_201_response_messages(resp):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 201
+
+        response = resp.json().get("data")
+        assert response.get("type") == "Message"
+        assert response.get("id") is not None
+        assert response.get("id") != ""
+        assert response.get("attributes").get("messageStatus") == "created"
+        assert response.get("attributes").get("timestamps").get("created")
+        assert response.get("attributes").get("timestamps").get("created") is not None
+        assert response.get("attributes").get("timestamps").get("created") != ""
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
