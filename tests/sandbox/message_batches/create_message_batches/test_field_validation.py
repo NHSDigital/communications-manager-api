@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.constants.constants import INVALID_NHS_NUMBER, INVALID_DOB, INVALID_MESSAGE_VALUES, NUM_MAX_ERRORS
+import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, DUPLICATE_PROPERTIES_PATHS, TOO_FEW_PROPERTIES_PATHS, MESSAGE_BATCHES_ENDPOINT
 headers = {
@@ -190,7 +190,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     """
@@ -228,7 +228,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
+@pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
     """
@@ -376,7 +376,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
+@pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
     """
@@ -471,4 +471,84 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
         },
         json=data,
     )
-    assert len(resp.json().get("errors")) <= NUM_MAX_ERRORS
+    assert len(resp.json().get("errors")) <= constants.NUM_MAX_ERRORS
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_IDS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/validation/test_invalid_personalisation.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "personalisation": personalisation
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/messages/0/personalisation"),
+        personalisation
+    )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/validation/test_invalid_personalisation.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "personalisation": personalisation
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_null_value_error("/data/attributes/messages/0/personalisation"),
+        personalisation
+    )
