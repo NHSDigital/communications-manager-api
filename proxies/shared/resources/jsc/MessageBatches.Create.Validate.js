@@ -83,8 +83,8 @@ const validate = () => {
 
               // $.data.attributes.messages.x.personalisation
               pointer = "/data/attributes/messages/" + index + "/personalisation";
-              if (!isUndefined(message.personalisation) && typeof message.personalisation !== "object") {
-                errors.push(invalidError(pointer));
+              if (!isUndefined(message.personalisation)) {
+                validateObject(errors, message.personalisation, pointer)
               }
             }
           });
