@@ -19,6 +19,10 @@
         <Condition>request.header.Prefer = "code=503"</Condition>
     </Step>
     <Step>
+        <Name>RaiseFault.500Generic</Name>
+        <Condition>request.header.Prefer = "code=500"</Condition>
+    </Step>
+    <Step>
         <Name>RaiseFault.401Unauthorized</Name>
         <Condition>
             request.header.Authorization = "Bearer InvalidMockToken" or request.header.Prefer = "code=401"
