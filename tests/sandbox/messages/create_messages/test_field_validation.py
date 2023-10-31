@@ -2,6 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
+import lib.constants.constants as constants
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
 
@@ -11,8 +12,6 @@ headers = {
     "Content-Type": "application/json"
 }
 CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
-INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
-INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1]
 
 
 @pytest.mark.sandboxtest
@@ -130,7 +129,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
+@pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     """
@@ -164,7 +163,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
+@pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
     """
@@ -259,5 +258,73 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/messageReference"),
+        correlation_id
+    )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+@pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
+def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/validation/test_invalid_personalisation.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageReference": "invalid",
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "2023-01-01"
+                },
+                "personalisation": personalisation
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/personalisation"),
+        correlation_id
+    )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+@pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
+def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/validation/test_invalid_personalisation.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageReference": "invalid",
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "2023-01-01"
+                },
+                "personalisation": personalisation
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_null_value_error("/data/attributes/personalisation"),
         correlation_id
     )
