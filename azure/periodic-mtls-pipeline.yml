@@ -27,5 +27,15 @@ variables:
     value: ''
 
 steps:
+
+  - template: ./templates/teams-alert-setup.yml
+    parameters:
+      webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'
+
   - bash: |
       make install-python && make mtls-test
+
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Integration'
+      webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'
