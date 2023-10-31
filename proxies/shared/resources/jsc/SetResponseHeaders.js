@@ -17,3 +17,15 @@ context.setVariable("error.header.Cache-Control", "no-cache, no-store, must-reva
 // set our x-content-type-options-header
 context.setVariable("response.header.X-Content-Type-Options", "nosniff");
 context.setVariable("error.header.X-Content-Type-Options", "nosniff");
+
+// format errors object
+try {
+  const content = context.getVariable("error.content")
+  const errors = JSON.parse(content).errors
+
+  if (errors) {
+    context.setVariable("error.content", JSON.stringify({ errors: errors }));
+  }
+} catch (e) {
+  //
+}
