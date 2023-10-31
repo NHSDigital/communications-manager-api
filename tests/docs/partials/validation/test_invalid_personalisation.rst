@@ -18,8 +18,8 @@ A valid personalisation must be structured in this format: { parameter: value }
 
     * - Value
       - Description
-    * - "", None
+    * - None
       - Are tested to ensure that null personalisation values are not accepted
-    * - []
+    * - 5, "", "some-string", []
       - Are tested to ensure that invalid personalisation values are not accepted
 

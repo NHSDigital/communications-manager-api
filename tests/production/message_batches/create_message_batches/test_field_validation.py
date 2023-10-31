@@ -489,7 +489,7 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/messages/0/personalisation"),
-        personalisation
+        correlation_id
     )
 
 
@@ -529,5 +529,5 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
         resp,
         400,
         Generators.generate_null_value_error("/data/attributes/messages/0/personalisation"),
-        personalisation
+        correlation_id
     )

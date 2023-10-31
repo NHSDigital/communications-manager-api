@@ -335,10 +335,10 @@ A valid personalisation must be structured in this format: { parameter: value }
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value    | Description                                                               |
-|----------|---------------------------------------------------------------------------|
-| “”, None | Are tested to ensure that null personalisation values are not accepted    |
-| []       | Are tested to ensure that invalid personalisation values are not accepted |
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid routing plan receives a 400 ‘Invalid Value’ response
@@ -383,10 +383,10 @@ A valid personalisation must be structured in this format: { parameter: value }
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value    | Description                                                               |
-|----------|---------------------------------------------------------------------------|
-| “”, None | Are tested to ensure that null personalisation values are not accepted    |
-| []       | Are tested to ensure that invalid personalisation values are not accepted |
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
 
 
 ## Scenario: An API consumer submitting a request with a null message value receives a 400 ‘Null Value’ response
