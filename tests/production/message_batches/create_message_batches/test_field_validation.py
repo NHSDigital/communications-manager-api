@@ -455,7 +455,7 @@ def test_null_value_under_messages(correlation_id):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_IDS)
+@pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
     """
