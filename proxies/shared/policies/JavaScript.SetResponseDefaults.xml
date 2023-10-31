@@ -7,8 +7,8 @@
 
  In this instance the JavaScript file sets the response-type header of the response to either application/vnd.api+json or application/json depending on the accept header passed.
 -->
-<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="JavaScript.SetResponseHeaders">
-    <DisplayName>JavaScript.SetResponseHeaders</DisplayName>
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="JavaScript.SetResponseDefaults">
+    <DisplayName>JavaScript.SetResponseDefaults</DisplayName>
     <Properties/>
-    <ResourceURL>jsc://SetResponseHeaders.js</ResourceURL>
+    <ResourceURL>jsc://SetResponseDefaults.js</ResourceURL>
 </Javascript>

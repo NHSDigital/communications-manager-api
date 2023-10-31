@@ -1,5 +1,5 @@
 Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 'Invalid Value' response
-====================================================================================================================
+======================================================================================================================
 
 A valid personalisation must be structured in this format: { parameter: value }
 
