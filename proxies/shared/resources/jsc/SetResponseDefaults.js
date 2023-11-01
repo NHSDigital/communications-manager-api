@@ -18,14 +18,14 @@ context.setVariable("error.header.Cache-Control", "no-cache, no-store, must-reva
 context.setVariable("response.header.X-Content-Type-Options", "nosniff");
 context.setVariable("error.header.X-Content-Type-Options", "nosniff");
 
-// format errors object
+// format errors and response objects
 try {
-  const content = context.getVariable("error.content")
-  const errors = JSON.parse(content).errors
+  const errorContent = context.getVariable("error.content")
+  const responseContent = context.getVariable("response.content")
 
-  if (errors) {
-    context.setVariable("error.content", JSON.stringify({ errors: errors }));
-  }
+  if (errorContent) context.setVariable("error.content", JSON.stringify(JSON.parse(errorContent)))
+  if (responseContent) context.setVariable("response.content", JSON.stringify(JSON.parse(responseContent)))
+
 } catch (e) {
   //
 }
