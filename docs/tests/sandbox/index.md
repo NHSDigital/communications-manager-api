@@ -7,6 +7,7 @@
   * [Not Found Tests](generic/not_found.md)
   * [Quota Tests](generic/quotas.md)
   * [Timeout Tests](generic/timeouts.md)
+  * [Error Tests](generic/errors.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)
   * [Validation Tests](post_v1_message-batches/validation.md)
   * [Invalid Routing Plans](post_v1_message-batches/invalid_routing_plans.md)

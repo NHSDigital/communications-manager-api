@@ -222,3 +222,11 @@ ERROR_SERVICE_TIMEOUT = Error(
     "Unable to call service",
     "The downstream service has not responded within the configured timeout period."
 )
+
+# internal server error
+ERROR_INTERNAL_SERVER = Error(
+    "CM_INTERNAL_SERVER_ERROR",
+    "500",
+    "Error processing request",
+    "There was an internal error whilst processing this request."
+)

@@ -6,3 +6,4 @@
 * [Not Found Tests](not_found.md)
 * [Quota Tests](quotas.md)
 * [Timeout Tests](timeouts.md)
+* [Error Tests](errors.md)
