@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Authentication, Error_Handler
+from lib import Authentication, Error_Handler, Assertions
 from lib.constants.constants import METHODS, PROD_URL, VALID_ENDPOINTS
 
 ACCEPT_HEADERS = [
@@ -40,4 +40,4 @@ def test_application_response_type(accept_headers, method, endpoints):
 
     Error_Handler.handle_retry(resp)
 
-    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+    Assertions.assertEquals(resp.headers.get("Content-Type"), accept_headers.get("expect"))

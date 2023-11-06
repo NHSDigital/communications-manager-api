@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Authentication, Error_Handler
+from lib import Authentication, Error_Handler, Assertions
 from lib.constants.constants import INT_URL, METHODS, VALID_ENDPOINTS
 
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
@@ -41,4 +41,4 @@ def test_application_response_type(accept_headers, method, endpoints):
 
     Error_Handler.handle_retry(resp)
 
-    assert resp.headers.get("Content-Type") == accept_headers.get("expect")
+    Assertions.assertEquala(resp.headers.get("Content-Type"), accept_headers.get("expect"))

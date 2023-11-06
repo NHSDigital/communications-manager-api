@@ -36,4 +36,4 @@ def test_406(
         correlation_id
     )
 
-    assert resp.headers.get("Content-Type") == DEFAULT_CONTENT_TYPE
+    Assertions.assertEquals(resp.headers.get("Content-Type"), DEFAULT_CONTENT_TYPE)

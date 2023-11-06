@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Authentication, Error_Handler
+from lib import Authentication, Error_Handler, Assertions
 from lib.constants.constants import INT_URL, METHODS, VALID_ENDPOINTS
 
 CORRELATION_IDS = [None, "a17669c8-219a-11ee-ba86-322b0407c489"]
@@ -21,4 +21,4 @@ def test_request_with_x_correlation_id(correlation_id, method, endpoints):
 
     Error_Handler.handle_retry(resp)
 
-    assert resp.headers.get("x-correlation-id") == correlation_id
+    Assertions.assertEquals(resp.headers.get("x-correlation-id"), correlation_id)
