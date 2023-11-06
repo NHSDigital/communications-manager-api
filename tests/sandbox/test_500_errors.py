@@ -11,7 +11,7 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("method", METHODS)
 def test_internal_server_error_get(nhsd_apim_proxy_url, correlation_id, method):
     """
-    .. include:: ../../docs/partials/timeouts/test_500_internal_error_prefer.rst
+    .. include:: ../../docs/partials/test_500_internal_error_prefer.rst
     """
     resp = getattr(requests, method)(nhsd_apim_proxy_url, headers={
         "Prefer": "code=500",
