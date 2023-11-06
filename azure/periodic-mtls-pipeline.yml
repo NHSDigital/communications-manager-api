@@ -34,8 +34,9 @@ steps:
 
   - bash: |
       make install-python && make mtls-test
+    timeoutInMinutes: 2
 
   - template: ./templates/teams-alert.yml
     parameters:
-      title: 'Integration'
+      title: 'mTLS'
       webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'
