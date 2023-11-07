@@ -62,9 +62,9 @@ class Assertions():
                 # then remove it as its a unique value that we do not know ahead of time
                 e.pop("id")
                 current_identifier_num += 1
-
             # validate the error is present
-            assert error in response_errors
+            for err in error:
+                assert str(error[err]) in str(response_errors), f"'{error[err]}' missing from response"
 
         assert resp.headers.get("X-Correlation-Id") == correlation_id
 
