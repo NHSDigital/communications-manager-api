@@ -176,6 +176,10 @@ class Generators():
         return Generators.generate_error(constants.ERROR_SERVICE_TIMEOUT)
 
     @staticmethod
+    def generate_internal_server_error():
+        return Generators.generate_error(constants.ERROR_INTERNAL_SERVER)
+
+    @staticmethod
     def generate_error(error, source=None, meta=None):
         ret = {
             "code": error.code,
