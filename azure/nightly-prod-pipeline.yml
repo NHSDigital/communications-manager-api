@@ -26,9 +26,18 @@ variables:
   - name: SERVICE_ARTIFACT_NAME
     value: ''
 
-extends:
-  template: ./templates/run-tests.yml
-  parameters:
-    nightly: true
-    environment: 'prod'
-    test_command: 'make production-test'
+steps:
+  - template: ./templates/teams-alert-setup.yml
+    parameters:
+      webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'
+
+  - template: ./templates/run-tests.yml
+    parameters:
+      nightly: true
+      environment: 'prod'
+      test_command: 'make production-test'
+
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'Production'
+      webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'

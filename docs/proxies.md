@@ -134,7 +134,6 @@ Determines if the service callout to the status response endpoint should be made
 
 Source: [proxies/shared/partials/Partial.Flows.StatusEndpoint.xml](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/partials/Partial.Flows.StatusEndpoint.xml)
 
-
 ```mermaid
 flowchart LR
     S[Start] --> Q1{Is path /_status?}
@@ -166,7 +165,7 @@ Source: [proxies/shared/partials/Partial.Component.SetResponseDefaults.xml](http
 flowchart LR
     S[Start] --> SRCT["Set response headers
 
-    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.SetResponseHeaders.xml'>JavaScript.SetResponseHeaders</a></em>"]
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.SetResponseDefaults.xml'>JavaScript.SetResponseDefaults</a></em>"]
     SRCT --> Q1{Correlation id present?}
     Q1 --> |Yes| SCI["Set correlation id
 

@@ -2,7 +2,12 @@ const fs = require("fs");
 const sinon = require("sinon");
 const uuid = require("uuid");
 
-const validateScript = fs.readFileSync("../../shared/resources/jsc/MessageBatches.Create.Validate.js").toString("utf8");
+const validationScripts = [
+    fs.readFileSync("../../shared/resources/jsc/helpers/validationChecks.js").toString("utf8"),
+    fs.readFileSync("../../shared/resources/jsc/helpers/validationErrors.js").toString("utf8"),
+    fs.readFileSync("../../shared/resources/jsc/MessageBatches.Create.Validate.js").toString("utf8")
+];
+const validateScript = validationScripts.join("\n");
 const context = {
     getVariable: () => {},
     setVariable: () => {},

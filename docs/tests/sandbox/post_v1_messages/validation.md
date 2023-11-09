@@ -185,6 +185,28 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
+## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
+
+A valid personalisation must be structured in this format: { parameter: value }
+
+**Given** the API consumer provides an message body with an invalid personalisation
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+
+
 ## Scenario: An API consumer submitting a request with an invalid routing plan receives a 400 ‘Invalid Value’ response
 
 The routing plan must be in a UUID format, for more information on UUID, look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
@@ -209,6 +231,28 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
+
+
+## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
+
+A valid personalisation must be structured in this format: { parameter: value }
+
+**Given** the API consumer provides an message body with an invalid personalisation
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
 
 
 ## Scenario: An API consumer submitting a request without a required attribute in the request body receives a 400 ‘Missing Value’ response

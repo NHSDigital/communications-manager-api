@@ -10,3 +10,4 @@ Generic Tests
    not_found
    quotas
    timeouts
+   errors

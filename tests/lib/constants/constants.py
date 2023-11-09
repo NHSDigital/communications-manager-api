@@ -1,5 +1,6 @@
 INT_URL = "https://int.api.service.nhs.uk/comms"
 PROD_URL = "https://api.service.nhs.uk/comms"
+VALID_ENDPOINTS = ["/v1/message-batches", "/v1/messages", "/v1/api/send"]
 CORS_METHODS = "GET, PUT, POST, PATCH, DELETE"
 CORS_MAX_AGE = "3628800"
 CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
@@ -34,6 +35,9 @@ VALID_NHS_NUMBER = "9990548609"
 
 INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1, None]
 VALID_DOB = ["0000-01-01", "2023-01-01"]
+
+INVALID_PERSONALISATION_VALUES = [5, "", "some-string", []]
+NULL_VALUES = [None]
 
 
 class Error():
@@ -217,4 +221,12 @@ ERROR_SERVICE_TIMEOUT = Error(
     "504",
     "Unable to call service",
     "The downstream service has not responded within the configured timeout period."
+)
+
+# internal server error
+ERROR_INTERNAL_SERVER = Error(
+    "CM_INTERNAL_SERVER_ERROR",
+    "500",
+    "Error processing request",
+    "There was an internal error whilst processing this request."
 )

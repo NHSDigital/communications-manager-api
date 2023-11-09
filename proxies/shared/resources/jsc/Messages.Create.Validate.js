@@ -52,9 +52,8 @@ const validate = () => {
                 }
 
                 // $.data.attributes.personalisation
-                pointer = "/data/attributes/personalisation";
-                if (!isUndefined(data.attributes.personalisation) && typeof data.attributes.personalisation !== "object") {
-                    errors.push(invalidError(pointer));
+                if (!isUndefined(data.attributes.personalisation)) {
+                  validateObject(errors, data.attributes.personalisation, "/data/attributes/personalisation")
                 }
             }
         }
