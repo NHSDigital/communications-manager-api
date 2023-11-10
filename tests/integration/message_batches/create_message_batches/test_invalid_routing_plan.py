@@ -1,7 +1,8 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators
+from lib import Assertions, Generators, Authentication
+import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
@@ -11,14 +12,13 @@ INVALID_ROUTING_PLAN = "ae0f772e-6660-4829-8f11-1ed8a3fc68c2"
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_no_such_routing_plan(correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            **nhsd_apim_auth_headers,
-            "X-Correlation-Id": correlation_id
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            "X-Correlation-Id": correlation_id,
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -49,14 +49,13 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_routing_plan_not_belonging_to_client_id(correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            **nhsd_apim_auth_headers,
-            "X-Correlation-Id": correlation_id
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            "X-Correlation-Id": correlation_id,
+            "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
