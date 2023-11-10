@@ -36,7 +36,7 @@ def pytest_assertrepr_compare(op, left, right):
         # show values that are different
         for key in keys_in_left.intersection(keys_in_right):
             if left[key] != right[key]:
-                output.append(f'~   "{key}" : "{left[key]}" -> "{right[key]}"')
+                output.append(f'~   "{key}" : "{left[key]}" should be "{right[key]}"')
 
         # show values that we should have but didn't
         for key in keys_in_right - keys_in_left:
