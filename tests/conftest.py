@@ -20,6 +20,7 @@ pytest.register_assert_rewrite('lib')
 def pytest_assertrepr_compare(op, left, right):
     """
     This function overrides pytests function for representing failed assertion statements
+    https://docs.pytest.org/en/6.2.x/assert.html#defining-your-own-explanation-for-failed-assertions
     """
 
     if op == '==' and type(left) is dict and type(right) is dict:
