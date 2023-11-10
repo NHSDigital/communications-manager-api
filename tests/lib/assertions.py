@@ -64,7 +64,11 @@ class Assertions():
                 current_identifier_num += 1
 
             # validate the error is present
-            assert error in response_errors
+            if len(response_errors) == 1:
+                # this case is for making debugging easier where possible
+                assert error == response_errors[0]
+            else:
+                assert error in response_errors
 
         assert resp.headers.get("X-Correlation-Id") == correlation_id
 
