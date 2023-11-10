@@ -453,15 +453,14 @@ def test_null_value_under_messages(correlation_id):
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+def test_invalid_personalisation(correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "X-Correlation-Id": correlation_id
+        "X-Correlation-Id": correlation_id,
+        "Authorization": f"{Authentication.generate_authentication('int')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -493,15 +492,14 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+def test_null_personalisation(correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "X-Correlation-Id": correlation_id
+        "X-Correlation-Id": correlation_id,
+        "Authorization": f"{Authentication.generate_authentication('int')}"
     }, json={
         "data": {
             "type": "MessageBatch",
