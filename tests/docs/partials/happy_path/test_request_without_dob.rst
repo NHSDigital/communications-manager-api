@@ -7,3 +7,5 @@ Scenario: An API consumer creating a batch of messages with a date of birth rece
 
 **Asserts**
 - Response returns a 201 status code
+- Response body matches expected result
+- Response contains correctly formatted link to new message URI
