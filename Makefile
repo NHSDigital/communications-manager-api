@@ -79,7 +79,7 @@ check-licenses: .check-licenses
 
 TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		PYTHONPATH=./tests \
-		poetry run pytest -v \
+		poetry run pytest -vv \
 		--color=yes \
 		-n 4 \
 		--api-name=communications-manager \
@@ -95,7 +95,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		PYTHONPATH=./tests \
-		poetry run pytest -v \
+		poetry run pytest -vv \
 		--color=yes \
 		-n 1 \
 		--api-name=communications-manager \
