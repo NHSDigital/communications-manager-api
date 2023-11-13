@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy takes the messageId value from the URI of the request and stores it within the Apigee flow variable data.messageId. This value is thus accessible from other policies in the proxy, referencing it with {data.messageId}.
+
+ For more information, see the following resources:
+    * https://docs.apigee.com/api-platform/fundamentals/introduction-flow-variables
+-->
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.Messages.GetSingle.Request">
+    <VariablePrefix>data</VariablePrefix>
+    <Source>request</Source>
+      <URIPath>
+      <Pattern ignoreCase="true">/v1/messages/{messageId}</Pattern>
+   </URIPath>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>
