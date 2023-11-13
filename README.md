@@ -1,5 +1,7 @@
 # Communications Manager API
 
+ignore
+
 ![Build](https://github.com/NHSDigital/communications-manager-api/workflows/Build/badge.svg?branch=release)
 
 This is the RESTful API for the [*Communications Manager Service*](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
