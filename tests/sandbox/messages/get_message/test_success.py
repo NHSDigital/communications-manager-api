@@ -20,7 +20,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
     .. include:: ../../partials/happy_path/test_200_messages_message_id.rst
     """
     data = Generators.generate_valid_create_message_body("sandbox")
-    resp = requests.post(
+    resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/2WL4TEpohhdATmtxTxvqPyUIOx5",
         headers={
             "Accept": accept_headers,
@@ -29,84 +29,3 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
         json=data
     )
     Assertions.assert_200_response_message(resp, "sandbox")
-
-
-# @pytest.mark.sandboxtest
-# @pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
-# def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, content_type):
-#     """
-#     .. include:: ../../partials/happy_path/test_201_message_batch_valid_content_type_headers.rst
-#     """
-#     data = Generators.generate_valid_create_message_body("sandbox")
-#     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-#             "Accept": "application/json",
-#             "Content-Type": content_type
-#         }, json=data
-#     )
-#     Assertions.assert_201_response_messages(resp, "sandbox")
-
-
-# @pytest.mark.sandboxtest
-# @pytest.mark.parametrize('routing_plan_id', VALID_ROUTING_PLAN_ID)
-# def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_plan_id):
-#     """
-#     .. include:: ../../partials/happy_path/test_201_message_batch_valid_routing_plan_id.rst
-#     """
-#     data = Generators.generate_valid_create_message_body("sandbox")
-#     data["data"]["attributes"]["routingPlanId"] = routing_plan_id
-
-#     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-#             "Accept": "application/json",
-#             "Content-Type": "application/json"
-#         }, json=data
-#     )
-#     Assertions.assert_201_response_messages(resp, "sandbox")
-
-
-# @pytest.mark.sandboxtest
-# def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
-#     """
-#     .. include:: ../../partials/happy_path/test_201_message_batch_valid_nhs_number.rst
-#     """
-#     data = Generators.generate_valid_create_message_body("sandbox")
-#     data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
-
-#     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-#             "Accept": "application/json",
-#             "Content-Type": "application/json"
-#         }, json=data
-#     )
-#     Assertions.assert_201_response_messages(resp, "sandbox")
-
-
-# @pytest.mark.sandboxtest
-# @pytest.mark.parametrize('dob', constants.VALID_DOB)
-# def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
-#     """
-#     .. include:: ../../partials/happy_path/test_201_message_batch_valid_dob.rst
-#     """
-#     data = Generators.generate_valid_create_message_body("sandbox")
-#     data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
-
-#     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-#             "Accept": "application/json",
-#             "Content-Type": "application/json"
-#         }, json=data
-#     )
-#     Assertions.assert_201_response_messages(resp, "sandbox")
-
-
-# @pytest.mark.sandboxtest
-# def test_request_without_dob(nhsd_apim_proxy_url):
-#     """
-#     .. include:: ../../partials/happy_path/test_request_without_dob.rst
-#     """
-#     data = Generators.generate_valid_create_message_body("sandbox")
-#     data["data"]["attributes"]["recipient"].pop("dateOfBirth")
-
-#     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-#         "Accept": "application/json",
-#         "Content-Type": "application/json"
-#         }, json=data
-#     )
-#     Assertions.assert_201_response_messages(resp, "sandbox")
