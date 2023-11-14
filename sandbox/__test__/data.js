@@ -1,20 +1,11 @@
-const KSUID = require("ksuid");
-const { sendError, write_log } = require('./utils')
 
-async function get_message(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
-    sendError(res, 403, "Request rejected because client service ban is in effect");
-    next();
-    return;
-  }
 
-  const messageId = req.params.messageId;
-
+const get_message_test_data = [
   // Enrichment failures
   // ======================================================
-
-  if (messageId === "2WL4TEpohhdATmtxTxvqPyUIOx5") {
-    res.status(200).json({
+  {
+    messageId: "2WL4TEpohhdATmtxTxvqPyUIOx5",
+    body: {
       "data": {
         "type": "Message",
         "id": "2WL4QcKGjNHvHFQeKgYbapZJGHK",
@@ -36,10 +27,11 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4QcKGjNHvHFQeKgYbapZJGHK"
         }
       }
-    });
-  }
-  if (messageId === "2WL4cPfBRuPKa44JxhyXYf2kr1E") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4cPfBRuPKa44JxhyXYf2kr1E",
+    body: {
       "data": {
         "type": "Message",
         "id": "2WL4cPfBRuPKa44JxhyXYf2kr1E",
@@ -61,10 +53,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4cPfBRuPKa44JxhyXYf2kr1E"
         }
       }
-    });
-  }
-  if (messageId === "2WL4g2f7GQ2F9HZmgonIFiXAPku") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4g2f7GQ2F9HZmgonIFiXAPku", body: {
       "data": {
         "type": "Message",
         "id": "2WL4g2f7GQ2F9HZmgonIFiXAPku",
@@ -87,10 +79,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4g2f7GQ2F9HZmgonIFiXAPku"
         }
       }
-    });
-  }
-  if (messageId === "2WL4ibGoigirgbH4yQwqbPaJXyQ") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4ibGoigirgbH4yQwqbPaJXyQ", body: {
       "data": {
         "type": "Message",
         "id": "2WL4ibGoigirgbH4yQwqbPaJXyQ",
@@ -113,10 +105,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4ibGoigirgbH4yQwqbPaJXyQ"
         }
       }
-    });
-  }
-  if (messageId === "2WL4khXn32dOOj4bB4bi8Tkllrq") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4khXn32dOOj4bB4bi8Tkllrq", body: {
       "data": {
         "type": "Message",
         "id": "2WL4khXn32dOOj4bB4bi8Tkllrq",
@@ -139,10 +131,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4khXn32dOOj4bB4bi8Tkllrq"
         }
       }
-    });
-  }
-  if (messageId === "2WL4mvx6eBva8dcIK60VEGIfcgZ") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4mvx6eBva8dcIK60VEGIfcgZ", body: {
       "data": {
         "type": "Message",
         "id": "2WL4mvx6eBva8dcIK60VEGIfcgZ",
@@ -165,10 +157,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4mvx6eBva8dcIK60VEGIfcgZ"
         }
       }
-    });
-  }
-  if (messageId === "2WL4pcpmKxYYblm3PSKVEqcmEPX") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4pcpmKxYYblm3PSKVEqcmEPX", body: {
       "data": {
         "type": "Message",
         "id": "2WL4pcpmKxYYblm3PSKVEqcmEPX",
@@ -191,15 +183,13 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4pcpmKxYYblm3PSKVEqcmEPX"
         }
       }
-    });
-  }
-
-
+    }
+  },
   // NHS app only
   // ==============================================================
 
-  if (messageId === "2WL4vHFZzInmaYwq6HRNDqTX8dH") {
-    res.status(200).json({
+  {
+    messageId: "2WL4vHFZzInmaYwq6HRNDqTX8dH", body: {
       "data": {
         "type": "Message",
         "id": "2WL4vHFZzInmaYwq6HRNDqTX8dH",
@@ -236,11 +226,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4vHFZzInmaYwq6HRNDqTX8dH"
         }
       }
-    });
-  }
-
-  if (messageId === "2WL3qFTEFM0qMY8xjRbt1LIKCzM") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL3qFTEFM0qMY8xjRbt1LIKCzM", body: {
       "data": {
         "type": "Message",
         "id": "2WL3qFTEFM0qMY8xjRbt1LIKCzM",
@@ -275,11 +264,11 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
         }
       }
-    });
-  }
+    }
+  },
 
-  if (messageId === "2WL44QP7vrKxKKBZdTtUQoB2bWl") {
-    res.status(200).json({
+  {
+    messageId: "2WL44QP7vrKxKKBZdTtUQoB2bWl", body: {
       "data": {
         "type": "Message",
         "id": "2WL44QP7vrKxKKBZdTtUQoB2bWl",
@@ -312,11 +301,11 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL44QP7vrKxKKBZdTtUQoB2bWl"
         }
       }
-    });
-  }
+    }
+  },
 
-  if (messageId === "2WL45YuHOLATvC3GspEu0oSioux") {
-    res.status(200).json({
+  {
+    messageId: "2WL45YuHOLATvC3GspEu0oSioux", body: {
       "data": {
         "type": "Message",
         "id": "2WL4vHFZzInmaYwq6HRNDqTX8dH",
@@ -353,14 +342,14 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4vHFZzInmaYwq6HRNDqTX8dH"
         }
       }
-    });
-  }
+    }
+  },
 
   // Email only
   // ================================================================
 
-  if (messageId === "2WL4xcWKvz4F32g0htBEl8DINzn") {
-    res.status(200).json({
+  {
+    messageId: "2WL4xcWKvz4F32g0htBEl8DINzn", body: {
       "data": {
         "type": "Message",
         "id": "2WL4xcWKvz4F32g0htBEl8DINzn",
@@ -397,10 +386,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4xcWKvz4F32g0htBEl8DINzn"
         }
       }
-    });
-  }
-  if (messageId === "2WL3wwFhpZ6blJNIoh747bDEFNv") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL3wwFhpZ6blJNIoh747bDEFNv", body: {
       "data": {
         "type": "Message",
         "id": "2WL3wwFhpZ6blJNIoh747bDEFNv",
@@ -435,10 +424,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL3wwFhpZ6blJNIoh747bDEFNv"
         }
       }
-    });
-  }
-  if (messageId === "2WL4GEeFVxXG9S57nRlefBwwKxp") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4GEeFVxXG9S57nRlefBwwKxp", body: {
       "data": {
         "type": "Message",
         "id": "2WL4GEeFVxXG9S57nRlefBwwKxp",
@@ -471,10 +460,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4GEeFVxXG9S57nRlefBwwKxp"
         }
       }
-    });
-  }
-  if (messageId === "2WL4W9RgbuLLByXdR77H8vjKSDd") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4W9RgbuLLByXdR77H8vjKSDd", body: {
       "data": {
         "type": "Message",
         "id": "2WL4W9RgbuLLByXdR77H8vjKSDd",
@@ -511,15 +500,15 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4GEeFVxXG9S57nRlefBwwKxp"
         }
       }
-    });
-  }
+    }
+  },
 
 
   // SMS only
   // ==========================================================================
 
-  if (messageId === "2WL50w41YaZXcyFCNT346LY8rlz") {
-    res.status(200).json({
+  {
+    messageId: "2WL50w41YaZXcyFCNT346LY8rlz", body: {
       "data": {
         "type": "Message",
         "id": "2WL50w41YaZXcyFCNT346LY8rlz",
@@ -556,10 +545,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL50w41YaZXcyFCNT346LY8rlz"
         }
       }
-    });
-  }
-  if (messageId === "2WL3ydEEk37IzREoWRhuAdolFCE") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL3ydEEk37IzREoWRhuAdolFCE", body: {
       "data": {
         "type": "Message",
         "id": "2WL3ydEEk37IzREoWRhuAdolFCE",
@@ -594,10 +583,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL3ydEEk37IzREoWRhuAdolFCE"
         }
       }
-    });
-  }
-  if (messageId === "2WL4JXrfauCaQnSFbAujoImSKwo") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4JXrfauCaQnSFbAujoImSKwo", body: {
       "data": {
         "type": "Message",
         "id": "2WL4JXrfauCaQnSFbAujoImSKwo",
@@ -630,10 +619,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4JXrfauCaQnSFbAujoImSKwo"
         }
       }
-    });
-  }
-  if (messageId === "2WL4JtCiOe7l2TT4szwPjNJah3z") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4JtCiOe7l2TT4szwPjNJah3z", body: {
       "data": {
         "type": "Message",
         "id": "2WL4JtCiOe7l2TT4szwPjNJah3z",
@@ -670,14 +659,14 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4JtCiOe7l2TT4szwPjNJah3z"
         }
       }
-    });
-  }
+    }
+  },
 
   // Letter only
   // ==========================================================================
 
-  if (messageId === "2WL54x0XQjCbWeE5lN0DKQZcokU") {
-    res.status(200).json({
+  {
+    messageId: "2WL54x0XQjCbWeE5lN0DKQZcokU", body: {
       "data": {
         "type": "Message",
         "id": "2WL54x0XQjCbWeE5lN0DKQZcokU",
@@ -714,10 +703,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL54x0XQjCbWeE5lN0DKQZcokU"
         }
       }
-    });
-  }
-  if (messageId === "2WL3zxCY9e5vm2VP1ZfYMb53WPF") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL3zxCY9e5vm2VP1ZfYMb53WPF", body: {
       "data": {
         "type": "Message",
         "id": "2WL3zxCY9e5vm2VP1ZfYMb53WPF",
@@ -752,10 +741,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL3zxCY9e5vm2VP1ZfYMb53WPF"
         }
       }
-    });
-  }
-  if (messageId === "2WL4LuyNMtoGAsJQIpTxZLl8e3e") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4LuyNMtoGAsJQIpTxZLl8e3e", body: {
       "data": {
         "type": "Message",
         "id": "2WL4LuyNMtoGAsJQIpTxZLl8e3e",
@@ -788,10 +777,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4LuyNMtoGAsJQIpTxZLl8e3e"
         }
       }
-    });
-  }
-  if (messageId === "2WL4MOuSeCTODDAScFG7KIq9a5r") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL4MOuSeCTODDAScFG7KIq9a5r", body: {
       "data": {
         "type": "Message",
         "id": "2WL4MOuSeCTODDAScFG7KIq9a5r",
@@ -828,14 +817,14 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL4MOuSeCTODDAScFG7KIq9a5r"
         }
       }
-    });
-  }
+    }
+  },
 
   // Multi-channel
   // ==========================================================================
 
-  if (messageId === "2WL5TWl7F7PondWbZ1vctlEtOZ3") {
-    res.status(200).json({
+  {
+    messageId: "2WL5TWl7F7PondWbZ1vctlEtOZ3", body: {
       "data": {
         "type": "Message",
         "id": "2WL5TWl7F7PondWbZ1vctlEtOZ3",
@@ -894,10 +883,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL5TWl7F7PondWbZ1vctlEtOZ3"
         }
       }
-    });
-  }
-  if (messageId === "2WL5eDefrbW31uw1il84WdF8ndH") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL5eDefrbW31uw1il84WdF8ndH", body: {
       "data": {
         "type": "Message",
         "id": "2WL5eDefrbW31uw1il84WdF8ndH",
@@ -959,10 +948,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL5eDefrbW31uw1il84WdF8ndH"
         }
       }
-    });
-  }
-  if (messageId === "2WL5eYSWGzCHlGmzNxuqVusPxDg") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL5eYSWGzCHlGmzNxuqVusPxDg", body: {
       "data": {
         "type": "Message",
         "id": "2WL5eYSWGzCHlGmzNxuqVusPxDg",
@@ -1027,10 +1016,10 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL5eYSWGzCHlGmzNxuqVusPxDg"
         }
       }
-    });
-  }
-  if (messageId === "2WL5f8j4XVxUPgd3OOqXVYvVFIW") {
-    res.status(200).json({
+    }
+  },
+  {
+    messageId: "2WL5f8j4XVxUPgd3OOqXVYvVFIW", body: {
       "data": {
         "type": "Message",
         "id": "2WL5f8j4XVxUPgd3OOqXVYvVFIW",
@@ -1098,14 +1087,14 @@ async function get_message(req, res, next) {
           "self": "%PATH_ROOT%/2WL5f8j4XVxUPgd3OOqXVYvVFIW"
         }
       }
-    });
-  }
+    }
+  },
 
   // Batched messages
   // ==========================================================================
 
-  if (messageId === "2WL5qbEa7TzSWZXU2IAOCCrLXVL") {
-    res.status(200).json({
+  {
+    messageId: "2WL5qbEa7TzSWZXU2IAOCCrLXVL", body: {
       "data": {
         "type": "Message",
         "id": "2WL5qbEa7TzSWZXU2IAOCCrLXVL",
@@ -1148,23 +1137,11 @@ async function get_message(req, res, next) {
           }
         }
       }
-    });
-  }
-
-  write_log(res, "warn", {
-    message: `/api/v1/messages/${messageId}`,
-    req: {
-      path: req.path,
-      query: req.query,
-      headers: req.rawHeaders,
-      payload: req.body
     }
-  });
+  }]
 
-  res.end();
-  next();
-}
+
 
 module.exports = {
-  get_message
+  get_message_test_data
 }
