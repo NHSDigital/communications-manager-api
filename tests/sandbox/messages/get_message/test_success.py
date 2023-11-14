@@ -4,14 +4,6 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 
-VALID_ROUTING_PLAN_ID = [
-    "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-    "49e43b98-70cb-47a9-a55e-fe70c9a6f77c",
-    "b402cd20-b62a-4357-8e02-2952959531c8",
-    "936e9d45-15de-4a95-bb36-ae163c33ae53",
-    "9ba00d23-cd6f-4aca-8688-00abc85a7980"
-]
-
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
