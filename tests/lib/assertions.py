@@ -33,7 +33,14 @@ class Assertions():
         assert response.get("type") == "Message"
         assert response.get("id") is not None
         assert response.get("id") != ""
-        assert response.get("attributes").get("messageStatus") == "created"
+        assert response.get("attributes").get("messageStatus") is not None
+        assert response.get("attributes").get("messageStatus") != ""
+        assert response.get("attributes").get("messageReference") is not None
+        assert response.get("attributes").get("messageReference") != ""
+        assert response.get("attributes").get("messageStatusDescription") is not None
+        assert response.get("attributes").get("messageStatusDescription") != ""
+        assert response.get("attributes").get("routingPlanId") is not None
+        assert response.get("attributes").get("routingPlanId") != ""
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""

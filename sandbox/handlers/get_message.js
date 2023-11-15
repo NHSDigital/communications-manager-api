@@ -13,7 +13,7 @@ async function get_message(req, res, next) {
   // Enrichment failures
   // ======================================================
 
-  if (messageId === "2WL4TEpohhdATmtxTxvqPyUIOx5") {
+  if (messageId === "2WL4QcKGjNHvHFQeKgYbapZJGHK") {
     res.status(200).json({
       "data": {
         "type": "Message",

@@ -4,7 +4,7 @@ const get_message_test_data = [
   // Enrichment failures
   // ======================================================
   {
-    messageId: "2WL4TEpohhdATmtxTxvqPyUIOx5",
+    messageId: "2WL4QcKGjNHvHFQeKgYbapZJGHK",
     body: {
       "data": {
         "type": "Message",
