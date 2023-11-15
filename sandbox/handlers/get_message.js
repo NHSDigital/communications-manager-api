@@ -1161,8 +1161,9 @@ async function get_message(req, res, next) {
     }
   });
 
-  res.end();
+  sendError(res, 404, `Message with id of ${messageId} not found`);
   next();
+  return;
 }
 
 module.exports = {

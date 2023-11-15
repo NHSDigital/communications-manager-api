@@ -25,6 +25,14 @@ describe('/api/v1/messages/{messageId}', () => {
             })
             .expect("Content-Type", /json/, done);
     });
+    it('returns a 404 when no message is found', (done) => {
+        request(server)
+            .get('/api/v1/messages/test-id-123')
+            .expect(404, {
+                message: `Message with id of test-id-123 not found`
+            })
+            .expect("Content-Type", /json/, done);
+    });
 
     get_message_test_data.forEach(({ messageId, body }, i) => {
         it(`responds correctly ${i}`, (done) => {
