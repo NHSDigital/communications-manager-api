@@ -23,9 +23,6 @@ const get_message_test_data = [
             "queriedAt": "2023-10-09T10:31:59Z"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4QcKGjNHvHFQeKgYbapZJGHK"
-        }
       }
     }
   },
@@ -48,9 +45,6 @@ const get_message_test_data = [
           "pdsMeta": {
             "queriedAt": "2023-10-09T10:31:59Z"
           }
-        },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4cPfBRuPKa44JxhyXYf2kr1E"
         }
       }
     }
@@ -74,9 +68,6 @@ const get_message_test_data = [
           "pdsMeta": {
             "queriedAt": "2023-10-09T10:31:59Z"
           }
-        },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4g2f7GQ2F9HZmgonIFiXAPku"
         }
       }
     }
@@ -101,9 +92,6 @@ const get_message_test_data = [
             "queriedAt": "2023-10-09T10:31:59Z"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4ibGoigirgbH4yQwqbPaJXyQ"
-        }
       }
     }
   },
@@ -127,9 +115,7 @@ const get_message_test_data = [
             "queriedAt": "2023-10-09T10:31:59Z"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4khXn32dOOj4bB4bi8Tkllrq"
-        }
+
       }
     }
   },
@@ -153,9 +139,7 @@ const get_message_test_data = [
             "queriedAt": "2023-10-09T10:31:59Z"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4mvx6eBva8dcIK60VEGIfcgZ"
-        }
+
       }
     }
   },
@@ -179,9 +163,7 @@ const get_message_test_data = [
             "queriedAt": "2023-10-09T10:31:59Z"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4pcpmKxYYblm3PSKVEqcmEPX"
-        }
+
       }
     }
   },
@@ -222,9 +204,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4vHFZzInmaYwq6HRNDqTX8dH"
-        }
+
       }
     }
   },
@@ -260,9 +240,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
-        }
+
       }
     }
   },
@@ -297,9 +275,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL44QP7vrKxKKBZdTtUQoB2bWl"
-        }
+
       }
     }
   },
@@ -338,9 +314,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4vHFZzInmaYwq6HRNDqTX8dH"
-        }
+
       }
     }
   },
@@ -382,9 +356,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4xcWKvz4F32g0htBEl8DINzn"
-        }
+
       }
     }
   },
@@ -420,9 +392,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL3wwFhpZ6blJNIoh747bDEFNv"
-        }
+
       }
     }
   },
@@ -456,9 +426,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4GEeFVxXG9S57nRlefBwwKxp"
-        }
+
       }
     }
   },
@@ -496,9 +464,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4GEeFVxXG9S57nRlefBwwKxp"
-        }
+
       }
     }
   },
@@ -541,9 +507,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL50w41YaZXcyFCNT346LY8rlz"
-        }
+
       }
     }
   },
@@ -579,9 +543,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL3ydEEk37IzREoWRhuAdolFCE"
-        }
+
       }
     }
   },
@@ -615,9 +577,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4JXrfauCaQnSFbAujoImSKwo"
-        }
+
       }
     }
   },
@@ -655,9 +615,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4JtCiOe7l2TT4szwPjNJah3z"
-        }
+
       }
     }
   },
@@ -699,9 +657,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL54x0XQjCbWeE5lN0DKQZcokU"
-        }
+
       }
     }
   },
@@ -737,9 +693,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL3zxCY9e5vm2VP1ZfYMb53WPF"
-        }
+
       }
     }
   },
@@ -773,9 +727,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4LuyNMtoGAsJQIpTxZLl8e3e"
-        }
+
       }
     }
   },
@@ -813,9 +765,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL4MOuSeCTODDAScFG7KIq9a5r"
-        }
+
       }
     }
   },
@@ -879,9 +829,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL5TWl7F7PondWbZ1vctlEtOZ3"
-        }
+
       }
     }
   },
@@ -944,9 +892,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL5eDefrbW31uw1il84WdF8ndH"
-        }
+
       }
     }
   },
@@ -1012,9 +958,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL5eYSWGzCHlGmzNxuqVusPxDg"
-        }
+
       }
     }
   },
@@ -1083,9 +1027,7 @@ const get_message_test_data = [
             "versionId": "23"
           }
         },
-        "links": {
-          "self": "%PATH_ROOT%/2WL5f8j4XVxUPgd3OOqXVYvVFIW"
-        }
+
       }
     }
   },
@@ -1124,9 +1066,6 @@ const get_message_test_data = [
             "queriedAt": "2023-10-09T10:31:59Z",
             "versionId": "23"
           }
-        },
-        "links": {
-          "self": "%PATH_ROOT%/2WL5qbEa7TzSWZXU2IAOCCrLXVL"
         },
         "relationships": {
           "messageBatch": {

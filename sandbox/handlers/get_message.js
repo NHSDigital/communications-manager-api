@@ -7,6 +7,7 @@ async function get_message(req, res, next) {
     next();
     return;
   }
+  const reqUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
 
   const messageId = req.params.messageId;
 
@@ -33,7 +34,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4QcKGjNHvHFQeKgYbapZJGHK"
+          "self": reqUrl,
         }
       }
     });
@@ -58,7 +59,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4cPfBRuPKa44JxhyXYf2kr1E"
+          "self": reqUrl,
         }
       }
     });
@@ -84,7 +85,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4g2f7GQ2F9HZmgonIFiXAPku"
+          "self": reqUrl,
         }
       }
     });
@@ -110,7 +111,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4ibGoigirgbH4yQwqbPaJXyQ"
+          "self": reqUrl,
         }
       }
     });
@@ -136,7 +137,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4khXn32dOOj4bB4bi8Tkllrq"
+          "self": reqUrl,
         }
       }
     });
@@ -162,7 +163,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4mvx6eBva8dcIK60VEGIfcgZ"
+          "self": reqUrl,
         }
       }
     });
@@ -188,7 +189,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4pcpmKxYYblm3PSKVEqcmEPX"
+          "self": reqUrl,
         }
       }
     });
@@ -233,7 +234,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4vHFZzInmaYwq6HRNDqTX8dH"
+          "self": reqUrl,
         }
       }
     });
@@ -272,7 +273,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
+          "self": reqUrl,
         }
       }
     });
@@ -309,7 +310,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL44QP7vrKxKKBZdTtUQoB2bWl"
+          "self": reqUrl,
         }
       }
     });
@@ -350,7 +351,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4vHFZzInmaYwq6HRNDqTX8dH"
+          "self": reqUrl,
         }
       }
     });
@@ -394,7 +395,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4xcWKvz4F32g0htBEl8DINzn"
+          "self": reqUrl,
         }
       }
     });
@@ -432,7 +433,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL3wwFhpZ6blJNIoh747bDEFNv"
+          "self": reqUrl,
         }
       }
     });
@@ -468,7 +469,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4GEeFVxXG9S57nRlefBwwKxp"
+          "self": reqUrl,
         }
       }
     });
@@ -508,7 +509,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4GEeFVxXG9S57nRlefBwwKxp"
+          "self": reqUrl,
         }
       }
     });
@@ -553,7 +554,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL50w41YaZXcyFCNT346LY8rlz"
+          "self": reqUrl,
         }
       }
     });
@@ -591,7 +592,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL3ydEEk37IzREoWRhuAdolFCE"
+          "self": reqUrl,
         }
       }
     });
@@ -627,7 +628,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4JXrfauCaQnSFbAujoImSKwo"
+          "self": reqUrl,
         }
       }
     });
@@ -667,7 +668,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4JtCiOe7l2TT4szwPjNJah3z"
+          "self": reqUrl,
         }
       }
     });
@@ -711,7 +712,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL54x0XQjCbWeE5lN0DKQZcokU"
+          "self": reqUrl,
         }
       }
     });
@@ -749,7 +750,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL3zxCY9e5vm2VP1ZfYMb53WPF"
+          "self": reqUrl,
         }
       }
     });
@@ -785,7 +786,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4LuyNMtoGAsJQIpTxZLl8e3e"
+          "self": reqUrl,
         }
       }
     });
@@ -825,7 +826,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL4MOuSeCTODDAScFG7KIq9a5r"
+          "self": reqUrl,
         }
       }
     });
@@ -891,7 +892,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL5TWl7F7PondWbZ1vctlEtOZ3"
+          "self": reqUrl,
         }
       }
     });
@@ -956,7 +957,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL5eDefrbW31uw1il84WdF8ndH"
+          "self": reqUrl,
         }
       }
     });
@@ -1024,7 +1025,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL5eYSWGzCHlGmzNxuqVusPxDg"
+          "self": reqUrl,
         }
       }
     });
@@ -1095,7 +1096,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL5f8j4XVxUPgd3OOqXVYvVFIW"
+          "self": reqUrl,
         }
       }
     });
@@ -1137,7 +1138,7 @@ async function get_message(req, res, next) {
           }
         },
         "links": {
-          "self": "%PATH_ROOT%/2WL5qbEa7TzSWZXU2IAOCCrLXVL"
+          "self": reqUrl,
         },
         "relationships": {
           "messageBatch": {
