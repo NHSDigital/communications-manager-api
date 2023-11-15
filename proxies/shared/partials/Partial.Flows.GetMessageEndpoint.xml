@@ -19,6 +19,6 @@
         </Step>
     </Response>
     <Condition>
-        (proxy.pathsuffix MatchesPath "/v1/messages/") and (request.verb = "GET")
+        (proxy.pathsuffix MatchesPath "/v1/messages/{messageId}") and (request.verb = "GET")
     </Condition>
 </Flow>
