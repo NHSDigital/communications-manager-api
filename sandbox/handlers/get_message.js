@@ -7,7 +7,7 @@ async function get_message(req, res, next) {
     next();
     return;
   }
-  const reqUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+  const reqUrl = `$https://${req.get('host')}${req.originalUrl}`;
 
   const messageId = req.params.messageId;
 
