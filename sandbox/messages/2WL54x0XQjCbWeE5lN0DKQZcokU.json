@@ -1,0 +1,38 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL54x0XQjCbWeE5lN0DKQZcokU",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "1226417c-f683-4d68-afe8-2d52321a6b70",
+      "messageStatus": "failed",
+      "messageStatusDescription": "Contact detail is missing",
+      "channels": [
+        {
+          "type": "letter",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "Contact detail is missing",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T10:52:12Z",
+            "failed": "2023-10-09T10:52:12Z"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:52:12Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:52:12Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z",
+        "versionId": "23"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%/2WL54x0XQjCbWeE5lN0DKQZcokU"
+    }
+  }
+}

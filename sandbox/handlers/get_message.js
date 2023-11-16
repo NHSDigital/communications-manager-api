@@ -1,5 +1,5 @@
+const fs = require('fs');
 const { sendError, write_log } = require('./utils')
-const { get_message_response_data } = require('./data')
 
 async function get_message(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -10,26 +10,23 @@ async function get_message(req, res, next) {
 
   const messageId = req.params.messageId;
 
-
-  get_message_response_data.forEach(({ messageId, body }) => {
-    if (req.params.messageId === messageId) {
-      res.status(200).json(body)
+  fs.readFile(`./messages/${messageId}.json`, 'utf8', (err, fileContent) => {
+    if (err) {
+      write_log(res, "warn", {
+        message: `/api/v1/messages/${messageId}`,
+        req: {
+          path: req.path,
+          query: req.query,
+          headers: req.rawHeaders,
+        }
+      });
+      sendError(res, 404, `Message with id of ${messageId} not found`);
+      next();
+      return
     }
-  })
-
-  write_log(res, "warn", {
-    message: `/api/v1/messages/${messageId}`,
-    req: {
-      path: req.path,
-      query: req.query,
-      headers: req.rawHeaders,
-      payload: req.body
-    }
+    res.type('json').status(200).send(fileContent)
+    return
   });
-
-  sendError(res, 404, `Message with id of ${messageId} not found`);
-  next();
-  return;
 }
 
 module.exports = {

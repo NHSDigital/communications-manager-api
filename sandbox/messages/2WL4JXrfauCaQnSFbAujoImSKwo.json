@@ -1,0 +1,34 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL4JXrfauCaQnSFbAujoImSKwo",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "9de1821a-058d-499b-ab8e-5c127278284e",
+      "messageStatus": "sending",
+      "channels": [
+        {
+          "type": "sms",
+          "retryCount": 0,
+          "channelStatus": "sending",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T10:52:12Z"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "updated": "2023-10-09T10:52:12Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z",
+        "versionId": "23"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%/2WL4JXrfauCaQnSFbAujoImSKwo"
+    }
+  }
+}

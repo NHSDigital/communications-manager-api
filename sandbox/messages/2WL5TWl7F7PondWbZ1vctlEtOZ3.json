@@ -1,0 +1,60 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL5TWl7F7PondWbZ1vctlEtOZ3",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "d0612714-59e2-4377-86f4-6d0c114ab83d",
+      "messageStatus": "delivered",
+      "channels": [
+        {
+          "type": "nhsapp",
+          "retryCount": 0,
+          "channelStatus": "delivered",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T10:52:12Z",
+            "delivered": "2023-10-09T10:52:12Z"
+          }
+        },
+        {
+          "type": "email",
+          "retryCount": 0,
+          "channelStatus": "created",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z"
+          }
+        },
+        {
+          "type": "sms",
+          "retryCount": 0,
+          "channelStatus": "created",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z"
+          }
+        },
+        {
+          "type": "letter",
+          "retryCount": 0,
+          "channelStatus": "created",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:52:12Z",
+        "enriched": "2023-10-09T10:39:37Z",
+        "delivered": "2023-10-09T10:52:12Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z",
+        "versionId": "23"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%/2WL5TWl7F7PondWbZ1vctlEtOZ3"
+    }
+  }
+}

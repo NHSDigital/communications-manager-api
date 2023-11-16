@@ -1,8 +1,25 @@
 const request = require("supertest");
+const fs = require('fs');
+const path = require('path');
 const assert = require("chai").assert;
 const { setup } = require('./helpers')
-const { get_message_response_data } = require('../handlers/data')
 
+function getMessageData() {
+    const directoryPath = path.join(__dirname, '../messages'); // Path to the directory
+    let messagesArray = []; // Array to hold the result
+
+    const files = fs.readdirSync(directoryPath)
+
+    files.forEach(file => {
+        let messageId = path.basename(file, '.json');
+
+        const fileContent = fs.readFileSync(path.join(directoryPath, file), 'utf8')
+
+        messagesArray.push({ messageId, response: JSON.parse(fileContent) });
+
+    })
+    return messagesArray
+}
 describe('/api/v1/messages/{messageId}', () => {
     let env;
 
@@ -34,13 +51,13 @@ describe('/api/v1/messages/{messageId}', () => {
             .expect("Content-Type", /json/, done);
     });
 
-    get_message_response_data.forEach(({ messageId, body }, i) => {
+    getMessageData().forEach(({ messageId, response }, i) => {
         it(`responds correctly ${i}`, (done) => {
             request(server)
                 .get(`/api/v1/messages/${messageId}`)
                 .expect(200)
                 .expect((res) => {
-                    assert.deepEqual(res.body, body);
+                    assert.deepEqual(res.body, response);
                 })
                 .expect("Content-Type", /json/, done);
         });
