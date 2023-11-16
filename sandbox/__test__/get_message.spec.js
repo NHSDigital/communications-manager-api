@@ -1,7 +1,7 @@
 const request = require("supertest");
 const assert = require("chai").assert;
 const { setup } = require('./helpers')
-const { get_message_test_data } = require('./data')
+const { get_message_response_data } = require('../handlers/data')
 
 describe('/api/v1/messages/{messageId}', () => {
     let env;
@@ -34,7 +34,7 @@ describe('/api/v1/messages/{messageId}', () => {
             .expect("Content-Type", /json/, done);
     });
 
-    get_message_test_data.forEach(({ messageId, body }, i) => {
+    get_message_response_data.forEach(({ messageId, body }, i) => {
         it(`responds correctly ${i}`, (done) => {
             request(server)
                 .get(`/api/v1/messages/${messageId}`)

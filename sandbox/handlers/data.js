@@ -1,6 +1,6 @@
 
 
-const get_message_test_data = [
+const get_message_response_data = [
   // Enrichment failures
   // ======================================================
   {
@@ -1143,5 +1143,5 @@ const get_message_test_data = [
 
 
 module.exports = {
-  get_message_test_data
+  get_message_response_data
 }
