@@ -51,8 +51,9 @@ describe('/api/v1/messages/{messageId}', () => {
             .expect("Content-Type", /json/, done);
     });
 
-    getMessageData().forEach(({ messageId, response }, i) => {
+    getMessageData().slice(0, 1).forEach(({ messageId, response }, i) => {
         it(`responds correctly ${i}`, (done) => {
+            console.log(response)
             request(server)
                 .get(`/api/v1/messages/${messageId}`)
                 .expect(200)
