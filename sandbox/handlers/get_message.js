@@ -1,5 +1,5 @@
-const KSUID = require("ksuid");
 const { sendError, write_log } = require('./utils')
+const { get_message_response_data } = require('./data')
 
 async function get_message(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -11,6 +11,12 @@ async function get_message(req, res, next) {
   const messageId = req.params.messageId;
 
 
+  get_message_response_data.forEach(({ messageId, body }) => {
+    if (req.params.messageId === messageId) {
+      res.status(200).json(body)
+    }
+  })
+
   write_log(res, "warn", {
     message: `/api/v1/messages/${messageId}`,
     req: {
@@ -21,43 +27,9 @@ async function get_message(req, res, next) {
     }
   });
 
-  const messageReference = KSUID.randomSync(new Date()).string
-  const batchId = KSUID.randomSync(new Date()).string
-  const routingPlanId = KSUID.randomSync(new Date()).string
-
-  res.status(201).json({
-    data: {
-      type: 'Message',
-      id: messageId,
-      attributes: {
-        messageStatus: "created",
-        messageReference: messageReference,
-        routingPlan: {
-          id: routingPlanId,
-          version: 1
-        },
-        channels: [],
-        log: [],
-        pdsMeta: [],
-        timestamps: {
-          created: new Date()
-        }
-      },
-      links: {
-        self: `%PATH_ROOT%/${messageId}`
-      },
-      relationships: {
-        messageBatch: {
-          data: {
-            type: "MessageBatch",
-            id: batchId
-          }
-        }
-      }
-    }
-  });
-  res.end();
+  sendError(res, 404, `Message with id of ${messageId} not found`);
   next();
+  return;
 }
 
 module.exports = {

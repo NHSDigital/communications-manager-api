@@ -24,6 +24,39 @@ class Assertions():
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
+    def assert_200_response_message(resp, environment):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 200
+
+        response = resp.json().get("data")
+        assert response.get("type") == "Message"
+        assert response.get("id") is not None
+        assert response.get("id") != ""
+        assert response.get("attributes").get("messageStatus") is not None
+        assert response.get("attributes").get("messageStatus") != ""
+        assert response.get("attributes").get("messageReference") is not None
+        assert response.get("attributes").get("messageReference") != ""
+        assert response.get("attributes").get("messageStatusDescription") is not None
+        assert response.get("attributes").get("messageStatusDescription") != ""
+        assert response.get("attributes").get("routingPlanId") is not None
+        assert response.get("attributes").get("routingPlanId") != ""
+        assert response.get("attributes").get("timestamps").get("created")
+        assert response.get("attributes").get("timestamps").get("created") is not None
+        assert response.get("attributes").get("timestamps").get("created") != ""
+
+        hostname = f"{environment}.api.service.nhs.uk"
+        prefixes = ["internal-dev", "internal-qa"]
+
+        for p in prefixes:
+            if p in response.get("links").get("self"):
+                hostname = f"{p}-{hostname}"
+                break
+
+        assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
+        assert response.get("links").get("self").endswith(response.get("id"))
+
+    @staticmethod
     def assert_201_response_messages(resp, environment):
         Error_Handler.handle_retry(resp)
 

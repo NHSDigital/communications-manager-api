@@ -10,13 +10,6 @@
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.Messages.GetSingle.Response">
     <DisplayName>AssignMessage.Messages.GetSingle.Response</DisplayName>
     <Properties/>
-    <AssignTo createNew="true" transport="http" type="response"/>
+    <AssignTo createNew="false" transport="http" type="response"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
-    <Set>
-        <Payload variablePrefix="%" variableSuffix="#">%response.content#</Payload>
-        <Headers>
-            <Header name="Location">/v1/messages/{messageId}</Header>
-        </Headers>
-        <StatusCode>201</StatusCode>
-    </Set>
 </AssignMessage>
