@@ -1,12 +1,7 @@
 const request = require("supertest");
-const chai = require("chai");
-var chaiSubset = require('chai-subset');
+const assert = require("chai").assert;
 const { setup } = require('./helpers')
 const { get_message_test_data } = require('./data')
-
-const assert = chai.assert;
-chai.use(chaiSubset);
-
 
 describe('/api/v1/messages/{messageId}', () => {
     let env;
@@ -45,7 +40,7 @@ describe('/api/v1/messages/{messageId}', () => {
                 .get(`/api/v1/messages/${messageId}`)
                 .expect(200)
                 .expect((res) => {
-                    assert.containSubset(res.body, body)
+                    assert.deepEqual(res.body, body);
                 })
                 .expect("Content-Type", /json/, done);
         });

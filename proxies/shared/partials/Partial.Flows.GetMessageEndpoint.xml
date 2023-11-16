@@ -15,6 +15,9 @@
     </Request>
     <Response>
         <Step>
+            <Name>JavaScript.Messages.Create.Response</Name>
+        </Step>
+        <Step>
             <Name>AssignMessage.Messages.GetSingle.Response</Name>
         </Step>
     </Response>
