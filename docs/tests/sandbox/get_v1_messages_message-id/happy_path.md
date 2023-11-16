@@ -16,3 +16,6 @@ These tests target the API endpoint GET /v1/messages/{messageId} testing success
 - Response returns a 200 status code
 - Response body matches expected result
 - Response contains correctly formatted link to new message URI
+
+
+<!-- include: ../../partials/happy_path/test_200_get_message_valid_response_bodies.rst -->
