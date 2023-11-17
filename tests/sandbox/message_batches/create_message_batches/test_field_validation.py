@@ -43,7 +43,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. include:: ../../partials/validation/test_property_missing.rst
+    .. include:: ../../partials/validation/test_message_batch_property_missing.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
@@ -73,7 +73,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. include:: ../../partials/validation/test_data_null.rst
+    .. include:: ../../partials/validation/test_message_batch_null.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
@@ -103,7 +103,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
-    .. include:: ../../partials/validation/test_data_invalid.rst
+    .. include:: ../../partials/validation/test_message_batch_invalid.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",

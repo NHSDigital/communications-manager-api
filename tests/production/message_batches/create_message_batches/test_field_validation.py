@@ -47,7 +47,7 @@ def test_invalid_body(correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_property_missing(property, pointer, correlation_id):
     """
-    .. include:: ../../partials/validation/test_property_missing.rst
+    .. include:: ../../partials/validation/test_message_batch_property_missing.rst
     """
     resp = requests.post(
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
@@ -78,7 +78,7 @@ def test_property_missing(property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_null(property, pointer, correlation_id):
     """
-    .. include:: ../../partials/validation/test_data_null.rst
+    .. include:: ../../partials/validation/test_message_batch_null.rst
     """
     resp = requests.post(
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
@@ -109,7 +109,7 @@ def test_data_null(property, pointer, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_invalid(property, pointer, correlation_id):
     """
-    .. include:: ../../partials/validation/test_data_invalid.rst
+    .. include:: ../../partials/validation/test_message_batch_invalid.rst
     """
     resp = requests.post(
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
