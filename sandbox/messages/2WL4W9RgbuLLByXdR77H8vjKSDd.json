@@ -1,0 +1,38 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL4W9RgbuLLByXdR77H8vjKSDd",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "0397b134-e30d-4fb1-9060-0d204b0ac340",
+      "messageStatus": "failed",
+      "messageStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+      "channels": [
+        {
+          "type": "email",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T10:52:12Z",
+            "failed": "2023-10-09T10:52:12Z"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:52:12Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:52:12Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z",
+        "versionId": "23"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

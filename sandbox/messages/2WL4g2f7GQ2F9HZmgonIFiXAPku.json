@@ -1,0 +1,24 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL4g2f7GQ2F9HZmgonIFiXAPku",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "b801d925-70aa-49d6-a045-28cec9893de3",
+      "messageStatus": "failed",
+      "messageStatusDescription": "PDS response date of birth does not match given date of birth",
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:31:59Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:31:59Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

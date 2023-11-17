@@ -1,6 +1,6 @@
 from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
 from .error_handler import Error_Handler
-from datetime import datetime
+import json
 
 
 class Assertions():
@@ -22,6 +22,37 @@ class Assertions():
 
         # ensure we have our cache-control set correctly
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
+
+    @staticmethod
+    def assert_200_response_message(resp, environment):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 200
+
+        response = resp.json().get("data")
+        assert response.get("type") == "Message"
+        assert response.get("id") is not None
+        assert response.get("id") != ""
+        assert response.get("attributes").get("messageStatus") is not None
+        assert response.get("attributes").get("messageStatus") != ""
+        assert response.get("attributes").get("messageReference") is not None
+        assert response.get("attributes").get("messageReference") != ""
+        assert response.get("attributes").get("routingPlanId") is not None
+        assert response.get("attributes").get("routingPlanId") != ""
+        assert response.get("attributes").get("timestamps").get("created")
+        assert response.get("attributes").get("timestamps").get("created") is not None
+        assert response.get("attributes").get("timestamps").get("created") != ""
+
+        hostname = f"{environment}.api.service.nhs.uk"
+        prefixes = ["internal-dev", "internal-qa"]
+
+        for p in prefixes:
+            if p in response.get("links").get("self"):
+                hostname = f"{p}-{hostname}"
+                break
+
+        assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
+        assert response.get("links").get("self").endswith(response.get("id"))
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
@@ -60,6 +91,19 @@ class Assertions():
         response = resp.json().get("data")
 
         assert response.get("attributes").get("routingPlan") == routing_plan
+
+    @staticmethod
+    def assert_200_valid_message_id_response_body(resp, message_id, url):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 200
+
+        expected_response_file = open(f"sandbox/messages/{message_id}.json")
+        expected = json.load(expected_response_file).get("data")
+        expected["links"]["self"] = url
+        actual = resp.json().get("data")
+
+        assert actual == expected
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):

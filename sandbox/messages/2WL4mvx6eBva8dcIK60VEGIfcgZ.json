@@ -1,0 +1,24 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL4mvx6eBva8dcIK60VEGIfcgZ",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "1791d23b-6f5d-4153-ab45-637bd7711d41",
+      "messageStatus": "failed",
+      "messageStatusDescription": "Patient has exit code",
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:31:59Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:31:59Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

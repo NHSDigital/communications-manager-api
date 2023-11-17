@@ -1,0 +1,24 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL4khXn32dOOj4bB4bi8Tkllrq",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "68cc8e05-c404-405a-a41d-92cdb8afd9e3",
+      "messageStatus": "failed",
+      "messageStatusDescription": "Patient is informally dead",
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:31:59Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:31:59Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}
