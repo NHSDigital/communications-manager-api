@@ -53,6 +53,15 @@ class Assertions():
         assert response.get("links").get("self").endswith(response.get("id"))
 
     @staticmethod
+    def assert_201_routing_plan_and_version(resp, routing_plan):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 201
+        response = resp.json().get("data")
+
+        assert response.get("attributes").get("routingPlan") == routing_plan
+
+    @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         if code == 429:
             Error_Handler.handle_504_retry(resp)
