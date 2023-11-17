@@ -61,7 +61,7 @@ def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_pl
         }, json=data
     )
     Assertions.assert_201_routing_plan_and_version(
-        resp, 
+        resp,
         {
             "id": routing_plan_id,
             "version": version
