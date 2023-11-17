@@ -27,3 +27,13 @@ def test_200_get_message_valid_accept_headers(nhsd_apim_proxy_url, accept_header
         },
     )
     Assertions.assert_200_response_message(resp, "sandbox")
+
+
+@pytest.mark.parametrize('message_ids', get_200_message_ids())
+def test_200_get_message_valid_response_bodies(nhsd_apim_proxy_url, message_ids):
+    """
+    .. include: ../../partials/happy_path/test_200_get_message_valid_response_bodies.rst
+    """
+    url = f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/{message_ids}"
+    resp = requests.get(url)
+    Assertions.assert_200_valid_message_id_response_body(resp, message_ids, url)

@@ -4,6 +4,7 @@
   * [Generic Tests](sandbox/generic/index.md)
   * [POST /v1/message-batches](sandbox/post_v1_message-batches/index.md)
   * [POST /v1/messages](sandbox/post_v1_messages/index.md)
+  * [GET /v1/messages/{messageId}](sandbox/get_v1_messages_message-id/index.md)
 * [Development test suite](development/index.md)
   * [Generic Tests](development/generic/index.md)
   * [POST /v1/message-batches](development/post_v1_message-batches/index.md)

@@ -1,6 +1,6 @@
 from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
 from .error_handler import Error_Handler
-from datetime import datetime
+import json
 
 
 class Assertions():
@@ -79,6 +79,19 @@ class Assertions():
 
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(response.get("id"))
+
+    @staticmethod
+    def assert_200_valid_message_id_response_body(resp, message_id, url):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 200
+
+        expected_response_file = open(f"sandbox/messages/{message_id}.json")
+        expected = json.load(expected_response_file).get("data")
+        expected["links"]["self"] = url
+        actual = resp.json().get("data")
+
+        assert actual == expected
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
