@@ -37,6 +37,9 @@ class Assertions():
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
+        assert response.get("attributes").get("routingPlan") is not None
+        assert response.get("attributes").get("routingPlan").get("id") != ""
+        assert response.get("attributes").get("routingPlan").get("version") != ""
 
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]

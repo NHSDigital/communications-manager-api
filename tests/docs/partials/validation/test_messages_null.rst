@@ -1,4 +1,4 @@
-Scenario: An API consumer submitting a request with an empty required attribute in the request body receives a 400 'Null Value' response
+Scenario: An API consumer submitting a message with an empty required attribute in the request body receives a 400 'Null Value' response
 ========================================================================================================================================
 
 | **Given** the API consumer provides an message body with a null attribute
@@ -10,5 +10,5 @@ Scenario: An API consumer submitting a request with an empty required attribute 
 - Response returns the expected error message body with references to the null attribute
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/request_properties.rst
+.. include:: ../../partials/message_request_properties.rst
 .. include:: ../../partials/correlation_ids.rst

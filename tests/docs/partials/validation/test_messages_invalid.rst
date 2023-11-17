@@ -1,4 +1,4 @@
-Scenario: An API consumer submitting a request with an invalid required attribute in the request body receives a 400 'Invalid Value' response
+Scenario: An API consumer submitting a message with an invalid required attribute in the request body receives a 400 'Invalid Value' response
 =============================================================================================================================================
 
 | **Given** the API consumer provides an message body with an invalid attribute
@@ -10,5 +10,5 @@ Scenario: An API consumer submitting a request with an invalid required attribut
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/request_properties.rst
+.. include:: ../../partials/message_request_properties.rst
 .. include:: ../../partials/correlation_ids.rst
