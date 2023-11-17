@@ -1,0 +1,29 @@
+description: |+
+  There is an issue communicating to our backend services. If this occurs it is a good idea to back off and retry the request at a later time - see the [Circuit Breaker pattern](https://microservices.io/patterns/reliability/circuit-breaker.html).
+
+  This error can occur if there is an issue with a dependent service and so may be bubbled up from a 3rd party HTTP call.
+
+  ### Sandbox
+
+  It is possible to simulate this error response by sending a request with a header of `Prefer` set to the value `code=504`.
+
+  Here is an example curl request to simulate this response:
+
+  ```
+    curl -X GET --header "Prefer: code=504" https://sandbox.api.service.nhs.uk/comms/
+  ```
+
+  To simulate a backend `504` exception bubbling upwards you can send this request:
+
+  ```
+    curl -X GET https://sandbox.api.service.nhs.uk/comms/_timeout_504
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/ServiceTimeout.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/ServiceTimeout.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

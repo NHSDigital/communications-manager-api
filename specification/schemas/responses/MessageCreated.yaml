@@ -1,0 +1,37 @@
+type: object
+title: Message response
+additionalProperties: false
+properties:
+  data:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        $ref: ../enums/TypeMessage.yaml
+      id:
+        $ref: ../types/KSUID.yaml
+        description: Identifier for this Message. You should store this identifier for later lookups.
+      attributes:
+        type: object
+        additionalProperties: false
+        properties:
+          messageReference:
+            type: string
+            description: Your unique message reference.
+            format: uuid
+            example: da0b1495-c7cb-468c-9d81-07dee089d728
+          messageStatus:
+            description: The status of your message.
+            $ref: ../enums/MessageCreatedStatus.yaml
+          timestamps:
+            type: object
+            additionalProperties: false
+            properties:
+              created:
+                type: string
+                description: The date and time that your message was created at.
+                format: date-time
+                example: '2023-11-17T14:27:51.413Z'
+          routingPlan:
+            description: The routing plan that you requested the message be sent with.
+            $ref: ../types/RoutingPlan.yaml

@@ -1,0 +1,56 @@
+type: object
+title: Request not processable
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: ../../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../../enums/ErrorInvalidValue.yaml
+        links:
+          $ref: ../../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '400'
+          example: '400'
+        title:
+          type: string
+          enum:
+            - Missing property
+            - Property cannot be null
+            - Invalid value
+            - Duplicate value
+            - Too few items
+          example: Missing property
+        detail:
+          type: string
+          enum:
+            - 'The property at the specified location is required, but was not present in the request.'
+            - 'The property at the specified location is required, but a null value was passed in the request.'
+            - The property at the specified location does not allow this value.
+            - 'The property at the specified location is a duplicate, duplicated values are not allowed.'
+            - The property at the specified location contains too few items.
+          example: 'The property at the specified location is required, but was not present in the request.'
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            pointer:
+              type: string
+              enum:
+                - /data/type
+                - /data/attributes
+                - /data/attributes/messageBatchReference
+                - /data/attributes/routingPlanId
+                - /data/attributes/messages
+                - /data/attributes/messages/0/recipient/nhsNumber
+                - /data/attributes/messages/0/recipient/dateOfBirth
+                - /data/attributes/messages/0/messageReference
+              example: /data/attributes/routingPlanId

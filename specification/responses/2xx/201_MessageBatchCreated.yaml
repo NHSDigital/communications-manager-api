@@ -1,0 +1,13 @@
+description: |+
+  Your message batch has been created. The backend service will process the messages contained within it according to the routing plan identified in the request.
+
+  The response includes both your `messageBatchReference` and our message batch `id`. You should store this `id` in your database.
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/MessageBatch.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/MessageBatch.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

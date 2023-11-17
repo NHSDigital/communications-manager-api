@@ -1,0 +1,9 @@
+title: Enum_MessageStatus
+type: string
+enum:
+  - created
+  - pending_enrichment
+  - enriched
+  - sending
+  - delivered
+  - failed

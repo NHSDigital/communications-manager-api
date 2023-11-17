@@ -1,0 +1,33 @@
+type: object
+title: Too many requests
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: ../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../enums/ErrorQuota.yaml
+        links:
+          $ref: ../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '429'
+          example: '429'
+        title:
+          type: string
+          enum:
+            - Too many requests
+          example: Too many requests
+        detail:
+          type: string
+          enum:
+            - You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.
+          example: You have made too many requests. Re-send the request after the time (in seconds) specified `Retry-After` header.

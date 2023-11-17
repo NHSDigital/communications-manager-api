@@ -1,0 +1,16 @@
+description: |+
+  The request did not contain a valid `Accept` header value.
+
+  Valid values are:
+
+  * `*/*`
+  * `application/json`
+  * `application/vnd.api+json`
+
+  Where no `Accept` header is present, this will default to `application/vnd.api+json`
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/NotAcceptable.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

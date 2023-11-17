@@ -36,7 +36,7 @@ clean:
 #Creates the fully expanded OAS spec in json
 publish: clean
 	mkdir -p build
-	npm run publish 2> /dev/null
+	npm run publish
 
 #Runs build proxy script
 build-proxy:

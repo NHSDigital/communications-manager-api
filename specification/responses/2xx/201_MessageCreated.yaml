@@ -1,0 +1,13 @@
+description: |+
+  Your message has been created. The backend service will process the message according to the routing plan identified in the request.
+
+  The response includes both your `messageReference` and our message `id`. You should store the `id` in your database.
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/MessageCreated.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/MessageCreated.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml
