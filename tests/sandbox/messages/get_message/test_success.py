@@ -19,13 +19,11 @@ def test_200_get_message_valid_accept_headers(nhsd_apim_proxy_url, accept_header
     """
     .. include:: ../../partials/happy_path/test_200_messages_message_id.rst
     """
-    data = Generators.generate_valid_create_message_body("sandbox")
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/{message_ids}",
         headers={
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
-        json=data
     )
     Assertions.assert_200_response_message(resp, "sandbox")
