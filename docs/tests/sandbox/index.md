@@ -21,3 +21,4 @@
   * [Happy Path Tests](post_v1_messages/happy_path.md)
 * [GET /v1/messages/{messageId}](get_v1_messages_message-id/index.md)
   * [Happy Path Tests](get_v1_messages_message-id/happy_path.md)
+  * [404 Tests](get_v1_messages_message-id/404.md)
