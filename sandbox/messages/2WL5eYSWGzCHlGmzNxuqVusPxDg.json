@@ -1,0 +1,66 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL5eYSWGzCHlGmzNxuqVusPxDg",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "ac8e4b6c-b0bc-480f-976c-a601fda36351",
+      "messageStatus": "delivered",
+      "channels": [
+        {
+          "type": "nhsapp",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "NHS number not found",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T10:52:12Z",
+            "failed": "2023-10-09T10:52:12Z"
+          }
+        },
+        {
+          "type": "email",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T11:25:23Z",
+            "failed": "2023-10-09T11:25:23Z"
+          }
+        },
+        {
+          "type": "sms",
+          "retryCount": 0,
+          "channelStatus": "delivered",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T11:48:52Z",
+            "delivered": "2023-10-09T11:48:52Z"
+          }
+        },
+        {
+          "type": "letter",
+          "retryCount": 0,
+          "channelStatus": "created",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T11:48:52Z",
+        "enriched": "2023-10-09T10:39:37Z",
+        "delivered": "2023-10-09T11:48:52Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z",
+        "versionId": "23"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

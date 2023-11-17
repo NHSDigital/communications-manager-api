@@ -20,7 +20,7 @@ function setup(options) {
         level: "info",
         app: app.locals.app_name,
         msg: "setup",
-        version:  app.locals.version_info
+        version: app.locals.version_info
     }));
 }
 
@@ -33,7 +33,7 @@ function start(options) {
             app: app.locals.app_name,
             msg: "startup",
             server_port: server.address().port,
-            version:  app.locals.version_info
+            version: app.locals.version_info
         }))
     });
     return server;
@@ -80,7 +80,7 @@ function after_request(req, res, next) {
         version: app.locals.version_info
     };
 
-    if (log.getLevel()<2) {
+    if (log.getLevel() < 2) {
         // debug
         log_entry.req.headers = req.rawHeaders;
         log_entry.res.headers = res.rawHeaders;
@@ -111,29 +111,30 @@ function on_error(err, req, res, next) {
         finished: finished_at,
         duration: finished_at - res.locals.started_at,
         err: log_err,
-        version:  app.locals.version_info
+        version: app.locals.version_info
     }));
     if (res.headersSent) {
         next();
         return;
     }
     res.status(500);
-    res.json({error: "something went wrong" });
+    res.json({ error: "something went wrong" });
     next();
 }
 
 const handlers = require("./handlers");
 app.use(before_request);
-app.use(express.json({limit: '10mb'}));
+app.use(express.json({ limit: '10mb' }));
 app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);
 app.post("/api/v1/send", handlers.batch_send);
 app.post("/api/v1/messages", handlers.messages);
+app.get("/api/v1/messages/:messageId", handlers.get_message);
 app.get("/_timeout", handlers.trigger_timeout);
 app.get("/_timeout_408", handlers.backend_408);
 app.get("/_timeout_504", handlers.backend_504);
 app.use(on_error)
 app.use(after_request);
 
-module.exports = {start: start, setup: setup};
+module.exports = { start: start, setup: setup };
