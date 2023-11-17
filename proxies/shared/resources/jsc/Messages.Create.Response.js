@@ -12,7 +12,10 @@ var messageId = null;
 
 if (data) {
     messageId = data.id;
-    data.links.self = data.links.self.replace("%PATH_ROOT%", baseUrl);
+
+    if (data.links && data.links.self) {
+        data.links.self = data.links.self.replace("%PATH_ROOT%", baseUrl);
+    }
 }
 
 context.setVariable("messageId", messageId);
