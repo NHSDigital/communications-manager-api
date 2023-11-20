@@ -65,7 +65,13 @@
     <Step>
         <Name>RaiseFault.404NotFound</Name>
         <Condition>
-            (proxy.pathsuffix != "/v1/message-batches") or (proxy.pathsuffix == "/v1/message-batches" and request.verb != "POST")
+            request.verb != "POST"
+        </Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.404NotFound</Name>
+        <Condition>
+            proxy.pathsuffix != "/v1/message-batches" and proxy.pathsuffix != "/v1/messages"
         </Condition>
     </Step>
 {% endif %}
