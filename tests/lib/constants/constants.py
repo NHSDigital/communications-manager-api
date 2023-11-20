@@ -190,6 +190,14 @@ ERROR_NOT_FOUND = Error(
     "The resource at the requested URI was not found."
 )
 
+# not allowed
+ERROR_NOT_ALLOWED = Error(
+    "CM_NOT_ALLOWED",
+    "405",
+    "Method not allowed",
+    "The method at the requested URI was not allowed."
+)
+
 # retry too early
 ERROR_RETRY_TOO_EARLY = Error(
     "CM_RETRY_TOO_EARLY",
