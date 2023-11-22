@@ -1,4 +1,4 @@
-Scenario: An API consumer submitting a request without a required attribute in the request body receives a 400 'Missing Value' response
+Scenario: An API consumer submitting a message without a required attribute in the request body receives a 400 'Missing Value' response
 =======================================================================================================================================
 
 | **Given** the API consumer provides an message body with a missing required attribute
@@ -10,5 +10,5 @@ Scenario: An API consumer submitting a request without a required attribute in t
 - Response returns the expected error message body with references to the missing attribute
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/request_properties.rst
+.. include:: ../../partials/message_request_properties.rst
 .. include:: ../../partials/correlation_ids.rst

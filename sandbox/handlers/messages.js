@@ -1,5 +1,5 @@
 const KSUID = require("ksuid");
-const { sendError, write_log } = require('./utils')
+const { sendError, write_log } = require("./utils")
 const {
   sendingGroupIdWithMissingNHSTemplates,
   sendingGroupIdWithMissingTemplates,
@@ -7,7 +7,7 @@ const {
   duplicateTemplates,
   trigger500SendingGroupId,
   validSendingGroupIds,
-} = require('./config')
+} = require("./config")
 
 async function messages(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -23,9 +23,9 @@ async function messages(req, res, next) {
   }
 
   if (!validSendingGroupIds[req.body.data.attributes.routingPlanId]) {
-      sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.data.attributes.routingPlanId}"`);
-      next();
-      return;
+    sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.data.attributes.routingPlanId}"`);
+    next();
+    return;
   }
 
   if (req.body.data.attributes.routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
@@ -66,10 +66,13 @@ async function messages(req, res, next) {
 
   res.status(201).json({
     data: {
-      type: 'Message',
+      type: "Message",
       id: messageId,
       attributes: {
-        routingPlanId: req.body.data.attributes.routingPlanId,
+        routingPlan: {
+            id: req.body.data.attributes.routingPlanId,
+            version: validSendingGroupIds[req.body.data.attributes.routingPlanId]
+        },
         messageReference: req.body.data.attributes.messageReference,
         messageStatus: "created",
         timestamps: {

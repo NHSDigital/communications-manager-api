@@ -1,7 +1,7 @@
 # Validation Tests
 
 
-## Scenario: An API consumer submitting a request with an invalid required attribute in the request body receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a message with an invalid required attribute in the request body receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an message body with an invalid attribute
 <br/>
@@ -21,17 +21,15 @@ This test uses a method to replace the values in the response body, it sets the 
 
 Below is a table showing the required attributes and their locations as seen in the response body.
 
-| Attribute             | Location                                        |
-|-----------------------|-------------------------------------------------|
-| data                  | /data                                           |
-| type                  | /data/type                                      |
-| attributes            | /data/attributes                                |
-| routingPlanId         | /data/attributes/routingPlanId                  |
-| messageBatchReference | /data/attributes/messageBatchReference          |
-| messages              | /data/attributes/messages                       |
-| messageReference      | /data/attributes/messages/0/messageReference    |
-| recipient             | /data/attributes/messages/0/recipient           |
-| nhsNumber             | /data/attributes/messages/0/recipient/nhsNumber |
+| Attribute             | Location                             |
+|-----------------------|--------------------------------------|
+| data                  | /data                                |
+| type                  | /data/type                           |
+| attributes            | /data/attributes                     |
+| routingPlanId         | /data/attributes/routingPlanId       |
+| messageBatchReference | /data/attributes/messageReference    |
+| recipient             | /data/attributes/recipient           |
+| nhsNumber             | /data/attributes/recipient/nhsNumber |
 
 **Correlation IDs**
 
@@ -43,7 +41,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-## Scenario: An API consumer submitting a request with an empty required attribute in the request body receives a 400 ‘Null Value’ response
+## Scenario: An API consumer submitting a message with an empty required attribute in the request body receives a 400 ‘Null Value’ response
 
 **Given** the API consumer provides an message body with a null attribute
 <br/>
@@ -63,17 +61,15 @@ This test uses a method to replace the values in the response body, it sets the 
 
 Below is a table showing the required attributes and their locations as seen in the response body.
 
-| Attribute             | Location                                        |
-|-----------------------|-------------------------------------------------|
-| data                  | /data                                           |
-| type                  | /data/type                                      |
-| attributes            | /data/attributes                                |
-| routingPlanId         | /data/attributes/routingPlanId                  |
-| messageBatchReference | /data/attributes/messageBatchReference          |
-| messages              | /data/attributes/messages                       |
-| messageReference      | /data/attributes/messages/0/messageReference    |
-| recipient             | /data/attributes/messages/0/recipient           |
-| nhsNumber             | /data/attributes/messages/0/recipient/nhsNumber |
+| Attribute             | Location                             |
+|-----------------------|--------------------------------------|
+| data                  | /data                                |
+| type                  | /data/type                           |
+| attributes            | /data/attributes                     |
+| routingPlanId         | /data/attributes/routingPlanId       |
+| messageBatchReference | /data/attributes/messageReference    |
+| recipient             | /data/attributes/recipient           |
+| nhsNumber             | /data/attributes/recipient/nhsNumber |
 
 **Correlation IDs**
 
@@ -255,7 +251,7 @@ A valid personalisation must be structured in this format: { parameter: value }
 | 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
 
 
-## Scenario: An API consumer submitting a request without a required attribute in the request body receives a 400 ‘Missing Value’ response
+## Scenario: An API consumer submitting a message without a required attribute in the request body receives a 400 ‘Missing Value’ response
 
 **Given** the API consumer provides an message body with a missing required attribute
 <br/>
@@ -275,17 +271,15 @@ This test uses a method to replace the values in the response body, it sets the 
 
 Below is a table showing the required attributes and their locations as seen in the response body.
 
-| Attribute             | Location                                        |
-|-----------------------|-------------------------------------------------|
-| data                  | /data                                           |
-| type                  | /data/type                                      |
-| attributes            | /data/attributes                                |
-| routingPlanId         | /data/attributes/routingPlanId                  |
-| messageBatchReference | /data/attributes/messageBatchReference          |
-| messages              | /data/attributes/messages                       |
-| messageReference      | /data/attributes/messages/0/messageReference    |
-| recipient             | /data/attributes/messages/0/recipient           |
-| nhsNumber             | /data/attributes/messages/0/recipient/nhsNumber |
+| Attribute             | Location                             |
+|-----------------------|--------------------------------------|
+| data                  | /data                                |
+| type                  | /data/type                           |
+| attributes            | /data/attributes                     |
+| routingPlanId         | /data/attributes/routingPlanId       |
+| messageBatchReference | /data/attributes/messageReference    |
+| recipient             | /data/attributes/recipient           |
+| nhsNumber             | /data/attributes/recipient/nhsNumber |
 
 **Correlation IDs**
 

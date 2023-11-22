@@ -48,7 +48,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_header
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     """
-    .. include:: ../../partials/validation/test_property_missing.rst
+    .. include:: ../../partials/validation/test_message_batch_property_missing.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
@@ -80,7 +80,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     """
-    .. include:: ../../partials/validation/test_data_null.rst
+    .. include:: ../../partials/validation/test_message_batch_null.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
@@ -112,7 +112,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
     """
-    .. include:: ../../partials/validation/test_data_invalid.rst
+    .. include:: ../../partials/validation/test_message_batch_invalid.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",

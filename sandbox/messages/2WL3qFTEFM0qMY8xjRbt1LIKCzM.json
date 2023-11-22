@@ -1,0 +1,36 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2WL3qFTEFM0qMY8xjRbt1LIKCzM",
+    "attributes": {
+      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "messageReference": "7a94bc7c-5d55-4816-bea0-8449eb81d65f",
+      "messageStatus": "delivered",
+      "channels": [
+        {
+          "type": "nhsapp",
+          "retryCount": 0,
+          "channelStatus": "delivered",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "updated": "2023-10-09T10:52:12Z",
+            "delivered": "2023-10-09T10:52:12Z"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "updated": "2023-10-09T10:52:12Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "delivered": "2023-10-09T10:52:12Z"
+      },
+      "pdsMeta": {
+        "queriedAt": "2023-10-09T10:31:59Z",
+        "versionId": "23"
+      }
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

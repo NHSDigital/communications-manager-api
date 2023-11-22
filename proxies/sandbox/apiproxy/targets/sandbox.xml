@@ -10,6 +10,7 @@
     <Flows>
         [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
         [% include './partials/Partial.Flows.CreateMessageEndpoint.xml' %]
+        [% include './partials/Partial.Flows.GetMessageEndpoint.xml' %]
     </Flows>
     [% include './partials/Partial.Target.PostFlow.xml' %]
     <FaultRules>

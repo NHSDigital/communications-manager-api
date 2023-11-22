@@ -10,5 +10,5 @@ Scenario: An API consumer submitting a request with a duplicate attribute in the
 - Response returns the expected error message body with references to the duplicate attribute
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/request_properties.rst
+.. include:: ../../partials/message_batch_request_properties.rst
 .. include:: ../../partials/correlation_ids.rst
