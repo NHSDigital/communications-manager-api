@@ -8,6 +8,7 @@
 * [Development test suite](development/index.md)
   * [Generic Tests](development/generic/index.md)
   * [POST /v1/message-batches](development/post_v1_message-batches/index.md)
+  * [POST /v1/messages](development/post_v1_messages/index.md)
 * [Integration test suite](integration/index.md)
   * [Generic Tests](integration/generic/index.md)
   * [POST /v1/message-batches](integration/post_v1_message-batches/index.md)
