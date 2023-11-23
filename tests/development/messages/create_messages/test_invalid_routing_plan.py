@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
-from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
+from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.constants.constants import INVALID_ROUTING_PLAN_DEV
 from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID_DEV
 from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS_DEV
@@ -16,28 +16,25 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             **nhsd_apim_auth_headers,
             "X-Correlation-Id": correlation_id
-        }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": f"f{str(uuid.uuid1())[1:]}",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
-                        },
-                        "personalisation": {}
-                    }
-                ]
+        },
+        json={
+            "data": {
+                "type": "Message",
+                "attributes": {
+                    "routingPlanId": f"f{str(uuid.uuid1())[1:]}",
+                    "messageReference": str(uuid.uuid1()),
+                    "recipient": {
+                        "nhsNumber": "9990548609",
+                        "dateOfBirth": "1982-03-17"
+                    },
+                    "personalisation": {}
+                }
             }
         }
-    })
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -54,28 +51,25 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlatio
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             **nhsd_apim_auth_headers,
             "X-Correlation-Id": correlation_id
-        }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": INVALID_ROUTING_PLAN_DEV,
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
-                        },
-                        "personalisation": {}
-                    }
-                ]
+        },
+        json={
+            "data": {
+                "type": "Message",
+                "attributes": {
+                    "routingPlanId": INVALID_ROUTING_PLAN_DEV,
+                    "messageReference": str(uuid.uuid1()),
+                    "recipient": {
+                        "nhsNumber": "9990548609",
+                        "dateOfBirth": "1982-03-17"
+                    },
+                    "personalisation": {}
+                }
             }
         }
-    })
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -92,28 +86,24 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_ap
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             **nhsd_apim_auth_headers,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
-            "type": "MessageBatch",
+            "type": "Message",
             "attributes": {
                 "routingPlanId": DUPLICATE_ROUTING_PLAN_TEMPLATE_ID_DEV,
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
-                        },
-                        "personalisation": {}
-                    }
-                ]
+                "messageReference": str(uuid.uuid1()),
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "1982-03-17"
+                },
+                "personalisation": {}
+                }
             }
         }
-    })
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -143,28 +133,24 @@ def test_routing_plan_missing_templates(
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             **nhsd_apim_auth_headers,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
-            "type": "MessageBatch",
+            "type": "Message",
             "attributes": {
                 "routingPlanId": routing_plan_id,
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
-                        },
-                        "personalisation": {}
-                    }
-                ]
+                "messageReference": str(uuid.uuid1()),
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "1982-03-17"
+                },
+                "personalisation": {}
+                }
             }
         }
-    })
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
