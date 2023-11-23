@@ -67,7 +67,7 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_header
 @pytest.mark.devtest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
+def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_dob.rst
     """
