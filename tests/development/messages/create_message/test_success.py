@@ -13,9 +13,9 @@ DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "bb454d66-033b-45c0-bbb6-d9b3420a0bd4"
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
-    # """
-    # .. include:: ../../partials/happy_path/test_201.rst
-    # """
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
+    """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             **nhsd_apim_auth_headers,
@@ -31,9 +31,9 @@ def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_he
 @pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
-    # """
-    # .. include:: ../../partials/happy_path/test_201.rst
-    # """
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_content_type_headers.rst
+    """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             **nhsd_apim_auth_headers,
@@ -48,9 +48,9 @@ def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_a
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    # """
-    # .. include:: ../../partials/happy_path/test_201.rst
-    # """
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
+    """
     data = Generators.generate_valid_create_message_body("dev")
     data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
 
@@ -68,9 +68,9 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_header
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
-    # """
-    # .. include:: ../../partials/happy_path/test_201.rst
-    # """
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_dob.rst
+    """
     data = Generators.generate_valid_create_message_body("dev")
     data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
 
@@ -87,9 +87,9 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 @pytest.mark.devtest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
-    # """
-    # .. include:: ../../partials/happy_path/test_201.rst
-    # """
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_without_dob.rst
+    """
     data = Generators.generate_valid_create_message_body("dev")
     data["data"]["attributes"]["recipient"].pop("dateOfBirth")
 
