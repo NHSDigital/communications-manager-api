@@ -5,9 +5,6 @@ from lib import Assertions, Generators
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 import lib.constants.constants as constants
 
-CORRELATION_ID = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
-DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "bb454d66-033b-45c0-bbb6-d9b3420a0bd4"
-
 
 @pytest.mark.devtest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
