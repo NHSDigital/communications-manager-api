@@ -46,10 +46,11 @@ class Assertions():
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
 
-        for p in prefixes:
-            if p in response.get("links").get("self"):
-                hostname = f"{p}-{hostname}"
-                break
+        if environment == 'sandbox':
+            for p in prefixes:
+                if p in response.get("links").get("self"):
+                    hostname = f"{p}-{hostname}"
+                    break
 
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(response.get("id"))
@@ -75,10 +76,11 @@ class Assertions():
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
 
-        for p in prefixes:
-            if p in response.get("links").get("self"):
-                hostname = f"{p}-{hostname}"
-                break
+        if environment == 'sandbox':
+            for p in prefixes:
+                if p in response.get("links").get("self"):
+                    hostname = f"{p}-{hostname}"
+                    break
 
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(response.get("id"))
