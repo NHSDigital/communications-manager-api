@@ -82,3 +82,90 @@ def test_routing_plan_not_belonging_to_client_id(correlation_id):
         Generators.generate_no_such_routing_plan_error(),
         correlation_id
     )
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_500_duplicate_routing_plan(correlation_id, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
+    """
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "X-Correlation-Id": correlation_id
+        }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": constants.DUPLICATE_ROUTING_PLAN_TEMPLATE_ID,
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "1982-03-17"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        500,
+        Generators.generate_duplicate_routing_plan_template_error([
+            {
+                "communicationType": "NHSAPP",
+                "supplier": "NHSAPP",
+                "id": "playwright-nhs-app",
+                "lettersNotifyNative": False
+            }
+        ]),
+        correlation_id
+    )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("routing_plan_id", constants.MISSING_TEMPLATE_ROUTING_PLANS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_routing_plan_missing_templates(
+    correlation_id,
+    routing_plan_id,
+    nhsd_apim_auth_headers
+):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
+    """
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "X-Correlation-Id": correlation_id
+        }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": routing_plan_id,
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "1982-03-17"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        500,
+        Generators.generate_missing_routing_plan_template_error(),
+        correlation_id
+    )
