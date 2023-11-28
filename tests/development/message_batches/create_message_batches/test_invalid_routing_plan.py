@@ -4,8 +4,8 @@ import uuid
 from lib import Assertions, Generators
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 from lib.constants.constants import INVALID_ROUTING_PLAN_DEV
-from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID_DEV
-from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS_DEV
+from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID
+from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS
 from lib.constants.constants import CORRELATION_IDS
 
 
@@ -99,7 +99,7 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_ap
         "data": {
             "type": "MessageBatch",
             "attributes": {
-                "routingPlanId": DUPLICATE_ROUTING_PLAN_TEMPLATE_ID_DEV,
+                "routingPlanId": DUPLICATE_ROUTING_PLAN_TEMPLATE_ID,
                 "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
@@ -132,7 +132,7 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_ap
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS_DEV)
+@pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_routing_plan_missing_templates(
     nhsd_apim_proxy_url,
