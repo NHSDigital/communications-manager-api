@@ -14,4 +14,5 @@ The Integration test suite is a collection of tests ran against the integration 
   * [Happy Path Tests](post_v1_message-batches/happy_path.md)
 * [POST /v1/messages](post_v1_messages/index.md)
   * [Validation Tests](post_v1_messages/validation.md)
+  * [Invalid Routing Plans](post_v1_messages/invalid_routing_plans.md)
   * [Happy Path Tests](post_v1_messages/happy_path.md)

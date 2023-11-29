@@ -477,7 +477,6 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
@@ -517,7 +516,6 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst

@@ -3,7 +3,7 @@ import pytest
 import uuid
 from lib import Assertions, Generators
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-from lib.constants.constants import INVALID_ROUTING_PLAN_DEV
+from lib.constants.constants import INVALID_ROUTING_PLAN
 from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID
 from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS
 from lib.constants.constants import CORRELATION_IDS
@@ -61,7 +61,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlatio
         "data": {
             "type": "MessageBatch",
             "attributes": {
-                "routingPlanId": INVALID_ROUTING_PLAN_DEV,
+                "routingPlanId": INVALID_ROUTING_PLAN,
                 "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
