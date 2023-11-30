@@ -8,6 +8,7 @@ CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization(
     {
         "access": "healthcare_worker",

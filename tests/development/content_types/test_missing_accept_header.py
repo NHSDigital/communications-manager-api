@@ -8,6 +8,7 @@ VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

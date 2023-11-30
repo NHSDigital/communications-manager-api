@@ -10,6 +10,7 @@ CONTENT_TYPE = "application/json"
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
@@ -39,6 +40,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, nhsd_apim_au
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """

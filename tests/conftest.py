@@ -54,3 +54,12 @@ def pytest_assertrepr_compare(op, left, right):
                 *left_strio.getvalue().split('\n'),
                 f'  {op}',
                 *right_strio.getvalue().split('\n')]
+
+
+@pytest.fixture(scope='session')
+def marker_value(request):
+    """
+    Fixture to retrieve the marker value passed through the command line.
+    """
+    marker = request.config.getoption('-m')  # Get the marker value
+    return marker

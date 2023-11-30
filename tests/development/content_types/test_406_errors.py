@@ -10,6 +10,7 @@ CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("accept_header_name", HEADER_NAME)
 @pytest.mark.parametrize("accept_header_value", HEADER_VALUE)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)

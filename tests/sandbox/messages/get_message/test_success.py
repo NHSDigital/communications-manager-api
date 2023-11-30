@@ -14,7 +14,7 @@ def get_200_message_ids():
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
 @pytest.mark.parametrize('message_ids', get_200_message_ids())
-def test_200_get_message_valid_accept_headers(nhsd_apim_proxy_url, accept_headers, message_ids):
+def test_200_get_message_valid_accept_headers(nhsd_apim_proxy_url, accept_headers, message_ids, marker_value):
 
     """
     .. include:: ../../partials/happy_path/test_200_messages_message_id.rst
@@ -26,7 +26,7 @@ def test_200_get_message_valid_accept_headers(nhsd_apim_proxy_url, accept_header
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, "sandbox")
+    Assertions.assert_200_response_message(resp, marker_value)
 
 
 @pytest.mark.parametrize('message_ids', get_200_message_ids())

@@ -24,7 +24,7 @@ class Assertions():
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
-    def assert_200_response_message(resp, environment):
+    def assert_200_response_message(resp, marker):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 200
@@ -43,6 +43,21 @@ class Assertions():
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
 
+        environment = None
+
+        if marker == "sandboxtest":
+            environment = "sandbox"
+        elif marker == "devtest":
+            environment = "internal-dev"
+        elif marker == "uattest":
+            environment == "internal-qa"
+        elif marker == "inttest":
+            environment == "int"
+        elif marker == "prodtest":
+            environment == "prod"
+        else:
+            raise (ValueError("Unexpected marker provided"))
+
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
 
@@ -56,7 +71,7 @@ class Assertions():
         assert response.get("links").get("self").endswith(response.get("id"))
 
     @staticmethod
-    def assert_201_response_messages(resp, environment):
+    def assert_201_response_messages(resp, marker):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201
@@ -72,6 +87,21 @@ class Assertions():
         assert response.get("attributes").get("routingPlan") is not None
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") != ""
+
+        environment = None
+
+        if marker == "sandboxtest":
+            environment = "sandbox"
+        elif marker == "devtest":
+            environment = "internal-dev"
+        elif marker == "uattest":
+            environment == "internal-qa"
+        elif marker == "inttest":
+            environment == "int"
+        elif marker == "prodtest":
+            environment == "prod"
+        else:
+            raise (ValueError("Unexpected marker provided"))
 
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]

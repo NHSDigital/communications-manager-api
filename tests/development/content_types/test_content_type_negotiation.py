@@ -27,6 +27,7 @@ ACCEPT_HEADERS = [
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)

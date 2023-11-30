@@ -10,6 +10,7 @@ from lib.constants.constants import CORRELATION_IDS
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
@@ -45,6 +46,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
@@ -80,6 +82,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlatio
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
@@ -121,6 +124,7 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_ap
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})

@@ -5,6 +5,7 @@ from lib.constants.constants import CORRELATION_IDS, METHODS, TOKENS, VALID_ENDP
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level0"})
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
@@ -27,6 +28,7 @@ def test_401_invalid_level(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlat
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('invalid_token', TOKENS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)

@@ -6,6 +6,7 @@ from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
@@ -26,6 +27,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_a
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
@@ -43,6 +45,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
@@ -61,6 +64,7 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
@@ -80,6 +84,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """

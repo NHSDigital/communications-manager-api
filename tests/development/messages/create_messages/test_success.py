@@ -7,9 +7,10 @@ import lib.constants.constants as constants
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
+def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
     """
@@ -21,13 +22,15 @@ def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_he
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
+def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type,
+                                                marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_content_type_headers.rst
     """
@@ -39,12 +42,13 @@ def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_a
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
     """
@@ -58,13 +62,14 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_header
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
+def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_dob.rst
     """
@@ -78,12 +83,13 @@ def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob)
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_without_dob.rst
     """
@@ -97,4 +103,4 @@ def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, marker_value)

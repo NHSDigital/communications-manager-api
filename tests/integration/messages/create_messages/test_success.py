@@ -12,7 +12,7 @@ VALID_ROUTING_PLAN_ID_AND_VERSION = [
 
 @pytest.mark.inttest
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
-def test_201_message_batch_valid_accept_headers(accept_headers):
+def test_201_message_batch_valid_accept_headers(accept_headers, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
     """
@@ -26,12 +26,12 @@ def test_201_message_batch_valid_accept_headers(accept_headers):
         },
         json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.inttest
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
-def test_201_message_batch_valid_content_type_headers(content_type):
+def test_201_message_batch_valid_content_type_headers(content_type, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_content_type_headers.rst
     """
@@ -42,7 +42,7 @@ def test_201_message_batch_valid_content_type_headers(content_type):
             "Content-Type": content_type
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.inttest
@@ -70,7 +70,7 @@ def test_201_message_batch_valid_routing_plan_id(routing_plan_id, version):
 
 
 @pytest.mark.inttest
-def test_201_message_batch_valid_nhs_number():
+def test_201_message_batch_valid_nhs_number(marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
     """
@@ -83,12 +83,12 @@ def test_201_message_batch_valid_nhs_number():
             "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.inttest
 @pytest.mark.parametrize('dob', VALID_DOB)
-def test_201_message_batch_valid_dob(dob):
+def test_201_message_batch_valid_dob(dob, marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_dob.rst
     """
@@ -101,11 +101,11 @@ def test_201_message_batch_valid_dob(dob):
             "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, marker_value)
 
 
 @pytest.mark.inttest
-def test_request_without_dob():
+def test_request_without_dob(marker_value):
     """
     .. include:: ../../partials/happy_path/test_201_messages_without_dob.rst
     """
@@ -118,4 +118,4 @@ def test_request_without_dob():
         "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, marker_value)

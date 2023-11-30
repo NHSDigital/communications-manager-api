@@ -8,6 +8,7 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("request_path", POST_PATHS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)

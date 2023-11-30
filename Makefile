@@ -165,8 +165,8 @@ internal-qa-test:
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
-	-m devtest \
 	-m uattest
+
 
 .integration-test:
 	$(TEST_CMD) \

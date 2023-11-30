@@ -15,6 +15,7 @@ CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
@@ -40,6 +41,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_header
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize(
     "property, pointer",
     MISSING_PROPERTIES_PATHS
@@ -72,6 +74,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize(
     "property, pointer",
     NULL_PROPERTIES_PATHS
@@ -104,6 +107,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize(
     "property, pointer",
     INVALID_PROPERTIES_PATHS
@@ -137,6 +141,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nh
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
@@ -173,6 +178,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
@@ -209,6 +215,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_he
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
@@ -244,6 +251,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
@@ -279,6 +287,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
@@ -314,6 +323,7 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
 
 
 @pytest.mark.devtest
+@pytest.mark.uattest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
