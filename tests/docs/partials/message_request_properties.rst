@@ -17,7 +17,7 @@ Below is a table showing the required attributes and their locations as seen in 
       - /data/attributes
     * - routingPlanId
       - /data/attributes/routingPlanId
-    * - messageBatchReference
+    * - messageReference
       - /data/attributes/messageReference
     * - recipient
       - /data/attributes/recipient
