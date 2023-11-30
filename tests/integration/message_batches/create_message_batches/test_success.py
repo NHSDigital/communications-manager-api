@@ -79,7 +79,7 @@ def test_201_message_batch_valid_dob(dob):
 @pytest.mark.inttest
 def test_request_without_dob():
     """
-    .. include:: ../../partials/happy_path/test_request_without_dob.rst
+    .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")

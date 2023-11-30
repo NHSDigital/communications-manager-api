@@ -6,3 +6,4 @@ POST /v1/messages
 
    invalid_routing_plans
    validation
+   happy_path

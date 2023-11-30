@@ -99,7 +99,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
 @pytest.mark.sandboxtest
 def test_request_without_dob(nhsd_apim_proxy_url):
     """
-    .. include:: ../../partials/happy_path/test_request_without_dob.rst
+    .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("sandbox")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")

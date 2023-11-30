@@ -83,7 +83,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. include:: ../../partials/happy_path/test_request_without_dob.rst
+    .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
