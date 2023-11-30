@@ -24,7 +24,7 @@ class Assertions():
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
-    def assert_200_response_message(resp, environment):
+    def assert_200_response_message(resp, url):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 200
@@ -42,21 +42,11 @@ class Assertions():
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
-
-        hostname = f"{environment}.api.service.nhs.uk"
-        prefixes = ["internal-dev", "internal-qa"]
-
-        if environment == 'sandbox':
-            for p in prefixes:
-                if p in response.get("links").get("self"):
-                    hostname = f"{p}-{hostname}"
-                    break
-
-        assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
+        assert response.get("links").get("self").startswith(url)
         assert response.get("links").get("self").endswith(response.get("id"))
 
     @staticmethod
-    def assert_201_response_messages(resp, environment):
+    def assert_201_response_messages(resp, url):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201
@@ -72,17 +62,7 @@ class Assertions():
         assert response.get("attributes").get("routingPlan") is not None
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") != ""
-
-        hostname = f"{environment}.api.service.nhs.uk"
-        prefixes = ["internal-dev", "internal-qa"]
-
-        if environment == 'sandbox':
-            for p in prefixes:
-                if p in response.get("links").get("self"):
-                    hostname = f"{p}-{hostname}"
-                    break
-
-        assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
+        assert response.get("links").get("self").startswith(url)
         assert response.get("links").get("self").endswith(response.get("id"))
 
     @staticmethod

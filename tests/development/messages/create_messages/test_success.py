@@ -21,7 +21,7 @@ def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_he
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.devtest
@@ -39,7 +39,7 @@ def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_a
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.devtest
@@ -58,7 +58,7 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_header
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.devtest
@@ -78,7 +78,7 @@ def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob)
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.devtest
@@ -97,4 +97,4 @@ def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, "internal-dev")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
