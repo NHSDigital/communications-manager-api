@@ -63,11 +63,11 @@
 - Response contains correctly formatted link to new message URI
 
 
-### Scenario: An API consumer submitting a message batches request with a messageReference used in a previous request recieves the same response as the original request
+### Scenario: An API consumer submitting a message batches request with a messageBatchReference used in a previous request recieves the same response as the original request
 
 **Given** the API consumer submits a message batches request
 <br/>
-**And** the API consumer submits a second message batches request containing the same messageReference as the first request
+**And** the API consumer submits a second message batches request containing the same messageBatchReference as the first request
 <br/>
 **When** the request is submitted
 <br/>
