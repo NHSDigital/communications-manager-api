@@ -1,6 +1,7 @@
 import requests
 import pytest
 import uuid
+import time
 from lib import Assertions, Generators
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 import lib.constants.constants as constants
@@ -103,3 +104,30 @@ def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
     Assertions.assert_201_response_messages(
         resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+
+
+@pytest.mark.devtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_request_idempotency(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_request_idempotency.rst
+    """
+    data = Generators.generate_valid_create_message_body("dev")
+
+    respOne = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
+        }, json=data
+    )
+
+    time.sleep(5)
+
+    respTwo = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
+        }, json=data
+    )
+
+    Assertions.assert_messages_idempotency(respOne, respTwo)
