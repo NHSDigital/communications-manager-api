@@ -1,5 +1,6 @@
 import requests
 import pytest
+import time
 from lib import Assertions, Generators, Authentication
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
@@ -91,3 +92,30 @@ def test_request_without_dob():
     }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
+
+
+@pytest.mark.inttest
+@pytest.mark.nhsd_apim_authorization()
+def test_201_message_batches_request_idempotency():
+    """
+    .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("int")
+
+    respOne = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+        }, json=data
+    )
+
+    time.sleep(5)
+
+    respTwo = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+        }, json=data
+    )
+
+    Assertions.assert_message_batches_idempotency(respOne, respTwo)

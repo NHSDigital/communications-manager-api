@@ -1,5 +1,6 @@
 import requests
 import pytest
+import time
 from lib import Assertions, Generators, Authentication
 from lib.constants.constants import INT_URL, VALID_CONTENT_TYPE_HEADERS, VALID_ACCEPT_HEADERS, \
     VALID_NHS_NUMBER, VALID_DOB, VALID_ROUTING_PLAN_ID_INT
@@ -119,3 +120,29 @@ def test_request_without_dob():
         }, json=data
     )
     Assertions.assert_201_response_messages(resp, "int")
+
+
+@pytest.mark.inttest
+def test_201_message_request_idempotency():
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_request_idempotency.rst
+    """
+    data = Generators.generate_valid_create_message_body("int")
+
+    respOne = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+        }, json=data
+    )
+
+    time.sleep(5)
+
+    respTwo = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+        "Authorization": Authentication.generate_authentication("int"),
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+        }, json=data
+    )
+
+    Assertions.assert_messages_idempotency(respOne, respTwo)

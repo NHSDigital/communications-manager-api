@@ -108,6 +108,40 @@ class Assertions():
         assert actual == expected
 
     @staticmethod
+    def assert_message_batches_idempotency(respOne, respTwo):
+        Error_Handler.handle_retry(respOne)
+        Error_Handler.handle_retry(respTwo)
+
+        assert respOne.status_code == 201
+        assert respTwo.status_code == 201
+
+        responseOne = respOne.json().get("data")
+        responseTwo = respTwo.json().get("data")
+
+        assert responseOne.get("id") == responseTwo.get("id")
+
+    @staticmethod
+    def assert_messages_idempotency(respOne, respTwo):
+        Error_Handler.handle_retry(respOne)
+        Error_Handler.handle_retry(respTwo)
+
+        assert respOne.status_code == 201
+        assert respTwo.status_code == 201
+
+        responseOne = respOne.json().get("data")
+        responseTwo = respTwo.json().get("data")
+
+        assert responseOne.get("id") == responseTwo.get("id")
+        assert (responseOne.get("attributes").get("messageStatus") ==
+                responseTwo.get("attributes").get("messageStatus"))
+        assert (responseOne.get("attributes").get("timestamps").get("created") ==
+                responseTwo.get("attributes").get("timestamps").get("created"))
+        assert (responseOne.get("attributes").get("routingPlan").get("id") ==
+                responseTwo.get("attributes").get("routingPlan").get("id"))
+        assert (responseOne.get("attributes").get("routingPlan").get("version") ==
+                responseTwo.get("attributes").get("routingPlan").get("version"))
+
+    @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         if code == 429:
             Error_Handler.handle_504_retry(resp)

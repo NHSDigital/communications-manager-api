@@ -63,6 +63,22 @@
 - Response contains correctly formatted link to new message URI
 
 
+### Scenario: An API consumer submitting a message batches request with a messageReference used in a previous request recieves the same response as the original request
+
+**Given** the API consumer submits a message batches request
+<br/>
+**And** the API consumer submits a second message batches request containing the same messageReference as the first request
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response is the same contents as the first request
+<br/>
+
+**Asserts**
+- Response returns a 201 status code
+- Response body matches the first request
+
+
 ### Scenario: An API consumer creating a batch of messages with a date of birth receives a 201 response
 
 **Given** the API consumer does not provide a date of birth for a recipient in their new message batch
