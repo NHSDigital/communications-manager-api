@@ -95,7 +95,6 @@ def test_request_without_dob():
 
 
 @pytest.mark.inttest
-@pytest.mark.nhsd_apim_authorization()
 def test_201_message_batches_request_idempotency():
     """
     .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
