@@ -4,10 +4,8 @@ import uuid
 from lib import Assertions, Permutations, Generators, Authentication
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
-from lib.constants.constants import INVALID_ROUTING_PLAN_DEV  # TODO: Update id for prod environment
-from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID_DEV  # TODO: Update id for prod environment
-from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS_DEV  # TODO: Update id for prod environment
-from lib.constants.constants import CORRELATION_IDS
+from lib.constants.constants import INVALID_ROUTING_PLAN, DUPLICATE_ROUTING_PLAN_TEMPLATE_ID, \
+    MISSING_TEMPLATE_ROUTING_PLANS, CORRELATION_IDS
 
 
 headers = {
@@ -60,7 +58,7 @@ def test_routing_plan_not_belonging_to_client_id(correlation_id):
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
             "routingPlanId",
-            INVALID_ROUTING_PLAN_DEV
+            INVALID_ROUTING_PLAN
         ),
     )
 
@@ -88,7 +86,7 @@ def test_500_duplicate_routing_plan(correlation_id):
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
             "routingPlanId",
-            DUPLICATE_ROUTING_PLAN_TEMPLATE_ID_DEV
+            DUPLICATE_ROUTING_PLAN_TEMPLATE_ID
         ),
     )
 
@@ -109,7 +107,7 @@ def test_500_duplicate_routing_plan(correlation_id):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS_DEV)
+@pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS)
 def test_routing_plan_missing_templates(
     correlation_id,
     routing_plan_id,
