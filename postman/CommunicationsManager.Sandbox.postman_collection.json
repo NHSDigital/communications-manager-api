@@ -13,7 +13,7 @@
                   "//assign the correlation id",
                   "pm.variables.set(\"correlation_id\", uuid.v4());"
                ],
-               "id" : "5128b9d9-e279-45d5-9602-fbb3bcf332f3",
+               "id" : "86958eae-29b0-4e27-9885-f0dd2826d8b3",
                "type" : "text/javascript"
             }
          },
@@ -23,7 +23,7 @@
                "exec" : [
                   ""
                ],
-               "id" : "3c0c0abb-8072-4852-a6fc-f689320b7bb3",
+               "id" : "b22a6144-02f0-45c3-8bd8-ce9817716983",
                "type" : "text/javascript"
             }
          }
@@ -34,7 +34,7 @@
          "name" : "Communications Manager - Sandbox",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-ec078d1e-d4d7-4460-92b9-7d79d51f967a",
-         "updatedAt" : "2023-07-25T08:51:39.000Z"
+         "updatedAt" : "2023-12-01T15:44:41.000Z"
       },
       "item" : [
          {
@@ -482,6 +482,79 @@
                         },
                         "response" : [],
                         "uid" : "28740466-078a88ca-8f29-4ebb-9bad-ea3e716ce497"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "c03f7c6e-7f29-4f18-b70e-a9435a74e5c6",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 404\", () => {\r",
+                                    "    pm.response.to.have.status(404);\r",
+                                    "});"
+                                 ],
+                                 "id" : "fdc23909-5778-4d89-b301-1690e1fe3018",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "464c20a7-fc40-43fa-9a86-5c965b4e9912",
+                        "name" : "404 - Invalid Routing Plan Id",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"c118b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request sends an invalid routing plan id. As the system cannot find this routing plan it triggers a 404 error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "28740466-464c20a7-fc40-43fa-9a86-5c965b4e9912"
                      }
                   ],
                   "name" : "Validation Errors",
@@ -520,7 +593,10 @@
                   "id" : "c731e648-18c6-4a09-94e7-2eac675f0462",
                   "name" : "201 - Message Batch Created",
                   "protocolProfileBehavior" : {
-                     "disableBodyPruning" : true
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
                   },
                   "request" : {
                      "body" : {
@@ -559,79 +635,6 @@
                   },
                   "response" : [],
                   "uid" : "28740466-c731e648-18c6-4a09-94e7-2eac675f0462"
-               },
-               {
-                  "event" : [
-                     {
-                        "listen" : "prerequest",
-                        "script" : {
-                           "exec" : [
-                              ""
-                           ],
-                           "id" : "c03f7c6e-7f29-4f18-b70e-a9435a74e5c6",
-                           "type" : "text/javascript"
-                        }
-                     },
-                     {
-                        "listen" : "test",
-                        "script" : {
-                           "exec" : [
-                              "pm.test(\"Correlation identifier is returned\", () => {\r",
-                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
-                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
-                              "});\r",
-                              "\r",
-                              "pm.test(\"Status code is 404\", () => {\r",
-                              "    pm.response.to.have.status(404);\r",
-                              "});"
-                           ],
-                           "id" : "fdc23909-5778-4d89-b301-1690e1fe3018",
-                           "type" : "text/javascript"
-                        }
-                     }
-                  ],
-                  "id" : "464c20a7-fc40-43fa-9a86-5c965b4e9912",
-                  "name" : "404 - Invalid Routing Plan Id",
-                  "protocolProfileBehavior" : {
-                     "disableBodyPruning" : true
-                  },
-                  "request" : {
-                     "body" : {
-                        "mode" : "raw",
-                        "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"c118b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
-                     },
-                     "description" : "This request sends an invalid routing plan id. As the system cannot find this routing plan it triggers a 404 error.",
-                     "header" : [
-                        {
-                           "key" : "Content-Type",
-                           "type" : "default",
-                           "value" : "application/vnd.api+json"
-                        },
-                        {
-                           "key" : "Accept",
-                           "type" : "default",
-                           "value" : "application/vnd.api+json"
-                        },
-                        {
-                           "key" : "X-Correlation-Id",
-                           "type" : "text",
-                           "value" : "{{correlation_id}}"
-                        }
-                     ],
-                     "method" : "POST",
-                     "url" : {
-                        "host" : [
-                           "{{base_url}}"
-                        ],
-                        "path" : [
-                           "v1",
-                           "message-batches"
-                        ],
-                        "raw" : "{{base_url}}/v1/message-batches"
-                     }
-                  },
-                  "response" : [],
-                  "uid" : "28740466-464c20a7-fc40-43fa-9a86-5c965b4e9912"
                }
             ],
             "name" : "Send Messages",
@@ -844,6 +847,70 @@
                         },
                         "response" : [],
                         "uid" : "28740466-a67f0972-d8d3-46f5-8ece-67a78604ec29"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 425\", () => {\r",
+                                    "    pm.response.to.have.status(425);\r",
+                                    "});"
+                                 ],
+                                 "id" : "b26e06af-9979-4778-909f-3ab124923976",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "461a9372-4d0f-4579-b4e5-52cddd837226",
+                        "name" : "425 - Retry Too Early",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : ""
+                           },
+                           "description" : "This request simulates the retry too early error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "text",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "text",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "text",
+                                 "value" : "code=425"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "28740466-461a9372-4d0f-4579-b4e5-52cddd837226"
                      }
                   ],
                   "name" : "Timeouts & Quotas",
@@ -1152,71 +1219,6 @@
                      "exec" : [
                         ""
                      ],
-                     "id" : "ed4d085f-935d-48db-b829-59b06c1e6aa5",
-                     "type" : "text/javascript"
-                  }
-               },
-               {
-                  "listen" : "test",
-                  "script" : {
-                     "exec" : [
-                        "pm.test(\"Correlation identifier is returned\", () => {\r",
-                        "    pm.response.to.have.header(\"x-correlation-id\");\r",
-                        "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
-                        "});\r",
-                        "\r",
-                        "pm.test(\"Status code is 404\", () => {\r",
-                        "    pm.response.to.have.status(404);\r",
-                        "});"
-                     ],
-                     "id" : "45009cd8-ae03-4327-95d7-728a089909b1",
-                     "type" : "text/javascript"
-                  }
-               }
-            ],
-            "id" : "8851be31-fcdf-4faa-9ad7-cf7e549ba4b4",
-            "name" : "404 - Not Found - Invalid URL",
-            "protocolProfileBehavior" : {
-               "disableBodyPruning" : true
-            },
-            "request" : {
-               "description" : "This request triggers a 404 not found error.",
-               "header" : [
-                  {
-                     "key" : "Accept",
-                     "type" : "default",
-                     "value" : "application/vnd.api+json"
-                  },
-                  {
-                     "key" : "X-Correlation-Id",
-                     "type" : "text",
-                     "value" : "{{correlation_id}}"
-                  }
-               ],
-               "method" : "GET",
-               "url" : {
-                  "host" : [
-                     "{{base_url}}"
-                  ],
-                  "path" : [
-                     "does",
-                     "not",
-                     "exist"
-                  ],
-                  "raw" : "{{base_url}}/does/not/exist"
-               }
-            },
-            "response" : [],
-            "uid" : "28740466-8851be31-fcdf-4faa-9ad7-cf7e549ba4b4"
-         },
-         {
-            "event" : [
-               {
-                  "listen" : "prerequest",
-                  "script" : {
-                     "exec" : [
-                        ""
-                     ],
                      "id" : "ebd214ce-fa6f-494c-9e42-a26cc6943794",
                      "type" : "text/javascript"
                   }
@@ -1290,6 +1292,71 @@
             },
             "response" : [],
             "uid" : "28740466-923ebe93-2151-4292-8913-ee5417d3509d"
+         },
+         {
+            "event" : [
+               {
+                  "listen" : "prerequest",
+                  "script" : {
+                     "exec" : [
+                        ""
+                     ],
+                     "id" : "ed4d085f-935d-48db-b829-59b06c1e6aa5",
+                     "type" : "text/javascript"
+                  }
+               },
+               {
+                  "listen" : "test",
+                  "script" : {
+                     "exec" : [
+                        "pm.test(\"Correlation identifier is returned\", () => {\r",
+                        "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                        "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                        "});\r",
+                        "\r",
+                        "pm.test(\"Status code is 404\", () => {\r",
+                        "    pm.response.to.have.status(404);\r",
+                        "});"
+                     ],
+                     "id" : "45009cd8-ae03-4327-95d7-728a089909b1",
+                     "type" : "text/javascript"
+                  }
+               }
+            ],
+            "id" : "8851be31-fcdf-4faa-9ad7-cf7e549ba4b4",
+            "name" : "404 - Not Found - Invalid URL",
+            "protocolProfileBehavior" : {
+               "disableBodyPruning" : true
+            },
+            "request" : {
+               "description" : "This request triggers a 404 not found error.",
+               "header" : [
+                  {
+                     "key" : "Accept",
+                     "type" : "default",
+                     "value" : "application/vnd.api+json"
+                  },
+                  {
+                     "key" : "X-Correlation-Id",
+                     "type" : "text",
+                     "value" : "{{correlation_id}}"
+                  }
+               ],
+               "method" : "GET",
+               "url" : {
+                  "host" : [
+                     "{{base_url}}"
+                  ],
+                  "path" : [
+                     "does",
+                     "not",
+                     "exist"
+                  ],
+                  "raw" : "{{base_url}}/does/not/exist"
+               }
+            },
+            "response" : [],
+            "uid" : "28740466-8851be31-fcdf-4faa-9ad7-cf7e549ba4b4"
          }
       ],
       "variable" : [
