@@ -16,3 +16,4 @@
 * [Production test suite](production/index.md)
   * [Generic Tests](production/generic/index.md)
   * [POST /v1/message-batches](production/post_v1_message-batches/index.md)
+  * [POST /v1/messages](production/post_v1_messages/index.md)

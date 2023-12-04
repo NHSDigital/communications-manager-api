@@ -16,7 +16,7 @@ headers = {
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_body(correlation_id):
     """
-    .. include:: ../../partials/validation/test_invalid_body.rst
+    .. include:: ../../partials/validation/test_messages_invalid.rst
     """
     resp = requests.post(
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
