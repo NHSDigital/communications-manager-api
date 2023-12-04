@@ -2,11 +2,9 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators, Authentication
-from lib.constants.constants import PROD_URL
+from lib.constants.constants import PROD_URL, CORRELATION_IDS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
-CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 INVALID_ROUTING_PLAN = "acd3d4b9-de96-49ef-9ab9-8ce03e678082"
 
 
