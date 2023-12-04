@@ -13,6 +13,7 @@ To create a new release:
 * The new release will be generated and uploaded to github
 * The release will run through the CI/CD pipeline, automatically deploying into `internal-dev`, `internal-dev-sandbox`, `internal-qa` and `internal-qa-sandbox`.
 * The release will be held at this point, ready for deployment into our production environments
+* Ensure that the release has a change note uploaded to it, detailing the features/changes/fixes that went into the release
 
 ## Promote a release to production environments
 
