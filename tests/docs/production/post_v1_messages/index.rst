@@ -5,3 +5,4 @@ POST /v1/messages
    :maxdepth: 1
 
    validation
+   invalid_routing_plans
