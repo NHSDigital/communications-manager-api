@@ -878,6 +878,7 @@
                               "mode" : "raw",
                               "raw" : ""
                            },
+                           "description" : "This request simulates the retry too early error response from the API.",
                            "header" : [
                               {
                                  "key" : "Content-Type",
