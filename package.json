@@ -28,7 +28,7 @@
     "sinon": "^17.0.1"
   },
   "dependencies": {
-    "jsrsasign": "^10.8.6",
+    "jsrsasign": "^10.9.0",
     "jsrsasign-util": "^1.0.5"
   }
 }
