@@ -1,0 +1,14 @@
+description: |+
+  The `Content-Type` of the request is not supported. This endpoint supports:
+
+  * `application/vnd.api+json`
+  * `application/json`
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/UnsupportedMedia.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/UnsupportedMedia.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

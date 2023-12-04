@@ -1,0 +1,29 @@
+description: |+
+  You have retried this request too early, the previous request is still being processed. Re-send the request after the time (in seconds) specified `Retry-After` header.
+
+  ### Sandbox
+
+  It is possible to trigger this on the sandbox by using the `Prefer` header with a value of `code=425`.
+
+  Here is an example curl request to trigger a `425`:
+
+  ```
+    curl -X GET --header "Prefer: code=425" https://sandbox.api.service.nhs.uk/comms/
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/RetryTooEarly.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/RetryTooEarly.yaml
+headers:
+  Retry-After:
+    schema:
+      type: integer
+      format: duration
+      minimum: 300
+      multipleOf: 1
+      example: 300
+    description: Time to wait before retrying the request.
+  $ref: ../../snippets/StandardResponseHeaders.yaml

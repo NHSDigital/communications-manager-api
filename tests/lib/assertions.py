@@ -43,6 +43,12 @@ class Assertions():
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
 
+        # temporarily check that links is not sent
+        assert "links" not in response
+
+        """
+        Disabled this section as we do not want to go live with the links properties.
+
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
 
@@ -53,7 +59,8 @@ class Assertions():
                     break
 
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
-        assert response.get("links").get("self").endswith(response.get("id"))
+        assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
+        """
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
@@ -73,6 +80,13 @@ class Assertions():
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") != ""
 
+        # temporarily check that links is not sent
+        assert "links" not in response
+        assert "Location" not in resp.headers
+
+        """
+        Disabled this section as we do not want to go live with the links properties.
+
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
 
@@ -83,7 +97,9 @@ class Assertions():
                     break
 
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
-        assert response.get("links").get("self").endswith(response.get("id"))
+        assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
+        assert resp.headers.get("Location") == f"/v1/messages/{response.get('id')}"
+        """
 
     @staticmethod
     def assert_201_routing_plan_and_version(resp, routing_plan):

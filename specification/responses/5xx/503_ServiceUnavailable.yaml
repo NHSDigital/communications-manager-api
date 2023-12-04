@@ -1,0 +1,30 @@
+description: |+
+  The service is currently not accepting requests,
+
+  This error can occur if any part of the system has gone offline.
+
+  ### Sandbox
+
+  It is possible to simulate this error response by sending a request with a header of `Prefer` set to the value `code=503`.
+
+  Here is an example curl request to simulate this response:
+
+  ```
+    curl -X GET --header "Prefer: code=503" https://sandbox.api.service.nhs.uk/comms/
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/ServiceUnavailable.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/ServiceUnavailable.yaml
+headers:
+  Retry-After:
+    schema:
+      type: integer
+      minimum: 5
+      multipleOf: 1
+      example: 5
+    description: Time to wait between requests in seconds
+  $ref: ../../snippets/StandardResponseHeaders.yaml

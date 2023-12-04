@@ -1,0 +1,18 @@
+type: object
+title: Recipient
+additionalProperties: false
+properties:
+  nhsNumber:
+    type: string
+    pattern: '^\d{10}$'
+    minLength: 10
+    maxLength: 10
+    example: '9990548609'
+    description: The [NHS number](https://digital.nhs.uk/services/nhs-number) of the recipient. Only [valid NHS Numbers](https://www.datadictionary.nhs.uk/attributes/nhs_number.html) will be accepted. This will be used to lookup the recipients details with the [Personal Demographics Service](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir).
+  dateOfBirth:
+    type: string
+    description: 'Date of birth in ISO-8601 format: YYYY-MM-DD.'
+    format: date
+    example: '1982-03-17'
+required:
+  - nhsNumber

@@ -1,0 +1,42 @@
+type: object
+title: Access Denied
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: ../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../enums/ErrorAccessDenied.yaml
+        links:
+          $ref: ../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '401'
+          example: '401'
+        title:
+          type: string
+          enum:
+            - Access denied
+          example: Access denied
+        detail:
+          type: string
+          enum:
+            - 'Access token missing, invalid or expired, or calling application not configured for this operation.'
+          example: 'Access token missing, invalid or expired, or calling application not configured for this operation.'
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            header:
+              type: string
+              enum:
+                - Authorization
+              example: Authorization

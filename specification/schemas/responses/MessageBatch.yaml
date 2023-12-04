@@ -1,0 +1,22 @@
+type: object
+title: Message batch response
+additionalProperties: false
+properties:
+  data:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        $ref: ../enums/TypeMessageBatch.yaml
+      id:
+        $ref: ../types/KSUID.yaml
+        description: Identifier for this MessageBatch. You should store this identifier for later lookups.
+      attributes:
+        type: object
+        additionalProperties: false
+        properties:
+          messageBatchReference:
+            type: string
+            description: Your unique message batch reference, provided within the payload to create the batch of messages.
+            format: uuid
+            example: da0b1495-c7cb-468c-9d81-07dee089d728

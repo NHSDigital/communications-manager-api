@@ -15,7 +15,11 @@
     <Set>
         <Payload variablePrefix="%" variableSuffix="#">%response.content#</Payload>
         <Headers>
+            <!--
+            Temporarily disabled until the get single message endpoint is enabled.
+
             <Header name="Location">/v1/messages/{messageId}</Header>
+            -->
         </Headers>
         <StatusCode>201</StatusCode>
     </Set>
