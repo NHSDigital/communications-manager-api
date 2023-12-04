@@ -297,6 +297,6 @@ def test_null_personalisation(correlation_id, personalisation):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_null_value_error("/data/attributes/messages/0/personalisation"),
+        Generators.generate_null_value_error("/data/attributes/personalisation"),
         correlation_id
     )
