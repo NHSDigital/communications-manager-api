@@ -1,0 +1,14 @@
+description: |+
+  Your request specified a method that was not allowed on this endpoint.
+
+  Endpoints only allow certain methods to be called on them. If your method was not one of the allowed ones it will be rejected with this status code.
+
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/MethodNotAllowed.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/MethodNotAllowed.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

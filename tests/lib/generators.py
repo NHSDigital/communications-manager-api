@@ -156,6 +156,10 @@ class Generators():
         return Generators.generate_error(constants.ERROR_NOT_FOUND)
 
     @staticmethod
+    def generate_not_allowed_error():
+        return Generators.generate_error(constants.ERROR_NOT_ALLOWED)
+
+    @staticmethod
     def generate_quota_error():
         return Generators.generate_error(constants.ERROR_QUOTA)
 

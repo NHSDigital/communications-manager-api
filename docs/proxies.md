@@ -335,11 +335,17 @@ flowchart
     429 --> E
     Q10 --> |No| E
     Q9 --> |No| Q11{Is request on a known resource?}
-    Q11 --> |Yes| E
     Q11 --> |No| 404["Raise 404 error
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.404NotFound.xml'>RaiseFault.404NotFound</a></em>"]
     404 --> E
+    Q11 --> |Yes| Q12{Is method allowed on this resource?}
+    Q11 --> |Yes| E
+    Q12 --> |Yes| E
+    Q12 --> |No| 405["Raise 405 error
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.405NotAllowed.xml'>RaiseFault.405NotAllowed</a></em>"]
+    405 --> E
 ```
 
 ### Target PreFlow Response

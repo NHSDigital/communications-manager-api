@@ -1,0 +1,33 @@
+type: object
+title: Method not allowed
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: ../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../enums/ErrorMethodNotAllowed.yaml
+        links:
+          $ref: ../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '405'
+          example: '405'
+        title:
+          type: string
+          enum:
+            - Method not allowed
+          example: Method not allowed
+        detail:
+          type: string
+          enum:
+            - The method at the requested URI was not allowed.
+          example: The method at the requested URI was not allowed.
