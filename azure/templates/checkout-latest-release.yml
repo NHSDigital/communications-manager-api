@@ -1,0 +1,25 @@
+parameters:
+  - name: environment
+    type: string
+    default: prod
+
+steps:
+  - bash: |
+      if [ "${{ parameters.environment }}" != "prod" ]; then
+        export HOSTNAME=https://${{parameters.environment}}.api.service.nhs.uk/comms/_ping
+      else
+        export HOSTNAME=https://api.service.nhs.uk/comms/_ping
+      fi
+
+      echo "Endpoint targeted $HOSTNAME"
+      
+      export PREVIOUS_HASH=$(git rev-parse HEAD)
+      echo "Previous version of code $PREVIOUS_HASH"
+
+      export LATEST_RELEASE_HASH=$(curl -s $HOSTNAME | jq -r '.commitId')
+
+      git remote update && git checkout $LATEST_RELEASE_HASH
+      echo "Checking out code at version $LATEST_RELEASE_HASH"
+      
+      export CURRENT_HASH=$(git rev-parse HEAD)
+      echo "Current version of code $CURRENT_HASH"
