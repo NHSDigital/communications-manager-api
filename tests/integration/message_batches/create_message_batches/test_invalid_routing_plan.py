@@ -7,16 +7,21 @@ from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-INVALID_ROUTING_PLAN = "ae0f772e-6660-4829-8f11-1ed8a3fc68c2"
+
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
 
 
-@pytest.mark.devtest
+@pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_no_such_routing_plan(correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **headers,
             "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
@@ -47,20 +52,21 @@ def test_no_such_routing_plan(correlation_id):
     )
 
 
-@pytest.mark.devtest
+@pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_routing_plan_not_belonging_to_client_id(correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **headers,
             "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('int')}"
         }, json={
         "data": {
             "type": "MessageBatch",
             "attributes": {
-                "routingPlanId": INVALID_ROUTING_PLAN,
+                "routingPlanId": constants.INVALID_ROUTING_PLAN,
                 "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
@@ -80,5 +86,89 @@ def test_routing_plan_not_belonging_to_client_id(correlation_id):
         resp,
         404,
         Generators.generate_no_such_routing_plan_error(),
+        correlation_id
+    )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+def test_500_duplicate_routing_plan(correlation_id):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
+    """
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **headers,
+            "Authorization": f"{Authentication.generate_authentication('int')}",
+            "X-Correlation-Id": correlation_id
+        }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": constants.DUPLICATE_ROUTING_PLAN_TEMPLATE_ID,
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "1982-03-17"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        500,
+        Generators.generate_duplicate_routing_plan_template_error([
+            {
+                "communicationType": "NHSAPP",
+                "supplier": "NHSAPP",
+                "id": "playwright-nhs-app",
+                "lettersNotifyNative": False
+            }
+        ]),
+        correlation_id
+    )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("routing_plan_id", constants.MISSING_TEMPLATE_ROUTING_PLANS)
+def test_routing_plan_missing_templates(correlation_id, routing_plan_id,):
+    """
+    .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
+    """
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **headers,
+            "Authorization": f"{Authentication.generate_authentication('int')}",
+            "X-Correlation-Id": correlation_id
+        }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": routing_plan_id,
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "1982-03-17"
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        500,
+        Generators.generate_missing_routing_plan_template_error(),
         correlation_id
     )

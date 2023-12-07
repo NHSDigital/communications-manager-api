@@ -1,0 +1,13 @@
+title: RoutingPlan
+type: object
+additionalProperties: false
+properties:
+  id:
+    type: string
+    format: uuid
+    description: The identifier for the routing plan
+    example: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1'
+  version:
+    type: string
+    description: This identifies the specific version of the routing plan.
+    example: 'ztoe2qRAM8M8vS0bqajhyEBcvXacrGPp'

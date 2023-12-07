@@ -1,0 +1,31 @@
+description: |+
+  You have made too many requests too quickly, you must send requests at a slower rate.
+
+  If you have a retry mechanism in your HTTP client you may want to look at implementing an [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) or you can use the `Retry-After` response header to determine when you should retry your request.
+
+  ### Sandbox
+
+  It is possible to trigger this on the sandbox by using the `Prefer` header with a value of `code=429`.
+
+  Here is an example curl request to trigger a `429`:
+
+  ```
+    curl -X GET --header "Prefer: code=429" https://sandbox.api.service.nhs.uk/comms/
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/TooManyRequests.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/TooManyRequests.yaml
+headers:
+  Retry-After:
+    schema:
+      type: integer
+      format: duration
+      minimum: 5
+      multipleOf: 1
+      example: 5
+    description: Time to wait between requests in seconds
+  $ref: ../../snippets/StandardResponseHeaders.yaml

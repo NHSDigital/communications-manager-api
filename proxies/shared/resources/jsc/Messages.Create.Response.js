@@ -13,6 +13,12 @@ var messageId = null;
 if (data) {
     messageId = data.id;
 
+    // temporary change to remove all links from responses using this script
+    // this is due to the send single going live before the get single
+    if (data.links) {
+        delete data.links;
+    }
+
     if (data.links && data.links.self) {
         data.links.self = data.links.self.replace("%PATH_ROOT%", baseUrl);
     }

@@ -36,7 +36,7 @@ clean:
 #Creates the fully expanded OAS spec in json
 publish: clean
 	mkdir -p build
-	npm run publish 2> /dev/null
+	npm run publish
 
 #Runs build proxy script
 build-proxy:
@@ -165,8 +165,7 @@ internal-qa-test:
 	--junitxml=test-report.xml \
 	--ignore=tests/sandbox \
 	--ignore=tests/integration \
-	-m devtest \
-	-m uattest
+	-m "devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \

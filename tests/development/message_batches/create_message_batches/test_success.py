@@ -1,5 +1,6 @@
 import requests
 import pytest
+import time
 from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
@@ -83,7 +84,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
-    .. include:: ../../partials/happy_path/test_request_without_dob.rst
+    .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
@@ -95,3 +96,30 @@ def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         }, json=data
     )
     Assertions.assert_201_response(resp, data["data"]["attributes"]["messageBatchReference"])
+
+
+@pytest.mark.devtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_batches_request_idempotency(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("dev")
+
+    respOne = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
+        }, json=data
+    )
+
+    time.sleep(5)
+
+    respTwo = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
+        }, json=data
+    )
+
+    Assertions.assert_message_batches_idempotency(respOne, respTwo)

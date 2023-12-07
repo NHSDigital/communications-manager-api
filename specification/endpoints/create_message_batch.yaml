@@ -1,0 +1,45 @@
+summary: Send messages
+description:
+  $ref: ../documentation/CreateMessageBatch.md
+operationId: create-message-batch
+parameters:
+  - $ref: ../snippets/AuthorizationParameter.yaml
+  - $ref: ../snippets/CorrelationParameter.yaml
+requestBody:
+  description: ''
+  content:
+    application/vnd.api+json:
+      schema:
+        $ref: ../schemas/requests/CreateMessageBatch.yaml
+    application/json:
+      schema:
+        $ref: ../schemas/requests/CreateMessageBatch.yaml
+responses:
+  '201':
+    $ref: ../responses/2xx/201_MessageBatchCreated.yaml
+  '400':
+    $ref: ../responses/4xx/message_batches/400_UnableToProcessMessageBatch.yaml
+  '401':
+    $ref: ../responses/4xx/401_AccessDenied.yaml
+  '403':
+    $ref: ../responses/4xx/403_Forbidden.yaml
+  '404':
+    $ref: ../responses/4xx/message_batches/404_NoSuchRoutingPlanForBatch.yaml
+  '405':
+    $ref: ../responses/4xx/405_NotAllowed.yaml
+  '406':
+    $ref: ../responses/4xx/406_NotAcceptable.yaml
+  '408':
+    $ref: ../responses/4xx/408_RequestTimeout.yaml
+  '415':
+    $ref: ../responses/4xx/415_UnsupportedMedia.yaml
+  '425':
+    $ref: ../responses/4xx/425_TooEarly.yaml
+  '429':
+    $ref: ../responses/4xx/429_TooManyRequests.yaml
+  '500':
+    $ref: ../responses/5xx/message_batches/500_InternalServerErrorForBatch.yaml
+  '503':
+    $ref: ../responses/5xx/503_ServiceUnavailable.yaml
+  '504':
+    $ref: ../responses/5xx/504_ServiceTimeout.yaml

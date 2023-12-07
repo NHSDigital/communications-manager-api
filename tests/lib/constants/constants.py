@@ -13,6 +13,17 @@ VALID_ROUTING_PLAN_ID_PROD = "0e38317f-1670-480a-9aa9-b711fb136610"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
 VALID_ROUTING_PLAN_ID_INT = "119bdd50-783c-4161-a765-792785e46851"
 VALID_ROUTING_PLAN_ID_DEV = "0e38317f-1670-480a-9aa9-b711fb136610"
+
+INVALID_ROUTING_PLAN = "ae0f772e-6660-4829-8f11-1ed8a3fc68c2"
+INVALID_ROUTING_PLAN_PROD = "acd3d4b9-de96-49ef-9ab9-8ce03e678082"
+
+DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "bb454d66-033b-45c0-bbb6-d9b3420a0bd4"
+
+MISSING_TEMPLATE_ROUTING_PLANS = [
+    "191b5bf4-1a69-4798-ba8e-fbbd7dc3dea2",
+    "d66ace32-20c2-4aff-a1fc-9ffa3f9fa577"
+]
+
 TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
@@ -177,6 +188,14 @@ ERROR_NOT_FOUND = Error(
     "404",
     "Resource not found",
     "The resource at the requested URI was not found."
+)
+
+# not allowed
+ERROR_NOT_ALLOWED = Error(
+    "CM_NOT_ALLOWED",
+    "405",
+    "Method not allowed",
+    "The method at the requested URI was not allowed."
 )
 
 # retry too early

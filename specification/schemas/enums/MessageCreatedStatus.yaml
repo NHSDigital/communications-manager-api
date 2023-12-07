@@ -1,0 +1,5 @@
+title: Enum_MessageCreatedStatus
+type: string
+enum:
+  - created
+example: created

@@ -1,0 +1,57 @@
+description: |+
+  An error has occured that is stopping your request from being processed. These errors may be thrown while the system is still being configured for your use, or a misconfiguration has occurred.
+
+  The following errors can occur:
+
+  | Error code | Title | Description |
+  | ---------- | ----- | ----------- |
+  | `CM_MISSING_ROUTING_PLAN_TEMPLATE` | Templates missing | The templates required to use the routing plan were not found. |
+  | `CM_ROUTING_PLAN_DUPLICATE_TEMPLATES` | Duplicate templates | The routing plan specified contains duplicate templates. |
+  | `CM_INTERNAL_SERVER_ERROR` | Error processing request | There was an internal error whilst processing this request. |
+
+  Within each error is a source object which details the location of the error within your request body.
+
+  Certain errors may include an extra set of metadata to assist you with resolving the problem.
+
+  This is done using a pointer that uses the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) as per the [JSON:API Error Specification](https://jsonapi.org/format/#errors).
+
+  ### Sandbox
+
+  It is possible to simulate these errors by sending requests with specific routing plan identifiers.
+
+  To trigger the `CM_MISSING_ROUTING_PLAN_TEMPLATE` error use routing plan id `c8857ccf-06ec-483f-9b3a-7fc732d9ad48` or `aeb16ab8-cb9c-4d23-92e9-87c78119175c`. Here is an example curl request to simulate the response:
+
+  ```
+    curl -X POST \
+      --header "Accept: */*" \
+      --header "Content-type: application/vnd.api+json" \
+      -d '{"data": {"type": "Message","attributes": {"routingPlanId": "c8857ccf-06ec-483f-9b3a-7fc732d9ad48","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"personalisation": {}}}}' \
+      https://sandbox.api.service.nhs.uk/comms/v1/messages
+  ```
+
+  To trigger the `CM_ROUTING_PLAN_DUPLICATE_TEMPLATES` error use routing plan id `a3a4e55d-7a21-45a6-9286-8eb595c872a8`. Here is an example curl request to simulate the response:
+
+  ```
+    curl -X POST \
+      --header "Accept: */*" \
+      --header "Content-type: application/vnd.api+json" \
+      -d '{"data": {"type": "Message","attributes": {"routingPlanId": "a3a4e55d-7a21-45a6-9286-8eb595c872a8","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"personalisation": {}}}}' \
+      https://sandbox.api.service.nhs.uk/comms/v1/messages
+  ```
+
+  It is possible to trigger the `CM_INTERNAL_SERVER_ERROR` on the sandbox by using the `Prefer` header with a value of `code=500`.
+
+  Here is an example curl request to trigger a `500`:
+
+  ```
+    curl -X GET --header "Prefer: code=500" https://sandbox.api.service.nhs.uk/comms/
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../../schemas/responses/errors/InternalServerError.yaml
+  application/json:
+    schema:
+      $ref: ../../../schemas/responses/errors/InternalServerError.yaml
+headers:
+  $ref: ../../../snippets/StandardResponseHeaders.yaml

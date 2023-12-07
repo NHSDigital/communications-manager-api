@@ -3,11 +3,10 @@ import pytest
 import uuid
 from lib import Assertions, Generators
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-
-CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
-METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "bb454d66-033b-45c0-bbb6-d9b3420a0bd4"
-INVALID_ROUTING_PLAN = "ae0f772e-6660-4829-8f11-1ed8a3fc68c2"
+from lib.constants.constants import INVALID_ROUTING_PLAN
+from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID
+from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS
+from lib.constants.constants import CORRELATION_IDS
 
 
 @pytest.mark.devtest
@@ -133,10 +132,7 @@ def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_ap
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.parametrize("routing_plan_id", [
-    "191b5bf4-1a69-4798-ba8e-fbbd7dc3dea2",
-    "d66ace32-20c2-4aff-a1fc-9ffa3f9fa577"
-])
+@pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_routing_plan_missing_templates(
     nhsd_apim_proxy_url,

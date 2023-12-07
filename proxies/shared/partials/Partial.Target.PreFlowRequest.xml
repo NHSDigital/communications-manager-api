@@ -61,17 +61,19 @@
         <Name>RaiseFault.429TooManyRequests</Name>
         <Condition>request.header.Prefer = "code=429"</Condition>
     </Step>
-{% else %}
-    <Step>
-        <Name>RaiseFault.404NotFound</Name>
-        <Condition>
-            request.verb != "POST"
-        </Condition>
-    </Step>
-    <Step>
-        <Name>RaiseFault.404NotFound</Name>
-        <Condition>
-            proxy.pathsuffix != "/v1/message-batches" and proxy.pathsuffix != "/v1/messages"
-        </Condition>
-    </Step>
 {% endif %}
+<Step>
+    <Name>JavaScript.Routing.CheckValid</Name>
+</Step>
+<Step>
+    <Name>RaiseFault.404NotFound</Name>
+    <Condition>
+        is404 = "true"
+    </Condition>
+</Step>
+<Step>
+    <Name>RaiseFault.405NotAllowed</Name>
+    <Condition>
+        is405 = "true"
+    </Condition>
+</Step>

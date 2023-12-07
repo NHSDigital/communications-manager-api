@@ -265,12 +265,11 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -299,12 +298,11 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={

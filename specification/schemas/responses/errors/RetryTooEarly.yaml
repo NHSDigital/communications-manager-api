@@ -1,0 +1,33 @@
+type: object
+title: Retry too early
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      properties:
+        id:
+          $ref: ../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../enums/ErrorRetryTooEarly.yaml
+        links:
+          $ref: ../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '425'
+          example: '425'
+        title:
+          type: string
+          enum:
+            - Retried too early
+          example: Retried too early
+        detail:
+          type: string
+          enum:
+            - You have retried this request too early, the previous request is still being processed. Re-send the request after the time (in seconds) specified `Retry-After` header.
+          example: You have retried this request too early, the previous request is still being processed. Re-send the request after the time (in seconds) specified `Retry-After` header.
