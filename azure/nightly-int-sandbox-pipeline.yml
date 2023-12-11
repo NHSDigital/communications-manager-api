@@ -33,10 +33,10 @@ variables:
     value: ''
 
 steps:
-  - template: ./templates/checkout-latest-release.yml
-    condition: ${{ parameters.DISABLE_VERSION_OVERRIDE }}
-    parameters:
-      environment: 'internal-dev-sandbox'
+  - ${{ if eq(parameters['DISABLE_VERSION_OVERRIDE'], 'false') }}:
+    - template: ./templates/checkout-latest-release.yml
+      parameters:
+        environment: 'internal-dev-sandbox'
 
   - template: ./templates/teams-alert-setup.yml
     parameters:
