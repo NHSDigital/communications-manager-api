@@ -3,6 +3,12 @@ name: "$(SourceBranchName)+$(BuildID)"
 trigger: none
 pr: none
 
+parameters:
+  - name: DISABLE_VERSION_OVERRIDE
+    displayName: Disable version override
+    type: boolean
+    default: false
+
 resources:
   repositories:
     - repository: common
@@ -28,6 +34,7 @@ variables:
 
 steps:
   - template: ./templates/checkout-latest-release.yml
+    condition: eq('${{ parameters.DISABLE_VERSION_OVERRIDE }}', true)
     parameters:
       environment: 'prod'
 
