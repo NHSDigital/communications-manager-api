@@ -22,9 +22,10 @@
         "enriched": "2023-10-09T10:31:59Z",
         "updated": "2023-10-09T10:31:59Z"
       },
-      "pdsMeta": {
+      "metadata": {
         "queriedAt": "2023-10-09T10:31:59Z",
-        "versionId": "23"
+        "versionId": "23",
+        "source": "pds"
       }
     },
     "links": {
