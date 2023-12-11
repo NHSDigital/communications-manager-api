@@ -34,7 +34,7 @@ variables:
 
 steps:
   - template: ./templates/checkout-latest-release.yml
-    condition: eq('${{ parameters.DISABLE_VERSION_OVERRIDE }}', true)
+    condition: ${{ parameters.DISABLE_VERSION_OVERRIDE }}
     parameters:
       environment: 'internal-qa'
 
