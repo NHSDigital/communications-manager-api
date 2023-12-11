@@ -3,6 +3,12 @@ name: "$(SourceBranchName)+$(BuildID)"
 trigger: none
 pr: none
 
+parameters:
+  - name: DISABLE_VERSION_OVERRIDE
+    displayName: Disable version override
+    type: boolean
+    default: false
+
 resources:
   repositories:
     - repository: common
@@ -27,6 +33,11 @@ variables:
     value: ''
 
 steps:
+  - ${{ if eq(parameters.DISABLE_VERSION_OVERRIDE, false) }}:
+    - template: ./templates/checkout-latest-release.yml
+      parameters:
+        environment: 'int'
+
   - template: ./templates/teams-alert-setup.yml
     parameters:
       webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'
