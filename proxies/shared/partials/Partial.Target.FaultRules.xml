@@ -95,7 +95,7 @@
         <Condition>fault.name = "RequestTimeout"</Condition>
     </Step>
     <Step>
-      <Name>RaiseFault.408ServerRequestTimeout</Name>
+      <Name>RaiseFault.504GatewayTimeout</Name>
       <Condition>response.status.code = 408</Condition>
     </Step>
 </FaultRule>
