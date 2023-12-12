@@ -16,10 +16,10 @@ describe('backend_408', () => {
       server.close();
   });
 
-  it('can mock a 408 response type', (done) => {
+  it('can mock a 408 response type transformed to a 504', (done) => {
     request(server)
         .get('/_timeout_408')
-        .expect(408, '408 Request Timeout', done);
+        .expect(504, '504 Gateway Timeout', done);
   });
 
 })
