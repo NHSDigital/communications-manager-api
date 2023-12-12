@@ -57,10 +57,13 @@
         "enriched": "2023-10-09T10:39:37Z",
         "delivered": "2023-10-12T08:23:41Z"
       },
-      "pdsMeta": {
-        "queriedAt": "2023-10-09T10:31:59Z",
-        "versionId": "23"
-      }
+      "metadata": [
+        {
+          "queriedAt": "2023-10-09T10:31:59Z",
+          "versionId": "23",
+          "source": "pds"
+        }
+      ]
     },
     "links": {
       "self": "%PATH_ROOT%"
