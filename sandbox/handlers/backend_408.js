@@ -1,6 +1,6 @@
 async function backend_408(req, res, next) {
-  res.status(504);
-  res.send("504 Gateway Timeout");
+  res.status(408);
+  res.send("408 Request Timeout");
   next();
 }
 
