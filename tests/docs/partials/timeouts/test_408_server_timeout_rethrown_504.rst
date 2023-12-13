@@ -1,5 +1,5 @@
-Scenario: An API consumer submitting a request when the backend service responds with a 408 timeout receives a 408 'Timeout' response
-=====================================================================================================================================
+Scenario: An API consumer submitting a request when the backend service responds with a 408 timeout receives a 504 'Gateway Timeout' response
+==============================================================================================================================================
 
 | **Given** the backend service takes too long to respond
 | **When** the request is submitted
