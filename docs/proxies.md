@@ -543,9 +543,9 @@ flowchart
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.504GatewayTimeout.xml'>RaiseFault.504GatewayTimeout</a></em>"]
     504 --> E15[End]
     Q16 --> |No| Q17{Backend 408 or request timeout?}
-    Q17 --> |Yes| 408["Raise 408 error
+    Q17 --> |Yes| 408["Rethrow 504 error
 
-    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.408RequestTimeout.xml'>RaiseFault.408RequestTimeout</a></em>"]
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.408RequestTimeout.xml'>RaiseFault.504GatewayTimeout</a></em>"]
     408 --> E16[End]
     Q17 --> |No| E16
 ```
