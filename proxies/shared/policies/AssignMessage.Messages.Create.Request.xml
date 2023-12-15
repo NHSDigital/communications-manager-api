@@ -13,6 +13,10 @@
     <AssignTo createNew="false" transport="http" type="request"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignVariable>
++        <Name>target.url</Name>
++        <Value>https://comms-apim.de-xxxx1.communications.national.nhs.uk/api/v1/send</Value>
++   </AssignVariable>
+    <AssignVariable>
         <Name>target.copy.pathsuffix</Name>
         <Value>false</Value>
     </AssignVariable>
