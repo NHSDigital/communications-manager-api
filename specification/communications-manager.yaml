@@ -22,3 +22,13 @@ paths:
   /v1/messages:
     post:
       $ref: endpoints/create_message.yaml
+  /v1/messages/{messageId}:
+    parameters:
+      - schema:
+          $ref: schemas/types/KSUID.yaml
+        name: messageId
+        in: path
+        required: true
+        description: The unique identifier for the message
+    get:
+      $ref: endpoints/get_message.yaml

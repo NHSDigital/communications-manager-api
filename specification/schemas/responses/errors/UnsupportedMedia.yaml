@@ -10,6 +10,7 @@ properties:
     items:
       type: object
       properties:
+        additionalProperties: false
         id:
           $ref: ../../types/ErrorIdentifier.yaml
         code:

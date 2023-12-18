@@ -1,0 +1,6 @@
+type: string
+title: RoutingPlanType
+enum:
+  - original
+  - override
+example: original

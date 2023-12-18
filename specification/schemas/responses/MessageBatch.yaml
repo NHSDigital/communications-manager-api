@@ -11,6 +11,7 @@ properties:
       id:
         $ref: ../types/KSUID.yaml
         description: Identifier for this MessageBatch. You should store this identifier for later lookups.
+        example: 2ZljUiS8NjJNs95PqiYOO7gAfJb
       attributes:
         type: object
         additionalProperties: false

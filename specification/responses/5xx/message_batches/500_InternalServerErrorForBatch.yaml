@@ -49,9 +49,9 @@ description: |+
 content:
   application/vnd.api+json:
     schema:
-      $ref: ../../../schemas/responses/errors/InternalServerError.yaml
+      $ref: ../../../schemas/responses/errors/CreateMessageInternalServerError.yaml
   application/json:
     schema:
-      $ref: ../../../schemas/responses/errors/InternalServerError.yaml
+      $ref: ../../../schemas/responses/errors/CreateMessageInternalServerError.yaml
 headers:
   $ref: ../../../snippets/StandardResponseHeaders.yaml

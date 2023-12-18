@@ -16,10 +16,7 @@ properties:
         additionalProperties: false
         properties:
           messageReference:
-            type: string
-            description: Your unique message reference.
-            format: uuid
-            example: da0b1495-c7cb-468c-9d81-07dee089d728
+            $ref: ../types/MessageReference.yaml
           messageStatus:
             description: The status of your message.
             $ref: ../enums/MessageCreatedStatus.yaml

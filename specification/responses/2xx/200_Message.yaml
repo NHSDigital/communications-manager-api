@@ -1,0 +1,10 @@
+description: The message has been found and its details are contained within the response body.
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/MessageResponse.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/MessageResponse.yaml
