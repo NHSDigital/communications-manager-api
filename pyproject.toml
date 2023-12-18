@@ -22,7 +22,7 @@ pyjwt = {version = "2.3.0", extras = ["crypto"]}
 pytest-xdist = "^3.5.0"
 pre-commit = "^3.5.0"
 pytest-rerunfailures = "^12.0"
-locust = "^2.19.1"
+locust = "^2.20.0"
 sphinx = "7.1.2"
 sphinx-markdown-builder = "^0.6.5"
 
