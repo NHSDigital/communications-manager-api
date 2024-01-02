@@ -21,12 +21,12 @@ context.setVariable("error.header.X-Content-Type-Options", "nosniff");
 // remove aws headers
 const headers = context.getVariable("response.header");
 const headerRegex = /^x-amz-/;
-headers.forEach(function (header)  {
+for (let header of headers) {
   if (headerRegex.test(header.key.toLowerCase())) {
     context.removeVariable("response.header." + header.key);
     context.removeVariable("error.header." + header.key);
   }
-});
+};
 
 // format errors and response objects
 try {
