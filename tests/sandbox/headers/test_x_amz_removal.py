@@ -10,7 +10,7 @@ TEST_METHODS = ["get", "post", "put", "delete"]
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("method", TEST_METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_request_with_x_amz_is_removed( nhsd_apim_proxy_url, endpoints, method):
+def test_request_with_x_amz_is_removed(nhsd_apim_proxy_url, endpoints, method):
 
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{endpoints}", headers={
         "Accept": "*/*",
