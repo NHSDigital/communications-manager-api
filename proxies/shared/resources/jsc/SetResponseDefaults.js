@@ -19,14 +19,14 @@ context.setVariable("response.header.X-Content-Type-Options", "nosniff");
 context.setVariable("error.header.X-Content-Type-Options", "nosniff");
 
 // remove aws headers
-const headers = context.getVariable("response.header");
+const headers = context.getVariable("response.headers");
 const headerRegex = /^x-amz-/;
-for (let header of headers) {
+headers.forEach(function (header)  {
   if (headerRegex.test(header.key.toLowerCase())) {
     context.removeVariable("response.header." + header.key);
     context.removeVariable("error.header." + header.key);
   }
-};
+});
 
 // format errors and response objects
 try {
