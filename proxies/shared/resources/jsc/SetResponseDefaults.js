@@ -18,6 +18,15 @@ context.setVariable("error.header.Cache-Control", "no-cache, no-store, must-reva
 context.setVariable("response.header.X-Content-Type-Options", "nosniff");
 context.setVariable("error.header.X-Content-Type-Options", "nosniff");
 
+// remove aws headers
+const headers = context.getVariable("response.header");
+const headerRegex = /^x-amz-/;
+Object.keys(headers).forEach(function (headerKey) {
+  if (headerRegex.test(headerKey.toLowerCase())) {
+    context.removeVariable("response.header." + headerKey);
+  }
+});
+
 // format errors and response objects
 try {
   const errorContent = context.getVariable("error.content")
