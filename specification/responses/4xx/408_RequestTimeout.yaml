@@ -15,11 +15,6 @@ description: |+
     curl -X GET --header "Prefer: code=408" https://sandbox.api.service.nhs.uk/comms/
   ```
 
-  To simulate a backend `408` exception bubbling upwards you can send this request:
-
-  ```
-    curl -X GET https://sandbox.api.service.nhs.uk/comms/_timeout_408
-  ```
 content:
   application/vnd.api+json:
     schema:

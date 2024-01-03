@@ -12,9 +12,12 @@
         "updated": "2023-10-09T10:31:59Z",
         "failed": "2023-10-09T10:31:59Z"
       },
-      "pdsMeta": {
-        "queriedAt": "2023-10-09T10:31:59Z"
-      }
+      "metadata": [
+        {
+          "queriedAt": "2023-10-09T10:31:59Z",
+          "source": "pds"
+        }
+      ]
     },
     "links": {
       "self": "%PATH_ROOT%"
