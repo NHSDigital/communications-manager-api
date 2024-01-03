@@ -26,7 +26,6 @@ MISSING_TEMPLATE_ROUTING_PLANS = [
 
 TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-TEST_METHODS = ["get", "post", "put", "delete"]
 CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 ORIGIN = "https://my.website"
 NUM_MAX_ERRORS = 100

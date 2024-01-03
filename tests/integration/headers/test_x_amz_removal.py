@@ -2,11 +2,11 @@ import requests
 import pytest
 
 from lib import Assertions, Authentication
-from lib.constants.constants import VALID_ENDPOINTS, ORIGIN, TEST_METHODS
+from lib.constants.constants import VALID_ENDPOINTS, ORIGIN, METHODS
 
 
 @pytest.mark.inttest
-@pytest.mark.parametrize("method", TEST_METHODS)
+@pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
 def test_request_with_x_amz_is_removed(nhsd_apim_proxy_url, endpoints, method):
 
