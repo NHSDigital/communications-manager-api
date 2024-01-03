@@ -112,7 +112,7 @@
                   "    clearTimeout(interval);    ",
                   "});"
                ],
-               "id" : "54ae2f7a-af6b-4377-a224-64beba6e5a5c",
+               "id" : "20337976-b428-42a8-8fc4-bb59f313c545",
                "type" : "text/javascript"
             }
          },
@@ -122,7 +122,7 @@
                "exec" : [
                   ""
                ],
-               "id" : "fa4f1b40-c1f6-443d-b4f5-500081b7522e",
+               "id" : "b1c9e624-a866-42e1-b769-d443db19c671",
                "type" : "text/javascript"
             }
          }
@@ -133,7 +133,7 @@
          "name" : "Communications Manager - Integration",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "updatedAt" : "2023-08-30T11:56:06.000Z"
+         "updatedAt" : "2023-12-22T12:49:10.000Z"
       },
       "item" : [
          {
