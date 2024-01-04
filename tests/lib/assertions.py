@@ -215,3 +215,9 @@ class Assertions():
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS
         assert resp.headers.get("Cross-Origin-Resource-Policy") == CORS_POLICY
+
+    @staticmethod
+    def assert_no_aws_headers(resp):
+        assert "X-Amzn-Trace-Id" not in resp.headers
+        assert "x-amzn-RequestId" not in resp.headers
+        assert "x-amz-apigw-id" not in resp.headers

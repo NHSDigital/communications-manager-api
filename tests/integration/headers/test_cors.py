@@ -1,8 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Authentication
-from lib.constants.constants import INT_URL, VALID_ENDPOINTS
-
+from lib.constants.constants import INT_URL, VALID_ENDPOINTS, ORIGIN
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 TEST_METHODS = ["get", "post", "put", "delete"]
@@ -18,7 +17,7 @@ def test_cors_options(method, endpoints):
     resp = requests.options(f"{INT_URL}{endpoints}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "*/*",
-        "Origin": "https://my.website",
+        "Origin": ORIGIN,
         "Access-Control-Request-Method": method
     })
     Assertions.assert_cors_response(resp, "https://my.website")
@@ -34,7 +33,7 @@ def test_cors(method, endpoints):
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "*/*",
-        "Origin": "https://my.website"
+        "Origin": ORIGIN
     })
 
     Assertions.assert_cors_headers(resp, "https://my.website")
