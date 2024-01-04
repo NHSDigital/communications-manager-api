@@ -5,3 +5,4 @@ GET /v1/messages
    :maxdepth: 1
 
    happy_path
+   404
