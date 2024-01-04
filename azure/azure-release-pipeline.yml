@@ -57,8 +57,15 @@ extends:
             parameters:
               test_command: 'make internal-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
+
+      - environment: manual-approval
+        stage_name: manual_approval_ref
+        depends_on:
+          - internal_dev
             
       - environment: ref
+        depends_on:
+          - manual_approval_ref
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
