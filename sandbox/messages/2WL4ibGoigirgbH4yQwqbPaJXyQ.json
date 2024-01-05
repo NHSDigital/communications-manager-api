@@ -3,7 +3,10 @@
     "type": "Message",
     "id": "2WL4ibGoigirgbH4yQwqbPaJXyQ",
     "attributes": {
-      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
       "messageReference": "2f2e071c-9fba-4dde-bf8d-8dd0c8060300",
       "messageStatus": "failed",
       "messageStatusDescription": "Patient is formally dead",

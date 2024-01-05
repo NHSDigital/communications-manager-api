@@ -3,7 +3,10 @@
     "type": "Message",
     "id": "2WL45YuHOLATvC3GspEu0oSioux",
     "attributes": {
-      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
       "messageReference": "d1cc6082-729e-4e31-8842-ac3279d3f72d",
       "messageStatus": "failed",
       "messageStatusDescription": "NHS number not found",
@@ -16,6 +19,11 @@
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:52:12Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
           }
         }
       ],
