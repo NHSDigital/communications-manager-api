@@ -15,14 +15,12 @@
           "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-09T10:52:12Z",
             "failed": "2023-10-09T10:52:12Z"
           }
         }
       ],
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "updated": "2023-10-09T10:52:12Z",
         "enriched": "2023-10-09T10:31:59Z",
         "failed": "2023-10-09T10:52:12Z"
       },

@@ -14,7 +14,6 @@
           "channelStatusDescription": "NHS number not found",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-09T10:52:12Z",
             "failed": "2023-10-09T10:52:12Z"
           }
         },
@@ -25,7 +24,6 @@
           "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-09T11:25:23Z",
             "failed": "2023-10-09T11:25:23Z"
           }
         },
@@ -36,7 +34,6 @@
           "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-09T11:48:52Z",
             "failed": "2023-10-09T11:48:52Z"
           }
         },
@@ -46,14 +43,12 @@
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-12T08:23:41Z",
             "delivered": "2023-10-12T08:23:41Z"
           }
         }
       ],
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "updated": "2023-10-12T08:23:41Z",
         "enriched": "2023-10-09T10:39:37Z",
         "delivered": "2023-10-12T08:23:41Z"
       },
