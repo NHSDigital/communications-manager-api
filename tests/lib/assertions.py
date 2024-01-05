@@ -37,12 +37,8 @@ class Assertions():
         assert response.get("attributes").get("messageStatus") != ""
         assert response.get("attributes").get("messageReference") is not None
         assert response.get("attributes").get("messageReference") != ""
-        if environment == "sandbox":
-            assert response.get("attributes").get("routingPlanId") is not None
-            assert response.get("attributes").get("routingPlanId") != ""
-        else:
-            assert response.get("attributes").get("routingPlan") is not None
-            assert response.get("attributes").get("routingPlan") != ""
+        assert response.get("attributes").get("routingPlan") is not None
+        assert response.get("attributes").get("routingPlan") != ""
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""

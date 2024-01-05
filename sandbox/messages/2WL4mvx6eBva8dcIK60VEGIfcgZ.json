@@ -3,7 +3,10 @@
     "type": "Message",
     "id": "2WL4mvx6eBva8dcIK60VEGIfcgZ",
     "attributes": {
-      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
       "messageReference": "1791d23b-6f5d-4153-ab45-637bd7711d41",
       "messageStatus": "failed",
       "messageStatusDescription": "Patient has exit code",
