@@ -1,10 +1,11 @@
 type: object
-title: Internal server error
+title: Not found
 additionalProperties: false
 properties:
   errors:
     type: array
     minItems: 1
+    maxItems: 1
     uniqueItems: true
     items:
       type: object
@@ -13,21 +14,21 @@ properties:
         id:
           $ref: ../../types/ErrorIdentifier.yaml
         code:
-          $ref: ../../enums/ErrorInternalServerError.yaml
+          $ref: ../../enums/ErrorNotFound.yaml
         links:
           $ref: ../../types/LinksError.yaml
         status:
           type: string
           enum:
-            - '500'
-          example: '500'
+            - '404'
+          example: '404'
         title:
           type: string
           enum:
-            - Error processing request
-          example: Error processing request
+            - Resource not found
+          example: Resource not found
         detail:
           type: string
           enum:
-            - 'There was an internal error whilst processing this request.'
-          example: 'There was an internal error whilst processing this request.'
+            - The resource at the requested URI was not found.
+          example: The resource at the requested URI was not found.

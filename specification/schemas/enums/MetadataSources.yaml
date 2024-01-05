@@ -1,0 +1,5 @@
+type: string
+enum:
+  - pds
+title: MetadataSources
+example: pds

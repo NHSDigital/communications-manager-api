@@ -1,0 +1,21 @@
+description: |+
+  An error has occured that is stopping your request from being processed.
+
+  ### Sandbox
+
+  It is possible to trigger the `CM_INTERNAL_SERVER_ERROR` on the sandbox by using the `Prefer` header with a value of `code=500`.
+
+  Here is an example curl request to trigger a `500`:
+
+  ```
+    curl -X GET --header "Prefer: code=500" https://sandbox.api.service.nhs.uk/comms
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/InternalServerError.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/InternalServerError.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

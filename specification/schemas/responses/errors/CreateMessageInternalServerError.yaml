@@ -13,7 +13,7 @@ properties:
         id:
           $ref: ../../types/ErrorIdentifier.yaml
         code:
-          $ref: ../../enums/ErrorInternalServerError.yaml
+          $ref: ../../enums/ErrorCreateMessageInternalServerError.yaml
         links:
           $ref: ../../types/LinksError.yaml
         status:
@@ -24,10 +24,23 @@ properties:
         title:
           type: string
           enum:
+            - Templates missing
+            - Duplicate templates
             - Error processing request
-          example: Error processing request
+          example: Templates missing
         detail:
           type: string
           enum:
+            - 'The templates required to use the routing plan were not found.'
+            - 'The routing plan specified contains duplicate templates.'
             - 'There was an internal error whilst processing this request.'
-          example: 'There was an internal error whilst processing this request.'
+          example: 'The templates required to use the routing plan were not found.'
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            pointer:
+              type: string
+              enum:
+                - /data/attributes/routingPlanId
+              example: /data/attributes/routingPlanId

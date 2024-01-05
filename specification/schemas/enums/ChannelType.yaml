@@ -1,0 +1,8 @@
+type: string
+title: ChannelType
+enum:
+  - nhsapp
+  - email
+  - sms
+  - letter
+example: email

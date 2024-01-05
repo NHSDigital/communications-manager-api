@@ -7,3 +7,4 @@ enum:
   - sending
   - delivered
   - failed
+example: sending

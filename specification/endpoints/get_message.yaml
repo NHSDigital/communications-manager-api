@@ -1,0 +1,30 @@
+summary: Get the status of a message
+description:
+  $ref: ../documentation/GetMessage.md
+operationId: get-message
+parameters:
+  - $ref: ../snippets/AuthorizationParameter.yaml
+  - $ref: ../snippets/CorrelationParameter.yaml
+responses:
+  '200':
+    $ref: ../responses/2xx/200_Message.yaml
+  '401':
+    $ref: ../responses/4xx/401_AccessDenied.yaml
+  '403':
+    $ref: ../responses/4xx/403_Forbidden.yaml
+  '404':
+    $ref: ../responses/4xx/404_NotFound.yaml
+  '405':
+    $ref: ../responses/4xx/405_NotAllowed.yaml
+  '406':
+    $ref: ../responses/4xx/406_NotAcceptable.yaml
+  '408':
+    $ref: ../responses/4xx/408_RequestTimeout.yaml
+  '429':
+    $ref: ../responses/4xx/429_TooManyRequests.yaml
+  '500':
+    $ref: ../responses/5xx/500_InternalServerError.yaml
+  '503':
+    $ref: ../responses/5xx/503_ServiceUnavailable.yaml
+  '504':
+    $ref: ../responses/5xx/504_ServiceTimeout.yaml
