@@ -14,3 +14,5 @@
   * [Invalid Routing Plans](post_v1_messages/invalid_routing_plans.md)
   * [Validation Tests](post_v1_messages/validation.md)
   * [Happy Path Tests](post_v1_messages/happy_path.md)
+* [GET /v1/messages](get_v1_messages/index.md)
+  * [Happy Path Tests](get_v1_messages/happy_path.md)

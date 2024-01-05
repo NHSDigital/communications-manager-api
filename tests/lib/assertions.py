@@ -37,8 +37,12 @@ class Assertions():
         assert response.get("attributes").get("messageStatus") != ""
         assert response.get("attributes").get("messageReference") is not None
         assert response.get("attributes").get("messageReference") != ""
-        assert response.get("attributes").get("routingPlanId") is not None
-        assert response.get("attributes").get("routingPlanId") != ""
+        if environment == "sandbox":
+            assert response.get("attributes").get("routingPlanId") is not None
+            assert response.get("attributes").get("routingPlanId") != ""
+        else:
+            assert response.get("attributes").get("routingPlan") is not None
+            assert response.get("attributes").get("routingPlan") != ""
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
@@ -61,6 +65,24 @@ class Assertions():
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
         """
+
+    @staticmethod
+    def assert_get_message_status(resp, status, failureReason=None):
+        response = resp.json().get("data")
+        assert response.get("attributes").get("messageStatus") == status
+        if status == "failed":
+            assert response.get("attributes").get("messageStatusDescription") == failureReason
+
+    @staticmethod
+    def assert_get_message_response_channels(resp, channelType, channelStatus):
+        response = resp.json().get("data")
+        channels = response.get("attributes").get("channels")
+        for c in range(len(channels)):
+            assert response.get("attributes").get("channels")[c].get("type") in channelType
+            assert response.get("attributes").get("channels")[c].get("retryCount") == 1
+            assert response.get("attributes").get("channels")[c].get("channelStatus") in channelStatus
+            assert response.get("attributes").get("channels")[c].get("timestamps") is not None
+            assert response.get("attributes").get("channels")[c].get("routingPlan") is not None
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
