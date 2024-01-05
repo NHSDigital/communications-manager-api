@@ -33,6 +33,13 @@ variables:
 extends:
   template: azure/common/apigee-deployment.yml@common
   parameters:
+    _pipeline_defaults:
+      - name_suffix: '-Pull-Request'
+        deploy_template: pr.yml
+        environments:
+        - internal-dev
+        - internal-dev-sandbox
+        - ref
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
@@ -56,3 +63,19 @@ extends:
             parameters:
               test_command: 'make internal-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
+
+      - environment: manual-approval
+        stage_name: manual_approval_ref
+        depends_on:
+          - internal_dev
+
+      - environment: ref
+        depends_on:
+          - manual_approval_ref
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make internal-dev-test'
