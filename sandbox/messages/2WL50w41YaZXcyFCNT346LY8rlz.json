@@ -15,14 +15,12 @@
           "channelStatusDescription": "Contact detail is missing",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-09T10:52:12Z",
             "failed": "2023-10-09T10:52:12Z"
           }
         }
       ],
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "updated": "2023-10-09T10:52:12Z",
         "enriched": "2023-10-09T10:31:59Z",
         "failed": "2023-10-09T10:52:12Z"
       },
