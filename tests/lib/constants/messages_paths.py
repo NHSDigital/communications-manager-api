@@ -75,6 +75,13 @@ MESSAGE_IDS = [
     "pds_name_error_single_request_item_id"
 ]
 
+SUCCESSFUL_MESSAGE_IDS = [
+    "2aUxQER3co3kXdvTKrhbSFHRRxR",
+    "2aUxdGDkW87biAvPOfG8ATYHj00"
+]
+
+MESSAGE_ID_NOT_BELONGING_TO_CLIENT = "2aUx0TuRORU8yXX7MPNoEUtGVg3"
+
 CHANNEL_TYPE = [
         "nhsapp",
         "email",
