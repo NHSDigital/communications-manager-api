@@ -2,15 +2,15 @@ import requests
 import pytest
 
 from lib import Assertions, Authentication
-from lib.constants.constants import VALID_ENDPOINTS, ORIGIN, METHODS
+from lib.constants.constants import VALID_ENDPOINTS, ORIGIN, METHODS, INT_URL
 
 
-@pytest.mark.inttest
+# TODO: Add inttest once 4.9.0 is in int
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_request_with_x_amz_is_removed(nhsd_apim_proxy_url, endpoints, method):
+def test_request_with_x_amz_is_removed(endpoints, method):
 
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{endpoints}", headers={
+    resp = getattr(requests, method)(f"{INT_URL}/{endpoints}", headers={
         "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "*/*",
         "Origin": ORIGIN,
