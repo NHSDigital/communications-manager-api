@@ -34,12 +34,12 @@ extends:
   template: azure/common/apigee-deployment.yml@common
   parameters:
     _pipeline_defaults:
-    - name_suffix: '-Pull-Request'
-      deploy_template: pr.yml
-      environments:
-      - internal-dev
-      - internal-dev-sandbox
-      - ref
+      - name_suffix: '-Pull-Request'
+        deploy_template: pr.yml
+        environments:
+        - internal-dev
+        - internal-dev-sandbox
+        - ref
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
