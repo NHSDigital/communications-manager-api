@@ -30,6 +30,8 @@ class Assertions():
         assert resp.status_code == 200
 
         response = resp.json().get("data")
+        messageStatus = response.get("attributes").get("messageStatus")
+        
         assert response.get("type") == "Message"
         assert response.get("id") is not None
         assert response.get("id") != ""
@@ -39,9 +41,35 @@ class Assertions():
         assert response.get("attributes").get("messageReference") != ""
         assert response.get("attributes").get("routingPlan") is not None
         assert response.get("attributes").get("routingPlan") != ""
+        assert response.get("attributes").get("routingPlan").get("id") is not None
+        assert response.get("attributes").get("routingPlan").get("id") != ""
+        assert response.get("attributes").get("routingPlan").get("version") is not None
+        assert response.get("attributes").get("routingPlan").get("version") != ""
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
+        if messageStatus != "pending_enrichment":
+            assert response.get("attributes").get("metadata") is not None
+            assert response.get("attributes").get("metadata") != ""
+            assert response.get("attributes").get("metadata")[0].get("queriedAt") is not None
+            assert response.get("attributes").get("metadata")[0].get("queriedAt") != ""
+            assert response.get("attributes").get("metadata")[0].get("source") is not None
+            assert response.get("attributes").get("metadata")[0].get("source") != ""
+            assert response.get("attributes").get("metadata")[0].get("version") is not None
+            assert response.get("attributes").get("metadata")[0].get("version") != ""
+            assert response.get("attributes").get("metadata")[0].get("labels") != ""
+        if  messageStatus == "sending" or messageStatus == "delivered":
+            assert response.get("attributes").get("channels") is not None
+            assert response.get("attributes").get("channels")[0].get("type") is not None
+            assert response.get("attributes").get("channels")[0].get("type") != ""
+            assert response.get("attributes").get("channels")[0].get("retryCount") is not None
+            assert response.get("attributes").get("channels")[0].get("retryCount") != ""
+            assert response.get("attributes").get("channels")[0].get("channelStatus") is not None
+            assert response.get("attributes").get("channels")[0].get("channelStatus") != ""
+            assert response.get("attributes").get("channels")[0].get("timestamps") is not None
+            assert response.get("attributes").get("channels")[0].get("timestamps") != ""
+            assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
+            assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
 
         # temporarily check that links is not sent
         assert "links" not in response

@@ -9,15 +9,16 @@
       },
       "messageReference": "d1cc6082-729e-4e31-8842-ac3279d3f72d",
       "messageStatus": "failed",
-      "messageStatusDescription": "NHS number not found",
+      "messageStatusDescription": "Failed reason: NHS number not found",
       "channels": [
         {
           "type": "nhsapp",
           "retryCount": 0,
           "channelStatus": "failed",
-          "channelStatusDescription": "NHS number not found",
+          "channelStatusDescription": "Failed reason: NHS number not found",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:52:12Z"
           },
           "routingPlan": {
@@ -36,7 +37,10 @@
         {
           "queriedAt": "2023-10-09T10:31:59Z",
           "version": "23",
-          "source": "pds"
+          "source": "pds",
+          "labels": [
+            "nhsapp"
+          ]
         }
       ]
     },

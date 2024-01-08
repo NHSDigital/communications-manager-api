@@ -9,15 +9,16 @@
       },
       "messageReference": "1226417c-f683-4d68-afe8-2d52321a6b70",
       "messageStatus": "failed",
-      "messageStatusDescription": "Contact detail is missing",
+      "messageStatusDescription": "Failed reason: Contact detail is missing",
       "channels": [
         {
           "type": "letter",
           "retryCount": 0,
           "channelStatus": "failed",
-          "channelStatusDescription": "Contact detail is missing",
+          "channelStatusDescription": "Failed reason: Contact detail is missing",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:52:12Z"
           },
           "routingPlan": {
@@ -36,7 +37,10 @@
         {
           "queriedAt": "2023-10-09T10:31:59Z",
           "version": "23",
-          "source": "pds"
+          "source": "pds",
+          "labels": [
+            "letter"
+          ]
         }
       ]
     },
