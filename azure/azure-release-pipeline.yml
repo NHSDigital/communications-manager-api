@@ -19,6 +19,8 @@ resources:
             - refs/tags/v*
             - release
             - hotfix
+            - refs/head/feature/CCM-2126_add-ref-environment
+            - feature/CCM-2126_add-ref-environment
 
 pool:
   name: 'AWS-ECS'
