@@ -113,7 +113,7 @@ async function batch_send(req, res, next) {
     res.json({
         requestId: KSUID.randomSync(new Date()).string,
         routingPlan: {
-            id: KSUID.randomSync(new Date()).string,
+            id: req.body.sendingGroupId,
             version: "1"
         }
     });
