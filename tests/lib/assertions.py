@@ -5,7 +5,7 @@ import json
 
 class Assertions():
     @staticmethod
-    def assert_201_response(resp, message_batch_reference):
+    def assert_201_response(resp, message_batch_reference, routing_plan_id):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201
@@ -16,6 +16,9 @@ class Assertions():
         assert response.get("id") != ""
         assert response.get("attributes").get("messageBatchReference") is not None
         assert response.get("attributes").get("messageBatchReference") == message_batch_reference
+        assert response.get("attributes").get("routingPlan").get("id") is not None
+        assert response.get("attributes").get("routingPlan").get("id") == routing_plan_id
+        assert response.get("attributes").get("routingPlan").get("version") is not None
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"

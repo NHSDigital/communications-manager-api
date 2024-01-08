@@ -12,6 +12,12 @@
         <Variable name="requestId" type="string">
             <JSONPath>$.requestId</JSONPath>
         </Variable>
+        <Variable name="routingPlanId" type="string">
+            <JSONPath>$.routingPlan.id</JSONPath>
+        </Variable>
+        <Variable name="routingPlanVersion" type="string">
+            <JSONPath>$.routingPlan.version</JSONPath>
+        </Variable>
     </JSONPayload>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </ExtractVariables>
