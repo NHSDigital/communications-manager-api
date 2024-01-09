@@ -31,7 +31,7 @@ class Assertions():
 
         response = resp.json().get("data")
         messageStatus = response.get("attributes").get("messageStatus")
-        
+
         assert response.get("type") == "Message"
         assert response.get("id") is not None
         assert response.get("id") != ""
@@ -58,7 +58,7 @@ class Assertions():
             assert response.get("attributes").get("metadata")[0].get("version") is not None
             assert response.get("attributes").get("metadata")[0].get("version") != ""
             assert response.get("attributes").get("metadata")[0].get("labels") != ""
-        if  messageStatus == "sending" or messageStatus == "delivered":
+        if messageStatus == "sending" or messageStatus == "delivered":
             assert response.get("attributes").get("channels") is not None
             assert response.get("attributes").get("channels")[0].get("type") is not None
             assert response.get("attributes").get("channels")[0].get("type") != ""
