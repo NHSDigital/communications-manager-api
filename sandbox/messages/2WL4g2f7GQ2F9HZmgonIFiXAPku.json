@@ -9,7 +9,7 @@
       },
       "messageReference": "b801d925-70aa-49d6-a045-28cec9893de3",
       "messageStatus": "failed",
-      "messageStatusDescription": "PDS response date of birth does not match given date of birth",
+      "messageStatusDescription": "Failed reason: PDS response date of birth does not match given date of birth",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:59Z",
@@ -18,7 +18,9 @@
       "metadata": [
         {
           "queriedAt": "2023-10-09T10:31:59Z",
-          "source": "pds"
+          "source": "pds",
+          "version": "1",
+          "labels": []
         }
       ]
     },

@@ -9,15 +9,16 @@
       },
       "messageReference": "0397b134-e30d-4fb1-9060-0d204b0ac340",
       "messageStatus": "failed",
-      "messageStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+      "messageStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
       "channels": [
         {
           "type": "email",
           "retryCount": 0,
           "channelStatus": "failed",
-          "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+          "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:52:12Z"
           },
           "routingPlan": {
@@ -36,7 +37,10 @@
         {
           "queriedAt": "2023-10-09T10:31:59Z",
           "version": "23",
-          "source": "pds"
+          "source": "pds",
+          "labels": [
+            "email"
+          ]
         }
       ]
     },

@@ -14,9 +14,10 @@
           "type": "nhsapp",
           "retryCount": 0,
           "channelStatus": "failed",
-          "channelStatusDescription": "NHS number not found",
+          "channelStatusDescription": "Failed reason: NHS number not found",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
             "failed": "2023-10-09T10:52:12Z"
           },
           "routingPlan": {
@@ -29,9 +30,10 @@
           "type": "email",
           "retryCount": 0,
           "channelStatus": "failed",
-          "channelStatusDescription": "The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+          "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
             "failed": "2023-10-09T11:25:23Z"
           },
           "routingPlan": {
@@ -46,6 +48,7 @@
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:32:37Z",
             "delivered": "2023-10-09T11:48:52Z"
           },
           "routingPlan": {
@@ -77,7 +80,13 @@
         {
           "queriedAt": "2023-10-09T10:31:59Z",
           "version": "23",
-          "source": "pds"
+          "source": "pds",
+          "labels": [
+            "nhsapp",
+            "email",
+            "sms",
+            "letter"
+          ]
         }
       ]
     },

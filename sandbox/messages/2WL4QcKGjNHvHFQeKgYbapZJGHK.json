@@ -9,15 +9,18 @@
       },
       "messageReference": "4fbc5f73-0f7c-4304-b848-5c6ccb781c84",
       "messageStatus": "failed",
-      "messageStatusDescription": "Patient does not exist in PDS",
+      "messageStatusDescription": "Failed reason: Patient does not exist in PDS",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:31:40Z",
         "failed": "2023-10-09T10:31:59Z"
       },
       "metadata": [
         {
           "queriedAt": "2023-10-09T10:31:59Z",
-          "source": "pds"
+          "source": "pds",
+          "version": "1",
+          "labels": []
         }
       ]
     },

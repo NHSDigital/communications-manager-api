@@ -16,6 +16,7 @@
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
             "delivered": "2023-10-09T10:52:12Z"
           },
           "routingPlan": {
@@ -73,7 +74,13 @@
         {
           "queriedAt": "2023-10-09T10:31:59Z",
           "version": "23",
-          "source": "pds"
+          "source": "pds",
+          "labels": [
+            "nhsapp",
+            "email",
+            "sms",
+            "letter"
+          ]
         }
       ]
     },

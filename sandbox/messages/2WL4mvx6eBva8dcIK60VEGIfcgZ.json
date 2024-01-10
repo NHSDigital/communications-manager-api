@@ -9,7 +9,7 @@
       },
       "messageReference": "1791d23b-6f5d-4153-ab45-637bd7711d41",
       "messageStatus": "failed",
-      "messageStatusDescription": "Patient has exit code",
+      "messageStatusDescription": "Failed reason: Patient has exit code",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:59Z",
@@ -18,7 +18,9 @@
       "metadata": [
         {
           "queriedAt": "2023-10-09T10:31:59Z",
-          "source": "pds"
+          "source": "pds",
+          "version": "1",
+          "labels": []
         }
       ]
     },
