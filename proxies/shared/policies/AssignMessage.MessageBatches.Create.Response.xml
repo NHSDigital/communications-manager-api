@@ -19,7 +19,11 @@
                     "type" : "MessageBatch",
                     "id" : "%data.requestId#",
                     "attributes" : {
-                        "messageBatchReference" : "%data.messageBatchReference#"
+                        "messageBatchReference" : "%data.messageBatchReference#",
+                        "routingPlan": {
+                            "id" : "%data.routingPlanId#",
+                            "version" : "%data.routingPlanVersion#"
+                        }
                     }
                 }
             }
