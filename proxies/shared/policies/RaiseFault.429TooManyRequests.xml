@@ -14,7 +14,7 @@
     <DisplayName>RaiseFault.429TooManyRequests</DisplayName>
     <Properties/>
     <FaultResponse>
-        <Set>
+      <!--        <Add>
             {% if ENVIRONMENT_TYPE == 'sandbox' %}
                 <Headers>
                     <Header name="Retry-After">5</Header>
@@ -22,6 +22,8 @@
             {% else %}
                 <Headers/>
             {% endif %}
+      </Add> -->
+        <Set>
             <StatusCode>429</StatusCode>
             <ReasonPhrase>Too many requests</ReasonPhrase>
             <Payload variablePrefix="@" variableSuffix="#">
