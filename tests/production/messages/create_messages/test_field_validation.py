@@ -25,7 +25,7 @@ def test_invalid_body():
         data="{}SF{}NOTVALID",
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_value_error("/"),
@@ -54,7 +54,7 @@ def test_property_missing(property, pointer):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_missing_value_error(pointer),
@@ -83,7 +83,7 @@ def test_data_null(property, pointer):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_null_value_error(pointer),
@@ -113,7 +113,7 @@ def test_data_invalid(property, pointer):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_value_error(pointer),
@@ -140,7 +140,7 @@ def test_invalid_nhs_number(nhs_number):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_nhs_number_error("/data/attributes/recipient/nhsNumber"),
@@ -167,7 +167,7 @@ def test_invalid_dob(dob):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/recipient/dateOfBirth"),
@@ -193,7 +193,7 @@ def test_invalid_routing_plan():
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/routingPlanId"),
@@ -219,7 +219,7 @@ def test_invalid_message_reference():
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/messageReference"),
@@ -246,7 +246,7 @@ def test_invalid_personalisation(personalisation):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/personalisation"),
@@ -273,7 +273,7 @@ def test_null_personalisation(personalisation):
         ),
     )
 
-    Assertions.assert_error_with_optional_None(
+    Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_null_value_error("/data/attributes/personalisation"),
