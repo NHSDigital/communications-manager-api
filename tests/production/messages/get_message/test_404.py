@@ -6,7 +6,7 @@ from lib.constants.constants import PROD_URL
 from lib.constants.messages_paths import MESSAGES_ENDPOINT, MESSAGE_ID_NOT_BELONGING_TO_CLIENT
 
 
-@pytest.mark.inttest
+@pytest.mark.prodtest
 def test_message_id_not_belonging_to_client_id():
     """
     .. include:: ../../partials/not_found/test_message_id_not_belonging_to_client_id.rst
@@ -23,7 +23,7 @@ def test_message_id_not_belonging_to_client_id():
     )
 
 
-@pytest.mark.inttest
+@pytest.mark.prodtest
 def test_message_id_that_does_not_exist():
     """
     .. include:: ../../partials/not_found/test_message_id_that_does_not_exist.rst
