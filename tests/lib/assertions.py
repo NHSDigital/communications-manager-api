@@ -55,8 +55,9 @@ class Assertions():
             assert response.get("attributes").get("metadata")[0].get("queriedAt") != ""
             assert response.get("attributes").get("metadata")[0].get("source") is not None
             assert response.get("attributes").get("metadata")[0].get("source") != ""
-            assert response.get("attributes").get("metadata")[0].get("version") is not None
-            assert response.get("attributes").get("metadata")[0].get("version") != ""
+            # TODO: Uncomment once 4.9.0 is in int
+            # assert response.get("attributes").get("metadata")[0].get("version") is not None
+            # assert response.get("attributes").get("metadata")[0].get("version") != ""
             assert response.get("attributes").get("metadata")[0].get("labels") != ""
         if messageStatus == "sending" or messageStatus == "delivered":
             assert response.get("attributes").get("channels") is not None
