@@ -14,3 +14,6 @@ The Production test suite is a collection of tests ran against the production en
 * [POST /v1/messages](post_v1_messages/index.md)
   * [Validation Tests](post_v1_messages/validation.md)
   * [Invalid Routing Plans](post_v1_messages/invalid_routing_plans.md)
+* [GET /v1/messages](get_v1_messages/index.md)
+  * [Happy Path Tests](get_v1_messages/happy_path.md)
+  * [404 Tests](get_v1_messages/404.md)
