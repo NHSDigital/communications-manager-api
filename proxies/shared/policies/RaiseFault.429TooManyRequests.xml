@@ -18,11 +18,8 @@
             {% if ENVIRONMENT_TYPE == 'sandbox' %}
                 <Headers>
                     <Header name="Retry-After">5</Header>
-                    [% include './partials/Partial.Headers.CorsHeaders.xml' %]
                 </Headers>
             {% else %}
-                <Headers>
-                    [% include './partials/Partial.Headers.CorsHeaders.xml' %]
                 <Headers/>
             {% endif %}
             <StatusCode>429</StatusCode>
