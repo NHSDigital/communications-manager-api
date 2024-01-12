@@ -45,5 +45,5 @@
             </Payload>
         </Set>
     </FaultResponse>
-    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </RaiseFault>
