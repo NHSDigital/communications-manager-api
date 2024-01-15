@@ -25,6 +25,7 @@ locust = "^2.20.1"
 sphinx = "7.1.2"
 sphinx-markdown-builder = "^0.6.5"
 notifications-python-client = "^9.0.0"
+polling = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"

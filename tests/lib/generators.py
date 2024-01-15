@@ -62,6 +62,35 @@ class Generators():
         }
 
     @staticmethod
+    def generate_send_message_body(channel):
+        if channel == "nhsapp":
+            routing_plan_id = constants.NHS_APP_ROUTING_PLAN
+        elif channel == "email":
+            routing_plan_id = constants.EMAIL_ROUTING_PLAN
+        elif channel == "sms":
+            routing_plan_id = constants.SMS_ROUTING_PLAN
+        elif channel == "letter":
+            routing_plan_id = constants.LETTER_ROUTING_PLAN
+        else:
+            raise
+        return {
+            "data": {
+                "type": "Message",
+                "attributes": {
+                    "routingPlanId": routing_plan_id,
+                    "messageReference": str(uuid.uuid1()),
+                    "recipient": {
+                        "nhsNumber": "9627193232",
+                        "dateOfBirth": "1998-03-21"
+                    },
+                    "personalisation": {
+                        "exampleParameter": "hello!"
+                    }
+                }
+            }
+        }
+
+    @staticmethod
     def generate_invalid_value_error(pointer):
         return Generators.generate_error(constants.ERROR_INVALID_VALUE, source={
             "pointer": pointer

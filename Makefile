@@ -193,3 +193,12 @@ mtls-test:
 	--ignore=tests/integration \
 	--ignore=tests/development \
 	-m mtlstest
+
+e2e-test:
+	$(TEST_CMD) \
+	--junitxml=test-report.xml \
+	--ignore=tests/sandbox \
+	--ignore=tests/integration \
+	--ignore=tests/development \
+	--ignore=tests/production \
+	-m e2e
