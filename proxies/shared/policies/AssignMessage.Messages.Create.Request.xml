@@ -20,6 +20,10 @@
         <Name>requestpath</Name>
         <Value>/api/v1/messages</Value>
     </AssignVariable>
++    <AssignVariable>
++        <Name>target.url</Name>
++        <Value>https://comms-apim.de-rake4.communications.national.nhs.uk/api/v1/send</Value>
++    </AssignVariable>
     <Set>
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
         <Headers>
