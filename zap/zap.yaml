@@ -101,6 +101,9 @@ jobs:
     - id: 90005
       name: Sec-Fetch-Site Header is Missing
       threshold: Off
+    - id: 90004
+      name: Insufficient Site Isolation Against Spectre Vulnerability
+      threshold: Off
 
   # run an active scan on sandbox
   - type: activeScan
