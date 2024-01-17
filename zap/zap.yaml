@@ -98,11 +98,11 @@ jobs:
     - id: 10049
       name: Non-Storable Content
       threshold: Off
-    - id: 90005
-      name: Sec-Fetch-Site Header is Missing
-      threshold: Off
     - id: 90004
       name: Insufficient Site Isolation Against Spectre Vulnerability
+      threshold: Off
+    - id: 90005
+      name: Sec-Fetch-Site Header is Missing
       threshold: Off
 
   # run an active scan on sandbox
