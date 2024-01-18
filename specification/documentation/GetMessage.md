@@ -6,6 +6,19 @@ Use this endpoint to fetch the status of a single message sent by your account.
 
 Personalisation and contact details are not returned within the messages. This is to ensure that Personally Identifiable Information cannot be extracted from the system.
 
+### Sandbox
+When sending this request on sandbox you can use one of these 5 message identifiers:
+* `2WL3qFTEFM0qMY8xjRbt1LIKCzM` - single message status of delivered.
+* `2WL4GEeFVxXG9S57nRlefBwwKxp` - single message status of sending.
+* `2WL4cPfBRuPKa44JxhyXYf2kr1E` - single message status of failed.
+* `2WL5qbEa7TzSWZXU2IAOCCrLXVL` - message as part of a batch delivered.
+
+Here's an example curl command using one of the above message Id's:
+```
+curl --location 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
+--header 'Accept: application/vnd.api+json'
+```
+
 ### Message channels
 
 The [Communications Manager Service](https://digital.nhs.uk/services/communications-manager) supports multiple channels. These channels are configured within the routing plan specified by the messages `routingPlan`. These routing plans are configured during your [onboarding process](#overview--onboarding).
