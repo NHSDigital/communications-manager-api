@@ -8,10 +8,10 @@ Personalisation and contact details are not returned within the messages. This i
 
 ### Sandbox
 When sending this request on sandbox you can use one of these 5 message identifiers:
-* `2WL3qFTEFM0qMY8xjRbt1LIKCzM` - single message status of delivered.
-* `2WL4GEeFVxXG9S57nRlefBwwKxp` - single message status of sending.
-* `2WL4cPfBRuPKa44JxhyXYf2kr1E` - single message status of failed.
-* `2WL5qbEa7TzSWZXU2IAOCCrLXVL` - message as part of a batch delivered.
+* single message status of delivered - `2WL3qFTEFM0qMY8xjRbt1LIKCzM`
+* single message status of sending - `2WL4GEeFVxXG9S57nRlefBwwKxp`
+* single message status of failed - `2WL4cPfBRuPKa44JxhyXYf2kr1E`
+* message as part of a batch delivered - `2WL5qbEa7TzSWZXU2IAOCCrLXVL`
 
 Here's an example curl command using one of the above message Id's:
 ```
