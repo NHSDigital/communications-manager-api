@@ -1,8 +1,7 @@
 import requests
 import pytest
 from lib import Assertions
-from lib.constants.constants import VALID_ENDPOINTS
-
+from lib.constants.constants import VALID_ENDPOINTS, ORIGIN
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 TEST_METHODS = ["get", "post", "put", "delete"]
@@ -17,7 +16,7 @@ def test_cors_options(nhsd_apim_proxy_url, method, endpoints):
     """
     resp = requests.options(f"{nhsd_apim_proxy_url}{endpoints}", headers={
         "Accept": "*/*",
-        "Origin": "https://my.website",
+        "Origin": ORIGIN,
         "Access-Control-Request-Method": method
     })
     Assertions.assert_cors_response(resp, "https://my.website")
@@ -32,7 +31,7 @@ def test_cors(nhsd_apim_proxy_url, method, endpoints):
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
         "Accept": "*/*",
-        "Origin": "https://my.website"
+        "Origin": ORIGIN
     })
 
     Assertions.assert_cors_headers(resp, "https://my.website")

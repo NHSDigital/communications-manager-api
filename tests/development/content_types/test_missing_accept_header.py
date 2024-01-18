@@ -35,5 +35,5 @@ def test_missing_accept_header(
     Error_Handler.handle_retry(resp)
 
     Assertions.assert_201_response(
-        resp, data["data"]["attributes"]["messageBatchReference"]
+        resp, data["data"]["attributes"]["messageBatchReference"], data["data"]["attributes"]["routingPlanId"]
     )

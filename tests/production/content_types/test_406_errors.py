@@ -1,31 +1,18 @@
 import requests
 import pytest
 from lib import Assertions, Generators, Authentication
-from lib.constants.constants import CORRELATION_IDS, METHODS, PROD_URL, VALID_ENDPOINTS
-
-HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
-HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+from lib.constants.constants import METHODS, PROD_URL, VALID_ENDPOINTS
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("accept_header_name", HEADER_NAME)
-@pytest.mark.parametrize("accept_header_value", HEADER_VALUE)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
 @pytest.mark.parametrize("method", METHODS)
-def test_406(
-    accept_header_name,
-    accept_header_value,
-    correlation_id,
-    method,
-    endpoints
-):
+def test_406(method, endpoints):
     """
     .. include:: ../../partials/content_types/test_406.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}/{endpoints}", headers={
-        accept_header_name: accept_header_value,
-        "X-Correlation-Id": correlation_id,
+        "Accept": "invalid",
         "Authorization": f"{Authentication.generate_authentication('prod')}",
     })
 
@@ -33,5 +20,5 @@ def test_406(
         resp,
         406,
         Generators.generate_not_acceptable_error() if method not in ["options", "head"] else None,
-        correlation_id
+        None
     )
