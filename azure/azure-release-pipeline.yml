@@ -59,9 +59,20 @@ extends:
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: manual-approval
-        stage_name: manual_approval_internal_qa_sandbox
+        stage_name: manual_approval_ref
         depends_on:
-          - internal_dev_sandbox
+          - internal_dev
+            
+      - environment: ref
+        depends_on:
+          - manual_approval_ref
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make internal-dev-test'
 
       - environment: manual-approval
         stage_name: manual_approval_internal_qa
@@ -78,6 +89,11 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: 'make internal-qa-test'
+
+      - environment: manual-approval
+        stage_name: manual_approval_internal_qa_sandbox
+        depends_on:
+          - internal_dev_sandbox
 
       - environment: internal-qa-sandbox
         proxy_path: sandbox

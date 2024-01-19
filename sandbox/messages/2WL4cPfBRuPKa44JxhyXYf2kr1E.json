@@ -3,19 +3,24 @@
     "type": "Message",
     "id": "2WL4cPfBRuPKa44JxhyXYf2kr1E",
     "attributes": {
-      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
       "messageReference": "d85be1f0-1593-41b0-94d2-beae6ee7dcc0",
       "messageStatus": "failed",
-      "messageStatusDescription": "Patient record invalidated",
+      "messageStatusDescription": "Failed reason: patient record invalidated",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "updated": "2023-10-09T10:31:59Z",
+        "enriched": "2023-10-09T10:31:45Z",
         "failed": "2023-10-09T10:31:59Z"
       },
       "metadata": [
         {
           "queriedAt": "2023-10-09T10:31:59Z",
-          "source": "pds"
+          "source": "pds",
+          "version": "1",
+          "labels": []
         }
       ]
     },

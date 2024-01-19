@@ -3,34 +3,44 @@
     "type": "Message",
     "id": "2WL4vHFZzInmaYwq6HRNDqTX8dH",
     "attributes": {
-      "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
       "messageReference": "d1cc6082-729e-4e31-8842-ac3279d3f72d",
       "messageStatus": "failed",
-      "messageStatusDescription": "Contact detail is missing",
+      "messageStatusDescription": "Failed reason: Contact detail is missing",
       "channels": [
         {
           "type": "nhsapp",
           "retryCount": 0,
           "channelStatus": "failed",
-          "channelStatusDescription": "Contact detail is missing",
+          "channelStatusDescription": "Failed reason: Contact detail is missing",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "updated": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:31:59Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
           }
         }
       ],
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "updated": "2023-10-09T10:31:59Z",
         "enriched": "2023-10-09T10:31:59Z",
         "failed": "2023-10-09T10:31:59Z"
       },
       "metadata": [
         {
           "queriedAt": "2023-10-09T10:31:59Z",
-          "versionId": "23",
-          "source": "pds"
+          "version": "23",
+          "source": "pds",
+          "labels": [
+            "nhsapp"
+          ]
         }
       ]
     },

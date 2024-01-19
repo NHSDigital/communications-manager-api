@@ -5,7 +5,7 @@ import json
 
 class Assertions():
     @staticmethod
-    def assert_201_response(resp, message_batch_reference):
+    def assert_201_response(resp, message_batch_reference, routing_plan_id):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201
@@ -16,6 +16,9 @@ class Assertions():
         assert response.get("id") != ""
         assert response.get("attributes").get("messageBatchReference") is not None
         assert response.get("attributes").get("messageBatchReference") == message_batch_reference
+        assert response.get("attributes").get("routingPlan").get("id") is not None
+        assert response.get("attributes").get("routingPlan").get("id") == routing_plan_id
+        assert response.get("attributes").get("routingPlan").get("version") is not None
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
@@ -30,6 +33,8 @@ class Assertions():
         assert resp.status_code == 200
 
         response = resp.json().get("data")
+        messageStatus = response.get("attributes").get("messageStatus")
+
         assert response.get("type") == "Message"
         assert response.get("id") is not None
         assert response.get("id") != ""
@@ -37,11 +42,38 @@ class Assertions():
         assert response.get("attributes").get("messageStatus") != ""
         assert response.get("attributes").get("messageReference") is not None
         assert response.get("attributes").get("messageReference") != ""
-        assert response.get("attributes").get("routingPlanId") is not None
-        assert response.get("attributes").get("routingPlanId") != ""
+        assert response.get("attributes").get("routingPlan") is not None
+        assert response.get("attributes").get("routingPlan") != ""
+        assert response.get("attributes").get("routingPlan").get("id") is not None
+        assert response.get("attributes").get("routingPlan").get("id") != ""
+        assert response.get("attributes").get("routingPlan").get("version") is not None
+        assert response.get("attributes").get("routingPlan").get("version") != ""
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
+        if messageStatus != "pending_enrichment":
+            assert response.get("attributes").get("metadata") is not None
+            assert response.get("attributes").get("metadata") != ""
+            assert response.get("attributes").get("metadata")[0].get("queriedAt") is not None
+            assert response.get("attributes").get("metadata")[0].get("queriedAt") != ""
+            assert response.get("attributes").get("metadata")[0].get("source") is not None
+            assert response.get("attributes").get("metadata")[0].get("source") != ""
+            # TODO: Uncomment once 4.9.0 is in int
+            # assert response.get("attributes").get("metadata")[0].get("version") is not None
+            # assert response.get("attributes").get("metadata")[0].get("version") != ""
+            assert response.get("attributes").get("metadata")[0].get("labels") != ""
+        if messageStatus == "sending" or messageStatus == "delivered":
+            assert response.get("attributes").get("channels") is not None
+            assert response.get("attributes").get("channels")[0].get("type") is not None
+            assert response.get("attributes").get("channels")[0].get("type") != ""
+            assert response.get("attributes").get("channels")[0].get("retryCount") is not None
+            assert response.get("attributes").get("channels")[0].get("retryCount") != ""
+            assert response.get("attributes").get("channels")[0].get("channelStatus") is not None
+            assert response.get("attributes").get("channels")[0].get("channelStatus") != ""
+            assert response.get("attributes").get("channels")[0].get("timestamps") is not None
+            assert response.get("attributes").get("channels")[0].get("timestamps") != ""
+            assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
+            assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
 
         # temporarily check that links is not sent
         assert "links" not in response
@@ -61,6 +93,24 @@ class Assertions():
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
         """
+
+    @staticmethod
+    def assert_get_message_status(resp, status, failureReason=None):
+        response = resp.json().get("data")
+        assert response.get("attributes").get("messageStatus") == status
+        if status == "failed":
+            assert response.get("attributes").get("messageStatusDescription") == failureReason
+
+    @staticmethod
+    def assert_get_message_response_channels(resp, channelType, channelStatus):
+        response = resp.json().get("data")
+        channels = response.get("attributes").get("channels")
+        for c in range(len(channels)):
+            assert response.get("attributes").get("channels")[c].get("type") in channelType
+            assert response.get("attributes").get("channels")[c].get("retryCount") == 1
+            assert response.get("attributes").get("channels")[c].get("channelStatus") in channelStatus
+            assert response.get("attributes").get("channels")[c].get("timestamps") is not None
+            assert response.get("attributes").get("channels")[c].get("routingPlan") is not None
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
@@ -215,3 +265,9 @@ class Assertions():
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS
         assert resp.headers.get("Cross-Origin-Resource-Policy") == CORS_POLICY
+
+    @staticmethod
+    def assert_no_aws_headers(resp):
+        assert "X-Amzn-Trace-Id" not in resp.headers
+        assert "x-amzn-RequestId" not in resp.headers
+        assert "x-amz-apigw-id" not in resp.headers

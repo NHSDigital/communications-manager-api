@@ -99,6 +99,9 @@
                   "            //assign the message batch reference",
                   "            pm.environment.set(\"message_batch_reference\", uuid.v4());",
                   "",
+                  "            //assign the message reference",
+                  "            pm.environment.set(\"message_reference\", uuid.v4());",
+                  "",
                   "            //generate a correlation identifier",
                   "            pm.environment.set(\"correlation_id\", uuid.v4());",
                   "",
@@ -112,7 +115,7 @@
                   "    clearTimeout(interval);    ",
                   "});"
                ],
-               "id" : "54ae2f7a-af6b-4377-a224-64beba6e5a5c",
+               "id" : "6d182916-1352-4f7e-bc2f-5402971ea2d3",
                "type" : "text/javascript"
             }
          },
@@ -122,7 +125,7 @@
                "exec" : [
                   ""
                ],
-               "id" : "fa4f1b40-c1f6-443d-b4f5-500081b7522e",
+               "id" : "dc1945c6-e8f1-4c50-ae33-7014b01dbbc0",
                "type" : "text/javascript"
             }
          }
@@ -133,7 +136,7 @@
          "name" : "Communications Manager - Integration",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "updatedAt" : "2023-08-30T11:56:06.000Z"
+         "updatedAt" : "2024-01-03T15:56:30.000Z"
       },
       "item" : [
          {
@@ -227,6 +230,90 @@
                   },
                   "response" : [],
                   "uid" : "28740466-1c5c08e7-9088-4ab8-aa82-75bcf21a805d"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "832ce22d-e604-4477-8b49-6add91920812",
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.environment.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Content-negotiation was successful\", () => {\r",
+                              "    pm.response.to.have.header(\"content-type\");\r",
+                              "    pm.response.to.be.header(\"content-type\", pm.environment.get(\"mime_type\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "59dadc53-94c6-4329-8f96-668bd304968b",
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "611761b4-f4aa-408b-85a3-4cc4a4eec71a",
+                  "name" : "201 - Send Single Message",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "options" : {
+                           "raw" : {
+                              "language" : "json"
+                           }
+                        },
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"1932-01-06\"\r\n            },\r\n            \"personalisation\": {\r\n                \"custom\": \"value\"\r\n            }\r\n        }\r\n    }\r\n}"
+                     },
+                     "description" : "Sends a request to send a single message.\n\nIt is possible to toggle the mime type used for sending and receiving data by changing the `mime_type` environment variable. Valid values for this can be found in [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches).\n\nA random `X-Correlation-Id` header and `messageReference` body value will be generated for each request in the pre-request script.",
+                     "header" : [
+                        {
+                           "key" : "Content-Type",
+                           "value" : "{{mime_type}}"
+                        },
+                        {
+                           "key" : "Accept",
+                           "value" : "{{mime_type}}"
+                        },
+                        {
+                           "key" : "Authorization",
+                           "value" : "{{authorization_header_value}}"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-611761b4-f4aa-408b-85a3-4cc4a4eec71a"
                }
             ],
             "name" : "Send Messages",

@@ -1,6 +1,6 @@
 INT_URL = "https://int.api.service.nhs.uk/comms"
 PROD_URL = "https://api.service.nhs.uk/comms"
-VALID_ENDPOINTS = ["/v1/message-batches", "/v1/messages", "/v1/api/send"]
+VALID_ENDPOINTS = ["/v1/message-batches", "/v1/messages", "/v1/api/send", "/v1/messages/1234"]
 CORS_METHODS = "GET, PUT, POST, PATCH, DELETE"
 CORS_MAX_AGE = "3628800"
 CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
@@ -27,6 +27,7 @@ MISSING_TEMPLATE_ROUTING_PLANS = [
 TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
+ORIGIN = "https://my.website"
 NUM_MAX_ERRORS = 100
 DEV_API_GATEWAY_URL = "https://comms-apim.internal-dev.communications.national.nhs.uk"
 INT_API_GATEWAY_URL = "https://comms-apim.int.communications.national.nhs.uk"
