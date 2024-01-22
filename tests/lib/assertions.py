@@ -90,7 +90,6 @@ class Assertions():
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
 
-
     @staticmethod
     def assert_get_message_status(resp, status, failureReason=None):
         response = resp.json().get("data")
