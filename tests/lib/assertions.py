@@ -75,8 +75,6 @@ class Assertions():
             assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
             assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
 
-        # temporarily check that links is not sent
-        assert "links" not in response
 
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
@@ -125,10 +123,6 @@ class Assertions():
         assert response.get("attributes").get("routingPlan") is not None
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") != ""
-
-        # temporarily check that links is not sent
-        assert "links" not in response
-        assert "Location" not in resp.headers
 
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
