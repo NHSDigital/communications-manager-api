@@ -13,4 +13,5 @@
 * [ ] PR link added as a comment to the relevant JIRA ticket
 * [ ] Branch deployed to a dynamic env - link to deployment pipeline
 * [ ] PR link shared on Slack and/or Teams
-* [ ] 1 reviews received
+* [ ] 2 reviews received
+* [ ] Tester approval

@@ -21,3 +21,6 @@ properties:
             description: Your unique message batch reference, provided within the payload to create the batch of messages.
             format: uuid
             example: da0b1495-c7cb-468c-9d81-07dee089d728
+          routingPlan:
+            description: The routing plan that you requested the messages be sent with.
+            $ref: ../types/RoutingPlan.yaml

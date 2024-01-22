@@ -1,6 +1,5 @@
 import requests
 import pytest
-import uuid
 from lib import Assertions, Permutations, Generators, Authentication
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
@@ -13,8 +12,7 @@ headers = {
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_body(correlation_id):
+def test_invalid_body():
     """
     .. include:: ../../partials/validation/test_messages_invalid.rst
     """
@@ -22,7 +20,6 @@ def test_invalid_body(correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         data="{}SF{}NOTVALID",
@@ -32,7 +29,7 @@ def test_invalid_body(correlation_id):
         resp,
         400,
         Generators.generate_invalid_value_error("/"),
-        correlation_id
+        None
     )
 
 
@@ -41,8 +38,7 @@ def test_invalid_body(correlation_id):
     "property, pointer",
     MISSING_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_property_missing(property, pointer, correlation_id):
+def test_property_missing(property, pointer):
     """
     .. include:: ../../partials/validation/test_messages_property_missing.rst
     """
@@ -50,7 +46,6 @@ def test_property_missing(property, pointer, correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_without_key(
@@ -63,7 +58,7 @@ def test_property_missing(property, pointer, correlation_id):
         resp,
         400,
         Generators.generate_missing_value_error(pointer),
-        correlation_id
+        None
     )
 
 
@@ -72,8 +67,7 @@ def test_property_missing(property, pointer, correlation_id):
     "property, pointer",
     NULL_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_data_null(property, pointer, correlation_id):
+def test_data_null(property, pointer):
     """
     .. include:: ../../partials/validation/test_messages_null.rst
     """
@@ -81,7 +75,6 @@ def test_data_null(property, pointer, correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_null_key(
@@ -94,7 +87,7 @@ def test_data_null(property, pointer, correlation_id):
         resp,
         400,
         Generators.generate_null_value_error(pointer),
-        correlation_id
+        None
     )
 
 
@@ -103,8 +96,7 @@ def test_data_null(property, pointer, correlation_id):
     "property, pointer",
     INVALID_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_data_invalid(property, pointer, correlation_id):
+def test_data_invalid(property, pointer):
     """
     .. include:: ../../partials/validation/test_messages_invalid.rst
     """
@@ -112,7 +104,6 @@ def test_data_invalid(property, pointer, correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -126,14 +117,13 @@ def test_data_invalid(property, pointer, correlation_id):
         resp,
         400,
         Generators.generate_invalid_value_error(pointer),
-        correlation_id
+        None
     )
 
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_nhs_number(nhs_number, correlation_id):
+def test_invalid_nhs_number(nhs_number):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
@@ -141,7 +131,6 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -155,14 +144,13 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
         resp,
         400,
         Generators.generate_invalid_nhs_number_error("/data/attributes/recipient/nhsNumber"),
-        correlation_id
+        None
     )
 
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("dob", constants.INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_dob(dob, correlation_id):
+def test_invalid_dob(dob):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
@@ -170,7 +158,6 @@ def test_invalid_dob(dob, correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -184,13 +171,12 @@ def test_invalid_dob(dob, correlation_id):
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/recipient/dateOfBirth"),
-        correlation_id
+        None
     )
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_routing_plan(correlation_id):
+def test_invalid_routing_plan():
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
@@ -198,7 +184,6 @@ def test_invalid_routing_plan(correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -212,13 +197,12 @@ def test_invalid_routing_plan(correlation_id):
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/routingPlanId"),
-        correlation_id
+        None
     )
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_message_reference(correlation_id):
+def test_invalid_message_reference():
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
@@ -226,7 +210,6 @@ def test_invalid_message_reference(correlation_id):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -240,14 +223,13 @@ def test_invalid_message_reference(correlation_id):
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/messageReference"),
-        correlation_id
+        None
     )
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-def test_invalid_personalisation(correlation_id, personalisation):
+def test_invalid_personalisation(personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
@@ -255,7 +237,6 @@ def test_invalid_personalisation(correlation_id, personalisation):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -269,14 +250,13 @@ def test_invalid_personalisation(correlation_id, personalisation):
         resp,
         400,
         Generators.generate_invalid_value_error("/data/attributes/personalisation"),
-        correlation_id
+        None
     )
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-def test_null_personalisation(correlation_id, personalisation):
+def test_null_personalisation(personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
@@ -284,7 +264,6 @@ def test_null_personalisation(correlation_id, personalisation):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "X-Correlation-Id": correlation_id,
             "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
@@ -298,5 +277,5 @@ def test_null_personalisation(correlation_id, personalisation):
         resp,
         400,
         Generators.generate_null_value_error("/data/attributes/personalisation"),
-        correlation_id
+        None
     )
