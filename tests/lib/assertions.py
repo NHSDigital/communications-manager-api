@@ -75,7 +75,6 @@ class Assertions():
             assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
             assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
 
-
         hostname = f"{environment}.api.service.nhs.uk"
         prefixes = ["internal-dev", "internal-qa"]
 
