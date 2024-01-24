@@ -11,6 +11,7 @@ properties:
       id:
         $ref: ../types/KSUID.yaml
         description: Identifier for this Message.
+        example: 0ujsszwN8NRY24YaXiTIE2VWDTS
       attributes:
         type: object
         additionalProperties: false
@@ -155,15 +156,7 @@ properties:
             description: The routing plan that you requested the message be sent with.
             $ref: ../types/RoutingPlan.yaml
       links:
-        type: object
-        additionalProperties: false
-        description: Contains links to related objects.
-        properties:
-          self:
-            type: string
-            format: uri
-            description: This URI can be used to fetch this resource again.
-            example: https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS
+        ref: ../types/Links.yaml
       relationships:
         type: object
         additionalProperties: false

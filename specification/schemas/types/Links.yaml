@@ -1,0 +1,9 @@
+type: object
+additionalProperties: false
+description: Contains links to related objects.
+properties:
+  self:
+    type: string
+    format: uri
+    description: This URI can be used to fetch this resource again.
+    example: https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS

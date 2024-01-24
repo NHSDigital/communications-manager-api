@@ -32,3 +32,5 @@ properties:
           routingPlan:
             description: The routing plan that you requested the message be sent with.
             $ref: ../types/RoutingPlan.yaml
+        links:
+          ref: ../types/Links.yaml
