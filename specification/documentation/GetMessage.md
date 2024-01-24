@@ -2,14 +2,10 @@
 
 Use this endpoint to fetch the status of a single message sent by your account.
 
-### Personalisation & Contact details
-
-Personalisation and contact details are not returned within the messages. This is to ensure that Personally Identifiable Information cannot be extracted from the system.
-
-
 ### Channels
 
-The [Communications Manager Service](https://digital.nhs.uk/services/communications-manager) supports multiple channels for delivering a message.
+The [NHS Notify Service](https://digital.nhs.uk/services/nhs-notify) supports multiple channels for delivering a message.
+
 These channels are:
 
 * sms
@@ -17,8 +13,7 @@ These channels are:
 * letter
 * NHS app
 
-The channels used to send your message are configured within the routing plan.
-These routing plans are configured during your [onboarding process](#overview--onboarding).
+The channels used to send your message are configured within the routing plan. These routing plans are configured during your [onboarding process](#overview--onboarding).
 
 The channels configured in your routing plan at the time of sending are returned as part of the message status response. The channels are returned in the order that sending will be attempted.
 
@@ -41,10 +36,13 @@ Each channel can have one of the following statuses:
 
 If your routing plan supports conditional overrides, then in certain situations the routing plan referenced by a channel may be different from the one you initially requested. If this occurs then the `routingPlan.type` field will be set to the value `override`, plus the `id` and `version` fields will reflect the override that was used.
 
-The following response example highlights this interaction and can be replicated using message id `2bBBpsiMl2rnQt99qm6JLZ6w1vq`:
+The following CURL request example highlights this interaction and can be replicated using message id `2bBBpsiMl2rnQt99qm6JLZ6w1vq`:
+
+The following CURL request allows you to view a message on sandbox where an override has been used:
 
 ```
-
+curl --location 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2bBBpsiMl2rnQt99qm6JLZ6w1vq' \
+     --header 'Accept: application/vnd.api+json'
 ```
 
 ### Message statuses
@@ -59,13 +57,28 @@ Messages can have the following statuses:
 * `failed` - we have failed to deliver the message
 
 For certain statuses more information can be found within the `messageStatusDescription` field.
-This status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
+
+The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
 
 ### 3rd Party Querying
 
-This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated.
+This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated with information about the queries made, including:
+
+* the date and time that the query occured at - `queriedAt`
+* a version of the document returned in the query, if supported by the 3rd party - `version`
+* the channels that the response affected - `labels`
+* the 3rd party system the query was made to - `source`
+
+The 3rd party systems being queried are:
+
+* `pds` - [Personal Demographics Service](https://digital.nhs.uk/services/personal-demographics-service)
+
+### Personalisation & Contact details
+
+Personalisation and contact details are not returned within the messages. This is to ensure that Personally Identifiable Information cannot be extracted from the system.
 
 ### Sandbox
+
 When sending this request on sandbox you can use one of these 4 message identifiers:
 * single message status of delivered - `2WL3qFTEFM0qMY8xjRbt1LIKCzM`
 * single message delivered using multiple channels - `2WL5eYSWGzCHlGmzNxuqVusPxDg`
@@ -76,5 +89,5 @@ When sending this request on sandbox you can use one of these 4 message identifi
 Here's an example curl command using one of the above message Id's:
 ```
 curl --location 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
---header 'Accept: application/vnd.api+json'
+     --header 'Accept: application/vnd.api+json'
 ```
