@@ -88,6 +88,7 @@ When sending this request on sandbox you can use one of these 4 message identifi
 * single message routing plan overriden - `2bBBpsiMl2rnQt99qm6JLZ6w1vq`
 
 Here's an example curl command using one of the above message Id's:
+
 ```
 curl --location 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
      --header 'Accept: application/vnd.api+json'
