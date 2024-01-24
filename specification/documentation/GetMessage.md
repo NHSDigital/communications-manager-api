@@ -80,6 +80,7 @@ Personalisation and contact details are not returned within the messages. This i
 ### Sandbox
 
 When sending this request on sandbox you can use one of these 4 message identifiers:
+
 * single message status of delivered - `2WL3qFTEFM0qMY8xjRbt1LIKCzM`
 * single message delivered using multiple channels - `2WL5eYSWGzCHlGmzNxuqVusPxDg`
 * single message status of sending - `2WL4GEeFVxXG9S57nRlefBwwKxp`
