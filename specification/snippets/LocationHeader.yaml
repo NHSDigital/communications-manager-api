@@ -1,7 +1,3 @@
-name: Location
-in: header
-description: |-
-  URI of newly created resource
 schema:
   type: string
   example: https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS

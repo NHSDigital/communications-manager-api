@@ -5,7 +5,6 @@ operationId: create-message
 parameters:
   - $ref: ../snippets/AuthorizationParameter.yaml
   - $ref: ../snippets/CorrelationParameter.yaml
-  - $ref: ../snippets/LocationParameter.yaml
 requestBody:
   description: ''
   content:
