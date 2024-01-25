@@ -155,8 +155,6 @@ properties:
           routingPlan:
             description: The routing plan that you requested the message be sent with.
             $ref: ../types/RoutingPlan.yaml
-      links:
-        $ref: ../types/Links.yaml
       relationships:
         type: object
         additionalProperties: false
@@ -177,3 +175,5 @@ properties:
                     description: This is the unique identifier of the batch that contains this message.
                     $ref: ../types/KSUID.yaml
                     example: 2ZljUiS8NjJNs95PqiYOO7gAfJb
+      links:
+        $ref: ../types/Links.yaml
