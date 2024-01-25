@@ -19,12 +19,12 @@ The channels configured in your routing plan at the time of sending are returned
 
 Key values that are returned for each of these channels are:
 
-* the channel type - `type`
-* the status of that channel - `channelStatus`
-* the channel status description - `channelStatusDescription`
-* the number of times we have attempted delivery - `retryCount`
-* timestamps of key events - `timestamps`
-* the routing plan that was used to generate the channel - `routingPlan`
+* `type` - the channel type
+* `channelStatus` - the status of that channel
+* `channelStatusDescription` - the channel status description
+* `retryCount` - the number of times we have attempted delivery
+* `timestamps` - timestamps of key events
+* `routingPlan` - the routing plan that was used to generate the channel
 
 Each channel can have one of the following statuses:
 
@@ -37,15 +37,12 @@ Each channel can have one of the following statuses:
 If your routing plan supports conditional overrides, then in certain situations the routing plan referenced by a channel may be different from the one you initially requested. If this occurs then the `routingPlan.type` field will be set to the value `override`, plus the `id` and `version` fields will reflect the override that was used.
 
 The following CURL request example highlights this interaction and can be replicated using message id `2bBBpsiMl2rnQt99qm6JLZ6w1vq`:
-
-The following CURL request allows you to view a message on sandbox where an override has been used:
-
 ```
-curl --location 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2bBBpsiMl2rnQt99qm6JLZ6w1vq' \
+curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2bBBpsiMl2rnQt99qm6JLZ6w1vq' \
      --header 'Accept: application/vnd.api+json'
 ```
 
-### Message statuses
+### Message Statuses
 
 Messages can have the following statuses:
 
@@ -64,10 +61,10 @@ The message status shows an overall aggregate status taken from all of the commu
 
 This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated with information about the queries made, including:
 
-* the date and time that the query occured at - `queriedAt`
-* a version of the document returned in the query, if supported by the 3rd party - `version`
-* the channels that the response affected - `labels`
-* the 3rd party system the query was made to - `source`
+* `queriedAt` - the date and time that the query occured at
+* `version` - a version of the document returned in the query, if supported by the 3rd party
+* `labels` - the channels that the response affected
+* `source` - the 3rd party system the query was made to
 
 The 3rd party systems being queried are:
 
@@ -79,7 +76,7 @@ Personalisation and contact details are not returned within the messages. This i
 
 ### Sandbox
 
-When sending this request on sandbox you can use one of these 4 message identifiers:
+When sending this request on sandbox you can use one of these 5 message identifiers:
 
 * single message status of delivered - `2WL3qFTEFM0qMY8xjRbt1LIKCzM`
 * single message delivered using multiple channels - `2WL5eYSWGzCHlGmzNxuqVusPxDg`
@@ -90,6 +87,6 @@ When sending this request on sandbox you can use one of these 4 message identifi
 Here's an example curl command using one of the above message Id's:
 
 ```
-curl --location 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
+curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
      --header 'Accept: application/vnd.api+json'
 ```
