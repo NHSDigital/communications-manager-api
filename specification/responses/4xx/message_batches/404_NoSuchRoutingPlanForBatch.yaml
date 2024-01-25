@@ -15,7 +15,7 @@ description: |+
 
   If you use a routing plan id that is not in this list then a `404 Not Found` error response will be triggered.
 
-  On other environments these values will be established as part of your [Communications Manager Service onboarding](#overview--onboarding).
+  On other environments these values will be established as part of your [NHS Notify Service onboarding](#overview--onboarding).
 
   Here is an example curl request to trigger a `404`:
 
