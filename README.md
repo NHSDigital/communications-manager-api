@@ -1,8 +1,8 @@
-# Communications Manager API
+# NHS Notify API
 
 ![Build](https://github.com/NHSDigital/communications-manager-api/workflows/Build/badge.svg?branch=release)
 
-This is the RESTful API for the [*Communications Manager Service*](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
+This is the RESTful API for the [*NHS Notify Service*](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
 
 It includes:
 
@@ -16,9 +16,9 @@ It includes:
 * `postman/` - Postman collections.
 * `docs/` - [Documentation for the project](docs/index.md)
 
-Consumers of the API will find developer documentation on the [Communications Manager API entry](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
+Consumers of the API will find developer documentation on the [NHS Notify API entry](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
 
-This repo does not include the Communications Manager back-end that is not currently open source.
+This repo does not include the NHS Notify back-end that is not currently open source.
 
 ## Contributing
 
@@ -299,7 +299,7 @@ Contains templates defining Azure Devops pipelines. By default the following pip
 
 #### `/proxies`:
 
-This folder contains files relating to the Communications Manager Apigee API proxy.
+This folder contains files relating to the NHS Notify Apigee API proxy.
 
 There are 2 proxy folders `/live` and `/sandbox`. The `/live` folder contains the configuration that is specific to all none sandbox proxy instances - `/sandbox` contains the sandbox proxy definition.
 
@@ -336,7 +336,7 @@ Contains useful scripts that are used throughout the project, these are:
 
 #### `/specification`:
 
-This folder contains the Open API specification for the Communications Manager API. The specification is broken down into multiple files to aid readability and reuse.
+This folder contains the Open API specification for the NHS Notify API. The specification is broken down into multiple files to aid readability and reuse.
 
 #### `/tests`:
 

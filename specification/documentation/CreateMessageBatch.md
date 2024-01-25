@@ -33,7 +33,7 @@ When sending this request on sandbox you must use one of the 5 preconfigured rou
 * `936e9d45-15de-4a95-bb36-ae163c33ae53`
 * `9ba00d23-cd6f-4aca-8688-00abc85a7980`
 
-On other environments these values will be established as part of your [Communications Manager Service onboarding](#overview--onboarding).
+On other environments these values will be established as part of your [NHS Notify Service onboarding](#overview--onboarding).
 
 Here is an example curl request which creates a message batch using one of these routing plan identifiers:
 

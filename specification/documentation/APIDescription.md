@@ -2,18 +2,18 @@
 
 Use this API to send messages to citizens via email, SMS, the NHS App or letter.
 
-Communications Manager provides:
+NHS Notify provides:
 
 * message templating
 * message routing - via SMS, email, letter and NHS App
 * enrichment of recipient details
 * support for accessible formats and multiple languages
 
-For more information about this services capabilities, see [Communications Manager Service](https://digital.nhs.uk/services/communications-manager).
+For more information about this services capabilities, see [NHS Notify Service](https://digital.nhs.uk/services/nhs-notify).
 
 ## Who can use this API
 
-The Communications Manager service is intended for services involved in direct care. This API can only be used where you have a legal basis to issue communications to citizens.
+The NHS Notify service is intended for services involved in direct care. This API can only be used where you have a legal basis to issue communications to citizens.
 
 ## API status and roadmap
 
@@ -126,7 +126,7 @@ Rather, use the [production test patient for PDS](https://digital.nhs.uk/develop
 
 ## Onboarding
 
-You need to get your software approved by us before it can go live with this API. You will also need to undertake the Communications Manager onboarding process which is still being defined. Further details will follow.
+You need to get your software approved by us before it can go live with this API. You will also need to undertake the NHS Notify onboarding process which is still being defined. Further details will follow.
 
 To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
 

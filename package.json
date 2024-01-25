@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "description": "Public facing API for the Communications Manager service",
   "scripts": {
-    "lint": "redocly lint specification/communications-manager.yaml",
-    "publish": "mkdir -p build && redocly bundle specification/communications-manager.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/communications-manager.json",
+    "lint": "redocly lint specification/nhs-notify.yaml",
+    "publish": "mkdir -p build && redocly bundle specification/nhs-notify.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/communications-manager.json",
     "serve": "redocly preview-docs -p 5000 build/communications-manager.json",
     "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL --failOn AGPL",
     "sandbox-postman-collection": "newman run postman/CommunicationsManager.Sandbox.postman_collection.json",
@@ -14,7 +14,7 @@
   },
   "author": "NHS Digital",
   "license": "MIT",
-  "homepage": "https://digital.nhs.uk/developer/api-catalogue/communications-manager",
+  "homepage": "https://digital.nhs.uk/developer/api-catalogue/nhs-notify",
   "bugs": {
     "url": "https://github.com/NHSDigital/communications-manager-api/issues"
   },

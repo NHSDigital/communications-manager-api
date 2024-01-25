@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
   version: '3.0'
-  title: Communications Manager API
+  title: NHS Notify API
   description:
     $ref: documentation/APIDescription.md
   contact:
-    name: Communications Manager Service API Support
+    name: NHS Notify Service API Support
     url: 'https://digital.nhs.uk/developer/help-and-support'
     email: api.management@nhs.net
 servers:

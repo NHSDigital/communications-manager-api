@@ -3,7 +3,7 @@
 The proxy is constructed of two main parts:
 
 * proxy definition
-* communications manager target definition
+* nhs notify target definition
 
 ## Proxy definition
 
@@ -38,7 +38,7 @@ flowchart
 
 ## Target definition
 
-The target definition contains configuration thats specific for calling the backend communications manager API service.
+The target definition contains configuration thats specific for calling the backend nhs notify API service.
 
 This configuration is called via the proxy definition as part of the request routing configuration.
 
@@ -271,7 +271,7 @@ flowchart LR
 
 ### Target PreFlow Request
 
-This defines the actions carried out on all incoming requests to the communications manager target.
+This defines the actions carried out on all incoming requests to the nhs notify target.
 
 Source: [proxies/shared/partials/Partial.Target.PreFlowRequest.xml](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/partials/Partial.Target.PreFlowRequest.xml)
 
@@ -350,7 +350,7 @@ flowchart
 
 ### Target PreFlow Response
 
-This defines the actions carried out on all outgoing responses from the communications manager target.
+This defines the actions carried out on all outgoing responses from the nhs notify target.
 
 Source: [proxies/shared/partials/Partial.Target.PreFlowResponse.xml](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/partials/Partial.Target.PreFlowResponse.xml)
 
