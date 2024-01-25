@@ -10,4 +10,7 @@ content:
     schema:
       $ref: ../../schemas/responses/MessageCreated.yaml
 headers:
-  $ref: ../../snippets/StandardResponseHeaders.yaml
+  X-Correlation-ID:
+    $ref: ../../snippets/CorrelationHeader.yaml
+  Location:
+    $ref: ../../snippets/LocationHeader.yaml

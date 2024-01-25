@@ -1,0 +1,8 @@
+type: string
+title: MetadataLabels
+enum:
+  - nhsapp
+  - email
+  - sms
+  - letter
+example: email

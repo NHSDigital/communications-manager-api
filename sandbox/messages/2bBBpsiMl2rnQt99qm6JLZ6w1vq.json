@@ -1,0 +1,48 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2bBBpsiMl2rnQt99qm6JLZ6w1vq",
+    "attributes": {
+      "routingPlan": {
+        "id" : "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version" : "1"
+      },
+      "messageReference": "1226417c-f683-4d68-afe8-2d52321a6b70",
+      "messageStatus": "failed",
+      "messageStatusDescription": "Failed reason: Contact detail is missing",
+      "channels": [
+        {
+          "type": "sms",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "Failed reason: Contact detail is missing",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "failed": "2023-10-09T10:52:12Z"
+          },
+          "routingPlan" : {
+            "id" : "9ba00d23-cd6f-4aca-8688-00abc85a7980",
+            "type" : "override",
+            "version" : "5"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:31:59Z"
+      },
+      "metadata": [
+        {
+          "queriedAt": "2023-10-09T10:31:59Z",
+          "version": "23",
+          "labels":["sms"],
+          "source": "pds"
+        }
+      ]
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

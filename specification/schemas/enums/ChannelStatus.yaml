@@ -1,0 +1,9 @@
+type: string
+title: ChannelStatus
+enum:
+  - created
+  - sending
+  - delivered
+  - failed
+  - skipped
+example: delivered

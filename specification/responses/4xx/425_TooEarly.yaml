@@ -1,5 +1,5 @@
 description: |+
-  You have retried this request too early, the previous request is still being processed. Re-send the request after the time (in seconds) specified `Retry-After` header.
+  You have retried this request too early, the previous request is still being processed. Re-send the request after the time (in seconds) specified in the `Retry-After` header.
 
   ### Sandbox
 
