@@ -156,7 +156,7 @@ properties:
             description: The routing plan that you requested the message be sent with.
             $ref: ../types/RoutingPlan.yaml
       links:
-        ref: ../types/Links.yaml
+        $ref: ../types/Links.yaml
       relationships:
         type: object
         additionalProperties: false
