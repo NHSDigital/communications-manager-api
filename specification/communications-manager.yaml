@@ -5,7 +5,7 @@ info:
   description:
     $ref: documentation/APIDescription.md
   contact:
-    name: Communications Manager Service API Support
+    name: NHS Notify API Support
     url: 'https://digital.nhs.uk/developer/help-and-support'
     email: api.management@nhs.net
 servers:
