@@ -145,6 +145,8 @@ Set the `PROXY_NAME` environment variable to the environment you want to run the
 * communications-manager-pr-{num}
 * communications-manager-pr-{num}-sandbox
 
+If you are running the end to end tests you will need to set the `GUKN_API_KEY` variable to be able to access gov Notify messages, the value of the API key can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
+
 ##### Running with make
 
 In the root folder run the following command:
