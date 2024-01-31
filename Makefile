@@ -133,72 +133,58 @@ zap-security-scan:
 
 .internal-sandbox-test:
 	$(TEST_CMD) \
+	tests/sandbox \
 	--junitxml=test-report.xml \
-	--ignore=tests/development \
-	--ignore=tests/integration \
-	--ignore=tests/mtls \
 	-m sandboxtest
 
 internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
 
 .prod-sandbox-test:
 	$(PROD_TEST_CMD) \
+	tests/sandbox \
 	--junitxml=test-report.xml \
-	--ignore=tests/development \
-	--ignore=tests/integration \
-	--ignore=tests/mtls \
 	-m sandboxtest
 
 prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
 
 .internal-dev-test:
 	$(TEST_CMD) \
+	tests/development \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
 	-m devtest
 
 internal-dev-test: .internal-dev-test
 
 internal-qa-test:
 	$(TEST_CMD) \
+	tests/development \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
 	-m "devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \
+	tests/integration \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/development \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
 
 .production-test:
 	$(PROD_TEST_CMD) \
+	tests/production \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/development \
-	--ignore=tests/integration \
 	-m prodtest
 
 production-test: .production-test
 
 mtls-test:
 	$(TEST_CMD) \
+	tests/mtls \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
-	--ignore=tests/development \
 	-m mtlstest
 
 e2e-test:
 	$(TEST_CMD) \
+	tests/end_to_end \
 	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
-	--ignore=tests/development \
-	--ignore=tests/production \
 	-m e2e
