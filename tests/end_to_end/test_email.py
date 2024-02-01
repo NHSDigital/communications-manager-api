@@ -25,8 +25,9 @@ def test_email_end_to_end(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
     message_id = post_single_message_response.json().get("data").get("id")
     message_status = None
+    end_time = int(time.time()) + 300
 
-    while message_status != 'delivered':
+    while message_status != 'delivered' and int(time.time()) < end_time:
         get_message_response = requests.get(
             f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/{message_id}",
             headers={
@@ -40,6 +41,9 @@ def test_email_end_to_end(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
         message_status = get_message_response.json().get("data").get("attributes").get("messageStatus")
         time.sleep(10)
+
+    if message_status != "delivered":
+        raise TimeoutError(f"Request took too long to be processed. Message id: {message_id}")
 
     notifications_client = NotificationsAPIClient(os.environ.get("GUKN_API_KEY"))
     gov_uk_response = notifications_client.get_all_notifications("delivered").get("notifications")
