@@ -89,8 +89,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--reruns-delay 5 \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
-		--ignore=tests/docs \
-		--ignore=tests/locust
+	    --junitxml=test-report.xml
 
 
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
@@ -108,8 +107,7 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
 		--apigee-organization=nhsd-prod \
 		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)" \
-		--ignore=tests/docs \
-		--ignore=tests/locust
+		--junitxml=test-report.xml
 
 .run-sandbox-unit-tests:
 	(cd sandbox; rm -rf node_modules; npm install --legacy-peer-deps; npm run test)
@@ -134,7 +132,6 @@ zap-security-scan:
 .internal-sandbox-test:
 	$(TEST_CMD) \
 	tests/sandbox \
-	--junitxml=test-report.xml \
 	-m sandboxtest
 
 internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
@@ -142,7 +139,6 @@ internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sa
 .prod-sandbox-test:
 	$(PROD_TEST_CMD) \
 	tests/sandbox \
-	--junitxml=test-report.xml \
 	-m sandboxtest
 
 prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
@@ -150,7 +146,6 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 .internal-dev-test:
 	$(TEST_CMD) \
 	tests/development \
-	--junitxml=test-report.xml \
 	-m devtest
 
 internal-dev-test: .internal-dev-test
@@ -158,13 +153,11 @@ internal-dev-test: .internal-dev-test
 internal-qa-test:
 	$(TEST_CMD) \
 	tests/development \
-	--junitxml=test-report.xml \
 	-m "devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \
 	tests/integration \
-	--junitxml=test-report.xml \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
@@ -172,7 +165,6 @@ integration-test: .run-postman-int .integration-test
 .production-test:
 	$(PROD_TEST_CMD) \
 	tests/production \
-	--junitxml=test-report.xml \
 	-m prodtest
 
 production-test: .production-test
@@ -180,11 +172,9 @@ production-test: .production-test
 mtls-test:
 	$(TEST_CMD) \
 	tests/mtls \
-	--junitxml=test-report.xml \
 	-m mtlstest
 
 e2e-test:
 	$(TEST_CMD) \
 	tests/end_to_end \
-	--junitxml=test-report.xml \
 	-m e2e
