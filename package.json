@@ -14,7 +14,7 @@
   },
   "author": "NHS Digital",
   "license": "MIT",
-  "homepage": "https://digital.nhs.uk/developer/api-catalogue/communications-manager",
+  "homepage": "https://digital.nhs.uk/developer/api-catalogue/nhs-notify",
   "bugs": {
     "url": "https://github.com/NHSDigital/communications-manager-api/issues"
   },

@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
   version: '3.0'
-  title: Communications Manager API
+  title: NHS Notify API
   description:
     $ref: documentation/APIDescription.md
   contact:
-    name: Communications Manager Service API Support
+    name: NHS Notify API Support
     url: 'https://digital.nhs.uk/developer/help-and-support'
     email: api.management@nhs.net
 servers:
@@ -22,3 +22,13 @@ paths:
   /v1/messages:
     post:
       $ref: endpoints/create_message.yaml
+  /v1/messages/{messageId}:
+    parameters:
+      - schema:
+          $ref: schemas/types/KSUID.yaml
+        name: messageId
+        in: path
+        required: true
+        description: The unique identifier for the message
+    get:
+      $ref: endpoints/get_message.yaml

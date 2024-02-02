@@ -1,0 +1,179 @@
+title: MessageResponse
+type: object
+additionalProperties: false
+properties:
+  data:
+    type: object
+    additionalProperties: false
+    properties:
+      type:
+        $ref: ../enums/TypeMessage.yaml
+      id:
+        $ref: ../types/KSUID.yaml
+        description: Identifier for this Message.
+        example: 0ujsszwN8NRY24YaXiTIE2VWDTS
+      attributes:
+        type: object
+        additionalProperties: false
+        properties:
+          messageReference:
+            $ref: ../types/MessageReference.yaml
+          messageStatus:
+            description: |-
+              The current status of this message at the time this response was generated.
+
+              For more information please check our documentation on message & channel statuses above.
+            $ref: ../enums/MessageStatus.yaml
+          messageStatusDescription:
+            type: string
+            description: If there is extra information associated with the status of this message, it is provided here.
+            example: ""
+          channels:
+            type: array
+            description: |-
+              This array contains the channels that attempts to send your message will use, ordered as they will be attempted.
+
+              This array will remain empty (or not present) in the response until your message has gone through enrichment.
+            minItems: 0
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                type:
+                  description: This is the type of channel to be used.
+                  $ref: ../enums/ChannelType.yaml
+                retryCount:
+                  description: Contains the amount of times that we have attempted to send this channel.
+                  type: integer
+                  example: 1
+                channelStatus:
+                  description: |-
+                    The current status of this channel at the time this response was generated.
+
+                    For more information please check our documentation on message & channel statuses above.
+                  $ref: ../enums/ChannelStatus.yaml
+                channelStatusDescription:
+                  type: string
+                  description: If there is extra information associated with the status of this channel, it is provided here.
+                  example: ""
+                timestamps:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    created:
+                      type: string
+                      description: The date and time that this channel was created at.
+                      format: date-time
+                      example: '2023-11-17T14:27:51.413Z'
+                    enriched:
+                      type: string
+                      description: The date and time when we last enriched the contact details associated with this channel.
+                      format: date-time
+                      example: '2023-11-17T14:27:51.413Z'
+                    delivered:
+                      type: string
+                      description: The date and time that this channel was successfully delivered.
+                      format: date-time
+                      example: '2023-11-17T14:27:51.413Z'
+                    failed:
+                      type: string
+                      description: The date and time that this channel failed to be delivered.
+                      format: date-time
+                      example: '2023-11-17T14:27:51.413Z'
+                routingPlan:
+                  type: object
+                  additionalProperties: false
+                  description: The routing plan that this channel was generated from.
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      description: The identifier for the routing plan
+                      example: b838b13c-f98c-4def-93f0-515d4e4f4ee1
+                    version:
+                      type: string
+                      description: This identifies the specific version of the routing plan.
+                      example: ztoe2qRAM8M8vS0bqajhyEBcvXacrGPp
+                    type:
+                      description: Identifies if this is the original routing plan that was requested, or if a conditional override has been used.
+                      $ref: ../enums/RoutingPlanType.yaml
+          timestamps:
+            type: object
+            additionalProperties: false
+            properties:
+              created:
+                type: string
+                description: The date and time that your message was created at.
+                format: date-time
+                example: '2023-11-17T14:27:51.413Z'
+              enriched:
+                type: string
+                description: |-
+                  The date and time when we enriched the recipients details from the [Personal Demographics Service](https://digital.nhs.uk/services/personal-demographics-service).
+
+                  This is the business effective date that should be used when reviewing the patients details within PDS.
+                format: date-time
+                example: '2023-11-17T14:27:51.413Z'
+              delivered:
+                type: string
+                description: The date and time that this message was successfully delivered.
+                format: date-time
+                example: '2023-11-17T14:27:51.413Z'
+              failed:
+                type: string
+                description: The date and time that this message failed to be delivered.
+                format: date-time
+                example: '2023-11-17T14:27:51.413Z'
+          metadata:
+            type: array
+            minItems: 0
+            description: |-
+              This array includes a list of all metadata lookups done for this message within the system.
+
+              Currently only PDS is used for lookups.
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                version:
+                  description: This is the version of the document that was received from this source.
+                  type: string
+                  example: 2
+                queriedAt:
+                  description: This is the date and time the query was made (business effective date).
+                  type: string
+                  format: date-time
+                  example: '2023-11-17T14:27:51.413Z'
+                labels:
+                  description: This is an array of labels indicating what this lookup affects. This may include the channels that were affected.
+                  type: array
+                  items:
+                    $ref: ../enums/MetadataLabels.yaml
+                source:
+                  description: This is the service that was queried.
+                  $ref: ../enums/MetadataSources.yaml
+          routingPlan:
+            description: The routing plan that you requested the message be sent with.
+            $ref: ../types/RoutingPlan.yaml
+      relationships:
+        type: object
+        additionalProperties: false
+        description: This object contains information about other objects related to this message.
+        properties:
+          messageBatch:
+            type: object
+            description: If your message was sent as part of a batch, then this property will be present.
+            additionalProperties: false
+            properties:
+              data:
+                type: object
+                additionalProperties: false
+                properties:
+                  type:
+                    $ref: ../enums/TypeMessageBatch.yaml
+                  id:
+                    description: This is the unique identifier of the batch that contains this message.
+                    $ref: ../types/KSUID.yaml
+                    example: 2ZljUiS8NjJNs95PqiYOO7gAfJb
+      links:
+        $ref: ../types/Links.yaml
