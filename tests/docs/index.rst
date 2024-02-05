@@ -8,3 +8,4 @@ Test Suite
    development/index
    integration/index
    production/index
+   end_to_end/index

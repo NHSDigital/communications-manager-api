@@ -159,6 +159,16 @@ class Assertions():
         assert actual == expected
 
     @staticmethod
+    def assert_message_delivered_gov_uk(response, message_id, type):
+        for i in range(len(response)):
+            if message_id in response[i].get("reference"):
+                assert response[i].get("status") == "delivered"
+                assert response[i].get("type") == type
+                assert response[i].get("subject") is not None
+                assert response[i].get("body") is not None
+                break
+
+    @staticmethod
     def assert_message_batches_idempotency(respOne, respTwo):
         Error_Handler.handle_retry(respOne)
         Error_Handler.handle_retry(respTwo)

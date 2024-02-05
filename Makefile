@@ -89,8 +89,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--reruns-delay 5 \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
-		--ignore=tests/docs \
-		--ignore=tests/locust
+	    --junitxml=test-report.xml
 
 
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
@@ -108,8 +107,7 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
 		--apigee-organization=nhsd-prod \
 		--status-endpoint-api-key="$(STATUS_ENDPOINT_API_KEY)" \
-		--ignore=tests/docs \
-		--ignore=tests/locust
+		--junitxml=test-report.xml
 
 .run-sandbox-unit-tests:
 	(cd sandbox; rm -rf node_modules; npm install --legacy-peer-deps; npm run test)
@@ -133,63 +131,50 @@ zap-security-scan:
 
 .internal-sandbox-test:
 	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/development \
-	--ignore=tests/integration \
-	--ignore=tests/mtls \
+	tests/sandbox \
 	-m sandboxtest
 
 internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
 
 .prod-sandbox-test:
 	$(PROD_TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/development \
-	--ignore=tests/integration \
-	--ignore=tests/mtls \
+	tests/sandbox \
 	-m sandboxtest
 
 prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
 
 .internal-dev-test:
 	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
+	tests/development \
 	-m devtest
 
 internal-dev-test: .internal-dev-test
 
 internal-qa-test:
 	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
+	tests/development \
 	-m "devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/development \
+	tests/integration \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
 
 .production-test:
 	$(PROD_TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/development \
-	--ignore=tests/integration \
+	tests/production \
 	-m prodtest
 
 production-test: .production-test
 
 mtls-test:
 	$(TEST_CMD) \
-	--junitxml=test-report.xml \
-	--ignore=tests/sandbox \
-	--ignore=tests/integration \
-	--ignore=tests/development \
+	tests/mtls \
 	-m mtlstest
+
+e2e-test:
+	$(TEST_CMD) \
+	tests/end_to_end \
+	-m e2e
