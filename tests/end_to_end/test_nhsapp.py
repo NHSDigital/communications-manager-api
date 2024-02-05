@@ -1,5 +1,4 @@
 import pytest
-import os
 from lib import Assertions, Generators, Helper
 
 

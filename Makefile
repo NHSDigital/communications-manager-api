@@ -14,8 +14,12 @@ install-node:
 	cp scripts/pre-commit .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
 
+#Downloads and installs the latest compatible chrome and chromedriver binaries
+install-chrome:
+	./scripts/selenium-setup.sh
+
 #Condensed Target to run all targets above.
-install: install-node install-python .git/hooks/pre-commit
+install: install-node install-python install-chrome .git/hooks/pre-commit
 
 #Referenced within readme
 install-hooks: .git/hooks/pre-commit

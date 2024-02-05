@@ -26,6 +26,9 @@ sphinx = "7.1.2"
 sphinx-markdown-builder = "^0.6.6"
 notifications-python-client = "^9.0.0"
 polling = "^0.3.2"
+selenium = "^4.17.2"
+chromedriver-autoinstaller = "^0.6.4"
+webdriver-manager = "^4.0.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"
