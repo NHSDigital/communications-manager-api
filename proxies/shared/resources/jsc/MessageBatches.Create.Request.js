@@ -3,7 +3,7 @@ const data = JSON.parse(content).data
 var messageBatchReference = null;
 
 if (data && data.attributes) {
-    messageReference = data.attributes.messageReference;
+    messageBatchReference = data.attributes.messageBatchReference;
 }
 
 context.setVariable("data.payload", content);
