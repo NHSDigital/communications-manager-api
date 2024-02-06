@@ -20,6 +20,10 @@
         <Name>requestpath</Name>
         <Template>/api/v1/messages/{data.messageId}</Template>
     </AssignVariable>
+    <AssignVariable>
+        <Name>target.url</Name>
+        <Value>https://comms-apim.de-adsm6.communications.national.nhs.uk/api/v1/messages/{data.messageId}</Value>
+    </AssignVariable>
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
