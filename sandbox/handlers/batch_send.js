@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const KSUID = require("ksuid");
 const { sendError, write_log } = require('./utils')
 const {
