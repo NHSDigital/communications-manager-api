@@ -19,7 +19,7 @@
     <Step>
         <Name>RaiseFault.404InvalidRoutingPlan</Name>
         <Condition>
-          response.status.code = 404 and response.content Like "*Routing Config does not exist for clientId *" and response.content Like "* and sendingGroupId *"
+          response.status.code = 404 and response.content Like "*Routing Config does not exist for clientId *" and response.content Like "* and routingPlanId *"
       </Condition>
     </Step>
     <Step>
