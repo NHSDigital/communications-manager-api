@@ -1,4 +1,3 @@
-/* istanbul ignore file */
 const KSUID = require("ksuid");
 const { sendError, write_log } = require('./utils')
 const {
@@ -31,8 +30,14 @@ async function batch_send(req, res, next) {
         return;
     }
 
+    if (!req.body.data.type) {
+        sendError(res, 400, "Missing request body data type");
+        next();
+        return;
+    }
+
     if (req.body.data.type !== "MessageBatch") {
-        sendError(req, 400, "Request body data type is not MessageBatch");
+        sendError(res, 400, "Request body data type is not MessageBatch");
         next();
         return;
     }
@@ -43,20 +48,20 @@ async function batch_send(req, res, next) {
         return;
     }
 
-    if (!req.body.attributes.routingPlanId) {
+    if (!req.body.data.attributes.routingPlanId) {
         sendError(res, 400, "Missing routingPlanId");
         next();
         return;
     }
 
-    if (!req.body.attributes.messageBatchReference) {
+    if (!req.body.data.attributes.messageBatchReference) {
         sendError(res, 400, "Missing messageBatchReference");
         next();
         return;
     }
 
     if (!Array.isArray(req.body.data.attributes.messages)) {
-        sendError(res, 400, "Missing data array");
+        sendError(res, 400, "Missing messages array");
         next();
         return;
     }
