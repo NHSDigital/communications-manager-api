@@ -84,7 +84,7 @@ describe('/api/v1/messages', () => {
                 }
             })
             .expect(404, {
-              message: 'Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "sending-group-id"'
+              message: 'Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "sending-group-id"'
             })
             .expect("Content-Type", /json/, done);
     });
