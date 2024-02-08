@@ -1,4 +1,3 @@
-import os
 import requests
 import pytest
 from lib import Assertions
@@ -22,8 +21,8 @@ def test_200_get_message(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_hea
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, 
-        "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+    Assertions.assert_200_response_message(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
 
 
 @pytest.mark.devtest
@@ -41,8 +40,8 @@ def test_200_get_message_pending_enrichment(nhsd_apim_proxy_url, nhsd_apim_auth_
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, 
-        "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+    Assertions.assert_200_response_message(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
     Assertions.assert_get_message_status(resp, "pending_enrichment")
 
 
@@ -61,7 +60,8 @@ def test_200_get_message_sending(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ac
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, "internal-dev")
+    Assertions.assert_200_response_message(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
     Assertions.assert_get_message_status(resp, "sending")
 
 
@@ -80,7 +80,8 @@ def test_200_get_message_successful(nhsd_apim_proxy_url, nhsd_apim_auth_headers,
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, "internal-dev")
+    Assertions.assert_200_response_message(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
     Assertions.assert_get_message_status(resp, "delivered")
 
 
@@ -99,8 +100,8 @@ def test_200_get_message_failed(nhsd_apim_proxy_url, nhsd_apim_auth_headers, acc
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, 
-        "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+    Assertions.assert_200_response_message(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
     Assertions.assert_get_message_status(resp, "failed", "Failed reason: patient has exit code")
 
 
@@ -119,7 +120,7 @@ def test_200_get_message_cascade(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ac
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, 
-        "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+    Assertions.assert_200_response_message(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
     Assertions.assert_get_message_status(resp, "sending")
     Assertions.assert_get_message_response_channels(resp, CHANNEL_TYPE, CHANNEL_STATUS)
