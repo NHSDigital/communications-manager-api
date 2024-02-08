@@ -6,3 +6,4 @@ Gov Notify Tests
 
    email
    sms
+   letter

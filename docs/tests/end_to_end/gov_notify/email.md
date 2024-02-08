@@ -3,9 +3,9 @@
 These tests check that the system can proccess a request to a users email end to end
 
 
-## Scenario: An API consumer sending a request to target a user’s email can confirm the message is delivered
+## Scenario: An API consumer sending a request to generate an email can confirm the message is delivered in Gov Notify
 
-**Given** the API consumer submits a request targeting a user’s email
+**Given** the API consumer submits a request to generate an email
 <br/>
 **When** the request is submitted
 <br/>
