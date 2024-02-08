@@ -20,8 +20,7 @@ def test_email_end_to_end(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
         }, json=Generators.generate_send_message_body("email")
     )
 
-    Assertions.assert_201_response_messages(
-        post_single_message_response, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+    Assertions.assert_201_response_messages(post_single_message_response, nhsd_apim_proxy_url)
 
     message_id = post_single_message_response.json().get("data").get("id")
     message_status = None
@@ -36,8 +35,7 @@ def test_email_end_to_end(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
             },
         )
 
-        Assertions.assert_200_response_message(
-            get_message_response, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+        Assertions.assert_200_response_message(get_message_response, nhsd_apim_proxy_url)
 
         message_status = get_message_response.json().get("data").get("attributes").get("messageStatus")
         time.sleep(10)
