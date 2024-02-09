@@ -164,8 +164,12 @@ class Assertions():
             if message_id in response[i].get("reference"):
                 assert response[i].get("status") == "delivered"
                 assert response[i].get("type") == type
-                assert response[i].get("subject") is not None
                 assert response[i].get("body") is not None
+                if type == "email":
+                    assert response[i].get("subject") is not None
+                    assert response[i].get("email_address") is not None
+                if type == "sms":
+                    assert response[i].get("phone_number") is not None
                 break
 
     @staticmethod

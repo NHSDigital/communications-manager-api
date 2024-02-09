@@ -5,3 +5,4 @@ Gov Notify Tests
    :maxdepth: 1
 
    email
+   sms
