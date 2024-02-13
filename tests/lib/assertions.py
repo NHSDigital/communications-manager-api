@@ -58,9 +58,8 @@ class Assertions():
             assert response.get("attributes").get("metadata")[0].get("queriedAt") != ""
             assert response.get("attributes").get("metadata")[0].get("source") is not None
             assert response.get("attributes").get("metadata")[0].get("source") != ""
-            # TODO: Uncomment once 4.9.0 is in int
-            # assert response.get("attributes").get("metadata")[0].get("version") is not None
-            # assert response.get("attributes").get("metadata")[0].get("version") != ""
+            assert response.get("attributes").get("metadata")[0].get("version") is not None
+            assert response.get("attributes").get("metadata")[0].get("version") != ""
             assert response.get("attributes").get("metadata")[0].get("labels") != ""
         if messageStatus == "sending" or messageStatus == "delivered":
             assert response.get("attributes").get("channels") is not None
@@ -135,15 +134,6 @@ class Assertions():
         assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
         assert resp.headers.get("Location") == f"/v1/messages/{response.get('id')}"
-
-    @staticmethod
-    def assert_201_routing_plan_and_version(resp, routing_plan):
-        Error_Handler.handle_retry(resp)
-
-        assert resp.status_code == 201
-        response = resp.json().get("data")
-
-        assert response.get("attributes").get("routingPlan") == routing_plan
 
     @staticmethod
     def assert_200_valid_message_id_response_body(resp, message_id, url):
