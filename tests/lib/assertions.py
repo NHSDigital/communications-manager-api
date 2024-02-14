@@ -159,17 +159,34 @@ class Assertions():
         assert actual == expected
 
     @staticmethod
-    def assert_message_delivered_gov_uk(response, message_id, type):
-        for i in range(len(response)):
-            if message_id in response[i].get("reference"):
-                assert response[i].get("status") == "delivered"
-                assert response[i].get("type") == type
-                assert response[i].get("body") is not None
-                if type == "email":
-                    assert response[i].get("subject") is not None
-                    assert response[i].get("email_address") is not None
-                if type == "sms":
-                    assert response[i].get("phone_number") is not None
+    def assert_email_gov_uk(response, message_id):
+        for message in response:
+            if message_id in message.get("reference"):
+                assert message.get("status") == "delivered"
+                assert message.get("type") == "email"
+                assert message.get("body") is not None
+                assert message.get("subject") is not None
+                assert message.get("email_address") is not None
+                break
+
+    @staticmethod
+    def assert_sms_gov_uk(response, message_id):
+        for message in response:
+            if message_id in message.get("reference"):
+                assert message.get("status") == "delivered"
+                assert message.get("type") == "sms"
+                assert message.get("body") is not None
+                assert message.get("phone_number") is not None
+                break
+
+    @staticmethod
+    def assert_letter_gov_uk(response, message_id):
+        for message in response:
+            if message_id in message.get("reference"):
+                assert message.get("status") == "received"
+                assert message.get("type") == "letter"
+                assert message.get("subject") is not None
+                assert message.get("body") is not None
                 break
 
     @staticmethod
