@@ -116,8 +116,7 @@ def calculate_version(base_major=1, base_minor=0, base_revision=0, base_pre="alp
     # If there are any +patch in commit messages, increment the counter
     # We only care about commits after the last minor increment
     commits = list(itertools.takewhile(lambda c: not is_minor_inc(c), commits))
-    commits = list(without_empty(commits))
-    patch_incs = [c for c in commits if is_minor_inc(c)]
+    patch_incs = [c for c in commits if is_patch_inc(c)]
 
     if patch_incs:
         patch += len(patch_incs)
