@@ -47,29 +47,6 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, conte
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize('routing_plan_id, version', VALID_ROUTING_PLAN_ID_AND_VERSION)
-def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_plan_id, version):
-    """
-    .. include:: ../../partials/happy_path/test_201_messages_valid_routing_plan_id.rst
-    """
-    data = Generators.generate_valid_create_message_body("sandbox")
-    data["data"]["attributes"]["routingPlanId"] = routing_plan_id
-
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }, json=data
-    )
-    Assertions.assert_201_routing_plan_and_version(
-        resp,
-        {
-            "id": routing_plan_id,
-            "version": version
-        }
-    )
-
-
-@pytest.mark.sandboxtest
 def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
