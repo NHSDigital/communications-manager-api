@@ -23,7 +23,7 @@
     {% if ENVIRONMENT_TYPE != 'sandbox' %}
         <AssignVariable>
             <Name>target.url</Name>
-            <Value>https://comms-apim.de-adsm6.communications.national.nhs.uk/api/v1/send</Value>
+            <Value>https://comms-apim.de-alnu1.communications.national.nhs.uk/api/v1/send</Value>
         </AssignVariable>
     {% endif %}
     <Set>
