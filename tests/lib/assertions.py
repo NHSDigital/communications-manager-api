@@ -263,7 +263,7 @@ class Assertions():
             # validate the error is present
             if len(response_errors) == 1:
                 # this case is for making debugging easier where possible
-                assert response_errors[0] == error
+                assert error == response_errors[0]
             else:
                 assert error in response_errors
 
