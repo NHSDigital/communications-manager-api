@@ -35,207 +35,150 @@ describe('/api/v1/send', () => {
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when body data doesnt exist', (done) => {
+    it('returns a 400 when the sendingGroupId doesnt exist', (done) => {
         request(server)
             .post('/api/v1/send')
             .send({})
             .expect(400, {
-              message: 'Missing request body data'
+                message: 'Missing sendingGroupId'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when type is missing', (done) => {
+    it('returns a 400 when the sendingGroupId is null', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{}})
+            .send({
+                sendingGroupId: null
+            })
             .expect(400, {
-              message: 'Missing request body data type'
+                message: 'Missing sendingGroupId'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when type isnt MessageBatch', (done) => {
+    it('returns a 400 when the requestRefId doesnt exist', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{type: 'Message'}})
+            .send({
+                sendingGroupId: 'sending-group-id'
+            })
             .expect(400, {
-              message: 'Request body data type is not MessageBatch'
+                message: 'Missing requestRefId'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when attributes dont exist', (done) => {
+    it('returns a 400 when the requestRefId is null', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{type: 'MessageBatch'}})
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: null
+            })
             .expect(400, {
-              message: 'Missing request body data attributes'
+                message: 'Missing requestRefId'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when the routingPlanId doesnt exist', (done) => {
+    it('returns a 400 when the data doesnt exist', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{type: 'MessageBatch',
-                attributes: {
-                }}})
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: 'request-ref-id'
+            })
             .expect(400, {
-                message: 'Missing routingPlanId'
+                message: 'Missing data array'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when the routingPlanId is null', (done) => {
+    it('returns a 400 when the data is null', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: null
-                }}})
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: 'request-ref-id',
+                data: null
+            })
             .expect(400, {
-                message: 'Missing routingPlanId'
+                message: 'Missing data array'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when the messageBatchReference doesnt exist', (done) => {
+    it('returns a 400 when the data is not an array', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id'
-                }}})
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: 'request-ref-id',
+                data: 'invalid'
+            })
             .expect(400, {
-                message: 'Missing messageBatchReference'
+                message: 'Missing data array'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when the messageBatchReference is null', (done) => {
+    it('returns a 400 when the data does not contain items with requestItemRefId', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: null
-                }}})
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        notARequestItemRefId: '1'
+                    }
+                ]
+            })
             .expect(400, {
-                message: 'Missing messageBatchReference'
+                message: 'Missing requestItemRefIds'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when messages doesnt exist', (done) => {
+    it('returns a 400 when the data contains duplicate requestItemRefIds', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: 'request-ref-id'
-                }}})
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '1'
+                    }
+                ]
+            })
             .expect(400, {
-                message: 'Missing messages array'
+                message: 'Duplicate requestItemRefIds'
             })
             .expect("Content-Type", /json/, done);
     });
 
-    it('returns a 400 when messages is null', (done) => {
+    it('returns a 404 when sendingGroupId is not found', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: 'request-ref-id',
-                  messages: null
-                }}})
-            .expect(400, {
-                message: 'Missing messages array'
+            .send({
+                sendingGroupId: 'sending-group-id',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
             })
-            .expect("Content-Type", /json/, done);
-    });
-
-    it('returns a 400 when messages is not an array', (done) => {
-        request(server)
-            .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: 'request-ref-id',
-                  messages: 'invalid'
-                }}})
-            .expect(400, {
-                message: 'Missing messages array'
-            })
-            .expect("Content-Type", /json/, done);
-    });
-
-    it('returns a 400 when the data does not contain items with messageReference', (done) => {
-        request(server)
-            .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          notAMessageReference: '1'
-                      }
-                  ]
-                }}})
-            .expect(400, {
-                message: 'Missing messageReferences'
-            })
-            .expect("Content-Type", /json/, done);
-    });
-
-    it('returns a 400 when the data contains duplicate messageReferences', (done) => {
-        request(server)
-            .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '1'
-                      }
-                  ]
-                }}})
-            .expect(400, {
-                message: 'Duplicate messageReferences'
-            })
-            .expect("Content-Type", /json/, done);
-    });
-
-    it('returns a 404 when routingPlanId is not found', (done) => {
-        request(server)
-            .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'sending-group-id',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
             .expect(404, {
-                message: 'Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "sending-group-id"'
+                message: 'Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "sending-group-id"'
             })
             .expect("Content-Type", /json/, done);
     });
@@ -243,20 +186,18 @@ describe('/api/v1/send', () => {
     it('returns a 400 when routing plan is invalid', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: '4ead415a-c033-4b39-9b05-326ac237a3be',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: '4ead415a-c033-4b39-9b05-326ac237a3be',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(400, {
                 message: 'Invalid Routing Config'
             })
@@ -266,20 +207,18 @@ describe('/api/v1/send', () => {
     it('returns a 425 when a repeat request is sent too early', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'd895ade5-0029-4fc3-9fb5-86e1e5370854',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: 'd895ade5-0029-4fc3-9fb5-86e1e5370854',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(425, {
                 message: 'Message with this idempotency key is already being processed'
             })
@@ -289,20 +228,18 @@ describe('/api/v1/send', () => {
     it('returns a 500 when the sending group has missing templates', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'c8857ccf-06ec-483f-9b3a-7fc732d9ad48',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: 'c8857ccf-06ec-483f-9b3a-7fc732d9ad48',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(500, {
                 message: 'Templates required in "c8857ccf-06ec-483f-9b3a-7fc732d9ad48" routing config not found'
             })
@@ -312,20 +249,18 @@ describe('/api/v1/send', () => {
     it('returns a 500 when the sending group has duplicate templates', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'a3a4e55d-7a21-45a6-9286-8eb595c872a8',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: 'a3a4e55d-7a21-45a6-9286-8eb595c872a8',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(500, {
                 message: 'Duplicate templates in routing config: [{"name":"EMAIL_TEMPLATE","type":"EMAIL"},{"name":"SMS_TEMPLATE","type":"SMS"},{"name":"LETTER_TEMPLATE","type":"LETTER"},{"name":"LETTER_PDF_TEMPLATE","type":"LETTER_PDF"},{"name":"NHSAPP_TEMPLATE","type":"NHSAPP"}]'
             })
@@ -335,20 +270,18 @@ describe('/api/v1/send', () => {
     it('returns a 500 when the sending group has missing NHS templates', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'aeb16ab8-cb9c-4d23-92e9-87c78119175c',
-                  messageBatchReference: 'request-ref-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: 'aeb16ab8-cb9c-4d23-92e9-87c78119175c',
+                requestRefId: 'request-ref-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(500, {
                 message: 'NHS App Template does not exist with internalTemplateId: invalid-template'
             })
@@ -358,20 +291,18 @@ describe('/api/v1/send', () => {
     it('can simulate a 500 error', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: '3bb82e6a-9873-4683-b2b9-fdf33c9ba86f',
-                  messageBatchReference: 'simulate-500',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: '3bb82e6a-9873-4683-b2b9-fdf33c9ba86f',
+                requestRefId: 'simulate-500',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(500, {
                 message: 'Error writing request items to DynamoDB'
             })
@@ -381,20 +312,18 @@ describe('/api/v1/send', () => {
     it('responds with a 200 when the request is correctly formatted', (done) => {
         request(server)
             .post('/api/v1/send')
-            .send({data:{
-                type: 'MessageBatch',
-                attributes: {
-                  routingPlanId: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1',
-                  messageBatchReference: 'request-id',
-                  messages: [
-                      {
-                          messageReference: '1'
-                      },
-                      {
-                          messageReference: '2'
-                      }
-                  ]
-                }}})
+            .send({
+                sendingGroupId: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1',
+                requestRefId: 'request-id',
+                data: [
+                    {
+                        requestItemRefId: '1'
+                    },
+                    {
+                        requestItemRefId: '2'
+                    }
+                ]
+            })
             .expect(200)
             .expect((res) => {
                 assert.notEqual(res.body.requestId, undefined);

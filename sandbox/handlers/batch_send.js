@@ -24,101 +24,77 @@ async function batch_send(req, res, next) {
         return;
     }
 
-    if (!req.body.data) {
-        sendError(res, 400, "Missing request body data");
+    if (!req.body.sendingGroupId) {
+        sendError(res, 400, "Missing sendingGroupId");
         next();
         return;
     }
 
-    if (!req.body.data.type) {
-        sendError(res, 400, "Missing request body data type");
+    if (!req.body.requestRefId) {
+        sendError(res, 400, "Missing requestRefId");
         next();
         return;
     }
 
-    if (req.body.data.type !== "MessageBatch") {
-        sendError(res, 400, "Request body data type is not MessageBatch");
+    if (!Array.isArray(req.body.data)) {
+        sendError(res, 400, "Missing data array");
         next();
         return;
     }
 
-    if (!req.body.data.attributes) {
-        sendError(res, 400, "Missing request body data attributes");
-        next();
-        return;
-    }
-
-    if (!req.body.data.attributes.routingPlanId) {
-        sendError(res, 400, "Missing routingPlanId");
-        next();
-        return;
-    }
-
-    if (!req.body.data.attributes.messageBatchReference) {
-        sendError(res, 400, "Missing messageBatchReference");
-        next();
-        return;
-    }
-
-    if (!Array.isArray(req.body.data.attributes.messages)) {
-        sendError(res, 400, "Missing messages array");
-        next();
-        return;
-    }
-
-    const messageReferences = req.body.data.attributes.messages.map(
-        (message) => message.messageReference
+    const requestItemRefIds = req.body.data.map(
+        (item) => item.requestItemRefId
     );
 
-    if (messageReferences.includes(undefined)) {
-        sendError(res, 400, "Missing messageReferences");
+    if (requestItemRefIds.includes(undefined)) {
+        sendError(res, 400, 'Missing requestItemRefIds');
         next();
         return;
     }
 
-    if (new Set(messageReferences).size !== messageReferences.length) {
-        sendError(res, 400, "Duplicate messageReferences");
+    if (new Set(requestItemRefIds).size !== requestItemRefIds.length) {
+        sendError(res, 400, 'Duplicate requestItemRefIds');
         next();
         return;
     }
 
-    if (!validSendingGroupIds[req.body.data.attributes.routingPlanId]) {
-        sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`);
+    if (!validSendingGroupIds[req.body.sendingGroupId]) {
+        sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.sendingGroupId}"`);
         next();
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === invalidRoutingPlanId) {
+    if (req.body.sendingGroupId === invalidRoutingPlanId) {
         sendError(res, 400, "Invalid Routing Config");
         next();
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === trigger425SendingGroupId) {
+    if (req.body.sendingGroupId === trigger425SendingGroupId) {
         sendError(res, 425, "Message with this idempotency key is already being processed");
         next();
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
+    if (req.body.sendingGroupId === sendingGroupIdWithMissingNHSTemplates) {
         sendError(res, 500, `NHS App Template does not exist with internalTemplateId: invalid-template`);
         next();
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === sendingGroupIdWithMissingTemplates) {
-        sendError(res, 500, `Templates required in "${req.body.data.attributes.routingPlanId}" routing config not found`);
+    if (req.body.sendingGroupId === sendingGroupIdWithMissingTemplates) {
+        sendError(res, 500, `Templates required in "${req.body.sendingGroupId}" routing config not found`);
         next();
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === sendingGroupIdWithDuplicateTemplates) {
+    if (req.body.sendingGroupId === sendingGroupIdWithDuplicateTemplates) {
         sendError(res, 500, `Duplicate templates in routing config: ${JSON.stringify(duplicateTemplates)}`);
         next();
         return;
     }
 
-    if (req.body.data.attributes.routingPlanId === trigger500SendingGroupId) {
+    if (req.body.sendingGroupId === trigger500SendingGroupId) {
         sendError(res, 500, "Error writing request items to DynamoDB");
         next();
         return;
@@ -137,7 +113,7 @@ async function batch_send(req, res, next) {
     res.json({
         requestId: KSUID.randomSync(new Date()).string,
         routingPlan: {
-            id: req.body.data.attributes.routingPlanId,
+            id: req.body.sendingGroupId,
             version: "1"
         }
     });
