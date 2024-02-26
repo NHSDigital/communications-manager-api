@@ -85,63 +85,6 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_500_duplicate_routing_plan(nhsd_apim_proxy_url, correlation_id):
-    """
-    .. include:: ../../partials/invalid_routing_plans/test_500_duplicate_routing_plan.rst
-    """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "X-Correlation-Id": correlation_id
-        }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": DUPLICATE_ROUTING_PLAN_TEMPLATE_ID,
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        500,
-        Generators.generate_duplicate_routing_plan_template_error([
-            {
-                "name": "EMAIL_TEMPLATE",
-                "type": "EMAIL"
-            },
-            {
-                "name": "SMS_TEMPLATE",
-                "type": "SMS"
-            },
-            {
-                "name": "LETTER_TEMPLATE",
-                "type": "LETTER"
-            },
-            {
-                "name": "LETTER_PDF_TEMPLATE",
-                "type": "LETTER_PDF"
-            },
-            {
-                "name": "NHSAPP_TEMPLATE",
-                "type": "NHSAPP"
-            }
-        ]),
-        correlation_id
-    )
-
-
-@pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("routing_plan_id", [
     "c8857ccf-06ec-483f-9b3a-7fc732d9ad48",
     "aeb16ab8-cb9c-4d23-92e9-87c78119175c"
