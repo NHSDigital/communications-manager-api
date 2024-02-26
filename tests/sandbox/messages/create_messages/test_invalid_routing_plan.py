@@ -6,7 +6,6 @@ from lib.constants.messages_paths import MESSAGES_ENDPOINT
 
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
-DUPLICATE_ROUTING_PLAN_TEMPLATE_ID = "a3a4e55d-7a21-45a6-9286-8eb595c872a8"
 
 
 @pytest.mark.sandboxtest
