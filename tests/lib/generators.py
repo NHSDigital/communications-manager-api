@@ -63,7 +63,11 @@ class Generators():
 
     @staticmethod
     def generate_send_message_body(channel):
+        nhsNumber = "9627193232"
+        dateOfBirth = "1998-03-21"
         if channel == "nhsapp":
+            nhsNumber = "9842434109"
+            dateOfBirth = "2002-10-23"
             routing_plan_id = constants.NHS_APP_ROUTING_PLAN
         elif channel == "email":
             routing_plan_id = constants.EMAIL_ROUTING_PLAN
@@ -80,8 +84,8 @@ class Generators():
                     "routingPlanId": routing_plan_id,
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": "9627193232",
-                        "dateOfBirth": "1998-03-21"
+                        "nhsNumber": nhsNumber,
+                        "dateOfBirth": dateOfBirth
                     },
                     "personalisation": {
                         "exampleParameter": "hello!"

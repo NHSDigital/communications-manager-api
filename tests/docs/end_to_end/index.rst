@@ -5,3 +5,4 @@ End to end test suite
    :maxdepth: 2
 
    gov_notify/index.rst
+   nhsapp/index.rst
