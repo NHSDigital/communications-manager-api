@@ -6,14 +6,17 @@ We store our release candidate within the [release branch](https://github.com/NH
 
 To create a new release:
 
-* Create a PR from release into master
-* Push a commit into release that increments the version number - see release versioning commands.
-* Review the changes to be included in the release
-* Get approval on the PR and merge into master
-* The new release will be generated and uploaded to github
+* Create a new release branch i.e. `release/v4.12.0`.
+* Push a commit into the release branch that increments the version number - see release versioning commands.
+* Create a PR from the release branch into `release`.
+* Get approval on the PR and merge into `release`.
+* Create a PR from `release` into `master`.
+* Review the changes to be included in the release.
+* Get approval on the PR and merge into `master`.
+* The new release will be generated and uploaded to github.
 * The release will run through the CI/CD pipeline, automatically deploying into `internal-dev`, `internal-dev-sandbox`, `internal-qa` and `internal-qa-sandbox`.
-* The release will be held at this point, ready for deployment into our production environments
-* Ensure that the release has a change note uploaded to it, detailing the features/changes/fixes that went into the release
+* The release will be held at this point, ready for deployment into our production environments.
+* Ensure that the release has a change note uploaded to it, detailing the features/changes/fixes that went into the release.
 
 ## Promote a release to production environments
 
