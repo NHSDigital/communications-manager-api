@@ -26,7 +26,7 @@ def test_200_get_message_valid_accept_headers(nhsd_apim_proxy_url, accept_header
             "Content-Type": "application/json"
         },
     )
-    Assertions.assert_200_response_message(resp, "sandbox")
+    Assertions.assert_200_response_message(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.parametrize('message_ids', get_200_message_ids())
