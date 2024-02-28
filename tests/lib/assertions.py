@@ -8,7 +8,7 @@ class Assertions():
     def assert_201_response(resp, message_batch_reference, routing_plan_id):
         Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == 418, f"Response: {resp.status_code}: {resp.text}"
+        assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
 
         response = resp.json().get("data")
         assert response.get("type") == "MessageBatch"
@@ -30,7 +30,7 @@ class Assertions():
     def assert_200_response_message(resp, environment):
         Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == 200
+        assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
 
         response = resp.json().get("data")
         messageStatus = response.get("attributes").get("messageStatus")
@@ -108,7 +108,7 @@ class Assertions():
     def assert_201_response_messages(resp, environment):
         Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == 201
+        assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
 
         response = resp.json().get("data")
         assert response.get("type") == "Message"
@@ -139,7 +139,7 @@ class Assertions():
     def assert_200_valid_message_id_response_body(resp, message_id, url):
         Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == 200
+        assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
 
         expected_response_file = open(f"sandbox/messages/{message_id}.json")
         expected = json.load(expected_response_file).get("data")
@@ -222,7 +222,7 @@ class Assertions():
         else:
             Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == code
+        assert resp.status_code == code, f"Response: {resp.status_code}: {resp.text}"
 
         if error is not None:
             # ensure that all errors contain an identifier
@@ -257,7 +257,7 @@ class Assertions():
     def assert_cors_response(resp, website):
         Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == 200
+        assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Allow-Methods") == CORS_METHODS
         assert resp.headers.get("Access-Control-Max-Age") == CORS_MAX_AGE
