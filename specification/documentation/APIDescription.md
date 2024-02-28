@@ -138,7 +138,7 @@ Free-text communications (as opposed to fixed format communications) can be achi
 |--------------------------------------|------------------|-----------------------------------------|----------------------------|
 | 00000000-0000-0000-0000-000000000001 | NHS App          | 24 hours                                | body                       |
 
-Please see the Postman collections in the [environments and testing section](#environments-and-testing) for examples.
+Please see the Postman collections in the [environments and testing section](#section/Environments-and-testing) for examples.
 
 ## Errors
 
