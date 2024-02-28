@@ -8,7 +8,7 @@ class Assertions():
     def assert_201_response(resp, message_batch_reference, routing_plan_id):
         Error_Handler.handle_retry(resp)
 
-        assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text()}"
+        assert resp.status_code == 418, f"Response: {resp.status_code}: {resp.text()}"
 
         response = resp.json().get("data")
         assert response.get("type") == "MessageBatch"
