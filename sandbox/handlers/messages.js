@@ -32,7 +32,7 @@ async function messages(req, res, next) {
     sendError(
       res,
       404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and sendingGroupId "${req.body.data.attributes.routingPlanId}"`
+      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
     );
     next();
     return;

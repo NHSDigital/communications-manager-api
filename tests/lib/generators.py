@@ -169,18 +169,6 @@ class Generators():
         })
 
     @staticmethod
-    def generate_duplicate_routing_plan_template_error(expectedDuplicates):
-        return Generators.generate_error(
-            constants.ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE,
-            source={
-                "pointer": ROUTING_PLAN_ID_PATH
-            },
-            meta={
-                "duplicateTemplates": expectedDuplicates
-            }
-        )
-
-    @staticmethod
     def generate_not_found_error():
         return Generators.generate_error(constants.ERROR_NOT_FOUND)
 

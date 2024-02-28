@@ -180,14 +180,6 @@ ERROR_MISSING_ROUTING_PLAN_TEMPLATE = Error(
     "The templates required to use the routing plan were not found."
 )
 
-# duplicate routing plan
-ERROR_DUPLICATE_ROUTING_PLAN_TEMPLATE = Error(
-    "CM_ROUTING_PLAN_DUPLICATE_TEMPLATES",
-    "500",
-    "Duplicate templates",
-    "The routing plan specified contains duplicate templates."
-)
-
 # not found
 ERROR_NOT_FOUND = Error(
     "CM_NOT_FOUND",
