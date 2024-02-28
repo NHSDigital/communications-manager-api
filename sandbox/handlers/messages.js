@@ -1,5 +1,5 @@
 const KSUID = require("ksuid");
-const { sendError, write_log } = require("./utils");
+const { sendError, write_log, hasValidGlobalTemplatePersonalisation } = require("./utils");
 const {
   sendingGroupIdWithMissingNHSTemplates,
   sendingGroupIdWithMissingTemplates,
@@ -9,23 +9,6 @@ const {
   validSendingGroupIds,
   globalNhsAppSendingGroupId,
 } = require("./config");
-
-function hasValidGlobalTemplatePersonalisation(req) {
-  const personalisation = req.body.data.attributes.personalisation;
-  if (!personalisation) {
-    return false;
-  }
-
-  const personalisationFields = Object.keys(personalisation);
-  if (personalisationFields.length != 1) {
-    return false;
-  }
-
-  if (personalisationFields[0] !== "body") {
-    return false;
-  }
-  return true;
-}
 
 async function messages(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -57,7 +40,7 @@ async function messages(req, res, next) {
 
   if (
     routingPlanId === globalNhsAppSendingGroupId &&
-    !hasValidGlobalTemplatePersonalisation(req)
+    !hasValidGlobalTemplatePersonalisation(req.body.data.attributes.personalisation)
   ) {
     sendError(res, 400, "Expect single personalisation field of 'body'");
     next();
