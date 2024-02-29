@@ -18,6 +18,16 @@ class Helper():
         return resp
 
     @staticmethod
+    def get_message(url, auth, message_id):
+        resp = requests.get(f"{url}{MESSAGES_ENDPOINT}/{message_id}", headers={
+            **auth,
+            "Accept": "application/vnd.api+json"
+        })
+        Error_Handler.handle_retry(resp)
+        assert resp.status_code == 200
+        return resp
+
+    @staticmethod
     def poll_get_message(url, auth, message_id, end_state="delivered", poll_time=300):
         message_status = None
         end_time = int(time.time()) + poll_time
