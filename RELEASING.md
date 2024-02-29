@@ -6,7 +6,7 @@ We store our release candidate within the [release branch](https://github.com/NH
 
 To create a new release:
 
-* Create a new release branch i.e. `release/v4.12.0`.
+* Create a new release branch i.e. `v4.12.0`.
 * Push a commit into the release branch that increments the version number - see release versioning commands.
 * Create a PR from the release branch into `release`.
 * Get approval on the PR and merge into `release`.
@@ -59,7 +59,7 @@ To bump a major version - `1.2.3` to `2.0.0` - you can add an empty commit with 
 
 ```
 $> git commit -m '+major' --allow-empty
-$> git push origin release
+$> git push origin <release branch>
 ```
 
 #### Bump minor version
@@ -68,7 +68,7 @@ To bump a minor version - `1.2.3` to `1.3.0` - you can add an empty commit with 
 
 ```
 $> git commit -m '+minor' --allow-empty
-$> git push origin release
+$> git push origin <release branch>
 ```
 
 #### Bump patch version
@@ -77,5 +77,5 @@ To bump a patch version - `1.2.3` to `1.2.4` - you can add an empty commit with 
 
 ```
 $> git commit -m '+patch' --allow-empty
-$> git push origin release
+$> git push origin <release branch>
 ```
