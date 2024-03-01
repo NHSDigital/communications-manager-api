@@ -12,6 +12,10 @@ properties:
   personalisation:
     type: object
     description: The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).
+  overridingOdsCode:
+    type: string
+    description: ODS code to send this messages against on the NHS App (allowOdsOverride must be enabled on the corresponding NHS Notify client).
+    example: 'X26'
 required:
   - messageReference
   - recipient
