@@ -13,11 +13,12 @@ const {
   duplicateTemplates,
   trigger500SendingGroupId,
   trigger425SendingGroupId,
-  globalNhsAppSendingGroupId,
+  globalFreeTextNhsAppSendingGroupId,
 } = require("./config");
 
 async function batch_send(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
+  const { headers, body } = req;
+  if (headers["authorization"] === "banned") {
     sendError(
       res,
       403,
@@ -27,50 +28,53 @@ async function batch_send(req, res, next) {
     return;
   }
 
-  if (!req.body) {
+  if (!body) {
     sendError(res, 400, "Missing request body");
     next();
     return;
   }
 
-  if (!req.body.data) {
+  const message = body.data;
+  if (!message) {
     sendError(res, 400, "Missing request body data");
     next();
     return;
   }
 
-  if (!req.body.data.type) {
+  const type = message.type;
+  if (!type) {
     sendError(res, 400, "Missing request body data type");
     next();
     return;
   }
 
-  if (req.body.data.type !== "MessageBatch") {
+  if (type !== "MessageBatch") {
     sendError(res, 400, "Request body data type is not MessageBatch");
     next();
     return;
   }
 
-  if (!req.body.data.attributes) {
+  const attributes = message.attributes;
+  if (!attributes) {
     sendError(res, 400, "Missing request body data attributes");
     next();
     return;
   }
 
-  const routingPlanId = req.body.data.attributes.routingPlanId;
+  const routingPlanId = attributes.routingPlanId;
   if (!routingPlanId) {
     sendError(res, 400, "Missing routingPlanId");
     next();
     return;
   }
 
-  if (!req.body.data.attributes.messageBatchReference) {
+  if (!attributes.messageBatchReference) {
     sendError(res, 400, "Missing messageBatchReference");
     next();
     return;
   }
 
-  const messages = req.body.data.attributes.messages;
+  const messages = attributes.messages;
   if (!Array.isArray(messages)) {
     sendError(res, 400, "Missing messages array");
     next();
@@ -94,7 +98,7 @@ async function batch_send(req, res, next) {
     sendError(
       res,
       404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
+      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${routingPlanId}"`
     );
     next();
     return;
@@ -117,7 +121,7 @@ async function batch_send(req, res, next) {
   }
 
   if (
-    routingPlanId === globalNhsAppSendingGroupId &&
+    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
     messages.findIndex(
       (message) =>
         !hasValidGlobalTemplatePersonalisation(message.personalisation)
@@ -142,7 +146,7 @@ async function batch_send(req, res, next) {
     sendError(
       res,
       500,
-      `Templates required in "${req.body.data.attributes.routingPlanId}" routing config not found`
+      `Templates required in "${routingPlanId}" routing config not found`
     );
     next();
     return;
@@ -172,7 +176,7 @@ async function batch_send(req, res, next) {
       path: req.path,
       query: req.query,
       headers: req.rawHeaders,
-      payload: req.body,
+      payload: body,
     },
   });
 

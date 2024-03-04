@@ -7,7 +7,7 @@ const {
   duplicateTemplates,
   trigger500SendingGroupId,
   validSendingGroupIds,
-  globalNhsAppSendingGroupId,
+  globalFreeTextNhsAppSendingGroupId,
 } = require("./config");
 
 async function messages(req, res, next) {
@@ -39,7 +39,7 @@ async function messages(req, res, next) {
   }
 
   if (
-    routingPlanId === globalNhsAppSendingGroupId &&
+    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
     !hasValidGlobalTemplatePersonalisation(req.body.data.attributes.personalisation)
   ) {
     sendError(res, 400, "Expect single personalisation field of 'body'");
