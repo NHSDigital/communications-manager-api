@@ -34,14 +34,14 @@ async function batch_send(req, res, next) {
     return;
   }
 
-  const message = body.data;
-  if (!message) {
+  const data = body.data;
+  if (!data) {
     sendError(res, 400, "Missing request body data");
     next();
     return;
   }
 
-  const type = message.type;
+  const type = data.type;
   if (!type) {
     sendError(res, 400, "Missing request body data type");
     next();
@@ -54,7 +54,7 @@ async function batch_send(req, res, next) {
     return;
   }
 
-  const attributes = message.attributes;
+  const attributes = data.attributes;
   if (!attributes) {
     sendError(res, 400, "Missing request body data attributes");
     next();
