@@ -22,3 +22,4 @@
   * [GET /v1/messages](production/get_v1_messages/index.md)
 * [End to end test suite](end_to_end/index.md)
   * [Gov Notify Tests](end_to_end/gov_notify/index.md)
+  * [NHS App Tests](end_to_end/nhsapp/index.md)

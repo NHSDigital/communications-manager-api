@@ -27,7 +27,7 @@ class Assertions():
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
-    def assert_200_response_message(resp, environment):
+    def assert_200_response_message(resp, base_url):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
@@ -73,17 +73,7 @@ class Assertions():
             assert response.get("attributes").get("channels")[0].get("timestamps") != ""
             assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
             assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
-
-        hostname = f"{environment}.api.service.nhs.uk"
-        prefixes = ["internal-dev", "internal-qa"]
-
-        if environment == 'sandbox':
-            for p in prefixes:
-                if p in response.get("links").get("self"):
-                    hostname = f"{p}-{hostname}"
-                    break
-
-        assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
+        assert response.get("links").get("self").startswith(base_url)
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
 
     @staticmethod

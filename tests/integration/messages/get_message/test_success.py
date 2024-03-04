@@ -16,5 +16,5 @@ def test_200_get_message(message_ids):
         f"{INT_URL}{MESSAGES_ENDPOINT}/{message_ids}",
         headers={"Authorization": Authentication.generate_authentication("int")}
         )
-    Assertions.assert_200_response_message(resp, "int")
+    Assertions.assert_200_response_message(resp, INT_URL)
     Assertions.assert_get_message_response_channels(resp, "email", "delivered")
