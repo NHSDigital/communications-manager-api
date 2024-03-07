@@ -1,0 +1,230 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0",
+    "title": "Callback Example",
+    "description": "This is an example OpenAPI specification detailing an endpoint to be created by a partner who has integrated with the Communications Manager API and wishes to use the callbacks feature. For context, please see the [Communications Manager API](https://digital.nhs.uk/developer/api-catalogue/communications-manager)."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/nhs-notify-callbacks/v1/message-status": {
+      "post": {
+        "summary": "Receive a callback",
+        "description": "You may develop this endpoint on your service if you want to receive callbacks from NHS Notify.\n\nThe default behaviour of NHS Notify will make a callback to this endpoint when:\n\n* the message has been delivered\n* the message has failed to be delivered by a given channel (NHS App, email, SMS, letter)\n* the message has failed to be delivered by any channel\n\nAdditional callbacks can be configured on message status changes when requested during onboarding. These statuses are:\n\n* `pending_enrichment` - the message is currently pending enrichment\n* `enriched` - we have queried PDS for this patients details and now know how to contact this individual\n* `sending` - the message is in the process of being sent\n\nWe have created an OpenAPI specification detailing the behaviour of the endpoint that consumers should create to subscribe to callbacks.\n\nWe will send your API key in the `x-api-key header`. Your service should respond with:\n\n* `401 Unauthorized` if the API key is not received\n* `401 Unauthorized` if the API key is invalid\n\nWe will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from an authorized sender. Details on this will be provided during the onboarding process. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.\n\nEvery request includes an idempotencyKey located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.\n\nIf a request fails, our retry policy will make up to three attempts with intervals of five seconds between each attempt.",
+        "operationId": "post-v1-callbacks",
+        "parameters": [
+          {
+            "name": "x-hmac-sha256-signature",
+            "in": "header",
+            "description": "Contains a HMAC-SHA256 signature of the request body using a pre-agreed secret",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "9ee8c6aab877a97600e5c0cd8419f52d3dcdc45002e35220873d11123db6486f"
+              ]
+            }
+          },
+          {
+            "name": "x-api-key",
+            "in": "header",
+            "description": "Contains the pre-agreed API key.",
+            "schema": {
+              "type": "string",
+              "examples": [
+                "0bb04a0e-d005-42dd-8993-dacf37410a12"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.api+json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/CallbackRequest"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "servers": [
+          {
+            "url": "http://localhost:3000"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CallbackRequest": {
+        "type": "object",
+        "title": "CallbackRequest",
+        "properties": {
+          "type": {
+            "const": "MessageStatus"
+          },
+          "attributes": {
+            "type": "object",
+            "properties": {
+              "messageId": {
+                "$ref": "#/components/schemas/Type_KSUID"
+              },
+              "messageReference": {
+                "type": "string",
+                "format": "uuid",
+                "examples": [
+                  "1642109b-69eb-447f-8f97-ab70a74f5db4"
+                ]
+              },
+              "messageStatus": {
+                "$ref": "#/components/schemas/Enum_MessageStatus"
+              },
+              "messageStatusDescription": {
+                "type": "string"
+              },
+              "channels": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/MessageStatusChannel"
+                }
+              },
+              "timestamp": {
+                "type": "string",
+                "description": "Timestamp of when the callback was generated.",
+                "format": "date-time"
+              },
+              "routingPlan": {
+                "$ref": "#/components/schemas/RoutingPlan"
+              }
+            },
+            "required": [
+              "messageId",
+              "messageReference",
+              "messageStatus",
+              "timestamp",
+              "routingPlan"
+            ]
+          },
+          "links": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "format": "uri",
+                "examples": [
+                  "https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS"
+                ]
+              }
+            },
+            "required": [
+              "message"
+            ]
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "idempotencyKey": {
+                "type": "string",
+                "description": "Contains a value that you can use to deduplicate retried requests.",
+                "examples": [
+                  "2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445"
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "Type_KSUID": {
+        "type": "string",
+        "title": "Type_KSUID",
+        "pattern": "^[a-zA-Z0-9]{27}$",
+        "minLength": 27,
+        "maxLength": 27,
+        "examples": [
+          "0ujsszwN8NRY24YaXiTIE2VWDTS"
+        ]
+      },
+      "Enum_MessageStatus": {
+        "type": "string",
+        "enum": [
+          "created",
+          "pending_enrichment",
+          "enriched",
+          "sending",
+          "delivered",
+          "failed"
+        ],
+        "title": "Enum_MessageStatus"
+      },
+      "MessageStatusChannel": {
+        "type": "object",
+        "title": "MessageStatusChannel",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/Enum_ChannelType"
+          },
+          "channelStatus": {
+            "type": "string",
+            "enum": [
+              "delivered",
+              "failed"
+            ]
+          }
+        }
+      },
+      "Enum_ChannelType": {
+        "type": "string",
+        "enum": [
+          "nhsapp",
+          "email",
+          "sms",
+          "letter"
+        ],
+        "title": "Enum_ChannelType"
+      },
+      "RoutingPlan": {
+        "type": "object",
+        "title": "RoutingPlan",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "version": {
+            "type": "string",
+            "examples": [
+              "c889ViFFlqtDdgV9E2KH.w58T5I71_x_"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
