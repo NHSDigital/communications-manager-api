@@ -130,6 +130,16 @@ You need to get your software approved by us before it can go live with this API
 
 To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
 
+## Free-text communications
+
+Free-text communications (as opposed to fixed format communications) can be achieved by setting up a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
+
+| Global Routing Plan ID               | Channel/Supplier | Read wait time (before failing channel) | Personalisation field name |
+|--------------------------------------|------------------|-----------------------------------------|----------------------------|
+| 00000000-0000-0000-0000-000000000001 | NHS App          | 24 hours                                | body                       |
+
+Please see the Postman collections in the [environments and testing section](#section/Environments-and-testing) for examples.
+
 ## Errors
 
 We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
