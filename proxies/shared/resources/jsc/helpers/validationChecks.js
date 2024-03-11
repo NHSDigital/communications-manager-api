@@ -120,3 +120,17 @@ const validateDob = (errors, fieldValue, fieldPointer) => {
     }
     return true
 }
+
+const validateOdsCode = (errors, fieldValue, fieldPointer) => {
+    if (
+        !isUndefined(fieldValue)
+        && (
+            fieldValue === null
+            || typeof fieldValue !== "string"
+        )
+    ) {
+        errors.push(invalidError(fieldPointer));
+        return false
+    }
+    return true
+}

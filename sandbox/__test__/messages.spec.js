@@ -48,6 +48,9 @@ describe("/api/v1/messages", () => {
               nhsNumber: "1",
               dateOfBirth: "1",
             },
+            originator: {
+              odsCode: "X123"
+            },
             personalisation: {},
           },
         },
@@ -83,6 +86,9 @@ describe("/api/v1/messages", () => {
             recipient: {
               nhsNumber: "1",
               dateOfBirth: "1",
+            },
+            originator: {
+              odsCode: "X123"
             },
             personalisation: {
               body: "Free text message",
@@ -122,6 +128,9 @@ describe("/api/v1/messages", () => {
               nhsNumber: "1",
               dateOfBirth: "1",
             },
+            originator: {
+              odsCode: "X123"
+            },
           },
         },
       })
@@ -142,6 +151,9 @@ describe("/api/v1/messages", () => {
             recipient: {
               nhsNumber: "1",
               dateOfBirth: "1",
+            },
+            originator: {
+              odsCode: "X123"
             },
           },
           personalisation: {
@@ -166,6 +178,9 @@ describe("/api/v1/messages", () => {
             recipient: {
               nhsNumber: "1",
               dateOfBirth: "1",
+            },
+            originator: {
+              odsCode: "X123"
             },
           },
           personalisation: {
@@ -193,6 +208,9 @@ describe("/api/v1/messages", () => {
               nhsNumber: "999999999",
               dateOfBirth: "2000-01-01",
             },
+            originator: {
+              odsCode: "X123"
+            },
             personalisation: {},
           },
         },
@@ -216,6 +234,9 @@ describe("/api/v1/messages", () => {
             recipient: {
               nhsNumber: "999999999",
               dateOfBirth: "2000-01-01",
+            },
+            originator: {
+              odsCode: "X123"
             },
             personalisation: {},
           },
@@ -241,6 +262,9 @@ describe("/api/v1/messages", () => {
               nhsNumber: "999999999",
               dateOfBirth: "2000-01-01",
             },
+            originator: {
+              odsCode: "X123"
+            },
             personalisation: {},
           },
         },
@@ -265,6 +289,9 @@ describe("/api/v1/messages", () => {
               nhsNumber: "999999999",
               dateOfBirth: "2000-01-01",
             },
+            originator: {
+              odsCode: "X123"
+            },
             personalisation: {},
           },
         },
@@ -288,6 +315,9 @@ describe("/api/v1/messages", () => {
             recipient: {
               nhsNumber: "999999999",
               dateOfBirth: "2000-01-01",
+            },
+            originator: {
+              odsCode: "X123"
             },
             personalisation: {},
           },

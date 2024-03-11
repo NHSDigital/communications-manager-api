@@ -37,6 +37,6 @@ Here is an example curl request which creates a message using one of these routi
   curl -X POST \
     --header "Accept: */*" \
     --header "Content-type: application/vnd.api+json" \
-    -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"personalisation": {}}}}' \
+    -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"originator": {"odsCode":"X123"},"personalisation": {}}}}' \
     https://sandbox.api.service.nhs.uk/comms/v1/messages
 ```

@@ -33,6 +33,8 @@ properties:
             example: da0b1495-c7cb-468c-9d81-07dee089d728
           recipient:
             $ref: ../components/Recipient.yaml
+          originator:
+            $ref: ../components/Originator.yaml
           personalisation:
             type: object
             description: 'The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).'
