@@ -7,8 +7,8 @@
  For more information on RaiseFault policies within Apigee see the following resource:
     * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
 -->
-<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400BackendException.DuplicateRequestItemRefIds">
-    <DisplayName>RaiseFault.400BackendException.DuplicateRequestItemRefIds</DisplayName>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400BackendException.CannotSetOdsCode">
+    <DisplayName>RaiseFault.400BackendException.CannotSetOdsCode</DisplayName>
     <Properties/>
     <FaultResponse>
         <Set>
