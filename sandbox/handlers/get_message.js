@@ -1,7 +1,7 @@
-const fs = require('fs');
-const { sendError, write_log } = require('./utils')
+import * as  fs from 'fs'
+import { sendError, write_log } from './utils.js'
 
-async function get_message(req, res, next) {
+export async function get_message(req, res, next) {
   if (req.headers["authorization"] === "banned") {
     sendError(res, 403, "Request rejected because client service ban is in effect");
     next();
@@ -27,8 +27,4 @@ async function get_message(req, res, next) {
     res.type('json').status(200).send(fileContent)
     return
   });
-}
-
-module.exports = {
-  get_message
 }

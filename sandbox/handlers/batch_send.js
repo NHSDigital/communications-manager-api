@@ -1,10 +1,10 @@
-const KSUID = require("ksuid");
-const {
+import KSUID from "ksuid"
+import {
   sendError,
   write_log,
   hasValidGlobalTemplatePersonalisation,
-} = require("./utils");
-const {
+} from "./utils.js"
+import {
   validSendingGroupIds,
   invalidRoutingPlanId,
   sendingGroupIdWithMissingNHSTemplates,
@@ -14,9 +14,9 @@ const {
   trigger500SendingGroupId,
   trigger425SendingGroupId,
   globalFreeTextNhsAppSendingGroupId,
-} = require("./config");
+} from "./config.js"
 
-async function batch_send(req, res, next) {
+export async function batch_send(req, res, next) {
   const { headers, body } = req;
   if (headers["authorization"] === "banned") {
     sendError(
@@ -190,7 +190,3 @@ async function batch_send(req, res, next) {
   res.end();
   next();
 }
-
-module.exports = {
-  batch_send,
-};

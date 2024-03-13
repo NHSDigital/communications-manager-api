@@ -1,6 +1,6 @@
-const KSUID = require("ksuid");
-const { sendError, write_log, hasValidGlobalTemplatePersonalisation } = require("./utils");
-const {
+import KSUID from "ksuid";
+import { sendError, write_log, hasValidGlobalTemplatePersonalisation } from "./utils.js";
+import {
   sendingGroupIdWithMissingNHSTemplates,
   sendingGroupIdWithMissingTemplates,
   sendingGroupIdWithDuplicateTemplates,
@@ -8,9 +8,9 @@ const {
   trigger500SendingGroupId,
   validSendingGroupIds,
   globalFreeTextNhsAppSendingGroupId,
-} = require("./config");
+} from "./config.js"
 
-async function messages(req, res, next) {
+export async function messages(req, res, next) {
   if (req.headers["authorization"] === "banned") {
     sendError(
       res,
@@ -120,7 +120,3 @@ async function messages(req, res, next) {
   res.end();
   next();
 }
-
-module.exports = {
-  messages,
-};

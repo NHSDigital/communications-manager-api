@@ -1,11 +1,10 @@
-const { expect } = require("chai");
-const request = require("supertest");
-const assert = require("chai").assert;
-
-const { setup } = require("./helpers");
+import request from "supertest"
+import { assert } from "chai";
+import { setup } from './helpers.js'
 
 describe("/api/v1/messages", () => {
   let env;
+  let server;
 
   before(function () {
     env = process.env;
