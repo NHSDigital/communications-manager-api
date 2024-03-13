@@ -15,7 +15,7 @@
   "dependencies": {
     "express": "^5.0.0-alpha.8",
     "ksuid": "^3.0.0",
-    "loglevel": "^1.7.1",
+    "loglevel": "^1.9.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
