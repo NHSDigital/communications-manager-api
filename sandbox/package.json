@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL --failOn AGPL",
     "start": "node index.js",
     "start:hotreload": "nodemon index.js",
-    "test": "node ./node_modules/.bin/nyc node ./node_modules/.bin/mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./sandbox-unit-report.xml"
+    "test": "c8 mocha --reporter mocha-junit-reporter --reporter-options mochaFile=./sandbox-unit-report.xml"
   },
   "license": "Unlicense",
   "private": true,
@@ -18,13 +19,13 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "c8": "^9.1.0",
     "chai": "^5",
     "license-checker": "^25.0.1",
     "mocha": "<11.0.0",
     "mocha-junit-reporter": "^2.2.1",
     "mocha-multi": "^1.1.3",
     "nodemon": "^3.0.2",
-    "nyc": "^15.1.0",
     "supertest": "^6.3.4"
   }
 }

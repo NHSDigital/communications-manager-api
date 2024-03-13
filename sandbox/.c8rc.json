@@ -1,17 +1,17 @@
 {
-    "all" : true,
+    "all": true,
     "check-coverage": true,
     "lines": 80,
     "statements": 80,
     "functions": 80,
     "branches": 65,
-    "exclude" : [
+    "exclude": [
         "**/*.spec.js",
         ".eslintrc.js",
         "index.js",
         "coverage/**/*"
     ],
-    "reporter" : [
+    "reporter": [
         "lcov",
         "text"
     ]
