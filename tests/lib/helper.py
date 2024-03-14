@@ -1,5 +1,8 @@
 import requests
 import time
+import os
+from install_playwright import install
+from playwright.sync_api import expect, sync_playwright
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib import Error_Handler
 
@@ -52,3 +55,50 @@ class Helper():
         if message_status != end_state:
             raise TimeoutError(f"Request took too long to be processed. \
                                Message status: {message_status}, Message ID: {message_id}")
+
+    @staticmethod
+    def nhs_app_login_and_view_message():
+        email = os.environ.get("UAT_NHS_APP_USERNAME")
+        password = os.environ.get("UAT_NHS_APP_PASSWORD")
+        otp = os.environ.get("UAT_NHS_APP_OTP")
+
+        playwright = sync_playwright().start()
+        install(playwright.chromium)
+        browser = playwright.chromium.launch()
+        page = browser.new_page()
+
+        page.goto("https://www-onboardingaos.nhsapp.service.nhs.uk/login")
+
+        expect(page.get_by_role("heading", name="Access your NHS services")).to_be_visible()
+        page.get_by_role("button", name="Continue").click()
+
+        expect(page.get_by_role("heading", name="Enter your email address")).to_be_visible()
+        page.get_by_label("Email address", exact=True).fill(email)
+        page.get_by_role("button", name="Continue").click()
+
+        expect(page.get_by_role("heading", name="Enter your password")).to_be_visible()
+        page.get_by_label("Password", exact=True).fill(password)
+        page.get_by_role("button", name="Continue").click()
+
+        expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible()
+        page.get_by_label("Security code", exact=True).fill(otp)
+        page.get_by_role("button", name="Continue").click()
+
+        page.wait_for_url('**/patient/')
+
+        expect(page.get_by_role("heading", name="Access your NHS services any time, day or night")).to_be_visible()
+        page.get_by_role("link", name="View your messages").click()
+
+        expect(page.get_by_label(
+            "Your NHS healthcare services You may receive messages:. from your GP surgery")).to_be_visible()
+        page.get_by_label("Your NHS healthcare services You may receive messages: from your GP surgery").click()
+
+        expect(page.get_by_role("heading", name="NHS App Messaging Service")).to_be_visible()
+        page.get_by_label("Messages from: NHS ENGLAND -").click()
+
+        expect(page.get_by_role("heading", name="Messages from: NHS ENGLAND -")).to_be_visible()
+        page.locator("#unreadIndicator0").click()
+
+        page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
+        expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
+        expect(page.get_by_text("MISS Yvette Marian BRAY")).to_be_visible()

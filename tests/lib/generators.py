@@ -66,14 +66,15 @@ class Generators():
         if environment == "internal-dev":
             nhsNumber = "9627193232"
             dateOfBirth = "1998-03-21"
+            if channel == "nhsapp":
+                nhsNumber = "9842434109"
+                dateOfBirth = "2002-10-23"
         elif environment == "internal-qa":
             nhsNumber = "9730617953"
             dateOfBirth = "2009-09-02"
         else:
             raise ValueError(f"Invalid environment value provided: {environment}")
         if channel == "nhsapp":
-            nhsNumber = "9842434109"
-            dateOfBirth = "2002-10-23"
             routing_plan_id = constants.NHS_APP_ROUTING_PLAN
         elif channel == "email":
             routing_plan_id = constants.EMAIL_ROUTING_PLAN

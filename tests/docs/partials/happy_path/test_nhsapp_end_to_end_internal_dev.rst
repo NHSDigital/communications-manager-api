@@ -1,5 +1,5 @@
-Scenario: An API consumer sending a request to generate an nhs app message can confirm the message is delivered
-===============================================================================================================
+Scenario: An API consumer sending a request to generate an nhs app message can confirm the message is delivered in the Internal Dev environment
+===============================================================================================================================================
 
 | **Given** the API consumer submits a request to generate an NHS App message
 | **When** the request is submitted
