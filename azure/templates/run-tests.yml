@@ -29,6 +29,9 @@ steps:
       - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
       - ptl/api-deployment/communications-manager/GUKN_API_KEY
       - ptl/api-deployment/communications-manager/UAT_GUKN_API_KEY
+      - ptl/api-deployment/communications-manager/UAT_NHS_APP_USERNAME
+      - ptl/api-deployment/communications-manager/UAT_NHS_APP_PASSWORD
+      - ptl/api-deployment/communications-manager/UAT_NHS_APP_OTP
   - bash: |
       if [ "${{ parameters.nightly }}" != "True" ]; then
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
@@ -104,6 +107,9 @@ steps:
           export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
           export GUKN_API_KEY="$(GUKN_API_KEY)"
           export UAT_GUKN_API_KEY="$(UAT_GUKN_API_KEY)"
+          export UAT_NHS_APP_USERNAME="$(UAT_NHS_APP_USERNAME)"
+          export UAT_NHS_APP_PASSWORD="$(UAT_NHS_APP_PASSWORD)"
+          export UAT_NHS_APP_OTP="$(UAT_NHS_APP_OTP)"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
 
