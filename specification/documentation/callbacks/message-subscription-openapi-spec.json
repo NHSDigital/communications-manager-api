@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0",
     "title": "Callback Example",
-    "description": "This is an example OpenAPI specification detailing an endpoint to be created by a partner who has integrated with NHS Notify and wishes to use the callbacks feature. For context, please see the [NHS Notify API](https://digital.nhs.uk/developer/api-catalogue/communications-manager)."
+    "description": "This is an example OpenAPI specification detailing an endpoint to be created by a partner who has integrated with NHS Notify and wishes to use the callbacks feature."
   },
   "servers": [
     {
