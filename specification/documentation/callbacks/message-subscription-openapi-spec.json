@@ -114,7 +114,7 @@
               },
               "timestamp": {
                 "type": "string",
-                "description": "Timestamp of when the callback was generated.",
+                "description": "Timestamp of the callback event.",
                 "format": "date-time"
               },
               "routingPlan": {
