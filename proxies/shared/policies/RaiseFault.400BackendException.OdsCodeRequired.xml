@@ -7,8 +7,8 @@
  For more information on RaiseFault policies within Apigee see the following resource:
     * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
 -->
-<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400BackendException.CannotSetOdsCode">
-    <DisplayName>RaiseFault.400BackendException.CannotSetOdsCode</DisplayName>
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400BackendException.OdsCodeRequired">
+    <DisplayName>RaiseFault.400BackendException.OdsCodeRequired</DisplayName>
     <Properties/>
     <FaultResponse>
         <Set>
@@ -20,13 +20,13 @@
                     "errors" : [
                         {
                             "id" : "@messageid#.0",
-                            "code" : "CM_CANNOT_SET_ODS_CODE",
+                            "code" : "CM_ODS_CODE_REQUIRED",
                             "links" : {
                                 "about" : "{{ ERROR_ABOUT_LINK }}"
                             },
                             "status" : "400",
-                            "title" : "Cannot set ODS code",
-                            "detail" : "Your account is not permitted to set originator ODS codes.",
+                            "title" : "Originator odsCode must be provided",
+                            "detail" : "An originator with odsCode must be provided, as your account does not have a default ODS code.",
                             "source" : {
                                 "pointer" : "/data/attributes/messages"
                             }

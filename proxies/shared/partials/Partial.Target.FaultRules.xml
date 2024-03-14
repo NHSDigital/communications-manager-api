@@ -27,6 +27,10 @@
         <Condition>response.status.code = 404</Condition>
     </Step>
     <Step>
+        <Name>RaiseFault.400BackendException.OdsCodeRequired</Name>
+        <Condition>response.status.code = 400 and response.content Like "*odsCode must be provided*"</Condition>
+    </Step>
+    <Step>
         <Name>RaiseFault.400BackendException.CannotSetOdsCode</Name>
         <Condition>response.status.code = 400 and response.content Like "*ODS code override is not enabled*"</Condition>
     </Step>
