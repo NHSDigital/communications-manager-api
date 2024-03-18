@@ -48,4 +48,5 @@ properties:
                 - /data/attributes/routingPlanId
                 - /data/attributes/recipient/nhsNumber
                 - /data/attributes/recipient/dateOfBirth
+                - /data/attributes/originator/odsCode
               example: /data/attributes/routingPlanId
