@@ -20,13 +20,14 @@ These are not validated when we store your message, but will be validated when w
 
 ### Sandbox
 
-When sending this request on sandbox you must use one of the 5 preconfigured routing plan identifiers:
+When sending this request on sandbox you must use one of the 6 preconfigured routing plan identifiers:
 
 * `b838b13c-f98c-4def-93f0-515d4e4f4ee1`
 * `49e43b98-70cb-47a9-a55e-fe70c9a6f77c`
 * `b402cd20-b62a-4357-8e02-2952959531c8`
 * `936e9d45-15de-4a95-bb36-ae163c33ae53`
 * `9ba00d23-cd6f-4aca-8688-00abc85a7980`
+* `00000000-0000-0000-0000-000000000001`
 
 On other environments these values will be established as part of your [NHS Notify onboarding](#overview--onboarding).
 
@@ -36,6 +37,6 @@ Here is an example curl request which creates a message using one of these routi
   curl -X POST \
     --header "Accept: */*" \
     --header "Content-type: application/vnd.api+json" \
-    -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"personalisation": {}}}}' \
+    -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"originator": {"odsCode":"X123"},"personalisation": {}}}}' \
     https://sandbox.api.service.nhs.uk/comms/v1/messages
 ```

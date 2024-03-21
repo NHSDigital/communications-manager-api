@@ -1,17 +1,22 @@
-const KSUID = require("ksuid");
-const { sendError, write_log } = require("./utils")
-const {
+import KSUID from "ksuid";
+import { sendError, write_log, hasValidGlobalTemplatePersonalisation } from "./utils.js";
+import {
   sendingGroupIdWithMissingNHSTemplates,
   sendingGroupIdWithMissingTemplates,
   sendingGroupIdWithDuplicateTemplates,
   duplicateTemplates,
   trigger500SendingGroupId,
   validSendingGroupIds,
-} = require("./config")
+  globalFreeTextNhsAppSendingGroupId,
+} from "./config.js"
 
-async function messages(req, res, next) {
+export async function messages(req, res, next) {
   if (req.headers["authorization"] === "banned") {
-    sendError(res, 403, "Request rejected because client service ban is in effect");
+    sendError(
+      res,
+      403,
+      "Request rejected because client service ban is in effect"
+    );
     next();
     return;
   }
@@ -22,31 +27,59 @@ async function messages(req, res, next) {
     return;
   }
 
-  if (!validSendingGroupIds[req.body.data.attributes.routingPlanId]) {
-    sendError(res, 404, `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`);
+  const routingPlanId = req.body.data.attributes.routingPlanId;
+  if (!validSendingGroupIds[routingPlanId]) {
+    sendError(
+      res,
+      404,
+      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
+    );
     next();
     return;
   }
 
-  if (req.body.data.attributes.routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
-    sendError(res, 500, `NHS App Template does not exist with internalTemplateId: invalid-template`);
+  if (
+    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
+    !hasValidGlobalTemplatePersonalisation(req.body.data.attributes.personalisation)
+  ) {
+    sendError(res, 400, "Expect single personalisation field of 'body'");
     next();
     return;
   }
 
-  if (req.body.data.attributes.routingPlanId === sendingGroupIdWithMissingTemplates) {
-    sendError(res, 500, `Templates required in "${sendingGroupIdWithMissingTemplates}" routing config not found`);
+  if (routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
+    sendError(
+      res,
+      500,
+      `NHS App Template does not exist with internalTemplateId: invalid-template`
+    );
     next();
     return;
   }
 
-  if (req.body.data.attributes.routingPlanId === sendingGroupIdWithDuplicateTemplates) {
-    sendError(res, 500, `Duplicate templates in routing config: ${JSON.stringify(duplicateTemplates)}`);
+  if (routingPlanId === sendingGroupIdWithMissingTemplates) {
+    sendError(
+      res,
+      500,
+      `Templates required in "${sendingGroupIdWithMissingTemplates}" routing config not found`
+    );
     next();
     return;
   }
 
-  if (req.body.data.attributes.routingPlanId === trigger500SendingGroupId) {
+  if (routingPlanId === sendingGroupIdWithDuplicateTemplates) {
+    sendError(
+      res,
+      500,
+      `Duplicate templates in routing config: ${JSON.stringify(
+        duplicateTemplates
+      )}`
+    );
+    next();
+    return;
+  }
+
+  if (routingPlanId === trigger500SendingGroupId) {
     sendError(res, 500, "Error writing request items to DynamoDB");
     next();
     return;
@@ -58,11 +91,11 @@ async function messages(req, res, next) {
       path: req.path,
       query: req.query,
       headers: req.rawHeaders,
-      payload: req.body
-    }
+      payload: req.body,
+    },
   });
 
-  const messageId = KSUID.randomSync(new Date()).string
+  const messageId = KSUID.randomSync(new Date()).string;
 
   res.status(201).json({
     data: {
@@ -70,24 +103,20 @@ async function messages(req, res, next) {
       id: messageId,
       attributes: {
         routingPlan: {
-            id: req.body.data.attributes.routingPlanId,
-            version: validSendingGroupIds[req.body.data.attributes.routingPlanId]
+          id: routingPlanId,
+          version: validSendingGroupIds[routingPlanId],
         },
         messageReference: req.body.data.attributes.messageReference,
         messageStatus: "created",
         timestamps: {
-          created: new Date()
-        }
+          created: new Date(),
+        },
       },
       links: {
-        self: `%PATH_ROOT%/${messageId}`
-      }
-    }
+        self: `%PATH_ROOT%/${messageId}`,
+      },
+    },
   });
   res.end();
   next();
-}
-
-module.exports = {
-  messages
 }

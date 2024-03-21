@@ -19,6 +19,8 @@ properties:
             description: |-
               This is the routing plan you wish your message to be sent with. The values available to you for this are setup during your [onboarding process](#overview--onboarding).
 
+              There are also some global routingPlanIds available, please see the [Free-text communications documentation](#section/Free-text-communications).
+
               If you send through an invalid routing plan id you will receive a 404 response.
             example: b838b13c-f98c-4def-93f0-515d4e4f4ee1
           messageReference:
@@ -31,6 +33,8 @@ properties:
             example: da0b1495-c7cb-468c-9d81-07dee089d728
           recipient:
             $ref: ../components/Recipient.yaml
+          originator:
+            $ref: ../components/Originator.yaml
           personalisation:
             type: object
             description: 'The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).'

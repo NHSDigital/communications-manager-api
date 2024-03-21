@@ -1,5 +1,5 @@
-Scenario: An API consumer sending a request to generate a letter can confirm the message is received in Gov Notify
-==================================================================================================================
+Scenario: An API consumer sending a request to generate a letter can confirm the message is received in Gov Notify in the Internal Dev environment
+==================================================================================================================================================
 
 | **Given** the API consumer submits a request to generate a letter
 | **When** the request is submitted

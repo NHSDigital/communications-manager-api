@@ -81,6 +81,15 @@ const validate = () => {
 
               }
 
+              if (!isUndefined(message.originator)) {
+                // $.data.attributes.messages.x.originator
+                const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator")
+                if (validOriginatorObject) {
+                  // $.data.attributes.messages.x.originator.odsCode
+                  validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode")
+                }
+              }
+
               // $.data.attributes.messages.x.personalisation
               pointer = "/data/attributes/messages/" + index + "/personalisation";
               if (!isUndefined(message.personalisation)) {

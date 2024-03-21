@@ -1,11 +1,14 @@
-const request = require("supertest");
-const fs = require('fs');
-const path = require('path');
-const assert = require("chai").assert;
-const { setup } = require('./helpers')
+import request from "supertest"
+import * as fs from "fs"
+import * as path from "path"
+import { fileURLToPath } from 'url';
+import { assert } from "chai";
+import { setup } from './helpers.js'
 
 function getMessageData() {
-    const directoryPath = path.join(__dirname, '../messages'); // Path to the directory
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    const directoryPath = path.join(__dirname, '../messages');
     let messagesArray = []; // Array to hold the result
 
     const files = fs.readdirSync(directoryPath)
@@ -22,6 +25,7 @@ function getMessageData() {
 }
 describe('/api/v1/messages/{messageId}', () => {
     let env;
+    let server;
 
     before(function () {
         env = process.env;

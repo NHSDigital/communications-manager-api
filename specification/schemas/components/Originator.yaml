@@ -1,0 +1,8 @@
+type: object
+title: Originator
+additionalProperties: false
+properties:
+  odsCode:
+    type: string
+    description: ODS code to send this messages against on the NHS App (allowOdsOverride must be enabled on the corresponding NHS Notify client).
+    example: 'X26'

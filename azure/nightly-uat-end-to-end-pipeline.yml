@@ -1,0 +1,54 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+parameters:
+  - name: DISABLE_VERSION_OVERRIDE
+    displayName: Disable version override
+    type: boolean
+    default: false
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge-fixed
+      endpoint: NHSDigital (63)
+
+schedules:
+  - cron: 0 2 * * *
+    displayName: 2am daily
+    branches:
+      include: ['release']
+    always: true
+
+pool:
+  name: 'AWS-ECS'
+
+variables:
+  - template: project.yml
+  - name: SERVICE_ARTIFACT_NAME
+    value: ''
+
+steps:
+  - ${{ if eq(parameters.DISABLE_VERSION_OVERRIDE, false) }}:
+    - template: ./templates/checkout-latest-release.yml
+      parameters:
+        environment: 'internal-qa'
+  
+  - template: ./templates/teams-alert-setup.yml
+    parameters:
+      webhook_uri: 'ALERTS_DEV_API_WEBHOOK_URI'
+
+  - template: ./templates/run-tests.yml
+    parameters:
+      nightly: true
+      environment: 'internal-qa'
+      test_command: 'make e2e-test-uat'
+    
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'UAT End to End'
+      webhook_uri: 'ALERTS_DEV_API_WEBHOOK_URI'

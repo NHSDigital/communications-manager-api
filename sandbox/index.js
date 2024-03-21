@@ -1,11 +1,10 @@
 "use strict";
 
-const app = require("./app");
+import { setup, start } from './app.js';
 
-app.setup(process.env);
+setup(process.env);
 
-const server = app.start(process.env);
-
+const server = start(process.env);
 
 const signals = {
     'SIGHUP': 1,
@@ -29,4 +28,4 @@ Object.keys(signals).forEach((signal) => {
 });
 
 
-module.exports = {server: server};
+export { server };
