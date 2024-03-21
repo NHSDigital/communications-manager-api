@@ -28,6 +28,7 @@ steps:
       - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
       - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
       - ptl/api-deployment/communications-manager/GUKN_API_KEY
+      - ptl/api-deployment/communications-manager/UAT_GUKN_API_KEY
   - bash: |
       if [ "${{ parameters.nightly }}" != "True" ]; then
         cd $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
@@ -102,6 +103,7 @@ steps:
           export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
           export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
           export GUKN_API_KEY="$(GUKN_API_KEY)"
+          export UAT_GUKN_API_KEY="$(UAT_GUKN_API_KEY)"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
 

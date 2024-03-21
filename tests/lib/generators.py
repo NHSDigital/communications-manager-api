@@ -62,9 +62,15 @@ class Generators():
         }
 
     @staticmethod
-    def generate_send_message_body(channel):
-        nhsNumber = "9627193232"
-        dateOfBirth = "1998-03-21"
+    def generate_send_message_body(channel, environment):
+        if environment == "internal-dev":
+            nhsNumber = "9627193232"
+            dateOfBirth = "1998-03-21"
+        elif environment == "internal-qa":
+            nhsNumber = "9730617953"
+            dateOfBirth = "2009-09-02"
+        else:
+            raise ValueError(f"Invalid environment value provided: {environment}")
         if channel == "nhsapp":
             nhsNumber = "9842434109"
             dateOfBirth = "2002-10-23"
@@ -76,7 +82,7 @@ class Generators():
         elif channel == "letter":
             routing_plan_id = constants.LETTER_ROUTING_PLAN
         else:
-            raise
+            raise ValueError(f"Invalid channel value provided: {channel}")
         return {
             "data": {
                 "type": "Message",
