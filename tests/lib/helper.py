@@ -57,7 +57,7 @@ class Helper():
                                Message status: {message_status}, Message ID: {message_id}")
 
     @staticmethod
-    def nhs_app_login_and_view_message():
+    def nhs_app_login_and_view_message(personalisation):
         email = os.environ.get("UAT_NHS_APP_USERNAME")
         password = os.environ.get("UAT_NHS_APP_PASSWORD")
         otp = os.environ.get("UAT_NHS_APP_OTP")
@@ -101,4 +101,4 @@ class Helper():
 
         page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
         expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
-        expect(page.get_by_text("MISS Yvette Marian BRAY")).to_be_visible()
+        expect(page.get_by_text(f"APIM end to end test: {personalisation}")).to_be_visible()

@@ -62,7 +62,7 @@ class Generators():
         }
 
     @staticmethod
-    def generate_send_message_body(channel, environment):
+    def generate_send_message_body(channel, environment, personalisation="Hello"):
         if environment == "internal-dev":
             nhsNumber = "9627193232"
             dateOfBirth = "1998-03-21"
@@ -95,7 +95,7 @@ class Generators():
                         "dateOfBirth": dateOfBirth
                     },
                     "personalisation": {
-                        "exampleParameter": "hello!"
+                        "exampleParameter": personalisation
                     }
                 }
             }

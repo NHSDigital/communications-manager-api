@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from lib import Assertions, Generators, Helper
 
 
@@ -34,10 +35,12 @@ def test_nhsapp_end_to_end_uat(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/happy_path/test_nhsapp_end_to_end_uat.rst
     """
+    personalisation = str(uuid.uuid1())
+
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
         nhsd_apim_auth_headers,
-        Generators.generate_send_message_body("nhsapp", "internal-qa")
+        Generators.generate_send_message_body("nhsapp", "internal-qa", personalisation)
     )
 
     message_id = resp.json().get("data").get("id")
@@ -52,4 +55,4 @@ def test_nhsapp_end_to_end_uat(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     Assertions.assert_get_message_status(
         Helper.get_message(nhsd_apim_proxy_url, nhsd_apim_auth_headers, message_id), "sending")
 
-    Helper.nhs_app_login_and_view_message()
+    Helper.nhs_app_login_and_view_message(personalisation)
