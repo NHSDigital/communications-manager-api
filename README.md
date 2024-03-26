@@ -152,6 +152,9 @@ If you are running the end to end tests you will need to set the following envir
 * `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 * `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 
+**Note**
+When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
+
 ##### Running with make
 
 In the root folder run the following command:
