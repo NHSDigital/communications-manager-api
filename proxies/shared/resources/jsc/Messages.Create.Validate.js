@@ -56,7 +56,7 @@ const validate = () => {
                   const validOriginatorObject = validateObject(errors, data.attributes.originator, "/data/attributes/originator")
                   if (validOriginatorObject) {
                     // $.data.attributes.originator.odsCode
-                    validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/originator/odsCode")
+                    validateOdsCode(errors, data.attributes.originator.odsCode, "/data/attributes/originator/odsCode")
                   }
                 }
 
