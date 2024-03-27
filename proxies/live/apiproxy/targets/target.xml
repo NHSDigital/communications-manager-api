@@ -20,10 +20,7 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <LoadBalancer>
-            <Server name="communications-manager-target" />
-        </LoadBalancer>
-        <Path>{requestpath}</Path>
+        <URL>https://comms-apim.de-chel6.communications.national.nhs.uk</URL>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
