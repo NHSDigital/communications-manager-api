@@ -132,11 +132,13 @@
       ],
       "info" : {
          "_postman_id" : "fbe32763-302e-4a0b-b6e9-3a20f1bde923",
+         "createdAt" : null,
          "description" : "This collection enables you to make requests against our integration test environment.\n\nThis environment requires you to be authenticated and authorised to make these requests, plus you must have completed (or be in the progress of) onboarding onto the Communications Manager Service.\n\nFor more information on the Communications Manager API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager).\n\n## Authentication\n\nThis collection will carry out the [signed JWT authentication flow](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) for you automatically.\n\nYou must provide your API key and private key within the environment variables.\n\nIf you have not yet created an API client with an API key and private key, then please [refer to the documentation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication). Instructions are given here on how to create an application and how to generate a key pair for generating bearer tokens.\n\nMake sure to create your API application in the `Integration Testing` environment, and to request access to the `Communications Manager (Integration Testing)` API. Your API application will be granted access to this API automatically.\n\nOnce you have your API key and your private key, put these into the `api_key` and `private_key` variables within the `Integration` environment.\n\nRequests will now have a bearer token attached to them automatically, authenticating your requests.\n\nIf you have not yet started the onboarding process with the Communications Manager service then your requests, although authenticated, will return a `403 - Forbidden` response.\n\n**Ensure that your API key and private key are kept secret at all times!**\n\n**If you publish/share your API key or private key you must revoke them via the** [NHS onboarding portal](https://onboarding.prod.api.platform.nhs.uk/) **immediately.**\n\nLeaking these credentials will allow other people to generate tokens to call the API on your behalf.",
+         "lastUpdatedBy" : null,
          "name" : "Communications Manager - Integration",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "updatedAt" : "2024-01-03T15:56:30.000Z"
+         "updatedAt" : "2024-03-26T13:24:53.000Z"
       },
       "item" : [
          {
@@ -318,6 +320,43 @@
             ],
             "name" : "Send Messages",
             "uid" : "28740466-f5ca3438-8247-4f80-a0f2-29dfb6ee85d3"
+         },
+         {
+            "id" : "10354e32-504e-478c-b130-ecc063814e1a",
+            "item" : [
+               {
+                  "id" : "4dbe3915-b971-4cae-8590-9d3cb7e62f14",
+                  "name" : "200 - Get Message",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "This request successfully retrieves a message status.",
+                     "header" : [
+                        {
+                           "key" : "Authorization",
+                           "value" : "{{authorization_header_value}}"
+                        }
+                     ],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages",
+                           "2aUxQER3co3kXdvTKrhbSFHRRxR"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages/2aUxQER3co3kXdvTKrhbSFHRRxR"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-4dbe3915-b971-4cae-8590-9d3cb7e62f14"
+               }
+            ],
+            "name" : "Get Message",
+            "uid" : "28740466-10354e32-504e-478c-b130-ecc063814e1a"
          }
       ],
       "variable" : [
