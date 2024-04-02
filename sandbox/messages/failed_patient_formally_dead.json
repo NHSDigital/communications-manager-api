@@ -1,0 +1,32 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "failed_patient_formally_dead",
+    "attributes": {
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
+      "messageReference": "2f2e071c-9fba-4dde-bf8d-8dd0c8060300",
+      "messageStatus": "failed",
+      "messageStatusDescription": "Failed reason: Patient is formally dead",
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "failed": "2023-10-09T10:31:59Z"
+      },
+      "metadata": [
+        {
+          "queriedAt": "2023-10-09T10:31:59Z",
+          "source": "pds",
+          "version": "1",
+          "labels": []
+          
+        }
+      ]
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

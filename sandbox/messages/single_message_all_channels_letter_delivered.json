@@ -1,0 +1,100 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "single_message_all_channels_letter_delivered",
+    "attributes": {
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
+      "messageReference": "eb9a3342-afb2-4977-9536-65fab370376c",
+      "messageStatus": "delivered",
+      "channels": [
+        {
+          "type": "nhsapp",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "Failed reason: NHS number not found",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
+            "failed": "2023-10-09T10:52:12Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        },
+        {
+          "type": "email",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
+            "failed": "2023-10-09T11:25:23Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        },
+        {
+          "type": "sms",
+          "retryCount": 0,
+          "channelStatus": "failed",
+          "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
+            "failed": "2023-10-09T11:48:52Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        },
+        {
+          "type": "letter",
+          "retryCount": 0,
+          "channelStatus": "delivered",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:39:37Z",
+            "delivered": "2023-10-12T08:23:41Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:39:37Z",
+        "delivered": "2023-10-12T08:23:41Z"
+      },
+      "metadata": [
+        {
+          "queriedAt": "2023-10-09T10:31:59Z",
+          "version": "23",
+          "source": "pds",
+          "labels": [
+            "nhsapp",
+            "email",
+            "sms",
+            "letter"
+          ]
+        }
+      ]
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}

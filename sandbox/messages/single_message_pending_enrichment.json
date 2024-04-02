@@ -1,0 +1,20 @@
+{
+    "data": {
+        "type": "Message",
+        "id": "single_message_pending_enrichment",
+        "attributes": {
+            "messageReference": "1cb49aea-f604-4d8a-8ad2-352d4016dc87",
+            "messageStatus": "pending_enrichment",
+            "timestamps": {
+                "created": "2024-04-02T07:56:27.566Z"
+            },
+            "routingPlan": {
+                "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "version": "1"
+            }
+        },
+        "links": {
+            "self": "%PATH_ROOT%"
+        }
+    }
+}

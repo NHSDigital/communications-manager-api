@@ -1,0 +1,57 @@
+{
+    "data": {
+      "type": "Message",
+      "id": "message_batch_letter_delivered",
+      "attributes": {
+        "routingPlan": {
+          "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+          "version": "1"
+        },
+        "messageReference": "46f47f7b-53a4-4a61-a5bf-04916624d7f9",
+        "messageStatus": "delivered",
+        "channels": [
+          {
+            "type": "letter",
+            "retryCount": 0,
+            "channelStatus": "delivered",
+            "timestamps": {
+              "created": "2023-10-09T10:31:59Z",
+              "enriched": "2023-10-09T10:31:59Z",
+              "delivered": "2023-10-09T10:52:12Z"
+            },
+            "routingPlan": {
+                "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "version": "1",
+                "type": "original"
+            }
+          }
+        ],
+        "timestamps": {
+          "created": "2023-10-09T10:31:37Z",
+          "enriched": "2023-10-09T10:31:59Z",
+          "delivered": "2023-10-09T10:52:12Z"
+        },
+        "metadata": [
+          {
+            "queriedAt": "2023-10-09T10:31:59Z",
+            "version": "23",
+            "source": "pds",
+            "labels": [
+              "letter"
+            ]
+          }
+        ]
+      },
+      "links": {
+        "self": "%PATH_ROOT%"
+      },
+      "relationships": {
+        "messageBatch": {
+          "data": {
+            "type": "MessageBatch",
+            "id": "message_batch_letter_delivered_id"
+          }
+        }
+      }
+    }
+  }
