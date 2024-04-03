@@ -53,6 +53,9 @@ VALID_NHS_NUMBER = "9990548609"
 INVALID_DOB = ["1990-10-1", "1990-1-10", "90-10-10", "10-12-1990", "1-MAY-2000", "1990/01/01", "", [], {}, 5, 0.1, None]
 VALID_DOB = ["0000-01-01", "2023-01-01"]
 
+INVALID_ORIGINATOR = [5, 0.1, "", "some-string", []]
+INVALID_ODS_CODE = [5, 0.1, "", []]
+
 INVALID_PERSONALISATION_VALUES = [5, "", "some-string", []]
 NULL_VALUES = [None]
 

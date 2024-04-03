@@ -127,6 +127,7 @@ const validateOdsCode = (errors, fieldValue, fieldPointer) => {
         && (
             fieldValue === null
             || typeof fieldValue !== "string"
+            || fieldValue.length === 0
         )
     ) {
         errors.push(invalidError(fieldPointer));

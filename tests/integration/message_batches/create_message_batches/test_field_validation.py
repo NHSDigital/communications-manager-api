@@ -526,3 +526,85 @@ def test_null_personalisation(correlation_id, personalisation):
         Generators.generate_null_value_error("/data/attributes/messages/0/personalisation"),
         correlation_id
     )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("originator", constants.INVALID_ORIGINATOR)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_originator(originator, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_originator.rst
+    """
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        **headers,
+        "X-Correlation-Id": correlation_id,
+        "Authorization": f"{Authentication.generate_authentication('int')}"
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "originator": originator,
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/messages/0/originator"),
+        correlation_id
+    )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("odsCode", constants.INVALID_ODS_CODE)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_ods_code(odsCode, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_ods_code.rst
+    """
+    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        **headers,
+        "X-Correlation-Id": correlation_id,
+        "Authorization": f"{Authentication.generate_authentication('int')}"
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "originator": {
+                            "odsCode": odsCode
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/messages/0/originator/odsCode"),
+        correlation_id
+    )

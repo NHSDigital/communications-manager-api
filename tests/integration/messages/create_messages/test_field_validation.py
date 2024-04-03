@@ -3,7 +3,7 @@ import pytest
 import uuid
 from lib import Assertions, Permutations, Generators, Authentication
 from lib.constants.constants import INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
-    INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS
+    INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS, INVALID_ORIGINATOR, INVALID_ODS_CODE
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
 
@@ -334,5 +334,77 @@ def test_null_personalisation(correlation_id, personalisation):
         resp,
         400,
         Generators.generate_null_value_error("/data/attributes/personalisation"),
+        correlation_id
+    )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("originator", INVALID_ORIGINATOR)
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+def test_invalid_originator(originator, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_originator.rst
+    """
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+        "Authorization": Authentication.generate_authentication("int"),
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageReference": "invalid",
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "2023-01-01"
+                },
+                "originator": originator,
+                "personalisation": {}
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/originator"),
+        correlation_id
+    )
+
+
+@pytest.mark.inttest
+@pytest.mark.parametrize("odsCode", INVALID_ODS_CODE)
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+def test_invalid_ods_code(odsCode, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_ods_code.rst
+    """
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+        **headers,
+        "X-Correlation-Id": correlation_id,
+        "Authorization": f"{Authentication.generate_authentication('int')}"
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageReference": "invalid",
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "2023-01-01"
+                },
+                "originator": {
+                    "odsCode": odsCode
+                },
+                "personalisation": {}
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/originator/odsCode"),
         correlation_id
     )
