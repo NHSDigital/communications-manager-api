@@ -1,0 +1,88 @@
+{
+    "data": [
+      {
+        "id": "9999999018",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": true
+        }
+      },
+      {
+        "id": "9999999026",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999034",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999042",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999050",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999069",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999077",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999085",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999093",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      },
+      {
+        "id": "9999999107",
+        "type": "NhsAppAccount",
+        "attributes": {
+          "notificationsEnabled": false
+        }
+      }
+    ],
+    "links": {
+      "last": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=8",
+      "next": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=5",
+      "prev": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=3",
+      "self": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=4"
+    },
+    "relationships": {
+      "ods-organisation-code": {
+        "data": {
+          "id": "T00001",
+          "type": "OdsOrganisationCode"
+        }
+      }
+    }
+  }
