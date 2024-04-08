@@ -15,26 +15,6 @@ export async function user_details(req, res, next) {
     return;
   }
 
-  if (req.headers["authorization"] === "server_error") {
-    sendError(
-      res,
-      500,
-      "Something went wrong"
-    );
-    next();
-    return;
-  }
-
-  if (req.headers["authorization"] === "rate_limit") {
-    sendError(
-      res,
-      429,
-      "Too many requests"
-    );
-    next();
-    return;
-  }
-
   const odsCode = req.params.odsCode.toUpperCase()
 
   if (!odsCodeRegex.test(odsCode) && odsCode !== 'X26') {

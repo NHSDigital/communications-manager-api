@@ -47,26 +47,6 @@ describe("/api/v1/ods-organisation-code/{odsCode}/nhsapp-user-details", () => {
         })
     })
 
-    it("returns a 429 when server being throttled", (done) => {
-        request(server)
-            .get("/api/v1/ods-organisation-code/T00002/nhsapp-user-details")
-            .set({ Authorization: "rate_limit" })
-            .expect(429, {
-                message: "Too many requests",
-            })
-            .expect("Content-Type", /json/, done);
-    });
-
-    it("returns a 500 when internal server error", (done) => {
-        request(server)
-            .get("/api/v1/ods-organisation-code/T00004/nhsapp-user-details")
-            .set({ Authorization: "server_error" })
-            .expect(500, {
-                message: "Something went wrong",
-            })
-            .expect("Content-Type", /json/, done);
-    });
-
     describe("returns a 200 and default response for valid ODS codes other than T00001", (done) => {
         const testCases = ['X26', 'T00002', 'X23201', 'A90001']
 
