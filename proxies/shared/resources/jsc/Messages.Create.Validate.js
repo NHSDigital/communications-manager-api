@@ -51,6 +51,15 @@ const validate = () => {
 
                 }
 
+                if (!isUndefined(data.attributes.originator)) {
+                  // $.data.attributes.originator
+                  const validOriginatorObject = validateObject(errors, data.attributes.originator, "/data/attributes/originator")
+                  if (validOriginatorObject) {
+                    // $.data.attributes.originator.odsCode
+                    validateOdsCode(errors, data.attributes.originator.odsCode, "/data/attributes/originator/odsCode")
+                  }
+                }
+
                 // $.data.attributes.personalisation
                 if (!isUndefined(data.attributes.personalisation)) {
                   validateObject(errors, data.attributes.personalisation, "/data/attributes/personalisation")

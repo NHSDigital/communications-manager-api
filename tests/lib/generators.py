@@ -28,6 +28,9 @@ class Generators():
                                 "nhsNumber": "9990548609",
                                 "dateOfBirth": "2023-01-01"
                             },
+                            "originator": {
+                                "odsCode": "X26"
+                            },
                             "personalisation": {}
                         }
                     ]
@@ -56,18 +59,28 @@ class Generators():
                         "nhsNumber": "9990548609",
                         "dateOfBirth": "2023-01-01"
                     },
+                    "originator": {
+                        "odsCode": "X26"
+                    },
                     "personalisation": {}
                 }
             }
         }
 
     @staticmethod
-    def generate_send_message_body(channel):
-        nhsNumber = "9627193232"
-        dateOfBirth = "1998-03-21"
+    def generate_send_message_body(channel, environment, personalisation="Hello"):
+        if environment == "internal-dev":
+            nhsNumber = "9627193232"
+            dateOfBirth = "1998-03-21"
+            if channel == "nhsapp":
+                nhsNumber = "9842434109"
+                dateOfBirth = "2002-10-23"
+        elif environment == "internal-qa":
+            nhsNumber = "9730617953"
+            dateOfBirth = "2009-09-02"
+        else:
+            raise ValueError(f"Invalid environment value provided: {environment}")
         if channel == "nhsapp":
-            nhsNumber = "9842434109"
-            dateOfBirth = "2002-10-23"
             routing_plan_id = constants.NHS_APP_ROUTING_PLAN
         elif channel == "email":
             routing_plan_id = constants.EMAIL_ROUTING_PLAN
@@ -76,7 +89,7 @@ class Generators():
         elif channel == "letter":
             routing_plan_id = constants.LETTER_ROUTING_PLAN
         else:
-            raise
+            raise ValueError(f"Invalid channel value provided: {channel}")
         return {
             "data": {
                 "type": "Message",
@@ -87,8 +100,11 @@ class Generators():
                         "nhsNumber": nhsNumber,
                         "dateOfBirth": dateOfBirth
                     },
+                    "originator": {
+                        "odsCode": "X26"
+                    },
                     "personalisation": {
-                        "exampleParameter": "hello!"
+                        "exampleParameter": personalisation
                     }
                 }
             }

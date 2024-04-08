@@ -1,12 +1,12 @@
 "use strict";
 
-const express = require("express");
+import express from "express";
+import log from "loglevel";
+import * as uuid from 'uuid';
+import * as handlers from "./handlers/index.js";
+
 const app = express();
 app.disable("x-powered-by");
-const log = require("loglevel");
-const uuid = require('uuid');
-
-
 
 function setup(options) {
     options = options || {};
@@ -122,7 +122,6 @@ function on_error(err, req, res, next) {
     next();
 }
 
-const handlers = require("./handlers");
 app.use(before_request);
 app.use(express.json({ limit: '10mb' }));
 app.get("/_ping", handlers.status);
@@ -137,4 +136,4 @@ app.get("/_timeout_504", handlers.backend_504);
 app.use(on_error)
 app.use(after_request);
 
-module.exports = { start: start, setup: setup };
+export { start, setup };

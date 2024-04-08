@@ -145,7 +145,15 @@ Set the `PROXY_NAME` environment variable to the environment you want to run the
 * communications-manager-pr-{num}
 * communications-manager-pr-{num}-sandbox
 
-If you are running the end to end tests you will need to set the `GUKN_API_KEY` variable to be able to access gov Notify messages, the value of the API key can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
+If you are running the end to end tests you will need to set the following environment variables:
+* `GUKN_API_KEY` - Gov UK API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
+* `UAT_GUKN_API_KEY` - Gov UK API Key for the UAT environment, this value can be found in AWS parameter store under /comms/govuknotify/uat/api_key
+* `UAT_NHS_APP_USERNAME` - NHS App username, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
+* `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
+* `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
+
+**Note**
+When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
 
 ##### Running with make
 
@@ -385,5 +393,5 @@ The collections must be kept in sync manually, this is done by setting the `INTE
 
 ## Releasing
 
-Our release process is [documented here](RELEASING.md).
+Our release process is [documented here](https://nhsd-confluence.digital.nhs.uk/pages/viewpage.action?pageId=789753975).
 

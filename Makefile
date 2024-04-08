@@ -174,7 +174,12 @@ mtls-test:
 	tests/mtls \
 	-m mtlstest
 
-e2e-test:
+e2e-test-internal-dev:
 	$(TEST_CMD) \
 	tests/end_to_end \
-	-m e2e
+	-m "e2e and devtest"
+
+e2e-test-uat:
+	$(TEST_CMD) \
+	tests/end_to_end \
+	-m "e2e and uattest"

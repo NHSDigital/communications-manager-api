@@ -15,6 +15,8 @@ properties:
             description: |-
               This is the routing plan you wish your batch to use whilst sending messages to the recipients. The values available to you for this are setup during your [onboarding process](#overview--onboarding).
 
+              There are also some global routingPlanIds available, please see the [Free-text communications documentation](#section/Free-text-communications).
+
               If you send through an invalid routing plan id you will receive a 404 response.
             format: uuid
             example: b838b13c-f98c-4def-93f0-515d4e4f4ee1
