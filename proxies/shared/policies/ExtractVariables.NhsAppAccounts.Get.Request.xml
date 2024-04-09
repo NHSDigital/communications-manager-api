@@ -5,7 +5,7 @@
  For more information, see the following resources:
     * https://docs.apigee.com/api-platform/fundamentals/introduction-flow-variables
 -->
-<ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.NhsAppAccounts.Get.Request.OdsOrganisationCode">
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.NhsAppAccounts.Get.Request">
     <VariablePrefix>data</VariablePrefix>
     <Source>request</Source>
     <QueryParam name="ods-organisation-code">
