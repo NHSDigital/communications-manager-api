@@ -11,7 +11,7 @@
         [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
         [% include './partials/Partial.Flows.CreateMessageEndpoint.xml' %]
         [% include './partials/Partial.Flows.GetMessageEndpoint.xml' %]
-        [% include './partials/Partial.Flows.GetNhsAppAccountsEndpoint' %]
+        [% include './partials/Partial.Flows.GetNhsAppAccountsEndpoint.xml' %]
     </Flows>
     [% include './partials/Partial.Target.PostFlow.xml' %]
     <FaultRules>

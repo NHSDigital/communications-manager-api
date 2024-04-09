@@ -5,11 +5,11 @@
  For more information on JavaScript policies within Apigee see the following resource:
     * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
 
- In this instance the JavaScript file modifies the response from the POST /api/v1/ods-organisation-codes/{odsOrganisationCode}/nhs-app-accounts proxy target call so it is compatible
+ In this instance the JavaScript file modifies the response from the POST /api/channels/nhsapp/accounts proxy target call so it is compatible
  with the API definition.
 -->
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.NhsAppAccounts.Get.Response">
     <DisplayName>JavaScript.NhsAppAccounts.Get.Response</DisplayName>
     <Properties/>
-    <ResourceURL>jsc://NhsAppAccounts.Get.Response.js</ResourceURL>
+    <ResourceURL>jsc://NhsAppAccounts.Ok.Response.js</ResourceURL>
 </Javascript>

@@ -18,7 +18,7 @@
     </AssignVariable>
     <AssignVariable>
         <Name>requestpath</Name>
-        <Value>/api/v1/nhs-app-accounts</Value>
+        <Value>/api/channels/nhsapp/accounts</Value>
     </AssignVariable>
     <Set>
         <Headers>
