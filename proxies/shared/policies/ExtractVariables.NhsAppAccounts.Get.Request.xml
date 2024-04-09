@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy takes the ods-organisation-code value from the URI of the request and stores it within the Apigee flow variable data.ods-organisation-code. This value is thus accessible from other policies in the proxy, referencing it with {data.messageId}.
+
+ For more information, see the following resources:
+    * https://docs.apigee.com/api-platform/fundamentals/introduction-flow-variables
+-->
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.NhsAppAccounts.Get.Request.OdsOrganisationCode">
+    <VariablePrefix>data</VariablePrefix>
+    <Source>request</Source>
+    <QueryParam name="ods-organisation-code">
+      <Pattern ignoreCase="true">{odsOrganisationCode}</Pattern>
+    </QueryParam>
+    <QueryParam name="page">
+      <Pattern ignoreCase="true">{page}</Pattern>
+    </QueryParam>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>
