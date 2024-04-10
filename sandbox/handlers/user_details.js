@@ -9,16 +9,22 @@ export async function user_details(req, res, next) {
     sendError(
       res,
       403,
-      "Request rejected because client service ban is in effect"
+      "Request rejected because client service ban is in effect."
     );
     next();
     return;
   }
 
-  const odsCode = req.params.odsCode.toUpperCase()
+  if (!req.query['ods-organisation-code']) {
+    sendError(res, 400, 'ods-organisation-code not provided.')
+    next()
+    return;
+  }
+
+  const odsCode = req.query['ods-organisation-code'].toUpperCase()
 
   if (!odsCodeRegex.test(odsCode) && odsCode !== 'X26') {
-    sendError(res, 400, 'Invalid ODS Code')
+    sendError(res, 400, 'Invalid ods-organisation-code value.')
     next()
     return;
   }
@@ -28,7 +34,7 @@ export async function user_details(req, res, next) {
   if (odsCode === paginationOdsCode) {
     fs.readFile(`./user-details/${page}.json`, 'utf-8', (err, fileContent) => {
       if (err) {
-        sendError(res, 404, `Report not found`);
+        sendError(res, 404, `Report not found.`);
         next();
         return
       }
@@ -38,7 +44,7 @@ export async function user_details(req, res, next) {
   }
 
   if (page !== '1') {
-    sendError(res, 404, `Report not found`);
+    sendError(res, 404, `Report not found.`);
     next()
     return;
   }
@@ -48,35 +54,26 @@ export async function user_details(req, res, next) {
 
 function getDefaultResponse(odsCode) {
   return {
-    data: [
-      {
-        id: "9074662803",
-        type: "NhsAppAccount",
-        attributes: {
-          notificationsEnabled: true
-        }
-      },
-      {
-        id: "9903002157",
-        type: "NhsAppAccount",
-        attributes: {
-          notificationsEnabled: false
-        }
+    data: {
+      id: odsCode,
+      type: "NHSAppAccounts",
+      attributes: {
+        accounts: [
+          {
+            nhsNumber: "9074662803",
+            notificationsEnabled: true
+          },
+          {
+            nhsNumber: "9903002157",
+            notificationsEnabled: false
+          }
+        ]
       }
-    ],
+    },
     links: {
       last: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`,
       next: null,
-      prev: null,
       self: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`
-    },
-    relationships: {
-      "ods-organisation-code": {
-        data: {
-          id: odsCode,
-          type: "OdsOrganisationCode"
-        }
-      }
     }
   }
 }

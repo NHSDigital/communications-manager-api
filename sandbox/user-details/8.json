@@ -1,88 +1,54 @@
 {
-    "data": [
-      {
-        "id": "9999999018",
-        "type": "NhsAppAccount",
-        "attributes": {
+  "data": {
+    "id": "T00001",
+    "type": "NhsAppAccounts",
+    "attributes": {
+      "accounts": [
+        {
+          "nhsNumber": "9999999018",
           "notificationsEnabled": true
-        }
-      },
-      {
-        "id": "9999999026",
-        "type": "NhsAppAccount",
-        "attributes": {
+        },
+        {
+          "nhsNumber": "9999999026",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999034",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999042",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999050",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999069",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999077",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999085",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999093",
+          "notificationsEnabled": false
+        },
+        {
+          "nhsNumber": "9999999107",
           "notificationsEnabled": false
         }
-      },
-      {
-        "id": "9999999034",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999042",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999050",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999069",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999077",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999085",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999093",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      },
-      {
-        "id": "9999999107",
-        "type": "NhsAppAccount",
-        "attributes": {
-          "notificationsEnabled": false
-        }
-      }
-    ],
-    "links": {
-      "last": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=8",
-      "next": null,
-      "prev": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=7",
-      "self": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=8"
-    },
-    "relationships": {
-      "ods-organisation-code": {
-        "data": {
-          "id": "T00001",
-          "type": "OdsOrganisationCode"
-        }
-      }
+      ]
     }
+  },
+  "links": {
+    "last": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=8",
+    "self": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=8"
   }
+}
