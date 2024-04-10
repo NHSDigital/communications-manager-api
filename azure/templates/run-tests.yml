@@ -85,6 +85,27 @@ steps:
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
+    - ${{ elseif eq(parameters.environment, 'sandbox') }}:
+      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+        parameters:
+          secret_ids:
+            - ptl/azure-devops/apigee-prod/APIGEE_PASSWORD
+            - ptl/azure-devops/apigee-prod/APIGEE_OTP_KEY
+            - ptl/azure-devops/apigee-prod/APIGEE_USERNAME
+      - template: "azure/components/get-mfa-code.yml@common"
+        parameters:
+          apigee_otp_key: $(APIGEE_OTP_KEY)
+      - template: "azure/components/get-access-token.yml@common"
+        parameters:
+          apigee_organization: "prod"
+          apigee_username: $(APIGEE_USERNAME)
+          apigee_password: $(APIGEE_PASSWORD)
+      - bash: |
+          export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+          export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
+          export PROXY_NAME="communications-manager-${{parameters.environment}}"
+          ${{ parameters.test_command }}
+        displayName: Run nightly test suite
     - ${{ else }}:
       - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
         parameters:
