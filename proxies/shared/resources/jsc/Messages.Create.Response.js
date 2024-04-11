@@ -14,12 +14,7 @@ if (data) {
     messageId = data.id
 
     if (data.links && data.links.self) {
-      const withoutPathRoot = data.links.self.replace("%PATH_ROOT%", "").split("").reverse().join("");
-      if (baseUrl.split("").reverse().join("").indexOf(withoutPathRoot) === 0) {
-        data.links.self = baseUrl;
-      } else {
-        data.links.self = data.links.self.replace("%PATH_ROOT%", baseUrl);
-      }
+      data.links.self = replacePathRoot(data.links.self);
     }
 }
 

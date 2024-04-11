@@ -2,6 +2,9 @@
     <Description>Handle get NHS App Accounts</Description>
     <Request>
         <Step>
+            <Name>JavaScript.NhsAppAccounts.Get.Validate</Name>
+        </Step>
+        <Step>
             <Name>ExtractVariables.NhsAppAccounts.Get.Request</Name>
         </Step>
         <Step>

@@ -11,5 +11,6 @@
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.NhsAppAccounts.Get.Response">
     <DisplayName>JavaScript.NhsAppAccounts.Get.Response</DisplayName>
     <Properties/>
+    <IncludeURL>jsc://helpers/responseHelpers.js</IncludeURL>
     <ResourceURL>jsc://NhsAppAccounts.Ok.Response.js</ResourceURL>
 </Javascript>

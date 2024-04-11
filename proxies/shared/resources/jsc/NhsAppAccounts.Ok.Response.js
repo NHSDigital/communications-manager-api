@@ -10,15 +10,6 @@ const baseUrl = reqUrl.split("?")[0].replace(internalHostname, hostname);
 const parsedContent = JSON.parse(content)
 var odsOrganisationCode = null;
 
-const replacePathRoot = (link) => {
-  const withoutPathRoot = link.self.replace("%PATH_ROOT%", "").split("").reverse().join("");
-  if (baseUrl.split("").reverse().join("").indexOf(withoutPathRoot) === 0) {
-    return baseUrl;
-  } else {
-    return link.replace("%PATH_ROOT%", baseUrl);
-  }
-};
-
 if (parsedContent) {
   odsOrganisationCode = parsedContent.data.id
 

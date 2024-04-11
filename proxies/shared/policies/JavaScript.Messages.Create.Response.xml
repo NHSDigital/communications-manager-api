@@ -11,5 +11,6 @@
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.Messages.Create.Response">
     <DisplayName>JavaScript.Messages.Create.Response</DisplayName>
     <Properties/>
+    <IncludeURL>jsc://helpers/responseHelpers.js</IncludeURL>
     <ResourceURL>jsc://Messages.Create.Response.js</ResourceURL>
 </Javascript>
