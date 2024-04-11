@@ -70,9 +70,9 @@ function getDefaultResponse(odsCode) {
         ]
       }
     },
-    "links": {
-      "last": `https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=${odsCode}&page=1`,
-      "self": `https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=${odsCode}&page=1`
+    links: {
+      last: `%PATH_ROOT%?ods-organisation-code=${odsCode}&page=1`,
+      self: `%PATH_ROOT%?ods-organisation-code=${odsCode}&page=1`
     }
   }
 }
