@@ -6,7 +6,7 @@
  */
 
 
-var queryParamsList = request.queryParams;
+var queryParamsList = context.getVariable("request.queryParams");
 var errors = [];
 
 const odsCodeParamName = "ods-organisation-code";
