@@ -13,7 +13,7 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
-    "express": "^5.0.0-alpha.8",
+    "express": "^5.0.0-beta.3",
     "ksuid": "^3.0.0",
     "loglevel": "^1.9.1",
     "uuid": "^9.0.1"
