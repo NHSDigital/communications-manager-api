@@ -32,3 +32,7 @@ paths:
         description: The unique identifier for the message
     get:
       $ref: endpoints/get_message.yaml
+  /callbacks:
+    post:
+      $ref: callbacks/message_subscriptions.yaml
+      tags: ['Callbacks']

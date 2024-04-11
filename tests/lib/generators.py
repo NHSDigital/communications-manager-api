@@ -28,6 +28,9 @@ class Generators():
                                 "nhsNumber": "9990548609",
                                 "dateOfBirth": "2023-01-01"
                             },
+                            "originator": {
+                                "odsCode": "X26"
+                            },
                             "personalisation": {}
                         }
                     ]
@@ -55,6 +58,9 @@ class Generators():
                     "recipient": {
                         "nhsNumber": "9990548609",
                         "dateOfBirth": "2023-01-01"
+                    },
+                    "originator": {
+                        "odsCode": "X26"
                     },
                     "personalisation": {}
                 }
@@ -93,6 +99,9 @@ class Generators():
                     "recipient": {
                         "nhsNumber": nhsNumber,
                         "dateOfBirth": dateOfBirth
+                    },
+                    "originator": {
+                        "odsCode": "X26"
                     },
                     "personalisation": {
                         "exampleParameter": personalisation
