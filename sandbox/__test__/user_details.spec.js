@@ -2,7 +2,7 @@ import request from "supertest"
 import * as  fs from 'fs'
 import { setup } from './helpers.js'
 
-describe("/api/v1/nhs-app-accounts", () => {
+describe("/comms/channels/app/supplier/nhsapp/accounts", () => {
     let env;
     let server;
 
@@ -18,7 +18,7 @@ describe("/api/v1/nhs-app-accounts", () => {
 
     it("returns a service ban (403) when the user is banned", (done) => {
         request(server)
-            .get("/api/v1/nhs-app-accounts")
+            .get("/comms/channels/app/supplier/nhsapp/accounts")
             .query({
                 "ods-organisation-code": "X26"
             })
@@ -41,7 +41,7 @@ describe("/api/v1/nhs-app-accounts", () => {
         tests.forEach((odsCode) => {
             it(`ODS code: ${odsCode}`, (done) => {
                 request(server)
-                    .get('/api/v1/nhs-app-accounts')
+                    .get('/comms/channels/app/supplier/nhsapp/accounts')
                     .query({
                         "ods-organisation-code": odsCode
                     })
@@ -55,7 +55,7 @@ describe("/api/v1/nhs-app-accounts", () => {
 
     it('returns a 400 when ODS code not provided', (done) => {
         request(server)
-            .get('/api/v1/nhs-app-accounts')
+            .get('/comms/channels/app/supplier/nhsapp/accounts')
             .expect(400, {
                 message: "ods-organisation-code not provided."
             })
@@ -68,7 +68,7 @@ describe("/api/v1/nhs-app-accounts", () => {
         testCases.forEach((odsCode) => {
             it(`ODS code: ${odsCode}`, (done) => {
                 request(server)
-                    .get('/api/v1/nhs-app-accounts')
+                    .get('/comms/channels/app/supplier/nhsapp/accounts')
                     .query({
                         "ods-organisation-code": odsCode
                     }).expect(200, {
@@ -93,7 +93,6 @@ describe("/api/v1/nhs-app-accounts", () => {
                         },
                         links: {
                             last: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`,
-                            next: null,
                             self: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`
                         },
                     })
@@ -108,7 +107,7 @@ describe("/api/v1/nhs-app-accounts", () => {
         testCases.forEach((odsCode) => {
             it(`ODS code: ${odsCode}`, (done) => {
                 request(server)
-                    .get('/api/v1/nhs-app-accounts')
+                    .get('/comms/channels/app/supplier/nhsapp/accounts')
                     .query({
                         "ods-organisation-code": odsCode,
                         page: 1
@@ -135,7 +134,6 @@ describe("/api/v1/nhs-app-accounts", () => {
                         },
                         links: {
                             last: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`,
-                            next: null,
                             self: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`
                         },
                     })
@@ -150,7 +148,7 @@ describe("/api/v1/nhs-app-accounts", () => {
         testCases.forEach((pageNumber) => {
             it(`?page=${pageNumber}`, (done) => {
                 request(server)
-                    .get('/api/v1/nhs-app-accounts')
+                    .get('/comms/channels/app/supplier/nhsapp/accounts')
                     .query({
                         "ods-organisation-code": 'X26',
                         page: pageNumber
@@ -163,7 +161,7 @@ describe("/api/v1/nhs-app-accounts", () => {
 
     it("returns 200 with first page result for T00001 ODS code when no page query provided", (done) => {
         request(server)
-            .get('/api/v1/nhs-app-accounts')
+            .get('/comms/channels/app/supplier/nhsapp/accounts')
             .query({
                 "ods-organisation-code": 'T00001'
             })
@@ -177,7 +175,7 @@ describe("/api/v1/nhs-app-accounts", () => {
         pageNumbers.forEach((pageNumber) => {
             it(`?page=${pageNumber}`, (done) => {
                 request(server)
-                    .get('/api/v1/nhs-app-accounts')
+                    .get('/comms/channels/app/supplier/nhsapp/accounts')
                     .query({
                         "ods-organisation-code": 'T00001',
                         page: pageNumber
@@ -195,7 +193,7 @@ describe("/api/v1/nhs-app-accounts", () => {
         pageNumbers.forEach((pageNumber) => {
             it(`?page=${pageNumber}`, (done) => {
                 request(server)
-                    .get('/api/v1/nhs-app-accounts')
+                    .get('/comms/channels/app/supplier/nhsapp/accounts')
                     .query({
                         "ods-organisation-code": 'T00001',
                         page: pageNumber

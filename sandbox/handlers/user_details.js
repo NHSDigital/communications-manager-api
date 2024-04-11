@@ -72,7 +72,6 @@ function getDefaultResponse(odsCode) {
     },
     links: {
       last: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`,
-      next: null,
       self: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`
     }
   }
