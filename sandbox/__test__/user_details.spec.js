@@ -92,8 +92,8 @@ describe("/comms/channels/app/supplier/nhsapp/accounts", () => {
 
                         },
                         links: {
-                            last: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`,
-                            self: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`
+                            last: `https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=${odsCode}&page=1`,
+                            self: `https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=${odsCode}&page=1`,
                         },
                     })
                     .expect("Content-Type", /json/, done);
@@ -133,9 +133,8 @@ describe("/comms/channels/app/supplier/nhsapp/accounts", () => {
 
                         },
                         links: {
-                            last: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`,
-                            self: `https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/${odsCode}/nhs-app-accounts?page=1`
-                        },
+                            last: `https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=${odsCode}&page=1`,
+                            self: `https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=${odsCode}&page=1`,                        },
                     })
                     .expect("Content-Type", /json/, done);
             })

@@ -48,8 +48,8 @@
     }
   },
   "links": {
-    "last": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=8",
-    "next": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=2",
-    "self": "https://sandbox.api.service.nhs.uk/comms/v1/ods-organisation-codes/T00001/nhs-app-accounts?page=1"
+    "last": "https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=T00001&page=8",
+    "next": "https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=T00001&page=2",
+    "self": "https://sandbox.api.service.nhs.uk/comms/channels/app/supplier/nhsapp/accounts?ods-organisation-code=T00001&page=1"
   }
 }
