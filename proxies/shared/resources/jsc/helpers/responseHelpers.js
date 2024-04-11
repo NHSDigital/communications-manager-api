@@ -5,4 +5,4 @@ const replacePathRoot = (baseUrl, link) => {
     } else {
         return link.replace("%PATH_ROOT%", baseUrl);
     }
-};
+}
