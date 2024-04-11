@@ -14,7 +14,7 @@ if (data) {
     messageId = data.id
 
     if (data.links && data.links.self) {
-      data.links.self = replacePathRoot(data.links.self);
+      data.links.self = replacePathRoot(baseUrl, data.links.self);
     }
 }
 

@@ -15,15 +15,15 @@ if (parsedContent) {
 
     if (parsedContent.links) {
       if (parsedContent.links.self) {
-        parsedContent.links.self = replacePathRoot(parsedContent.links.self);
+        parsedContent.links.self = replacePathRoot(baseUrl, parsedContent.links.self);
       }
 
       if (parsedContent.links.next) {
-        parsedContent.links.next = replacePathRoot(parsedContent.links.next);
+        parsedContent.links.next = replacePathRoot(baseUrl, parsedContent.links.next);
       }
 
       if (parsedContent.links.last) {
-        parsedContent.links.last = replacePathRoot(parsedContent.links.last);
+        parsedContent.links.last = replacePathRoot(baseUrl, parsedContent.links.last);
       }
     }
 }
