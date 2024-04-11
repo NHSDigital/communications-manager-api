@@ -12,7 +12,14 @@ var errors = [];
 const odsCodeParamName = "ods-organisation-code";
 const odsCodeParamPointer = "queryParam." + odsCodeParamName;
 
-if (queryParamsList.includes(odsCodeParamName)) {
+var present = false;
+for(var queryParam in queryParamsList) {
+  if (queryParam.toLowerCase() == odsCodeParamName) {
+    present = true;
+  }
+}
+
+if (present) {
   var odsCode = context.getVariable("request.queryparam." + odsCodeParamName);
 
   validateOdsCode(errors, odsCode, odsCodeParamPointer);

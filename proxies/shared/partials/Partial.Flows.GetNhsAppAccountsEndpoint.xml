@@ -5,6 +5,10 @@
             <Name>JavaScript.NhsAppAccounts.Get.Validate</Name>
         </Step>
         <Step>
+            <Name>RaiseFault.400BadRequest</Name>
+            <Condition>errors != null</Condition>
+        </Step>
+        <Step>
             <Name>ExtractVariables.NhsAppAccounts.Get.Request</Name>
         </Step>
         <Step>
