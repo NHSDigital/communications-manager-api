@@ -15,7 +15,7 @@ export async function user_details(req, res, next) {
     return;
   }
 
-  if (!req.query['ods-organisation-code']) {
+  if (!req.query || !req.query['ods-organisation-code']) {
     sendError(res, 400, 'ods-organisation-code not provided.')
     next()
     return;
@@ -29,7 +29,11 @@ export async function user_details(req, res, next) {
     return;
   }
 
-  const page = req.query?.page ?? '1'
+  let page = '1'
+
+  if (req.query.page) {
+    page = req.query.page
+  }
 
   if (odsCode === paginationOdsCode) {
     fs.readFile(`./user-details/${page}.json`, 'utf-8', (err, fileContent) => {
