@@ -32,6 +32,6 @@
   "dependencies": {
     "jsrsasign": "^11.1.0",
     "jsrsasign-util": "^1.0.5",
-    "playwright": "^1.42.1"
+    "playwright": "^1.43.1"
   }
 }
