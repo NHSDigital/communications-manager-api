@@ -2,10 +2,9 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.user_details_paths import USER_DETAILS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
-    SINGLE_PAGE_ODS_CODES
+    SINGLE_PAGE_ODS_CODES, CORRELATION_IDS
 
 INVALID_PAGE_NUMBERS = [2, 3, 4, 5, 6]
-CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
 
 
 @pytest.mark.sandboxtest

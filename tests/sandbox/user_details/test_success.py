@@ -2,12 +2,8 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.user_details_paths import USER_DETAILS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
-    SINGLE_PAGE_ODS_CODES, MULTIPLE_PAGES_ODS_CODES
-
-VALID_MULTI_PAGE_NUMBERS = [None, 1, 2, 3, 4, 5, 6, 7, 8]
-MULTI_LAST_PAGE = 8
-VALID_SINGLE_PAGE_NUMBERS = [None, 1]
-CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
+    SINGLE_PAGE_ODS_CODES, MULTIPLE_PAGES_ODS_CODES, CORRELATION_IDS, VALID_MULTI_PAGE_NUMBERS, \
+    MULTI_LAST_PAGE, VALID_SINGLE_PAGE_NUMBERS
 
 
 @pytest.mark.sandboxtest
