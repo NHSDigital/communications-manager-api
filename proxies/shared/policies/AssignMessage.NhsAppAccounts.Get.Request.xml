@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy populates the requestpath, Idempotency and Correlation ID Headers, and the body of the request before it reaches the backend.
+
+ Since the payload is JSON we can't use the standard {variable.name} syntax for Apigee flow variables, this is where we use the variablePrefix and variableSuffix attributes.
+
+ For more information see the following resources:
+    * https://docs.apigee.com/api-platform/reference/policies/assign-message-policy#set-payload
+-->
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.NhsAppAccounts.Get.Request">
+    <DisplayName>AssignMessage.NhsAppAccounts.Get.Request</DisplayName>
+    <Properties/>
+    <AssignTo createNew="false" transport="http" type="request"/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignVariable>
+        <Name>target.copy.pathsuffix</Name>
+        <Value>false</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>requestpath</Name>
+        <Value>/api/channels/nhsapp/accounts</Value>
+    </AssignVariable>
+    <Set>
+        <Headers>
+            <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
+        </Headers>
+        <Verb>GET</Verb>
+        <QueryParams>
+            <QueryParam name="ods-organisation-code">{data.odsOrganisationCode}</QueryParam>
+            <QueryParam name="page">{data.page}</QueryParam>
+        </QueryParams>
+    </Set>
+</AssignMessage>

@@ -1,0 +1,34 @@
+<Flow name="GetNhsAppAccountsEndpoint">
+    <Description>Handle get NHS App Accounts</Description>
+    <Request>
+        <Step>
+            <Name>JavaScript.NhsAppAccounts.Get.Validate</Name>
+        </Step>
+        <Step>
+            <Name>RaiseFault.400BadRequest</Name>
+            <Condition>errors != null</Condition>
+        </Step>
+        <Step>
+            <Name>ExtractVariables.NhsAppAccounts.Get.Request</Name>
+        </Step>
+        <Step>
+            <Name>AssignMessage.NhsAppAccounts.Get.Request</Name>
+        </Step>
+        {% if ENVIRONMENT_TYPE != 'sandbox' %}
+            <Step>
+                <Name>AssignMessage.AuthenticationDetails</Name>
+            </Step>
+        {% endif %}
+    </Request>
+    <Response>
+        <Step>
+            <Name>JavaScript.NhsAppAccounts.Get.Response</Name>
+        </Step>
+        <Step>
+            <Name>AssignMessage.NhsAppAccounts.Get.Response</Name>
+        </Step>
+    </Response>
+    <Condition>
+        (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and (request.verb = "GET")
+    </Condition>
+</Flow>
