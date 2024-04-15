@@ -42,7 +42,7 @@ def test_multi_pages(nhsd_apim_proxy_url, ods_code, page, correlation_id):
     })
 
     self_page_in_response = page if page is not None else 1
-    next_page_in_response = page + 1 if page < MULTI_LAST_PAGE else None
+    next_page_in_response = self_page_in_response + 1 if self_page_in_response < MULTI_LAST_PAGE else None
 
     Assertions.assert_200_response_nhs_app_accounts(resp, nhsd_apim_proxy_url, ods_code, self_page_in_response,
                                                     next_page_in_response, 8)
