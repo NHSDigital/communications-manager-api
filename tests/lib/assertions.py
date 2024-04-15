@@ -27,6 +27,37 @@ class Assertions():
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
+    def assert_200_response_nhs_app_accounts(resp, base_url, ods_code, page, next, last):
+        Error_Handler.handle_retry(resp)
+
+        assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
+
+        response = resp.json()
+        data = response.get("data")
+
+        assert data.get("id") is not None
+        assert data.get("id") == ods_code
+        assert data.get("type") == "NHSAppAccounts"
+        assert data.get("attributes").get("accounts") is not None
+        assert len(data.get("attributes").get("accounts")) > 0
+        assert data.get("attributes").get("accounts")[0].get("nhsNumber") is not None
+        assert data.get("attributes").get("accounts")[0].get("nhsNumber") != ""
+        assert data.get("attributes").get("accounts")[0].get("notificationsEnabled") is not None
+        assert response.get("links").get("self").startswith(base_url)
+        assert response.get("links").get("self") \
+            .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={page}")
+        assert response.get("links").get("last").startswith(base_url)
+        assert response.get("links").get("last") \
+            .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={last}")
+
+        if next is None:
+            assert response.get("links").get("next") is None
+        else:
+            assert response.get("links").get("next").startswith(base_url)
+            assert response.get("links").get("next") \
+                .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={next}")
+
+    @staticmethod
     def assert_200_response_message(resp, base_url):
         Error_Handler.handle_retry(resp)
 

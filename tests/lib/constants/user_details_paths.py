@@ -4,7 +4,7 @@ PAGE_PARAM_NAME = "page"
 
 SINGLE_PAGE_ODS_CODES = [
     "X26",
-    "X00001",
+    "Y00001",
     "X12345"
 ]
 
