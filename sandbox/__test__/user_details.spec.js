@@ -74,7 +74,7 @@ describe("/api/channels/nhsapp/accounts", () => {
                     }).expect(200, {
                         data: {
                             id: odsCode,
-                            type: 'NHSAppAccounts',
+                            type: 'NhsAppAccounts',
                             attributes: {
                                 accounts: [
                                     {
@@ -115,7 +115,7 @@ describe("/api/channels/nhsapp/accounts", () => {
                     .expect(200, {
                         data: {
                             id: odsCode,
-                            type: 'NHSAppAccounts',
+                            type: 'NhsAppAccounts',
                             attributes: {
                                 accounts: [
                                     {

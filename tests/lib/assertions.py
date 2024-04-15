@@ -37,7 +37,7 @@ class Assertions():
 
         assert data.get("id") is not None
         assert data.get("id") == ods_code
-        assert data.get("type") == "NHSAppAccounts"
+        assert data.get("type") == "NhsAppAccounts"
         assert data.get("attributes").get("accounts") is not None
         assert len(data.get("attributes").get("accounts")) > 0
         assert data.get("attributes").get("accounts")[0].get("nhsNumber") is not None
