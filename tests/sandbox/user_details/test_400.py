@@ -22,6 +22,6 @@ def test_400_missing_ods_code(nhsd_apim_proxy_url, page, correlation_id):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_invalid_value_error("queryParam.ods-organisation-code"),
+        Generators.generate_missing_value_error("queryParam.ods-organisation-code"),
         correlation_id
     )
