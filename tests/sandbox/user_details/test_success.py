@@ -12,6 +12,9 @@ from lib.constants.user_details_paths import USER_DETAILS_ENDPOINT, ODS_CODE_PAR
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_single_page(nhsd_apim_proxy_url, ods_code, page, correlation_id):
 
+    """
+    .. include:: ../../partials/happy_path/test_200_get_nhs_app_accounts_single_page.rst
+    """
     resp = requests.get(f"{nhsd_apim_proxy_url}{USER_DETAILS_ENDPOINT}", headers={
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
@@ -29,6 +32,9 @@ def test_single_page(nhsd_apim_proxy_url, ods_code, page, correlation_id):
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_multi_pages(nhsd_apim_proxy_url, ods_code, page, correlation_id):
 
+    """
+    .. include:: ../../partials/happy_path/test_200_get_nhs_app_accounts_multi_pages.rst
+    """
     resp = requests.get(f"{nhsd_apim_proxy_url}{USER_DETAILS_ENDPOINT}", headers={
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
