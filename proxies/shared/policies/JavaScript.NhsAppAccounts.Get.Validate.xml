@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy executes a JavaScript file in the resources directory.
+
+ For more information on JavaScript policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
+
+ In this instance the JavaScript file validates GET requests to the channels/nhsapp/accounts endpoint
+-->
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.NhsAppAccounts.Get.Validate">
+    <DisplayName>JavaScript.NhsAppAccounts.Get.Validate</DisplayName>
+    <Properties/>
+    <IncludeURL>jsc://helpers/validationErrors.js</IncludeURL>
+    <IncludeURL>jsc://helpers/validationChecks.js</IncludeURL>
+    <ResourceURL>jsc://NhsAppAccounts.Get.Validate.js</ResourceURL>
+</Javascript>
