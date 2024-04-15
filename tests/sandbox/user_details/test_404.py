@@ -1,10 +1,12 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants.user_details_paths import USER_DETAILS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, VALID_ODS_CODES
+from lib.constants.user_details_paths import USER_DETAILS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
+    VALID_ODS_CODES
 
 INVALID_PAGE_NUMBERS = [2, 3, 4, 5, 6]
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
+
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("ods_code", VALID_ODS_CODES)
