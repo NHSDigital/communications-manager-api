@@ -40,9 +40,10 @@ class Assertions():
         assert data.get("type") == "NhsAppAccounts"
         assert data.get("attributes").get("accounts") is not None
         assert len(data.get("attributes").get("accounts")) > 0
-        assert data.get("attributes").get("accounts")[0].get("nhsNumber") is not None
-        assert data.get("attributes").get("accounts")[0].get("nhsNumber") != ""
-        assert data.get("attributes").get("accounts")[0].get("notificationsEnabled") is not None
+        for i in range(len(data.get("attributes").get("accounts"))):
+            assert data.get("attributes").get("accounts")[i].get("nhsNumber") is not None
+            assert data.get("attributes").get("accounts")[i].get("nhsNumber") != ""
+            assert data.get("attributes").get("accounts")[i].get("notificationsEnabled") is not None
         assert response.get("links").get("self").startswith(base_url)
         assert response.get("links").get("self") \
             .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={page}")

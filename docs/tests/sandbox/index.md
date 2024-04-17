@@ -22,3 +22,7 @@
 * [GET /v1/messages/{messageId}](get_v1_messages_message-id/index.md)
   * [Happy Path Tests](get_v1_messages_message-id/happy_path.md)
   * [404 Tests](get_v1_messages_message-id/404.md)
+* [GET /channels/nhsapp/account](get_channels_nhsapp_accounts/index.md)
+  * [Happy Path Tests](get_channels_nhsapp_accounts/happy_path.md)
+  * [404 Tests](get_channels_nhsapp_accounts/404.md)
+  * [400 Tests](get_channels_nhsapp_accounts/400.md)
