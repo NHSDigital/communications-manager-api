@@ -60,7 +60,7 @@ function getDefaultResponse(odsCode) {
   return {
     data: {
       id: odsCode,
-      type: "NHSAppAccounts",
+      type: "NhsAppAccounts",
       attributes: {
         accounts: [
           {

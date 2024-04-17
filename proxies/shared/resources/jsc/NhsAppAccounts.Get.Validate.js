@@ -22,7 +22,7 @@ for(var queryParam in queryParamsList) {
 if (present) {
   var odsCode = context.getVariable("request.queryparam." + odsCodeParamName);
 
-  validateOdsCode(errors, odsCode, odsCodeParamPointer);
+  validateOdsCodeFormat(errors, odsCode, odsCodeParamPointer);
 } else {
   errors.push(missingError(odsCodeParamPointer));
 }
