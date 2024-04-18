@@ -14,6 +14,8 @@ import {
   trigger500SendingGroupId,
   trigger425SendingGroupId,
   globalFreeTextNhsAppSendingGroupId,
+  noDefaultOdsClientAuth,
+  noOdsChangeClientAuth
 } from "./config.js"
 
 export async function batch_send(req, res, next) {
@@ -166,6 +168,27 @@ export async function batch_send(req, res, next) {
 
   if (routingPlanId === trigger500SendingGroupId) {
     sendError(res, 500, "Error writing request items to DynamoDB");
+    next();
+    return;
+  }
+
+  const odsCodes = messages.map((message) => message?.originator?.odsCode);
+  if (odsCodes.includes(undefined) && req.headers["authorization"] === noDefaultOdsClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode must be provided'
+    )
+    next();
+    return;
+  }
+
+  if (odsCodes.filter((o) => o === undefined).length > 0 && req.headers["authorization"] === noOdsChangeClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode was provided but ODS code override is not enabled for the client'
+    )
     next();
     return;
   }
