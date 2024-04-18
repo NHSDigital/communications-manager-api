@@ -6,5 +6,7 @@ enum:
   - CM_INVALID_NHS_NUMBER
   - CM_DUPLICATE_VALUE
   - CM_TOO_FEW_ITEMS
+  - CM_ODS_CODE_REQUIRED
+  - CM_CANNOT_SET_ODS_CODE
 example: CM_MISSING_VALUE
 title: Enum_Error_InvalidValue

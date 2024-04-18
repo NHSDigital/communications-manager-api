@@ -9,6 +9,8 @@ description: |+
   | `CM_NULL_VALUE` | Property cannot be null | The property at the specified location is required, but a null value was passed in the request. |
   | `CM_INVALID_VALUE` | Invalid value | The property at the specified location does not allow this value. |
   | `CM_INVALID_NHS_NUMBER` | Invalid nhs number | The value provided in this nhsNumber field is not a valid NHS number. |
+  | `CM_ODS_CODE_REQUIRED` | Originator odsCode must be provided | An originator with odsCode must be provided, as your account does not have a default ODS code. |
+  | `CM_CANNOT_SET_ODS_CODE` | Cannot set ODS code | Your account is not permitted to set originator ODS codes. |
 
   Within each error is a source object which details the location of the error within your request body.
 
