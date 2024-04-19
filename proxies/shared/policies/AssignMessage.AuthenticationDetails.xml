@@ -12,7 +12,11 @@
     <Set>
         <Headers>
             {% if ENVIRONMENT_TYPE == 'internal' %}
-                <Header name="X-APIM-Application-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
+                {% if request.header.UseClient == "no_ods_override" %}
+                    <Header name="X-APIM-Application-Id">8e899ae1-7971-4780-a0cf-b81d77dff36e</Header>
+                {% else %}
+                    <Header name="X-APIM-Application-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
+                {% endif %}
             {% else %}
                 <Header name="X-APIM-Application-Id">{developer.app.id}</Header>
             {% endif %}
