@@ -13,11 +13,11 @@
         <Headers>
             {% if ENVIRONMENT_TYPE == 'internal' %}
                 <Headers>
-                    <Condition>request.header.UseClient = "no_ods_override"</Condition>
+                    <Condition>false</Condition>
                     <Header name="X-APIM-Application-Id">8e899ae1-7971-4780-a0cf-b81d77dff36e</Header>
                 </Headers>
                 <Headers>
-                    <Condition>request.header.UseClient = ""</Condition>
+                    <Condition>true</Condition>
                     <Header name="X-APIM-Application-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
                 </Headers>
             {% else %}
