@@ -12,12 +12,12 @@
     <Set>
         <Headers>
             {% if ENVIRONMENT_TYPE == 'internal' %}
-                <Headers>
+                <!-- <Headers>
                     <Condition>false</Condition>
                     <Header name="X-APIM-Application-Id">8e899ae1-7971-4780-a0cf-b81d77dff36e</Header>
-                </Headers>
+                </Headers> -->
                 <Headers>
-                    <Condition>true</Condition>
+                    <!-- <Condition>true</Condition> -->
                     <Header name="X-APIM-Application-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
                 </Headers>
             {% else %}
