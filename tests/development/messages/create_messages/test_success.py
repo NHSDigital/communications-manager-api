@@ -66,6 +66,26 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_header
 
 
 @pytest.mark.devtest
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_try_different_app_id(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
+    """
+    data = Generators.generate_valid_create_message_body("dev")
+    data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
+
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            **nhsd_apim_auth_headers,
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "UseClient": "no_ods_override"
+        }, json=data
+    )
+    Assertions.assert_201_response_messages(
+        resp, "internal-qa" if "internal-qa" in nhsd_apim_proxy_url else "internal-dev")
+
+
+@pytest.mark.devtest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):

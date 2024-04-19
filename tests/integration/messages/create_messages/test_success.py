@@ -59,22 +59,22 @@ def test_201_message_batch_valid_nhs_number():
     Assertions.assert_201_response_messages(resp, "int")
 
 
-@pytest.mark.inttest
-def test_201_try_different_app_id():
-    """
-    .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
-    """
-    data = Generators.generate_valid_create_message_body("int")
-    data["data"]["attributes"]["recipient"]["nhsNumber"] = VALID_NHS_NUMBER
+# @pytest.mark.inttest
+# def test_201_try_different_app_id():
+#     """
+#     .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
+#     """
+#     data = Generators.generate_valid_create_message_body("int")
+#     data["data"]["attributes"]["recipient"]["nhsNumber"] = VALID_NHS_NUMBER
 
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": Authentication.generate_authentication("int"),
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "UseClient": "no_ods_override"
-        }, json=data
-    )
-    Assertions.assert_201_response_messages(resp, "int")
+#     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+#             "Authorization": Authentication.generate_authentication("int"),
+#             "Accept": "application/json",
+#             "Content-Type": "application/json",
+#             "UseClient": "no_ods_override"
+#         }, json=data
+#     )
+#     Assertions.assert_201_response_messages(resp, "int")
 
 
 @pytest.mark.inttest
