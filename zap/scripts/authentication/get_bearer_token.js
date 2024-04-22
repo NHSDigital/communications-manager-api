@@ -13,7 +13,6 @@ function authenticate(helper, paramsValues, credentials) {
     const existing_token = ScriptVars.getGlobalVar("bearer-token");
 
     if (existing_token) {
-        print("get_bearer_token.js: Returning existing token...");
         return;
     }
 

@@ -2,13 +2,13 @@ env:
   contexts:
     - name: Sandbox
       urls:
-        - https://sandbox.api.service.nhs.uk/comms
+        - https://sandbox.api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
     - name: IntegrationUnauthenticated
       urls:
-        - https://int.api.service.nhs.uk/comms
+        - https://int.api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
     - name: IntegrationAuthenticated
       urls:
-        - https://int.api.service.nhs.uk/comms
+        - https://int.api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
       authentication:
         method: 'script'
         parameters:
@@ -26,10 +26,10 @@ env:
             private_key: "${INTEGRATION_PRIVATE_KEY_CONTENTS}"
     - name: ProdUnauthenticated
       urls:
-        - https://api.service.nhs.uk/comms
+        - https://api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
     - name: ProdAuthenticated
       urls:
-        - https://api.service.nhs.uk/comms
+        - https://api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
       authentication:
         method: 'script'
         parameters:
@@ -71,128 +71,76 @@ jobs:
   - type: openapi
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      targetUrl: https://sandbox.api.service.nhs.uk/comms
       context: Sandbox
   - type: openapi
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      targetUrl: https://int.api.service.nhs.uk/comms
       context: IntegrationUnauthenticated
   - type: openapi
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      targetUrl: https://int.api.service.nhs.uk/comms
       context: IntegrationAuthenticated
   - type: openapi
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      targetUrl: https://api.service.nhs.uk/comms
       context: ProdUnauthenticated
   - type: openapi
     parameters:
       apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      targetUrl: https://api.service.nhs.uk/comms
       context: ProdAuthenticated
 
-  # configure the passive scan
-  - type: passiveScan-config
-    parameters:
-      maxAlertsPerRule: 10
-      scanOnlyInScope: true
-    rules:
-    - id: 10049
-      name: Non-Storable Content
-      threshold: Off
-    - id: 90005
-      name: Sec-Fetch-Site Header is Missing
-      threshold: Off
 
   # run an active scan on sandbox
   - type: activeScan
     parameters:
+      policy: API
       context: Sandbox
       scanHeadersAllRequests: true
-      delayInMs: 1000
+      delayInMs: 500
       threadPerHost: 1
-    policyDefinition:
-      rules:
-      - id: 10104
-        name: User Agent Fuzzer
-        strength: Low
-        threshold: Off
-      - id: 40040
-        name: CORS Misconfiguration
-        strength: Low
-        threshold: Off
 
   # run an active scan on integration, using unauthenticated calls
   - type: activeScan
     parameters:
+      policy: API
       context: IntegrationUnauthenticated
       scanHeadersAllRequests: true
-      delayInMs: 1000
+      delayInMs: 500
       threadPerHost: 1
-    policyDefinition:
-      rules:
-      - id: 10104
-        name: User Agent Fuzzer
-        strength: Low
-        threshold: Off
-      - id: 40040
-        name: CORS Misconfiguration
-        strength: Low
-        threshold: Off
 
   # run an active scan on integration, using authenticated calls
   - type: activeScan
     parameters:
+      policy: API
       context: IntegrationAuthenticated
       user: Integration
       scanHeadersAllRequests: true
-      delayInMs: 1000
+      delayInMs: 500
       threadPerHost: 1
-    policyDefinition:
-      rules:
-      - id: 10104
-        name: User Agent Fuzzer
-        strength: Low
-        threshold: Off
-      - id: 40040
-        name: CORS Misconfiguration
-        strength: Low
-        threshold: Off
 
    # run an active scan on prod, using unauthenticated calls
   - type: activeScan
     parameters:
+      policy: API
       context: ProdUnauthenticated
       scanHeadersAllRequests: true
-      delayInMs: 1000
+      delayInMs: 500
       threadPerHost: 1
-    policyDefinition:
-      rules:
-      - id: 10104
-        name: User Agent Fuzzer
-        strength: Low
-        threshold: Off
-      - id: 40040
-        name: CORS Misconfiguration
-        strength: Low
-        threshold: Off
 
   # run an active scan on prod, using authenticated calls
   - type: activeScan
     parameters:
+      policy: API
       context: ProdAuthenticated
       user: Prod
       scanHeadersAllRequests: true
-      delayInMs: 1000
+      delayInMs: 500
       threadPerHost: 1
-    policyDefinition:
-      rules:
-      - id: 10104
-        name: User Agent Fuzzer
-        strength: Low
-        threshold: Off
-      - id: 40040
-        name: CORS Misconfiguration
-        strength: Low
-        threshold: Off
 
   # generate our custom JSON report
   - type: report
