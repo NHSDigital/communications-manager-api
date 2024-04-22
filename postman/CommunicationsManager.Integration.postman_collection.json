@@ -138,7 +138,7 @@
          "name" : "Communications Manager - Integration",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "updatedAt" : "2024-03-26T13:24:53.000Z"
+         "updatedAt" : "2024-04-11T08:32:18.000Z"
       },
       "item" : [
          {
@@ -193,7 +193,7 @@
                               "language" : "json"
                            }
                         },
-                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"MessageBatch\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n            \"messages\": [\r\n                {\r\n                    \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                    \"recipient\": {\r\n                        \"nhsNumber\": \"9990548609\",\r\n                        \"dateOfBirth\": \"1932-01-06\"\r\n                    },\r\n                    \"personalisation\": {\r\n                        \"custom\" : \"value\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}"
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"MessageBatch\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n            \"messages\": [\r\n                {\r\n                    \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                    \"recipient\": {\r\n                        \"nhsNumber\": \"9990548609\",\r\n                        \"dateOfBirth\": \"1932-01-06\"\r\n                    },\r\n                    \"originator\": {\r\n                        \"odsCode\": \"X26\"\r\n                    },\r\n                    \"personalisation\": {\r\n                        \"custom\" : \"value\"\r\n                    }\r\n                }\r\n            ]\r\n        }\r\n    }\r\n}"
                      },
                      "description" : "Sends a request to create a message batch.\n\nIt is possible to toggle the mime type used for sending and receiving data by changing the `mime_type` environment variable. Valid values for this can be found in [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches).\n\nA random `X-Correlation-Id` header and `messageBatchReference` body value will be generated for each request in the pre-request script.",
                      "header" : [
@@ -281,7 +281,7 @@
                               "language" : "json"
                            }
                         },
-                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"1932-01-06\"\r\n            },\r\n            \"personalisation\": {\r\n                \"custom\": \"value\"\r\n            }\r\n        }\r\n    }\r\n}"
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"{{routing_plan_id}}\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"1932-01-06\"\r\n            },\r\n            \"originator\": {\r\n                \"odsCode\": \"X26\"\r\n            },\r\n            \"personalisation\": {\r\n                \"custom\": \"value\"\r\n            }\r\n        }\r\n    }\r\n}"
                      },
                      "description" : "Sends a request to send a single message.\n\nIt is possible to toggle the mime type used for sending and receiving data by changing the `mime_type` environment variable. Valid values for this can be found in [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager#post-/v1/message-batches).\n\nA random `X-Correlation-Id` header and `messageReference` body value will be generated for each request in the pre-request script.",
                      "header" : [
