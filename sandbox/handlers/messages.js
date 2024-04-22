@@ -8,6 +8,8 @@ import {
   trigger500SendingGroupId,
   validSendingGroupIds,
   globalFreeTextNhsAppSendingGroupId,
+  noOdsChangeClientAuth,
+  noDefaultOdsClientAuth,
 } from "./config.js"
 
 export async function messages(req, res, next) {
@@ -34,6 +36,27 @@ export async function messages(req, res, next) {
       404,
       `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
     );
+    next();
+    return;
+  }
+
+  const odsCode = req.body.data.attributes?.originator?.odsCode;
+  if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode must be provided'
+    )
+    next();
+    return;
+  }
+
+  if (odsCode && req.headers["authorization"] === noOdsChangeClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode was provided but ODS code override is not enabled for the client'
+    )
     next();
     return;
   }
