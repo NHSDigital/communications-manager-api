@@ -64,27 +64,6 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  const odsCode = attributes?.originator?.odsCode;
-  if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode must be provided'
-    )
-    next();
-    return;
-  }
-
-  if (odsCode && req.headers["authorization"] === noOdsChangeClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode was provided but ODS code override is not enabled for the client'
-    )
-    next();
-    return;
-  }
-
   const routingPlanId = attributes.routingPlanId;
   if (!routingPlanId) {
     sendError(res, 400, "Missing routingPlanId");
@@ -101,6 +80,27 @@ export async function batch_send(req, res, next) {
   const messages = attributes.messages;
   if (!Array.isArray(messages)) {
     sendError(res, 400, "Missing messages array");
+    next();
+    return;
+  }
+
+  const odsCodes = messages.map((message) => message?.originator?.odsCode);
+  if (odsCodes.includes(undefined) && req.headers["authorization"] === noDefaultOdsClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode must be provided'
+    )
+    next();
+    return;
+  }
+
+  if (odsCodes.filter((o) => o === undefined).length > 0 && req.headers["authorization"] === noOdsChangeClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode was provided but ODS code override is not enabled for the client'
+    )
     next();
     return;
   }
