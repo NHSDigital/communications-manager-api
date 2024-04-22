@@ -6,7 +6,6 @@ function sendingRequest(msg, initiator, helper) {
     const token = ScriptVars.getGlobalVar("bearer-token");
 
     if (token) {
-        print("add_bearer_token.js: Adding token to headers...");
         msg.getRequestHeader().setHeader("Authorization", "Bearer " + token);
     }
   }
