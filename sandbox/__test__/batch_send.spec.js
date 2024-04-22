@@ -641,7 +641,7 @@ describe("/api/v1/send", () => {
               },
               {
                 messageReference: "2",
-                recipient: {
+                originator: {
                   odsCode: "X26"
                 }
               },
@@ -671,7 +671,7 @@ describe("/api/v1/send", () => {
               },
               {
                 messageReference: "2",
-                recipient: {
+                originator: {
                   odsCode: "X26"
                 }
               },

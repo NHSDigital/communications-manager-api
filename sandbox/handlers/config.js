@@ -57,5 +57,5 @@ export {
     duplicateTemplates,
     globalFreeTextNhsAppSendingGroupId,
     noDefaultOdsClientAuth,
-    noOdsChangeClientAuth
+    noOdsChangeClientAuth,
 }
