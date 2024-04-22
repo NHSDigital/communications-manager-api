@@ -14,6 +14,8 @@ import {
   trigger500SendingGroupId,
   trigger425SendingGroupId,
   globalFreeTextNhsAppSendingGroupId,
+  noDefaultOdsClientAuth,
+  noOdsChangeClientAuth,
 } from "./config.js"
 
 export async function batch_send(req, res, next) {
@@ -40,6 +42,7 @@ export async function batch_send(req, res, next) {
     next();
     return;
   }
+  
 
   const type = data.type;
   if (!type) {
@@ -57,6 +60,27 @@ export async function batch_send(req, res, next) {
   const attributes = data.attributes;
   if (!attributes) {
     sendError(res, 400, "Missing request body data attributes");
+    next();
+    return;
+  }
+
+  const odsCode = attributes?.originator?.odsCode;
+  if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode must be provided'
+    )
+    next();
+    return;
+  }
+
+  if (odsCode && req.headers["authorization"] === noOdsChangeClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode was provided but ODS code override is not enabled for the client'
+    )
     next();
     return;
   }
