@@ -39,7 +39,7 @@
          "name" : "Communications Manager - Sandbox",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-ec078d1e-d4d7-4460-92b9-7d79d51f967a",
-         "updatedAt" : "2024-03-26T13:25:28.000Z"
+         "updatedAt" : "2024-04-15T08:09:42.000Z"
       },
       "item" : [
          {
@@ -640,6 +640,84 @@
                   },
                   "response" : [],
                   "uid" : "28740466-c731e648-18c6-4a09-94e7-2eac675f0462"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "832ce22d-e604-4477-8b49-6add91920812",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "59dadc53-94c6-4329-8f96-668bd304968b",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "80b83a2b-c51b-4d43-acbd-4398d65cd47a",
+                  "name" : "201 - Message Batch Created - Free-text NHS App",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"00000000-0000-0000-0000-000000000001\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"messageReference\": \"990b5b3d-d24b-40f9-83b6-d124597e92e0\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9800100369\",\r\n                            \"dateOfBirth\": \"1983-12-03\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message batch using a free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Content-Type",
+                           "type" : "default",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Accept",
+                           "type" : "default",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "type" : "text",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "message-batches"
+                        ],
+                        "raw" : "{{base_url}}/v1/message-batches"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-80b83a2b-c51b-4d43-acbd-4398d65cd47a"
                }
             ],
             "name" : "Send Message Batches",
@@ -1745,6 +1823,72 @@
                   },
                   "response" : [],
                   "uid" : "28740466-9c914885-7b44-4df8-a53a-0432fd95103b"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "6bbfaa16-170c-4cac-9d91-0f049854fef2",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "71842a9d-f3a0-4b43-b41b-422373bd9936",
+                  "name" : "201 - Message Created - Free-text NHS App",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "options" : {
+                           "raw" : {
+                              "language" : "json"
+                           }
+                        },
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"00000000-0000-0000-0000-000000000001\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {\r\n                \"body\": \"Your appointment has been booked for 28/02/2024 at 2:15 PM, please bring your medication with you\"\r\n            }\r\n        }\r\n    }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message using a free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-71842a9d-f3a0-4b43-b41b-422373bd9936"
                }
             ],
             "name" : "Send Message",

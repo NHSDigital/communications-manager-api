@@ -1,19 +1,19 @@
 openapi: 3.0.0
 info:
-  version: '3.0'
+  version: "3.0"
   title: NHS Notify API
   description:
     $ref: documentation/APIDescription.md
   contact:
     name: NHS Notify API Support
-    url: 'https://digital.nhs.uk/developer/help-and-support'
+    url: "https://digital.nhs.uk/developer/help-and-support"
     email: api.management@nhs.net
 servers:
-  - url: 'https://sandbox.api.service.nhs.uk/comms'
+  - url: "https://sandbox.api.service.nhs.uk/comms"
     description: Sandbox environment
-  - url: 'https://int.api.service.nhs.uk/comms'
+  - url: "https://int.api.service.nhs.uk/comms"
     description: Integration test environment
-  - url: 'https://api.service.nhs.uk/comms'
+  - url: "https://api.service.nhs.uk/comms"
     description: Production environment
 paths:
   /v1/message-batches:

@@ -1,0 +1,8 @@
+404 Tests
+================
+
+These tests target the API endpoint GET /channels/nhsapp/account testing that 404 is returned when a page does not exist
+
+.. automodule:: sandbox.user_details.test_404
+    :noindex:
+    :members:
