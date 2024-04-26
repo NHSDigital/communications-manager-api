@@ -12,6 +12,17 @@ import {
   noOdsChangeClientAuth
 } from "./config.js"
 
+// Note: the docker container uses node:12 which does not support optional chaining
+function getOriginatorOdsCode(req) {
+  let odsCode;
+  try {
+    odsCode = req.body.data.attributes.originator.odsCode;
+  } catch {
+    odsCode = undefined;
+  }
+  return odsCode;
+}
+
 export async function messages(req, res, next) {
   if (req.headers["authorization"] === "banned") {
     sendError(
@@ -40,7 +51,7 @@ export async function messages(req, res, next) {
     return;
   }
 
-  const odsCode = req.body.data.attributes?.originator?.odsCode;
+  const odsCode = getOriginatorOdsCode(req);
   if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
     sendError(
       res,

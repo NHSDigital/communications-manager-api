@@ -83,7 +83,12 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  const odsCodes = messages.map((message) => message?.originator?.odsCode);
+  // Note: the docker container uses node:12 which does not support optional chaining
+  const odsCodes = messages.map((message) => {
+    if (message && message.originator) {
+      return message.originator.odsCode;
+    }
+  });
   if (odsCodes.includes(undefined) && req.headers["authorization"] === noDefaultOdsClientAuth) {
     sendError(
       res,
@@ -94,7 +99,7 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  if (odsCodes.filter((o) => o === undefined).length > 0 && req.headers["authorization"] === noOdsChangeClientAuth) {
+  if (odsCodes.filter((o) => o !== undefined).length > 0 && req.headers["authorization"] === noOdsChangeClientAuth) {
     sendError(
       res,
       400,
