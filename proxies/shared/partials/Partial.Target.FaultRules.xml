@@ -9,6 +9,10 @@
         </Step>
     {% endif %}
     <Step>
+        <Name>RaiseFault.503ServiceUnavailable</Name>
+        <Condition>response.status.code = 403 and response.content ~~ "\{\u0022message\u0022:\u0022Forbidden\u0022\}"</Condition>
+    </Step>
+    <Step>
         <Name>RaiseFault.403ServiceBan</Name>
         <Condition>response.status.code = 403 and response.content like "*Request rejected because client service ban is in effect*"</Condition>
     </Step>
