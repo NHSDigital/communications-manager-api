@@ -128,6 +128,13 @@ class Assertions():
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
+        if "internal-qa" in environment:
+            environment = "internal-qa"
+        if "ref" in environment:
+            environment = "ref"
+        if "internal-dev" in environment:
+            environment = "internal-dev"
+
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
