@@ -128,13 +128,6 @@ class Assertions():
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
-        if "internal-qa" in environment:
-            environment = "internal-qa"
-        if "ref" in environment:
-            environment = "ref"
-        if "internal-dev" in environment:
-            environment = "internal-dev"
-
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
@@ -151,16 +144,7 @@ class Assertions():
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") != ""
 
-        hostname = f"{environment}.api.service.nhs.uk"
-        prefixes = ["internal-dev", "internal-qa"]
-
-        if environment == 'sandbox':
-            for p in prefixes:
-                if p in response.get("links").get("self"):
-                    hostname = f"{p}-{hostname}"
-                    break
-
-        assert response.get("links").get("self").startswith(f"https://{hostname}/comms")
+        assert response.get("links").get("self").startswith(environment)
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
         assert resp.headers.get("Location") == f"/v1/messages/{response.get('id')}"
 
