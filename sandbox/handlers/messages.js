@@ -8,7 +8,20 @@ import {
   trigger500SendingGroupId,
   validSendingGroupIds,
   globalFreeTextNhsAppSendingGroupId,
+  noDefaultOdsClientAuth,
+  noOdsChangeClientAuth
 } from "./config.js"
+
+// Note: the docker container uses node:12 which does not support optional chaining
+function getOriginatorOdsCode(req) {
+  let odsCode;
+  try {
+    odsCode = req.body.data.attributes.originator.odsCode;
+  } catch {
+    odsCode = undefined;
+  }
+  return odsCode;
+}
 
 export async function messages(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -34,6 +47,27 @@ export async function messages(req, res, next) {
       404,
       `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
     );
+    next();
+    return;
+  }
+
+  const odsCode = getOriginatorOdsCode(req);
+  if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode must be provided'
+    )
+    next();
+    return;
+  }
+
+  if (odsCode && req.headers["authorization"] === noOdsChangeClientAuth) {
+    sendError(
+      res,
+      400,
+      'odsCode was provided but ODS code override is not enabled for the client'
+    )
     next();
     return;
   }

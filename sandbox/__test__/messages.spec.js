@@ -327,4 +327,53 @@ describe("/api/v1/messages", () => {
       })
       .expect("Content-Type", /json/, done);
   });
+
+  it("returns a 400 when there is no odsCode and the client has no default", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "noDefaultOds" })
+      .send({
+        data: {
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "odsCode must be provided",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when odsCode provided but the client does not allow it", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "noOdsChange" })
+      .send({
+        data: {
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+            },
+            originator: {
+              odsCode: "X123"
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "odsCode was provided but ODS code override is not enabled for the client",
+      })
+      .expect("Content-Type", /json/, done);
+  });
 });

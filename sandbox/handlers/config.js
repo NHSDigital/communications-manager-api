@@ -43,6 +43,9 @@ const duplicateTemplates = [
     }
 ];
 
+const noDefaultOdsClientAuth = "noDefaultOds";
+const noOdsChangeClientAuth = "noOdsChange";
+
 export {
     invalidRoutingPlanId,
     trigger500SendingGroupId,
@@ -53,4 +56,6 @@ export {
     validSendingGroupIds,
     duplicateTemplates,
     globalFreeTextNhsAppSendingGroupId,
+    noDefaultOdsClientAuth,
+    noOdsChangeClientAuth,
 }
