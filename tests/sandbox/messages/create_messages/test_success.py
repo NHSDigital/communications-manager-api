@@ -28,7 +28,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
         },
         json=data
     )
-    Assertions.assert_201_response_messages(resp, "sandbox")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.sandboxtest
@@ -43,7 +43,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, conte
             "Content-Type": content_type
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "sandbox")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.sandboxtest
@@ -59,7 +59,7 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
             "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "sandbox")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.sandboxtest
@@ -76,7 +76,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
             "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "sandbox")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
 
 
 @pytest.mark.sandboxtest
@@ -92,4 +92,4 @@ def test_request_without_dob(nhsd_apim_proxy_url):
         "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "sandbox")
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)

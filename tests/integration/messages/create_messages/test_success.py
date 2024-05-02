@@ -23,7 +23,7 @@ def test_201_message_batch_valid_accept_headers(accept_headers):
         },
         json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, INT_URL)
 
 
 @pytest.mark.inttest
@@ -39,7 +39,7 @@ def test_201_message_batch_valid_content_type_headers(content_type):
             "Content-Type": content_type
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, INT_URL)
 
 
 @pytest.mark.inttest
@@ -56,7 +56,7 @@ def test_201_message_batch_valid_nhs_number():
             "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, INT_URL)
 
 
 @pytest.mark.inttest
@@ -74,7 +74,7 @@ def test_201_message_batch_valid_dob(dob):
             "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, INT_URL)
 
 
 @pytest.mark.inttest
@@ -91,7 +91,7 @@ def test_request_without_dob():
         "Content-Type": "application/json"
         }, json=data
     )
-    Assertions.assert_201_response_messages(resp, "int")
+    Assertions.assert_201_response_messages(resp, INT_URL)
 
 
 @pytest.mark.inttest
