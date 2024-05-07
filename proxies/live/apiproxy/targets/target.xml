@@ -21,7 +21,7 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         <LoadBalancer>
-            <Server name="communications-manager-target" />
+            <Server name="https://comms-apim.de-rake4.communications.national.nhs.uk" />
         </LoadBalancer>
         <Path>{requestpath}</Path>
         <Properties>

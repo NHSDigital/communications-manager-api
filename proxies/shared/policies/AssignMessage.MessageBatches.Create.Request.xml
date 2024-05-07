@@ -8,7 +8,13 @@
     * https://docs.apigee.com/api-platform/reference/policies/assign-message-policy#set-payload
 -->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageBatches.Create.Request">
-    <DisplayName>AssignMessage.MessageBatches.Create.Request</DisplayName>
+    <DisplayName>AssignMessage.MessageBatches.Create.Request</DisplayName>    
+    {% if ENVIRONMENT_TYPE != 'sandbox' %}
+        <AssignVariable>
+            <Name>target.url</Name>
+            <Value>https://comms-apim.de-rake4.communications.national.nhs.uk/api/v1/send</Value>
+        </AssignVariable>
+    {% endif %}
     <Properties/>
     <AssignTo createNew="false" transport="http" type="request"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
@@ -20,6 +26,12 @@
         <Name>requestpath</Name>
         <Value>/api/v1/send</Value>
     </AssignVariable>
+    {% if ENVIRONMENT_TYPE != 'sandbox' %}
+        <AssignVariable>
+            <Name>target.url</Name>
+            <Value>https://comms-apim.de-rake4.communications.national.nhs.uk/api/v1/send</Value>
+        </AssignVariable>
+    {% endif %}
     <Set>
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
         <Headers>
