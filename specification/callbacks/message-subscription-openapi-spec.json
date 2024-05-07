@@ -5,6 +5,11 @@
     "title": "Callback Example",
     "description": "This is an example OpenAPI specification detailing an endpoint to be created by a partner who has integrated with NHS Notify and wishes to use the callbacks feature."
   },
+  "x-spec-publication": {
+    "try-this-api": {
+      "disabled": true
+    }
+  },
   "servers": [
     {
       "url": "http://localhost:3000"
