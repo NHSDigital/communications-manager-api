@@ -9,7 +9,6 @@
 -->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageBatches.Create.Request">
     <DisplayName>AssignMessage.MessageBatches.Create.Request</DisplayName>
-    {% endif %}
     <Properties/>
     <AssignTo createNew="false" transport="http" type="request"/>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
