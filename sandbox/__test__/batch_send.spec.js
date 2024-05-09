@@ -624,4 +624,64 @@ describe("/api/v1/send", () => {
       })
       .expect("Content-Type", /json/, done);
   });
+
+  it("returns a 400 when a message has no odsCode and the client has no default", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "noDefaultOds" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+              },
+              {
+                messageReference: "2",
+                originator: {
+                  odsCode: "X26"
+                }
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "odsCode must be provided",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when a message has an odsCode but the client does not allow it", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "noOdsChange" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+              },
+              {
+                messageReference: "2",
+                originator: {
+                  odsCode: "X26"
+                }
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "odsCode was provided but ODS code override is not enabled for the client",
+      })
+      .expect("Content-Type", /json/, done);
+  });
 });

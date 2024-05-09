@@ -42,6 +42,10 @@ if (isSandbox) {
         match: /^\/_timeout_408$/,
         methods: ['get']
     });
+    validPaths.push({
+        match: /^\/_invalid_certificate$/,
+        methods: ['get']
+    });
 }
 
 validPaths.forEach((pathObj) => {

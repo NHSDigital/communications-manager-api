@@ -1,4 +1,4 @@
-summary: Send messages
+summary: Send a batch of messages
 description:
   $ref: ../documentation/CreateMessageBatch.md
 operationId: create-message-batch
