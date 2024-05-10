@@ -27,6 +27,9 @@ description: |-
     * `pending_enrichment` - the message is currently pending enrichment
     * `enriched` - we have queried PDS for this patients details and now know how to contact this individual
     * `sending` - the message is in the process of being sent
+x-spec-publication:
+  try-this-api:
+    disabled: true
 operationId: post-v1-callbacks
 parameters:
     - name: x-hmac-sha256-signature
