@@ -8,9 +8,6 @@ info:
     name: NHS Notify API Support
     url: "https://digital.nhs.uk/developer/help-and-support"
     email: api.management@nhs.net
-x-spec-publication:
-  try-this-api: 
-    disabled: true
 servers:
   - url: "https://sandbox.api.service.nhs.uk/comms"
     description: Sandbox environment
@@ -36,6 +33,9 @@ paths:
     get:
       $ref: endpoints/get_message.yaml
   /callbacks:
+    x-spec-publication:
+      try-this-api:
+        disabled: true
     post:
       $ref: callbacks/message_subscriptions.yaml
       tags: ['Callbacks']
