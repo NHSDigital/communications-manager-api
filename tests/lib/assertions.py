@@ -1,6 +1,7 @@
 from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
 from .error_handler import Error_Handler
 import json
+from urllib.parse import urlparse, parse_qs
 
 
 class Assertions():
@@ -27,7 +28,7 @@ class Assertions():
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
 
     @staticmethod
-    def assert_200_response_nhs_app_accounts(resp, base_url, ods_code, page, next, last):
+    def assert_200_response_nhs_app_accounts(resp, base_url, ods_code, page):
         Error_Handler.handle_retry(resp)
 
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
@@ -47,16 +48,28 @@ class Assertions():
         assert response.get("links").get("self").startswith(base_url)
         assert response.get("links").get("self") \
             .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={page}")
-        assert response.get("links").get("last").startswith(base_url)
-        assert response.get("links").get("last") \
-            .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={last}")
 
-        if next is None:
+        last_link = response.get("links").get("last")
+        parsed_last_link = urlparse(last_link)
+        last_link_query_params = parse_qs(parsed_last_link.query)
+        last_page_number = int(last_link_query_params["page"][0])
+
+        assert last_link.startswith(base_url)
+        assert response.get("links").get("last") \
+            .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={last_page_number}")
+
+        self_link = response.get("links").get("self")
+        parsed_self_link = urlparse(self_link)
+        self_link_query_params = parse_qs(parsed_self_link.query)
+        self_page_number = int(self_link_query_params["page"][0])
+
+        if self_page_number == last_page_number:
             assert response.get("links").get("next") is None
         else:
+            next_page_number = self_page_number + 1
             assert response.get("links").get("next").startswith(base_url)
             assert response.get("links").get("next") \
-                .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={next}")
+                .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={next_page_number}")
 
     @staticmethod
     def assert_200_response_message(resp, base_url):
