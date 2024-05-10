@@ -33,9 +33,6 @@ paths:
     get:
       $ref: endpoints/get_message.yaml
   /callbacks:
-    x-spec-publication:
-      try-this-api:
-        disabled: true
     post:
       $ref: callbacks/message_subscriptions.yaml
       tags: ['Callbacks']
