@@ -119,9 +119,6 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 	(rm -rf node_modules; npm install --legacy-peer-deps; \
 	npm run integration-postman-collection)
 
-run-locust-tests: 
-	scripts/run_locust.sh
-
 sandbox-postman-test: .run-postman-sandbox
 
 int-postman-test: .run-postman-int
