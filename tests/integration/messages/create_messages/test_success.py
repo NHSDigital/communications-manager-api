@@ -9,7 +9,7 @@ from lib.constants.messages_paths import MESSAGES_ENDPOINT
 
 @pytest.mark.inttest
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
-def test_201_single_message_wiht_valid_accept_headers(accept_headers):
+def test_201_single_message_with_valid_accept_headers(accept_headers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
     """
