@@ -15,7 +15,7 @@ VALID_ROUTING_PLAN_ID_AND_VERSION = [
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
-def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_headers):
+def test_201_single_message_with_valid_accept_headers(nhsd_apim_proxy_url, accept_headers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
     """
@@ -33,7 +33,7 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
-def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, content_type):
+def test_201_single_message_with_valid_content_type_headers(nhsd_apim_proxy_url, content_type):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_content_type_headers.rst
     """
@@ -47,7 +47,7 @@ def test_201_message_batch_valid_content_type_headers(nhsd_apim_proxy_url, conte
 
 
 @pytest.mark.sandboxtest
-def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
+def test_201_single_message_with_valid_nhs_number(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
     """
@@ -64,7 +64,7 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
-def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
+def test_201_single_message_with_valid_dob(nhsd_apim_proxy_url, dob):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_dob.rst
     """
@@ -80,7 +80,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
 
 
 @pytest.mark.sandboxtest
-def test_request_without_dob(nhsd_apim_proxy_url):
+def test_single_message_with_without_dob(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/happy_path/test_201_messages_without_dob.rst
     """
