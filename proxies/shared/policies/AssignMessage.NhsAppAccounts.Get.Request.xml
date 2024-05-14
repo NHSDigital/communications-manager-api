@@ -19,7 +19,13 @@
     <AssignVariable>
         <Name>requestpath</Name>
         <Value>/api/channels/nhsapp/accounts</Value>
-    </AssignVariable>
+      </AssignVariable>
+    {% if ENVIRONMENT_TYPE != 'sandbox' %}
+      <AssignVariable>
+        <Name>target.url</Name>
+        <Value>https://comms-apim.de-adsm6.communications.national.nhs.uk/api/channels/nhsapp/accounts</Value>
+      </AssignVariable>
+    {% endif %}
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
