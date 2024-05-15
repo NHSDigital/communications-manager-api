@@ -10,41 +10,20 @@ env:
       urls:
         - https://int.api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
       authentication:
-        method: 'script'
+        method: script
         parameters:
           url: https://int.api.service.nhs.uk/oauth2/token
-          script: 'scripts/authentication/get_bearer_token.js'
-          scriptEngine: 'Graal.js'
+          script: scripts/authentication/get_bearer_token.js
+          scriptEngine: Graal.js
         verification:
-          method: 'response'
-          loggedOutRegex: '401 Unauthorized'
+          method: response
+          loggedOutRegex: 401 Unauthorized
       users:
         - name: Integration
           credentials:
             kid: local
-            api_key: "${INTEGRATION_API_KEY}"
-            private_key: "${INTEGRATION_PRIVATE_KEY_CONTENTS}"
-    - name: ProdUnauthenticated
-      urls:
-        - https://api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
-    - name: ProdAuthenticated
-      urls:
-        - https://api.service.nhs.uk/comms # the actual url used for the scan is defined in the openapi job below
-      authentication:
-        method: 'script'
-        parameters:
-          url: https://api.service.nhs.uk/oauth2/token
-          script: 'scripts/authentication/get_bearer_token.js'
-          scriptEngine: 'Graal.js'
-        verification:
-          method: 'response'
-          loggedOutRegex: '401 Unauthorized'
-      users:
-        - name: Prod
-          credentials:
-            kid: prod-1
-            api_key: "${PRODUCTION_API_KEY}"
-            private_key: "${PRODUCTION_PRIVATE_KEY_CONTENTS}"
+            api_key: ${INTEGRATION_API_KEY}
+            private_key: ${INTEGRATION_PRIVATE_KEY_CONTENTS}
   parameters:
     failOnError: true
     failOnWarning: true
@@ -54,46 +33,83 @@ jobs:
   # load our authentication and httpsender script
   - type: script
     parameters:
-      action: 'add'
-      type: 'httpsender'
-      engine: 'Graal.js'
-      name: 'add_bearer_token'
-      file: 'scripts/httpsender/add_bearer_token.js'
+      action: add
+      type: httpsender
+      engine: Graal.js
+      name: add_bearer_token
+      file: scripts/httpsender/add_bearer_token.js
   - type: script
     parameters:
-      action: 'add'
-      type: 'authentication'
-      engine: 'Graal.js'
-      name: 'get_bearer_token'
-      file: 'scripts/authentication/get_bearer_token.js'
+      action: add
+      type: authentication
+      engine: Graal.js
+      name: get_bearer_token
+      file: scripts/authentication/get_bearer_token.js
+
+  # configure the passive scan
+  - type: passiveScan-config
+    parameters:
+      maxAlertsPerRule: 10
+      scanOnlyInScope: true
+    rules:
+      - id: 10049
+        name: Non-Storable Content
+        threshold: Off
+        # We do not want responses cached.
+        # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
+
+      - id: 90005
+        name: Sec-Fetch-Site Header is Missing
+        threshold: Off
+        # Sec-Fetch-* headers are only for requests.
+        # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
+
+      - id: 10094
+        name: Base64 Disclosure
+        threshold: Off
+        # The KSUIDs are sometimes detected as base64 strings.
+        # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
+
+      - id: 110009
+        name: Full Path Disclosure
+        threshold: Off
+        # Error responses include a link to the NHS developer catalogue.
+        # ZAP is picking up 'developer' in the link.
+        # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
+
+      - id: 90004
+        name: Insufficient Site Isolation Against Spectre Vulnerability
+        threshold: Off
+        # CORS headers (including Cross-Origin-Resource-Policy) are only added to the response when the request has an origin specified.
+        # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
+
+      - id: 10062
+        name: PII Disclosure
+        threshold: Off
+        # Error responses include the apigee message id in the body.
+        # Sometimes it can be detected as a Maestro credit card number.
+        # This rule only checks for credit card details, no other PII.
+        # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
 
   # load the zap specific openapi specification
   - type: openapi
     parameters:
-      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      apiFile: /zap/wrk/build/communications-manager-zap.json
       targetUrl: https://sandbox.api.service.nhs.uk/comms
       context: Sandbox
   - type: openapi
     parameters:
-      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      apiFile: /zap/wrk/build/communications-manager-zap.json
       targetUrl: https://int.api.service.nhs.uk/comms
       context: IntegrationUnauthenticated
   - type: openapi
     parameters:
-      apiFile: '/zap/wrk/build/communications-manager-zap.json'
+      apiFile: /zap/wrk/build/communications-manager-zap.json
       targetUrl: https://int.api.service.nhs.uk/comms
       context: IntegrationAuthenticated
-  - type: openapi
-    parameters:
-      apiFile: '/zap/wrk/build/communications-manager-zap.json'
-      targetUrl: https://api.service.nhs.uk/comms
-      context: ProdUnauthenticated
-  - type: openapi
-    parameters:
-      apiFile: '/zap/wrk/build/communications-manager-zap.json'
-      targetUrl: https://api.service.nhs.uk/comms
-      context: ProdAuthenticated
 
+  # let the passive scan do it's stuff
+  - type: passiveScan-wait
 
   # run an active scan on sandbox
   - type: activeScan
@@ -123,31 +139,12 @@ jobs:
       delayInMs: 500
       threadPerHost: 1
 
-   # run an active scan on prod, using unauthenticated calls
-  - type: activeScan
-    parameters:
-      policy: API
-      context: ProdUnauthenticated
-      scanHeadersAllRequests: true
-      delayInMs: 500
-      threadPerHost: 1
-
-  # run an active scan on prod, using authenticated calls
-  - type: activeScan
-    parameters:
-      policy: API
-      context: ProdAuthenticated
-      user: Prod
-      scanHeadersAllRequests: true
-      delayInMs: 500
-      threadPerHost: 1
-
   # generate our custom JSON report
   - type: report
     parameters:
-      template: 'comms-manager-json'
-      reportDir: '/zap/tmp'
-      reportFile: 'zap-report.json'
+      template: comms-manager-json
+      reportDir: /zap/tmp
+      reportFile: zap-report.json
     risks:
       - high
       - medium
