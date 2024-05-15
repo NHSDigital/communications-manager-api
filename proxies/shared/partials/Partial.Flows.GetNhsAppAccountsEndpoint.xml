@@ -29,6 +29,6 @@
         </Step>
     </Response>
     <Condition>
-        (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and (request.verb = "GET")
+      (proxy.pathsuffix MatchesPath "/api/comms/channels/nhsapp/accounts") and (request.verb = "GET")
     </Condition>
 </Flow>
