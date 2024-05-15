@@ -17,7 +17,6 @@ mv .python-version.ignore .python-version
 
 # open the contents in INTEGRATION_PRIVATE_KEY and put it into INTEGRATION_PRIVATE_KEY_CONTENTS
 export INTEGRATION_PRIVATE_KEY_CONTENTS=$(cat $INTEGRATION_PRIVATE_KEY)
-export PRODUCTION_PRIVATE_KEY_CONTENTS=$(cat $PRODUCTION_PRIVATE_KEY)
 
 docker build -t zap -f ./zap/Dockerfile .
 
@@ -25,8 +24,6 @@ docker build -t zap -f ./zap/Dockerfile .
 docker container run \
     --env INTEGRATION_PRIVATE_KEY_CONTENTS="$INTEGRATION_PRIVATE_KEY_CONTENTS" \
     --env INTEGRATION_API_KEY="$INTEGRATION_API_KEY" \
-    --env PRODUCTION_PRIVATE_KEY_CONTENTS="$PRODUCTION_PRIVATE_KEY_CONTENTS" \
-    --env PRODUCTION_API_KEY="$PRODUCTION_API_KEY" \
     -v $(pwd):/zap/wrk/:rw \
     -v $TEMP_DIR:/zap/tmp/:rw \
     -v $(pwd)/zap/comms-manager-json/:/home/zap/.ZAP/reports/comms-manager-json/:rw \

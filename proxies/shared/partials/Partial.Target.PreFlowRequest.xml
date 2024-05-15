@@ -1,4 +1,3 @@
-[% include './partials/Partial.Component.SetResponseDefaults.xml' %]
 <Step>
     <Name>JavaScript.SetBackendCorrelationId</Name>
 </Step>
