@@ -277,8 +277,7 @@ Source: [proxies/shared/partials/Partial.Target.PreFlowRequest.xml](https://gith
 
 ```mermaid
 flowchart
-    S[Start] --> SRD["<a href='https://github.com/NHSDigital/communications-manager-api/blob/release/docs/proxies.md#set-response-defaults'>Set response defaults</a>"]
-    SRD --> SBCI["Set the backend request correlation id
+    S[Start] --> SBCI["Set the backend request correlation id
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.SetBackendCorrelationId.xml'>JavaScript.SetBackendCorrelationId</a></em>"]
     SBCI --> ADRP["Sets a default request path
@@ -346,20 +345,6 @@ flowchart
 
     <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.405NotAllowed.xml'>RaiseFault.405NotAllowed</a></em>"]
     405 --> E
-```
-
-### Target PreFlow Response
-
-This defines the actions carried out on all outgoing responses from the communications manager target.
-
-Source: [proxies/shared/partials/Partial.Target.PreFlowResponse.xml](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/partials/Partial.Target.PreFlowResponse.xml)
-
-```mermaid
-flowchart LR
-    S[Start] --> AD["Add CORS headers
-
-    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.AddCors.xml'>AssignMessage.AddCors</a></em>"]
-    AD --> E[End]
 ```
 
 ### Create Message Batch
