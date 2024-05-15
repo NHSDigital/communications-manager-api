@@ -3,9 +3,6 @@
         <Request>
             [% include './partials/Partial.Target.PreFlowRequest.xml' %]
         </Request>
-        <Response>
-            [% include './partials/Partial.Target.PreFlowResponse.xml' %]
-        </Response>
     </PreFlow>
     <Flows>
         [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
