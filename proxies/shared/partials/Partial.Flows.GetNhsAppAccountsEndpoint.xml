@@ -2,9 +2,6 @@
     <Description>Handle get NHS App Accounts</Description>
     <Request>
         <Step>
-            <Name>JavaScript.NhsAppAccounts.Get.Validate</Name>
-        </Step>
-        <Step>
             <Name>RaiseFault.400BadRequest</Name>
             <Condition>errors != null</Condition>
         </Step>
