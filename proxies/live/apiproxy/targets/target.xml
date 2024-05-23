@@ -20,11 +20,8 @@
     <HTTPTargetConnection>
         <SSLInfo>
             <Enabled>true</Enabled>
-        </SSLInfo>
-        <LoadBalancer>
-            <Server name="communications-manager-target" />
-        </LoadBalancer>
-        <Path>{requestpath}</Path>
+    	</SSLInfo>
+	<URL>https://comms-apim.de-tehe1.communications.national.nhs.uk</URL>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
