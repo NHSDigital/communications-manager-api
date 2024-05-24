@@ -34,7 +34,6 @@ def test_404_page_not_found(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_cod
     )
 
 
-
 @pytest.mark.devtest
 @pytest.mark.parametrize("ods_code", INVALID_ODS_CODES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
@@ -58,4 +57,3 @@ def test_404_invalid_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_c
         Generators.generate_not_found_error(),
         correlation_id
     )
-

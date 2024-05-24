@@ -28,4 +28,3 @@ def test_400_missing_ods_code(page, correlation_id):
         Generators.generate_missing_value_error("queryParam.ods-organisation-code"),
         correlation_id
     )
-

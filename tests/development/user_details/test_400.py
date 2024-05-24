@@ -28,4 +28,3 @@ def test_400_missing_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, page,
         Generators.generate_missing_value_error("queryParam.ods-organisation-code"),
         correlation_id
     )
-

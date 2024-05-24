@@ -33,6 +33,7 @@ def test_404_page_not_found(ods_code, page, correlation_id):
         correlation_id
     )
 
+
 @pytest.mark.inttest
 @pytest.mark.parametrize("ods_code", INVALID_ODS_CODES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
@@ -55,5 +56,3 @@ def test_404_invalid_ods_code(ods_code, correlation_id):
         Generators.Generators.generate_not_found_error(),
         correlation_id
     )
-
-    
