@@ -42,7 +42,7 @@ def test_404_page_not_found(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_cod
 def test_400_invalid_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, correlation_id):
 
     """
-    .. include:: ../../partials/invalid_ods_code/test_400_nhs_accounts_invalid_ods_code.rst
+    .. include:: ../../partials/not_found/test_404_nhs_accounts_invalid_ods_code.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{USER_DETAILS_ENDPOINT}", headers={
         **nhsd_apim_auth_headers,

@@ -3,10 +3,10 @@ Scenario: An API consumer submitting a GET NHS App Accounts request an invalid O
 
 | **Given** the API consumer sends a request to get NHS App Accounts with an invalid ODS Code
 | **When** the request is submitted
-| **Then** the service responds with a 400 invalid response, telling the user the ODS Code is invalid
+| **Then** the service responds with a 404 invalid response, telling the user the ODS Code is invalid
 
 **Asserts**
-- Response returns a 400 'Invalid' error
+- Response returns a 404 'Invalid' error
 - Response returns the expected error message body
 - Response returns the 'X-Correlation-Id' header if provided
 
