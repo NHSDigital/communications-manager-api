@@ -51,6 +51,7 @@ def test_404_invalid_ods_code(ods_code, correlation_id):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         404,
-        Generators.generate_not_found_error(),
+        Generators.generate_not_found_error(),./tests/sandbox/user_details/test_400.py
         correlation_id
     )
+

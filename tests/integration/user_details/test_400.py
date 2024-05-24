@@ -29,5 +29,3 @@ def test_400_missing_ods_code(page, correlation_id):
         correlation_id
     )
 
-
-

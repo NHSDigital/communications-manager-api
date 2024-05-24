@@ -27,5 +27,3 @@ def test_400_missing_ods_code(nhsd_apim_proxy_url, page, correlation_id):
         correlation_id
     )
 
-
-

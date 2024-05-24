@@ -52,3 +52,4 @@ def test_404_invalid_ods_code(nhsd_apim_proxy_url, ods_code, correlation_id):
         Generators.generate_not_found_error(),
         correlation_id
     )
+
