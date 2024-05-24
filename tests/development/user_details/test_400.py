@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.user_details_paths import USER_DETAILS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
-    VALID_MULTI_PAGE_NUMBERS, INVALID_ODS_CODES, CORRELATION_IDS
+    VALID_MULTI_PAGE_NUMBERS, CORRELATION_IDS
 
 
 @pytest.mark.devtest

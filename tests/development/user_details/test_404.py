@@ -39,7 +39,7 @@ def test_404_page_not_found(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_cod
 @pytest.mark.parametrize("ods_code", INVALID_ODS_CODES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_400_invalid_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, correlation_id):
+def test_404_invalid_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, correlation_id):
 
     """
     .. include:: ../../partials/not_found/test_404_nhs_accounts_invalid_ods_code.rst
