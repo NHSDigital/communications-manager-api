@@ -99,7 +99,6 @@ There are:
 * Integration tests
 * Zap security scan tests
 * Postman collection tests
-* Locust performance tests
 
 #### Node unit tests
 
@@ -261,20 +260,6 @@ $ make postman-test
 ```
 
 The postman collections can be found in the `postman/` folder.
-
-#### Locust performance tests
-
-These tests live within the `/locust` folder and can be executed by:
-
-```
-$ export HOST_URL=<target_url>
-$ make run-locust-tests
-```
-
-A report will be generated for each test ran available in the locust directory
-* no_errors.html
-* spike_arrest.html
-* quota.html
 
 ### Caveats
 
