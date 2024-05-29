@@ -6,4 +6,9 @@ properties:
     format: uri
     example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
     description: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+  nhsNumbers:
+    type: string
+    format: uri
+    example: 'https://www.datadictionary.nhs.uk/attributes/nhs_number.html'
+    description: https://www.datadictionary.nhs.uk/attributes/nhs_number.html This link is only provided in the instance of a "CM_INVALID_NHS_NUMBER" error.
 minProperties: 1
