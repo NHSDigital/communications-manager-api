@@ -4,20 +4,20 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     SINGLE_PAGE_ODS_CODES, CORRELATION_IDS
+from lib.fixtures import *
 
 BAD_GATEWAY_ODS_CODE = 'T00401'  # The mock for the NHS App API will return a 401 should cause the BE to return a 502
 
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_502_bad_gateway(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id):
+def test_502_bad_gateway(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
 
     """
     .. include:: ../../partials/bad_gatway/test_502_bad_gateway.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

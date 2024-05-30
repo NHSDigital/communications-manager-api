@@ -1,11 +1,12 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Permutations, Generators, Authentication
+from lib import Assertions, Permutations, Generators
 from lib.constants.constants import INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
     INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
+from lib.fixtures import *
 
 
 headers = {
@@ -16,14 +17,14 @@ headers = {
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_body(correlation_id):
+def test_invalid_body(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_body.rst
     """
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": Authentication.generate_authentication("int"),
+            "Authorization": bearer_token_int,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -44,14 +45,14 @@ def test_invalid_body(correlation_id):
     MISSING_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_property_missing(property, pointer, correlation_id):
+def test_property_missing(bearer_token_int, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_messages_property_missing.rst
     """
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": Authentication.generate_authentication("int"),
+            "Authorization": bearer_token_int,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -75,14 +76,14 @@ def test_property_missing(property, pointer, correlation_id):
     NULL_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_data_null(property, pointer, correlation_id):
+def test_data_null(bearer_token_int, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_messages_null.rst
     """
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": Authentication.generate_authentication("int"),
+            "Authorization": bearer_token_int,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -106,14 +107,14 @@ def test_data_null(property, pointer, correlation_id):
     INVALID_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_data_invalid(property, pointer, correlation_id):
+def test_data_invalid(bearer_token_int, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_messages_invalid.rst
     """
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": Authentication.generate_authentication("int"),
+            "Authorization": bearer_token_int,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -135,12 +136,12 @@ def test_data_invalid(property, pointer, correlation_id):
 @pytest.mark.inttest
 @pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_nhs_number(nhs_number, correlation_id):
+def test_invalid_nhs_number(bearer_token_int, nhs_number, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("int"),
+        "Authorization": bearer_token_int,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -170,12 +171,12 @@ def test_invalid_nhs_number(nhs_number, correlation_id):
 @pytest.mark.inttest
 @pytest.mark.parametrize("dob", INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_dob(dob, correlation_id):
+def test_invalid_dob(bearer_token_int, dob, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("int"),
+        "Authorization": bearer_token_int,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -204,12 +205,12 @@ def test_invalid_dob(dob, correlation_id):
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_routing_plan(correlation_id):
+def test_invalid_routing_plan(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("int"),
+        "Authorization": bearer_token_int,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -238,12 +239,12 @@ def test_invalid_routing_plan(correlation_id):
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_message_reference(correlation_id):
+def test_invalid_message_reference(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("int"),
+        "Authorization": bearer_token_int,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -273,12 +274,12 @@ def test_invalid_message_reference(correlation_id):
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", INVALID_PERSONALISATION_VALUES)
-def test_invalid_personalisation(correlation_id, personalisation):
+def test_invalid_personalisation(bearer_token_int, correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("int"),
+        "Authorization": bearer_token_int,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -307,12 +308,12 @@ def test_invalid_personalisation(correlation_id, personalisation):
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", NULL_VALUES)
-def test_null_personalisation(correlation_id, personalisation):
+def test_null_personalisation(bearer_token_int, correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("int"),
+        "Authorization": bearer_token_int,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={

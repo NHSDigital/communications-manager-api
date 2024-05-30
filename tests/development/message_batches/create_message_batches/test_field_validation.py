@@ -2,6 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
+from lib.fixtures import *
 import lib.constants.constants as constants
 from lib.constants.shared_paths import ROUTING_PLAN_ID_PATH
 from lib.constants.message_batches_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
@@ -16,15 +17,14 @@ headers = {
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_invalid_body(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_body.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            **nhsd_apim_auth_headers,
+            "Authorization": bearer_token_internal_dev,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -45,15 +45,14 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_header
     MISSING_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
+def test_property_missing(nhsd_apim_proxy_url, bearer_token_internal_dev, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_message_batch_property_missing.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            **nhsd_apim_auth_headers,
+            "Authorization": bearer_token_internal_dev,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -77,15 +76,14 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
     NULL_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
+def test_data_null(nhsd_apim_proxy_url, bearer_token_internal_dev, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_message_batch_null.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            **nhsd_apim_auth_headers,
+            "Authorization": bearer_token_internal_dev,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -109,15 +107,14 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_
     INVALID_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
+def test_data_invalid(nhsd_apim_proxy_url, bearer_token_internal_dev, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_message_batch_invalid.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            **nhsd_apim_auth_headers,
+            "Authorization": bearer_token_internal_dev,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -142,8 +139,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id, nh
     DUPLICATE_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
+def test_data_duplicate(nhsd_apim_proxy_url, bearer_token_internal_dev, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_data_duplicate.rst
     """
@@ -155,7 +151,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, 
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            **nhsd_apim_auth_headers,
+            "Authorization": bearer_token_internal_dev,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -176,15 +172,14 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id, 
     TOO_FEW_PROPERTIES_PATHS
 )
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id, nhsd_apim_auth_headers):
+def test_data_too_few_items(nhsd_apim_proxy_url, bearer_token_internal_dev, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_data_too_few_items.rst
     """
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            **nhsd_apim_auth_headers,
+            "Authorization": bearer_token_internal_dev,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -206,13 +201,12 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 @pytest.mark.devtest
 @pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhsd_apim_auth_headers):
+def test_invalid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal_dev, nhs_number, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -245,13 +239,12 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id, nhs
 @pytest.mark.devtest
 @pytest.mark.parametrize("dob", constants.INVALID_DOB)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_headers):
+def test_invalid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, dob, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -284,13 +277,12 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id, nhsd_apim_auth_he
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_invalid_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -323,13 +315,12 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id, nhsd_apim_aut
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_invalid_message_batch_reference(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -362,13 +353,12 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id, nh
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_invalid_message_reference(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -402,13 +392,12 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id, nhsd_api
 @pytest.mark.devtest
 @pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id, nhsd_apim_auth_headers):
+def test_blank_value_under_messages(nhsd_apim_proxy_url, bearer_token_internal_dev, invalid_value, correlation_id):
     """
     .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -434,13 +423,12 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id, nhsd_apim_auth_headers):
+def test_null_value_under_messages(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -467,13 +455,12 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id, nhsd_api
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+def test_invalid_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -507,13 +494,12 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation, nhsd_apim_auth_headers):
+def test_null_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={

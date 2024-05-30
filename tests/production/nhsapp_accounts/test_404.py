@@ -1,9 +1,10 @@
 import requests
 import pytest
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     LIVE_ODS_CODES, CORRELATION_IDS
+from lib.fixtures import *
 
 REPORT_NOT_FOUND_PAGE_NUMBERS = [1000, 2000, 3000]
 
@@ -12,13 +13,13 @@ REPORT_NOT_FOUND_PAGE_NUMBERS = [1000, 2000, 3000]
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", REPORT_NOT_FOUND_PAGE_NUMBERS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_404_page_not_found(ods_code, page, correlation_id):
+def test_404_page_not_found(bearer_token_prod, ods_code, page, correlation_id):
 
     """
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_page_not_found.rst
     """
     resp = requests.get(f"{constants.PROD_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("prod"),
+        "Authorization": bearer_token_prod,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

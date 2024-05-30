@@ -1,9 +1,10 @@
 import requests
 import pytest
-from lib import Assertions, Permutations, Generators, Authentication
+from lib import Assertions, Permutations, Generators
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
+from lib.fixtures import *
 
 headers = {
     "Accept": "application/json",
@@ -12,7 +13,7 @@ headers = {
 
 
 @pytest.mark.prodtest
-def test_invalid_body():
+def test_invalid_body(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_messages_invalid.rst
     """
@@ -20,7 +21,7 @@ def test_invalid_body():
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         data="{}SF{}NOTVALID",
     )
@@ -38,7 +39,7 @@ def test_invalid_body():
     "property, pointer",
     MISSING_PROPERTIES_PATHS
 )
-def test_property_missing(property, pointer):
+def test_property_missing(bearer_token_prod, property, pointer):
     """
     .. include:: ../../partials/validation/test_messages_property_missing.rst
     """
@@ -46,7 +47,7 @@ def test_property_missing(property, pointer):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_without_key(
             Generators.generate_valid_create_message_body("prod"),
@@ -67,7 +68,7 @@ def test_property_missing(property, pointer):
     "property, pointer",
     NULL_PROPERTIES_PATHS
 )
-def test_data_null(property, pointer):
+def test_data_null(bearer_token_prod, property, pointer):
     """
     .. include:: ../../partials/validation/test_messages_null.rst
     """
@@ -75,7 +76,7 @@ def test_data_null(property, pointer):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_null_key(
             Generators.generate_valid_create_message_body("prod"),
@@ -96,7 +97,7 @@ def test_data_null(property, pointer):
     "property, pointer",
     INVALID_PROPERTIES_PATHS
 )
-def test_data_invalid(property, pointer):
+def test_data_invalid(bearer_token_prod, property, pointer):
     """
     .. include:: ../../partials/validation/test_messages_invalid.rst
     """
@@ -104,7 +105,7 @@ def test_data_invalid(property, pointer):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -123,7 +124,7 @@ def test_data_invalid(property, pointer):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
-def test_invalid_nhs_number(nhs_number):
+def test_invalid_nhs_number(bearer_token_prod, nhs_number):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
@@ -131,7 +132,7 @@ def test_invalid_nhs_number(nhs_number):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -150,7 +151,7 @@ def test_invalid_nhs_number(nhs_number):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("dob", constants.INVALID_DOB)
-def test_invalid_dob(dob):
+def test_invalid_dob(bearer_token_prod, dob):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
@@ -158,7 +159,7 @@ def test_invalid_dob(dob):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -176,7 +177,7 @@ def test_invalid_dob(dob):
 
 
 @pytest.mark.prodtest
-def test_invalid_routing_plan():
+def test_invalid_routing_plan(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
@@ -184,7 +185,7 @@ def test_invalid_routing_plan():
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -202,7 +203,7 @@ def test_invalid_routing_plan():
 
 
 @pytest.mark.prodtest
-def test_invalid_message_reference():
+def test_invalid_message_reference(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
@@ -210,7 +211,7 @@ def test_invalid_message_reference():
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -229,7 +230,7 @@ def test_invalid_message_reference():
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-def test_invalid_personalisation(personalisation):
+def test_invalid_personalisation(bearer_token_prod, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
@@ -237,7 +238,7 @@ def test_invalid_personalisation(personalisation):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -256,7 +257,7 @@ def test_invalid_personalisation(personalisation):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-def test_null_personalisation(personalisation):
+def test_null_personalisation(bearer_token_prod, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
@@ -264,7 +265,7 @@ def test_null_personalisation(personalisation):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),

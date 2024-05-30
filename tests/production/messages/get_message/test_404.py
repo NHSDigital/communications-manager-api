@@ -1,19 +1,20 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
 from lib.constants.constants import PROD_URL
 from lib.constants.messages_paths import MESSAGES_ENDPOINT, MESSAGE_ID_NOT_BELONGING_TO_CLIENT
+from lib.fixtures import *
 
 
 @pytest.mark.prodtest
-def test_message_id_not_belonging_to_client_id():
+def test_message_id_not_belonging_to_client_id(bearer_token_prod):
     """
     .. include:: ../../partials/not_found/test_message_id_not_belonging_to_client_id.rst
     """
     resp = requests.get(
         f"{PROD_URL}{MESSAGES_ENDPOINT}/{MESSAGE_ID_NOT_BELONGING_TO_CLIENT}",
-        headers={"Authorization": Authentication.generate_authentication("prod")}
+        headers={"Authorization": bearer_token_prod}
         )
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -24,13 +25,13 @@ def test_message_id_not_belonging_to_client_id():
 
 
 @pytest.mark.prodtest
-def test_message_id_that_does_not_exist():
+def test_message_id_that_does_not_exist(bearer_token_prod):
     """
     .. include:: ../../partials/not_found/test_message_id_that_does_not_exist.rst
     """
     resp = requests.get(
         f"{PROD_URL}{MESSAGES_ENDPOINT}/does_not_exist",
-        headers={"Authorization": Authentication.generate_authentication("prod")}
+        headers={"Authorization": bearer_token_prod}
         )
     Assertions.assert_error_with_optional_correlation_id(
         resp,

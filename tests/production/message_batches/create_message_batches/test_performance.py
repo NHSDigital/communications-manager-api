@@ -1,15 +1,16 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
 from lib.constants.constants import PROD_URL, NUM_MAX_ERRORS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
+from lib.fixtures import *
 
 NUM_MESSAGES = 50000
 
 
 @pytest.mark.prodtest
-def test_create_messages_large_invalid_payload():
+def test_create_messages_large_invalid_payload(bearer_token_prod):
     """
     .. include:: ../../partials/performance/test_create_messages_large_valid_payload.rst
     """
@@ -29,7 +30,7 @@ def test_create_messages_large_invalid_payload():
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": f"{Authentication.generate_authentication('prod')}"
+        "Authorization": bearer_token_prod
     }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
@@ -37,7 +38,7 @@ def test_create_messages_large_invalid_payload():
 
 
 @pytest.mark.prodtest
-def test_create_messages_large_not_unique_payload():
+def test_create_messages_large_not_unique_payload(bearer_token_prod):
     """
     .. include:: ../../partials/performance/test_create_messages_large_not_unique_payload.rst
     """
@@ -58,7 +59,7 @@ def test_create_messages_large_not_unique_payload():
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": f"{Authentication.generate_authentication('prod')}"
+        "Authorization": bearer_token_prod
     }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
