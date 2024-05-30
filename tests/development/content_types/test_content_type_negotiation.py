@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib.constants.constants import METHODS, VALID_ENDPOINTS
-from lib import Error_Handler
+from lib import Error_Handler, Authentication
 
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 ACCEPT_HEADERS = [
@@ -30,13 +30,12 @@ ACCEPT_HEADERS = [
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method, nhsd_apim_auth_headers, endpoints):
+def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method, endpoints):
     """
     .. include:: ../../partials/content_types/test_application_response_type.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": Authentication.generate_authentication("internal-dev"),
         **accept_headers.get("headers")
     })
 

@@ -15,7 +15,12 @@ class Authentication():
         global tokens
         global call_time
 
-        if env == "int":
+        if env == "internal-dev":
+            api_key = os.environ.get("API_KEY")
+            private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
+            url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
+            kid = "local"
+        elif env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
             url = "https://int.api.service.nhs.uk/oauth2/token"

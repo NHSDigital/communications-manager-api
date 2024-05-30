@@ -1,19 +1,18 @@
 import pytest
 import os
-from lib import Assertions, Generators, Helper
+from lib import Assertions, Helper, Generators, Authentication
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
 @pytest.mark.e2e
 @pytest.mark.devtest
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/happy_path/test_email_end_to_end_internal_dev.rst
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        nhsd_apim_auth_headers,
+        {"Authorization": Authentication.generate_authentication("internal-dev")},
         Generators.generate_send_message_body("email", "internal-dev")
     )
 
@@ -21,7 +20,7 @@ def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, nhsd_apim_auth_heade
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth=nhsd_apim_auth_headers,
+        auth={"Authorization": Authentication.generate_authentication("internal-dev")},
         message_id=message_id
     )
 
@@ -33,14 +32,13 @@ def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, nhsd_apim_auth_heade
 
 @pytest.mark.e2e
 @pytest.mark.uattest
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_email_end_to_end_uat(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+def test_email_end_to_end_uat(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/happy_path/test_email_end_to_end_uat.rst
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        nhsd_apim_auth_headers,
+        {"Authorization": Authentication.generate_authentication("internal-dev")},
         Generators.generate_send_message_body("email", "internal-qa")
     )
 
@@ -48,7 +46,7 @@ def test_email_end_to_end_uat(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth=nhsd_apim_auth_headers,
+        auth={"Authorization": Authentication.generate_authentication("internal-dev")},
         message_id=message_id
     )
 
