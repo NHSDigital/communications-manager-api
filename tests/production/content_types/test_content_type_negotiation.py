@@ -1,7 +1,8 @@
 import requests
 import pytest
-from lib import Authentication, Error_Handler
+from lib import Error_Handler
 from lib.constants.constants import METHODS, PROD_URL, VALID_ENDPOINTS
+from lib.fixtures import *
 
 ACCEPT_HEADERS = [
     {
@@ -29,12 +30,12 @@ ACCEPT_HEADERS = [
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_application_response_type(accept_headers, method, endpoints):
+def test_application_response_type(bearer_token_prod, accept_headers, method, endpoints):
     """
     .. include:: ../../partials/content_types/test_application_response_type.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": f"{Authentication.generate_authentication('prod')}",
+        "Authorization": bearer_token_prod,
         **accept_headers.get("headers")
     })
 
