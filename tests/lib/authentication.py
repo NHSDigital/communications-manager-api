@@ -5,17 +5,19 @@ import jwt
 import requests
 import json
 
-tokens = {}
-call_time = None
 
+class AuthenticationCache():
+    def __init__(self):
+        self.tokens = {}
 
-class Authentication():
-    @staticmethod
-    def generate_authentication(env):
-        global tokens
-        global call_time
+    def generate_authentication(self, env):
 
-        if env == "int":
+        if env == "internal-dev":
+            api_key = os.environ["NON_PROD_API_KEY"]
+            private_key = os.environ["NON_PROD_PRIVATE_KEY"]
+            url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
+            kid = "local"
+        elif env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
             url = "https://int.api.service.nhs.uk/oauth2/token"
@@ -28,7 +30,9 @@ class Authentication():
         else:
             raise ValueError("Unknown value: ", env)
 
-        if tokens.get(env, None) is None or (call_time is None or call_time + 595 < int(time())):
+        _, timestamp_of_last_token_fetch = self.tokens.get(env, (None, 0))
+
+        if env not in self.tokens or timestamp_of_last_token_fetch + 585 < int(time()):
             pk_pem = None
             with open(private_key, "r") as f:
                 pk_pem = f.read()
@@ -56,7 +60,7 @@ class Authentication():
             )
             details = json.loads(resp.content)
 
-            tokens[env] = (f"Bearer {details.get('access_token')}")
-            call_time = int(time())
+            self.tokens[env] = (f"Bearer {details.get('access_token')}", int(time()))
 
-        return tokens.get(env)
+        bearer_token = self.tokens[env][0]
+        return bearer_token
