@@ -22,13 +22,11 @@ steps:
       secret_file_ids:
       - ptl/app-credentials/jwt_testing/non-prod/JWT_TESTING_PRIVATE_KEY
       - ptl/api-deployment/communications-manager/NON_PROD_PRIVATE_KEY
-      - ptl/api-deployment/communications-manager/NON_PROD_PRIVATE_KEY_DOES_NOT_EXIST
       - ptl/api-deployment/communications-manager/INTEGRATION_PRIVATE_KEY
       - ptl/azure-devops/communications-manager/PRODUCTION_PRIVATE_KEY
       secret_ids:
       - ptl/app-credentials/communications-manager-testing-app/non-prod/SANDBOX_APP_ID
       - ptl/api-deployment/communications-manager/NON_PROD_API_KEY
-      - ptl/api-deployment/communications-manager/NON_PROD_API_KEY_DOES_NOT_EXIST
       - ptl/api-deployment/communications-manager/INTEGRATION_API_KEY
       - ptl/azure-devops/communications-manager/PRODUCTION_API_KEY
       - ptl/api-deployment/communications-manager/GUKN_API_KEY
