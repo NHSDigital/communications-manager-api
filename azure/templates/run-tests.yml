@@ -151,6 +151,8 @@ steps:
         export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
         export SOURCE_COMMIT_ID="$(Build.SourceVersion)"
+        export NON_PROD_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(NON_PROD_PRIVATE_KEY)"
+        export NON_PROD_API_KEY="$(NON_PROD_API_KEY)"
         export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
         export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
         export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
