@@ -8,6 +8,7 @@
         [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
         [% include './partials/Partial.Flows.CreateMessageEndpoint.xml' %]
         [% include './partials/Partial.Flows.GetMessageEndpoint.xml' %]
+        [% include './partials/Partial.Flows.GetNhsAppAccountsEndpoint.xml' %]
     </Flows>
     [% include './partials/Partial.Target.PostFlow.xml' %]
     <FaultRules>
@@ -17,10 +18,7 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <LoadBalancer>
-            <Server name="communications-manager-target" />
-        </LoadBalancer>
-        <Path>{requestpath}</Path>
+        <URL>https://comms-apim.de-adsm6.communications.national.nhs.uk</URL>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
