@@ -19,7 +19,7 @@ The NHS Notify service is intended for services involved in direct care. This AP
 
 This API is [in production, beta](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
 
-You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/?order=popular&filter=allexceptdone&tag=communications-manager-api).
+You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/?order=top&filter=allexceptdone&tag=nhs-notify-api).
 
 If you have any other queries, [contact us](https://digital.nhs.uk/developer/help-and-support).
 
