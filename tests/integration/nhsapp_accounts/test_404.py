@@ -5,12 +5,12 @@ import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     LIVE_ODS_CODES, CORRELATION_IDS
 
-INVALID_PAGE_NUMBERS = [1000, 2000, 3000]
+REPORT_NOT_FOUND_PAGE_NUMBERS = [1000, 2000, 3000]
 
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
-@pytest.mark.parametrize("page", INVALID_PAGE_NUMBERS)
+@pytest.mark.parametrize("page", REPORT_NOT_FOUND_PAGE_NUMBERS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_404_page_not_found(ods_code, page, correlation_id):
 
