@@ -134,20 +134,3 @@ const validateOdsCode = (errors, fieldValue, fieldPointer) => {
     }
     return true
 }
-
-const odsCodeRegex = new RegExp('^[A-Za-z]\\d{5}$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]$')
-
-const validateOdsCodeFormat = (errors, fieldValue, fieldPointer) => {
-    if (
-        !isUndefined(fieldValue)
-        && (
-            fieldValue === null
-            || typeof fieldValue !== "string"
-            || !odsCodeRegex.test(odsCode) && odsCode !== 'X26'
-        )
-    ) {
-        errors.push(invalidError(fieldPointer));
-        return false
-    }
-    return true
-}

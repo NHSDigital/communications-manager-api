@@ -130,7 +130,7 @@ app.get("/health", handlers.status);
 app.post("/api/v1/send", handlers.batch_send);
 app.post("/api/v1/messages", handlers.messages);
 app.get("/api/v1/messages/:messageId", handlers.get_message);
-app.get("/api/channels/nhsapp/accounts", handlers.user_details);
+app.get("/api/channels/nhsapp/accounts", handlers.nhsapp_accounts);
 app.get("/_timeout", handlers.trigger_timeout);
 app.get("/_invalid_certificate", handlers.backend_403);
 app.get("/_timeout_408", handlers.backend_408);
