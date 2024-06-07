@@ -1,0 +1,21 @@
+description: |+
+  NHS Notify is currently unable to communicate with a downstream API required to process your request.
+
+  ### Sandbox
+
+  It is possible to trigger the `CM_BAD_GATEWAY` on the sandbox by using the `Prefer` header with a value of `code=502`.
+
+  Here is an example curl request to trigger a `502`:
+
+  ```
+    curl -X GET --header "Prefer: code=502" https://sandbox.api.service.nhs.uk/comms
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/BadGateway.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/BadGateway.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

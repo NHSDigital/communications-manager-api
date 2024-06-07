@@ -1,0 +1,10 @@
+description: Request successful
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/NhsAppAccDetailsResponse.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/NhsAppAccDetailsResponse.yaml

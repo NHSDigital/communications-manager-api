@@ -1,0 +1,5 @@
+type: string
+enum:
+  - CM_BAD_GATEWAY
+example: CM_BAD_GATEWAY
+title: Enum_Error_BadGateway
