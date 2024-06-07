@@ -3,6 +3,6 @@
 
 These tests target the API endpoint GET /channels/nhsapp/accounts testing that 400 is returned when the ODS code is missing or invalid
 
-.. automodule:: sandbox.nhsapp_accounts.test_400
+.. automodule:: development.nhsapp_accounts.test_400
     :noindex:
     :members:

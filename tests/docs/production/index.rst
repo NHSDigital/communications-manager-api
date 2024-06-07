@@ -10,3 +10,4 @@ The Production test suite is a collection of tests ran against the production en
    post_v1_message-batches/index.rst
    post_v1_messages/index.rst
    get_v1_messages/index.rst
+   get_channels_nhsapp_accounts/index.rst
