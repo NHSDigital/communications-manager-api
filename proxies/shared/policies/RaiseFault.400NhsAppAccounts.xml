@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a general 404 error response an invalid URI path.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400NhsAppAccounts">
+    <DisplayName>RaiseFault.400NhsAppAccounts</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>400</StatusCode>
+            <ReasonPhrase>Invalid Request</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "@messageid#.0",
+                            "code" : "CM_INVALID_REQUEST",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "400",
+                            "title" : "Invalid Request",
+                            "detail" : "@data.errorMessage#"
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

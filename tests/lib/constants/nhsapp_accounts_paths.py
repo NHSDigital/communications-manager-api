@@ -1,4 +1,4 @@
-USER_DETAILS_ENDPOINT = "/channels/nhsapp/accounts"
+NHSAPP_ACCOUNTS_ENDPOINT = "/channels/nhsapp/accounts"
 ODS_CODE_PARAM_NAME = "ods-organisation-code"
 PAGE_PARAM_NAME = "page"
 
@@ -16,6 +16,17 @@ INVALID_ODS_CODES = [
     "NOT_A_VALID_CODE",
     "X25",
     "Y123456"
+]
+
+INVALID_PAGES = [
+    "page1",
+    0,
+    -1,
+    -20
+]
+
+LIVE_ODS_CODES = [
+    "X26"
 ]
 
 VALID_MULTI_PAGE_NUMBERS = [None, 1, 2, 3, 4, 5, 6, 7, 8]
