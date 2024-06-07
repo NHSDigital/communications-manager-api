@@ -1,0 +1,25 @@
+description: |+
+  The requested page has not been found, check the ODS code and page boundaries for any errors and try again.
+
+  ### Sandbox
+
+  On sandbox it is possible to simulate a 404 not found error using the `Prefer` header with a value of `code=404`.
+
+  Here is an example curl request to trigger a `404`:
+
+  ```
+    curl -X GET \
+      --header "Accept: */*" \
+      --header "Content-type: application/vnd.api+json" \
+      --header "Prefer: code=404" \
+      https://sandbox.api.service.nhs.uk/comms
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../../schemas/responses/errors/NotFound.yaml
+  application/json:
+    schema:
+      $ref: ../../../schemas/responses/errors/NotFound.yaml
+headers:
+  $ref: ../../../snippets/StandardResponseHeaders.yaml

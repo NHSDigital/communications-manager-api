@@ -1,0 +1,38 @@
+type: object
+title: Request not processable
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: ../../../types/ErrorIdentifier.yaml
+        code:
+          type: string
+          enum:
+            - CM_INVALID_REQUEST
+          example: CM_INVALID_REQUEST
+          title: Enum_Error_InvalidGetNHSAppAccounts_Request
+        links:
+          $ref: ../../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '400'
+          example: '400'
+        title:
+          type: string
+          enum:
+            - Invalid Request
+          example: Invalid Request
+        detail:
+          type: string
+          enum:
+            - Invalid ODS Code
+            - Missing ODS Code
+          example: 'Invalid ODS Code'
