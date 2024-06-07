@@ -1,0 +1,6 @@
+type: string
+title: Type_NHSNumber
+pattern: '^[0-9]{10}$'
+minLength: 10
+maxLength: 10
+example: 9044151320

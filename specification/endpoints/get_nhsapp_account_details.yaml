@@ -1,0 +1,34 @@
+summary: Get NHS App Account details
+description:
+  $ref: ../documentation/GetNHSAppAccountDetails.md
+operationId: get-nhsapp-account-details
+parameters:
+  - $ref: ../snippets/AuthorizationParameter.yaml
+  - $ref: ../snippets/CorrelationParameter.yaml
+responses:
+  '200':
+    $ref: ../responses/2xx/200_NhsAppAccountDetails.yaml
+  '400':
+    $ref: ../responses/4xx/get_nhsapp_accounts/400_UnableToGetAccounts.yaml
+  '401':
+    $ref: ../responses/4xx/401_AccessDenied.yaml
+  '403':
+    $ref: ../responses/4xx/403_Forbidden.yaml
+  '404':
+    $ref: ../responses/4xx/get_nhsapp_accounts/404_NHSAppAccountsNotFound.yaml
+  '405':
+    $ref: ../responses/4xx/405_NotAllowed.yaml
+  '406':
+    $ref: ../responses/4xx/406_NotAcceptable.yaml
+  '408':
+    $ref: ../responses/4xx/408_RequestTimeout.yaml
+  '429':
+    $ref: ../responses/4xx/get_nhsapp_accounts/429_GetNhsAppAccountTooManyRequests.yaml
+  '500':
+    $ref: ../responses/5xx/500_InternalServerError.yaml
+  '502':
+    $ref: ../responses/5xx/502_BadGateway.yaml
+  '503':
+    $ref: ../responses/5xx/503_ServiceUnavailable.yaml
+  '504':
+    $ref: ../responses/5xx/504_ServiceTimeout.yaml
