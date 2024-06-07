@@ -15,7 +15,7 @@ properties:
         code:
           $ref: ../../../enums/ErrorInvalidValue.yaml
         links:
-          $ref: ../../../types/LinksError.yaml
+          $ref: ../../../types/LinksErrorNHSNumber.yaml
         status:
           type: string
           enum:
