@@ -25,6 +25,6 @@ def test_502_bad_gateway(nhsd_apim_proxy_url, correlation_id):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         502,
-        Generators.generate_bad_gateway_error,
+        Generators.generate_bad_gateway_error(),
         correlation_id
     )

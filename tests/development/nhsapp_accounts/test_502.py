@@ -11,12 +11,13 @@ BAD_GATEWAY_ODS_CODE = 'T00401'  # The mock for the NHS App API will return a 40
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_502_bad_gateway(nhsd_apim_proxy_url, correlation_id):
+def test_502_bad_gateway(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id):
 
     """
     .. include:: ../../partials/bad_gatway/test_502_bad_gateway.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -26,6 +27,6 @@ def test_502_bad_gateway(nhsd_apim_proxy_url, correlation_id):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         502,
-        Generators.generate_bad_gateway_error,
+        Generators.generate_bad_gateway_error(),
         correlation_id
     )
