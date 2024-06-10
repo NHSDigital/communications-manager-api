@@ -3,6 +3,7 @@ import { sendError } from './utils.js'
 
 const paginationOdsCode = 'T00001';
 const odsCodeRegex = new RegExp('^[A-Za-z]\\d{5}$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]$')
+const badGatewayOdsCode = 'T00502'; // simulates something going wrong between the BE and the NHS APP API
 
 export async function nhsapp_accounts(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -22,6 +23,12 @@ export async function nhsapp_accounts(req, res, next) {
   }
 
   const odsCode = req.query['ods-organisation-code'].toUpperCase()
+
+  if (odsCode == badGatewayOdsCode) {
+    sendError(res, 502, 'bad gateway')
+    next()
+    return;
+  }
 
   if (!odsCodeRegex.test(odsCode) && odsCode !== 'X26') {
     sendError(res, 400, 'Invalid ODS Code')

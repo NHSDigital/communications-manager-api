@@ -128,4 +128,8 @@
       <Name>RaiseFault.504GatewayTimeout</Name>
       <Condition>response.status.code = 408</Condition>
     </Step>
+    <Step>
+      <Name>RaiseFault.502BadGateway</Name>
+      <Condition>response.status.code = 502</Condition>
+    </Step>
 </FaultRule>
