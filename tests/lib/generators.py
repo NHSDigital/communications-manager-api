@@ -221,6 +221,10 @@ class Generators():
         return Generators.generate_error(constants.ERROR_INTERNAL_SERVER)
 
     @staticmethod
+    def generate_bad_gateway_error():
+        return Generators.generate_error(constants.ERROR_BAD_GATEWAY)
+
+    @staticmethod
     def generate_error(error, source=None, meta=None):
         ret = {
             "code": error.code,

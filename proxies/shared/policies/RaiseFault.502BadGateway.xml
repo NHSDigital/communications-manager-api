@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 504 error response due to an issue communicating to our backend services.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.502BadGateway">
+    <DisplayName>RaiseFault.502BadGateway</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>502</StatusCode>
+            <ReasonPhrase>Bad Gateway</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "@messageid#.0",
+                            "code" : "CM_BAD_GATEWAY",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "502",
+                            "title" : "Unable to call service",
+                            "detail" : "A downstream service is not responding."
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>
