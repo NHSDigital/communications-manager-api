@@ -61,12 +61,13 @@ def test_400_invalid_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_c
 @pytest.mark.parametrize("page", INVALID_PAGES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_400_invalid_page(nhsd_apim_proxy_url, ods_code, page, correlation_id):
+def test_400_invalid_page(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, page, correlation_id):
 
     """
     .. include:: ../../partials/invalid_page/test_400_nhsapp_accounts_invalid_page.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

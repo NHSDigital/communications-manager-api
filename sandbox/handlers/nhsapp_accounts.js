@@ -24,7 +24,7 @@ export async function nhsapp_accounts(req, res, next) {
 
   const odsCode = req.query['ods-organisation-code'].toUpperCase()
 
-  if (odsCode == badGatewayOdsCode) {
+  if (odsCode === badGatewayOdsCode) {
     sendError(res, 502, 'bad gateway')
     next()
     return;
