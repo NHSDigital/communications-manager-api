@@ -29,6 +29,18 @@ describe("/api/channels/nhsapp/accounts", () => {
             .expect("Content-Type", /json/, done);
     });
 
+    it("returns a bad gateway (502) when unable to connect to the NHS App API", (done) => {
+        request(server)
+            .get("/api/channels/nhsapp/accounts")
+            .query({
+                "ods-organisation-code": "T00502"
+            })
+            .expect(502, {
+                message: "bad gateway",
+            })
+            .expect("Content-Type", /json/, done);
+    });
+
     describe('returns a 400 when given invalid ODS code', () => {
         const tests = [
             'X27',

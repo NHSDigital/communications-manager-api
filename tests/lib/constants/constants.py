@@ -256,6 +256,14 @@ ERROR_INTERNAL_SERVER = Error(
     "There was an internal error whilst processing this request."
 )
 
+# bad gateway error
+BAD_GATEWAY_SERVER = Error(
+    "CM_BAD_GATEWAY",
+    "502",
+    "Unable to call service",
+    "A downstream service is not responding."
+)
+
 # NHS App Accounts errors
 ERROR_NHS_APP_ACCOUNTS_MISSING_ODS_CODE = Error(
     "CM_INVALID_REQUEST",
