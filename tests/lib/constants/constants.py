@@ -257,7 +257,7 @@ ERROR_INTERNAL_SERVER = Error(
 )
 
 # bad gateway error
-BAD_GATEWAY_SERVER = Error(
+ERROR_BAD_GATEWAY = Error(
     "CM_BAD_GATEWAY",
     "502",
     "Unable to call service",
