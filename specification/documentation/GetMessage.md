@@ -22,6 +22,7 @@ Key values that are returned for each of these channels are:
 * `type` - the channel type
 * `channelStatus` - the status of that channel
 * `channelStatusDescription` - the channel status description
+* `supplierStatus` - the status of the message within that channel
 * `retryCount` - the number of times we have attempted delivery
 * `timestamps` - timestamps of key events
 * `routingPlan` - the routing plan that was used to generate the channel
@@ -33,6 +34,17 @@ Each channel can have one of the following statuses:
 * `sending` - the channel is in the process of sending the message
 * `delivered` - the channel has delivered the message
 * `failed` - the channel has failed to deliver the message
+
+Each channel can have one of the following supplier statuses:
+
+* `delivered` - the message has been successfully delivered to the user
+* `read` - a user has read the message
+* `notification_attempted` - a push notification is reported as having been sent to one or more device, but does not indicate whether the notifcation was received or displayed 
+* `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
+* `rejected` - the request to send the communication was rejected by the supplier
+* `notified` - a push notification is reported as having been successfully relayed to one or more devices
+* `received` - request has been received by the supplier and is queued to be processed
+* `unknown` - notify was unable to correctly determine the supplier status
 
 If your routing plan supports conditional overrides, then in certain situations the routing plan referenced by a channel may be different from the one you initially requested. If this occurs then the `routingPlan.type` field will be set to the value `override`, plus the `id` and `version` fields will reflect the override that was used.
 

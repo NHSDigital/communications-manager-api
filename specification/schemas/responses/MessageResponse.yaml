@@ -56,6 +56,12 @@ properties:
                   type: string
                   description: If there is extra information associated with the status of this channel, it is provided here.
                   example: ""
+                supplierStatus:
+                  description: |-
+                    The current status of this message within the channel at the time this response was generated.
+      
+                    For more information please check our documentation on message & channel statuses above.
+                  $ref: ../enums/SupplierStatus.yaml
                 timestamps:
                   type: object
                   additionalProperties: false
