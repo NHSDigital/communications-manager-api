@@ -60,6 +60,7 @@ def test_400_invalid_ods_code(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_c
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", INVALID_PAGES)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_400_invalid_page(nhsd_apim_proxy_url, ods_code, page, correlation_id):
 
     """
