@@ -194,6 +194,23 @@ describe("/api/channels/nhsapp/accounts", () => {
         })
     })
 
+    describe("returns a 404 for valid ODS code T00404 whether or not a page is provided", () => {
+        const testCases = [null, 1, 2]
+
+        testCases.forEach((pageNumber) => {
+            it(`?page=${pageNumber}`, (done) => {
+                request(server)
+                    .get('/api/channels/nhsapp/accounts')
+                    .query({
+                        "ods-organisation-code": 'T00404',
+                        page: pageNumber
+                    })
+                    .expect(404, { message: 'Report not found' })
+                    .expect("Content-Type", /json/, done);
+            })
+        })
+    })
+
     it("returns 200 with first page result for T00001 ODS code when no page query provided", (done) => {
         request(server)
             .get('/api/channels/nhsapp/accounts')
