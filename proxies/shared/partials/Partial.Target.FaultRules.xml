@@ -18,6 +18,12 @@
             (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and response.status.code = 400 and data.errorMessage != null
         </Condition>
     </Step>
+    <Step>
+        <Name>RaiseFault.429NhsAppAccounts</Name>
+        <Condition>
+            (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and response.status.code = 429 and data.errorMessage != null
+        </Condition>
+    </Step>
     {% if ENVIRONMENT_TYPE != 'sandbox' %}
         <Step>
             <Name>RaiseFault.401Unauthorized</Name>
