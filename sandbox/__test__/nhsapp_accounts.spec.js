@@ -36,7 +36,19 @@ describe("/api/channels/nhsapp/accounts", () => {
                 "ods-organisation-code": "T00502"
             })
             .expect(502, {
-                message: "bad gateway",
+                message: "Bad Gateway",
+            })
+            .expect("Content-Type", /json/, done);
+    });
+
+    it("returns a too many request (429) when quota reached with the NHS App API", (done) => {
+        request(server)
+            .get("/api/channels/nhsapp/accounts")
+            .query({
+                "ods-organisation-code": "T00429"
+            })
+            .expect(429, {
+                message: "",
             })
             .expect("Content-Type", /json/, done);
     });

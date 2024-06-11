@@ -132,4 +132,8 @@
       <Name>RaiseFault.502BadGateway</Name>
       <Condition>response.status.code = 502</Condition>
     </Step>
+    <Step>
+      <Name>RaiseFault.429TooManyRequests</Name>
+      <Condition>response.status.code = 429</Condition>
+    </Step>
 </FaultRule>

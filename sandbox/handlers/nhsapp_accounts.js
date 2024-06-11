@@ -5,6 +5,7 @@ const paginationOdsCode = 'T00001';
 const odsCodeRegex = new RegExp('^[A-Za-z]\\d{5}$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]$')
 const badGatewayOdsCode = 'T00502'; // simulates something going wrong between the BE and the NHS APP API'
 const notFoundOdsCode = 'T00404'; // valid format but no data stored against it
+const tooManyRequestsOdsCode = 'T00429';
 
 export async function nhsapp_accounts(req, res, next) {
   if (req.headers["authorization"] === "banned") {
@@ -26,13 +27,19 @@ export async function nhsapp_accounts(req, res, next) {
   const odsCode = req.query['ods-organisation-code'].toUpperCase()
 
   if (odsCode === badGatewayOdsCode) {
-    sendError(res, 502, 'bad gateway')
+    sendError(res, 502, 'Bad Gateway')
     next()
     return;
   }
 
   if (odsCode === notFoundOdsCode) {
     sendError(res, 404, 'Report not found')
+    next()
+    return;
+  }
+
+  if (odsCode === tooManyRequestsOdsCode) {
+    sendError(res, 429, '')
     next()
     return;
   }
