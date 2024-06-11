@@ -292,3 +292,10 @@ ERROR_NHS_APP_ACCOUNTS_REPORT_NOT_FOUND = Error(
     "Resource not found",
     "Report not found"
 )
+
+ERROR_NHS_APP_ACCOUNTS_TOO_MANY_REQUESTS = Error(
+    "CM_QUOTA",
+    "429",
+    "Too many requests",
+    "This endpoint is currently receiving a high volume of requests and is being rate limited."
+)
