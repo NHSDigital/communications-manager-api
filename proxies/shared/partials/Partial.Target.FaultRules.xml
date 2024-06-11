@@ -1,5 +1,29 @@
 <FaultRule name="combined_backend_fault_handler">
     [% include './partials/Partial.Component.SetResponseDefaults.xml' %]
+    <Step>
+        <Name>ExtractVariables.NhsAppAccounts.Error</Name>
+        <Condition>
+            response.content ~~ "\{\u0022message\u0022:\u0022.*\u0022\}"
+        </Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.404NhsAppAccounts</Name>
+        <Condition>
+            (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and response.status.code = 404 and data.errorMessage != null
+        </Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.400NhsAppAccounts</Name>
+        <Condition>
+            (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and response.status.code = 400 and data.errorMessage != null
+        </Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.429NhsAppAccounts</Name>
+        <Condition>
+            (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and response.status.code = 429 and data.errorMessage != null
+        </Condition>
+    </Step>
     {% if ENVIRONMENT_TYPE != 'sandbox' %}
         <Step>
             <Name>RaiseFault.401Unauthorized</Name>
@@ -109,5 +133,9 @@
     <Step>
       <Name>RaiseFault.504GatewayTimeout</Name>
       <Condition>response.status.code = 408</Condition>
+    </Step>
+    <Step>
+      <Name>RaiseFault.502BadGateway</Name>
+      <Condition>response.status.code = 502</Condition>
     </Step>
 </FaultRule>
