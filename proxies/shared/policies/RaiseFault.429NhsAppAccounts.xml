@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 429 error response when the rate limiting policies detect that either the spike arrest (short bursts of requests) or quota (many requests over a longer period) thresholds are exceeded.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+
+ For more information on rate limiting, see the following resources:
+    * https://nhsd-confluence.digital.nhs.uk/display/APM/Rate+limiting
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.429NhsAppAccounts">
+    <DisplayName>RaiseFault.429NhsAppAccounts</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <StatusCode>429</StatusCode>
+            <ReasonPhrase>Too many requests</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors": [
+                        {
+                            "id" : "@messageid#.0",
+                            "code": "CM_QUOTA",
+                            "links": {
+                                "about": "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status": "429",
+                            "title": "Too many requests",
+                            "detail": "@data.errorMessage#"
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>
