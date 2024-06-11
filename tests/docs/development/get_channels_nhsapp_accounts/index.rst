@@ -7,3 +7,5 @@ GET /channels/nhsapp/accounts
    happy_path
    404
    400
+   429
+   502

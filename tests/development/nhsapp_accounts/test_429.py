@@ -14,7 +14,7 @@ TOO_MANY_REQUESTS_ODS_CODE = 'T00429'
 def test_429_too_many_requests(nhsd_apim_proxy_url, nhsd_apim_auth_headers, correlation_id):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_too_many_requests.rst
+    .. include:: ../../partials/too_many_requests/test_429_nhs_app_accounts_too_many_requests.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
         **nhsd_apim_auth_headers,
