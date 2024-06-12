@@ -91,7 +91,6 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--only-rerun 'AssertionError: Unexpected 504' \
 	    --junitxml=test-report.xml
 
-
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		PYTHONPATH=./tests \
 		poetry run pytest -vv \
@@ -150,7 +149,7 @@ internal-dev-test: .internal-dev-test
 internal-qa-test:
 	$(TEST_CMD) \
 	tests/development \
-	-m "devtest or uattest"
+	-m "not devtestonly and devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \

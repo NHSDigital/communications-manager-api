@@ -28,6 +28,7 @@ def test_single_page(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, page
     Assertions.assert_200_response_nhsapp_accounts(resp, nhsd_apim_proxy_url, ods_code, 1)
 
 
+@pytest.mark.devtestonly
 @pytest.mark.devtest
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", VALID_MULTI_PAGE_NUMBERS)
