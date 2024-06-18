@@ -43,7 +43,7 @@ Each channel can have one of the following supplier statuses:
 * `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
 * `rejected` - the request to send the communication was rejected by the supplier
 * `notified` - a push notification is reported as having been successfully relayed to one or more devices
-* `received` - request has been received by the supplier and is queued to be processed
+* `received` - the request has been received by the supplier and is queued to be processed
 * `unknown` - notify was unable to correctly determine the supplier status
 
 If your routing plan supports conditional overrides, then in certain situations the routing plan referenced by a channel may be different from the one you initially requested. If this occurs then the `routingPlan.type` field will be set to the value `override`, plus the `id` and `version` fields will reflect the override that was used.
