@@ -76,7 +76,7 @@ The channels can have the following supplier statuses:
 
 This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated with information about the queries made, including:
 
-* `queriedAt` - the date and time that the query ocurred at
+* `queriedAt` - the date and time that the query occurred at
 * `version` - a version of the document returned in the query, if supported by the 3rd party
 * `labels` - the channels that the response affected
 * `source` - the 3rd party system the query was made to
