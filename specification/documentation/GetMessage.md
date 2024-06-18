@@ -73,6 +73,7 @@ For certain statuses more information can be found within the `messageStatusDesc
 The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
 
 ### Supplier Statuses
+
 The channels can have the following supplier statuses:
 
 | **NHS APP**            |                                                                                                                                                      |
