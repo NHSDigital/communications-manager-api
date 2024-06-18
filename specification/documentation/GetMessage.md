@@ -39,7 +39,7 @@ Each channel can have one of the following supplier statuses:
 
 * `delivered` - the message has been successfully delivered to the user
 * `read` - a user has read the message
-* `notification_attempted` - a push notification is reported as having been sent to one or more device, but does not indicate whether the notifcation was received or displayed 
+* `notification_attempted` - a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed 
 * `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
 * `rejected` - the request to send the communication was rejected by the supplier
 * `notified` - a push notification is reported as having been successfully relayed to one or more devices
