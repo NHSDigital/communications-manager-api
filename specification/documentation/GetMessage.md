@@ -61,16 +61,15 @@ The message status shows an overall aggregate status taken from all of the commu
 ### Supplier Statuses
 The channels can have the following supplier statuses:
 
-| **NHS APP**            |                                                                                                                                                      |
-|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| delivered              | the message has been successfully delivered to the user                                                                                              |
-| read                   | a user has read the message                                                                                                                          |
-| notification_attempted | a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed |
-| unnotified             | it has been determined that a push notification has not been successfully relayed to any devices                                                     |
-| rejected               | the request to send the communication was rejected by the supplier                                                                                   |
-| notified               | a push notification is reported as having been successfully relayed to one or more devices                                                           |
-| received               | the request has been received by the supplier and is queued to be processed                                                                          |
-| unknown                | NHS Notify was unable to correctly determine the supplier status                                                                                         |
+#### NHS APP
+* `delivered` - the message has been successfully delivered to the user
+* `read` - a user has read the message
+* `notification_attempted` - a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed
+* `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
+* `rejected` - the request to send the communication was rejected by the supplier
+* `notified` - a push notification is reported as having been successfully relayed to one or more devices
+* `received` - the request has been received by the supplier and is queued to be processed
+* `unknown` - NHS Notify was unable to correctly determine the supplier status
 
 ### 3rd Party Querying
 
