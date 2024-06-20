@@ -1,18 +1,17 @@
 import requests
 import pytest
 
-from lib import Assertions
+from lib import Assertions, Authentication
 from lib.constants.constants import VALID_ENDPOINTS, ORIGIN, METHODS
 
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_request_with_x_amz_is_removed(nhsd_apim_proxy_url, endpoints, method, nhsd_apim_auth_headers,):
+def test_request_with_x_amz_is_removed(nhsd_apim_proxy_url, endpoints, method,):
 
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{endpoints}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": Authentication.generate_authentication("internal-dev"),
         "Accept": "*/*",
         "Origin": ORIGIN,
         "Access-Control-Request-Method": method

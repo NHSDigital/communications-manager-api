@@ -88,7 +88,6 @@ def test_routing_plan_not_belonging_to_client_id(correlation_id):
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_routing_plan_missing_templates(correlation_id, routing_plan_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
