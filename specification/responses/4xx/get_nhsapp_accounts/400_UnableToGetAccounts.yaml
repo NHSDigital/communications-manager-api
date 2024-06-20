@@ -1,0 +1,21 @@
+description: |+
+  A validation error has occurred with the request sent.
+
+  The following validation errors can occur:
+
+  | Error code | Title | Description |
+  | ---------- | ----- | ----------- |
+  | `CM_INVALID_REQUEST` | Invalid Request | The ODS code is missing or invalid, detail provided in the `detail` field. |
+
+  Within each error is a source object which details the location of the error within your request body.
+
+  This is done using a pointer that uses the [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) as per the [JSON:API Error Specification](https://jsonapi.org/format/#errors).
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../../schemas/responses/errors/getnhsappaccounts/NHSAppAccountsUnableToProcessMessage.yaml
+  application/json:
+    schema:
+      $ref: ../../../schemas/responses/errors/getnhsappaccounts/NHSAppAccountsUnableToProcessMessage.yaml
+headers:
+  $ref: ../../../snippets/StandardResponseHeaders.yaml

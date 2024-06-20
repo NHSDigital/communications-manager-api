@@ -1,8 +1,8 @@
 Happy Path Tests
 ================
 
-These tests target the API endpoint GET /channels/nhsapp/account testing successful responses when valid data is provided.
+These tests target the API endpoint GET /channels/nhsapp/accounts testing successful responses when valid data is provided.
 
-.. automodule:: sandbox.user_details.test_success
+.. automodule:: sandbox.nhsapp_accounts.test_success
     :noindex:
     :members:

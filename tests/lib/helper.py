@@ -86,12 +86,11 @@ class Helper():
 
         page.wait_for_url('**/patient/')
 
-        expect(page.get_by_role("heading", name="Access your NHS services any time, day or night")).to_be_visible()
+        expect(page.get_by_text('NHS number: 973 061')).to_be_visible()
         page.get_by_role("link", name="View your messages").click()
 
-        expect(page.get_by_label(
-            "Your NHS healthcare services You may receive messages:. from your GP surgery")).to_be_visible()
-        page.get_by_label("Your NHS healthcare services You may receive messages: from your GP surgery").click()
+        expect(page.get_by_role("heading", name="Messages")).to_be_visible()
+        page.get_by_role("link", name="Your NHS healthcare services").click()
 
         expect(page.get_by_role("heading", name="NHS App Messaging Service")).to_be_visible()
         page.get_by_label("Messages from: NHS ENGLAND -").click()

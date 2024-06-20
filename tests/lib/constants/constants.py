@@ -86,6 +86,14 @@ ERROR_INVALID_NHS_NUMBER = Error(
     {"nhsNumbers": "https://www.datadictionary.nhs.uk/attributes/nhs_number.html"}
 )
 
+# missing odsCode constants
+ERROR_MISSING_ODS_CODE = Error(
+    "CM_ODS_CODE_REQUIRED",
+    "400",
+    "Originator odsCode must be provided",
+    "An originator with odsCode must be provided, as your account does not have a default ODS code."
+)
+
 # missing value constants
 ERROR_MISSING_VALUE = Error(
     "CM_MISSING_VALUE",
@@ -246,4 +254,48 @@ ERROR_INTERNAL_SERVER = Error(
     "500",
     "Error processing request",
     "There was an internal error whilst processing this request."
+)
+
+# bad gateway error
+ERROR_BAD_GATEWAY = Error(
+    "CM_BAD_GATEWAY",
+    "502",
+    "Unable to call service",
+    "A downstream service is not responding."
+)
+
+# NHS App Accounts errors
+ERROR_NHS_APP_ACCOUNTS_MISSING_ODS_CODE = Error(
+    "CM_INVALID_REQUEST",
+    "400",
+    "Invalid Request",
+    "Missing ODS Code"
+)
+
+ERROR_NHS_APP_ACCOUNTS_INVALID_ODS_CODE = Error(
+    "CM_INVALID_REQUEST",
+    "400",
+    "Invalid Request",
+    "Invalid ODS Code"
+)
+
+ERROR_NHS_APP_ACCOUNTS_INVALID_PAGE = Error(
+    "CM_INVALID_REQUEST",
+    "400",
+    "Invalid Request",
+    "page must be a positive non-zero integer"
+)
+
+ERROR_NHS_APP_ACCOUNTS_REPORT_NOT_FOUND = Error(
+    "CM_NOT_FOUND",
+    "404",
+    "Resource not found",
+    "Report not found"
+)
+
+ERROR_NHS_APP_ACCOUNTS_TOO_MANY_REQUESTS = Error(
+    "CM_QUOTA",
+    "429",
+    "Too many requests",
+    "This endpoint is currently receiving a high volume of requests and is being rate limited."
 )
