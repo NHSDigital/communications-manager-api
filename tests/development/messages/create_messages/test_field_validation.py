@@ -346,3 +346,79 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
         Generators.generate_null_value_error("/data/attributes/personalisation"),
         correlation_id
     )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("originator", constants.INVALID_ORIGINATOR)
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_originator(nhsd_apim_proxy_url, originator, correlation_id, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/validation/test_invalid_originator.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageReference": str(uuid.uuid1()),
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "2023-01-01"
+                },
+                "originator": originator,
+                "personalisation": {}
+
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/originator"),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("odsCode", constants.INVALID_ODS_CODE)
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_invalid_ods_code(nhsd_apim_proxy_url, odsCode, correlation_id, nhsd_apim_auth_headers):
+    """
+    .. include:: ../../partials/validation/test_invalid_ods_code.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+        **nhsd_apim_auth_headers,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "Message",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageReference": str(uuid.uuid1()),
+                "recipient": {
+                    "nhsNumber": "9990548609",
+                    "dateOfBirth": "2023-01-01"
+                },
+                "originator": {
+                    "odsCode": odsCode
+                },
+                "personalisation": {}
+
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error("/data/attributes/originator/odsCode"),
+        correlation_id
+    )
