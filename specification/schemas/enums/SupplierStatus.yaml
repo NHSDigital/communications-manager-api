@@ -8,4 +8,5 @@ enum:
   - rejected
   - notified
   - received
+  - unknown
 example: delivered
