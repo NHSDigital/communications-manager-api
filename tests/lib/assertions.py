@@ -118,6 +118,8 @@ class Assertions():
             assert response.get("attributes").get("channels")[0].get("timestamps") != ""
             assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
             assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
+            assert response.get("attributes").get("channels")[0].get("supplierStatus") is not None
+            assert response.get("attributes").get("channels")[0].get("supplierStatus") != ""
         assert response.get("links").get("self").startswith(base_url)
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
 
