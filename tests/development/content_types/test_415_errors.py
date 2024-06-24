@@ -1,6 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
+from lib.fixtures import *
 from lib.constants.constants import VALID_ENDPOINTS
 
 CONTENT_TYPE_NAME = ["content-type", "CONTENT_TYPE", "Content_Type", "conTENT_tYpe"]
@@ -17,6 +18,7 @@ CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
 def test_415_invalid(
     nhsd_apim_proxy_url,
+    bearer_token_internal_dev,
     content_type_name,
     content_type_value,
     correlation_id,
@@ -27,7 +29,7 @@ def test_415_invalid(
     .. include:: ../../partials/content_types/test_415_invalid.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": Authentication.generate_authentication("internal-dev"),
+        "Authorization": bearer_token_internal_dev,
         "Accept": "application/json",
         content_type_name: content_type_value,
         "X-Correlation-Id": correlation_id

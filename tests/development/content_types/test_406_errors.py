@@ -1,6 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
+from lib.fixtures import *
 from lib.constants.constants import DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
@@ -17,6 +18,7 @@ CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
 def test_406(
     nhsd_apim_proxy_url,
+    bearer_token_internal_dev,
     accept_header_name,
     accept_header_value,
     correlation_id,
@@ -27,7 +29,7 @@ def test_406(
     .. include:: ../../partials/content_types/test_406.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{endpoints}", headers={
-        "Authorization": Authentication.generate_authentication("internal-dev"),
+        "Authorization": bearer_token_internal_dev,
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id
     })

@@ -1,7 +1,8 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
+from lib.fixtures import *
 from lib.constants.constants import NUM_MAX_ERRORS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
@@ -10,7 +11,7 @@ CONTENT_TYPE = "application/json"
 
 
 @pytest.mark.devtest
-def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
+def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
     .. include:: ../../partials/performance/test_create_messages_large_valid_payload.rst
     """
@@ -28,7 +29,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
         })
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("internal-dev"),
+        "Authorization": bearer_token_internal_dev,
         "Accept": CONTENT_TYPE,
         "Content-Type": CONTENT_TYPE
     }, json=data
@@ -38,7 +39,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
 
 
 @pytest.mark.devtest
-def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
+def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
     .. include:: ../../partials/performance/test_create_messages_large_not_unique_payload.rst
     """
@@ -57,7 +58,7 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
         })
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": Authentication.generate_authentication("internal-dev"),
+        "Authorization": bearer_token_internal_dev,
         "Accept": CONTENT_TYPE,
         "Content-Type": CONTENT_TYPE
     }, json=data

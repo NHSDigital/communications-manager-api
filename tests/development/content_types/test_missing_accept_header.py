@@ -1,6 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators, Error_Handler, Authentication
+from lib import Assertions, Generators, Error_Handler
+from lib.fixtures import *
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
@@ -12,6 +13,7 @@ VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 def test_missing_accept_header(
     nhsd_apim_proxy_url,
+    bearer_token_internal_dev,
     correlation_id,
     content_type
 ):
@@ -25,7 +27,7 @@ def test_missing_accept_header(
         headers={
             "Content-Type": content_type,
             "X-Correlation-Id": correlation_id,
-            "Authorization": Authentication.generate_authentication("internal-dev"),
+            "Authorization": bearer_token_internal_dev,
         },
         json=data
     )

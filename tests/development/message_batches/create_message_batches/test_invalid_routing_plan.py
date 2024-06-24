@@ -1,7 +1,8 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
+from lib.fixtures import *
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 from lib.constants.constants import INVALID_ROUTING_PLAN
 from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID
@@ -11,12 +12,12 @@ from lib.constants.constants import CORRELATION_IDS
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
+def test_no_such_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": Authentication.generate_authentication("internal-dev"),
+            "Authorization": bearer_token_internal_dev,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -48,12 +49,12 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, correlation_id):
+def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": Authentication.generate_authentication("internal-dev"),
+            "Authorization": bearer_token_internal_dev,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -95,7 +96,7 @@ def test_routing_plan_missing_templates(
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": Authentication.generate_authentication("internal-dev"),
+            "Authorization": bearer_token_internal_dev,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
