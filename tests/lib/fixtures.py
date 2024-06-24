@@ -26,18 +26,18 @@ def api_product_name():
 
 # define one of these for each key we have set up and intend to use
 @pytest.fixture(scope='session')
-def api_product_in_comms_manager_test(developer_app_keys_api, api_product_name):
+def api_product_in_comms_manager_local(developer_app_keys_api, api_product_name):
     yield assert_api_product_in_application(
             developer_app_keys_api,
-            'ada.smaldon2@nhs.net',
-            'Comms-manager-test',
-            'q12XKnWCB2aQQwFdmVIyDkYIuhgCnNMG',
+            'phillip.skinner2@nhs.net',
+            'Comms-manager-local',
+            os.environ['NON_PROD_API_KEY'],
             api_product_name)
     # assert_api_product_not_in_application(
     #         developer_app_keys_api,
-    #         'ada.smaldon2@nhs.net',
-    #         'Comms-manager-test',
-    #         'q12XKnWCB2aQQwFdmVIyDkYIuhgCnNMG',
+    #         'phillip.skinner2@nhs.net',
+    #         'Comms-manager-local',
+    #         os.environ['NON_PROD_API_KEY'],
     #         api_product_name)
 
 
@@ -50,7 +50,7 @@ def authentication_cache():
 
 
 @pytest.fixture
-def bearer_token_internal_dev(authentication_cache, api_product_in_comms_manager_test):
+def bearer_token_internal_dev(authentication_cache, api_product_in_comms_manager_local):
     return authentication_cache.generate_authentication('internal-dev')
 
 
