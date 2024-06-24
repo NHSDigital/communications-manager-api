@@ -271,7 +271,10 @@ class Assertions():
             else:
                 assert error in response_errors
 
-        assert resp.headers.get("X-Correlation-Id") == correlation_id
+        resCorrelationID = resp.headers.get("X-Correlation-Id")
+        #apigee generates this value if not present with rrt prefix
+        isValidCorrelationID = resCorrelationID == correlation_id or (correlation_id is None and resCorrelationID.startswith('rrt'))
+        assert isValidCorrelationID
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
