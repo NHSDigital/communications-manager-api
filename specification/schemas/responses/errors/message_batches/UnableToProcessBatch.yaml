@@ -13,7 +13,7 @@ properties:
         id:
           $ref: ../../../types/ErrorIdentifier.yaml
         code:
-          $ref: ../../../enums/ErrorInvalidValue.yaml
+          $ref: ../../../enums/ErrorInvalidNHSNumber.yaml
         links:
           $ref: ../../../types/LinksErrorNHSNumber.yaml
         status:
@@ -29,7 +29,8 @@ properties:
             - Invalid value
             - Duplicate value
             - Too few items
-          example: Missing property
+            - Invalid nhs number
+          example: Invalid nhs number
         detail:
           type: string
           enum:
@@ -37,8 +38,9 @@ properties:
             - 'The property at the specified location is required, but a null value was passed in the request.'
             - The property at the specified location does not allow this value.
             - 'The property at the specified location is a duplicate, duplicated values are not allowed.'
-            - The property at the specified location contains too few items.
-          example: 'The property at the specified location is required, but was not present in the request.'
+            - 'The property at the specified location contains too few items.'
+            - 'The value provided in this nhsNumber field is not a valid NHS number.'
+          example: 'The value provided in this nhsNumber field is not a valid NHS number.'
         source:
           type: object
           additionalProperties: false
@@ -55,4 +57,4 @@ properties:
                 - /data/attributes/messages/0/recipient/dateOfBirth
                 - /data/attributes/messages/0/originator/odsCode
                 - /data/attributes/messages/0/messageReference
-              example: /data/attributes/routingPlanId
+              example: /data/attributes/messages/0/recipient/nhsNumber
