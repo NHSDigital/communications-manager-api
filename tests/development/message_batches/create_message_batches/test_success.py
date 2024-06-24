@@ -59,7 +59,8 @@ def test_201_message_batch_valid_content_type_headers(
 
 @pytest.mark.devtest
 def test_201_message_batch_valid_nhs_number(
-    nhsd_apim_proxy_url
+    nhsd_apim_proxy_url,
+    bearer_token_internal_dev
 ):
     """
     .. include:: ../../partials/happy_path/test_201_message_batch_valid_nhs_number.rst
