@@ -274,7 +274,7 @@ class Assertions():
         resCorrelationID = resp.headers.get("X-Correlation-Id")
         # apigee generates this value if not present with rrt prefix
         isValidCorrelationID = (resCorrelationID == correlation_id
-                                or  (correlation_id is None and resCorrelationID.startswith('rrt')))
+                                or (correlation_id is None and resCorrelationID.startswith('rrt')))
         assert isValidCorrelationID
 
         # ensure we have our x-content-type-options set correctly
