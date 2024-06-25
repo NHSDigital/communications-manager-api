@@ -16,7 +16,6 @@
         <Payload variablePrefix="%" variableSuffix="#">%response.content#</Payload>
         <Headers>
             <Header name="Location">/v1/messages/{messageId}</Header>
-            <Header name="X-Correlation-Id">{correlationId}</Header>
         </Headers>
         <StatusCode>201</StatusCode>
     </Set>
