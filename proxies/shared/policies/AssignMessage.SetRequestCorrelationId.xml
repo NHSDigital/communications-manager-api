@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy adds a Correlation ID header to a request before it reaches the backend.
+
+ A Correlation ID is an optional ID that can be used to track transactions across multiple systems.
+
+ For more information, see the following resources:
+    * https://www.hl7.org/fhir/http.html#custom
+    * https://nhsd-confluence.digital.nhs.uk/pages/viewpage.action?spaceKey=APM&title=Logging
+-->
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SetRequestCorrelationId">
+<AssignTo createNew="false" transport="http" type="response"/>
+<Set>
+  <Headers>
+    <Header name="X-Correlation-Id">{request.headers.X-Correlation-Id }</Header>
+  </Headers>
+</Set>
+</AssignMessage>
