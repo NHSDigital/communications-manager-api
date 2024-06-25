@@ -271,7 +271,7 @@ class Assertions():
             else:
                 assert error in response_errors
 
-        assert Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"))
+        Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"))
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
