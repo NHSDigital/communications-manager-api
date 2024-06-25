@@ -32,4 +32,4 @@ def test_request_with_x_correlation_id(
 
     Error_Handler.handle_retry(resp)
 
-    Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"))
+    Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)
