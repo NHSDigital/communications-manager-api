@@ -1,6 +1,7 @@
 import request from "supertest"
 import * as  fs from 'fs'
 import { setup } from './helpers.js'
+import * as uuid from 'uuid';
 
 describe("/api/channels/nhsapp/accounts", () => {
     let env;
@@ -14,6 +15,18 @@ describe("/api/channels/nhsapp/accounts", () => {
     after(function () {
         process.env = env;
         server.close();
+    });
+
+    it("returns a X-Correlation-Id when provided", (done) => {
+        const correlation_id = uuid.v4();
+        request(server)
+            .get("/api/channels/nhsapp/accounts")
+            .query({
+                "ods-organisation-code": "X26"
+            })
+            .set('X-Correlation-Id', correlation_id)
+            .expect(200)
+            .expect("X-Correlation-Id", correlation_id, done);
     });
 
     it("returns a service ban (403) when the user is banned", (done) => {

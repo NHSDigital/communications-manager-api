@@ -1,5 +1,6 @@
 import request from "supertest"
 import { setup } from './helpers.js'
+import * as uuid from 'uuid';
 
 describe('trigger_timeout can simulate a long request', () => {
   let env;
@@ -16,9 +17,12 @@ describe('trigger_timeout can simulate a long request', () => {
   });
 
   it('using a default 3 second delay', (done) => {
+    const correlation_id = uuid.v4();
     request(server)
       .get('/_timeout')
-      .expect(200, done);
+      .set('X-Correlation-Id', correlation_id)
+      .expect(200)
+      .expect("X-Correlation-Id", correlation_id, done);
   }).timeout(4000);
 
   it('using a custom delay', (done) => {
