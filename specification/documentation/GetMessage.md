@@ -22,6 +22,7 @@ Key values that are returned for each of these channels are:
 * `type` - the channel type
 * `channelStatus` - the status of that channel
 * `channelStatusDescription` - the channel status description
+* `supplierStatus` - the status provided by the supplier for this channel
 * `retryCount` - the number of times we have attempted delivery
 * `timestamps` - timestamps of key events
 * `routingPlan` - the routing plan that was used to generate the channel
@@ -57,11 +58,24 @@ For certain statuses more information can be found within the `messageStatusDesc
 
 The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
 
+### Supplier Statuses
+The channels can have the following supplier statuses:
+
+#### NHS APP
+* `delivered` - the message has been successfully delivered to the user
+* `read` - a user has read the message
+* `notification_attempted` - a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed
+* `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
+* `rejected` - the request to send the communication was rejected by the supplier
+* `notified` - a push notification is reported as having been successfully relayed to one or more devices
+* `received` - the request has been received by the supplier and is queued to be processed
+* `unknown` - NHS Notify was unable to correctly determine the supplier status
+
 ### 3rd Party Querying
 
 This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated with information about the queries made, including:
 
-* `queriedAt` - the date and time that the query occured at
+* `queriedAt` - the date and time that the query occurred at
 * `version` - a version of the document returned in the query, if supported by the 3rd party
 * `labels` - the channels that the response affected
 * `source` - the 3rd party system the query was made to
