@@ -28,9 +28,6 @@
                 }
             }
         </Payload>
-        <Headers>
-            <Header name="X-Correlation-Id">{data.correlationId}</Header>
-        </Headers>
         <StatusCode>201</StatusCode>
     </Set>
 </AssignMessage>
