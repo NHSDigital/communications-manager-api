@@ -19,8 +19,9 @@ def assert_api_product_in_application(developer_app_keys_api, dev_email, app_nam
 
 
 def assert_api_product_not_in_application(developer_app_keys_api, dev_email, app_name, key_id, api_product_name):
-    return developer_app_keys_api.delete_app_key(
+    return developer_app_keys_api.delete_product_app_key_association(
             email=dev_email,
             app_name=app_name,
-            key=key_id
+            app_key=key_id,
+            apiproduct_name=api_product_name
             )
