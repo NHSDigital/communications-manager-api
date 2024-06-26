@@ -37,6 +37,7 @@ properties:
       retryCount:
         type: number
         description: Contains the amount of times that we have attempted to send this channel.
+        example: 1
     required:
       - messageId
       - messageReference
