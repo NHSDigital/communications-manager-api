@@ -2,10 +2,6 @@
     <Name>JavaScript.SetResponseDefaults</Name>
 </Step>
 <Step>
-  <Name>AssignMessage.SetRequestCorrelationId</Name>
-  <Condition>request.headers.X-Correlation-Id  != null</Condition>
-</Step>
-<Step>
     <Name>AssignMessage.SetResponseCorrelationId</Name>
     <Condition>response.headers.X-Correlation-Id  != null</Condition>
 </Step>
