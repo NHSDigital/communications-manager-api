@@ -3,7 +3,7 @@
 </Step>
 <Step>
     <Name>AssignMessage.SetCorrelationId</Name>
-    <Condition>request.headers.x-correlation-id != null</Condition>
+    <Condition>response.headers.X-Correlation-Id  != null</Condition>
 </Step>
 <Step>
     <Name>AssignMessage.AddCorsResponse</Name>
