@@ -92,11 +92,8 @@ class Helper():
         expect(page.get_by_role("heading", name="Messages")).to_be_visible()
         page.get_by_role("link", name="Your NHS healthcare services").click()
 
-        expect(page.get_by_role("heading", name="NHS App Messaging Service")).to_be_visible()
-        page.get_by_label("Messages from: NHS ENGLAND -").click()
-
-        expect(page.get_by_role("heading", name="Messages from: NHS ENGLAND -")).to_be_visible()
-        page.locator("#unreadIndicator0").click()
+        expect(page.get_by_role("heading", name="Your messages")).to_be_visible()
+        page.get_by_label("Unread message from NHS").click()
 
         page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
         expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
