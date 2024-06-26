@@ -4,7 +4,7 @@ description: |-
 
     NHS Notify will send a supplier status callback when:
     * the channel status has changed - This refers to the internal statuses used by NHS Notify, which are consistent across all suppliers.
-    * the supplier status has changed - This is the raw status value specified by the supplier, representing the real-time status of a message
+    * the supplier status has changed - This is the raw status value specified by the supplier, representing the real-time status of a message.
 
     The types of receipt that may be included in this response are listed [here](../documentation/APIDescription#supplier-statuses)
 operationId: post-v1-callbacks

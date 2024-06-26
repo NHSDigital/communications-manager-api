@@ -173,7 +173,7 @@ Messages can have the following statuses:
 
 * `created` - the message has been created, but has received no processing
 * `pending_enrichment` - the message is currently pending enrichment
-* `enriched` - we have queried PDS for this patients details and now know how to contact this individual
+* `enriched` - we have queried PDS for this patient's details and now know how to contact this individual
 * `sending` - the message is in the process of being sent
 * `delivered` - the message has been delivered
 * `failed` - we have failed to deliver the message
