@@ -112,7 +112,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_
 
 
 @pytest.mark.devtest
-def test_request_without_dob(nhsd_apim_proxy_url):
+def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
     .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
     """
@@ -137,7 +137,8 @@ def test_request_without_dob(nhsd_apim_proxy_url):
 
 @pytest.mark.devtest
 def test_201_message_batches_request_idempotency(
-    nhsd_apim_proxy_url
+    nhsd_apim_proxy_url,
+    bearer_token_internal_dev
 ):
     """
     .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
