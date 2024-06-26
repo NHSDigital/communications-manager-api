@@ -89,6 +89,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, bearer_tok
 @pytest.mark.parametrize("routing_plan_id", MISSING_TEMPLATE_ROUTING_PLANS)
 def test_routing_plan_missing_templates(
     nhsd_apim_proxy_url,
+    bearer_token_internal_dev,
     correlation_id,
     routing_plan_id
 ):
