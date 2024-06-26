@@ -149,3 +149,50 @@ We use standard HTTP status codes to show whether an API request succeeded or no
 * 500 to 599 if it failed because of an error on our server
 
 Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide for more on errors](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes).
+
+## Receive a callback
+
+You may develop one or many endpoints on your service if you want to receive callbacks from NHS Notify.
+
+We have created an OpenAPI specification detailing the behaviour of the endpoint that consumers should create to subscribe to callbacks.
+
+We will send your API key in the `x-api-key header`. Your service should respond with:
+
+* `401 Unauthorized` if the API key is not received
+* `401 Unauthorized` if the API key is invalid
+
+We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from an authorized sender. Details on this will be provided during the onboarding process. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
+
+Every request includes an idempotencyKey located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
+
+If a request fails, our retry policy will make up to three attempts with intervals of five seconds between each attempt.
+
+## Message Statuses
+
+Messages can have the following statuses:
+
+* `created` - the message has been created, but has received no processing
+* `pending_enrichment` - the message is currently pending enrichment
+* `enriched` - we have queried PDS for this patients details and now know how to contact this individual
+* `sending` - the message is in the process of being sent
+* `delivered` - the message has been delivered
+* `failed` - we have failed to deliver the message
+
+For certain statuses more information can be found within the `messageStatusDescription` field.
+
+The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
+
+## Supplier Statuses
+
+The channels can have the following supplier statuses:
+
+### NHS APP
+
+* `delivered` - the message has been successfully delivered to the user
+* `read` - a user has read the message
+* `notification_attempted` - a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed
+* `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
+* `rejected` - the request to send the communication was rejected by the supplier
+* `notified` - a push notification is reported as having been successfully relayed to one or more devices
+* `received` - the request has been received by the supplier and is queued to be processed
+* `unknown` - NHS Notify was unable to correctly determine the supplier status
