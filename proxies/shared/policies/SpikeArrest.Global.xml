@@ -10,6 +10,6 @@ For more information on rate limiting, see the following resources:
 -->
 <SpikeArrest async="false" continueOnError="false" enabled="true" name="SpikeArrest.Global">
     <DisplayName>SpikeArrest.Global</DisplayName>
-    <Rate>300ps</Rate>
+    <Rate>500ps</Rate>
     <UseEffectiveCount>true</UseEffectiveCount>
 </SpikeArrest>
