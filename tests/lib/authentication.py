@@ -30,7 +30,9 @@ class AuthenticationCache():
         else:
             raise ValueError("Unknown value: ", env)
 
-        if env not in self.tokens or self.tokens[env][1] + 595 < int(time()):
+        _, timestamp_of_last_token_fetch = self.tokens.get(env, (None, 0))
+
+        if env not in self.tokens or timestamp_of_last_token_fetch + 595 < int(time()):
             pk_pem = None
             with open(private_key, "r") as f:
                 pk_pem = f.read()
@@ -60,4 +62,5 @@ class AuthenticationCache():
 
             self.tokens[env] = (f"Bearer {details.get('access_token')}", int(time()))
 
-        return self.tokens[env][0]
+        bearer_token = self.tokens[env][0]
+        return bearer_token
