@@ -41,7 +41,7 @@ def api_product_in_comms_manager_local(developer_app_keys_api, api_product_name)
                 os.environ['NON_PROD_API_KEY'],
                 api_product_name)
     else:
-        return None
+        yield None
 
 
 # By setting the scope to session on the cache but leaving session scope OFF
