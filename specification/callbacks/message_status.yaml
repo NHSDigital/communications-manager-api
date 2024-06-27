@@ -2,7 +2,7 @@
 summary: Message Status
 description: |-
     
-    NHS Notify will send a callback when:
+    NHS Notify will send a callback when the message status is updated to any of the following:
 
     * `delivered` - the message has been delivered (via any channel)
     * `sending` - the message could not be delivered to a given channel (but may be deliverable by an alternative channel)

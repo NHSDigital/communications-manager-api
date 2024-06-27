@@ -9,7 +9,7 @@ NHS Notify provides:
 * enrichment of recipient details
 * support for accessible formats and multiple languages
 
-For more information about this services capabilities, see [NHS Notify](https://digital.nhs.uk/services/nhs-notify).
+For more information about this service's capabilities, see [NHS Notify](https://digital.nhs.uk/services/nhs-notify).
 
 ## Who can use this API
 
