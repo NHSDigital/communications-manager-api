@@ -1,5 +1,5 @@
 
-def assert_api_product_in_application(developer_app_keys_api, dev_email, app_name, key_id, api_product_name):
+def ensure_api_product_in_application(developer_app_keys_api, dev_email, app_name, key_id, api_product_name):
     r = developer_app_keys_api.get_app_key(
             dev_email,
             app_name,
@@ -18,7 +18,7 @@ def assert_api_product_in_application(developer_app_keys_api, dev_email, app_nam
         return r
 
 
-def assert_api_product_not_in_application(
+def ensure_api_product_not_in_application(
         developer_app_keys_api,
         dev_email,
         app_name,

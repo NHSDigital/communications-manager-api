@@ -1,7 +1,7 @@
 import pytest
 import os
 from .authentication import AuthenticationCache
-from .app_keys import assert_api_product_in_application, assert_api_product_not_in_application
+from .app_keys import ensure_api_product_in_application, ensure_api_product_not_in_application
 
 
 @pytest.fixture(scope='session')
@@ -28,13 +28,13 @@ def api_product_name():
 @pytest.fixture(scope='session')
 def api_product_in_comms_manager_local(developer_app_keys_api, api_product_name):
     if api_product_name.startswith('communications-manager-pr-'):
-        yield assert_api_product_in_application(
+        yield ensure_api_product_in_application(
                 developer_app_keys_api,
                 'phillip.skinner2@nhs.net',
                 'Comms-manager-local',
                 os.environ['NON_PROD_API_KEY'],
                 api_product_name)
-        assert_api_product_not_in_application(
+        ensure_api_product_not_in_application(
                 developer_app_keys_api,
                 'phillip.skinner2@nhs.net',
                 'Comms-manager-local',
