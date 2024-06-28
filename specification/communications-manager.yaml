@@ -41,6 +41,7 @@ paths:
         required: true
         description: The Organisation Data Service (ODS) code of the GP practice for which to retrieve a list of NHS App users. Not case sensitive.
       - schema:
+          $ref: schemas/types/Page.yaml
         name: page
         in: query
         required: false
