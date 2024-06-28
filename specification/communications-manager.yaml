@@ -35,7 +35,7 @@ paths:
   /comms/channels/nhsapp/accounts:
     parameters:
       - schema:
-        $ref: schemas/types/ODSOrganisationCode.yaml
+          $ref: schemas/types/ODSOrganisationCode.yaml
         name: ods-organisation-code
         in: query
         required: true
