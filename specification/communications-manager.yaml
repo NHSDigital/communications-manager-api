@@ -32,7 +32,7 @@ paths:
         description: The unique identifier for the message
     get:
       $ref: endpoints/get_message.yaml
-  /comms/channels/nhsapp/accounts:
+  /channels/nhsapp/accounts:
     parameters:
       - schema:
         $ref: schemas/types/ODSOrganisationCode.yaml
