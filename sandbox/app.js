@@ -2,7 +2,6 @@
 
 import express from "express";
 import log from "loglevel";
-import * as uuid from 'uuid';
 import * as handlers from "./handlers/index.js";
 
 const app = express();
@@ -45,8 +44,11 @@ function before_request(req, res, next) {
         req.header('X-Correlation-ID')
         || req.header('Correlation-ID')
         || req.header('CorrelationID')
-        || uuid.v4()
+        || undefined
     );
+    if (res.locals.correlation_id) {
+        res.setHeader('X-Correlation-Id', res.locals.correlation_id);
+    }
     next();
 }
 
@@ -86,7 +88,7 @@ function after_request(req, res, next) {
         log_entry.res.headers = res.rawHeaders;
     }
     log.info(JSON.stringify(log_entry));
-
+    
     next();
 
 }

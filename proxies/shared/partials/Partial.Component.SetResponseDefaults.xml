@@ -2,8 +2,8 @@
     <Name>JavaScript.SetResponseDefaults</Name>
 </Step>
 <Step>
-    <Name>AssignMessage.SetCorrelationId</Name>
-    <Condition>request.headers.x-correlation-id != null</Condition>
+    <Name>AssignMessage.SetResponseCorrelationId</Name>
+    <Condition>response.headers.X-Correlation-Id  != null</Condition>
 </Step>
 <Step>
     <Name>AssignMessage.AddCorsResponse</Name>

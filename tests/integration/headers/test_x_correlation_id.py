@@ -1,6 +1,7 @@
 import requests
 import pytest
-from lib import Error_Handler
+from lib import Authentication, Error_Handler, Assertions
+
 from lib.constants.constants import INT_URL, METHODS, VALID_ENDPOINTS
 from lib.fixtures import *
 
@@ -22,4 +23,4 @@ def test_request_with_x_correlation_id(bearer_token_int, correlation_id, method,
 
     Error_Handler.handle_retry(resp)
 
-    assert resp.headers.get("x-correlation-id") == correlation_id
+    Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)

@@ -8,6 +8,9 @@
 <ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.MessageBatches.Create.Response">
     <VariablePrefix>data</VariablePrefix>
     <Source>response</Source>
+    <Header name="x-correlation-id">
+        <Pattern ignoreCase="true">{correlationId}</Pattern>
+    </Header>
     <JSONPayload>
         <Variable name="requestId" type="string">
             <JSONPath>$.requestId</JSONPath>
