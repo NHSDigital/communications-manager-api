@@ -1,7 +1,6 @@
 import requests
 import pytest
 from lib import Error_Handler
-from lib.fixtures import *
 from lib.constants.constants import VALID_ENDPOINTS
 
 
@@ -13,11 +12,12 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
 def test_request_with_x_correlation_id(
     nhsd_apim_proxy_url,
-    bearer_token_internal_dev,
     correlation_id,
     method,
+    nhsd_apim_auth_headers,
     endpoints
 ):
     """
@@ -26,7 +26,7 @@ def test_request_with_x_correlation_id(
     .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev,
+        **nhsd_apim_auth_headers,
         "x-correlation-id": correlation_id
     })
 
