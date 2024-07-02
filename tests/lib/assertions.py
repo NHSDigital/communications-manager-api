@@ -271,13 +271,21 @@ class Assertions():
             else:
                 assert error in response_errors
 
-        assert resp.headers.get("X-Correlation-Id") == correlation_id
+        Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
 
         # ensure we have our cache-control set correctly
         assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
+
+    @staticmethod
+    def assert_correlation_id(res_correlation_id, correlation_id):
+        # apigee generates this value if not present with rrt prefix
+        if correlation_id:
+            assert res_correlation_id == correlation_id
+        else:
+            assert res_correlation_id.startswith('rrt')
 
     @staticmethod
     def assert_cors_response(resp, website):
