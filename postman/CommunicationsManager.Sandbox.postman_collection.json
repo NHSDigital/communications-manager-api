@@ -33,13 +33,13 @@
       ],
       "info" : {
          "_postman_id" : "ec078d1e-d4d7-4460-92b9-7d79d51f967a",
-         "createdAt" : null,
+         "createdAt" : "2023-07-25T06:43:37.000Z",
          "description" : "This collection allows you to run a number of pre-generated requests to simulate responses from our sandbox environment.\n\nThis environment requires no authentication and no upfront setup for you to use.\n\nFor more information on the Communications Manager API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager).",
-         "lastUpdatedBy" : null,
+         "lastUpdatedBy" : "35992763",
          "name" : "Communications Manager - Sandbox",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-ec078d1e-d4d7-4460-92b9-7d79d51f967a",
-         "updatedAt" : "2024-04-15T08:09:42.000Z"
+         "updatedAt" : "2024-06-27T13:15:13.000Z"
       },
       "item" : [
          {
@@ -2684,6 +2684,340 @@
             ],
             "name" : "Get Message",
             "uid" : "28740466-5620a10b-ef65-4023-b055-63dbb0426473"
+         },
+         {
+            "id" : "4049f979-af48-4aca-8590-9d208947624e",
+            "item" : [
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 200\", () => {",
+                              "    pm.response.to.have.status(200);",
+                              "});"
+                           ],
+                           "id" : "c079d2b3-9d79-4724-a130-06bf09742d31",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "253ee3a2-def4-441f-b7fa-72e96f038e2a",
+                  "name" : "200 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request succesfully retreives NHS numbers registered for notifications in the NHS app against an ODS code",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "X26"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=X26"
+                     }
+                  },
+                  "response" : [
+                     {
+                        "_postman_previewlanguage" : null,
+                        "body" : null,
+                        "cookie" : [],
+                        "header" : null,
+                        "id" : "5074b3c7-25d4-4b05-964c-bb574eff574d",
+                        "name" : "200 - NHS App Account - T0001 returns the same data as X26",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "channels",
+                                 "nhsapp",
+                                 "accounts"
+                              ],
+                              "query" : [
+                                 {
+                                    "key" : "ods-organisation-code",
+                                    "value" : "T00001"
+                                 }
+                              ],
+                              "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00001"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "28740466-5074b3c7-25d4-4b05-964c-bb574eff574d"
+                     }
+                  ],
+                  "uid" : "28740466-253ee3a2-def4-441f-b7fa-72e96f038e2a"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 200\", () => {",
+                              "    pm.response.to.have.status(200);",
+                              "});"
+                           ],
+                           "id" : "acf7ef02-f37a-4cc4-a09f-6359e6f2a0a3",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "f563a926-2e67-4806-898c-e828522a8b8f",
+                  "name" : "200 - NHS App Account - Multipage",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request successfully retrieves NHS numbers registered for notifications in the NHS App against an ODS code, adding the \"page\" parameter allows you to access the full paginated response",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00001"
+                           },
+                           {
+                              "key" : "page",
+                              "value" : "2"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00001&page=2"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-f563a926-2e67-4806-898c-e828522a8b8f"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 400\", () => {",
+                              "    pm.response.to.have.status(400);",
+                              "});"
+                           ],
+                           "id" : "873444a1-9449-436b-8580-bde26cbd6474",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "44cf8ded-2398-4682-b37c-5e844a13d62b",
+                  "name" : "400 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a 400 invalid code when an invalid ODS code is provided",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : ""
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code="
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-44cf8ded-2398-4682-b37c-5e844a13d62b"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 404\", () => {",
+                              "    pm.response.to.have.status(404);",
+                              "});"
+                           ],
+                           "id" : "ac8b01ea-4c9b-4058-b343-040de1b78671",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "c764ed1f-7a57-425c-b0f8-339cb32a549b",
+                  "name" : "404 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a 404 not found code when a user attempts to access data that does not exist",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "x26"
+                           },
+                           {
+                              "key" : "page",
+                              "value" : "10"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=x26&page=10"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-c764ed1f-7a57-425c-b0f8-339cb32a549b"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 429\", () => {",
+                              "    pm.response.to.have.status(429);",
+                              "});"
+                           ],
+                           "id" : "328000b9-49a4-4151-99e0-f102dc0df3b5",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "a8de7402-731a-472f-af47-de6f3ecd80e6",
+                  "name" : "429 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a simulated 429 error for too many requests",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00429"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00429"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-a8de7402-731a-472f-af47-de6f3ecd80e6"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "a8938d57-3633-453f-860a-ec26d1ae4b28",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 502\", () => {",
+                              "    pm.response.to.have.status(502);",
+                              "});"
+                           ],
+                           "id" : "7a035513-40d6-4537-ad87-a8bff75d8edc",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "70888a33-c704-46db-a30b-ba10af01f768",
+                  "name" : "502 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a 502 simulation for bad gateway",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00502"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00502"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-70888a33-c704-46db-a30b-ba10af01f768"
+               }
+            ],
+            "name" : "NHS App Account",
+            "uid" : "28740466-4049f979-af48-4aca-8590-9d208947624e"
          },
          {
             "event" : [
