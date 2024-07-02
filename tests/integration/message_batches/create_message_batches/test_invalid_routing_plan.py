@@ -1,9 +1,10 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators, Authentication
+from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
+from lib.fixtures import *
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
@@ -16,14 +17,14 @@ headers = {
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_no_such_routing_plan(correlation_id):
+def test_no_such_routing_plan(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_authentication('int')}"
+            "Authorization": bearer_token_int
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -54,14 +55,14 @@ def test_no_such_routing_plan(correlation_id):
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_routing_plan_not_belonging_to_client_id(correlation_id):
+def test_routing_plan_not_belonging_to_client_id(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": f"{Authentication.generate_authentication('int')}"
+            "Authorization": bearer_token_int
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -93,13 +94,13 @@ def test_routing_plan_not_belonging_to_client_id(correlation_id):
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("routing_plan_id", constants.MISSING_TEMPLATE_ROUTING_PLANS)
-def test_routing_plan_missing_templates(correlation_id, routing_plan_id,):
+def test_routing_plan_missing_templates(bearer_token_int, correlation_id, routing_plan_id,):
     """
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('int')}",
+            "Authorization": bearer_token_int,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {

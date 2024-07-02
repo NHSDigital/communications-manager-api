@@ -9,7 +9,7 @@ resources:
       type: github
       name: NHSDigital/api-management-utils
       ref: refs/heads/edge
-      endpoint: NHSDigital (63)
+      endpoint: NHSDigital
   pipelines:
     - pipeline: build_pipeline
       source: "Communications-Manager-Build"

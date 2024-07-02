@@ -4,20 +4,20 @@ from lib import Assertions, Generators
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     LIVE_ODS_CODES, CORRELATION_IDS, VALID_MULTI_PAGE_NUMBERS, \
     MULTI_LAST_PAGE, VALID_SINGLE_PAGE_NUMBERS
+from lib.fixtures import *
 
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", VALID_SINGLE_PAGE_NUMBERS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_single_page(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, page, correlation_id):
+def test_single_page(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_code, page, correlation_id):
 
     """
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_single_page.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -33,14 +33,13 @@ def test_single_page(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, page
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", VALID_MULTI_PAGE_NUMBERS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
-def test_multi_pages(nhsd_apim_proxy_url, nhsd_apim_auth_headers, ods_code, page, correlation_id):
+def test_multi_pages(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_code, page, correlation_id):
 
     """
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_multi_pages.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        **nhsd_apim_auth_headers,
+        "Authorization": bearer_token_internal_dev,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
