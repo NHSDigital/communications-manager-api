@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Error_Handler
+from lib import Error_Handler, Assertions
 from lib.constants.constants import METHODS, PROD_URL
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 from lib.fixtures import *

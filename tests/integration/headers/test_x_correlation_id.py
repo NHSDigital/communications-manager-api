@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Error_Handler
+from lib import Error_Handler, Assertions
 from lib.constants.constants import INT_URL, METHODS, VALID_ENDPOINTS
 from lib.fixtures import *
 
