@@ -43,34 +43,6 @@ curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2bBBpsiMl2rnQt
      --header 'Accept: application/vnd.api+json'
 ```
 
-### Message Statuses
-
-Messages can have the following statuses:
-
-* `created` - the message has been created, but has received no processing
-* `pending_enrichment` - the message is currently pending enrichment
-* `enriched` - we have queried PDS for this patients details and now know how to contact this individual
-* `sending` - the message is in the process of being sent
-* `delivered` - the message has been delivered
-* `failed` - we have failed to deliver the message
-
-For certain statuses more information can be found within the `messageStatusDescription` field.
-
-The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
-
-### Supplier Statuses
-The channels can have the following supplier statuses:
-
-#### NHS APP
-* `delivered` - the message has been successfully delivered to the user
-* `read` - a user has read the message
-* `notification_attempted` - a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed
-* `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
-* `rejected` - the request to send the communication was rejected by the supplier
-* `notified` - a push notification is reported as having been successfully relayed to one or more devices
-* `received` - the request has been received by the supplier and is queued to be processed
-* `unknown` - NHS Notify was unable to correctly determine the supplier status
-
 ### 3rd Party Querying
 
 This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated with information about the queries made, including:
