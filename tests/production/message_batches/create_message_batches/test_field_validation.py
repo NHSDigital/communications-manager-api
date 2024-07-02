@@ -1,11 +1,10 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Permutations, Generators
+from lib import Assertions, Permutations, Generators, Authentication
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, DUPLICATE_PROPERTIES_PATHS, TOO_FEW_PROPERTIES_PATHS, MESSAGE_BATCHES_ENDPOINT
-from lib.fixtures import *
 
 headers = {
     "Accept": "application/json",
@@ -17,7 +16,7 @@ INVALID_DOB = ["1990-10-1"]
 
 
 @pytest.mark.prodtest
-def test_invalid_body(bearer_token_prod):
+def test_invalid_body():
     """
     .. include:: ../../partials/validation/test_invalid_body.rst
     """
@@ -25,7 +24,7 @@ def test_invalid_body(bearer_token_prod):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         data="{}SF{}NOTVALID",
     )
@@ -40,7 +39,7 @@ def test_invalid_body(bearer_token_prod):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("property, pointer", MISSING_PROPERTIES_PATHS)
-def test_property_missing(bearer_token_prod, property, pointer):
+def test_property_missing(property, pointer):
     """
     .. include:: ../../partials/validation/test_message_batch_property_missing.rst
     """
@@ -48,7 +47,7 @@ def test_property_missing(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_without_key(
             Generators.generate_valid_create_message_batch_body(),
@@ -66,7 +65,7 @@ def test_property_missing(bearer_token_prod, property, pointer):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("property, pointer", NULL_PROPERTIES_PATHS)
-def test_data_null(bearer_token_prod, property, pointer):
+def test_data_null(property, pointer):
     """
     .. include:: ../../partials/validation/test_message_batch_null.rst
     """
@@ -74,7 +73,7 @@ def test_data_null(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_null_key(
             Generators.generate_valid_create_message_batch_body(),
@@ -92,7 +91,7 @@ def test_data_null(bearer_token_prod, property, pointer):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("property, pointer", INVALID_PROPERTIES_PATHS)
-def test_data_invalid(bearer_token_prod, property, pointer):
+def test_data_invalid(property, pointer):
     """
     .. include:: ../../partials/validation/test_message_batch_invalid.rst
     """
@@ -100,7 +99,7 @@ def test_data_invalid(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body(),
@@ -119,7 +118,7 @@ def test_data_invalid(bearer_token_prod, property, pointer):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("property, pointer", DUPLICATE_PROPERTIES_PATHS)
-def test_data_duplicate(bearer_token_prod, property, pointer):
+def test_data_duplicate(property, pointer):
     """
     .. include:: ../../partials/validation/test_data_duplicate.rst
     """
@@ -132,7 +131,7 @@ def test_data_duplicate(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=data,
     )
@@ -147,7 +146,7 @@ def test_data_duplicate(bearer_token_prod, property, pointer):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("property, pointer", TOO_FEW_PROPERTIES_PATHS)
-def test_data_too_few_items(bearer_token_prod, property, pointer):
+def test_data_too_few_items(property, pointer):
     """
     .. include:: ../../partials/validation/test_data_too_few_items.rst
     """
@@ -155,7 +154,7 @@ def test_data_too_few_items(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": f"{Authentication.generate_authentication('prod')}"
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body(),
@@ -174,13 +173,13 @@ def test_data_too_few_items(bearer_token_prod, property, pointer):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("nhs_number", INVALID_NHS_NUMBER)
-def test_invalid_nhs_number(bearer_token_prod, nhs_number):
+def test_invalid_nhs_number(nhs_number):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -211,13 +210,13 @@ def test_invalid_nhs_number(bearer_token_prod, nhs_number):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("dob", INVALID_DOB)
-def test_invalid_dob(bearer_token_prod, dob):
+def test_invalid_dob(dob):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -247,13 +246,13 @@ def test_invalid_dob(bearer_token_prod, dob):
 
 
 @pytest.mark.prodtest
-def test_invalid_routing_plan(bearer_token_prod):
+def test_invalid_routing_plan():
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -283,13 +282,13 @@ def test_invalid_routing_plan(bearer_token_prod):
 
 
 @pytest.mark.prodtest
-def test_invalid_message_batch_reference(bearer_token_prod):
+def test_invalid_message_batch_reference():
     """
     .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -319,13 +318,13 @@ def test_invalid_message_batch_reference(bearer_token_prod):
 
 
 @pytest.mark.prodtest
-def test_invalid_message_reference(bearer_token_prod):
+def test_invalid_message_reference():
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -356,13 +355,13 @@ def test_invalid_message_reference(bearer_token_prod):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("invalid_value", INVALID_MESSAGE_VALUES)
-def test_blank_value_under_messages(bearer_token_prod, invalid_value):
+def test_blank_value_under_messages(invalid_value):
     """
     .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -385,13 +384,13 @@ def test_blank_value_under_messages(bearer_token_prod, invalid_value):
 
 
 @pytest.mark.prodtest
-def test_null_value_under_messages(bearer_token_prod):
+def test_null_value_under_messages():
     """
     .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -415,13 +414,13 @@ def test_null_value_under_messages(bearer_token_prod):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
-def test_invalid_personalisation(bearer_token_prod, personalisation):
+def test_invalid_personalisation(personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -452,13 +451,13 @@ def test_invalid_personalisation(bearer_token_prod, personalisation):
 
 @pytest.mark.prodtest
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
-def test_null_personalisation(bearer_token_prod, personalisation):
+def test_null_personalisation(personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": f"{Authentication.generate_authentication('prod')}"
     }, json={
         "data": {
             "type": "MessageBatch",

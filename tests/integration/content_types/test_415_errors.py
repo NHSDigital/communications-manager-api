@@ -1,8 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators
+from lib import Assertions, Generators, Authentication
 from lib.constants.constants import INT_URL, CORRELATION_IDS, VALID_ENDPOINTS
-from lib.fixtures import *
 
 CONTENT_TYPE_NAME = ["content-type", "CONTENT_TYPE", "Content_Type", "conTENT_tYpe"]
 CONTENT_TYPE_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
@@ -16,7 +15,6 @@ METHODS = ["post", "put", "patch"]
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
 def test_415_invalid(
-    bearer_token_int,
     content_type_name,
     content_type_value,
     correlation_id,
@@ -27,7 +25,7 @@ def test_415_invalid(
     .. include:: ../../partials/content_types/test_415_invalid.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": f"{Authentication.generate_authentication('int')}",
         "Accept": "application/json",
         content_type_name: content_type_value,
         "X-Correlation-Id": correlation_id

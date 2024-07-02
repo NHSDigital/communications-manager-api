@@ -1,19 +1,19 @@
 import pytest
 import os
-from lib import Assertions, Helper, Generators
-from lib.fixtures import *
+from lib import Assertions, Generators, Helper
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
 @pytest.mark.e2e
 @pytest.mark.devtest
-def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/happy_path/test_email_end_to_end_internal_dev.rst
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        {"Authorization": bearer_token_internal_dev},
+        nhsd_apim_auth_headers,
         Generators.generate_send_message_body("email", "internal-dev")
     )
 
@@ -21,7 +21,7 @@ def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, bearer_token_interna
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth={"Authorization": bearer_token_internal_dev},
+        auth=nhsd_apim_auth_headers,
         message_id=message_id
     )
 
@@ -33,13 +33,14 @@ def test_email_end_to_end_internal_dev(nhsd_apim_proxy_url, bearer_token_interna
 
 @pytest.mark.e2e
 @pytest.mark.uattest
-def test_email_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_email_end_to_end_uat(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/happy_path/test_email_end_to_end_uat.rst
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        {"Authorization": bearer_token_internal_dev},
+        nhsd_apim_auth_headers,
         Generators.generate_send_message_body("email", "internal-qa")
     )
 
@@ -47,7 +48,7 @@ def test_email_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth={"Authorization": bearer_token_internal_dev},
+        auth=nhsd_apim_auth_headers,
         message_id=message_id
     )
 
