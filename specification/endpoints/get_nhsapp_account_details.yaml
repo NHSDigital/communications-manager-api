@@ -5,6 +5,8 @@ operationId: get-nhsapp-account-details
 parameters:
   - $ref: ../snippets/AuthorizationParameter.yaml
   - $ref: ../snippets/CorrelationParameter.yaml
+  - $ref: ../snippets/ODSOrganisationCodeParameter.yaml
+  - $ref: ../snippets/PageNumberParameter.yaml
 responses:
   '200':
     $ref: ../responses/2xx/200_NhsAppAccountDetails.yaml
