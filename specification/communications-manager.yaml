@@ -52,7 +52,7 @@ paths:
     post:
       $ref: callbacks/message_status.yaml
       tags: ['Callbacks']
-  /callbacks/supplier-status:
+  /callbacks/channel-status:
     post:
-      $ref: callbacks/supplier_status.yaml
+      $ref: callbacks/channel_status.yaml
       tags: ['Callbacks']

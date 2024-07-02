@@ -163,7 +163,7 @@ We will send your API key in the `x-api-key header`. Your service should respond
 
 We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from an authorized sender. Details on this will be provided during the onboarding process. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
 
-Every request includes an idempotencyKey located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
+Every request includes an `idempotencyKey` field located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
 
 If a request fails, our retry policy will make up to three attempts with intervals of five seconds between each attempt.
 
@@ -195,4 +195,5 @@ The channels can have the following supplier statuses:
 * `rejected` - the request to send the communication was rejected by the supplier
 * `notified` - a push notification is reported as having been successfully relayed to one or more devices
 * `received` - the request has been received by the supplier and is queued to be processed
-* `unknown` - NHS Notify was unable to correctly determine the supplier status
+
+Statuses for other suppliers will be added in future.
