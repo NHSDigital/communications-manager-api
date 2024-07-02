@@ -6,4 +6,4 @@ description: |-
   body to determine whether any further pages of results exist.
 schema:
   type: number
-  example: 8
+  example: 1
