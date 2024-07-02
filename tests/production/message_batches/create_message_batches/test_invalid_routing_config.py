@@ -1,21 +1,20 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Generators
+from lib import Assertions, Generators, Authentication
 from lib.constants.constants import PROD_URL, INVALID_ROUTING_PLAN_PROD
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-from lib.fixtures import *
 
 
 @pytest.mark.prodtest
-def test_no_such_routing_plan(bearer_token_prod):
+def test_no_such_routing_plan():
     """
     ..py:function:: test_no_such_routing_plan
 
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -45,12 +44,12 @@ def test_no_such_routing_plan(bearer_token_prod):
 
 
 @pytest.mark.prodtest
-def test_routing_plan_not_belonging_to_client_id(bearer_token_prod):
+def test_routing_plan_not_belonging_to_client_id():
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
     }, json={
         "data": {
             "type": "MessageBatch",

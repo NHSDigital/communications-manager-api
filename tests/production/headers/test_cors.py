@@ -1,8 +1,7 @@
 import requests
 import pytest
-from lib import Assertions
+from lib import Assertions, Authentication
 from lib.constants.constants import PROD_URL, VALID_ENDPOINTS, ORIGIN
-from lib.fixtures import *
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 TEST_METHODS = ["get", "post", "put", "delete"]
@@ -11,12 +10,12 @@ TEST_METHODS = ["get", "post", "put", "delete"]
 @pytest.mark.prodtest
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_cors_options(bearer_token_prod, method, endpoints):
+def test_cors_options(method, endpoints):
     """
     .. include :: ../../partials/headers/test_cors_options.rst
     """
     resp = requests.options(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
         "Accept": "*/*",
         "Origin": ORIGIN,
         "Access-Control-Request-Method": method
@@ -27,12 +26,12 @@ def test_cors_options(bearer_token_prod, method, endpoints):
 @pytest.mark.prodtest
 @pytest.mark.parametrize("method", TEST_METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_cors(bearer_token_prod, method, endpoints):
+def test_cors(method, endpoints):
     """
     .. include :: ../../partials/headers/test_cors.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
         "Accept": "*/*",
         "Origin": ORIGIN
     })
