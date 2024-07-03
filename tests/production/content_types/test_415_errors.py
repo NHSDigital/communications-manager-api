@@ -1,8 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators
+from lib import Assertions, Generators, Authentication
 from lib.constants.constants import CORRELATION_IDS, PROD_URL, VALID_ENDPOINTS
-from lib.fixtures import *
 
 METHODS = ["post", "put", "patch"]
 
@@ -10,12 +9,12 @@ METHODS = ["post", "put", "patch"]
 @pytest.mark.prodtest
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_415_invalid(bearer_token_prod, method, endpoints):
+def test_415_invalid(method, endpoints):
     """
     .. include:: ../../partials/content_types/test_415_invalid.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": f"{Authentication.generate_authentication('prod')}",
         "Accept": "application/json",
         "Content-Type": "invalid"
         })

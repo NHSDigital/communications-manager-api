@@ -1,8 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators
+from lib import Assertions, Generators, Authentication
 from lib.constants.constants import CORRELATION_IDS, METHODS, INT_URL, DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
-from lib.fixtures import *
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
 HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
@@ -15,7 +14,6 @@ HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", 
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
 def test_406(
-    bearer_token_int,
     accept_header_name,
     accept_header_value,
     correlation_id,
@@ -28,7 +26,7 @@ def test_406(
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int,
+        "Authorization": f"{Authentication.generate_authentication('int')}"
     })
 
     Assertions.assert_error_with_optional_correlation_id(

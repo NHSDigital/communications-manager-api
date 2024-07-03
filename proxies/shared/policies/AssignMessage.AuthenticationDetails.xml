@@ -11,7 +11,11 @@
     <Properties/>
     <Set>
         <Headers>
-            <Header name="X-APIM-Application-Id">{developer.app.id}</Header>
+            {% if ENVIRONMENT_TYPE == 'internal' %}
+                <Header name="X-APIM-Application-Id">13bff444-4e1e-4e45-92a9-5924e2d19b9c</Header>
+            {% else %}
+                <Header name="X-APIM-Application-Id">{developer.app.id}</Header>
+            {% endif %}
         </Headers>
     </Set>
     <Remove>

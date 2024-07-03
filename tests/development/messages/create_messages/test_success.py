@@ -2,20 +2,20 @@ import requests
 import pytest
 import time
 from lib import Assertions, Generators
-from lib.fixtures import *
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 import lib.constants.constants as constants
 
 
 @pytest.mark.devtest
 @pytest.mark.parametrize('accept_headers', constants.VALID_ACCEPT_HEADERS)
-def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, bearer_token_internal_dev, accept_headers):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, accept_headers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
     """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": accept_headers,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -26,13 +26,14 @@ def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, bearer_token_inte
 
 @pytest.mark.devtest
 @pytest.mark.parametrize('content_type', constants.VALID_CONTENT_TYPE_HEADERS)
-def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, bearer_token_internal_dev, content_type):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, nhsd_apim_auth_headers, content_type):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_content_type_headers.rst
     """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": content_type
         }, json=data
@@ -42,7 +43,8 @@ def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, bearer_toke
 
 
 @pytest.mark.devtest
-def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
     """
@@ -50,7 +52,7 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal
     data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -61,7 +63,8 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal
 
 @pytest.mark.devtest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
-def test_201_message_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, dob):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_valid_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers, dob):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_dob.rst
     """
@@ -69,7 +72,7 @@ def test_201_message_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, d
     data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -79,7 +82,8 @@ def test_201_message_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, d
 
 
 @pytest.mark.devtest
-def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_request_without_dob(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_without_dob.rst
     """
@@ -87,7 +91,7 @@ def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
     data["data"]["attributes"]["recipient"].pop("dateOfBirth")
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -97,14 +101,15 @@ def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
 
 @pytest.mark.devtest
-def test_201_message_request_idempotency(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.nhsd_apim_authorization({"access": "application", "level": "level3"})
+def test_201_message_request_idempotency(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_request_idempotency.rst
     """
     data = Generators.generate_valid_create_message_body("dev")
 
     respOne = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -113,7 +118,7 @@ def test_201_message_request_idempotency(nhsd_apim_proxy_url, bearer_token_inter
     time.sleep(5)
 
     respTwo = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            **nhsd_apim_auth_headers,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
