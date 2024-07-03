@@ -13,7 +13,7 @@ description: |-
     * `pending_enrichment` - the message is currently pending enrichment
     * `enriched` - we have queried PDS for this patient's details and now know how to contact this individual
     * `sending` - the message is in the process of being sent
-operationId: post-v1-callbacks
+operationId: post-message-status-callbacks
 parameters:
     - name: x-hmac-sha256-signature
       in: header
