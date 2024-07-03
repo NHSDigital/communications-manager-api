@@ -1,6 +1,7 @@
 import request from "supertest"
 import { assert } from "chai";
 import { setup } from './helpers.js'
+import * as uuid from 'uuid';
 
 describe("/api/v1/messages", () => {
   let env;
@@ -72,6 +73,31 @@ describe("/api/v1/messages", () => {
         assert.notEqual(links.self, undefined);
       })
       .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a X-Correlation-Id when provided", (done) => {
+    const correlation_id = uuid.v4();
+    request(server)
+      .post("/api/v1/messages")
+      .send({
+        data: {
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+            },
+            originator: {
+              odsCode: "X123"
+            },
+            personalisation: {},
+          },
+        },
+      })
+    .set('X-Correlation-Id', correlation_id)
+    .expect(201)
+    .expect("X-Correlation-Id", correlation_id, done);
   });
 
   it("responds with a 201 for a valid global NHS app routing plan", (done) => {

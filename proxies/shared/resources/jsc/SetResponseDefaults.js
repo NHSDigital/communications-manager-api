@@ -18,6 +18,10 @@ context.setVariable("error.header.Cache-Control", "no-cache, no-store, must-reva
 context.setVariable("response.header.X-Content-Type-Options", "nosniff");
 context.setVariable("error.header.X-Content-Type-Options", "nosniff");
 
+backendCorrelationId = context.getVariable("backendCorrelationId");
+context.setVariable("response.header.X-Correlation-Id", backendCorrelationId);
+context.setVariable("error.header.X-Correlation-Id", backendCorrelationId);
+
 // remove aws headers
 const headerNames = (context.getVariable("response.headers.names") + "").slice(1, -1).split(', ');
 const headerRegex = /^x-amz/;
