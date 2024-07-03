@@ -242,9 +242,9 @@ class Assertions():
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         if code == 429:
-            Error_Handler.handle_429_retry(resp)
-        elif code == 504:
             Error_Handler.handle_504_retry(resp)
+        elif code == 504:
+            Error_Handler.handle_429_retry(resp)
         else:
             Error_Handler.handle_retry(resp)
 
