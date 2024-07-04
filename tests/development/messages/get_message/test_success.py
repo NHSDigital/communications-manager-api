@@ -16,7 +16,7 @@ def test_200_get_message(nhsd_apim_proxy_url, bearer_token_internal_dev, accept_
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/{message_ids}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
@@ -33,7 +33,7 @@ def test_200_get_message_pending_enrichment(nhsd_apim_proxy_url, bearer_token_in
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/pending_enrichment_request_item_id",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
@@ -51,7 +51,7 @@ def test_200_get_message_sending(nhsd_apim_proxy_url, bearer_token_internal_dev,
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/sending_nhsapp_request_item_id",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
@@ -69,7 +69,7 @@ def test_200_get_message_successful(nhsd_apim_proxy_url, bearer_token_internal_d
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/successful_letter_request_item_id",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
@@ -87,7 +87,7 @@ def test_200_get_message_failed(nhsd_apim_proxy_url, bearer_token_internal_dev, 
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/exit_code_request_item_id",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },
@@ -105,7 +105,7 @@ def test_200_get_message_cascade(nhsd_apim_proxy_url, bearer_token_internal_dev,
     resp = requests.get(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/cascade_sending_all_status_request_item_id",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": "application/json"
         },

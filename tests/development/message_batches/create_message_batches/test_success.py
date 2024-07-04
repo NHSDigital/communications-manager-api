@@ -19,7 +19,7 @@ def test_201_message_batch_valid_accept_headers(
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -44,7 +44,7 @@ def test_201_message_batch_valid_content_type_headers(
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": content_type,
         },
@@ -73,7 +73,7 @@ def test_201_message_batch_valid_nhs_number(
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -98,7 +98,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -122,7 +122,7 @@ def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -148,7 +148,7 @@ def test_201_message_batches_request_idempotency(
     respOne = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -160,7 +160,7 @@ def test_201_message_batches_request_idempotency(
     respTwo = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },

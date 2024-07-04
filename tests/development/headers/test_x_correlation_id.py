@@ -26,7 +26,7 @@ def test_request_with_x_correlation_id(
     .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "x-correlation-id": correlation_id
     })
 

@@ -36,7 +36,7 @@ def test_application_response_type(nhsd_apim_proxy_url, bearer_token_internal_de
     .. include:: ../../partials/content_types/test_application_response_type.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **accept_headers.get("headers")
     })
 

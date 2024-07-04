@@ -30,7 +30,7 @@ def test_create_messages_large_invalid_payload(bearer_token_prod):
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
@@ -59,7 +59,7 @@ def test_create_messages_large_not_unique_payload(bearer_token_prod):
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json=data
     )
     Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)

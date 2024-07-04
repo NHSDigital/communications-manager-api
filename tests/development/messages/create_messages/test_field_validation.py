@@ -24,7 +24,7 @@ def test_invalid_body(nhsd_apim_proxy_url, bearer_token_internal_dev, correlatio
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -52,7 +52,7 @@ def test_property_missing(nhsd_apim_proxy_url, bearer_token_internal_dev, proper
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -83,7 +83,7 @@ def test_data_null(nhsd_apim_proxy_url, bearer_token_internal_dev, property, poi
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -114,7 +114,7 @@ def test_data_invalid(nhsd_apim_proxy_url, bearer_token_internal_dev, property, 
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -141,7 +141,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal_dev, nhs_
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -176,7 +176,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, dob, correl
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -210,7 +210,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -244,7 +244,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, bearer_token_internal_de
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -279,7 +279,7 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev,
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -313,7 +313,7 @@ def test_null_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={

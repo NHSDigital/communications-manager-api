@@ -27,7 +27,7 @@ def test_missing_accept_header(
         headers={
             "Content-Type": content_type,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
         },
         json=data
     )

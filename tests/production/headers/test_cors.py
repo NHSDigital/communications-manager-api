@@ -16,7 +16,7 @@ def test_cors_options(bearer_token_prod, method, endpoints):
     .. include :: ../../partials/headers/test_cors_options.rst
     """
     resp = requests.options(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "Accept": "*/*",
         "Origin": ORIGIN,
         "Access-Control-Request-Method": method
@@ -32,7 +32,7 @@ def test_cors(bearer_token_prod, method, endpoints):
     .. include :: ../../partials/headers/test_cors.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "Accept": "*/*",
         "Origin": ORIGIN
     })

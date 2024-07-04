@@ -20,7 +20,7 @@ def test_404_page_not_found(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_page_not_found.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -44,7 +44,7 @@ def test_404_report_not_found(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_report_not_found.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

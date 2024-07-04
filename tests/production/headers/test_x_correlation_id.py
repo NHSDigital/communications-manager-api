@@ -20,7 +20,7 @@ def test_request_with_x_correlation_id(
     .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "x-correlation-id": correlation_id
     })
 

@@ -16,7 +16,7 @@ def test_request_with_x_correlation_id(bearer_token_int, correlation_id, method,
     .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "x-correlation-id": correlation_id
     })
 

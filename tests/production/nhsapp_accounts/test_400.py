@@ -16,7 +16,7 @@ def test_400_missing_ods_code(bearer_token_prod, page, correlation_id):
     .. include:: ../../partials/invalid_ods_code/test_400_nhsapp_accounts_missing_ods_code.rst
     """
     resp = requests.get(f"{constants.PROD_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -40,7 +40,7 @@ def test_400_invalid_ods_code(bearer_token_prod, ods_code, correlation_id):
     .. include:: ../../partials/invalid_ods_code/test_400_nhsapp_accounts_invalid_ods_code.rst
     """
     resp = requests.get(f"{constants.PROD_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -65,7 +65,7 @@ def test_400_invalid_page(bearer_token_prod, ods_code, page, correlation_id):
     .. include:: ../../partials/invalid_ods_code/test_400_nhsapp_accounts_invalid_page.rst
     """
     resp = requests.get(f"{constants.PROD_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

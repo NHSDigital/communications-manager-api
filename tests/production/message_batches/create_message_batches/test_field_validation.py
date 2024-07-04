@@ -25,7 +25,7 @@ def test_invalid_body(bearer_token_prod):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         data="{}SF{}NOTVALID",
     )
@@ -48,7 +48,7 @@ def test_property_missing(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_without_key(
             Generators.generate_valid_create_message_batch_body(),
@@ -74,7 +74,7 @@ def test_data_null(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_null_key(
             Generators.generate_valid_create_message_batch_body(),
@@ -100,7 +100,7 @@ def test_data_invalid(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body(),
@@ -132,7 +132,7 @@ def test_data_duplicate(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=data,
     )
@@ -155,7 +155,7 @@ def test_data_too_few_items(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body(),
@@ -180,7 +180,7 @@ def test_invalid_nhs_number(bearer_token_prod, nhs_number):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -217,7 +217,7 @@ def test_invalid_dob(bearer_token_prod, dob):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -253,7 +253,7 @@ def test_invalid_routing_plan(bearer_token_prod):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -289,7 +289,7 @@ def test_invalid_message_batch_reference(bearer_token_prod):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -325,7 +325,7 @@ def test_invalid_message_reference(bearer_token_prod):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -362,7 +362,7 @@ def test_blank_value_under_messages(bearer_token_prod, invalid_value):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -391,7 +391,7 @@ def test_null_value_under_messages(bearer_token_prod):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -421,7 +421,7 @@ def test_invalid_personalisation(bearer_token_prod, personalisation):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -458,7 +458,7 @@ def test_null_personalisation(bearer_token_prod, personalisation):
     """
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
-        "Authorization": bearer_token_prod
+        "Authorization": bearer_token_prod.value
     }, json={
         "data": {
             "type": "MessageBatch",

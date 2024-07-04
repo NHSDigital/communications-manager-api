@@ -4,6 +4,7 @@ import os
 import jwt
 import requests
 import json
+from .secret import Secret
 
 
 class AuthenticationCache():
@@ -63,4 +64,4 @@ class AuthenticationCache():
             self.tokens[env] = (f"Bearer {details.get('access_token')}", int(time()))
 
         bearer_token = self.tokens[env][0]
-        return bearer_token
+        return Secret(bearer_token)

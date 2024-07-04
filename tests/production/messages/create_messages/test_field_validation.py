@@ -21,7 +21,7 @@ def test_invalid_body(bearer_token_prod):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         data="{}SF{}NOTVALID",
     )
@@ -47,7 +47,7 @@ def test_property_missing(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_without_key(
             Generators.generate_valid_create_message_body("prod"),
@@ -76,7 +76,7 @@ def test_data_null(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_null_key(
             Generators.generate_valid_create_message_body("prod"),
@@ -105,7 +105,7 @@ def test_data_invalid(bearer_token_prod, property, pointer):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -132,7 +132,7 @@ def test_invalid_nhs_number(bearer_token_prod, nhs_number):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -159,7 +159,7 @@ def test_invalid_dob(bearer_token_prod, dob):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -185,7 +185,7 @@ def test_invalid_routing_plan(bearer_token_prod):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -211,7 +211,7 @@ def test_invalid_message_reference(bearer_token_prod):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -238,7 +238,7 @@ def test_invalid_personalisation(bearer_token_prod, personalisation):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -265,7 +265,7 @@ def test_null_personalisation(bearer_token_prod, personalisation):
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": bearer_token_prod
+            "Authorization": bearer_token_prod.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),

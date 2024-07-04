@@ -17,7 +17,7 @@ def test_429_too_many_requests(nhsd_apim_proxy_url, bearer_token_internal_dev, c
     .. include:: ../../partials/too_many_requests/test_429_nhs_app_accounts_too_many_requests.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

@@ -14,7 +14,7 @@ def test_message_id_not_belonging_to_client_id(bearer_token_prod):
     """
     resp = requests.get(
         f"{PROD_URL}{MESSAGES_ENDPOINT}/{MESSAGE_ID_NOT_BELONGING_TO_CLIENT}",
-        headers={"Authorization": bearer_token_prod}
+        headers={"Authorization": bearer_token_prod.value}
         )
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -31,7 +31,7 @@ def test_message_id_that_does_not_exist(bearer_token_prod):
     """
     resp = requests.get(
         f"{PROD_URL}{MESSAGES_ENDPOINT}/does_not_exist",
-        headers={"Authorization": bearer_token_prod}
+        headers={"Authorization": bearer_token_prod.value}
         )
     Assertions.assert_error_with_optional_correlation_id(
         resp,

@@ -17,7 +17,7 @@ def test_404_not_found(nhsd_apim_proxy_url, bearer_token_internal_dev, request_p
     .. include:: ../../partials/not_found/test_404_not_found.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{request_path}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "*/*",
         "Content-Type": "application/json"
