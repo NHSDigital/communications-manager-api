@@ -52,7 +52,7 @@ paths:
     post:
       $ref: callbacks/message_status.yaml
       tags: ['Callbacks']
-  /callbacks/channel-status:
+  /<client-provided-URI>:
     post:
       $ref: callbacks/channel_status.yaml
       tags: ['Callbacks']

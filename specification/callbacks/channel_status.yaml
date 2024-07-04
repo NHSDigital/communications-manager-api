@@ -8,7 +8,7 @@ description: |-
 
     The specific state transitions that trigger a callback will be agreed as part of onboarding in order to minimise unnecessary traffic.
 
-operationId: post-v1-callbacks
+operationId: post-v1-channel-callbacks
 parameters:
     - name: x-hmac-sha256-signature
       in: header
