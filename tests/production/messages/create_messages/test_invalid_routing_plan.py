@@ -1,10 +1,11 @@
 import requests
 import pytest
 import uuid
-from lib import Assertions, Permutations, Generators, Authentication
+from lib import Assertions, Permutations, Generators
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.constants.constants import INVALID_ROUTING_PLAN_PROD
+from lib.fixtures import *
 
 
 headers = {
@@ -14,7 +15,7 @@ headers = {
 
 
 @pytest.mark.prodtest
-def test_no_such_routing_plan():
+def test_no_such_routing_plan(bearer_token_prod):
     """
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
@@ -22,7 +23,7 @@ def test_no_such_routing_plan():
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),
@@ -40,7 +41,7 @@ def test_no_such_routing_plan():
 
 
 @pytest.mark.prodtest
-def test_routing_plan_not_belonging_to_client_id():
+def test_routing_plan_not_belonging_to_client_id(bearer_token_prod):
     """
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
@@ -48,7 +49,7 @@ def test_routing_plan_not_belonging_to_client_id():
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
             **headers,
-            "Authorization": f"{Authentication.generate_authentication('prod')}"
+            "Authorization": bearer_token_prod
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_body("prod"),

@@ -138,7 +138,7 @@
          "name" : "Communications Manager - Integration",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
          "uid" : "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "updatedAt" : "2024-04-11T08:32:18.000Z"
+         "updatedAt" : "2024-06-27T13:15:35.000Z"
       },
       "item" : [
          {
@@ -154,6 +154,7 @@
                               ""
                            ],
                            "id" : "832ce22d-e604-4477-8b49-6add91920812",
+                           "packages" : {},
                            "type" : "text/javascript"
                         }
                      },
@@ -176,6 +177,7 @@
                               "});"
                            ],
                            "id" : "59dadc53-94c6-4329-8f96-668bd304968b",
+                           "packages" : {},
                            "type" : "text/javascript"
                         }
                      }
@@ -242,6 +244,7 @@
                               ""
                            ],
                            "id" : "832ce22d-e604-4477-8b49-6add91920812",
+                           "packages" : {},
                            "type" : "text/javascript"
                         }
                      },
@@ -264,6 +267,7 @@
                               "});"
                            ],
                            "id" : "59dadc53-94c6-4329-8f96-668bd304968b",
+                           "packages" : {},
                            "type" : "text/javascript"
                         }
                      }
@@ -318,7 +322,7 @@
                   "uid" : "28740466-611761b4-f4aa-408b-85a3-4cc4a4eec71a"
                }
             ],
-            "name" : "Send a batch of messages",
+            "name" : "Send Messages",
             "uid" : "28740466-f5ca3438-8247-4f80-a0f2-29dfb6ee85d3"
          },
          {
@@ -357,6 +361,68 @@
             ],
             "name" : "Get Message",
             "uid" : "28740466-10354e32-504e-478c-b130-ecc063814e1a"
+         },
+         {
+            "id" : "6536f61f-354e-4d1b-9894-fa2ea43d06ce",
+            "item" : [
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 200\", () => {",
+                              "    pm.response.to.have.status(200);",
+                              "});"
+                           ],
+                           "id" : "18a3007b-fcfd-431c-b688-ff2e6fd26fb0",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "ba8f0088-6184-42ae-8e99-95a32f417fbe",
+                  "name" : "200 - NHS App Account - Multipage",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request successfully retrieves NHS numbers registered for notifications in the NHS App against an ODS code, adding the \"page\" parameter allows you to access the full paginated response",
+                     "header" : [
+                        {
+                           "key" : "Authorization",
+                           "value" : "{{authorization_header_value}}"
+                        }
+                     ],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00001"
+                           },
+                           {
+                              "key" : "page",
+                              "value" : "2"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00001&page=2"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "28740466-ba8f0088-6184-42ae-8e99-95a32f417fbe"
+               }
+            ],
+            "name" : "NHS App Account",
+            "uid" : "28740466-6536f61f-354e-4d1b-9894-fa2ea43d06ce"
          }
       ],
       "variable" : [

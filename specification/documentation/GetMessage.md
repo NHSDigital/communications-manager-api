@@ -22,6 +22,7 @@ Key values that are returned for each of these channels are:
 * `type` - the channel type
 * `channelStatus` - the status of that channel
 * `channelStatusDescription` - the channel status description
+* `supplierStatus` - the status provided by the supplier for this channel
 * `retryCount` - the number of times we have attempted delivery
 * `timestamps` - timestamps of key events
 * `routingPlan` - the routing plan that was used to generate the channel
@@ -42,26 +43,11 @@ curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2bBBpsiMl2rnQt
      --header 'Accept: application/vnd.api+json'
 ```
 
-### Message Statuses
-
-Messages can have the following statuses:
-
-* `created` - the message has been created, but has received no processing
-* `pending_enrichment` - the message is currently pending enrichment
-* `enriched` - we have queried PDS for this patients details and now know how to contact this individual
-* `sending` - the message is in the process of being sent
-* `delivered` - the message has been delivered
-* `failed` - we have failed to deliver the message
-
-For certain statuses more information can be found within the `messageStatusDescription` field.
-
-The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
-
 ### 3rd Party Querying
 
 This system queries 3rd party integrations during the sending process. If this occurs, the `metadata` field will be populated with information about the queries made, including:
 
-* `queriedAt` - the date and time that the query occured at
+* `queriedAt` - the date and time that the query occurred at
 * `version` - a version of the document returned in the query, if supported by the 3rd party
 * `labels` - the channels that the response affected
 * `source` - the 3rd party system the query was made to

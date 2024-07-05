@@ -1,0 +1,45 @@
+
+summary: Channel Status
+description: |-
+
+    NHS Notify can send a supplier status callback when:
+    * the channel status has changed - This refers to the internal statuses used by NHS Notify, which are consistent across all channels
+    * the supplier status has changed - This is the raw status value specified by the underlying channel supplier. The possible values are listed [here](#overview--supplier-statuses)
+
+    The specific state transitions that trigger a callback will be agreed as part of onboarding in order to minimise unnecessary traffic.
+
+operationId: post-v1-channel-callbacks
+parameters:
+    - name: x-hmac-sha256-signature
+      in: header
+      description: Contains a HMAC-SHA256 signature of the request body using a
+          pre-agreed secret
+      schema:
+          type: string
+          examples: 
+            - 9ee8c6aab877a97600e5c0cd8419f52d3dcdc45002e35220873d11123db6486f
+    - name: x-api-key
+      in: header
+      description: Contains the pre-agreed API key.
+      schema:
+          type: string
+          examples: 
+            - 0bb04a0e-d005-42dd-8993-dacf37410a12
+requestBody:
+  content:
+    application/vnd.api+json:
+      schema:
+        type: object
+        properties:
+          data:
+            type: array
+            minItems: 1
+            items:
+              $ref: ../schemas/components/SupplierStatus.yaml
+responses:
+    '202':
+        description: Accepted
+    '401':
+        description: Unauthorized
+    '403':
+        description: Forbidden

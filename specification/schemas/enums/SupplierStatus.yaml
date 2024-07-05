@@ -1,0 +1,12 @@
+title: Enum_SupplierStatus
+type: string
+enum:
+  - delivered
+  - read
+  - notification_attempted
+  - unnotified
+  - rejected
+  - notified
+  - received
+  - unknown
+example: delivered

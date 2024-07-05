@@ -1,5 +1,6 @@
 import request from "supertest";
 import { setup } from './helpers.js';
+import * as uuid from 'uuid';
 
 describe('backend_408', () => {
   let env;
@@ -19,5 +20,14 @@ describe('backend_408', () => {
     request(server)
       .get('/_timeout_408')
       .expect(408, '408 Request Timeout', done);
+  });
+
+  it("returns a X-Correlation-Id when provided", (done) => {
+    const correlation_id = uuid.v4();
+    request(server)
+      .get('/_timeout_408')
+      .set('X-Correlation-Id', correlation_id)
+      .expect(408, '408 Request Timeout')
+      .expect("X-Correlation-Id", correlation_id, done);
   });
 })

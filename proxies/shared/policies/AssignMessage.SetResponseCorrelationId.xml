@@ -8,11 +8,11 @@
     * https://www.hl7.org/fhir/http.html#custom
     * https://nhsd-confluence.digital.nhs.uk/pages/viewpage.action?spaceKey=APM&title=Logging
 -->
-<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SetCorrelationId">
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.SetResponseCorrelationId">
     <AssignTo createNew="false" transport="http" type="response"/>
     <Set>
         <Headers>
-            <Header name="X-Correlation-Id">{request.headers.x-correlation-id}</Header>
+            <Header name="X-Correlation-Id">{response.headers.X-Correlation-Id }</Header>
         </Headers>
     </Set>
 </AssignMessage>
