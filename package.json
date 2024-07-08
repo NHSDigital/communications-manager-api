@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.42.1",
-    "@redocly/cli": "^1.10.6",
+    "@redocly/cli": "^1.17.1",
     "@types/node": "^20.12.2",
     "hbs-cli": "^1.4.1",
     "license-checker": "^25.0.1",
