@@ -24,7 +24,7 @@ def test_invalid_body(bearer_token_int, correlation_id):
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -52,7 +52,7 @@ def test_property_missing(bearer_token_int, property, pointer, correlation_id):
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -83,7 +83,7 @@ def test_data_null(bearer_token_int, property, pointer, correlation_id):
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -114,7 +114,7 @@ def test_data_invalid(bearer_token_int, property, pointer, correlation_id):
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             **headers,
             "X-Correlation-Id": correlation_id
         },
@@ -141,7 +141,7 @@ def test_invalid_nhs_number(bearer_token_int, nhs_number, correlation_id):
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -176,7 +176,7 @@ def test_invalid_dob(bearer_token_int, dob, correlation_id):
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -210,7 +210,7 @@ def test_invalid_routing_plan(bearer_token_int, correlation_id):
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -244,7 +244,7 @@ def test_invalid_message_reference(bearer_token_int, correlation_id):
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -279,7 +279,7 @@ def test_invalid_personalisation(bearer_token_int, correlation_id, personalisati
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={
@@ -313,7 +313,7 @@ def test_null_personalisation(bearer_token_int, correlation_id, personalisation)
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
     }, json={

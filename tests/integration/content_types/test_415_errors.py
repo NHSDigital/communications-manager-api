@@ -27,7 +27,7 @@ def test_415_invalid(
     .. include:: ../../partials/content_types/test_415_invalid.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "Accept": "application/json",
         content_type_name: content_type_value,
         "X-Correlation-Id": correlation_id

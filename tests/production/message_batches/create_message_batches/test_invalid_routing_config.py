@@ -15,7 +15,7 @@ def test_no_such_routing_plan(bearer_token_prod):
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -50,7 +50,7 @@ def test_routing_plan_not_belonging_to_client_id(bearer_token_prod):
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
     }, json={
         "data": {
             "type": "MessageBatch",

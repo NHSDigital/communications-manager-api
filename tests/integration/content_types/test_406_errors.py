@@ -28,7 +28,7 @@ def test_406(
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
     })
 
     Assertions.assert_error_with_optional_correlation_id(

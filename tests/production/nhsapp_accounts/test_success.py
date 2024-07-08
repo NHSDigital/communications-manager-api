@@ -18,7 +18,7 @@ def test_single_page(bearer_token_prod, ods_code, page, correlation_id):
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_single_page.rst
     """
     resp = requests.get(f"{PROD_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -39,7 +39,7 @@ def test_multi_pages(bearer_token_prod, ods_code, page, correlation_id):
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_multi_pages.rst
     """
     resp = requests.get(f"{PROD_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

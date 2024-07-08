@@ -18,7 +18,7 @@ def test_201_message_batch_valid_accept_headers(bearer_token_int, accept_headers
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": accept_headers,
             "Content-Type": "application/json",
         },
@@ -42,7 +42,7 @@ def test_201_message_batch_valid_content_type_headers(bearer_token_int, content_
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": "application/json",
             "Content-Type": content_type,
         },
@@ -65,7 +65,7 @@ def test_201_message_batch_valid_nhs_number(bearer_token_int):
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": "application/json",
             "Content-Type": "application/json",
         },
@@ -90,7 +90,7 @@ def test_201_message_batch_valid_dob(bearer_token_int, dob):
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": "application/json",
             "Content-Type": "application/json",
         },
@@ -114,7 +114,7 @@ def test_request_without_dob(bearer_token_int):
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": "application/json",
             "Content-Type": "application/json",
         },
@@ -137,7 +137,7 @@ def test_201_message_batches_request_idempotency(bearer_token_int):
     respOne = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": "application/json",
             "Content-Type": "application/json",
         },
@@ -149,7 +149,7 @@ def test_201_message_batches_request_idempotency(bearer_token_int):
     respTwo = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "Accept": "application/json",
             "Content-Type": "application/json",
         },

@@ -12,7 +12,7 @@ def test_nhsapp_end_to_end(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        {"Authorization": bearer_token_internal_dev},
+        {"Authorization": bearer_token_internal_dev.value},
         Generators.generate_send_message_body("nhsapp", "internal-dev")
     )
 
@@ -20,14 +20,14 @@ def test_nhsapp_end_to_end(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth={"Authorization": bearer_token_internal_dev},
+        auth={"Authorization": bearer_token_internal_dev.value},
         message_id=message_id
     )
 
     Assertions.assert_get_message_status(
         Helper.get_message(
             nhsd_apim_proxy_url,
-            {"Authorization": bearer_token_internal_dev},
+            {"Authorization": bearer_token_internal_dev.value},
             message_id
         ),
         "delivered"
@@ -44,7 +44,7 @@ def test_nhsapp_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        {"Authorization": bearer_token_internal_dev},
+        {"Authorization": bearer_token_internal_dev.value},
         Generators.generate_send_message_body("nhsapp", "internal-qa", personalisation)
     )
 
@@ -52,7 +52,7 @@ def test_nhsapp_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth={"Authorization": bearer_token_internal_dev},
+        auth={"Authorization": bearer_token_internal_dev.value},
         message_id=message_id,
         end_state="sending"
     )
@@ -60,7 +60,7 @@ def test_nhsapp_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
     Assertions.assert_get_message_status(
         Helper.get_message(
             nhsd_apim_proxy_url,
-            {"Authorization": bearer_token_internal_dev},
+            {"Authorization": bearer_token_internal_dev.value},
             message_id
         ),
         "sending"

@@ -17,7 +17,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     .. include:: ../../partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -54,7 +54,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, bearer_tok
     .. include:: ../../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {
@@ -97,7 +97,7 @@ def test_routing_plan_missing_templates(
     .. include:: ../../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {

@@ -24,7 +24,7 @@ def test_no_such_routing_plan(bearer_token_int, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -62,7 +62,7 @@ def test_routing_plan_not_belonging_to_client_id(bearer_token_int, correlation_i
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         }, json={
         "data": {
             "type": "MessageBatch",
@@ -100,7 +100,7 @@ def test_routing_plan_missing_templates(bearer_token_int, correlation_id, routin
     """
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             **headers,
-            "Authorization": bearer_token_int,
+            "Authorization": bearer_token_int.value,
             "X-Correlation-Id": correlation_id
         }, json={
         "data": {

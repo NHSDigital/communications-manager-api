@@ -17,7 +17,7 @@ def test_single_page(bearer_token_int, ods_code, page, correlation_id):
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_single_page.rst
     """
     resp = requests.get(f"{INT_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

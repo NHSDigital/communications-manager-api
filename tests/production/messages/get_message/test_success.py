@@ -16,7 +16,7 @@ def test_200_get_message(bearer_token_prod, message_ids):
     """
     resp = requests.get(
         f"{PROD_URL}{MESSAGES_ENDPOINT}/{message_ids}",
-        headers={"Authorization": bearer_token_prod}
+        headers={"Authorization": bearer_token_prod.value}
         )
     Assertions.assert_200_response_message(resp, PROD_URL)
     Assertions.assert_get_message_response_channels(resp, "email", "delivered")

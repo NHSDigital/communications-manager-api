@@ -29,7 +29,7 @@ def test_406(
     .. include:: ../../partials/content_types/test_406.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}/{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id
     })

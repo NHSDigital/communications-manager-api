@@ -35,7 +35,7 @@ def test_application_response_type(bearer_token_prod, accept_headers, method, en
     .. include:: ../../partials/content_types/test_application_response_type.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{endpoints}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         **accept_headers.get("headers")
     })
 

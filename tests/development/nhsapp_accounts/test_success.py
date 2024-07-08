@@ -17,7 +17,7 @@ def test_single_page(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_code, p
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_single_page.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -39,7 +39,7 @@ def test_multi_pages(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_code, p
     .. include:: ../../partials/happy_path/test_200_get_nhsapp_accounts_multi_pages.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

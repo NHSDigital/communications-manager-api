@@ -19,7 +19,7 @@ def test_404_page_not_found(bearer_token_int, ods_code, page, correlation_id):
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_page_not_found.rst
     """
     resp = requests.get(f"{constants.INT_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

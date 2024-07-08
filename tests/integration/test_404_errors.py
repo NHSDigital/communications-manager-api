@@ -16,7 +16,7 @@ def test_404_not_found(bearer_token_int, request_path, correlation_id, method):
     .. include:: ../../partials/not_found/test_404_not_found.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "*/*",
         "Content-Type": "application/json"
