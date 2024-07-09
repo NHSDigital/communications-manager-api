@@ -1,7 +1,7 @@
 import pytest
 import os
 from lib import Assertions, Generators, Helper
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from notifications_python_client.notifications import NotificationsAPIClient
 
 

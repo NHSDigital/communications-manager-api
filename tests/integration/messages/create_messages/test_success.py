@@ -5,7 +5,7 @@ from lib import Assertions, Generators
 from lib.constants.constants import INT_URL, VALID_CONTENT_TYPE_HEADERS, VALID_ACCEPT_HEADERS, \
     VALID_NHS_NUMBER, VALID_DOB, VALID_ROUTING_PLAN_ID_INT
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.inttest
@@ -102,7 +102,7 @@ def test_201_message_request_idempotency(bearer_token_int):
     """
     data = Generators.generate_valid_create_message_body("int")
 
-    respOne = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+    resp_one = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         "Accept": "application/json",
         "Content-Type": "application/json"
@@ -111,11 +111,11 @@ def test_201_message_request_idempotency(bearer_token_int):
 
     time.sleep(5)
 
-    respTwo = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
+    resp_two = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         "Accept": "application/json",
         "Content-Type": "application/json"
         }, json=data
     )
 
-    Assertions.assert_messages_idempotency(respOne, respTwo)
+    Assertions.assert_messages_idempotency(resp_one, resp_two)

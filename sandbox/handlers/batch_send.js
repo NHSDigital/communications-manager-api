@@ -85,7 +85,7 @@ export async function batch_send(req, res, next) {
 
   // Note: the docker container uses node:12 which does not support optional chaining
   const odsCodes = messages.map((message) => {
-    if (message && message.originator) {
+    if (message?.originator) {
       return message.originator.odsCode;
     }
   });

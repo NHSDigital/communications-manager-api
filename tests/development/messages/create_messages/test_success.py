@@ -2,7 +2,7 @@ import requests
 import pytest
 import time
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 import lib.constants.constants as constants
 
@@ -103,7 +103,7 @@ def test_201_message_request_idempotency(nhsd_apim_proxy_url, bearer_token_inter
     """
     data = Generators.generate_valid_create_message_body("dev")
 
-    respOne = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp_one = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
@@ -112,11 +112,11 @@ def test_201_message_request_idempotency(nhsd_apim_proxy_url, bearer_token_inter
 
     time.sleep(5)
 
-    respTwo = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp_two = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
             "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
     )
 
-    Assertions.assert_messages_idempotency(respOne, respTwo)
+    Assertions.assert_messages_idempotency(resp_one, resp_two)

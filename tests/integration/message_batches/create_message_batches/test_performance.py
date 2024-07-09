@@ -4,7 +4,7 @@ import uuid
 from lib import Assertions, Generators
 from lib.constants.constants import NUM_MAX_ERRORS, INT_URL
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 NUM_MESSAGES = 50000
 CONTENT_TYPE = "application/json"

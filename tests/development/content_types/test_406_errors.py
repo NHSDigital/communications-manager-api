@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.constants import DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
 
 HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]

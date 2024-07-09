@@ -1,8 +1,8 @@
 import requests
 import pytest
 from lib.constants.constants import METHODS, VALID_ENDPOINTS
-from lib.fixtures import *
-from lib import Error_Handler
+from lib.fixtures import *  # NOSONAR
+from lib import error_handler
 
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 ACCEPT_HEADERS = [
@@ -40,6 +40,6 @@ def test_application_response_type(nhsd_apim_proxy_url, bearer_token_internal_de
         **accept_headers.get("headers")
     })
 
-    Error_Handler.handle_retry(resp)
+    error_handler.handle_retry(resp)
 
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")

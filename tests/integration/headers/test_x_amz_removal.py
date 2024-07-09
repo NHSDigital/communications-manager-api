@@ -3,7 +3,7 @@ import pytest
 
 from lib import Assertions
 from lib.constants.constants import VALID_ENDPOINTS, ORIGIN, METHODS, INT_URL
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.inttest

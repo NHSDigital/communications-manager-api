@@ -1,8 +1,8 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants.constants import *
-from lib.fixtures import *
+from lib.constants.constants import *  # NOSONAR
+from lib.fixtures import *  # NOSONAR
 
 POST_PATHS = ["/v1/ignore/i-dont-exist"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]

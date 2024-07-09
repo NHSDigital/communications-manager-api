@@ -47,8 +47,5 @@ export function hasValidGlobalTemplatePersonalisation(personalisation) {
     return false;
   }
 
-  if (personalisationFields[0] !== "body") {
-    return false;
-  }
-  return true;
+  return personalisationFields[0] == "body";
 }

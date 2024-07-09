@@ -6,7 +6,7 @@ from lib.constants.constants import INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
     INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 headers = {

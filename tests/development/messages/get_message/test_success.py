@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MESSAGES_ENDPOINT, MESSAGE_IDS, CHANNEL_TYPE, CHANNEL_STATUS
 

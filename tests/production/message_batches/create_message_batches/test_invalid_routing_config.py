@@ -4,7 +4,7 @@ import uuid
 from lib import Assertions, Generators
 from lib.constants.constants import PROD_URL, INVALID_ROUTING_PLAN_PROD
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.prodtest

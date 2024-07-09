@@ -17,7 +17,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append(
             {
                 "messageReference": str(uuid.uuid1()),
@@ -47,7 +47,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append(
             {
                 "messageReference": str(uuid.uuid1()),
@@ -77,7 +77,7 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
     reference = str(uuid.uuid1())
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append(
             {
                 "messageReference": reference,

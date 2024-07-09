@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib.constants.constants import METHODS, VALID_ENDPOINTS
-from lib import Error_Handler
+from lib import error_handler
 
 ACCEPT_HEADERS = [
     {
@@ -36,6 +36,6 @@ def test_application_response_type(nhsd_apim_proxy_url, accept_headers, method, 
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}",
                                      headers=accept_headers.get("headers"))
 
-    Error_Handler.handle_retry(resp)
+    error_handler.handle_retry(resp)
 
     assert resp.headers.get("Content-Type") == accept_headers.get("expect")
