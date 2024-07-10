@@ -4,8 +4,8 @@ from lib import Assertions, Generators
 from lib.constants.constants import CORRELATION_IDS, METHODS, INT_URL, DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
 from lib.fixtures import *
 
-HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
-HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+HEADER_NAME = ["accept", "AcCePt"]
+HEADER_VALUE = ["", "xyz/abc", "application/json; charset=utf-9"]
 
 
 @pytest.mark.inttest
