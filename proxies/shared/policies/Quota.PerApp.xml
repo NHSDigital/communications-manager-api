@@ -14,7 +14,7 @@
     <DisplayName>Quota.PerApp</DisplayName>
     <Interval>1</Interval>
     <TimeUnit>minute</TimeUnit>
-    <Allow count="1200"/>
+    <Allow count="15000"/>
     <AsynchronousConfiguration>
         <SyncMessageCount>50</SyncMessageCount>
     </AsynchronousConfiguration>
