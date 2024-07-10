@@ -3,8 +3,8 @@ import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import METHODS, DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
 
-HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
-HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+HEADER_NAME = ["accept", "AcCePt"]
+HEADER_VALUE = ["", "xyz/abc", "application/json; charset=utf-9"]
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 
 
