@@ -8,7 +8,7 @@ Server timeouts
     :noindex:
     :members:
 
-.. automodule:: sandbox.test_timeout_errors
+.. automodule:: sandbox.test_504_errors
     :noindex:
     :members: test_504_timeout, test_504_timeout_simulate, test_504_timeout_prefer, test_408_server_timeout_rethrown_504
 
@@ -16,6 +16,6 @@ Server timeouts
 Client timeouts
 ---------------
 
-.. automodule:: sandbox.test_timeout_errors
+.. automodule:: sandbox.test_408_errors
     :noindex:
     :members: test_408_timeout_prefer
