@@ -1,6 +1,4 @@
-"use strict";
-
-import { setup, start } from './app.js';
+import { setup, start } from './app';
 
 setup(process.env);
 

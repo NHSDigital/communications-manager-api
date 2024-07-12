@@ -4,8 +4,11 @@ export const write_log = (res, log_level, options = {}) => {
   if (log.getLevel() > log.levels[log_level.toUpperCase()]) {
     return
   }
+  let processedOptions;
   if (typeof options === "function") {
-    options = options()
+    processedOptions = options()
+  } else {
+    processedOptions = options
   }
   let log_line = {
     timestamp: Date.now(),
@@ -13,18 +16,24 @@ export const write_log = (res, log_level, options = {}) => {
     correlation_id: res.locals.correlation_id
   }
   if (typeof options === "object") {
-    options = Object.keys(options).reduce(function (obj, x) {
-      let val = options[x]
+    processedOptions = Object.keys(processedOptions).reduce((obj, x) => {
+      let val = processedOptions[x];
       if (typeof val === "function") {
-        val = val()
+        return {
+          ...obj,
+          val()
+        };
       }
-      obj[x] = val;
-      return obj;
+
+      return {
+        ...obj,
+        val
+      };
     }, {});
-    log_line = Object.assign(log_line, options)
+    log_line = Object.assign(log_line, processedOptions)
   }
-  if (Array.isArray(options)) {
-    log_line["log"] = { log: options.map(x => { return typeof x === "function" ? x() : x }) }
+  if (Array.isArray(processedOptions)) {
+    log_line["log"] = { log: processedOptions.map(x => { return typeof x === "function" ? x() : x }) }
   }
 
   log[log_level](JSON.stringify(log_line))
