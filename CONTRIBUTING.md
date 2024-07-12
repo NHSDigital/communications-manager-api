@@ -34,7 +34,7 @@ feature/CCM-1234_cicd-documentation
 
 Other branch prefixes that can be used are `chore`, and `fix`.
 
-The only merge strategy via Github is `Squash and merge`. If the merging is performed locally, every effort should be made to ensure only one commit is merged into the default branch. This is to keep a clean, concise history.
+The only merge strategy via Github is `Squash and merge`. If the merging is performed locally, every effort should be made to ensure only one commit is merged into the `release` branch. This is to keep a clean, concise history.
 
 ### Commit messages
 Commit messages should be formatted as follows:
