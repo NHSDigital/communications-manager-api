@@ -18,7 +18,7 @@ context.setVariable("error.header.Cache-Control", "no-cache, no-store, must-reva
 context.setVariable("response.header.X-Content-Type-Options", "nosniff");
 context.setVariable("error.header.X-Content-Type-Options", "nosniff");
 
-var backendCorrelationId = context.getVariable("backendCorrelationId");
+const backendCorrelationId = context.getVariable("backendCorrelationId");
 context.setVariable("response.header.X-Correlation-Id", backendCorrelationId);
 context.setVariable("error.header.X-Correlation-Id", backendCorrelationId);
 
