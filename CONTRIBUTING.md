@@ -16,17 +16,30 @@ so please explain why the changes need to be made (unless it is self-evident).
 * It is the responsibility of the author of the merge to ensure their merge is in a mergeable state.
 * It is the responsibility of the maintainers to ensure the merge process is unambiguous and automated where possible.
 
-### Branch naming
-Branch names should be of the format:
+### Branches
 
-`apm-nnn-short-issue-description`
+All changes are created on a short lived branch specifically for that change. Once ready, the branch must be merged into the default branch via a Pull Request.
 
-Multiple branches are permitted for the same ticket.
+Branch names must follow the format below:
+
+```
+feature/${jira-ticket-number}_${precis-of-branch-purpose}
+```
+
+e.g.
+
+```
+feature/CCM-1234_cicd-documentation
+```
+
+Other branch prefixes that can be used are `chore`, and `fix`.
+
+The only merge strategy via Github is `Squash and merge`. If the merging is performed locally, every effort should be made to ensure only one commit is merged into the default branch. This is to keep a clean, concise history.
 
 ### Commit messages
 Commit messages should be formatted as follows:
 ```
-APM-NNN Summary of changes
+CCM-1234: Summary of changes
 
 Longer description of changes if explaining rationale is necessary,
 limited to 80 columns and spanning as many lines as you need.
