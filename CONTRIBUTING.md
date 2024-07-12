@@ -18,7 +18,7 @@ so please explain why the changes need to be made (unless it is self-evident).
 
 ### Branches
 
-All changes are created on a short lived branch specifically for that change. Once ready, the branch must be merged into the default branch via a Pull Request.
+All changes are created on a short lived branch specifically for that change. Once ready, the branch must be merged into the `release` branch via a Pull Request.
 
 Branch names must follow the format below:
 
