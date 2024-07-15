@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 ENDPOINT = "/v1/ignore/i-dont-exist"
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]

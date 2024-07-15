@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import CORRELATION_IDS, METHODS, INT_URL, DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 HEADER_NAME = ["accept", "AcCePt"]
 HEADER_VALUE = ["", "xyz/abc", "application/json; charset=utf-9"]

@@ -8,7 +8,7 @@ from lib.constants.constants import MISSING_TEMPLATE_ROUTING_PLANS
 from lib.constants.constants import INVALID_ROUTING_PLAN
 from lib.constants.constants import CORRELATION_IDS
 from lib.constants.constants import INT_URL
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 headers = {
     "Accept": "application/json",

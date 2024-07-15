@@ -4,7 +4,7 @@ import uuid
 from lib import Assertions, Generators
 from lib.constants.constants import PROD_URL, NUM_MAX_ERRORS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 NUM_MESSAGES = 50000
 
@@ -18,7 +18,7 @@ def test_create_messages_large_invalid_payload(bearer_token_prod):
 
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {
@@ -47,7 +47,7 @@ def test_create_messages_large_not_unique_payload(bearer_token_prod):
     # around 50k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
     reference = str(uuid.uuid1())
-    for i in range(0, NUM_MESSAGES):
+    for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
             "messageReference": reference,
             "recipient": {

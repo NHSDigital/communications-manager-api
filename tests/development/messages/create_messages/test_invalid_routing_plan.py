@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.constants.constants import INVALID_ROUTING_PLAN
 from lib.constants.constants import DUPLICATE_ROUTING_PLAN_TEMPLATE_ID

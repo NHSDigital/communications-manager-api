@@ -1,8 +1,8 @@
 import requests
 import pytest
-from lib import Assertions, Error_Handler
+from lib import Assertions, error_handler
 from lib.constants.constants import INT_URL, METHODS, VALID_ENDPOINTS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 CORRELATION_IDS = [None, "a17669c8-219a-11ee-ba86-322b0407c489"]
 
@@ -20,6 +20,6 @@ def test_request_with_x_correlation_id(bearer_token_int, correlation_id, method,
         "x-correlation-id": correlation_id
     })
 
-    Error_Handler.handle_retry(resp)
+    error_handler.handle_retry(resp)
 
     Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)

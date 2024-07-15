@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import INT_URL, METHODS, CORRELATION_IDS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 ENDPOINT = "/v1/ignore/i-dont-exist"
 

@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.constants import VALID_ENDPOINTS
 
 CONTENT_TYPE_NAME = ["content-type", "conTENT_tYpe"]

@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions
 from lib.constants.constants import INT_URL, VALID_ENDPOINTS, ORIGIN
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 TEST_METHODS = ["get", "post", "put", "delete"]

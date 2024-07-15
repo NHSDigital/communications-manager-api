@@ -6,7 +6,7 @@ import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, DUPLICATE_PROPERTIES_PATHS, TOO_FEW_PROPERTIES_PATHS, MESSAGE_BATCH_REFERENCE_PATH, \
     FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH, FIRST_MESSAGE_REFERENCE_PATH, MESSAGE_BATCHES_ENDPOINT, ROUTING_PLAN_ID_PATH
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"

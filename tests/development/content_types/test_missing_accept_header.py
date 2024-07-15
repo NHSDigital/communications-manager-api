@@ -1,7 +1,7 @@
 import requests
 import pytest
-from lib import Assertions, Generators, Error_Handler
-from lib.fixtures import *
+from lib import Assertions, Generators, error_handler
+from lib.fixtures import *  # NOSONAR
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
@@ -32,7 +32,7 @@ def test_missing_accept_header(
         json=data
     )
 
-    Error_Handler.handle_retry(resp)
+    error_handler.handle_retry(resp)
 
     Assertions.assert_201_response(
         resp, data["data"]["attributes"]["messageBatchReference"], data["data"]["attributes"]["routingPlanId"]

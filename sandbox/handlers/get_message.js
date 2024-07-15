@@ -25,6 +25,5 @@ export async function get_message(req, res, next) {
       return
     }
     res.type('json').status(200).send(fileContent)
-    return
   });
 }

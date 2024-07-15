@@ -2,7 +2,7 @@ function createErrorObject(code, title, detail, pointer, links) {
     return {
         "id": messageId + "." + errors.length,
         "code": code,
-        "links": Object.assign({}, { "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager" }, links),
+        "links": Object.assign({}, { "about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager" }, links),  // NOSONAR
         "status": "400",
         "title": title,
         "detail": detail,

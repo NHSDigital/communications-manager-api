@@ -1,5 +1,5 @@
 from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
-from .error_handler import Error_Handler
+from .error_handler import error_handler
 import json
 from urllib.parse import urlparse, parse_qs
 
@@ -7,7 +7,7 @@ from urllib.parse import urlparse, parse_qs
 class Assertions():
     @staticmethod
     def assert_201_response(resp, message_batch_reference, routing_plan_id):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
 
@@ -29,7 +29,7 @@ class Assertions():
 
     @staticmethod
     def assert_200_response_nhsapp_accounts(resp, base_url, ods_code, page):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
 
@@ -73,12 +73,12 @@ class Assertions():
 
     @staticmethod
     def assert_200_response_message(resp, base_url):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
 
         response = resp.json().get("data")
-        messageStatus = response.get("attributes").get("messageStatus")
+        message_status = response.get("attributes").get("messageStatus")
 
         assert response.get("type") == "Message"
         assert response.get("id") is not None
@@ -96,7 +96,7 @@ class Assertions():
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
-        if messageStatus != "pending_enrichment":
+        if message_status != "pending_enrichment":
             assert response.get("attributes").get("metadata") is not None
             assert response.get("attributes").get("metadata") != ""
             assert response.get("attributes").get("metadata")[0].get("queriedAt") is not None
@@ -106,7 +106,7 @@ class Assertions():
             assert response.get("attributes").get("metadata")[0].get("version") is not None
             assert response.get("attributes").get("metadata")[0].get("version") != ""
             assert response.get("attributes").get("metadata")[0].get("labels") != ""
-        if messageStatus == "sending" or messageStatus == "delivered":
+        if message_status == "sending" or message_status == "delivered":
             assert response.get("attributes").get("channels") is not None
             assert response.get("attributes").get("channels")[0].get("type") is not None
             assert response.get("attributes").get("channels")[0].get("type") != ""
@@ -122,26 +122,26 @@ class Assertions():
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
 
     @staticmethod
-    def assert_get_message_status(resp, status, failureReason=None):
+    def assert_get_message_status(resp, status, failure_reason=None):
         response = resp.json().get("data")
         assert response.get("attributes").get("messageStatus") == status
         if status == "failed":
-            assert response.get("attributes").get("messageStatusDescription") == failureReason
+            assert response.get("attributes").get("messageStatusDescription") == failure_reason
 
     @staticmethod
-    def assert_get_message_response_channels(resp, channelType, channelStatus):
+    def assert_get_message_response_channels(resp, channel_type, channel_status):
         response = resp.json().get("data")
         channels = response.get("attributes").get("channels")
         for c in range(len(channels)):
-            assert response.get("attributes").get("channels")[c].get("type") in channelType
+            assert response.get("attributes").get("channels")[c].get("type") in channel_type
             assert response.get("attributes").get("channels")[c].get("retryCount") == 1
-            assert response.get("attributes").get("channels")[c].get("channelStatus") in channelStatus
+            assert response.get("attributes").get("channels")[c].get("channelStatus") in channel_status
             assert response.get("attributes").get("channels")[c].get("timestamps") is not None
             assert response.get("attributes").get("channels")[c].get("routingPlan") is not None
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
 
@@ -163,7 +163,7 @@ class Assertions():
 
     @staticmethod
     def assert_200_valid_message_id_response_body(resp, message_id, url):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
 
@@ -206,47 +206,47 @@ class Assertions():
                 break
 
     @staticmethod
-    def assert_message_batches_idempotency(respOne, respTwo):
-        Error_Handler.handle_retry(respOne)
-        Error_Handler.handle_retry(respTwo)
+    def assert_message_batches_idempotency(resp_one, resp_two):
+        error_handler.handle_retry(resp_one)
+        error_handler.handle_retry(resp_two)
 
-        assert respOne.status_code == 201
-        assert respTwo.status_code == 201
+        assert resp_one.status_code == 201
+        assert resp_two.status_code == 201
 
-        responseOne = respOne.json().get("data")
-        responseTwo = respTwo.json().get("data")
+        response_one = resp_one.json().get("data")
+        response_two = resp_two.json().get("data")
 
-        assert responseOne.get("id") == responseTwo.get("id")
+        assert response_one.get("id") == response_two.get("id")
 
     @staticmethod
-    def assert_messages_idempotency(respOne, respTwo):
-        Error_Handler.handle_retry(respOne)
-        Error_Handler.handle_retry(respTwo)
+    def assert_messages_idempotency(resp_one, resp_two):
+        error_handler.handle_retry(resp_one)
+        error_handler.handle_retry(resp_two)
 
-        assert respOne.status_code == 201
-        assert respTwo.status_code == 201
+        assert resp_one.status_code == 201
+        assert resp_two.status_code == 201
 
-        responseOne = respOne.json().get("data")
-        responseTwo = respTwo.json().get("data")
+        response_one = resp_one.json().get("data")
+        response_two = resp_two.json().get("data")
 
-        assert responseOne.get("id") == responseTwo.get("id")
-        assert (responseOne.get("attributes").get("messageStatus") ==
-                responseTwo.get("attributes").get("messageStatus"))
-        assert (responseOne.get("attributes").get("timestamps").get("created") ==
-                responseTwo.get("attributes").get("timestamps").get("created"))
-        assert (responseOne.get("attributes").get("routingPlan").get("id") ==
-                responseTwo.get("attributes").get("routingPlan").get("id"))
-        assert (responseOne.get("attributes").get("routingPlan").get("version") ==
-                responseTwo.get("attributes").get("routingPlan").get("version"))
+        assert response_one.get("id") == response_two.get("id")
+        assert (response_one.get("attributes").get("messageStatus") ==
+                response_one.get("attributes").get("messageStatus"))
+        assert (response_one.get("attributes").get("timestamps").get("created") ==
+                response_two.get("attributes").get("timestamps").get("created"))
+        assert (response_one.get("attributes").get("routingPlan").get("id") ==
+                response_two.get("attributes").get("routingPlan").get("id"))
+        assert (response_one.get("attributes").get("routingPlan").get("version") ==
+                response_two.get("attributes").get("routingPlan").get("version"))
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
         if code == 429:
-            Error_Handler.handle_504_retry(resp)
+            error_handler.handle_504_retry(resp)
         elif code == 504:
-            Error_Handler.handle_429_retry(resp)
+            error_handler.handle_429_retry(resp)
         else:
-            Error_Handler.handle_retry(resp)
+            error_handler.handle_retry(resp)
 
         assert resp.status_code == code, f"Response: {resp.status_code}: {resp.text}"
 
@@ -289,7 +289,7 @@ class Assertions():
 
     @staticmethod
     def assert_cors_response(resp, website):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
         assert resp.headers.get("Access-Control-Allow-Origin") == website
@@ -300,7 +300,7 @@ class Assertions():
 
     @staticmethod
     def assert_cors_headers(resp, website):
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
 
         assert resp.headers.get("Access-Control-Allow-Origin") == website
         assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS
