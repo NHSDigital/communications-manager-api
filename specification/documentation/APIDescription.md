@@ -196,4 +196,22 @@ The channels can have the following supplier statuses:
 * `notified` - a push notification is reported as having been successfully relayed to one or more devices
 * `received` - the request has been received by the supplier and is queued to be processed
 
-Statuses for other suppliers will be added in future.
+### GOV.UK Notify (Email/SMS)
+
+* `delivered` - the message has been successfully delivered to the user
+* `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
+* `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
+
+### GOV.UK Notify (Letters)
+
+* `accepted` - GOV.UK Notify has sent the letter to the provider to be printed
+* `received` - the provider has printed and dispatched the letter
+* `cancelled` - sending cancelled, the letter will not be printed or dispatched
+* `pending_virus_check` - GOV.UK Notify has not completed a virus scan of the precompiled letter file
+* `virus_scan_failed` - GOV.UK Notify found a potential virus in the precompiled letter file
+* `validation_failed` - content in the precompiled letter file is outside the printable area
+* `technical_failure` - GOV.UK Notify had an unexpected error while sending the letter to their printing provider
+* `permanent_failure` - the provider cannot print the letter, the letter will not be dispatched
+
+Presently there is no callback integration for HH, MBA, or Synertec.
