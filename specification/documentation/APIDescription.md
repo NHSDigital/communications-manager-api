@@ -161,7 +161,7 @@ We will send your API key in the `x-api-key header`. Your service should respond
 * `401 Unauthorized` if the API key is not received
 * `401 Unauthorized` if the API key is invalid
 
-We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from an authorized sender. This can be achieved by passing in the body crossed with the applicationID and apikey e.g. hmacsha256(body, 'applicationId.apiKey'). If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
+We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from an authorized sender. This can be achieved by passing in the body crossed with the applicationID and apikey e.g. `hmacsha256(body, 'applicationId.apiKey')`. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
 
 Every request includes an `idempotencyKey` field located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
 
