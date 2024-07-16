@@ -213,5 +213,3 @@ The channels can have the following supplier statuses:
 * `validation_failed` - content in the precompiled letter file is outside the printable area
 * `technical_failure` - GOV.UK Notify had an unexpected error while sending the letter to their printing provider
 * `permanent_failure` - the provider cannot print the letter, the letter will not be dispatched
-
-Presently there is no callback integration for HH, MBA, or Synertec.
