@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions
 from lib.constants.constants import INT_URL, VALID_ENDPOINTS, ORIGIN
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 TEST_METHODS = ["get", "post", "put", "delete"]
@@ -16,7 +16,7 @@ def test_cors_options(bearer_token_int, method, endpoints):
     .. include :: ../../partials/headers/test_cors_options.rst
     """
     resp = requests.options(f"{INT_URL}{endpoints}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "Accept": "*/*",
         "Origin": ORIGIN,
         "Access-Control-Request-Method": method
@@ -32,7 +32,7 @@ def test_cors(bearer_token_int, method, endpoints):
     .. include :: ../../partials/headers/test_cors.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "Accept": "*/*",
         "Origin": ORIGIN
     })

@@ -4,7 +4,7 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     VALID_MULTI_PAGE_NUMBERS, INVALID_ODS_CODES, CORRELATION_IDS, LIVE_ODS_CODES, INVALID_PAGES
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.devtest
@@ -16,7 +16,7 @@ def test_400_missing_ods_code(nhsd_apim_proxy_url, bearer_token_internal_dev, pa
     .. include:: ../../partials/invalid_ods_code/test_400_nhsapp_accounts_missing_ods_code.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -40,7 +40,7 @@ def test_400_invalid_ods_code(nhsd_apim_proxy_url, bearer_token_internal_dev, od
     .. include:: ../../partials/invalid_ods_code/test_400_nhsapp_accounts_invalid_ods_code.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -65,7 +65,7 @@ def test_400_invalid_page(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_co
     .. include:: ../../partials/invalid_page/test_400_nhsapp_accounts_invalid_page.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

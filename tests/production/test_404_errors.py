@@ -1,8 +1,8 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants.constants import *
-from lib.fixtures import *
+from lib.constants.constants import *  # NOSONAR
+from lib.fixtures import *  # NOSONAR
 
 POST_PATHS = ["/v1/ignore/i-dont-exist"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
@@ -16,7 +16,7 @@ def test_404_not_found(bearer_token_prod, request_path, method):
     .. include:: ../../partials/not_found/test_404_not_found.rst
     """
     resp = getattr(requests, method)(f"{PROD_URL}{request_path}", headers={
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
         "Accept": "*/*",
         "Content-Type": "application/json"
     })

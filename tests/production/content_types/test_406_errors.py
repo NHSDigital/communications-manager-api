@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import METHODS, PROD_URL, VALID_ENDPOINTS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.prodtest
@@ -14,7 +14,7 @@ def test_406(bearer_token_prod, method, endpoints):
     """
     resp = getattr(requests, method)(f"{PROD_URL}/{endpoints}", headers={
         "Accept": "invalid",
-        "Authorization": bearer_token_prod,
+        "Authorization": bearer_token_prod.value,
     })
 
     Assertions.assert_error_with_optional_correlation_id(

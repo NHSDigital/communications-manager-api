@@ -1,11 +1,11 @@
 import lib.constants.constants as constants
 
 
-class Error_Handler():
+class error_handler():
     @staticmethod
     def handle_retry(resp):
-        Error_Handler.handle_429_retry(resp)
-        Error_Handler.handle_504_retry(resp)
+        error_handler.handle_429_retry(resp)
+        error_handler.handle_504_retry(resp)
 
     @staticmethod
     def handle_429_retry(resp):

@@ -1,7 +1,7 @@
 import pytest
 import os
 from lib import Assertions, Generators, Helper
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from notifications_python_client.notifications import NotificationsAPIClient
 
 
@@ -13,7 +13,7 @@ def test_letter_end_to_end_internal_dev(nhsd_apim_proxy_url, bearer_token_intern
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        {"Authorization": bearer_token_internal_dev},
+        {"Authorization": bearer_token_internal_dev.value},
         Generators.generate_send_message_body("letter", "internal-dev"),
     )
 
@@ -21,7 +21,7 @@ def test_letter_end_to_end_internal_dev(nhsd_apim_proxy_url, bearer_token_intern
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth={"Authorization": bearer_token_internal_dev},
+        auth={"Authorization": bearer_token_internal_dev.value},
         message_id=message_id,
         end_state="sending",
         poll_time=595,
@@ -43,7 +43,7 @@ def test_letter_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
     resp = Helper.send_single_message(
         nhsd_apim_proxy_url,
-        {"Authorization": bearer_token_internal_dev},
+        {"Authorization": bearer_token_internal_dev.value},
         Generators.generate_send_message_body("letter", "internal-qa"),
     )
 
@@ -51,7 +51,7 @@ def test_letter_end_to_end_uat(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
     Helper.poll_get_message(
         url=nhsd_apim_proxy_url,
-        auth={"Authorization": bearer_token_internal_dev},
+        auth={"Authorization": bearer_token_internal_dev.value},
         message_id=message_id,
         end_state="sending",
         poll_time=595,

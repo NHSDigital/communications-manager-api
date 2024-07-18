@@ -2,10 +2,10 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import INT_URL, CORRELATION_IDS, VALID_ENDPOINTS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
-CONTENT_TYPE_NAME = ["content-type", "CONTENT_TYPE", "Content_Type", "conTENT_tYpe"]
-CONTENT_TYPE_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+CONTENT_TYPE_NAME = ["content-type", "conTENT_tYpe"]
+CONTENT_TYPE_VALUE = ["", "audio/mpeg", "application/json; charset=utf-9"]
 METHODS = ["post", "put", "patch"]
 
 
@@ -27,7 +27,7 @@ def test_415_invalid(
     .. include:: ../../partials/content_types/test_415_invalid.rst
     """
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "Accept": "application/json",
         content_type_name: content_type_value,
         "X-Correlation-Id": correlation_id

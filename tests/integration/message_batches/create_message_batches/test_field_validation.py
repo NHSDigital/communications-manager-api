@@ -6,7 +6,7 @@ import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, DUPLICATE_PROPERTIES_PATHS, TOO_FEW_PROPERTIES_PATHS, MESSAGE_BATCH_REFERENCE_PATH, \
     FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH, FIRST_MESSAGE_REFERENCE_PATH, MESSAGE_BATCHES_ENDPOINT, ROUTING_PLAN_ID_PATH
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
@@ -24,7 +24,7 @@ def test_invalid_body(bearer_token_int, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         },
         data="{}SF{}NOTVALID",
     )
@@ -52,7 +52,7 @@ def test_property_missing(bearer_token_int, property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         },
         json=Permutations.new_dict_without_key(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -83,7 +83,7 @@ def test_data_null(bearer_token_int, property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         },
         json=Permutations.new_dict_with_null_key(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -114,7 +114,7 @@ def test_data_invalid(bearer_token_int, property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -151,7 +151,7 @@ def test_data_duplicate(bearer_token_int, property, pointer, correlation_id):
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         },
         json=data,
     )
@@ -179,7 +179,7 @@ def test_data_too_few_items(bearer_token_int, property, pointer, correlation_id)
         headers={
             **headers,
             "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int
+            "Authorization": bearer_token_int.value
         },
         json=Permutations.new_dict_with_new_value(
             Generators.generate_valid_create_message_batch_body("int"),
@@ -206,7 +206,7 @@ def test_invalid_nhs_number(bearer_token_int, nhs_number, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -245,7 +245,7 @@ def test_invalid_dob(bearer_token_int, dob, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -283,7 +283,7 @@ def test_invalid_routing_plan(bearer_token_int, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -321,7 +321,7 @@ def test_invalid_message_batch_reference(bearer_token_int, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -359,7 +359,7 @@ def test_invalid_message_reference(bearer_token_int, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -398,7 +398,7 @@ def test_blank_value_under_messages(bearer_token_int, invalid_value, correlation
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -429,7 +429,7 @@ def test_null_value_under_messages(bearer_token_int, correlation_id):
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -461,7 +461,7 @@ def test_invalid_personalisation(bearer_token_int, correlation_id, personalisati
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -500,7 +500,7 @@ def test_null_personalisation(bearer_token_int, correlation_id, personalisation)
     resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int
+        "Authorization": bearer_token_int.value
     }, json={
         "data": {
             "type": "MessageBatch",

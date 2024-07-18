@@ -1,7 +1,7 @@
 import requests
 import pytest
-from lib import Error_Handler, Assertions
-from lib.fixtures import *
+from lib import error_handler, Assertions
+from lib.fixtures import *  # NOSONAR
 from lib.constants.constants import VALID_ENDPOINTS
 
 
@@ -26,10 +26,10 @@ def test_request_with_x_correlation_id(
     .. include:: ../../partials/headers/test_request_with_x_correlation_id.rst
     """
     resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "x-correlation-id": correlation_id
     })
 
-    Error_Handler.handle_retry(resp)
+    error_handler.handle_retry(resp)
 
     Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)

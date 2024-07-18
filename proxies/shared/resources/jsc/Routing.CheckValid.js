@@ -12,7 +12,7 @@ const isSandbox = /sandbox/.test(context.getVariable("request.header.host"));
 
 const validPaths = [
   {
-      match: /^\/v1\/message\-batches$/,
+      match: /^\/v1\/message-batches$/,
       methods: ['post']
   },
   {

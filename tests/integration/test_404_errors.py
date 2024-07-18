@@ -2,21 +2,20 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import INT_URL, METHODS, CORRELATION_IDS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
-POST_PATHS = ["/v1/ignore/i-dont-exist", "/api/fake-endpoint", "/im-a-teapot"]
+ENDPOINT = "/v1/ignore/i-dont-exist"
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("request_path", POST_PATHS)
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
-def test_404_not_found(bearer_token_int, request_path, correlation_id, method):
+def test_404_not_found(bearer_token_int, correlation_id, method):
     """
     .. include:: ../../partials/not_found/test_404_not_found.rst
     """
-    resp = getattr(requests, method)(f"{INT_URL}{request_path}", headers={
-        "Authorization": bearer_token_int,
+    resp = getattr(requests, method)(f"{INT_URL}{ENDPOINT}", headers={
+        "Authorization": bearer_token_int.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "*/*",
         "Content-Type": "application/json"

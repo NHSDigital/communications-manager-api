@@ -2,7 +2,7 @@ import requests
 import pytest
 import time
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 import lib.constants.constants as constants
 
@@ -15,7 +15,7 @@ def test_201_message_valid_accept_headers(nhsd_apim_proxy_url, bearer_token_inte
     """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -32,7 +32,7 @@ def test_201_message_valid_content_type_headers(nhsd_apim_proxy_url, bearer_toke
     """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": content_type
         }, json=data
@@ -50,7 +50,7 @@ def test_201_message_valid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal
     data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -69,7 +69,7 @@ def test_201_message_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, d
     data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -87,7 +87,7 @@ def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
     data["data"]["attributes"]["recipient"].pop("dateOfBirth")
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -103,8 +103,8 @@ def test_201_message_request_idempotency(nhsd_apim_proxy_url, bearer_token_inter
     """
     data = Generators.generate_valid_create_message_body("dev")
 
-    respOne = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+    resp_one = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
@@ -112,11 +112,11 @@ def test_201_message_request_idempotency(nhsd_apim_proxy_url, bearer_token_inter
 
     time.sleep(5)
 
-    respTwo = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev,
+    resp_two = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
     )
 
-    Assertions.assert_messages_idempotency(respOne, respTwo)
+    Assertions.assert_messages_idempotency(resp_one, resp_two)

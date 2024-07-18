@@ -4,7 +4,7 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     LIVE_ODS_CODES, CORRELATION_IDS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 REPORT_NOT_FOUND_PAGE_NUMBERS = [1000, 2000, 3000]
 NOT_FOUND_ODS_CODE = 'T00404'
@@ -20,7 +20,7 @@ def test_404_page_not_found(nhsd_apim_proxy_url, bearer_token_internal_dev, ods_
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_page_not_found.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
@@ -44,7 +44,7 @@ def test_404_report_not_found(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_report_not_found.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

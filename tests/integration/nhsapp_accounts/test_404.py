@@ -4,7 +4,7 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     LIVE_ODS_CODES, CORRELATION_IDS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 REPORT_NOT_FOUND_PAGE_NUMBERS = [1000, 2000, 3000]
 
@@ -19,7 +19,7 @@ def test_404_page_not_found(bearer_token_int, ods_code, page, correlation_id):
     .. include:: ../../partials/not_found/test_404_nhsapp_accounts_page_not_found.rst
     """
     resp = requests.get(f"{constants.INT_URL}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={

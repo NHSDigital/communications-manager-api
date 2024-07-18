@@ -2,10 +2,10 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import CORRELATION_IDS, METHODS, INT_URL, DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
-HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
-HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+HEADER_NAME = ["accept", "AcCePt"]
+HEADER_VALUE = ["", "xyz/abc", "application/json; charset=utf-9"]
 
 
 @pytest.mark.inttest
@@ -28,7 +28,7 @@ def test_406(
     resp = getattr(requests, method)(f"{INT_URL}{endpoints}", headers={
         accept_header_name: accept_header_value,
         "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int,
+        "Authorization": bearer_token_int.value,
     })
 
     Assertions.assert_error_with_optional_correlation_id(

@@ -23,7 +23,7 @@ properties:
       channelStatus:
         description: The current status of this channel at the time this response was generated.
         $ref: ../enums/ChannelStatus.yaml
-      messageStatusDescription:
+      channelStatusDescription:
         type: string
         description: If there is extra information associated with the status of this channel, it is provided here.
         example: ""

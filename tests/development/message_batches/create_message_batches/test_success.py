@@ -2,7 +2,7 @@ import requests
 import pytest
 import time
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
@@ -19,7 +19,7 @@ def test_201_message_batch_valid_accept_headers(
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": accept_headers,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -44,7 +44,7 @@ def test_201_message_batch_valid_content_type_headers(
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": content_type,
         },
@@ -73,7 +73,7 @@ def test_201_message_batch_valid_nhs_number(
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -98,7 +98,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -122,7 +122,7 @@ def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -145,10 +145,10 @@ def test_201_message_batches_request_idempotency(
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 
-    respOne = requests.post(
+    resp_one = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
@@ -157,14 +157,14 @@ def test_201_message_batches_request_idempotency(
 
     time.sleep(5)
 
-    respTwo = requests.post(
+    resp_two = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
-            "Authorization": bearer_token_internal_dev,
+            "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
         },
         json=data,
     )
 
-    Assertions.assert_message_batches_idempotency(respOne, respTwo)
+    Assertions.assert_message_batches_idempotency(resp_one, resp_two)

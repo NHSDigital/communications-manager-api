@@ -4,7 +4,7 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     SINGLE_PAGE_ODS_CODES, CORRELATION_IDS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 BAD_GATEWAY_ODS_CODE = 'T00401'  # The mock for the NHS App API will return a 401 should cause the BE to return a 502
 
@@ -17,7 +17,7 @@ def test_502_bad_gateway(nhsd_apim_proxy_url, bearer_token_internal_dev, correla
     .. include:: ../../partials/bad_gatway/test_502_bad_gateway.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev,
+        "Authorization": bearer_token_internal_dev.value,
         "X-Correlation-Id": correlation_id,
         "Accept": "application/vnd.api+json"
     }, params={
