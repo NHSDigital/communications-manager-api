@@ -1,5 +1,3 @@
-"use strict";
-
 import express from "express";
 import log from "loglevel";
 import * as handlers from "./handlers/index.js";
@@ -7,8 +5,7 @@ import * as handlers from "./handlers/index.js";
 const app = express();
 app.disable("x-powered-by");
 
-function setup(options) {
-    options = options || {};
+function setup(options = {}) {
     app.locals.app_name = options.APP_NAME || 'communications-manager';
     app.locals.version_info = JSON.parse(options.VERSION_INFO || '{}');
     log.setLevel(options.LOG_LEVEL || "info");
@@ -23,9 +20,8 @@ function setup(options) {
     }));
 }
 
-function start(options) {
-    options = options || {};
-    let server = app.listen(options.PORT || 9000, () => {
+function start(options = {}) {
+    const server = app.listen(options.PORT || 9000, () => {
         log.info(JSON.stringify({
             timestamp: Date.now(),
             level: "info",
@@ -59,8 +55,8 @@ function after_request(req, res, next) {
         // don't log ping / health by default
         return next();
     }
-    let finished_at = Date.now();
-    let log_entry = {
+    const finished_at = Date.now();
+    const log_entry = {
         timestamp: finished_at,
         level: "info",
         app: app.locals.app_name,
@@ -90,7 +86,7 @@ function after_request(req, res, next) {
     log.info(JSON.stringify(log_entry));
     
     next();
-
+    return undefined;
 }
 
 function on_error(err, req, res, next) {
@@ -102,7 +98,7 @@ function on_error(err, req, res, next) {
             stack: err.stack
         }
     }
-    let finished_at = Date.now();
+    const finished_at = Date.now();
     log.error(JSON.stringify({
         timestamp: finished_at,
         level: "error",

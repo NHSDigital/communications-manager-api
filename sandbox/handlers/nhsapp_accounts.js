@@ -2,13 +2,13 @@ import * as  fs from 'fs'
 import { sendError } from './utils.js'
 
 const paginationOdsCode = 'T00001';
-const odsCodeRegex = new RegExp('^[A-Za-z]\\d{5}$|^[A-Za-z]\\d[A-Za-z]\\d[A-Za-z]$')
+const odsCodeRegex = /^[A-Za-z]\d{5}$|^[A-Za-z]\d[A-Za-z]\d[A-Za-z]$/
 const badGatewayOdsCode = 'T00502'; // simulates something going wrong between the BE and the NHS APP API'
 const notFoundOdsCode = 'T00404'; // valid format but no data stored against it
 const tooManyRequestsOdsCode = 'T00429';
 
 export async function nhsapp_accounts(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
+  if (req.headers.authorization === "banned") {
     sendError(
       res,
       403,
@@ -55,7 +55,7 @@ export async function nhsapp_accounts(req, res, next) {
   if (req.query.page) {
     const pageNumber = Number(req.query.page)
 
-    if (isNaN(pageNumber) || pageNumber <= 0) {
+    if (Number.isNaN(pageNumber) || pageNumber <= 0) {
       sendError(res, 400, 'page must be a positive non-zero integer')
       next()
       return;

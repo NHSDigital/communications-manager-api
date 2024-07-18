@@ -1,17 +1,17 @@
 import request from "supertest";
-import { setup } from './helpers.js';
 import * as uuid from 'uuid';
+import { setup } from './helpers.js';
 
 describe('backend_408', () => {
   let env;
   let server;
 
-  before(function () {
+  beforeEach(() => {
     env = process.env;
     server = setup()
   });
 
-  after(function () {
+  afterEach(() => {
     process.env = env;
     server.close();
   });

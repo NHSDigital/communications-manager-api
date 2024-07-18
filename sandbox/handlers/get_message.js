@@ -2,13 +2,13 @@ import * as  fs from 'fs'
 import { sendError, write_log } from './utils.js'
 
 export async function get_message(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
+  if (req.headers.authorization === "banned") {
     sendError(res, 403, "Request rejected because client service ban is in effect");
     next();
     return;
   }
 
-  const messageId = req.params.messageId;
+  const { messageId } = req.params;
 
   fs.readFile(`./messages/${messageId}.json`, 'utf8', (err, fileContent) => {
     if (err) {
@@ -25,6 +25,5 @@ export async function get_message(req, res, next) {
       return
     }
     res.type('json').status(200).send(fileContent)
-    return
   });
 }

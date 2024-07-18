@@ -20,7 +20,7 @@ import {
 
 export async function batch_send(req, res, next) {
   const { headers, body } = req;
-  if (headers["authorization"] === "banned") {
+  if (headers.authorization === "banned") {
     sendError(
       res,
       403,
@@ -36,14 +36,14 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  const data = body.data;
+  const { data } = body;
   if (!data) {
     sendError(res, 400, "Missing request body data");
     next();
     return;
   }
 
-  const type = data.type;
+  const { type, attributes } = data;
   if (!type) {
     sendError(res, 400, "Missing request body data type");
     next();
@@ -56,14 +56,13 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  const attributes = data.attributes;
   if (!attributes) {
     sendError(res, 400, "Missing request body data attributes");
     next();
     return;
   }
 
-  const routingPlanId = attributes.routingPlanId;
+  const { routingPlanId, messages } = attributes;
   if (!routingPlanId) {
     sendError(res, 400, "Missing routingPlanId");
     next();
@@ -76,7 +75,6 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  const messages = attributes.messages;
   if (!Array.isArray(messages)) {
     sendError(res, 400, "Missing messages array");
     next();
@@ -84,12 +82,14 @@ export async function batch_send(req, res, next) {
   }
 
   // Note: the docker container uses node:12 which does not support optional chaining
-  const odsCodes = messages.map((message) => {
-    if (message && message.originator) {
-      return message.originator.odsCode;
-    }
-  });
-  if (odsCodes.includes(undefined) && req.headers["authorization"] === noDefaultOdsClientAuth) {
+  const odsCodes = messages.map((message) => message && message.originator ? message.originator.odsCode : undefined
+  );
+//  const odsCodes = messages.map((message) => {
+//    if (message && message.originator) {
+//      return message.originator.odsCode;
+//    }
+//  });
+  if (odsCodes.includes(undefined) && req.headers.authorization === noDefaultOdsClientAuth) {
     sendError(
       res,
       400,
@@ -99,7 +99,7 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  if (odsCodes.filter((o) => o !== undefined).length > 0 && req.headers["authorization"] === noOdsChangeClientAuth) {
+  if (odsCodes.filter((o) => o !== undefined).length > 0 && req.headers.authorization === noOdsChangeClientAuth) {
     sendError(
       res,
       400,

@@ -1,5 +1,3 @@
-"use strict";
-
 export { status } from "./status.js"
 export { batch_send } from "./batch_send.js"
 export { messages } from "./messages.js"

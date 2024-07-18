@@ -17,23 +17,20 @@ export const write_log = (res, log_level, options = {}) => {
   }
   if (typeof options === "object") {
     processedOptions = Object.keys(processedOptions).reduce((obj, x) => {
-      let val = processedOptions[x];
+      const val = processedOptions[x];
+      const returnedObj = obj;
       if (typeof val === "function") {
-        return {
-          ...obj,
-          val()
-        };
+        returnedObj[x] = val()
+      } else {
+        returnedObj[x] = val
       }
 
-      return {
-        ...obj,
-        val
-      };
+      return returnedObj
     }, {});
     log_line = Object.assign(log_line, processedOptions)
   }
   if (Array.isArray(processedOptions)) {
-    log_line["log"] = { log: processedOptions.map(x => { return typeof x === "function" ? x() : x }) }
+    log_line.log = { log: processedOptions.map(x => typeof x === "function" ? x() : x ) }
   }
 
   log[log_level](JSON.stringify(log_line))
@@ -42,7 +39,7 @@ export const write_log = (res, log_level, options = {}) => {
 export function sendError(res, code, message) {
   res.status(code);
   res.json({
-    message: message
+    message
   });
 }
 
@@ -52,7 +49,7 @@ export function hasValidGlobalTemplatePersonalisation(personalisation) {
   }
 
   const personalisationFields = Object.keys(personalisation);
-  if (personalisationFields.length != 1) {
+  if (personalisationFields.length !== 1) {
     return false;
   }
 

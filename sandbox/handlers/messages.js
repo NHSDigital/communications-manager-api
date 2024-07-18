@@ -24,7 +24,7 @@ function getOriginatorOdsCode(req) {
 }
 
 export async function messages(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
+  if (req.headers.authorization === "banned") {
     sendError(
       res,
       403,
@@ -40,7 +40,7 @@ export async function messages(req, res, next) {
     return;
   }
 
-  const routingPlanId = req.body.data.attributes.routingPlanId;
+  const { routingPlanId } = req.body.data.attributes;
   if (!validSendingGroupIds[routingPlanId]) {
     sendError(
       res,
@@ -52,7 +52,7 @@ export async function messages(req, res, next) {
   }
 
   const odsCode = getOriginatorOdsCode(req);
-  if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
+  if (!odsCode && req.headers.authorization === noDefaultOdsClientAuth) {
     sendError(
       res,
       400,
@@ -62,7 +62,7 @@ export async function messages(req, res, next) {
     return;
   }
 
-  if (odsCode && req.headers["authorization"] === noOdsChangeClientAuth) {
+  if (odsCode && req.headers.authorization === noOdsChangeClientAuth) {
     sendError(
       res,
       400,

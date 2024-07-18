@@ -47,16 +47,6 @@ module.exports = {
     camelcase: 'warn',
     'class-methods-use-this': 0,
     'comma-dangle': ['error', 'only-multiline'],
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        js: 'never',
-        jsx: 'never',
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
     'import/no-extraneous-dependencies': [
       'error',
       {
@@ -113,6 +103,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'security/detect-object-injection': 0,
     '@next/next/no-img-element': 'off',
+    'import/extensions': 0,
   },
   overrides: [
     {
