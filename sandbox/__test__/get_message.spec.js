@@ -58,15 +58,15 @@ describe('/api/v1/messages/{messageId}', () => {
 
     getMessageData().forEach(({ messageId, response }, i) => {
         it(`responds correctly ${i}`, (done) => {
-            const correlation_id = uuid.v4();
+            const correlationId = uuid.v4();
             request(server)
                 .get(`/api/v1/messages/${messageId}`)
-                .set('X-Correlation-Id', correlation_id)
+                .set('X-Correlation-Id', correlationId)
                 .expect(200)
                 .expect((res) => {
                     assert.deepEqual(res.body, response);
                 })
-                .expect("X-Correlation-Id", correlation_id)
+                .expect("X-Correlation-Id", correlationId)
                 .expect("Content-Type", /json/, done);
         });
     });

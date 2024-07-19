@@ -1,5 +1,5 @@
 import KSUID from "ksuid";
-import { sendError, write_log, hasValidGlobalTemplatePersonalisation } from "./utils.js";
+import { sendError, writeLog, hasValidGlobalTemplatePersonalisation } from "./utils.js";
 import {
   sendingGroupIdWithMissingNHSTemplates,
   sendingGroupIdWithMissingTemplates,
@@ -119,7 +119,7 @@ export async function messages(req, res, next) {
     return;
   }
 
-  write_log(res, "warn", {
+  writeLog(res, "warn", {
     message: "/api/v1/messages",
     req: {
       path: req.path,

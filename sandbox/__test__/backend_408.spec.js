@@ -23,11 +23,11 @@ describe('backend_408', () => {
   });
 
   it("returns a X-Correlation-Id when provided", (done) => {
-    const correlation_id = uuid.v4();
+    const correlationId = uuid.v4();
     request(server)
       .get('/_timeout_408')
-      .set('X-Correlation-Id', correlation_id)
+      .set('X-Correlation-Id', correlationId)
       .expect(408, '408 Request Timeout')
-      .expect("X-Correlation-Id", correlation_id, done);
+      .expect("X-Correlation-Id", correlationId, done);
   });
 })

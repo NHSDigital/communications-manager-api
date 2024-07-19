@@ -1,7 +1,7 @@
 import log from "loglevel"
 
-export const write_log = (res, log_level, options = {}) => {
-  if (log.getLevel() > log.levels[log_level.toUpperCase()]) {
+export const writeLog = (res, logLevel, options = {}) => {
+  if (log.getLevel() > log.levels[logLevel.toUpperCase()]) {
     return
   }
   let processedOptions;
@@ -10,9 +10,9 @@ export const write_log = (res, log_level, options = {}) => {
   } else {
     processedOptions = options
   }
-  let log_line = {
+  let logLine = {
     timestamp: Date.now(),
-    level: log_level,
+    level: logLevel,
     correlation_id: res.locals.correlation_id
   }
   if (typeof options === "object") {
@@ -27,13 +27,13 @@ export const write_log = (res, log_level, options = {}) => {
 
       return returnedObj
     }, {});
-    log_line = Object.assign(log_line, processedOptions)
+    logLine = Object.assign(logLine, processedOptions)
   }
   if (Array.isArray(processedOptions)) {
-    log_line.log = { log: processedOptions.map(x => typeof x === "function" ? x() : x ) }
+    logLine.log = { log: processedOptions.map(x => typeof x === "function" ? x() : x ) }
   }
 
-  log[log_level](JSON.stringify(log_line))
+  log[logLevel](JSON.stringify(logLine))
 };
 
 export function sendError(res, code, message) {

@@ -34,7 +34,7 @@ function start(options = {}) {
     return server;
 }
 
-function before_request(req, res, next) {
+function beforeRequest(req, res, next) {
     res.locals.started_at = Date.now();
     res.locals.correlation_id = (
         req.header('X-Correlation-ID')
@@ -48,23 +48,23 @@ function before_request(req, res, next) {
     next();
 }
 
-const _health_endpoints = ["/_ping", "/health"];
+const _healthEndpoints = ["/_ping", "/health"];
 
-function after_request(req, res, next) {
-    if (_health_endpoints.includes(req.path) && !('log' in { ...req.query })) {
+function afterRequest(req, res, next) {
+    if (_healthEndpoints.includes(req.path) && !('log' in { ...req.query })) {
         // don't log ping / health by default
         return next();
     }
-    const finished_at = Date.now();
-    const log_entry = {
-        timestamp: finished_at,
+    const finishedAt = Date.now();
+    const logEntry = {
+        timestamp: finishedAt,
         level: "info",
         app: app.locals.app_name,
         msg: "request",
         correlation_id: res.locals.correlation_id,
         started: res.locals.started_at,
-        finished: finished_at,
-        duration: finished_at - res.locals.started_at,
+        finished: finishedAt,
+        duration: finishedAt - res.locals.started_at,
         req: {
             url: req.url,
             method: req.method,
@@ -80,35 +80,35 @@ function after_request(req, res, next) {
 
     if (log.getLevel() < 2) {
         // debug
-        log_entry.req.headers = req.rawHeaders;
-        log_entry.res.headers = res.rawHeaders;
+        logEntry.req.headers = req.rawHeaders;
+        logEntry.res.headers = res.rawHeaders;
     }
-    log.info(JSON.stringify(log_entry));
+    log.info(JSON.stringify(logEntry));
     
     next();
     return undefined;
 }
 
-function on_error(err, req, res, next) {
-    let log_err = err;
-    if (log_err instanceof Error) {
-        log_err = {
+function onError(err, req, res, next) {
+    let logErr = err;
+    if (logErr instanceof Error) {
+        logErr = {
             name: err.name,
             message: err.message,
             stack: err.stack
         }
     }
-    const finished_at = Date.now();
+    const finishedAt = Date.now();
     log.error(JSON.stringify({
-        timestamp: finished_at,
+        timestamp: finishedAt,
         level: "error",
         app: app.locals.app_name,
         msg: "error",
         correlation_id: res.locals.correlation_id,
         started: res.locals.started_at,
-        finished: finished_at,
-        duration: finished_at - res.locals.started_at,
-        err: log_err,
+        finished: finishedAt,
+        duration: finishedAt - res.locals.started_at,
+        err: logErr,
         version: app.locals.version_info
     }));
     if (res.headersSent) {
@@ -120,20 +120,20 @@ function on_error(err, req, res, next) {
     next();
 }
 
-app.use(before_request);
+app.use(beforeRequest);
 app.use(express.json({ limit: '10mb' }));
 app.get("/_ping", handlers.status);
 app.get("/_status", handlers.status);
 app.get("/health", handlers.status);
-app.post("/api/v1/send", handlers.batch_send);
+app.post("/api/v1/send", handlers.batchSend);
 app.post("/api/v1/messages", handlers.messages);
-app.get("/api/v1/messages/:messageId", handlers.get_message);
-app.get("/api/channels/nhsapp/accounts", handlers.nhsapp_accounts);
-app.get("/_timeout", handlers.trigger_timeout);
-app.get("/_invalid_certificate", handlers.backend_403);
-app.get("/_timeout_408", handlers.backend_408);
-app.get("/_timeout_504", handlers.backend_504);
-app.use(on_error)
-app.use(after_request);
+app.get("/api/v1/messages/:messageId", handlers.getMessage);
+app.get("/api/channels/nhsapp/accounts", handlers.nhsappAccounts);
+app.get("/_timeout", handlers.triggerTimeout);
+app.get("/_invalid_certificate", handlers.backend403);
+app.get("/_timeout_408", handlers.backend408);
+app.get("/_timeout_504", handlers.backend504);
+app.use(onError)
+app.use(afterRequest);
 
 export { start, setup };

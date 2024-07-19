@@ -1,7 +1,7 @@
 import KSUID from "ksuid"
 import {
   sendError,
-  write_log,
+  writeLog,
   hasValidGlobalTemplatePersonalisation,
 } from "./utils.js"
 import {
@@ -18,7 +18,7 @@ import {
   noOdsChangeClientAuth,
 } from "./config.js"
 
-export async function batch_send(req, res, next) {
+export async function batchSend(req, res, next) {
   const { headers, body } = req;
   if (headers.authorization === "banned") {
     sendError(
@@ -198,7 +198,7 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  write_log(res, "warn", {
+  writeLog(res, "warn", {
     message: "/api/v1/send",
     req: {
       path: req.path,

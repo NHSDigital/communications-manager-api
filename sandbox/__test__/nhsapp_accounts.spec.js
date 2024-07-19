@@ -18,15 +18,15 @@ describe("/api/channels/nhsapp/accounts", () => {
     });
 
     it("returns a X-Correlation-Id when provided", (done) => {
-        const correlation_id = uuid.v4();
+        const correlationId = uuid.v4();
         request(server)
             .get("/api/channels/nhsapp/accounts")
             .query({
                 "ods-organisation-code": "X26"
             })
-            .set('X-Correlation-Id', correlation_id)
+            .set('X-Correlation-Id', correlationId)
             .expect(200)
-            .expect("X-Correlation-Id", correlation_id, done);
+            .expect("X-Correlation-Id", correlationId, done);
     });
 
     it("returns a service ban (403) when the user is banned", (done) => {

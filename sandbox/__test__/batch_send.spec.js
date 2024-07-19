@@ -463,10 +463,10 @@ describe("/api/v1/send", () => {
   });
 
   it("returns a X-Correlation-Id when provided", (done) => {
-    const correlation_id = uuid.v4();
+    const correlationId = uuid.v4();
     request(server)
       .post("/api/v1/send")
-      .set('X-Correlation-Id', correlation_id)
+      .set('X-Correlation-Id', correlationId)
       .send({
         data: {
           type: "MessageBatch",
@@ -499,7 +499,7 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(200)
-      .expect("X-Correlation-Id", correlation_id, done);
+      .expect("X-Correlation-Id", correlationId, done);
   });
 
   it("responds with a 200 for a valid global NHS app routing plan", (done) => {
