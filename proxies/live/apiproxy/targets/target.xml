@@ -17,7 +17,7 @@
     <HTTPTargetConnection>
         <SSLInfo>
             <Enabled>true</Enabled>
-        </SSLInfo>        
+        </SSLInfo>
         <URL>https://comms-apim.de-dahi8.communications.national.nhs.uk</URL>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
