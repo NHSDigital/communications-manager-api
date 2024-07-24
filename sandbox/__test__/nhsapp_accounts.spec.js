@@ -284,6 +284,7 @@ describe("/api/channels/nhsapp/accounts", () => {
 })
 
 function getResponse(page) {
+    /* eslint-disable-next-line security/detect-non-literal-fs-filename */
     return fs.readFileSync(`./nhsapp-accounts/${page}.json`, 'utf-8', (err, fileContent) => {
         if (err) {
             throw err;
