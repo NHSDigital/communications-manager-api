@@ -42,8 +42,8 @@ DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 UNEXPECTED_429 = AssertionError('Unexpected 429')
 UNEXPECTED_504 = AssertionError('Unexpected 504')
 
-VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
-VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE, "application/vnd.api+json"]
+VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE]
+VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE]
 
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
 
@@ -264,25 +264,27 @@ ERROR_BAD_GATEWAY = Error(
     "A downstream service is not responding."
 )
 
+INVALID_REQUEST_TITLE = "Invalid Request"
+
 # NHS App Accounts errors
 ERROR_NHS_APP_ACCOUNTS_MISSING_ODS_CODE = Error(
     "CM_INVALID_REQUEST",
     "400",
-    "Invalid Request",
+    INVALID_REQUEST_TITLE,
     "Missing ODS Code"
 )
 
 ERROR_NHS_APP_ACCOUNTS_INVALID_ODS_CODE = Error(
     "CM_INVALID_REQUEST",
     "400",
-    "Invalid Request",
+    INVALID_REQUEST_TITLE,
     "Invalid ODS Code"
 )
 
 ERROR_NHS_APP_ACCOUNTS_INVALID_PAGE = Error(
     "CM_INVALID_REQUEST",
     "400",
-    "Invalid Request",
+    INVALID_REQUEST_TITLE,
     "page must be a positive non-zero integer"
 )
 

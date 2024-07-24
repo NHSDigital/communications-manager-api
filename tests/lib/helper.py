@@ -4,7 +4,9 @@ import os
 from install_playwright import install
 from playwright.sync_api import expect, sync_playwright
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
-from lib import Error_Handler
+from lib import error_handler
+
+DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
 
 
 class Helper():
@@ -12,11 +14,11 @@ class Helper():
     def send_single_message(url, auth, body):
         resp = requests.post(f"{url}{MESSAGES_ENDPOINT}", headers={
                 **auth,
-                "Accept": "application/vnd.api+json",
-                "Content-Type": "application/vnd.api+json"
+                "Accept": DEFAULT_CONTENT_TYPE,
+                "Content-Type": DEFAULT_CONTENT_TYPE
             }, json=body
         )
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
         assert resp.status_code == 201
         return resp
 
@@ -24,9 +26,9 @@ class Helper():
     def get_message(url, auth, message_id):
         resp = requests.get(f"{url}{MESSAGES_ENDPOINT}/{message_id}", headers={
             **auth,
-            "Accept": "application/vnd.api+json"
+            "Accept": DEFAULT_CONTENT_TYPE
         })
-        Error_Handler.handle_retry(resp)
+        error_handler.handle_retry(resp)
         assert resp.status_code == 200
         return resp
 
@@ -40,7 +42,7 @@ class Helper():
                 f"{url}{MESSAGES_ENDPOINT}/{message_id}",
                 headers={
                     **auth,
-                    "Accept": "application/vnd.api+json"
+                    "Accept": DEFAULT_CONTENT_TYPE
                 },
             )
 

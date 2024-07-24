@@ -5,7 +5,7 @@ from lib.constants.constants import PROD_URL
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     LIVE_ODS_CODES, CORRELATION_IDS, VALID_MULTI_PAGE_NUMBERS, \
     MULTI_LAST_PAGE, VALID_SINGLE_PAGE_NUMBERS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.prodtest

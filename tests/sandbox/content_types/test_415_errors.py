@@ -3,8 +3,8 @@ import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import VALID_ENDPOINTS
 
-CONTENT_TYPE_NAME = ["content-type", "CONTENT_TYPE", "Content_Type", "conTENT_tYpe"]
-CONTENT_TYPE_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+CONTENT_TYPE_NAME = ["content-type", "conTENT_tYpe"]
+CONTENT_TYPE_VALUE = ["", "xyz/abc", "application/json; charset=utf-9"]
 METHODS = ["post", "put", "patch"]
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 

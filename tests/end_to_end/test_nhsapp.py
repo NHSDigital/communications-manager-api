@@ -1,7 +1,7 @@
 import pytest
 import uuid
 from lib import Assertions, Generators, Helper
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.e2e

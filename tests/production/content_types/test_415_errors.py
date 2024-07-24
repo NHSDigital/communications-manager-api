@@ -2,7 +2,7 @@ import requests
 import pytest
 from lib import Assertions, Generators
 from lib.constants.constants import CORRELATION_IDS, PROD_URL, VALID_ENDPOINTS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 METHODS = ["post", "put", "patch"]
 

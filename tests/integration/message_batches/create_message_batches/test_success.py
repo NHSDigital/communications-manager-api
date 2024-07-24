@@ -4,7 +4,7 @@ import time
 from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.inttest
@@ -134,7 +134,7 @@ def test_201_message_batches_request_idempotency(bearer_token_int):
     """
     data = Generators.generate_valid_create_message_batch_body("int")
 
-    respOne = requests.post(
+    resp_one = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Authorization": bearer_token_int.value,
@@ -146,7 +146,7 @@ def test_201_message_batches_request_idempotency(bearer_token_int):
 
     time.sleep(5)
 
-    respTwo = requests.post(
+    resp_two = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Authorization": bearer_token_int.value,
@@ -156,4 +156,4 @@ def test_201_message_batches_request_idempotency(bearer_token_int):
         json=data,
     )
 
-    Assertions.assert_message_batches_idempotency(respOne, respTwo)
+    Assertions.assert_message_batches_idempotency(resp_one, resp_two)

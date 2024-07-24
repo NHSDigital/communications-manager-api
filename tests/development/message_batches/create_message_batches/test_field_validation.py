@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 import lib.constants.constants as constants
 from lib.constants.shared_paths import ROUTING_PLAN_ID_PATH
 from lib.constants.message_batches_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \

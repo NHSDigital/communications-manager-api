@@ -5,7 +5,7 @@ from lib import Assertions, Permutations, Generators
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.constants.constants import INVALID_ROUTING_PLAN_PROD
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 headers = {

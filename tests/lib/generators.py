@@ -70,14 +70,14 @@ class Generators():
     @staticmethod
     def generate_send_message_body(channel, environment, personalisation="Hello"):
         if environment == "internal-dev":
-            nhsNumber = "9627193232"
-            dateOfBirth = "1998-03-21"
+            nhs_number = "9627193232"
+            date_of_birth = "1998-03-21"
             if channel == "nhsapp":
-                nhsNumber = "9842434109"
-                dateOfBirth = "2002-10-23"
+                nhs_number = "9842434109"
+                date_of_birth = "2002-10-23"
         elif environment == "internal-qa":
-            nhsNumber = "9730617953"
-            dateOfBirth = "2009-09-02"
+            nhs_number = "9730617953"
+            date_of_birth = "2009-09-02"
         else:
             raise ValueError(f"Invalid environment value provided: {environment}")
         if channel == "nhsapp":
@@ -97,8 +97,8 @@ class Generators():
                     "routingPlanId": routing_plan_id,
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": nhsNumber,
-                        "dateOfBirth": dateOfBirth
+                        "nhsNumber": nhs_number,
+                        "dateOfBirth": date_of_birth
                     },
                     "originator": {
                         "odsCode": "X26"

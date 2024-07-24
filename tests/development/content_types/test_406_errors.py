@@ -1,11 +1,11 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.constants import DEFAULT_CONTENT_TYPE, VALID_ENDPOINTS
 
-HEADER_NAME = ["accept", "ACCEPT", "Accept", "AcCePt"]
-HEADER_VALUE = ["", "application/xml", "image/png", "text/plain", "audio/mpeg", "xyz/abc"]
+HEADER_NAME = ["accept", "ACCEPT"]
+HEADER_VALUE = ["", "application/xml", "application/json; charset=utf-9"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 

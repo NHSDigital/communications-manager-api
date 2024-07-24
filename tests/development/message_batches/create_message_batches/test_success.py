@@ -2,7 +2,7 @@ import requests
 import pytest
 import time
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
@@ -145,7 +145,7 @@ def test_201_message_batches_request_idempotency(
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 
-    respOne = requests.post(
+    resp_one = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Authorization": bearer_token_internal_dev.value,
@@ -157,7 +157,7 @@ def test_201_message_batches_request_idempotency(
 
     time.sleep(5)
 
-    respTwo = requests.post(
+    resp_two = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Authorization": bearer_token_internal_dev.value,
@@ -167,4 +167,4 @@ def test_201_message_batches_request_idempotency(
         json=data,
     )
 
-    Assertions.assert_message_batches_idempotency(respOne, respTwo)
+    Assertions.assert_message_batches_idempotency(resp_one, resp_two)

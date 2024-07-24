@@ -4,7 +4,7 @@ from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.nhsapp_accounts_paths import NHSAPP_ACCOUNTS_ENDPOINT, ODS_CODE_PARAM_NAME, PAGE_PARAM_NAME, \
     SINGLE_PAGE_ODS_CODES, CORRELATION_IDS
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 BAD_GATEWAY_ODS_CODE = 'T00401'  # The mock for the NHS App API will return a 401 should cause the BE to return a 502
 

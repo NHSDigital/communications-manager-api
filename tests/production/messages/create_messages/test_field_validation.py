@@ -4,7 +4,7 @@ from lib import Assertions, Permutations, Generators
 import lib.constants.constants as constants
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 headers = {
     "Accept": "application/json",

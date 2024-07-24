@@ -4,7 +4,7 @@ import uuid
 from lib import Assertions, Generators
 from lib.constants.constants import INT_URL
 from lib.constants.messages_paths import MESSAGES_ENDPOINT, MESSAGE_ID_NOT_BELONGING_TO_CLIENT
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.inttest

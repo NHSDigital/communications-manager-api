@@ -1,7 +1,7 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.fixtures import *
+from lib.fixtures import *  # NOSONAR
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 
 

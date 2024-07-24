@@ -2,7 +2,7 @@ import * as  fs from 'fs'
 import { sendError } from './utils.js'
 
 const paginationOdsCode = 'T00001';
-const odsCodeRegex = /^[A-Za-z]\d{5}$|^[A-Za-z]\d[A-Za-z]\d[A-Za-z]$/
+const odsCodeRegex = /^[A-Za-z]\d{5}$|^[A-Za-z]\d[A-Za-z]\d[A-Za-z]$/;
 const badGatewayOdsCode = 'T00502'; // simulates something going wrong between the BE and the NHS APP API'
 const notFoundOdsCode = 'T00404'; // valid format but no data stored against it
 const tooManyRequestsOdsCode = 'T00429';
@@ -18,7 +18,7 @@ export async function nhsappAccounts(req, res, next) {
     return;
   }
 
-  if (!req.query || !req.query['ods-organisation-code']) {
+  if (!req.query?.['ods-organisation-code']) {
     sendError(res, 400, 'Missing ODS Code')
     next()
     return;
