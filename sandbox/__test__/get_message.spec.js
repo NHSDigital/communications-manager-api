@@ -17,6 +17,7 @@ function getMessageData() {
     files.forEach(file => {
         const messageId = path.basename(file, '.json');
 
+        /* eslint-disable-next-line security/detect-non-literal-fs-filename */
         const fileContent = fs.readFileSync(path.join(directoryPath, file), 'utf8')
 
         messagesArray.push({ messageId, response: JSON.parse(fileContent) });

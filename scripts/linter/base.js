@@ -119,7 +119,7 @@ module.exports = {
       },
     },
     {
-      files: ['src/server.js'],
+      files: ['sandbox/index.js'],
       rules: {
         'no-console': 'off',
       },
