@@ -2,7 +2,7 @@ import requests
 import time
 import os
 from install_playwright import install
-from playwright.sync_api import expect, sync_playwright
+from playwright.sync_api import sync_playwright, expect
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib import error_handler
 
@@ -64,39 +64,41 @@ class Helper():
         password = os.environ.get("UAT_NHS_APP_PASSWORD")
         otp = os.environ.get("UAT_NHS_APP_OTP")
 
-        playwright = sync_playwright().start()
-        install(playwright.chromium)
-        browser = playwright.chromium.launch()
-        page = browser.new_page()
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch(headless=True)
+        
+            page = browser.new_page()
 
-        page.goto("https://www-onboardingaos.nhsapp.service.nhs.uk/login")
+            page.goto("https://www-onboardingaos.nhsapp.service.nhs.uk/login")
 
-        expect(page.get_by_role("heading", name="Access your NHS services")).to_be_visible()
-        page.get_by_role("button", name="Continue").click()
+            expect(page.get_by_role("heading", name="Access your NHS services")).to_be_visible()
+            page.get_by_role("button", name="Continue").click()
 
-        expect(page.get_by_role("heading", name="Enter your email address")).to_be_visible()
-        page.get_by_label("Email address", exact=True).fill(email)
-        page.get_by_role("button", name="Continue").click()
+            expect(page.get_by_role("heading", name="Enter your email address")).to_be_visible()
+            page.get_by_label("Email address", exact=True).fill(email)
+            page.get_by_role("button", name="Continue").click()
 
-        expect(page.get_by_role("heading", name="Enter your password")).to_be_visible()
-        page.get_by_label("Password", exact=True).fill(password)
-        page.get_by_role("button", name="Continue").click()
+            expect(page.get_by_role("heading", name="Enter your password")).to_be_visible()
+            page.get_by_label("Password", exact=True).fill(password)
+            page.get_by_role("button", name="Continue").click()
 
-        expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible()
-        page.get_by_label("Security code", exact=True).fill(otp)
-        page.get_by_role("button", name="Continue").click()
+            expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible()
+            page.get_by_label("Security code", exact=True).fill(otp)
+            page.get_by_role("button", name="Continue").click()
 
-        page.wait_for_url('**/patient/')
+            page.wait_for_url('**/patient/')
 
-        expect(page.get_by_text('NHS number: 973 061')).to_be_visible()
-        page.get_by_role("link", name="View your messages").click()
+            expect(page.get_by_text('NHS number: 973 061')).to_be_visible()
+            page.get_by_role("link", name="View your messages").click()
 
-        expect(page.get_by_role("heading", name="Messages")).to_be_visible()
-        page.get_by_role("link", name="Your NHS healthcare services").click()
+            expect(page.get_by_role("heading", name="Messages")).to_be_visible()
+            page.get_by_role("link", name="Your NHS healthcare services").click()
 
-        expect(page.get_by_role("heading", name="Your messages")).to_be_visible()
-        page.get_by_label("Unread message from NHS").click()
+            expect(page.get_by_role("heading", name="Your messages")).to_be_visible()
+            page.get_by_label("Unread message from NHS").click()
 
-        page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
-        expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
-        expect(page.get_by_text(f"APIM end to end test: {personalisation}")).to_be_visible()
+            page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
+            expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
+            expect(page.get_by_text(f"APIM end to end test: {personalisation}")).to_be_visible()
+
+            browser.close()

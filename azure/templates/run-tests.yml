@@ -135,6 +135,7 @@ steps:
           export UAT_NHS_APP_USERNAME="$(UAT_NHS_APP_USERNAME)"
           export UAT_NHS_APP_PASSWORD="$(UAT_NHS_APP_PASSWORD)"
           export UAT_NHS_APP_OTP="$(UAT_NHS_APP_OTP)"
+          poetry install
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
 
