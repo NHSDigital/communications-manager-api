@@ -21,7 +21,7 @@
  },
  "eslintConfig": {
    "extends": [
-     "./scripts/linter/base.js"
+     "./base.js"
    ]
  },
  "devDependencies": {
