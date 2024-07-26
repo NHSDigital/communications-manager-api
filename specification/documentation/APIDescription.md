@@ -52,14 +52,18 @@ The `Accept` header can contain the following values:
 * `application/json`
 * `application/vnd.api+json`
 
+The `Accept` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `415` error response. If ommited then `utf-8` is assumed. 
+
 Where no `Accept` header is present, this will default to `application/vnd.api+json`
 
-### Request Content Types
+### Request content types
 
 This API will accept request payloads of the following types:
 
 * `application/vnd.api+json` - see [JSON:API specification](https://jsonapi.org/format/#introduction)
 * `application/json`
+
+The `Content-Type` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `406` error response. If ommited then `utf-8` is assumed. 
 
 If you attempt to send a payload without the `Content-Type` header set to either of these values then the API will respond with a `415 Unsupported Media Type` response.
 
