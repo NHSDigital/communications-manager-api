@@ -41,7 +41,6 @@ steps:
     parameters:
       webhook_uri: 'ALERTS_DEV_API_WEBHOOK_URI'
   - bash: |
-      set -e
       export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
       export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
       make install-python && make zap-security-scan    
