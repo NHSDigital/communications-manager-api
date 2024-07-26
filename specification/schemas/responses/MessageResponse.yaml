@@ -40,10 +40,9 @@ properties:
               additionalProperties: false
               properties:
                 type:
-                  description: This is the type of channel to be used.
                   $ref: ../enums/ChannelType.yaml
                 retryCount:
-                  description: Contains the amount of times that we have attempted to send this channel.
+                  description: Contains the amount of times that we have attempted to send this message to this channel.
                   type: integer
                   example: 1
                 channelStatus:

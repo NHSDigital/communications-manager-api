@@ -2,7 +2,7 @@
 summary: Channel Status
 description: |-
 
-    NHS Notify can send a supplier status callback when:
+    NHS Notify can send a channel status callback when:
     * the channel status has changed - This refers to the internal statuses used by NHS Notify, which are consistent across all channels
     * the supplier status has changed - This is the raw status value specified by the underlying channel supplier. The possible values are listed [here](#overview--supplier-statuses)
 

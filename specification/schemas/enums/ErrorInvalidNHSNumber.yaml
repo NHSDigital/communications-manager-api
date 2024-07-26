@@ -1,3 +1,4 @@
+title: Enum_Error_InvalidNHSNumber
 type: string
 enum:
   - CM_MISSING_VALUE
@@ -9,4 +10,3 @@ enum:
   - CM_ODS_CODE_REQUIRED
   - CM_CANNOT_SET_ODS_CODE
 example: CM_INVALID_NHS_NUMBER
-title: Enum_Error_InvalidNHSNumber

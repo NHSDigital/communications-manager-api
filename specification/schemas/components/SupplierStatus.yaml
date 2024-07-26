@@ -21,14 +21,17 @@ properties:
           - nhsapp
         example: nhsapp
       channelStatus:
-        description: The current status of this channel at the time this response was generated.
         $ref: ../enums/ChannelStatus.yaml
       channelStatusDescription:
         type: string
         description: If there is extra information associated with the status of this channel, it is provided here.
         example: ""
       supplierStatus:
+<<<<<<< HEAD
         $ref: ../enums/SupplierStatusEnum.yaml
+=======
+        $ref: ../enums/SupplierStatus.yaml
+>>>>>>> b5567fa (CCM-5995: Add descriptions to enums in API docs)
       timestamp:
         type: string
         description: Date-time for when the supplier status change was processed.
@@ -36,7 +39,7 @@ properties:
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
         type: number
-        description: Contains the amount of times that we have attempted to send this channel.
+        description: Contains the amount of times that we have attempted to send this message to this channel.
         example: 1
     required:
       - messageId

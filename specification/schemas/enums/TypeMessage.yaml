@@ -1,5 +1,5 @@
+title: Type_Message
 type: string
 enum:
   - Message
-title: Type_Message
 example: Message

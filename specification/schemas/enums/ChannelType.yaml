@@ -1,5 +1,6 @@
+title: Enum_ChannelType
+description: The communication type of this channel.
 type: string
-title: ChannelType
 enum:
   - nhsapp
   - email
