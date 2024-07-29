@@ -19,7 +19,7 @@
     "url": "https://github.com/NHSDigital/communications-manager-api/issues"
   },
   "devDependencies": {
-    "@playwright/test": "^1.42.1",
+    "@playwright/test": "^1.45.3",
     "@redocly/cli": "^1.10.6",
     "@types/node": "^20.12.2",
     "hbs-cli": "^1.4.1",
