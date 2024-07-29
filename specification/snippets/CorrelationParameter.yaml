@@ -1,7 +1,7 @@
 name: X-Correlation-ID
 in: header
 description: |-
-  An optional ID which you can use to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters.
+  An optional ID which you can use to track transactions across multiple systems. It can take any value, but we recommend avoiding `.` characters. If not provided in the request, NHS Notify will default to a system generated ID in its place.
   Mirrored back in a response header.
 schema:
   type: string
