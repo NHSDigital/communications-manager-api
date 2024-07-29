@@ -196,14 +196,21 @@ The channels can have the following supplier statuses:
 * `notified` - a push notification is reported as having been successfully relayed to one or more devices
 * `received` - the request has been received by the supplier and is queued to be processed
 
-### GOV.UK Notify (Email/SMS)
+### Email
 
 * `delivered` - the message has been successfully delivered to the user
 * `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
 * `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
 * `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
 
-### GOV.UK Notify (Letters)
+### SMS
+
+* `delivered` - the message has been successfully delivered to the user
+* `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
+* `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
+
+### Letters
 
 * `accepted` - GOV.UK Notify has sent the letter to the provider to be printed
 * `received` - the provider has printed and dispatched the letter
