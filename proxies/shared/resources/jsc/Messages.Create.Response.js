@@ -9,8 +9,8 @@ const baseUrl = reqUrl.split("?")[0].replace(internalHostname, hostname);
 
 const correlationId = context.getVariable("response.header.x-correlation-id");
 
-const data = JSON.parse(content).data
-var messageId = null;
+const {data} = JSON.parse(content)
+let messageId = null;
 
 if (data) {
     messageId = data.id
@@ -22,4 +22,4 @@ if (data) {
 
 context.setVariable("messageId", messageId);
 context.setVariable("correlationId", correlationId);
-context.setVariable("response.content", JSON.stringify({ data: data }));
+context.setVariable("response.content", JSON.stringify({ data }));

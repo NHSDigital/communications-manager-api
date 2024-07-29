@@ -32,7 +32,6 @@
     "@typescript-eslint/parser": "^7.17.0",
     "eslint": "^8.28.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-formatter-gitlab": "^3.0.0",
     "eslint-import-resolver-typescript": "^3.5.2",
@@ -51,12 +50,14 @@
     "minimist": "^1.2.2",
     "newman": "^6.1.2",
     "react-is": "^18.2.0",
-    "sinon": "^17.0.1",
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
     "jsrsasign": "^11.1.0",
     "jsrsasign-util": "^1.0.5",
-    "playwright": "^1.42.1"
+    "playwright": "^1.42.1",
+    "sinon": "^17.0.1",
+    "uuid": "^10.0.0"
   }
 }

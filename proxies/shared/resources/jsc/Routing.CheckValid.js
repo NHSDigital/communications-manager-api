@@ -3,8 +3,8 @@ When a method is used to access an endpoint that doesn't support it, the API res
 When a GET method is used to access an endpoint that doesn't exist, the API responds with a 404
 */
 
-var is404 = true;
-var is405 = false;
+let is404 = true;
+let is405 = false;
 
 const requestMethod = context.getVariable("request.verb").toLowerCase();
 const requestPath = context.getVariable("proxy.pathsuffix");
@@ -53,7 +53,7 @@ validPaths.forEach((pathObj) => {
         is404 = false;
         is405 = true;
         pathObj.methods.forEach((method) => {
-            if (method == requestMethod) {
+            if (method === requestMethod) {
                 is405 = false;
             }
         });

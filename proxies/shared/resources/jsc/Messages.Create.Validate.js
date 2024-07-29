@@ -6,10 +6,10 @@
  */
 
 
-var content = context.getVariable("request.content")
-var errors = []
+const content = context.getVariable("request.content")
+const errors = []
 
-var all
+let all
 try {
     all = JSON.parse(content)
 } catch (e) {
@@ -20,7 +20,7 @@ try {
 
 const validate = () => {
     if (all) {
-        var data = all.data;
+        const {data} = all;
 
         // $.data
         const validDataObject = validateObject(errors, data, "/data")

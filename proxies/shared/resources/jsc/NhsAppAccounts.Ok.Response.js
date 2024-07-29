@@ -8,7 +8,7 @@ const reqUrl = context.getVariable('proxy.url');
 const baseUrl = reqUrl.split("?")[0].replace(internalHostname, hostname);
 
 const parsedContent = JSON.parse(content)
-var odsOrganisationCode = null;
+let odsOrganisationCode = null;
 
 if (parsedContent) {
   odsOrganisationCode = parsedContent.data.id

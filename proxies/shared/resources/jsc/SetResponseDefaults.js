@@ -1,6 +1,6 @@
 const acceptHeader = context.getVariable("request.header.accept");
 
-var responseType = "application/vnd.api+json";
+let responseType = "application/vnd.api+json";
 
 if (acceptHeader === "application/json") {
     responseType = "application/json";
@@ -23,11 +23,11 @@ context.setVariable("response.header.X-Correlation-Id", backendCorrelationId);
 context.setVariable("error.header.X-Correlation-Id", backendCorrelationId);
 
 // remove aws headers
-const headerNames = (context.getVariable("response.headers.names") + "").slice(1, -1).split(', ');
-headerNames.forEach(function (header)  {
+const headerNames = (`${context.getVariable("response.headers.names")  }`).slice(1, -1).split(', ');
+headerNames.forEach((header) =>  {
   if (header.toLowerCase().startsWith('x-amz')) {
-    context.removeVariable("response.header." + header);
-    context.removeVariable("error.header." + header);
+    context.removeVariable(`response.header.${header}`);
+    context.removeVariable(`error.header.${header}`);
   }
 });
 

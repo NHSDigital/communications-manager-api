@@ -29,12 +29,12 @@ function authenticate(helper, paramsValues, credentials) {
 
     const encoder = Base64.getUrlEncoder().withoutPadding();
 
-    //build the token
+    // build the token
     const headers = encoder.encodeToString(
         JSON.stringify({
             typ: "JWT",
             alg: "RS512",
-            kid: kid
+            kid
         }).getBytes()
     );
     const token = encoder.encodeToString(
@@ -52,11 +52,11 @@ function authenticate(helper, paramsValues, credentials) {
     signer.update([headers, token].join(".").getBytes(StandardCharsets.UTF_8));
 
     const signature = encoder.encodeToString(signer.sign());
-    const jwt = headers + "." + token + "." + signature;
+    const jwt = `${headers}.${token}.${signature}`;
 
     let tokenRequestBody = "grant_type=client_credentials";
     tokenRequestBody+= "&client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
-    tokenRequestBody+= "&client_assertion=" + jwt;
+    tokenRequestBody+= `&client_assertion=${jwt}`;
 
     const tokenRequestMainHeader = new HttpRequestHeader(
         HttpRequestHeader.POST, 
@@ -64,7 +64,7 @@ function authenticate(helper, paramsValues, credentials) {
         HttpHeader.HTTP11
     );
 
-    let tokenMsg = helper.prepareMessage();
+    const tokenMsg = helper.prepareMessage();
     tokenMsg.setRequestBody(tokenRequestBody);
     tokenMsg.setRequestHeader(tokenRequestMainHeader);
     tokenMsg.getRequestHeader().setContentLength(tokenMsg.getRequestBody().length());
@@ -73,7 +73,7 @@ function authenticate(helper, paramsValues, credentials) {
     const body = tokenMsg.getResponseBody().toString();
     const json = JSON.parse(body);
 
-    const access_token = json['access_token'];
+    const {access_token} = json;
     
     if (access_token){
         print("get_bearer_token.js: Successfully fetched token!");

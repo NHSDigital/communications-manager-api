@@ -4,9 +4,7 @@ const nhsNumberRegex = /^\d{10}$/i
 const dobRegex = /^\d{4}-\d{2}-\d{2}$/i
 const messageId = context.getVariable("messageid");
 
-const isUndefined = (val) => {
-    return typeof val === "undefined";
-}
+const isUndefined = (val) => typeof val === "undefined"
 
 const isValidNhsNumber = (nhsNumber, nhsNumberRegex) => {
     if (!nhsNumberRegex.test(nhsNumber)) {
@@ -15,9 +13,9 @@ const isValidNhsNumber = (nhsNumber, nhsNumberRegex) => {
 
     const checkDigit = nhsNumber.substring(9);
 
-    var total = 0;
-    for (var i = 0; i <= 8; i++) {
-        var digit = (parseInt(nhsNumber.substring(i, i + 1)))
+    let total = 0;
+    for (let i = 0; i <= 8; i++) {
+        const digit = (parseInt(nhsNumber.substring(i, i + 1)))
         total += (digit * (10 - i))
     }
 
@@ -93,13 +91,13 @@ const validateArray = (errors, fieldValue, fieldPointer, minElements) => {
     if (isUndefined(fieldValue)) {
         errors.push(missingError(fieldPointer));
         return false
-    } else if (fieldValue === null) {
+    } if (fieldValue === null) {
         errors.push(nullError(fieldPointer));
         return false
-    } else if (!Array.isArray(fieldValue)) {
+    } if (!Array.isArray(fieldValue)) {
         errors.push(invalidError(fieldPointer));
         return false
-    } else if (fieldValue.length < minElements) {
+    } if (fieldValue.length < minElements) {
         errors.push(tooFewItemsError(fieldPointer));
         return false
     }

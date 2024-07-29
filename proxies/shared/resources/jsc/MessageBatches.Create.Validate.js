@@ -4,11 +4,10 @@
  *
  * It is called by the JavaScript.MessageBatches.Create.Validate policy.
  */
+const content = context.getVariable("request.content")
+let errors = []
 
-var content = context.getVariable("request.content")
-var errors = []
-
-var all
+let all
 try {
   all = JSON.parse(content)
 } catch (e) {
@@ -18,8 +17,8 @@ try {
 
 const validate = () => {
   if (all) {
-    var seenMessages = {};
-    var data = all.data;
+    const seenMessages = {};
+    const {data} = all;
 
     // $.data
     const validDataObject = validateObject(errors, data, "/data")
@@ -42,8 +41,9 @@ const validate = () => {
         const validArray = validateArray(errors, data.attributes.messages, "/data/attributes/messages", 1)
         if (validArray) {
           // $.data.attributes.messages.x
+          /* eslint-disable-next-line consistent-return */
           data.attributes.messages.forEach((message, index) => {
-            var pointer = "/data/attributes/messages/" + index;
+            let pointer = `/data/attributes/messages/${index}`;
             // Limit the amount of errors returned to 100 entries
             if (errors.length >= 100) {
               errors = errors.slice(0, 100);
@@ -59,7 +59,7 @@ const validate = () => {
             } else {
 
               // $.data.attributes.messages.x.messageReference
-              pointer = "/data/attributes/messages/" + index + "/messageReference"
+              pointer = `/data/attributes/messages/${index}/messageReference`
               const validMessageReferenceUuid = validateUuid(errors, message.messageReference, pointer)
               if (validMessageReferenceUuid) {
                 if (seenMessages[message.messageReference]) {
@@ -70,28 +70,28 @@ const validate = () => {
               }
 
               // $.data.attributes.messages.x.recipient
-              const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient")
+              const validRecipientObject = validateObject(errors, message.recipient, `/data/attributes/messages/${index}/recipient`)
               if (validRecipientObject) {
 
                 // $.data.attributes.messages.x.recipient.nhsNumber
-                validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber")
+                validateNhsNumber(errors, message.recipient.nhsNumber, `/data/attributes/messages/${index}/recipient/nhsNumber`)
 
                 // $.data.attributes.recipients.x.dateOfBirth
-                validateDob(errors, message.recipient.dateOfBirth, "/data/attributes/messages/" + index + "/recipient/dateOfBirth")
+                validateDob(errors, message.recipient.dateOfBirth, `/data/attributes/messages/${index}/recipient/dateOfBirth`)
 
               }
 
               if (!isUndefined(message.originator)) {
                 // $.data.attributes.messages.x.originator
-                const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator")
+                const validOriginatorObject = validateObject(errors, message.originator, `/data/attributes/messages/${index}/originator`)
                 if (validOriginatorObject) {
                   // $.data.attributes.messages.x.originator.odsCode
-                  validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode")
+                  validateOdsCode(errors, message.originator.odsCode, `/data/attributes/messages/${index}/originator/odsCode`)
                 }
               }
 
               // $.data.attributes.messages.x.personalisation
-              pointer = "/data/attributes/messages/" + index + "/personalisation";
+              pointer = `/data/attributes/messages/${index}/personalisation`;
               if (!isUndefined(message.personalisation)) {
                 validateObject(errors, message.personalisation, pointer)
               }

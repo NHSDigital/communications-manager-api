@@ -1,6 +1,6 @@
 const content = context.getVariable("request.content")
-const data = JSON.parse(content).data
-var messageBatchReference = null;
+const {data} = JSON.parse(content)
+let messageBatchReference = null;
 
 if (data && data.attributes) {
     messageBatchReference = data.attributes.messageBatchReference;

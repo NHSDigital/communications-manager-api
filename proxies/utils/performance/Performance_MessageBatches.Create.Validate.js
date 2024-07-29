@@ -14,13 +14,11 @@ const context = {
 };
 
 const duplicateRef = uuid.v4();
-const genDuplicateMessage = () => {
-    return {
+const genDuplicateMessage = () => ({
         messageReference: duplicateRef,
         recipient: { nhsNumber: "9990548609" },
         personalisation: {}
-    }
-};
+    });
 
 let flipFlopRef = null;
 let flip = 0;
@@ -30,7 +28,7 @@ const genDuplicateFlipFlopMessage = () => {
     }
 
     const ret = {
-        messageReference: flipFlopRef + "",
+        messageReference: `${flipFlopRef  }`,
         recipient: { nhsNumber: "9990548609" },
         personalisation: {}
     };
@@ -44,16 +42,13 @@ const genDuplicateFlipFlopMessage = () => {
     return ret;
 };
 
-const genMessage = () => {
-    return {
+const genMessage = () => ({
         messageReference: uuid.v4(),
         recipient: { nhsNumber: "9990548609" },
         personalisation: {}
-    }
-};
+    });
 
-const generateBigMessage = (size, genFunction) => {
-    return JSON.stringify({
+const generateBigMessage = (size, genFunction) => JSON.stringify({
       data: {
         type: "MessageBatch",
         attributes: {
@@ -62,8 +57,7 @@ const generateBigMessage = (size, genFunction) => {
           messages: Array.from(Array(size).keys()).map(genFunction)
         }
       }
-    });
-}
+    })
 
 const testValidationPerformance = (runs) => {
     console.log("Generating big message....");
