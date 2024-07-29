@@ -1,5 +1,3 @@
-"use strict";
-
 import express from "express";
 import log from "loglevel";
 import * as handlers from "./handlers/index.js";
