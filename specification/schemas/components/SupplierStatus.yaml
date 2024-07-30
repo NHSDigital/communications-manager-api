@@ -7,7 +7,6 @@ properties:
     type: object
     properties:
       messageId:
-        description: Identifier for the message
         $ref: ../types/KSUID.yaml
       messageReference:
         type: string
@@ -27,20 +26,14 @@ properties:
         description: If there is extra information associated with the status of this channel, it is provided here.
         example: ""
       supplierStatus:
-<<<<<<< HEAD
         $ref: ../enums/SupplierStatusEnum.yaml
-=======
-        $ref: ../enums/SupplierStatus.yaml
->>>>>>> b5567fa (CCM-5995: Add descriptions to enums in API docs)
       timestamp:
         type: string
         description: Date-time for when the supplier status change was processed.
         format: date-time
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
-        type: number
-        description: Contains the amount of times that we have attempted to send this message to this channel.
-        example: 1
+        $ref: ../../snippets/RetryCount.yaml
     required:
       - messageId
       - messageReference

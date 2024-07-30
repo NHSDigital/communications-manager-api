@@ -15,7 +15,7 @@ properties:
           - 1642109b-69eb-447f-8f97-ab70a74f5db4
       messageStatus:
         type: string
-        $ref: ../enums/MessageStatus.yaml 
+        $ref: ../enums/EnumMessageStatus.yaml 
       messageStatusDescription:
         type: string
         example: ""

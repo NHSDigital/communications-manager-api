@@ -1,4 +1,4 @@
-title: Type_MessageBatch
+title: Enum_MessageBatch
 type: string
 enum:
   - MessageBatch

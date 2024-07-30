@@ -1,4 +1,4 @@
-title: Type_Message
+title: Enum_Message
 type: string
 enum:
   - Message

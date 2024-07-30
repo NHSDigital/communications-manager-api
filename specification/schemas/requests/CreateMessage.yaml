@@ -5,7 +5,7 @@ properties:
     type: object
     properties:
       type:
-        $ref: ../enums/TypeMessage.yaml
+        $ref: ../enums/EnumMessage.yaml
       attributes:
         type: object
         required:

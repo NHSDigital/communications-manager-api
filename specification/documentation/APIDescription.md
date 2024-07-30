@@ -191,7 +191,7 @@ The message status shows an overall aggregate status taken from all of the commu
 
 The channels can have the following supplier statuses:
 
-### NHS APP
+### NHS App
 
 * `delivered` - the message has been successfully delivered to the user
 * `read` - a user has read the message
