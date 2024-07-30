@@ -82,7 +82,7 @@ function authenticate(helper, paramsValues, credentials) {
         print("get_bearer_token.js: Error getting access token");
     }
     
-    return tokenMsg;
+    // return tokenMsg;
 }
 
 function getRequiredParamsNames(){
