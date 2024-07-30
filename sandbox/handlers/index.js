@@ -1,11 +1,9 @@
-"use strict";
-
 export { status } from "./status.js"
-export { batch_send } from "./batch_send.js"
+export { batchSend } from "./batch_send.js"
 export { messages } from "./messages.js"
-export { get_message } from "./get_message.js"
-export { nhsapp_accounts } from "./nhsapp_accounts.js"
-export { trigger_timeout } from "./trigger_timeout.js"
-export { backend_403 } from "./backend_403.js"
-export { backend_408 } from "./backend_408.js"
-export { backend_504 } from "./backend_504.js"
+export { getMessage } from "./get_message.js"
+export { nhsappAccounts } from "./nhsapp_accounts.js"
+export { triggerTimeout } from "./trigger_timeout.js"
+export { backend403 } from "./backend_403.js"
+export { backend408 } from "./backend_408.js"
+export { backend504 } from "./backend_504.js"

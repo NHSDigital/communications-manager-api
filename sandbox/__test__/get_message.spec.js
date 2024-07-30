@@ -3,19 +3,19 @@ import * as fs from "fs"
 import * as path from "path"
 import { fileURLToPath } from 'url';
 import { assert } from "chai";
-import { setup } from './helpers.js'
 import * as uuid from 'uuid';
+import { setup } from './helpers.js'
 
 function getMessageData() {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = path.dirname(__filename);
     const directoryPath = path.join(__dirname, '../messages');
-    let messagesArray = []; // Array to hold the result
+    const messagesArray = []; // Array to hold the result
 
     const files = fs.readdirSync(directoryPath)
 
     files.forEach(file => {
-        let messageId = path.basename(file, '.json');
+        const messageId = path.basename(file, '.json');
 
         const fileContent = fs.readFileSync(path.join(directoryPath, file), 'utf8')
 
@@ -28,12 +28,12 @@ describe('/api/v1/messages/{messageId}', () => {
     let env;
     let server;
 
-    before(function () {
+    beforeEach(() => {
         env = process.env;
         server = setup()
     });
 
-    after(function () {
+    afterEach(() => {
         process.env = env;
         server.close();
     });
@@ -58,15 +58,15 @@ describe('/api/v1/messages/{messageId}', () => {
 
     getMessageData().forEach(({ messageId, response }, i) => {
         it(`responds correctly ${i}`, (done) => {
-            const correlation_id = uuid.v4();
+            const correlationId = uuid.v4();
             request(server)
                 .get(`/api/v1/messages/${messageId}`)
-                .set('X-Correlation-Id', correlation_id)
+                .set('X-Correlation-Id', correlationId)
                 .expect(200)
                 .expect((res) => {
                     assert.deepEqual(res.body, response);
                 })
-                .expect("X-Correlation-Id", correlation_id)
+                .expect("X-Correlation-Id", correlationId)
                 .expect("Content-Type", /json/, done);
         });
     });
