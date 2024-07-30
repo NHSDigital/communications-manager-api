@@ -1,4 +1,4 @@
-title: SupplierStatusEnum
+title: Enum_SupplierStatus
 type: string
 enum:
   - delivered

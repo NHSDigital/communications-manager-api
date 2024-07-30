@@ -1,4 +1,4 @@
-title: MessageStatusEnum
+title: Enum_MessageStatus
 type: string
 enum:
   - created
