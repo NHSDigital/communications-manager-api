@@ -119,6 +119,12 @@ module.exports = {
       },
     },
     {
+      files: ['sandbox/**'],
+      rules: {
+        'security/detect-non-literal-fs-filename': 'off',
+      },
+    },
+    {
       files: ['sandbox/index.js'],
       rules: {
         'no-console': 'off',
