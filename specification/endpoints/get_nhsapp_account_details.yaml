@@ -19,7 +19,7 @@ responses:
   '404':
     $ref: ../responses/4xx/get_nhsapp_accounts/404_NHSAppAccountsNotFound.yaml
   '405':
-    $ref: ../responses/4xx/405_NotAllowed.yaml
+    $ref: ../responses/2xx/200_Message.yaml
   '406':
     $ref: ../responses/4xx/406_NotAcceptable.yaml
   '408':

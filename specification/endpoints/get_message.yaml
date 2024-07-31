@@ -9,9 +9,9 @@ responses:
   '200':
     $ref: ../responses/2xx/200_Message.yaml
   '401':
-    $ref: ../responses/4xx/401_AccessDenied.yaml
+    $ref: ../responses/2xx/200_Message.yaml
   '403':
-    $ref: ../responses/4xx/403_Forbidden.yaml
+    $ref: ../responses/2xx/200_Message.yaml
   '404':
     $ref: ../responses/4xx/404_NotFound.yaml
   '405':
