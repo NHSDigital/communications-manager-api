@@ -40,7 +40,7 @@ requestBody:
             type: array
             minItems: 1
             items:
-              $ref: ../schemas/components/MessageStatus.yaml
+              $ref: ../schemas/components/SupplierStatus.yaml
 responses:
     '202':
         description: Accepted

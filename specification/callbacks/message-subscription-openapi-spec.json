@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/nhs-notify-callbacks/v1/channel-status": {
+    "/nhs-notify-callbacks/v1/message-status": {
       "post": {
         "summary": "Receive a callback",
         "description": "NHS Notify will make a callback to this endpoint when:\n\n* the message has been delivered (via any channel)\n* the message could not be delivered to a given channel (but may be deliverable by an alternative channel)\n* the message could not be delivered by any channel\n\nCallbacks can be received for additional state transitions subject to the needs of the user. These additional state transitions can be requested during onboarding. These statuses are:\n\n* `pending_enrichment` - the message is currently pending enrichment\n* `enriched` - we have queried PDS for this patient's details and now know how to contact this individual\n* `sending` - the message is in the process of being sent",
