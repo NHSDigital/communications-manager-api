@@ -23,11 +23,7 @@ properties:
               The current status of this message at the time this response was generated.
 
               For more information please check our documentation on message & channel statuses above.
-<<<<<<< HEAD
             $ref: ../enums/MessageStatusEnum.yaml
-=======
-            $ref: ../enums/EnumMessageStatus.yaml
->>>>>>> 2bd5e73 (CCM-5995: Address review comments)
           messageStatusDescription:
             type: string
             description: If there is extra information associated with the status of this message, it is provided here.

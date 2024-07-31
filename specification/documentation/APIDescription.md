@@ -46,7 +46,7 @@ This API can generate responses in the following formats:
 
 Both of these formats have the same structure - the API responds with a standard JSON document.
 
-You can control which `Content-Type` is returned by using the `Accept` header.
+You can use the `Accept` header to control which `Content-Type` is returned in the response.
 
 The `Accept` header can contain the following values:
 
