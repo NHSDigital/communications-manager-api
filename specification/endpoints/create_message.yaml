@@ -1,7 +1,7 @@
 summary: Send a single message
 description:
   $ref: ../documentation/CreateMessage.md
-operationId: create-message
+operationId: get-message
 parameters:
   - $ref: ../snippets/AuthorizationParameter.yaml
   - $ref: ../snippets/CorrelationParameter.yaml

@@ -1,7 +1,7 @@
 summary: Get NHS App Account details
 description:
   $ref: ../documentation/GetNHSAppAccountDetails.md
-operationId: get-nhsapp-account-details
+operationId: get-message
 parameters:
   - $ref: ../snippets/AuthorizationParameter.yaml
   - $ref: ../snippets/CorrelationParameter.yaml
