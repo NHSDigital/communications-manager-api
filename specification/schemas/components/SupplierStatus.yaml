@@ -28,7 +28,7 @@ properties:
         description: If there is extra information associated with the status of this channel, it is provided here.
         example: ""
       supplierStatus:
-        $ref: ../enums/SupplierStatus.yaml
+        $ref: ../enums/SupplierStatusEnum.yaml
       timestamp:
         type: string
         description: Date-time for when the supplier status change was processed.
