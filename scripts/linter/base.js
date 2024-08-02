@@ -161,7 +161,7 @@ module.exports = {
       files: ["**/*bearer_token.js"],
       rules: {
         "no-undef": "off",
-        camelcase: "off",
+        "camelcase": "off",
         "no-restricted-globals": "off",
         "@typescript-eslint/no-unused-vars": "off",
       },
@@ -210,6 +210,7 @@ module.exports = {
       rules: {
         "@typescript-eslint/no-unused-vars": "off",
         "no-eval": "off",
+        "security/detect-eval-with-expression": "off",
       },
     },
   ],

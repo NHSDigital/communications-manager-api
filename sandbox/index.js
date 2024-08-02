@@ -25,5 +25,4 @@ Object.keys(signals).forEach((signal) => {
     });
 });
 
-
 export { server };

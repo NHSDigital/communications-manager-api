@@ -49,7 +49,7 @@ build-test-documentation:
 
 # Lint JavaScript files
 .lint-js:
-	node_modules/.bin/eslint sandbox/
+	node_modules/.bin/eslint .
 
 # Lint Python files
 .lint-python:
