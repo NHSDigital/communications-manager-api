@@ -1,18 +1,18 @@
 import request from "supertest"
 import { assert } from "chai";
-import { setup } from './helpers.js'
 import * as uuid from 'uuid';
+import { setup } from './helpers.js'
 
 describe("/api/v1/messages", () => {
   let env;
   let server;
 
-  before(function () {
+  beforeEach(() => {
     env = process.env;
     server = setup();
   });
 
-  after(function () {
+  afterEach(() => {
     process.env = env;
     server.close();
   });
@@ -76,7 +76,7 @@ describe("/api/v1/messages", () => {
   });
 
   it("returns a X-Correlation-Id when provided", (done) => {
-    const correlation_id = uuid.v4();
+    const correlationId = uuid.v4();
     request(server)
       .post("/api/v1/messages")
       .send({
@@ -95,9 +95,9 @@ describe("/api/v1/messages", () => {
           },
         },
       })
-    .set('X-Correlation-Id', correlation_id)
+    .set('X-Correlation-Id', correlationId)
     .expect(201)
-    .expect("X-Correlation-Id", correlation_id, done);
+    .expect("X-Correlation-Id", correlationId, done);
   });
 
   it("responds with a 201 for a valid global NHS app routing plan", (done) => {

@@ -35,7 +35,8 @@ with open('build/communications-manager-zap.json', 'w') as f:
             (
                 ("format", "date"),
                 ("personalisation", None),
-                ("/callbacks", None)
+                ("/callbacks/message-status", None),
+                ("/<client-provided-URI>", None),
             )
         ),
         f

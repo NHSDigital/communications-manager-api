@@ -1,32 +1,32 @@
 import request from "supertest"
 import * as  fs from 'fs'
-import { setup } from './helpers.js'
 import * as uuid from 'uuid';
+import { setup } from './helpers.js'
 
 describe("/api/channels/nhsapp/accounts", () => {
     let env;
     let server;
 
-    before(function () {
+    beforeEach(() => {
         env = process.env;
         server = setup();
     });
 
-    after(function () {
+    afterEach(() => {
         process.env = env;
         server.close();
     });
 
     it("returns a X-Correlation-Id when provided", (done) => {
-        const correlation_id = uuid.v4();
+        const correlationId = uuid.v4();
         request(server)
             .get("/api/channels/nhsapp/accounts")
             .query({
                 "ods-organisation-code": "X26"
             })
-            .set('X-Correlation-Id', correlation_id)
+            .set('X-Correlation-Id', correlationId)
             .expect(200)
-            .expect("X-Correlation-Id", correlation_id, done);
+            .expect("X-Correlation-Id", correlationId, done);
     });
 
     it("returns a service ban (403) when the user is banned", (done) => {
@@ -123,7 +123,7 @@ describe("/api/channels/nhsapp/accounts", () => {
             .expect("Content-Type", /json/, done);
     })
 
-    describe("returns a 200 and default response for valid ODS codes other than T00001", (done) => {
+    describe("returns a 200 and default response for valid ODS codes other than T00001", () => {
         const testCases = ['X26', 'T00002', 'X23201', 'A90001']
 
         testCases.forEach((odsCode) => {
@@ -162,7 +162,7 @@ describe("/api/channels/nhsapp/accounts", () => {
         })
     })
 
-    describe("returns a 200 and default response for valid ODS codes other than T00001 with page 1 for query param", (done) => {
+    describe("returns a 200 and default response for valid ODS codes other than T00001 with page 1 for query param", () => {
         const testCases = ['X26', 'T00002', 'X23201', 'A90001']
 
         testCases.forEach((odsCode) => {
@@ -195,7 +195,8 @@ describe("/api/channels/nhsapp/accounts", () => {
                         },
                         links: {
                             last: `%PATH_ROOT%?ods-organisation-code=${odsCode}&page=1`,
-                            self: `%PATH_ROOT%?ods-organisation-code=${odsCode}&page=1`,                        },
+                            self: `%PATH_ROOT%?ods-organisation-code=${odsCode}&page=1`,
+                        },
                     })
                     .expect("Content-Type", /json/, done);
             })

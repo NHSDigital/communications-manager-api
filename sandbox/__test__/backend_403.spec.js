@@ -1,17 +1,17 @@
 import request from "supertest";
-import { setup } from './helpers.js';
 import * as uuid from 'uuid';
+import { setup } from './helpers.js';
 
 describe('backend_403', () => {
   let env;
   let server;
 
-  before(function () {
+  beforeEach(() => {
     env = process.env;
     server = setup()
   });
 
-  after(function () {
+  afterEach(() => {
     process.env = env;
     server.close();
   });
@@ -23,11 +23,11 @@ describe('backend_403', () => {
   });
 
   it("returns a X-Correlation-Id when provided", (done) => {
-    const correlation_id = uuid.v4();
+    const correlationId = uuid.v4();
     request(server)
       .get('/_invalid_certificate')
-      .set('X-Correlation-Id', correlation_id)
+      .set('X-Correlation-Id', correlationId)
       .expect(403, '{"message":"Forbidden"}')
-      .expect("X-Correlation-Id", correlation_id, done);
+      .expect("X-Correlation-Id", correlationId, done);
   });
 })

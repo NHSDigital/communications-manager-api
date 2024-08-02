@@ -21,9 +21,8 @@ install: install-node install-python .git/hooks/pre-commit
 install-hooks: .git/hooks/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint: .check-licenses .ensure-test-documentation-validity
-	npm run lint
-	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
+lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
+	npm run lint 
 
 static-analysis:
 	npm run static-analysis
@@ -47,6 +46,14 @@ build-proxy:
 
 build-test-documentation:
 	cd tests/docs && ./build-docs.sh --build-only && cd ../../
+
+# Lint JavaScript files
+.lint-js:
+	node_modules/.bin/eslint sandbox/
+
+# Lint Python files
+.lint-python:
+	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
 
 #Files to loop over in release
 _dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman scripts"
