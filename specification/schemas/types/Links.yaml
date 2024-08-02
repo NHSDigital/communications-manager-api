@@ -6,4 +6,4 @@ properties:
     type: string
     format: uri
     description: URI of this message.
-    example: https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS
+    example: https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM

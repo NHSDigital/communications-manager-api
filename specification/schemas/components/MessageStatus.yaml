@@ -9,15 +9,13 @@ properties:
       messageId:
         $ref: ../types/KSUID.yaml
       messageReference:
-        type: string
-        format: uuid
-        examples: 
-          - 1642109b-69eb-447f-8f97-ab70a74f5db4
+        $ref: ../../snippets/MessageReference.yaml
       messageStatus:
         type: string
         $ref: ../enums/MessageStatusEnum.yaml 
       messageStatusDescription:
         type: string
+        description: If there is extra information associated with the status of this message, it is provided here.
         example: ""
       channels:
         type: array

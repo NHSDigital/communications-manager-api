@@ -1,5 +1,6 @@
 title: Enum_RoutingPlanType
 type: string
+description: The routing plan used to send messages.
 enum:
   - original
   - override
