@@ -1,5 +1,5 @@
+title: Enum_Error_NotFound
 type: string
 enum:
   - CM_NOT_FOUND
 example: CM_NOT_FOUND
-title: Enum_Error_NotFound

@@ -1,5 +1,5 @@
-type: string
 title: Enum_Error_Method_Not_Allowed
+type: string
 enum:
   - CM_NOT_ALLOWED
 example: CM_NOT_ALLOWED

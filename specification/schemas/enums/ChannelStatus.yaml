@@ -1,5 +1,6 @@
+title: Enum_ChannelStatus
+description: The current status of this channel at the time this response was generated.
 type: string
-title: ChannelStatus
 enum:
   - created
   - sending

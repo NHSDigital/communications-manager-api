@@ -1,5 +1,5 @@
+title: Enum_RoutingPlanType
 type: string
-title: RoutingPlanType
 enum:
   - original
   - override

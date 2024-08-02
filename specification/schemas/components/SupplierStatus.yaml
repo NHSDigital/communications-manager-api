@@ -7,7 +7,6 @@ properties:
     type: object
     properties:
       messageId:
-        description: Identifier for the message
         $ref: ../types/KSUID.yaml
       messageReference:
         type: string
@@ -21,7 +20,6 @@ properties:
           - nhsapp
         example: nhsapp
       channelStatus:
-        description: The current status of this channel at the time this response was generated.
         $ref: ../enums/ChannelStatus.yaml
       channelStatusDescription:
         type: string
@@ -35,9 +33,7 @@ properties:
         format: date-time
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
-        type: number
-        description: Contains the amount of times that we have attempted to send this channel.
-        example: 1
+        $ref: ../../snippets/RetryCount.yaml
     required:
       - messageId
       - messageReference

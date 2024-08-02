@@ -123,8 +123,7 @@
                 "format": "date-time"
               },
               "retryCount": {
-                "type": "number",
-                "description": "Contains the amount of times that we have attempted to send this channel."
+                "$ref": "../snippets/RetryCount.yaml"
               }
             },
             "required": [

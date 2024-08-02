@@ -1,4 +1,5 @@
 title: Enum_MessageStatus
+description: An overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
 type: string
 enum:
   - created
