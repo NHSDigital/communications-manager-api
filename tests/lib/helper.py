@@ -95,7 +95,10 @@ class Helper():
             page.get_by_role("link", name="Your NHS healthcare services").click()
 
             expect(page.get_by_role("heading", name="Your messages")).to_be_visible()
-            page.get_by_label("Unread message from NHS").click()
+
+            # There might several unread messages, we need to select the right one
+            page.locator(f'text="APIM end to end test: {personalisation} "').locator("..") \
+                .locator("..").get_by_label("Unread message from NHS").click()
 
             page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
             expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
