@@ -1,4 +1,4 @@
-import { setup, start } from './app';
+import { setup, start } from './app.js';
 
 setup(process.env);
 

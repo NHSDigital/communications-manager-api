@@ -65,7 +65,6 @@ export async function nhsappAccounts(req, res, next) {
   }
 
   if (odsCode === paginationOdsCode) {
-    /* eslint-disable-next-line security/detect-non-literal-fs-filename */
     fs.readFile(`./nhsapp-accounts/${page}.json`, 'utf-8', (err, fileContent) => {
       if (err) {
         sendError(res, 404, 'Report not found');

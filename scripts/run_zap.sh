@@ -1,6 +1,8 @@
 #!/bin/bash
 
-set -o nounset errexit pipefail
+set -o nounset
+set -o errexit
+set -o pipefail
 
 # create our temporary directory
 export TEMP_DIR=/tmp

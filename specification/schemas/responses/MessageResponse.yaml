@@ -7,7 +7,7 @@ properties:
     additionalProperties: false
     properties:
       type:
-        $ref: ../enums/TypeMessage.yaml
+        $ref: ../enums/EnumMessage.yaml
       id:
         $ref: ../types/KSUID.yaml
         description: Identifier for this Message.
@@ -23,7 +23,7 @@ properties:
               The current status of this message at the time this response was generated.
 
               For more information please check our documentation on message & channel statuses above.
-            $ref: ../enums/MessageStatus.yaml
+            $ref: ../enums/MessageStatusEnum.yaml
           messageStatusDescription:
             type: string
             description: If there is extra information associated with the status of this message, it is provided here.
@@ -40,12 +40,9 @@ properties:
               additionalProperties: false
               properties:
                 type:
-                  description: This is the type of channel to be used.
                   $ref: ../enums/ChannelType.yaml
                 retryCount:
-                  description: Contains the amount of times that we have attempted to send this channel.
-                  type: integer
-                  example: 1
+                  $ref: ../../snippets/RetryCount.yaml
                 channelStatus:
                   description: |-
                     The current status of this channel at the time this response was generated.
@@ -61,7 +58,7 @@ properties:
                     The current status of this message within the channel at the time this response was generated.
       
                     For more information please check our documentation on message & channel statuses above.
-                  $ref: ../enums/SupplierStatus.yaml
+                  $ref: ../enums/SupplierStatusEnum.yaml
                 timestamps:
                   type: object
                   additionalProperties: false
@@ -176,7 +173,7 @@ properties:
                 additionalProperties: false
                 properties:
                   type:
-                    $ref: ../enums/TypeMessageBatch.yaml
+                    $ref: ../enums/EnumMessageBatch.yaml
                   id:
                     description: This is the unique identifier of the batch that contains this message.
                     $ref: ../types/KSUID.yaml

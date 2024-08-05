@@ -10,7 +10,6 @@ export async function getMessage(req, res, next) {
 
   const { messageId } = req.params;
 
-  /* eslint-disable-next-line security/detect-non-literal-fs-filename */
   fs.readFile(`./messages/${messageId}.json`, 'utf8', (err, fileContent) => {
     if (err) {
       writeLog(res, "warn", {

@@ -119,6 +119,18 @@ module.exports = {
       },
     },
     {
+      files: ['sandbox/**'],
+      rules: {
+        'security/detect-non-literal-fs-filename': 'off',
+      },
+    },
+    {
+      files: ['sandbox/**'],
+      rules: {
+        'security/detect-non-literal-fs-filename': 'off',
+      },
+    },
+    {
       files: [
         "sandbox/index.js",
         "**/Performance_MessageBatches.Create.Validate.js",
