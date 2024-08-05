@@ -196,6 +196,7 @@ module.exports = {
       ],
       rules: {
         "no-undef": "off",
+        "prefer-destructuring": "off",
       },
     },
     {
