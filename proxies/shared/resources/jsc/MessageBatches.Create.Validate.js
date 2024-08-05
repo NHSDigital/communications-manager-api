@@ -18,7 +18,7 @@ try {
 const validate = () => {
   if (all) {
     const seenMessages = {};
-    const {data} = all;
+    const data = all.data;
 
     // $.data
     const validDataObject = validateObject(errors, data, "/data")

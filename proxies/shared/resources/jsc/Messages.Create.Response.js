@@ -9,7 +9,7 @@ const baseUrl = reqUrl.split("?")[0].replace(internalHostname, hostname);
 
 const correlationId = context.getVariable("response.header.x-correlation-id");
 
-const {data} = JSON.parse(content)
+const data = JSON.parse(content).data
 let messageId = null;
 
 if (data) {

@@ -1,5 +1,5 @@
 const content = context.getVariable("request.content")
-const {data} = JSON.parse(content)
+const data = JSON.parse(content).data
 let messageReference = null;
 
 if (data && data.attributes) {
