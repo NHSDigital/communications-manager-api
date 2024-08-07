@@ -10,7 +10,7 @@ It includes:
 * `sandbox/` - This NodeJS application implements a mock implementation of the service. Use it as a back-end service to the interactive documentation to illustrate interactions and concepts. It is not intended to provide an exhaustive/faithful environment suitable for full development and testing.
 * `scripts/` - Utilities helpful to developers of this specification.
 * `proxies/` - Live (connecting to another service) and sandbox (using the sandbox container) Apigee API Proxy definitions.
-* `azure/` - Azure Devops pipeline definitions
+* `azure/` - Azure Devops pipeline definitions.
 * `zap/` - Zap security scan configuration.
 * `tests/` - Integration test suites.
 * `postman/` - Postman collections.
