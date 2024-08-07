@@ -16,7 +16,7 @@ It includes:
 * `postman/` - Postman collections.
 * `docs/` - [Documentation for the project](docs/index.md)
 
-Consumers of the API will find developer documentation on the [Communications Manager API entry](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
+Consumers of the API will find developer documentation on the [NHS Notify API entry](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
 
 This repo does not include the Communications Manager back-end that is not currently open source.
 
