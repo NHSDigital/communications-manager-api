@@ -5,14 +5,13 @@ description: |-
     NHS Notify will send a callback when the message status is updated to any of the following:
 
     * `delivered` - the message has been delivered (via any channel)
-    * `sending` - the message could not be delivered to a given channel (but may be deliverable by an alternative channel)
     * `failed` - the message could not be delivered by any channel
 
     Callbacks can be received for additional state transitions subject to the needs of the user. These additional state transitions can be requested during onboarding. These statuses are:
 
     * `pending_enrichment` - the message is currently pending enrichment
-    * `enriched` - we have queried PDS for this patient's details and now know how to contact this individual
-    * `sending` - the message is in the process of being sent
+    * `enriched` - NHS Notify has queried PDS for this patient's details and now know how to contact this individual
+    * `sending` - the message is in the process of being sent - this can occur multiple times for a single message if multiple channels are to be attempted
 operationId: post-v1-message-callbacks
 parameters:
     - name: x-hmac-sha256-signature
