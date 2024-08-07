@@ -34,7 +34,7 @@
       "info" : {
          "_postman_id" : "ec078d1e-d4d7-4460-92b9-7d79d51f967a",
          "createdAt" : "2023-07-25T06:43:37.000Z",
-         "description" : "This collection allows you to run a number of pre-generated requests to simulate responses from our sandbox environment.\n\nThis environment requires no authentication and no upfront setup for you to use.\n\nFor more information on the Communications Manager API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/communications-manager).",
+         "description" : "This collection allows you to run a number of pre-generated requests to simulate responses from our sandbox environment.\n\nThis environment requires no authentication and no upfront setup for you to use.\n\nFor more information on the Communications Manager API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).",
          "lastUpdatedBy" : "35992763",
          "name" : "Communications Manager - Sandbox",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",

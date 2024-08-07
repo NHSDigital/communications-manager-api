@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/NHSDigital/communications-manager-api/workflows/Build/badge.svg?branch=release)
 
-This is the RESTful API for the [*Communications Manager Service*](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
+This is the RESTful API for the [*Communications Manager Service*](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
 
 It includes:
 
@@ -16,7 +16,7 @@ It includes:
 * `postman/` - Postman collections.
 * `docs/` - [Documentation for the project](docs/index.md)
 
-Consumers of the API will find developer documentation on the [Communications Manager API entry](https://digital.nhs.uk/developer/api-catalogue/communications-manager).
+Consumers of the API will find developer documentation on the [Communications Manager API entry](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
 
 This repo does not include the Communications Manager back-end that is not currently open source.
 

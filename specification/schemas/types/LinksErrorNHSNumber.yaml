@@ -4,8 +4,8 @@ properties:
   about:
     type: string
     format: uri
-    example: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
-    description: 'https://digital.nhs.uk/developer/api-catalogue/communications-manager'
+    example: 'https://digital.nhs.uk/developer/api-catalogue/nhs-notify'
+    description: 'https://digital.nhs.uk/developer/api-catalogue/nhs-notify'
   nhsNumbers:
     type: string
     format: uri
