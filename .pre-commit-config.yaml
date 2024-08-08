@@ -23,6 +23,7 @@ repos:
       description: Ensure the test documentation is valid
       entry: './scripts/ensure_docs_validity.sh'
       language: script
+      files: 'tests/docs/.*\.(rst)$'
     - id: check-licences
       name: check licences
       description: Check dependencies for licensing issues
