@@ -9,15 +9,8 @@ install-node:
 	npm install --legacy-peer-deps
 	cd sandbox && npm install --legacy-peer-deps
 
-#Configures Git Hooks, which are scripts that run given a specified event.
-.git/hooks/pre-commit:
-	chmod +x .git/hooks/pre-commit
-
 #Condensed Target to run all targets above.
-install: install-node install-python .git/hooks/pre-commit
-
-#Referenced within readme
-install-hooks: .git/hooks/pre-commit
+install: install-node install-python
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
 lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
