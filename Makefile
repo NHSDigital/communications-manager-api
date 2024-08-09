@@ -4,13 +4,16 @@ SHELL=/bin/bash -euo pipefail
 install-python:
 	poetry install
 
+install-pre-commit:
+	pnpm install pre-commit
+
 #Installs dependencies using npm.
 install-node:
 	npm install --legacy-peer-deps
 	cd sandbox && npm install --legacy-peer-deps
 
 #Condensed Target to run all targets above.
-install: install-node install-python
+install: install-node install-python install-pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
 lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
