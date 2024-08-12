@@ -1,15 +1,14 @@
 #!/bin/bash
 
-# Create a stash and capture output
-git stash push --keep-index -u
-
-# Check if the stash was created successfully
-if [ $? -eq 0 ]; then
-    echo -e "Stashing unstaged changes... \n"
-    STASH_CREATED=true
-else
-    echo -e "No unstaged changes to stash... \n"
+# Check if there are unstaged changes
+if git diff --quiet; then
+    echo -e "No unstaged changes to stash...\n"
     STASH_CREATED=false
+else
+    # Unstaged changes detected
+    git stash --keep-index -u
+    echo -e "Stashing unstaged changes...\n"
+    STASH_CREATED=true
 fi
 
 # Find all changed files for this commit
