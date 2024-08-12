@@ -4,11 +4,11 @@
 STASH_REF=$(git stash --keep-index -u)
 
 if [ -n "$STASH_REF" ]; then
-    echo "Stashing unstaged changes..."
+    echo -e "Stashing unstaged changes... \n"
     git stash store -q "$STASH_REF"
     STASH_CREATED=true
 else
-    echo "No unstaged changes to stash..."
+    echo -e "No unstaged changes to stash... \n"
     STASH_CREATED=false
 fi
 
