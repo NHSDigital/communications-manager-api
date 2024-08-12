@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Stash unstaged changes and capture the stash reference if any
-STASH_REF=$(git stash --keep-index -u)
+# Create a stash and capture output
+git stash push --keep-index -u
 
-if [ -n "$STASH_REF" ]; then
+# Check if the stash was created successfully
+if [ $? -eq 0 ]; then
     echo -e "Stashing unstaged changes... \n"
-    git stash store -q "$STASH_REF"
     STASH_CREATED=true
 else
     echo -e "No unstaged changes to stash... \n"
