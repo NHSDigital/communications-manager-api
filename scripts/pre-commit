@@ -1,2 +1,92 @@
-#!/bin/sh
-make lint
+#!/bin/bash
+
+# Stash unstaged changes and capture the stash reference if any
+STASH_REF=$(git stash --keep-index -u)
+
+if [ -n "$STASH_REF" ]; then
+    echo "Stashing unstaged changes..."
+    git stash store -q "$STASH_REF"
+    STASH_CREATED=true
+else
+    echo "No unstaged changes to stash..."
+    STASH_CREATED=false
+fi
+
+# Find all changed files for this commit
+# Compute the diff only once to save a small amount of time.
+CHANGED_FILES=$(git diff --name-only --cached --diff-filter=ACMR)
+# Get only changed files that match our file suffix pattern
+get_pattern_files() {
+    pattern=$(echo "$*" | sed "s/ /\$\\\|/g")
+    echo "$CHANGED_FILES" | { grep "$pattern$" || true; }
+}
+# Get all changed python files
+PY_FILES=$(get_pattern_files .py)
+JS_FILES=$(get_pattern_files .js)
+
+# Tracks if any checks fail
+FAIL=0
+
+# Git Secrets
+echo "Running Git Secrets..."
+./nhsd-git-secrets/pre-commit-mac.sh
+if [ $? -ne 0 ]; then
+    echo "Git Secrets failed. Commit aborted."
+    FAIL=1
+fi
+
+if [[ -n "$JS_FILES" ]]; then
+    # Lint JavaScript files in the sandbox folder
+    echo "Linting JavaScript files..."
+    node_modules/.bin/eslint 'sandbox/**/*.{js,jsx}'
+    if [ $? -ne 0 ]; then
+        echo "JavaScript linting failed. Commit aborted."
+        FAIL=1
+    fi
+else
+    echo "No JavaScript files to lint. Skipping JavaScript linting."
+fi
+
+if [[ -n "$PY_FILES" ]]; then
+    # Lint Python files in the project
+    echo "Linting Python files..."
+    ./scripts/lint_python.sh
+    if [ $? -ne 0 ]; then
+        echo "Python linting failed. Commit aborted."
+        FAIL=1
+    fi
+else
+    echo "No Python files to lint. Skipping Python linting."
+fi
+
+# Ensure Test Documentation Validity
+echo "Ensuring test documentation validity..."
+if ./scripts/ensure_docs_validity.sh > /dev/null 2>&1; then
+    echo "Documentation check passed."
+else
+    echo "Test documentation validation failed. Commit aborted."
+    FAIL=1
+fi
+
+# Check Licences
+echo "Checking licenses..."
+if ./scripts/check_licences.sh > /dev/null 2>&1; then
+    echo "License check passed."
+else
+    echo "License check failed. Commit aborted."
+    FAIL=1
+fi
+
+# Pop the stash only if a stash was created
+if [ "$STASH_CREATED" = true ]; then
+    echo "Restoring unstaged changes..."
+    git stash pop -q
+fi
+
+# Exit with failure if any checks failed
+if [ $FAIL -ne 0 ]; then
+    exit 1
+fi
+
+echo "All checks passed. Proceeding with commit."
+exit 0

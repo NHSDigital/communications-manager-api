@@ -57,7 +57,6 @@
   "dependencies": {
     "jsrsasign": "^11.1.0",
     "jsrsasign-util": "^1.0.5",
-    "playwright": "^1.42.1",
-    "pre-commit": "^1.2.2"
+    "playwright": "^1.42.1"
   }
 }
