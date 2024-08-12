@@ -31,49 +31,57 @@ FAIL=0
 echo "Running Git Secrets..."
 ./nhsd-git-secrets/pre-commit-mac.sh
 if [ $? -ne 0 ]; then
-    echo "Git Secrets failed. Commit aborted."
-    FAIL=1
+    echo -e "Git Secrets failed. Commit aborted. \n"
+    FAIL=1    
+else
+    echo -e "Git Secrets check passed.\n"
 fi
 
+
+# Lint JavaScript files in the sandbox folder
+echo "Linting JavaScript files..."
 if [[ -n "$JS_FILES" ]]; then
-    # Lint JavaScript files in the sandbox folder
-    echo "Linting JavaScript files..."
     node_modules/.bin/eslint 'sandbox/**/*.{js,jsx}'
     if [ $? -ne 0 ]; then
-        echo "JavaScript linting failed. Commit aborted."
+        echo -e "JavaScript linting failed. Commit aborted. \n"
         FAIL=1
+    else
+        echo -e "JavaScript linting passed.\n"
     fi
 else
-    echo "No JavaScript files to lint. Skipping JavaScript linting."
+    echo -e "No JavaScript files to lint. Skipping JavaScript linting. \n"
 fi
 
+
+# Lint Python files in the project
+echo "Linting Python files..."
 if [[ -n "$PY_FILES" ]]; then
-    # Lint Python files in the project
-    echo "Linting Python files..."
     ./scripts/lint_python.sh
     if [ $? -ne 0 ]; then
-        echo "Python linting failed. Commit aborted."
+        echo -e "Python linting failed. Commit aborted. \n"
         FAIL=1
+    else
+        echo -e "Python linting passed.\n"
     fi
 else
-    echo "No Python files to lint. Skipping Python linting."
+    echo -e "No Python files to lint. Skipping Python linting. \n"
 fi
 
 # Ensure Test Documentation Validity
 echo "Ensuring test documentation validity..."
 if ./scripts/ensure_docs_validity.sh > /dev/null 2>&1; then
-    echo "Documentation check passed."
+    echo -e "Documentation check passed. \n"
 else
-    echo "Test documentation validation failed. Commit aborted."
+    echo -e "Test documentation validation failed. Commit aborted. \n"
     FAIL=1
 fi
 
 # Check Licences
 echo "Checking licenses..."
 if ./scripts/check_licences.sh > /dev/null 2>&1; then
-    echo "License check passed."
+    echo -e "License check passed. \n"
 else
-    echo "License check failed. Commit aborted."
+    echo -e "License check failed. Commit aborted. \n"
     FAIL=1
 fi
 
@@ -88,5 +96,5 @@ if [ $FAIL -ne 0 ]; then
     exit 1
 fi
 
-echo "All checks passed. Proceeding with commit."
+echo -e "All checks passed. Proceeding with commit. \n"
 exit 0
