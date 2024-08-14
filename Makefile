@@ -10,12 +10,12 @@ install-node:
 	cd sandbox && npm install --legacy-peer-deps
 
 #Configures Git Hooks, which are scripts that run given a specified event.
-.git/hooks/pre-commit:
+git/hooks/pre-commit:
 	cp scripts/pre-commit .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
 
 #Condensed Target to run all targets above.
-install: install-node install-python .git/hooks/pre-commit
+install: install-node install-python git/hooks/pre-commit
 
 #Referenced within readme
 install-hooks: .git/hooks/pre-commit
