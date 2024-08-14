@@ -207,14 +207,14 @@ The channels can have the following supplier statuses:
 
 * `delivered` - the message has been successfully delivered to the user
 * `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
-* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
 * `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
 
 ### SMS
 
 * `delivered` - the message has been successfully delivered to the user
 * `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
-* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
 * `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
 
 ### Letters
