@@ -138,7 +138,7 @@ To understand how our online digital onboarding process works, see [digital onbo
 
 ## Free-text communications
 
-Free-text communications (as opposed to fixed format communications) can be achieved by setting up a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
+Free-text communications (as opposed to fixed format communications) are possible via the use of a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
 
 | Global Routing Plan ID               | Channel/Supplier | Read wait time (before failing channel) | Personalisation field name |
 |--------------------------------------|------------------|-----------------------------------------|----------------------------|
