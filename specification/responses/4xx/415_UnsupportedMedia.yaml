@@ -1,8 +1,10 @@
 description: |+
   The `Content-Type` of the request is not supported. This endpoint supports:
 
-  * `application/vnd.api+json`
   * `application/json`
+  * `application/vnd.api+json`
+  * `application/json; charset=utf-8`
+  * `application/vnd.api+json; charset=utf-8`
 content:
   application/vnd.api+json:
     schema:
