@@ -10,8 +10,6 @@ properties:
         $ref: ../enums/EnumMessage.yaml
       id:
         $ref: ../types/KSUID.yaml
-        description: Identifier for this Message.
-        example: 0ujsszwN8NRY24YaXiTIE2VWDTS
       attributes:
         type: object
         additionalProperties: false

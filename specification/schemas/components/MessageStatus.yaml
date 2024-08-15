@@ -9,7 +9,7 @@ properties:
       messageId:
         $ref: ../types/KSUID.yaml
       messageReference:
-        $ref: ../../snippets/MessageReference.yaml
+        $ref: ../../snippets/MessageReferenceSnippet.yaml
       messageStatus:
         type: string
         $ref: ../enums/MessageStatusEnum.yaml 
@@ -45,9 +45,10 @@ properties:
     properties:
       message:
         type: string
+        description: URL to retrieve overarching message status from the GET endpoint.
         format: uri
         examples: 
-          - "https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS"
+          - "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
     required:
       - message
   meta:
