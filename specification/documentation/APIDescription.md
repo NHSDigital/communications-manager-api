@@ -138,7 +138,7 @@ To understand how our online digital onboarding process works, see [digital onbo
 
 ## Free-text communications
 
-Free-text communications (as opposed to fixed format communications) can be achieved by setting up a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
+Free-text communications (as opposed to fixed format communications) are possible via the use of a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
 
 | Global Routing Plan ID               | Channel/Supplier | Read wait time (before failing channel) | Personalisation field name |
 |--------------------------------------|------------------|-----------------------------------------|----------------------------|
@@ -207,14 +207,14 @@ The channels can have the following supplier statuses:
 
 * `delivered` - the message has been successfully delivered to the user
 * `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
-* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
 * `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
 
 ### SMS
 
 * `delivered` - the message has been successfully delivered to the user
 * `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
-* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient’s phone is off, has no signal, or their text message inbox is full
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
 * `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
 
 ### Letters

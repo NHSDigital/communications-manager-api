@@ -6,6 +6,8 @@ description: |+
   * `*/*`
   * `application/json`
   * `application/vnd.api+json`
+  * `application/json; charset=utf-8`
+  * `application/vnd.api+json; charset=utf-8`
 
   Where no `Accept` header is present, this will default to `application/vnd.api+json`
 content:

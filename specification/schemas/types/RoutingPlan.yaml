@@ -1,4 +1,3 @@
-title: RoutingPlan
 type: object
 additionalProperties: false
 properties:
