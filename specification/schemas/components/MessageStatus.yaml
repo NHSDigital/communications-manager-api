@@ -16,7 +16,7 @@ properties:
       messageStatusDescription:
         type: string
         description: If there is extra information associated with the status of this message, it is provided here.
-        example: ""
+        example: " "
       channels:
         type: array
         minItems: 1

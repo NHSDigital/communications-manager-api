@@ -20,7 +20,7 @@ properties:
       channelStatusDescription:
         type: string
         description: If there is extra information associated with the status of this channel, it is provided here.
-        example: ""
+        example: " "
       supplierStatus:
         $ref: ../enums/SupplierStatusEnum.yaml
       timestamp:
