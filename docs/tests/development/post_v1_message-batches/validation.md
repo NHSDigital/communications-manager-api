@@ -319,6 +319,58 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
+## Scenario: An API consumer submitting a request with an invalid ODS Code receives a 400 ‘Invalid Value’ response
+
+The ODS code must be a string
+
+**Given** the API consumer provides an message body with an invalid ODS Code
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+**Correlation IDs**
+
+This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
+
+| Value                                | Description                                                                                                   |
+|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
+| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
+
+
+## Scenario: An API consumer submitting a request with an invalid originator receives a 400 ‘Invalid Value’ response
+
+The originator is optional and must be an object
+
+**Given** the API consumer provides an message body with an invalid originator
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+**Correlation IDs**
+
+This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
+
+| Value                                | Description                                                                                                   |
+|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
+| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
+| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
+
+
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
 
 A valid personalisation must be structured in this format: { parameter: value }
