@@ -43,6 +43,14 @@ export function sendError(res, code, message) {
   });
 }
 
+export function sendErrorWithDetails(res, code, message, errors) {
+  res.status(code);
+  res.json({
+    message,
+    errors
+  });
+}
+
 export function hasValidGlobalTemplatePersonalisation(personalisation) {
   if (!personalisation) {
     return false;

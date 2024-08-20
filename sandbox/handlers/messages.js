@@ -1,5 +1,5 @@
 import KSUID from "ksuid";
-import { sendError, writeLog, hasValidGlobalTemplatePersonalisation } from "./utils.js";
+import { sendError, writeLog, hasValidGlobalTemplatePersonalisation, sendErrorWithDetails } from "./utils.js";
 import {
   sendingGroupIdWithMissingNHSTemplates,
   sendingGroupIdWithMissingTemplates,
@@ -9,7 +9,8 @@ import {
   validSendingGroupIds,
   globalFreeTextNhsAppSendingGroupId,
   noDefaultOdsClientAuth,
-  noOdsChangeClientAuth
+  noOdsChangeClientAuth,
+  invalidEmailAddress
 } from "./config.js"
 
 // Note: the docker container uses node:12 which does not support optional chaining
@@ -21,6 +22,16 @@ function getOriginatorOdsCode(req) {
     odsCode = undefined;
   }
   return odsCode;
+}
+
+function getEmailOverride(req) {
+  let email;
+  try {
+    email = req.body.data.attributes.recipient.contactDetails.email;
+  } catch {
+    email = undefined;
+  }
+  return email;
 }
 
 export async function messages(req, res, next) {
@@ -115,6 +126,20 @@ export async function messages(req, res, next) {
 
   if (routingPlanId === trigger500SendingGroupId) {
     sendError(res, 500, "Error writing request items to DynamoDB");
+    next();
+    return;
+  }
+
+  const emailOverride = getEmailOverride(req);
+  if (emailOverride === invalidEmailAddress) {
+    const errors = [
+      {
+        title: "Invalid value",
+        field: "email",
+        message: "Input failed format check"
+      }
+    ];
+    sendErrorWithDetails(res, 400, "Invalid recipient contact details. Field 'email': Input failed format check", errors);
     next();
     return;
   }

@@ -19,6 +19,7 @@ validSendingGroupIds[trigger500SendingGroupId] = "Jc96S9y4AKjncXndUXiS7M7yIZ3jNt
 validSendingGroupIds[trigger425SendingGroupId] = "_oivtOz8fHRXhtZAyFxJmT2j_xpWzq9s";
 validSendingGroupIds[sendingGroupIdWithMissingNHSTemplates] = "DjAAu455M2TMq0VKEaD_1WZfwjkspJDL";
 validSendingGroupIds[globalFreeTextNhsAppSendingGroupId] = "odbGpMQvYRM7sp7jueU2lRHQiueKujVO";
+const invalidEmailAddress = "invalidEmailAddress";
 
 const duplicateTemplates = [
     {
@@ -58,4 +59,5 @@ export {
     globalFreeTextNhsAppSendingGroupId,
     noDefaultOdsClientAuth,
     noOdsChangeClientAuth,
+    invalidEmailAddress
 }

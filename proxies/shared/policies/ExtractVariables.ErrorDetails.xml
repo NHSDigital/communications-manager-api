@@ -1,0 +1,10 @@
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.ErrorDetails">
+    <VariablePrefix>data</VariablePrefix>
+    <Source>error.content</Source>
+    <JSONPayload>
+        <Variable name="errors" type="string">
+            <JSONPath>$.errors</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>
