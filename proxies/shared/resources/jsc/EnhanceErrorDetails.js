@@ -5,16 +5,25 @@ const links = {
     about : "{{ ERROR_ABOUT_LINK }}"
 };
 
-errors.forEach((error, index) => {
+const enhancedErrors = [];
+
+JSON.parse(errors).forEach((error, index) => {
     var code = 'CM_INVALID_VALUE';
     if (error.title === 'Missing value') {
         code = 'CM_MISSING_VALUE';
     }
-    
-    Object.defineProperty(error, "id", {value: messageId});
-    Object.defineProperty(error, "code", {value: code});
-    Object.defineProperty(error, "links", {value: links});
-    Object.defineProperty(error, "status", {value: statusCode});
-    Object.defineProperty(error, "title", {value: error.title});
-    Object.defineProperty(error, "detail", {value: error.message});
+
+    enhancedErrors.push({
+        id: messageId,
+        code: code,
+        links: links,
+        status: statusCode,
+        title: error.title,
+        detail: error.message,
+        source: {
+            pointer: error.field
+        }
+    });
 });
+
+context.setVariable("data.enhancedErrors", JSON.stringify(enhancedErrors));

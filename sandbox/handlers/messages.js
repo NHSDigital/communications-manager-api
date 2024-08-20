@@ -135,7 +135,7 @@ export async function messages(req, res, next) {
     const errors = [
       {
         title: "Invalid value",
-        field: "email",
+        field: "/data/attributes/recipient/contactDetails/email",
         message: "Input failed format check"
       }
     ];

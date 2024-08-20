@@ -21,7 +21,7 @@
     <Step>
         <Name>RaiseFault.GenericErrorDetails</Name>
         <Condition>
-            data.errors != null
+            data.enhancedErrors != null
         </Condition>
     </Step>
     <Step>

@@ -8,7 +8,7 @@
             <Headers/>
             <Payload variablePrefix="%" variableSuffix="#">
             {
-                "errors" : %data.errors#
+                "errors" : %data.enhancedErrors#
             }
             </Payload>
             <StatusCode>400</StatusCode>
