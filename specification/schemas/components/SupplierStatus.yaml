@@ -7,26 +7,20 @@ properties:
     type: object
     properties:
       messageId:
-        description: Identifier for the message
         $ref: ../types/KSUID.yaml
       messageReference:
-        type: string
-        format: uuid
-        description: Original reference supplied for the message
-        examples: 
-          - 1642109b-69eb-447f-8f97-ab70a74f5db4
+        $ref: ../../snippets/MessageReferenceSnippet.yaml
       channel:
         type: any
         enum:
           - nhsapp
         example: nhsapp
       channelStatus:
-        description: The current status of this channel at the time this response was generated.
         $ref: ../enums/ChannelStatus.yaml
       channelStatusDescription:
         type: string
         description: If there is extra information associated with the status of this channel, it is provided here.
-        example: ""
+        example: " "
       supplierStatus:
         $ref: ../enums/SupplierStatusEnum.yaml
       timestamp:
@@ -35,9 +29,7 @@ properties:
         format: date-time
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
-        type: number
-        description: Contains the amount of times that we have attempted to send this channel.
-        example: 1
+        $ref: ../../snippets/RetryCount.yaml
     required:
       - messageId
       - messageReference
@@ -53,7 +45,7 @@ properties:
         description: URL to retrieve overarching message status from the GET endpoint.
         format: uri
         examples: 
-          - "https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS"
+          - "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
     required:
       - message
   meta:

@@ -64,7 +64,7 @@ class Error():
         self.title = title
         self.detail = detail
         self.links = {
-            **{"about": "https://digital.nhs.uk/developer/api-catalogue/communications-manager"},
+            **{"about": "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"},
             **links
         }
 

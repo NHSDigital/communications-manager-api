@@ -7,7 +7,7 @@ properties:
     additionalProperties: false
     properties:
       type:
-        $ref: ../enums/TypeMessage.yaml
+        $ref: ../enums/EnumMessage.yaml
       id:
         $ref: ../types/KSUID.yaml
         description: Identifier for this Message. You should store this identifier for later lookups.

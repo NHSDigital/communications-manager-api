@@ -1,5 +1,5 @@
+title: Enum_MetadataLabels
 type: string
-title: MetadataLabels
 enum:
   - nhsapp
   - email

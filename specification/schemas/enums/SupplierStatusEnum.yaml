@@ -1,4 +1,5 @@
 title: Enum_SupplierStatus
+description: The current status of this message within the channel at the time this response was generated.
 type: string
 enum:
   - delivered
