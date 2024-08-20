@@ -3,7 +3,7 @@ const messageId = context.getVariable('messageid');
 const statusCode = context.getVariable('response.status.code');
 const links = {
     about : "{{ ERROR_ABOUT_LINK }}"
-}
+};
 
 errors.forEach((error, index) => {
     let code = 'CM_INVALID_VALUE';
