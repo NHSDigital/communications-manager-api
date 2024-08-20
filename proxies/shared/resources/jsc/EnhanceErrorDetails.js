@@ -6,7 +6,7 @@ const links = {
 };
 
 errors.forEach((error, index) => {
-    let code = 'CM_INVALID_VALUE';
+    var code = 'CM_INVALID_VALUE';
     if (error.title === 'Missing value') {
         code = 'CM_MISSING_VALUE';
     }
