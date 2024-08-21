@@ -34,7 +34,7 @@ class AuthenticationCache():
         _, latest_token_expiry = self.tokens.get(env, (None, 0))
 
         # Generate new token if latest token will expire in 15 seconds
-        if env not in self.tokens or latest_token_expiry - 15 < int(time()):
+        if env not in self.tokens or latest_token_expiry < int(time()) + 15:
             pk_pem = None
             with open(private_key, "r") as f:
                 pk_pem = f.read()
