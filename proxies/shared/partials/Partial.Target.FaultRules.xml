@@ -7,6 +7,24 @@
         </Condition>
     </Step>
     <Step>
+        <Name>ExtractVariables.ErrorDetails</Name>
+        <Condition>
+            response.content ~~ ".*\u0022errors\u0022:.*"
+        </Condition>
+    </Step>
+    <Step>
+        <Name>JavaScript.EnhanceErrorDetails</Name>
+        <Condition>
+            data.errors != null
+        </Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.GenericErrorDetails</Name>
+        <Condition>
+            data.enhancedErrors != null
+        </Condition>
+    </Step>
+    <Step>
         <Name>RaiseFault.404NhsAppAccounts</Name>
         <Condition>
             (proxy.pathsuffix MatchesPath "/channels/nhsapp/accounts") and response.status.code = 404 and data.errorMessage != null
