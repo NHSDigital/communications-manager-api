@@ -1,7 +1,7 @@
 <FaultRule name="combined_backend_fault_handler">
     [% include './partials/Partial.Component.SetResponseDefaults.xml' %]
     <Step>
-        <Name>ExtractVariables.NhsAppAccounts.Error</Name>
+        <Name>ExtractVariables.ErrorMessage</Name>
         <Condition>
             response.content ~~ "\{\u0022message\u0022:\u0022.*\u0022\}"
         </Condition>
