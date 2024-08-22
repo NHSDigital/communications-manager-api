@@ -25,6 +25,8 @@ function getOriginatorOdsCode(req) {
 }
 
 function getEmailOverride(req) {
+ return req?.body?.data?.attributes?.recipient?.contactDetails?.email
+}
   let email;
   try {
     email = req.body.data.attributes.recipient.contactDetails.email;
