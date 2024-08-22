@@ -36,6 +36,41 @@ describe("/api/v1/messages", () => {
       .expect("Content-Type", /json/, done);
   });
 
+  it("returns a 400 for invalid email address", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({
+        data: {
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                email: "invalidEmailAddress",
+              }
+            },
+            originator: {
+              odsCode: "X123"
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'email': Input failed format check",
+        errors: [
+          {
+            title: 'Invalid value',
+            field: '/data/attributes/recipient/contactDetails/email',
+            message: 'Input failed format check'
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
   it("responds with a 201 when the request is correctly formatted", (done) => {
     request(server)
       .post("/api/v1/messages")

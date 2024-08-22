@@ -27,14 +27,6 @@ function getOriginatorOdsCode(req) {
 function getEmailOverride(req) {
  return req?.body?.data?.attributes?.recipient?.contactDetails?.email
 }
-  let email;
-  try {
-    email = req.body.data.attributes.recipient.contactDetails.email;
-  } catch {
-    email = undefined;
-  }
-  return email;
-}
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
