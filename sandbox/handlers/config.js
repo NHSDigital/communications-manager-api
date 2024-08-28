@@ -45,6 +45,7 @@ const duplicateTemplates = [
 
 const noDefaultOdsClientAuth = "noDefaultOds";
 const noOdsChangeClientAuth = "noOdsChange";
+const allowedContactDetailOverride = "allowedContactDetailOverride"
 
 export {
     invalidRoutingPlanId,
@@ -58,4 +59,5 @@ export {
     globalFreeTextNhsAppSendingGroupId,
     noDefaultOdsClientAuth,
     noOdsChangeClientAuth,
+    allowedContactDetailOverride,
 }

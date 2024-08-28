@@ -1,27 +1,11 @@
 import KSUID from "ksuid";
 import { sendError, writeLog, hasValidGlobalTemplatePersonalisation } from "./utils.js";
 import {
-  sendingGroupIdWithMissingNHSTemplates,
-  sendingGroupIdWithMissingTemplates,
-  sendingGroupIdWithDuplicateTemplates,
-  duplicateTemplates,
-  trigger500SendingGroupId,
   validSendingGroupIds,
   globalFreeTextNhsAppSendingGroupId,
-  noDefaultOdsClientAuth,
-  noOdsChangeClientAuth
 } from "./config.js"
-
-// Note: the docker container uses node:12 which does not support optional chaining
-function getOriginatorOdsCode(req) {
-  let odsCode;
-  try {
-    odsCode = req.body.data.attributes.originator.odsCode;
-  } catch {
-    odsCode = undefined;
-  }
-  return odsCode;
-}
+import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
+import { getOdsCodeError } from "./error_scenarios/ods_code.js";
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
@@ -41,34 +25,16 @@ export async function messages(req, res, next) {
   }
 
   const { routingPlanId } = req.body.data.attributes;
-  if (!validSendingGroupIds[routingPlanId]) {
-    sendError(
-      res,
-      404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
-    );
-    next();
-    return;
-  }
 
-  const odsCode = getOriginatorOdsCode(req);
-  if (!odsCode && req.headers.authorization === noDefaultOdsClientAuth) {
+  const sendingGroupIdError = getSendingGroupIdError(routingPlanId)
+  if (sendingGroupIdError !== null) {
+    const [sendingGroupIdErrorCode, sendingGroupIdErrorMessage] = sendingGroupIdError
     sendError(
       res,
-      400,
-      'odsCode must be provided'
+      sendingGroupIdErrorCode,
+      sendingGroupIdErrorMessage
     )
-    next();
-    return;
-  }
-
-  if (odsCode && req.headers.authorization === noOdsChangeClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode was provided but ODS code override is not enabled for the client'
-    )
-    next();
+    next()
     return;
   }
 
@@ -81,41 +47,12 @@ export async function messages(req, res, next) {
     return;
   }
 
-  if (routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
-    sendError(
-      res,
-      500,
-      `NHS App Template does not exist with internalTemplateId: invalid-template`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingTemplates) {
-    sendError(
-      res,
-      500,
-      `Templates required in "${sendingGroupIdWithMissingTemplates}" routing config not found`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithDuplicateTemplates) {
-    sendError(
-      res,
-      500,
-      `Duplicate templates in routing config: ${JSON.stringify(
-        duplicateTemplates
-      )}`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger500SendingGroupId) {
-    sendError(res, 500, "Error writing request items to DynamoDB");
-    next();
+  const odsCode = req.body.data?.attributes?.originator?.odsCode;
+  const odsCodeError = getOdsCodeError(odsCode, req.headers.authorization)
+  if (odsCodeError !== null) {
+    const [odsCodeErrorCode, odsCodeErrorMessage] = odsCodeError
+    sendError(res, odsCodeErrorCode, odsCodeErrorMessage)
+    next()
     return;
   }
 

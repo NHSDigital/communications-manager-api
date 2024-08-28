@@ -5,18 +5,10 @@ import {
   hasValidGlobalTemplatePersonalisation,
 } from "./utils.js"
 import {
-  validSendingGroupIds,
-  invalidRoutingPlanId,
-  sendingGroupIdWithMissingNHSTemplates,
-  sendingGroupIdWithMissingTemplates,
-  sendingGroupIdWithDuplicateTemplates,
-  duplicateTemplates,
-  trigger500SendingGroupId,
-  trigger425SendingGroupId,
   globalFreeTextNhsAppSendingGroupId,
-  noDefaultOdsClientAuth,
-  noOdsChangeClientAuth,
 } from "./config.js"
+import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js"
+import { getOdsCodeError } from "./error_scenarios/ods_code.js"
 
 export async function batchSend(req, res, next) {
   const { headers, body } = req;
@@ -81,29 +73,6 @@ export async function batchSend(req, res, next) {
     return;
   }
 
-  // Note: the docker container uses node:12 which does not support optional chaining
-  const odsCodes = messages.map((message) => message && message.originator ? message.originator.odsCode : undefined
-  );
-  if (odsCodes.includes(undefined) && req.headers.authorization === noDefaultOdsClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode must be provided'
-    )
-    next();
-    return;
-  }
-
-  if (odsCodes.filter((o) => o !== undefined).length > 0 && req.headers.authorization === noOdsChangeClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode was provided but ODS code override is not enabled for the client'
-    )
-    next();
-    return;
-  }
-
   const messageReferences = messages.map((message) => message.messageReference);
   if (messageReferences.includes(undefined)) {
     sendError(res, 400, "Missing messageReferences");
@@ -117,29 +86,27 @@ export async function batchSend(req, res, next) {
     return;
   }
 
-  if (!validSendingGroupIds[routingPlanId]) {
-    sendError(
-      res,
-      404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${routingPlanId}"`
-    );
-    next();
-    return;
+  const odsCodes = messages.map((message) => message && message.originator?.odsCode)
+  for (const odsCode of odsCodes) {
+    const odsCodeError = getOdsCodeError(odsCode, req.headers.authorization)
+
+    if (odsCodeError !== null) {
+      const [errorCode, errorMessage] = odsCodeError
+      sendError(res, errorCode, errorMessage)
+      next()
+      return;
+    }
   }
 
-  if (routingPlanId === invalidRoutingPlanId) {
-    sendError(res, 400, "Invalid Routing Config");
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger425SendingGroupId) {
+  const sendingGroupIdError = getSendingGroupIdError(routingPlanId)
+  if (sendingGroupIdError !== null) {
+    const [errorCode, errorMessage] = sendingGroupIdError
     sendError(
       res,
-      425,
-      "Message with this idempotency key is already being processed"
-    );
-    next();
+      errorCode,
+      errorMessage
+    )
+    next()
     return;
   }
 
@@ -151,44 +118,6 @@ export async function batchSend(req, res, next) {
     ) > -1
   ) {
     sendError(res, 400, "Expect single personalisation field of 'body'");
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
-    sendError(
-      res,
-      500,
-      `NHS App Template does not exist with internalTemplateId: invalid-template`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingTemplates) {
-    sendError(
-      res,
-      500,
-      `Templates required in "${routingPlanId}" routing config not found`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithDuplicateTemplates) {
-    sendError(
-      res,
-      500,
-      `Duplicate templates in routing config: ${JSON.stringify(
-        duplicateTemplates
-      )}`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger500SendingGroupId) {
-    sendError(res, 500, "Error writing request items to DynamoDB");
     next();
     return;
   }
