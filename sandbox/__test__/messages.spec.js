@@ -86,22 +86,22 @@ describe("/api/v1/messages", () => {
       .expect("Content-Type", /json/, done);
   });
 
-  it("returns a 400 when the routingPlanId is null", (done) => {
+  it("returns a 400 when the routingPlanId is null", (done) => { 
     request(server)
-      .post("/api/v1/messages")
-      .send({
-        data: {
-          type: "Message",
-          attributes: {
-            routingPlanId: null,
-          },
+    .post("/api/v1/messages")
+    .send({
+      data: {
+        type: "Message",
+        attributes: {
+          routingPlanId: null,
         },
-      })
-      .expect(400, {
-        message: "Missing routingPlanId",
-      })
-      .expect("Content-Type", /json/, done);
-  });
+      },
+    })
+    .expect(400, {
+      message: "Missing routingPlanId",
+    })
+    .expect("Content-Type", /json/, done);
+  })
 
   it("responds with a 201 when the request is correctly formatted", (done) => {
     request(server)
@@ -664,7 +664,7 @@ describe("/api/v1/messages", () => {
               nhsNumber: "1",
               dateOfBirth: "1",
               contactDetails: {
-                email: 'perm-fail@simulator.notify'
+                email: 'invalidEmailAddress'
               },
             },
             personalisation: {},
@@ -1054,7 +1054,7 @@ describe("/api/v1/messages", () => {
                   lines: ['1'],
                   postcode: []
                 },
-                email: 'perm-fail@simulator.notify'
+                email: 'invalidEmailAddress'
               },
             },
             personalisation: {},

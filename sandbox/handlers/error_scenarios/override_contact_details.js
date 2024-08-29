@@ -3,7 +3,7 @@ import {
 } from "../config.js"
 
 const invalidPhoneNumber = '07700900002'
-const invalidEmailAddress = 'perm-fail@simulator.notify'
+const invalidEmailAddress = 'invalidEmailAddress'
 
 function validationSuccess() {
   return {

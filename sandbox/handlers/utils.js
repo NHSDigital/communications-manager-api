@@ -43,6 +43,7 @@ export function sendError(res, code, message, errors) {
     errors
   });
 }
+
 export function hasValidGlobalTemplatePersonalisation(personalisation) {
   if (!personalisation) {
     return false;

@@ -948,7 +948,7 @@ describe("/api/v1/send", () => {
                     nhsNumber: "1",
                     dateOfBirth: "1",
                     contactDetails: {
-                      email: 'perm-fail@simulator.notify'
+                      email: 'invalidEmailAddress'
                     },
                   },
                 },
@@ -1383,7 +1383,7 @@ describe("/api/v1/send", () => {
                       lines: ['1'],
                       postcode: []
                     },
-                    email: 'perm-fail@simulator.notify'
+                    email: 'invalidEmailAddress'
                   },
                 },
               },
