@@ -10,6 +10,7 @@ import {
 import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js"
 import { getOdsCodeError } from "./error_scenarios/ods_code.js"
 import { mandatoryBatchMessageFieldValidation } from "./validation/mandatory_batch_message_fields.js"
+import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js"
 
 export async function batchSend(req, res, next) {
   const { headers, body } = req;
@@ -67,6 +68,22 @@ export async function batchSend(req, res, next) {
     )
     next()
     return;
+  }
+
+  const alternateContactDetails = messages.map((message) => message.recipient?.contactDetails)
+  for (const contactDetail of alternateContactDetails) {
+    const alternateContactDetailsError = getAlternateContactDetailsError(contactDetail, req.headers.authorization, '/data/attributes/messages')
+    if (alternateContactDetailsError !== null) {
+      const [errorCode, errorMessage, errors] = alternateContactDetailsError
+      sendError(
+        res,
+        errorCode,
+        errorMessage,
+        errors
+      )
+      next()
+      return;
+    }
   }
 
   writeLog(res, "warn", {

@@ -36,11 +36,79 @@ describe("/api/v1/messages", () => {
       .expect("Content-Type", /json/, done);
   });
 
+  it("returns a 400 when body data doesnt exist", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({})
+      .expect(400, {
+        message: "Missing request body data",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when type is missing", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({ data: {} })
+      .expect(400, {
+        message: "Missing request body data type",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when type isnt Message", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({ data: { type: "MessageBatch" } })
+      .expect(400, {
+        message: "Request body data type is not Message",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when attributes dont exist", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({ data: { type: "Message" } })
+      .expect(400, {
+        message: "Missing request body data attributes",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when the routingPlanId doesnt exist", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({ data: { type: "Message", attributes: {} } })
+      .expect(400, {
+        message: "Missing routingPlanId",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when the routingPlanId is null", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({
+        data: {
+          type: "Message",
+          attributes: {
+            routingPlanId: null,
+          },
+        },
+      })
+      .expect(400, {
+        message: "Missing routingPlanId",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
   it("responds with a 201 when the request is correctly formatted", (done) => {
     request(server)
       .post("/api/v1/messages")
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -81,6 +149,7 @@ describe("/api/v1/messages", () => {
       .post("/api/v1/messages")
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -105,6 +174,7 @@ describe("/api/v1/messages", () => {
       .post("/api/v1/messages")
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "00000000-0000-0000-0000-000000000001",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -146,6 +216,7 @@ describe("/api/v1/messages", () => {
       .post("/api/v1/messages")
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "00000000-0000-0000-0000-000000000001",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -170,6 +241,7 @@ describe("/api/v1/messages", () => {
       .post("/api/v1/messages")
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "00000000-0000-0000-0000-000000000001",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -197,6 +269,7 @@ describe("/api/v1/messages", () => {
       .post("/api/v1/messages")
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "00000000-0000-0000-0000-000000000001",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -360,6 +433,7 @@ describe("/api/v1/messages", () => {
       .set({ Authorization: "noDefaultOds" })
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -383,6 +457,7 @@ describe("/api/v1/messages", () => {
       .set({ Authorization: "noOdsChange" })
       .send({
         data: {
+          type: 'Message',
           attributes: {
             routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
@@ -402,4 +477,557 @@ describe("/api/v1/messages", () => {
       })
       .expect("Content-Type", /json/, done);
   });
+
+  it("returns a 201 when email alternate contact detail is provided and client is allowed to use feature", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                email: 'hello'
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(201)
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when contactDetails provided but client is not permitted to use feature", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "noOdsChange" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                sms: 'hello'
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Client is not allowed to provide alternative contact details",
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 201 when sms alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                sms: 'hello'
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(201)
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when invalid sms alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                sms: '07700900002'
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'sms': Input failed format check",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/sms",
+            message: "Input failed format check",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when invalid value for sms alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                sms: {
+                  hello: 1
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'sms': Input is not a string",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/sms",
+            message: "Input is not a string",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when invalid email alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                email: 'perm-fail@simulator.notify'
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'email': Input failed format check",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/email",
+            message: "Input failed format check",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when invalid value for email alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                email: {
+                  hello: 1
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'email': Input is not a string",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/email",
+            message: "Input is not a string",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when string for address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: 'hello'
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'address': Input is not an object",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address",
+            message: "Input is not an object",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when array for address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: []
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'address': Input is not an object",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address",
+            message: "Input is not an object",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when invalid value for lines in address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: {
+                  lines: 'test',
+                  postcode: 'test'
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'lines': 'lines' is missing",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address/lines",
+            message: "`lines` is missing",
+            title: "Missing value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when too few lines is provided in address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: {
+                  lines: ['1'],
+                  postcode: 'hello'
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'lines': Too few address lines were provided",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address/lines",
+            message: "Too few address lines were provided",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when too many lines is provided in address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: {
+                  lines: ['1','2','3','4','5','6'],
+                  postcode: 'hello'
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'lines': Too many address lines were provided",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address/lines",
+            message: "Too many address lines were provided",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when lines contains non-string value in address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: {
+                  lines: ['1','2',3,'4','5'],
+                  postcode: 'hello'
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'lines': Lines contain non-string or empty line",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address/lines",
+            message: "Lines contain non-string or empty line",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when no postcode is provided in address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: {
+                  lines: ['1', '2'],
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'postcode': 'postcode' is missing",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address/postcode",
+            message: "`postcode` is missing",
+            title: "Missing value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when invalid value is provided for postcode in address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: 'Message',
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              dateOfBirth: "1",
+              contactDetails: {
+                address: {
+                  lines: ['1', '2'],
+                  postcode: []
+                }
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'postcode': 'postcode' is not a string",
+        errors: [
+          {
+            field: "/data/attributes/recipient/contactDetails/address/postcode",
+            message: "'postcode' is not a string",
+            title: "Invalid value"
+          }
+        ]
+      })
+      .expect("Content-Type", /json/, done);
+  });
+  it('returns a 400 and multiple errors when there are multiple issues in contact details provided', (done) => {
+    request(server)
+    .post("/api/v1/messages")
+    .set({ Authorization: "allowedContactDetailOverride" })
+    .send({
+      data: {
+        type: 'Message',
+        attributes: {
+          routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+          messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+          recipient: {
+            nhsNumber: "1",
+            dateOfBirth: "1",
+            contactDetails: {
+              address: {
+                lines: ['1'],
+                postcode: []
+              },
+              email: 'perm-fail@simulator.notify'
+            },
+          },
+          personalisation: {},
+        },
+      },
+    })
+    .expect(400, {
+      message: "Invalid recipient contact details. Field 'email': Input failed format check. Field 'lines': Too few address lines were provided. Field 'postcode': 'postcode' is not a string",
+      errors: [
+        {
+          field: "/data/attributes/recipient/contactDetails/email",
+          message: "Input failed format check",
+          title: "Invalid value"
+         },
+         {
+          field: "/data/attributes/recipient/contactDetails/address/lines",
+          message: "Too few address lines were provided",
+          title: "Invalid value"
+        },
+        {
+          field: "/data/attributes/recipient/contactDetails/address/postcode",
+          message: "'postcode' is not a string",
+          title: "Invalid value"
+        },
+      ]
+    })
+    .expect("Content-Type", /json/, done);
+  })
 });

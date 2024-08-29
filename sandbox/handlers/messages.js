@@ -7,6 +7,7 @@ import {
 import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
 import { getOdsCodeError } from "./error_scenarios/ods_code.js";
 import { mandatorySingleMessageFieldValidation } from "./validation/mandatory_single_message_fields.js";
+import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js";
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
@@ -55,6 +56,20 @@ export async function messages(req, res, next) {
   if (odsCodeError !== null) {
     const [odsCodeErrorCode, odsCodeErrorMessage] = odsCodeError
     sendError(res, odsCodeErrorCode, odsCodeErrorMessage)
+    next()
+    return;
+  }
+
+  const alternateContactDetails = req.body.data?.attributes?.recipient?.contactDetails
+  const alternateContactDetailsError = getAlternateContactDetailsError(alternateContactDetails, req.headers.authorization, '/data/attributes')
+  if (alternateContactDetailsError !== null) {
+    const [errorCode, errorMessage, errors] = alternateContactDetailsError
+    sendError(
+      res,
+      errorCode,
+      errorMessage,
+      errors
+    )
     next()
     return;
   }

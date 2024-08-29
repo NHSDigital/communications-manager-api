@@ -36,13 +36,13 @@ export const writeLog = (res, logLevel, options = {}) => {
   log[logLevel](JSON.stringify(logLine))
 };
 
-export function sendError(res, code, message) {
+export function sendError(res, code, message, errors) {
   res.status(code);
   res.json({
-    message
+    message,
+    errors
   });
 }
-
 export function hasValidGlobalTemplatePersonalisation(personalisation) {
   if (!personalisation) {
     return false;
