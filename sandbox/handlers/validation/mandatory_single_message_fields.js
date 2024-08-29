@@ -1,17 +1,20 @@
 import { commonMandatoryRequestFieldValidation } from "./common_request_attributes.js";
 
 export function mandatorySingleMessageFieldValidation(body) {
-    const errorFromCommonFields = commonMandatoryRequestFieldValidation(body, 'Message');
+  const errorFromCommonFields = commonMandatoryRequestFieldValidation(
+    body,
+    "Message"
+  );
 
-    if (errorFromCommonFields !== null) {
-        return errorFromCommonFields
-    }
+  if (errorFromCommonFields !== null) {
+    return errorFromCommonFields;
+  }
 
-    const { attributes } = body.data
+  const { attributes } = body.data;
 
-    if (!attributes.messageReference) {
-        return [ 400, "Missing messageReference"]
-      }
+  if (!attributes.messageReference) {
+    return [400, "Missing messageReference"];
+  }
 
-    return null;
+  return null;
 }

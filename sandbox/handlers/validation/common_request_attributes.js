@@ -1,29 +1,32 @@
-export function commonMandatoryRequestFieldValidation(body, expectedRequestType) {
-    if (!body) {
-        return [400, "Missing request body"]
-      }
-    
-    const { data } = body;
-    if (!data) {
-        return [400, "Missing request body data"]
-    }
+export function commonMandatoryRequestFieldValidation(
+  body,
+  expectedRequestType
+) {
+  if (!body) {
+    return [400, "Missing request body"];
+  }
 
-    const { type, attributes } = data;
-    if (!type) {
-        return [400, "Missing request body data type"]
-    }
+  const { data } = body;
+  if (!data) {
+    return [400, "Missing request body data"];
+  }
 
-    if (type !== expectedRequestType) {
-        return [400, `Request body data type is not ${expectedRequestType}`]
-    }
+  const { type, attributes } = data;
+  if (!type) {
+    return [400, "Missing request body data type"];
+  }
 
-    if (!attributes) {
-        return [400, "Missing request body data attributes"]
-    }
+  if (type !== expectedRequestType) {
+    return [400, `Request body data type is not ${expectedRequestType}`];
+  }
 
-    if (!attributes.routingPlanId) {
-        return [400, "Missing routingPlanId"]
-    }
+  if (!attributes) {
+    return [400, "Missing request body data attributes"];
+  }
 
-    return null
+  if (!attributes.routingPlanId) {
+    return [400, "Missing routingPlanId"];
+  }
+
+  return null;
 }
