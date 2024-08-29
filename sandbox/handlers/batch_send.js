@@ -9,6 +9,7 @@ import {
 } from "./config.js"
 import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js"
 import { getOdsCodeError } from "./error_scenarios/ods_code.js"
+import { mandatoryBatchMessageFieldValidation } from "./validation/mandatory_batch_message_fields.js"
 
 export async function batchSend(req, res, next) {
   const { headers, body } = req;
@@ -22,66 +23,24 @@ export async function batchSend(req, res, next) {
     return;
   }
 
-  if (!body) {
-    sendError(res, 400, "Missing request body");
-    next();
+  const mandatoryFieldError = mandatoryBatchMessageFieldValidation(body)
+  if (mandatoryFieldError !== null) {
+    const [errorCode, errorMessage] = mandatoryFieldError
+    sendError(res, errorCode, errorMessage)
+    next()
     return;
-  }
+  } 
 
-  const { data } = body;
-  if (!data) {
-    sendError(res, 400, "Missing request body data");
-    next();
-    return;
-  }
+  const { routingPlanId, messages } = body.data.attributes
 
-  const { type, attributes } = data;
-  if (!type) {
-    sendError(res, 400, "Missing request body data type");
-    next();
-    return;
-  }
-
-  if (type !== "MessageBatch") {
-    sendError(res, 400, "Request body data type is not MessageBatch");
-    next();
-    return;
-  }
-
-  if (!attributes) {
-    sendError(res, 400, "Missing request body data attributes");
-    next();
-    return;
-  }
-
-  const { routingPlanId, messages } = attributes;
-  if (!routingPlanId) {
-    sendError(res, 400, "Missing routingPlanId");
-    next();
-    return;
-  }
-
-  if (!attributes.messageBatchReference) {
-    sendError(res, 400, "Missing messageBatchReference");
-    next();
-    return;
-  }
-
-  if (!Array.isArray(messages)) {
-    sendError(res, 400, "Missing messages array");
-    next();
-    return;
-  }
-
-  const messageReferences = messages.map((message) => message.messageReference);
-  if (messageReferences.includes(undefined)) {
-    sendError(res, 400, "Missing messageReferences");
-    next();
-    return;
-  }
-
-  if (new Set(messageReferences).size !== messageReferences.length) {
-    sendError(res, 400, "Duplicate messageReferences");
+  if (
+    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
+    messages.findIndex(
+      (message) =>
+        !hasValidGlobalTemplatePersonalisation(message.personalisation)
+    ) > -1
+  ) {
+    sendError(res, 400, "Expect single personalisation field of 'body'");
     next();
     return;
   }
@@ -107,18 +66,6 @@ export async function batchSend(req, res, next) {
       errorMessage
     )
     next()
-    return;
-  }
-
-  if (
-    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
-    messages.findIndex(
-      (message) =>
-        !hasValidGlobalTemplatePersonalisation(message.personalisation)
-    ) > -1
-  ) {
-    sendError(res, 400, "Expect single personalisation field of 'body'");
-    next();
     return;
   }
 

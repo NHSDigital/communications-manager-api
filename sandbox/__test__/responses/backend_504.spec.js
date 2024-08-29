@@ -1,8 +1,8 @@
-import request from "supertest";
+import request from "supertest"
 import * as uuid from 'uuid';
-import { setup } from './helpers.js';
+import { setup } from '../helpers.js'
 
-describe('backend_408', () => {
+describe('backend_504', () => {
   let env;
   let server;
 
@@ -16,18 +16,18 @@ describe('backend_408', () => {
     server.close();
   });
 
-  it('can mock a 408 response type', (done) => {
+  it('can mock a 504 response type', (done) => {
     request(server)
-      .get('/_timeout_408')
-      .expect(408, '408 Request Timeout', done);
+      .get('/_timeout_504')
+      .expect(504, '504 Gateway Timeout', done);
   });
 
   it("returns a X-Correlation-Id when provided", (done) => {
     const correlationId = uuid.v4();
     request(server)
-      .get('/_timeout_408')
+      .get('/_timeout_504')
       .set('X-Correlation-Id', correlationId)
-      .expect(408, '408 Request Timeout')
+      .expect(504, '504 Gateway Timeout')
       .expect("X-Correlation-Id", correlationId, done);
   });
 })

@@ -6,6 +6,7 @@ import {
 } from "./config.js"
 import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
 import { getOdsCodeError } from "./error_scenarios/ods_code.js";
+import { mandatorySingleMessageFieldValidation } from "./validation/mandatory_single_message_fields.js";
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
@@ -18,21 +19,23 @@ export async function messages(req, res, next) {
     return;
   }
 
-  if (!req.body) {
-    sendError(res, 400, "Missing request body");
-    next();
+  const mandatoryFieldError = mandatorySingleMessageFieldValidation(req.body)
+  if (mandatoryFieldError !== null) {
+    const [errorCode, errorMessage] = mandatoryFieldError
+    sendError(res, errorCode, errorMessage)
+    next()
     return;
-  }
+  } 
 
   const { routingPlanId } = req.body.data.attributes;
 
   const sendingGroupIdError = getSendingGroupIdError(routingPlanId)
   if (sendingGroupIdError !== null) {
-    const [sendingGroupIdErrorCode, sendingGroupIdErrorMessage] = sendingGroupIdError
+    const [errorCode, errorMessage] = sendingGroupIdError
     sendError(
       res,
-      sendingGroupIdErrorCode,
-      sendingGroupIdErrorMessage
+      errorCode,
+      errorMessage
     )
     next()
     return;
