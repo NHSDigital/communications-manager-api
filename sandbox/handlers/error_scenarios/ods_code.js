@@ -1,7 +1,7 @@
 import {
-    noDefaultOdsClientAuth,
-    noOdsChangeClientAuth,
-  } from "../config.js"
+  noDefaultOdsClientAuth,
+  noOdsChangeClientAuth,
+} from "../config.js"
 
 export function getOdsCodeError(odsCode, authorizationHeader) {
   if (!odsCode && authorizationHeader === noDefaultOdsClientAuth) {
@@ -10,7 +10,7 @@ export function getOdsCodeError(odsCode, authorizationHeader) {
       'odsCode must be provided'
     ]
   }
-  
+
   if (odsCode && authorizationHeader === noOdsChangeClientAuth) {
     return [
       400,

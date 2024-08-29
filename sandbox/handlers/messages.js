@@ -26,7 +26,7 @@ export async function messages(req, res, next) {
     sendError(res, errorCode, errorMessage)
     next()
     return;
-  } 
+  }
 
   const { routingPlanId } = req.body.data.attributes;
 

@@ -30,7 +30,7 @@ export async function batchSend(req, res, next) {
     sendError(res, errorCode, errorMessage)
     next()
     return;
-  } 
+  }
 
   const { routingPlanId, messages } = body.data.attributes
 

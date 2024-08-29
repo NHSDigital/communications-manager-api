@@ -752,7 +752,7 @@ describe("/api/v1/send", () => {
             },
           },
         }
-        )
+      )
       .expect(200)
       .expect("Content-Type", /json/, done);
   });
@@ -783,7 +783,7 @@ describe("/api/v1/send", () => {
             },
           },
         }
-        )
+      )
       .expect(400, {
         message: "Client is not allowed to provide alternative contact details",
       })
@@ -888,11 +888,11 @@ describe("/api/v1/send", () => {
           },
         })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'sms': Input is not a string",
+        message: "Invalid recipient contact details. Field 'sms': Invalid",
         errors: [
           {
             field: "/data/attributes/messages/recipient/contactDetails/sms",
-            message: "Input is not a string",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -997,11 +997,11 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'email': Input is not a string",
+        message: "Invalid recipient contact details. Field 'email': Invalid",
         errors: [
           {
             field: "/data/attributes/messages/recipient/contactDetails/email",
-            message: "Input is not a string",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -1028,7 +1028,7 @@ describe("/api/v1/send", () => {
                     dateOfBirth: "1",
                     contactDetails: {
                       address: {
-                        lines: ['1','2'],
+                        lines: ['1', '2'],
                         postcode: 'hello'
                       }
                     },
@@ -1068,11 +1068,11 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'address': Input is not an object",
+        message: "Invalid recipient contact details. Field 'address': Invalid",
         errors: [
           {
             field: "/data/attributes/messages/recipient/contactDetails/address",
-            message: "Input is not an object",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -1106,11 +1106,11 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'address': Input is not an object",
+        message: "Invalid recipient contact details. Field 'address': Invalid",
         errors: [
           {
             field: "/data/attributes/messages/recipient/contactDetails/address",
-            message: "Input is not an object",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -1218,7 +1218,7 @@ describe("/api/v1/send", () => {
                   dateOfBirth: "1",
                   contactDetails: {
                     address: {
-                      lines: ['1','2','3','4','5','6'],
+                      lines: ['1', '2', '3', '4', '5', '6'],
                       postcode: 'hello'
                     }
                   },
@@ -1259,7 +1259,7 @@ describe("/api/v1/send", () => {
                   dateOfBirth: "1",
                   contactDetails: {
                     address: {
-                      lines: ['1','2',3,'4','5'],
+                      lines: ['1', '2', 3, '4', '5'],
                       postcode: 'hello'
                     }
                   },
@@ -1270,11 +1270,11 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'lines': Lines contain non-string or empty line",
+        message: "Invalid recipient contact details. Field 'lines': Invalid",
         errors: [
           {
             field: "/data/attributes/messages/recipient/contactDetails/address/lines",
-            message: "Lines contain non-string or empty line",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -1351,11 +1351,11 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'postcode': 'postcode' is not a string",
+        message: "Invalid recipient contact details. Field 'postcode': Invalid",
         errors: [
           {
             field: "/data/attributes/messages/recipient/contactDetails/address/postcode",
-            message: "'postcode' is not a string",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -1364,54 +1364,49 @@ describe("/api/v1/send", () => {
   });
   it('returns a 400 and multiple errors when there are multiple issues in contact details provided', (done) => {
     request(server)
-    .post("/api/v1/send")
-    .set({ Authorization: "allowedContactDetailOverride" })
-    .send({
-      data: {
-        type: "MessageBatch",
-        attributes: {
-          routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-          messageBatchReference: "request-id",
-          messages: [
-            {
-              messageReference: "1",
-              recipient: {
-                nhsNumber: "1",
-                dateOfBirth: "1",
-                contactDetails: {
-                  address: {
-                    lines: ['1'],
-                    postcode: []
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  dateOfBirth: "1",
+                  contactDetails: {
+                    address: {
+                      lines: ['1'],
+                      postcode: []
+                    },
+                    email: 'perm-fail@simulator.notify'
                   },
-                  email: 'perm-fail@simulator.notify'
                 },
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-    })
-    .expect(400, {
-      message: "Invalid recipient contact details. Field 'email': Input failed format check. Field 'lines': Too few address lines were provided. Field 'postcode': 'postcode' is not a string",
-      errors: [
-        {
-          field: "/data/attributes/messages/recipient/contactDetails/email",
-          message: "Input failed format check",
-          title: "Invalid value"
-         },
-         {
-          field: "/data/attributes/messages/recipient/contactDetails/address/lines",
-          message: "Too few address lines were provided",
-          title: "Invalid value"
-        },
-        {
-          field: "/data/attributes/messages/recipient/contactDetails/address/postcode",
-          message: "'postcode' is not a string",
-          title: "Invalid value"
-        },
-      ]
-    })
-    .expect("Content-Type", /json/, done);
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'email': Input failed format check. Field 'lines': Too few address lines were provided",
+        errors: [
+          {
+            field: "/data/attributes/messages/recipient/contactDetails/email",
+            message: "Input failed format check",
+            title: "Invalid value"
+          },
+          {
+            field: "/data/attributes/messages/recipient/contactDetails/address/lines",
+            message: "Too few address lines were provided",
+            title: "Invalid value"
+          },
+        ]
+      })
+      .expect("Content-Type", /json/, done);
   })
 
   it("returns a 200 when all alternate contact details are provided", (done) => {
@@ -1435,7 +1430,7 @@ describe("/api/v1/send", () => {
                       email: 'hello',
                       sms: 'hello',
                       address: {
-                        lines: ['1','2'],
+                        lines: ['1', '2'],
                         postcode: 'hello'
                       }
                     },
