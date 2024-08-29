@@ -900,6 +900,36 @@ describe("/api/v1/send", () => {
       .expect("Content-Type", /json/, done);
   });
 
+  it("returns a 200 when sms alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send(
+        {
+          data: {
+            type: "MessageBatch",
+            attributes: {
+              routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+              messageBatchReference: "request-id",
+              messages: [
+                {
+                  messageReference: "1",
+                  recipient: {
+                    nhsNumber: "1",
+                    dateOfBirth: "1",
+                    contactDetails: {
+                      email: 'hello'
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        })
+      .expect(200)
+      .expect("Content-Type", /json/, done);
+  });
+
   it("returns a 400 when invalid email alternate contact detail is provided", (done) => {
     request(server)
       .post("/api/v1/send")
@@ -976,6 +1006,39 @@ describe("/api/v1/send", () => {
           }
         ]
       })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 200 when address alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send(
+        {
+          data: {
+            type: "MessageBatch",
+            attributes: {
+              routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+              messageBatchReference: "request-id",
+              messages: [
+                {
+                  messageReference: "1",
+                  recipient: {
+                    nhsNumber: "1",
+                    dateOfBirth: "1",
+                    contactDetails: {
+                      address: {
+                        lines: ['1','2'],
+                        postcode: 'hello'
+                      }
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        })
+      .expect(200)
       .expect("Content-Type", /json/, done);
   });
 
@@ -1350,4 +1413,39 @@ describe("/api/v1/send", () => {
     })
     .expect("Content-Type", /json/, done);
   })
+
+  it("returns a 200 when all alternate contact details are provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send(
+        {
+          data: {
+            type: "MessageBatch",
+            attributes: {
+              routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+              messageBatchReference: "request-id",
+              messages: [
+                {
+                  messageReference: "1",
+                  recipient: {
+                    nhsNumber: "1",
+                    dateOfBirth: "1",
+                    contactDetails: {
+                      email: 'hello',
+                      sms: 'hello',
+                      address: {
+                        lines: ['1','2'],
+                        postcode: 'hello'
+                      }
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        })
+      .expect(200)
+      .expect("Content-Type", /json/, done);
+  });
 });
