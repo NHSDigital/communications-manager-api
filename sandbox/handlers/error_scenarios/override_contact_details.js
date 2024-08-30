@@ -90,7 +90,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Missing value",
-        field: `${path}/recipient/contactDetails/address/lines`,
+        field: `${path}/recipient/contactDetails/address`,
         message: "`lines` is missing",
       },
       `Field 'lines': 'lines' is missing`,
@@ -100,7 +100,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Missing value",
-        field: `${path}/recipient/contactDetails/address/lines`,
+        field: `${path}/recipient/contactDetails/address`,
         message: "`lines` is missing",
       },
       `Field 'lines': 'lines' is missing`,
@@ -111,7 +111,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Invalid value",
-        field: `${path}/recipient/contactDetails/address/lines`,
+        field: `${path}/recipient/contactDetails/address`,
         message: "Invalid",
       },
       `Field 'lines': Invalid`,
@@ -121,8 +121,8 @@ function addressValidation(address, path) {
   if (address.lines.length < 2) {
     return validationFailure([
       {
-        title: "Invalid value",
-        field: `${path}/recipient/contactDetails/address/lines`,
+        title: "Missing value",
+        field: `${path}/recipient/contactDetails/address`,
         message: "Too few address lines were provided",
       },
       `Field 'lines': Too few address lines were provided`,
@@ -132,10 +132,10 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Invalid value",
-        field: `${path}/recipient/contactDetails/address/lines`,
-        message: "Too many address lines were provided",
+        field: `${path}/recipient/contactDetails/address`,
+        message: "Invalid",
       },
-      `Field 'lines': Too many address lines were provided`,
+      `Field 'lines': Invalid`,
     ]);
   }
 
@@ -143,7 +143,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Missing value",
-        field: `${path}/recipient/contactDetails/address/postcode`,
+        field: `${path}/recipient/contactDetails/address`,
         message: "`postcode` is missing",
       },
       `Field 'postcode': 'postcode' is missing`,

@@ -1150,7 +1150,7 @@ describe("/api/v1/send", () => {
         message: "Invalid recipient contact details. Field 'lines': 'lines' is missing",
         errors: [
           {
-            field: "/data/attributes/messages/recipient/contactDetails/address/lines",
+            field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "`lines` is missing",
             title: "Missing value"
           }
@@ -1191,9 +1191,9 @@ describe("/api/v1/send", () => {
         message: "Invalid recipient contact details. Field 'lines': Too few address lines were provided",
         errors: [
           {
-            field: "/data/attributes/messages/recipient/contactDetails/address/lines",
+            field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Invalid value"
+            title: "Missing value"
           }
         ]
       })
@@ -1229,11 +1229,11 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'lines': Too many address lines were provided",
+        message: "Invalid recipient contact details. Field 'lines': Invalid",
         errors: [
           {
-            field: "/data/attributes/messages/recipient/contactDetails/address/lines",
-            message: "Too many address lines were provided",
+            field: "/data/attributes/messages/recipient/contactDetails/address",
+            message: "Invalid",
             title: "Invalid value"
           }
         ]
@@ -1273,7 +1273,7 @@ describe("/api/v1/send", () => {
         message: "Invalid recipient contact details. Field 'lines': Invalid",
         errors: [
           {
-            field: "/data/attributes/messages/recipient/contactDetails/address/lines",
+            field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1313,7 +1313,7 @@ describe("/api/v1/send", () => {
         message: "Invalid recipient contact details. Field 'postcode': 'postcode' is missing",
         errors: [
           {
-            field: "/data/attributes/messages/recipient/contactDetails/address/postcode",
+            field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "`postcode` is missing",
             title: "Missing value"
           }
@@ -1400,9 +1400,9 @@ describe("/api/v1/send", () => {
             title: "Invalid value"
           },
           {
-            field: "/data/attributes/messages/recipient/contactDetails/address/lines",
+            field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Invalid value"
+            title: "Missing value"
           },
         ]
       })
