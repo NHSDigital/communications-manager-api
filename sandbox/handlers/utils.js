@@ -36,14 +36,7 @@ export const writeLog = (res, logLevel, options = {}) => {
   log[logLevel](JSON.stringify(logLine))
 };
 
-export function sendError(res, code, message) {
-  res.status(code);
-  res.json({
-    message
-  });
-}
-
-export function sendErrorWithDetails(res, code, message, errors) {
+export function sendError(res, code, message, errors) {
   res.status(code);
   res.json({
     message,

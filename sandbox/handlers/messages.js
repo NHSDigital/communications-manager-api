@@ -1,32 +1,13 @@
 import KSUID from "ksuid";
-import { sendError, writeLog, hasValidGlobalTemplatePersonalisation, sendErrorWithDetails } from "./utils.js";
+import { sendError, writeLog, hasValidGlobalTemplatePersonalisation } from "./utils.js";
 import {
-  sendingGroupIdWithMissingNHSTemplates,
-  sendingGroupIdWithMissingTemplates,
-  sendingGroupIdWithDuplicateTemplates,
-  duplicateTemplates,
-  trigger500SendingGroupId,
   validSendingGroupIds,
   globalFreeTextNhsAppSendingGroupId,
-  noDefaultOdsClientAuth,
-  noOdsChangeClientAuth,
-  invalidEmailAddress
 } from "./config.js"
-
-// Note: the docker container uses node:12 which does not support optional chaining
-function getOriginatorOdsCode(req) {
-  let odsCode;
-  try {
-    odsCode = req.body.data.attributes.originator.odsCode;
-  } catch {
-    odsCode = undefined;
-  }
-  return odsCode;
-}
-
-function getEmailOverride(req) {
- return req?.body?.data?.attributes?.recipient?.contactDetails?.email
-}
+import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
+import { getOdsCodeError } from "./error_scenarios/ods_code.js";
+import { mandatorySingleMessageFieldValidation } from "./validation/mandatory_single_message_fields.js";
+import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js";
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
@@ -39,41 +20,25 @@ export async function messages(req, res, next) {
     return;
   }
 
-  if (!req.body) {
-    sendError(res, 400, "Missing request body");
-    next();
+  const mandatoryFieldError = mandatorySingleMessageFieldValidation(req.body)
+  if (mandatoryFieldError !== null) {
+    const [errorCode, errorMessage] = mandatoryFieldError
+    sendError(res, errorCode, errorMessage)
+    next()
     return;
   }
 
   const { routingPlanId } = req.body.data.attributes;
-  if (!validSendingGroupIds[routingPlanId]) {
-    sendError(
-      res,
-      404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
-    );
-    next();
-    return;
-  }
 
-  const odsCode = getOriginatorOdsCode(req);
-  if (!odsCode && req.headers.authorization === noDefaultOdsClientAuth) {
+  const sendingGroupIdError = getSendingGroupIdError(routingPlanId)
+  if (sendingGroupIdError !== null) {
+    const [errorCode, errorMessage] = sendingGroupIdError
     sendError(
       res,
-      400,
-      'odsCode must be provided'
+      errorCode,
+      errorMessage
     )
-    next();
-    return;
-  }
-
-  if (odsCode && req.headers.authorization === noOdsChangeClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode was provided but ODS code override is not enabled for the client'
-    )
-    next();
+    next()
     return;
   }
 
@@ -86,55 +51,26 @@ export async function messages(req, res, next) {
     return;
   }
 
-  if (routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
+  const odsCode = req.body.data?.attributes?.originator?.odsCode;
+  const odsCodeError = getOdsCodeError(odsCode, req.headers.authorization)
+  if (odsCodeError !== null) {
+    const [odsCodeErrorCode, odsCodeErrorMessage] = odsCodeError
+    sendError(res, odsCodeErrorCode, odsCodeErrorMessage)
+    next()
+    return;
+  }
+
+  const alternateContactDetails = req.body.data?.attributes?.recipient?.contactDetails
+  const alternateContactDetailsError = getAlternateContactDetailsError(alternateContactDetails, req.headers.authorization, '/data/attributes')
+  if (alternateContactDetailsError !== null) {
+    const [errorCode, errorMessage, errors] = alternateContactDetailsError
     sendError(
       res,
-      500,
-      `NHS App Template does not exist with internalTemplateId: invalid-template`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingTemplates) {
-    sendError(
-      res,
-      500,
-      `Templates required in "${sendingGroupIdWithMissingTemplates}" routing config not found`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithDuplicateTemplates) {
-    sendError(
-      res,
-      500,
-      `Duplicate templates in routing config: ${JSON.stringify(
-        duplicateTemplates
-      )}`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger500SendingGroupId) {
-    sendError(res, 500, "Error writing request items to DynamoDB");
-    next();
-    return;
-  }
-
-  const emailOverride = getEmailOverride(req);
-  if (emailOverride === invalidEmailAddress) {
-    const errors = [
-      {
-        title: "Invalid value",
-        field: "/data/attributes/recipient/contactDetails/email",
-        message: "Input failed format check"
-      }
-    ];
-    sendErrorWithDetails(res, 400, "Invalid recipient contact details. Field 'email': Input failed format check", errors);
-    next();
+      errorCode,
+      errorMessage,
+      errors
+    )
+    next()
     return;
   }
 
