@@ -51,4 +51,4 @@ properties:
                 - /data/attributes/recipient/nhsNumber
                 - /data/attributes/recipient/dateOfBirth
                 - /data/attributes/originator/odsCode
-              example: /data/attributes/messages/0/recipient/nhsNumber
+              example: /data/attributes/recipient/nhsNumber
