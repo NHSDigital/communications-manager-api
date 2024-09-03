@@ -5,6 +5,10 @@ APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
     has_mock_auth: true
+    app_ratelimit: '6000pm'
+    app_quota: '1200'
+    global_ratelimit: '18000pm'
+    global_quota: '6000'
   - name: internal-qa
     display_name: Internal QA
     has_mock_auth: true
@@ -42,7 +46,26 @@ apigee:
         attributes:
           - name: access
             value: public
-            # rate limiting is handled within the proxy policies directly
+          - name: ratelimiting
+            value:
+              {{ NAME }}:
+                quota:
+                  enabled: true
+                  interval: 1
+                  limit: {{ ENV.global_quota | default(6000)}}
+                  timeunit: minute
+                spikeArrest:
+                  enabled: true
+                  ratelimit: {{ ENV.global_ratelimit | default('18000pm') }}
+              app:
+                quota:
+                  enabled: true
+                  interval: 1
+                  limit: {{ ENV.app_quota | default(1200)}}
+                  timeunit: minute
+                spikeArrest:
+                  ratelimit: {{ ENV.app_ratelimit | default('6000pm') }}
+                  enabled: true
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]
