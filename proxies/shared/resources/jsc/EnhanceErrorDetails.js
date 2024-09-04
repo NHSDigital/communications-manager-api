@@ -17,7 +17,7 @@ JSON.parse(errors).forEach((error, index) => {
         id: messageId + '.' + index,
         code: code,
         links: links,
-        status: statusCode,
+        status: `${statusCode}`,
         title: error.title,
         detail: error.message,
         source: {
