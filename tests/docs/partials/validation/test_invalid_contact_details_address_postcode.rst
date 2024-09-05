@@ -1,5 +1,5 @@
 Scenario: An API consumer submitting a request with an invalid address postcode receives a 400 'Invalid Value' response
-======================================================================================================================
+===========================================================================================================================
 
 A valid contact detail must be structured in this format: { sms: value, email: value, address: { lines: [], postcode: value } }
 
