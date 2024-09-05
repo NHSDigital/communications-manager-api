@@ -1,4 +1,4 @@
-Scenario: An API consumer submitting a request with an invalid address lines receives a 400 'Missing Value' response
+Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 'Missing Value' response
 ======================================================================================================================
 
 A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }

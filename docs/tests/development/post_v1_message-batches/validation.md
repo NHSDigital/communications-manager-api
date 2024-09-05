@@ -193,6 +193,72 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
+## Scenario: An API consumer submitting a request with an invalid address postcode receives a 400 ‘Invalid Value’ response
+
+A valid contact detail must be structured in this format: { sms: value, email: value, address: { lines: [], postcode: value } }
+
+**Given** the API consumer provides an message body with an invalid postcode
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+
+
+## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Missing Value’ response
+
+A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
+
+**Given** the API consumer provides an message body with with too few address lines
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Missing value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+
+
+## Scenario: An API consumer submitting a request with invalid address lines (too many) receives a 400 ‘Invalid Value’ response
+
+A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
+
+**Given** the API consumer provides an message body with with too many address lines
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+
+
 ## Scenario: An API consumer submitting a request without a request body receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an empty message body
@@ -239,6 +305,28 @@ A valid date of birth must be structured in this format: YYYY-MM-dd
 | 10-12-1990, 1-MAY-2000, 1990/01/01 | Are tested to ensure that date of birth is only accepted as a ISO-8601 format     |
 | “”, None                           | Are tested to ensure that null date of birth values are not accepted              |
 | [], {}, 5, 0.1                     | Are tested to ensure that invalid date of birth values are not accepted           |
+
+
+## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
+
+A valid contact detail must be structured in this format: { email: value }
+
+**Given** the API consumer provides an message body with an invalid email address
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid message batch reference receives a 400 ‘Invalid Value’ response
@@ -365,6 +453,28 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
+
+
+## Scenario: An API consumer submitting a request with an invalid sms receives a 400 ‘Invalid Value’ response
+
+A valid sms contact detail must be structured in this format: { sms: value }
+
+**Given** the API consumer provides an message body with an invalid sms
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value                    | Description                                                               |
+|--------------------------|---------------------------------------------------------------------------|
+| None                     | Are tested to ensure that null personalisation values are not accepted    |
+| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
