@@ -1,4 +1,4 @@
-import { allowedContactDetailOverride } from "../config.js";
+import { notAllowedContactDetailOverride } from "../config.js";
 
 const invalidPhoneNumber = "07700900002";
 const invalidEmailAddress = "invalidEmailAddress";
@@ -172,7 +172,7 @@ export function getAlternateContactDetailsError(
     return null;
   }
 
-  if (contactDetails && authorizationHeader !== allowedContactDetailOverride) {
+  if (contactDetails && authorizationHeader === notAllowedContactDetailOverride) {
     return [
       400,
       "Client is not allowed to provide alternative contact details",

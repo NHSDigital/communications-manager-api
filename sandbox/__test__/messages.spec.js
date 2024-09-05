@@ -506,7 +506,7 @@ describe("/api/v1/messages", () => {
   it("returns a 400 when contactDetails provided but client is not permitted to use feature", (done) => {
     request(server)
       .post("/api/v1/messages")
-      .set({ Authorization: "noOdsChange" })
+      .set({ Authorization: "notAllowedContactDetailOverride" })
       .send({
         data: {
           type: 'Message',
