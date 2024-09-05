@@ -18,8 +18,6 @@ A valid contact detail must be structured in this format: { sms: value, email: v
 
     * - Value
       - Description
-    * - None
-      - Are tested to ensure that null personalisation values are not accepted
-    * - 5, "", "some-string", []
-      - Are tested to ensure that invalid personalisation values are not accepted
+    * - LS1 6AECD
+      - Used to ensure only valid postcode is accepted
 

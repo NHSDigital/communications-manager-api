@@ -18,8 +18,6 @@ A valid sms contact detail must be structured in this format: { sms: value }
 
     * - Value
       - Description
-    * - None
-      - Are tested to ensure that null personalisation values are not accepted
-    * - 5, "", "some-string", []
-      - Are tested to ensure that invalid personalisation values are not accepted
+    * - 077009000021
+      - Used to ensure invalid phone number is not accepted
 

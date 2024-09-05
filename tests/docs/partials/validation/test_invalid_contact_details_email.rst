@@ -1,7 +1,7 @@
 Scenario: An API consumer submitting a request with an invalid email receives a 400 'Invalid Value' response
 ======================================================================================================================
 
-A valid contact detail must be structured in this format: { email: value }
+A valid contact detail must be structured in this format: { email: Value }
 
 | **Given** the API consumer provides an message body with an invalid email address
 | **When** the request is submitted
@@ -17,9 +17,7 @@ A valid contact detail must be structured in this format: { email: value }
     :header-rows: 1
 
     * - Value
-      - Description
+      - invalidEmailAddress
     * - None
-      - Are tested to ensure that null personalisation values are not accepted
-    * - 5, "", "some-string", []
-      - Are tested to ensure that invalid personalisation values are not accepted
+      - Used to ensure invalid email address is not accepted
 

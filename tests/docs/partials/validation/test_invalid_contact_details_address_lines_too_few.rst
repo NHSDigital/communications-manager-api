@@ -18,8 +18,6 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 
     * - Value
       - Description
-    * - None
-      - Are tested to ensure that null personalisation values are not accepted
-    * - 5, "", "some-string", []
-      - Are tested to ensure that invalid personalisation values are not accepted
+    * - [ "1" ]
+      - Used to ensure list of less than 2 values is not accepted
 
