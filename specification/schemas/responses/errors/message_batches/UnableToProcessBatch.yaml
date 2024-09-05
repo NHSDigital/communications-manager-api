@@ -13,7 +13,7 @@ properties:
         id:
           $ref: ../../../types/ErrorIdentifier.yaml
         code:
-          $ref: ../../../enums/ErrorInvalidNHSNumber.yaml
+          $ref: ../../../enums/ErrorCode.yaml
         links:
           $ref: ../../../types/LinksErrorNHSNumber.yaml
         status:
@@ -22,39 +22,13 @@ properties:
             - '400'
           example: '400'
         title:
-          type: string
-          enum:
-            - Missing property
-            - Property cannot be null
-            - Invalid value
-            - Duplicate value
-            - Too few items
-            - Invalid nhs number
-          example: Invalid nhs number
+          $ref: ../../../enums/Title.yaml
         detail:
-          type: string
-          enum:
-            - 'The property at the specified location is required, but was not present in the request.'
-            - 'The property at the specified location is required, but a null value was passed in the request.'
-            - The property at the specified location does not allow this value.
-            - 'The property at the specified location is a duplicate, duplicated values are not allowed.'
-            - 'The property at the specified location contains too few items.'
-            - 'The value provided in this nhsNumber field is not a valid NHS number.'
-          example: 'The value provided in this nhsNumber field is not a valid NHS number.'
+          $ref: ../../../types/ErrorDetail.yaml
         source:
           type: object
           additionalProperties: false
           properties:
             pointer:
-              type: string
-              enum:
-                - /data/type
-                - /data/attributes
-                - /data/attributes/messageBatchReference
-                - /data/attributes/routingPlanId
-                - /data/attributes/messages
-                - /data/attributes/messages/0/recipient/nhsNumber
-                - /data/attributes/messages/0/recipient/dateOfBirth
-                - /data/attributes/messages/0/originator/odsCode
-                - /data/attributes/messages/0/messageReference
+              $ref: ../../../types/ErrorPointer.yaml
               example: /data/attributes/messages/0/recipient/nhsNumber

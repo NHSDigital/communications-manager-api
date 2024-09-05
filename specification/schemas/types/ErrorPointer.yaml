@@ -1,0 +1,2 @@
+type: string
+description: Lists the path to the field in the request that contains the validation error.
