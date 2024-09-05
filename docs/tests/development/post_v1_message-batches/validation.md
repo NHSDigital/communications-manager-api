@@ -209,10 +209,9 @@ A valid contact detail must be structured in this format: { sms: value, email: v
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value                    | Description                                                               |
-|--------------------------|---------------------------------------------------------------------------|
-| None                     | Are tested to ensure that null personalisation values are not accepted    |
-| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+| Value     | Description                                    |
+|-----------|------------------------------------------------|
+| LS1 6AECD | Used to ensure only valid postcode is accepted |
 
 
 ## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Missing Value’ response
@@ -231,10 +230,9 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value                    | Description                                                               |
-|--------------------------|---------------------------------------------------------------------------|
-| None                     | Are tested to ensure that null personalisation values are not accepted    |
-| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+| Value   | Description                                               |
+|---------|-----------------------------------------------------------|
+| [ “1” ] | Used to ensure list of less than 2 values is not accepted |
 
 
 ## Scenario: An API consumer submitting a request with invalid address lines (too many) receives a 400 ‘Invalid Value’ response
@@ -253,10 +251,9 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value                    | Description                                                               |
-|--------------------------|---------------------------------------------------------------------------|
-| None                     | Are tested to ensure that null personalisation values are not accepted    |
-| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+| Value                            | Description                                               |
+|----------------------------------|-----------------------------------------------------------|
+| [ “1”, “2”, “3”, “4”, “5”, “6” ] | Used to ensure list of more than 5 values is not accepted |
 
 
 ## Scenario: An API consumer submitting a request without a request body receives a 400 ‘Invalid Value’ response
@@ -309,7 +306,7 @@ A valid date of birth must be structured in this format: YYYY-MM-dd
 
 ## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
 
-A valid contact detail must be structured in this format: { email: value }
+A valid contact detail must be structured in this format: { email: Value }
 
 **Given** the API consumer provides an message body with an invalid email address
 <br/>
@@ -323,10 +320,9 @@ A valid contact detail must be structured in this format: { email: value }
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value                    | Description                                                               |
-|--------------------------|---------------------------------------------------------------------------|
-| None                     | Are tested to ensure that null personalisation values are not accepted    |
-| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+| Value   | invalidEmailAddress                                  |
+|---------|------------------------------------------------------|
+| None    | Used to ensure invalid email address is not accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid message batch reference receives a 400 ‘Invalid Value’ response
@@ -471,10 +467,9 @@ A valid sms contact detail must be structured in this format: { sms: value }
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value                    | Description                                                               |
-|--------------------------|---------------------------------------------------------------------------|
-| None                     | Are tested to ensure that null personalisation values are not accepted    |
-| 5, “”, “some-string”, [] | Are tested to ensure that invalid personalisation values are not accepted |
+|        Value | Description                                         |
+|--------------|-----------------------------------------------------|
+| 077009000021 | Used to ensure invalid phone number is not accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
