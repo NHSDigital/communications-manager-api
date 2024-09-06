@@ -409,7 +409,8 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_interna
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/recipient/contactDetails/email",
             "Input failed format check"
-        )
+        ),
+        correlation_id
     )
 
 
@@ -457,7 +458,8 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
         400,
         Generators.generate_error(error, source={
             "pointer": "/data/attributes/recipient/contactDetails/address"
-        })
+        }),
+        correlation_id
     )
 
 
@@ -504,7 +506,8 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bea
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/recipient/contactDetails/address",
             "Invalid"
-        )
+        ),
+        correlation_id
     )
 
 
