@@ -1,4 +1,3 @@
-import json
 import pytest
 import os
 from .authentication import AuthenticationCache
