@@ -26,5 +26,5 @@ if (errorParsed.policy == "quota") {
     retryAfter = 60;
 }
 
-context.setVariable("data.enhancedErrors", JSON.stringify(enhancedErrors));
+context.setVariable("error.content", JSON.stringify(enhancedErrors));
 context.setVariable("error.header.Retry-After", retryAfter);

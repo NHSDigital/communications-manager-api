@@ -5,7 +5,7 @@
  For more information on JavaScript policies within Apigee see the following resource:
     * https://docs.apigee.com/api-platform/reference/policies/javascript-policy.
 
- In this instance the JavaScript file translate the error payload from the rate limit shared flow
+ In this instance the JavaScript file translates the error payload from the rate limit shared flow
  into enhanced errors that will then be used to create an error as per the NHS Notify specs
 -->
 <Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.TranslateQuotaErrors">
