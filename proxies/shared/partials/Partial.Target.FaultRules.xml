@@ -21,7 +21,7 @@
     <Step>
         <Name>JavaScript.TranslateQuotaErrors</Name>
         <Condition>
-            response.content ~~ "\{.*\u0022scope\u0022:\u0022proxy\u0022.*\}" or response.content ~~ "\{.*\u0022scope\u0022:\u0022application\u0022.*\}"
+            error.content ~~ "\{.*\u0022scope\u0022:\u0022proxy\u0022.*\}" or error.content ~~ "\{.*\u0022scope\u0022:\u0022application\u0022.*\}"
         </Condition>
     </Step>
     <Step>

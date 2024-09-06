@@ -1,7 +1,7 @@
 
 const errorContent = context.getVariable('error.content');
 const messageId = context.getVariable('messageid');
-const statusCode = context.getVariable('response.status.code');
+const statusCode = context.getVariable('error.status.code');
 const links = {
     about : "{{ ERROR_ABOUT_LINK }}"
 };
@@ -27,4 +27,4 @@ if (errorParsed.policy == "quota") {
 }
 
 context.setVariable("data.enhancedErrors", JSON.stringify(enhancedErrors));
-context.setVariable("data.retryAfter", retryAfter);
+context.setVariable("error.header.Retry-After", retryAfter);
