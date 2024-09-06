@@ -9,11 +9,10 @@ headers = {
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-CORRELATION_IDS = [None, "e8bb49c6-06bc-44f7-8443-9244284640f8"]
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_body.rst
@@ -40,7 +39,7 @@ def test_invalid_body(nhsd_apim_proxy_url, correlation_id):
     "property, pointer",
     MISSING_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_message_batch_property_missing.rst
@@ -70,7 +69,7 @@ def test_property_missing(nhsd_apim_proxy_url, property, pointer, correlation_id
     "property, pointer",
     NULL_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_message_batch_null.rst
@@ -100,7 +99,7 @@ def test_data_null(nhsd_apim_proxy_url, property, pointer, correlation_id):
     "property, pointer",
     INVALID_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_message_batch_invalid.rst
@@ -131,7 +130,7 @@ def test_data_invalid(nhsd_apim_proxy_url, property, pointer, correlation_id):
     "property, pointer",
     DUPLICATE_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_data_duplicate.rst
@@ -163,7 +162,7 @@ def test_data_duplicate(nhsd_apim_proxy_url, property, pointer, correlation_id):
     "property, pointer",
     TOO_FEW_PROPERTIES_PATHS
 )
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_id):
     """
     .. include:: ../../partials/validation/test_data_too_few_items.rst
@@ -191,7 +190,7 @@ def test_data_too_few_items(nhsd_apim_proxy_url, property, pointer, correlation_
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("nhs_number", constants.INVALID_NHS_NUMBER)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
@@ -229,7 +228,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("dob", constants.INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
@@ -265,7 +264,7 @@ def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
@@ -302,7 +301,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
@@ -339,7 +338,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
@@ -377,7 +376,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("invalid_value", constants.INVALID_MESSAGE_VALUES)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
     """
     .. include:: ../../partials/validation/test_blank_value_under_messages.rst
@@ -407,7 +406,7 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlat
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_null_value_under_messages.rst
@@ -437,7 +436,7 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, correlation_id):
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("number_of_errors", [99, 100, 101, 150, 200])
 def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, number_of_errors):
     """
@@ -475,7 +474,7 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.INVALID_PERSONALISATION_VALUES)
 def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation):
     """
@@ -513,7 +512,7 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
 
 
 @pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
 def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisation):
     """
@@ -551,12 +550,14 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
 
 
 @pytest.mark.sandboxtest
-def test_invalid_sms_contact_details(nhsd_apim_proxy_url):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -585,17 +586,20 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url):
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/sms",
             "Input failed format check"
-        )
+        ),
+        correlation_id
     )
 
 
 @pytest.mark.sandboxtest
-def test_invalid_email_contact_details(nhsd_apim_proxy_url):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_email_contact_details(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -624,17 +628,20 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url):
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/email",
             "Input failed format check"
-        )
+        ),
+        correlation_id
     )
 
 
 @pytest.mark.sandboxtest
-def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -674,17 +681,20 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url):
         400,
         Generators.generate_error(error, source={
             "pointer": "/data/attributes/messages/recipient/contactDetails/address"
-        })
+        }),
+        correlation_id
     )
 
 
 @pytest.mark.sandboxtest
-def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -723,5 +733,6 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url):
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/address",
             "Invalid"
-        )
+        ),
+        correlation_id
     )

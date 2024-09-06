@@ -208,9 +208,9 @@ A valid contact detail must be structured in this format: { email: Value }
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
-| Value   | invalidEmailAddress                                  |
-|---------|------------------------------------------------------|
-| None    | Used to ensure invalid email address is not accepted |
+| Value               | Description                                          |
+|---------------------|------------------------------------------------------|
+| invalidEmailAddress | Used to ensure invalid email address is not accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid message reference receives a 400 ‘Invalid Value’ response

@@ -31,7 +31,8 @@ LETTER_ROUTING_PLAN = "e5edd3db-503e-4997-b870-88ac9215cb47"
 
 TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
-CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
+CORRELATION_ID = ["76491414-d0cf-4655-ae20-a4d1368472f3"]
+CORRELATION_IDS = [None] + CORRELATION_ID
 ORIGIN = "https://my.website"
 NUM_MAX_ERRORS = 100
 DEV_API_GATEWAY_URL = "https://comms-apim.internal-dev.communications.national.nhs.uk"

@@ -17,7 +17,7 @@ A valid contact detail must be structured in this format: { email: Value }
     :header-rows: 1
 
     * - Value
-      - invalidEmailAddress
-    * - None
+      - Description
+    * - invalidEmailAddress
       - Used to ensure invalid email address is not accepted
 

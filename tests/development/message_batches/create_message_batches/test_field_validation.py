@@ -531,13 +531,15 @@ def test_null_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, co
 
 
 @pytest.mark.devtest
-def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Authorization": bearer_token_internal_dev.value,
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -567,18 +569,21 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/sms",
             "Input failed format check"
-        )
+        ),
+        correlation_id
     )
 
 
 @pytest.mark.devtest
-def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Authorization": bearer_token_internal_dev.value,
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -608,18 +613,21 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_interna
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/email",
             "Input failed format check"
-        )
+        ),
+        correlation_id
     )
 
 
 @pytest.mark.devtest
-def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Authorization": bearer_token_internal_dev.value,
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -660,18 +668,21 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
         400,
         Generators.generate_error(error, source={
             "pointer": "/data/attributes/messages/recipient/contactDetails/address"
-        })
+        }),
+        correlation_id
     )
 
 
 @pytest.mark.devtest
-def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Authorization": bearer_token_internal_dev.value,
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -711,18 +722,21 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bea
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/address",
             "Invalid"
-        )
+        ),
+        correlation_id
     )
 
 
 @pytest.mark.devtest
-def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         "Authorization": bearer_token_internal_dev.value,
         **headers,
+        "X-Correlation-Id": correlation_id
     }, json={
         "data": {
             "type": "MessageBatch",
@@ -761,5 +775,6 @@ def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_to
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/recipient/contactDetails/address",
             "Postcode input failed format check"
-        )
+        ),
+        correlation_id
     )
