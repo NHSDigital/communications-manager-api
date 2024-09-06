@@ -22,7 +22,7 @@ properties:
             - '400'
           example: '400'
         title:
-          $ref: ../../../enums/Title.yaml
+          $ref: ../../../enums/ErrorTitle.yaml
         detail:
           $ref: ../../../types/ErrorDetail.yaml
         source:
