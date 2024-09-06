@@ -31,4 +31,3 @@ properties:
           properties:
             pointer:
               $ref: ../../../types/ErrorPointer.yaml
-              example: /data/attributes/recipient/nhsNumber
