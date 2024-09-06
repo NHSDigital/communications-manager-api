@@ -26,9 +26,9 @@ class RateLimiting:
         return ratelimit
 
     def restore_rate_limit(self):
-        self.set_rate_limit_string(self.previous_ratelimit)
+        self.update_product_rate_limit(self.previous_ratelimit)
 
-    def set_rate_limit_string(self, ratelimit):
+    def update_product_rate_limit(self, ratelimit):
         for attribute in self.product["attributes"]:
             if attribute["name"] == 'ratelimiting':
                 attribute["value"] = ratelimit
@@ -68,4 +68,4 @@ class RateLimiting:
             }
         }
         ratelimit_value = json.dumps(config_dict)
-        self.set_rate_limit_string(ratelimit_value)
+        self.update_product_rate_limit(ratelimit_value)
