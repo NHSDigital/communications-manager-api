@@ -10,13 +10,7 @@
     <Properties/>
     <FaultResponse>
         <Set>
-            {% if data.retryAfter %}
-                <Headers variablePrefix="%" variableSuffix="#">
-                    <Header name="Retry-After">%data.retryAfter#</Header>
-                </Headers>
-            {% else %}
-                <Headers/>
-            {% endif %}
+            <Headers/>
             <Payload variablePrefix="%" variableSuffix="#">
             {
                 "errors" : %data.enhancedErrors#
