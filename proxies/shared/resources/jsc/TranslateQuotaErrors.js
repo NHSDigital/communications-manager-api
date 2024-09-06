@@ -20,7 +20,7 @@ const enhancedErrors = [
 ];
 
 // If it's a spike arrest then retry after 1 second
-let retryAfter = 1;
+var retryAfter = 1;
 if (errorParsed.policy == "quota") {
     // If it's a quota limit then retry after 1 minute
     retryAfter = 60;
