@@ -13,18 +13,18 @@ const enhancedErrors = [
         id: messageId + '.0',
         code: "CM_QUOTA",
         links: links,
-        status: statusCode,
+        status: statusCode.toString(),
         title: "Too many requests",
         detail: errorParsed.message
     }
 ];
 
 // If it's a spike arrest then retry after 1 second
-var retryAfter = 1;
+var retryAfter = "1";
 if (errorParsed.policy == "quota") {
     // If it's a quota limit then retry after 1 minute
-    retryAfter = 60;
+    retryAfter = "60";
 }
 
-context.setVariable("error.content", JSON.stringify(enhancedErrors));
+context.setVariable("error.content", JSON.stringify({errors: enhancedErrors}));
 context.setVariable("error.header.Retry-After", retryAfter);

@@ -1,7 +1,9 @@
+import json
 import pytest
 import os
 from .authentication import AuthenticationCache
 from .app_keys import ensure_api_product_in_application, ensure_api_product_not_in_application
+from .rate_limiting import RateLimiting
 
 
 @pytest.fixture(scope='session')
@@ -65,3 +67,10 @@ def bearer_token_int(authentication_cache):
 @pytest.fixture
 def bearer_token_prod(authentication_cache):
     return authentication_cache.generate_authentication('prod')
+
+
+@pytest.fixture(scope='session')
+def rate_limiting(products_api, api_product_name):
+    rate_limiting = RateLimiting(products_api, api_product_name, 5)
+    yield rate_limiting
+    rate_limiting.set_default_rate_limit()

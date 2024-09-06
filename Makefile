@@ -98,6 +98,18 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--only-rerun 'AssertionError: Unexpected 504' \
 	    --junitxml=test-report.xml
 
+PERFTEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
+		PYTHONPATH=./tests \
+		poetry run pytest -vv \
+		--color=yes \
+		-n 1 \
+		--api-name=communications-manager \
+		--proxy-name="$(PROXY_NAME)" \
+		-s \
+		--reruns 5 \
+		--reruns-delay 30 \
+	    --junitxml=perftest-report.xml
+
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		PYTHONPATH=./tests \
 		poetry run pytest -vv \
@@ -151,7 +163,12 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 	tests/development \
 	-m devtest
 
-internal-dev-test: .internal-dev-test
+.internal-dev-perftest:
+	$(PERFTEST_CMD) \
+	tests/development \
+	-m devperftest
+
+internal-dev-test: .internal-dev-test .internal-dev-perftest
 
 internal-qa-test:
 	$(TEST_CMD) \

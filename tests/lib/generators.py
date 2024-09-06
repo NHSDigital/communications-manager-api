@@ -213,6 +213,12 @@ class Generators():
         return Generators.generate_error(constants.ERROR_QUOTA)
 
     @staticmethod
+    def generate_quota_error_custom(detail):
+        error = constants.ERROR_QUOTA
+        error.detail = detail
+        return Generators.generate_error(error)
+
+    @staticmethod
     def generate_retry_too_early_error():
         return Generators.generate_error(constants.ERROR_RETRY_TOO_EARLY)
 

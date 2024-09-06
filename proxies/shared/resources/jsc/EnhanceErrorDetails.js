@@ -26,4 +26,4 @@ JSON.parse(errors).forEach((error, index) => {
     });
 });
 
-context.setVariable("error.content", JSON.stringify(enhancedErrors));
+context.setVariable("error.content", JSON.stringify({errors: enhancedErrors}));
