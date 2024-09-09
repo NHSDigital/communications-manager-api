@@ -35,5 +35,5 @@ resp = requests.post(f"https://{env}.api.service.nhs.uk/oauth2/token", headers={
 )
 
 details = json.loads(resp.content)
-print(details)
+
 print(f"Token is: {details.get('access_token', 'Unknown')}")
