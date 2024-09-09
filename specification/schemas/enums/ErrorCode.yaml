@@ -1,4 +1,4 @@
-title: Enum_Error_InvalidNHSNumber
+title: Enum_ErrorCode
 type: string
 enum:
   - CM_MISSING_VALUE

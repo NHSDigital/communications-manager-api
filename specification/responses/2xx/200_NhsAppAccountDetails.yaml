@@ -1,4 +1,4 @@
-description: Request successful
+description: Request successful.
 headers:
   $ref: ../../snippets/StandardResponseHeaders.yaml
 content:

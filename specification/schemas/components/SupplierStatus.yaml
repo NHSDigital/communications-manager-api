@@ -44,8 +44,7 @@ properties:
         type: string
         description: URL to retrieve overarching message status from the GET endpoint.
         format: uri
-        examples: 
-          - "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
+        example: "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
     required:
       - message
   meta:
@@ -53,9 +52,8 @@ properties:
     properties:
       idempotencyKey:
         type: string
-        description: Contains a value that you can use to deduplicate retried
+        description: Contains a value that you can use to deduplicate retried.
           requests.
-        examples: 
-          - "2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445"
+        example: "2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445"
     required:
       - idempotencyKey

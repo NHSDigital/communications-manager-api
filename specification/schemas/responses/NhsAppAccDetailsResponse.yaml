@@ -10,7 +10,7 @@ properties:
         $ref: ../enums/TypeNhsAppAccounts.yaml
       id:
         $ref: ../types/ODSOrganisationCode.yaml
-        description: The ODS organisation code that was specified in the request
+        description: The ODS organisation code that was specified in the request.
       attributes:
         type: object
         additionalProperties: false
@@ -31,20 +31,20 @@ properties:
   links:
     type: object
     additionalProperties: false
-    description: Contains links to related objects
+    description: Contains links to related objects.
     properties:
       last:
         type: string
         format: uri
-        description: URI of the final page of data
+        description: URI of the final page of data.
         example: https://api.service.nhs.uk/comms/channels/nhsapp/accounts?ods-organisation-code=Y00001&page=10
       next:
         type: string
         format: uri
-        description: URI of the next page of data
+        description: URI of the next page of data.
         example: https://api.service.nhs.uk/comms/channels/nhsapp/accounts?ods-organisation-code=Y00001&page=7
       self:
         type: string
         format: uri
-        description: URI of this page of data
+        description: URI of this page of data.
         example: https://api.service.nhs.uk/comms/channels/nhsapp/accounts?ods-organisation-code=Y00001&page=6
