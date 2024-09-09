@@ -3,8 +3,9 @@ import time
 
 
 class RateLimiting:
-    def __init__(self, products_api, api_product_name, delay):
+    def __init__(self, products_api, developer_apps_api, api_product_name, delay):
         self.products_api = products_api
+        self.developer_apps_api = developer_apps_api
         self.api_product_name = api_product_name
         self.product = products_api.get_product_by_name(api_product_name)
         self.previous_ratelimit = self.extract_ratelimiting_attribute()
@@ -69,3 +70,51 @@ class RateLimiting:
         }
         ratelimit_value = json.dumps(config_dict)
         self.update_product_rate_limit(ratelimit_value)
+
+    def remove_app_ratelimit(self, email, app_name):
+        app = self.developer_apps_api.get_app_by_name(email, app_name)
+
+        new_attributes = []
+
+        for attribute in app["attributes"]:
+            if attribute["name"] != 'ratelimiting':
+                new_attributes.append(attribute)
+
+        app["attributes"] = new_attributes
+
+        self.developer_apps_api.put_app_by_name(email, app_name, app)
+
+    def set_app_ratelimit(self, email, app_name, quota=1200, spikearrest="6000pm"):
+        app = self.developer_apps_api.get_app_by_name(email, app_name)
+
+        config_dict = {
+            self.api_product_name: {
+                "quota": {
+                    "enabled": True,
+                    "interval": 1,
+                    "limit": quota,
+                    "timeunit": "minute"
+                },
+                "spikeArrest": {
+                    "enabled": True,
+                    "ratelimit": spikearrest
+                }
+            }
+        }
+
+        ratelimit_value = json.dumps(config_dict)
+
+        updated = False
+        for attribute in app["attributes"]:
+            if attribute["name"] == 'ratelimiting':
+                attribute["value"] = ratelimit_value
+                updated = True
+                break
+
+        if updated is False:
+            app["attributes"].append({
+                "name": "ratelimiting",
+                "value": ratelimit_value
+            })
+
+        self.developer_apps_api.put_app_by_name(email, app_name, app)

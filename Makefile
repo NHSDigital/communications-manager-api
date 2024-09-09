@@ -106,7 +106,7 @@ PERFTEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--api-name=communications-manager \
 		--proxy-name="$(PROXY_NAME)" \
 		-s \
-		--reruns 5 \
+		--reruns 8 \
 		--reruns-delay 30 \
 	    --junitxml=perftest-report.xml
 
