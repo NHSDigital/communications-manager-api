@@ -7,4 +7,4 @@ Scenario: An API consumer submitting requests when exceeding the specific app sp
 
 **Asserts**
 - Response returns a 200 OK
-- Response returns the expected error message body
+- Response returns the message body
