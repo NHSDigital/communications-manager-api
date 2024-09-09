@@ -14,7 +14,7 @@
 
 **Asserts**
 - Response returns a 200 OK
-- Response returns the expected error message body
+- Response returns the message body
 
 
 ### Scenario: An API consumer submitting requests when exceeding the specific app quota rate limit for another app
@@ -28,7 +28,7 @@
 
 **Asserts**
 - Response returns a 200 OK
-- Response returns the expected error message body
+- Response returns the expected message body
 
 
 ### Scenario: An API consumer submitting requests when exceeding the global app quota rate limit
