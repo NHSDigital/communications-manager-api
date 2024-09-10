@@ -760,7 +760,7 @@ describe("/api/v1/send", () => {
   it("returns a 400 when contactDetails provided but client is not permitted to use feature", (done) => {
     request(server)
       .post("/api/v1/send")
-      .set({ Authorization: "noOdsChange" })
+      .set({ Authorization: "notAllowedContactDetailOverride" })
       .send(
         {
           data: {

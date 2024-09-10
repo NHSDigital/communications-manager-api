@@ -528,3 +528,253 @@ def test_null_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, co
         Generators.generate_null_value_error("/data/attributes/messages/0/personalisation"),
         correlation_id
     )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "sms": "077009000021"
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/sms",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "email": "invalidEmailAddress"
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/email",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "address": {
+                                    "lines": [
+                                        "1"
+                                    ],
+                                    "postcode": "LS1 6AE"
+                                }
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    error = constants.Error(
+        "CM_MISSING_VALUE",
+        "400",
+        "Missing value",
+        "Too few address lines were provided"
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_error(error, source={
+            "pointer": "/data/attributes/messages/recipient/contactDetails/address"
+        }),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "address": {
+                                    "lines": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5",
+                                        "6"
+                                    ],
+                                    "postcode": "LS1 6AE"
+                                }
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/address",
+            "Invalid"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "address": {
+                                    "lines": [
+                                        "1",
+                                        "2",
+                                        "3",
+                                        "4",
+                                        "5"
+                                    ],
+                                    "postcode": "LS1 6AECD"
+                                }
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/address",
+            "Postcode input failed format check"
+        ),
+        correlation_id
+    )
