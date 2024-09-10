@@ -168,7 +168,9 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 	tests/development \
 	-m devperftest
 
-internal-dev-test: .internal-dev-test .internal-dev-perftest
+internal-dev-test: .internal-dev-test
+
+internal-dev-test-nightly: .internal-dev-test .internal-dev-perftest
 
 internal-qa-test:
 	$(TEST_CMD) \
