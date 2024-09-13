@@ -134,6 +134,8 @@ Rather, use the [production test patient for PDS](https://digital.nhs.uk/develop
 
 You need to get your software approved by us before it can go live with this API. You will also need to undertake the NHS Notify onboarding process which is still being defined. Further details will follow.
 
+NHS Notify sends messages to patients using their contact details obtained from the Personal Demographics Service. In exceptional cases where different contact details are required, this information can be overridden. As overriding contact details is a sensitive action, it requires explicit approval from the onboarding team, who will consult with legal and clinical teams before granting permission.
+
 To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
 
 ## Free-text communications
