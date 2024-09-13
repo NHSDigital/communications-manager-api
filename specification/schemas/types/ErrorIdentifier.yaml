@@ -1,3 +1,4 @@
 type: string
 title: Type_ErrorIdentifier
+description: A system generated unique identifier for this request.
 example: 'rrt-1931948104716186917-c-geu2-10664-3111479-3.0'

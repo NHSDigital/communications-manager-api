@@ -1,0 +1,13 @@
+type: string
+title: Enum_Title
+description: The title of this error response.
+enum:
+  - Missing property
+  - Property cannot be null
+  - Invalid value
+  - Duplicate value
+  - Too few items
+  - Invalid nhs number
+  - Originator odsCode must be provided
+  - Cannot set ODS code
+example: Invalid nhs number

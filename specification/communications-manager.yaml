@@ -29,7 +29,7 @@ paths:
         name: messageId
         in: path
         required: true
-        description: The unique identifier for the message
+        description: The unique identifier for the message.
     get:
       $ref: endpoints/get_message.yaml
   /channels/nhsapp/accounts:

@@ -18,6 +18,11 @@ class AuthenticationCache():
             private_key = os.environ["NON_PROD_PRIVATE_KEY"]
             url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
             kid = "local"
+        elif env == "internal-dev-test-1":
+            api_key = os.environ["NON_PROD_API_KEY_TEST_1"]
+            private_key = os.environ["NON_PROD_PRIVATE_KEY"]
+            url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
+            kid = "local"
         elif env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")

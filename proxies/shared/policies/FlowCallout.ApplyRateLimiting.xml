@@ -1,0 +1,7 @@
+<!-- 
+    See https://nhsd-confluence.digital.nhs.uk/display/APM/Rate+limiting+shared+flow
+-->
+<FlowCallout async="false" continueOnError="false" enabled="true" name="FlowCallout.ApplyRateLimiting">
+    <DisplayName>Apply Rate Limiting</DisplayName>
+    <SharedFlowBundle>ApplyRateLimiting</SharedFlowBundle>
+</FlowCallout>

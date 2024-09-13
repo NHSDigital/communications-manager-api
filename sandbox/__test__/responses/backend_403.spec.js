@@ -1,6 +1,6 @@
 import request from "supertest";
 import * as uuid from 'uuid';
-import { setup } from './helpers.js';
+import { setup } from '../helpers.js';
 
 describe('backend_403', () => {
   let env;

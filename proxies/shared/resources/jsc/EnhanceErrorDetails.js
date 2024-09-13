@@ -17,7 +17,7 @@ JSON.parse(errors).forEach((error, index) => {
         id: messageId + '.' + index,
         code: code,
         links: links,
-        status: statusCode,
+        status: String(statusCode),
         title: error.title,
         detail: error.message,
         source: {
@@ -26,4 +26,4 @@ JSON.parse(errors).forEach((error, index) => {
     });
 });
 
-context.setVariable("data.enhancedErrors", JSON.stringify(enhancedErrors));
+context.setVariable("error.content", JSON.stringify({errors: enhancedErrors}));

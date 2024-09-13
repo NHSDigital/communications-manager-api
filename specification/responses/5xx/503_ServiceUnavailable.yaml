@@ -26,5 +26,5 @@ headers:
       minimum: 5
       multipleOf: 1
       example: 5
-    description: Time to wait between requests in seconds
+    description: Time to wait between requests in seconds.
   $ref: ../../snippets/StandardResponseHeaders.yaml
