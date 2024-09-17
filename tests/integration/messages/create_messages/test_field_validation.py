@@ -341,11 +341,11 @@ def test_null_personalisation(bearer_token_int, correlation_id, personalisation)
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_int, correlation_id):
+def test_invalid_sms_contact_details(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
@@ -379,11 +379,11 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_int, corr
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_int, correlation_id):
+def test_invalid_email_contact_details(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
@@ -417,11 +417,11 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_int, co
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bearer_token_int, correlation_id):
+def test_invalid_address_contact_details_too_few_lines(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
@@ -466,11 +466,11 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bearer_token_int, correlation_id):
+def test_invalid_address_contact_details_too_many_lines(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id
@@ -514,11 +514,11 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bea
 
 @pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_token_int, correlation_id):
+def test_invalid_address_contact_details_postcode(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
         "Authorization": bearer_token_int.value,
         **headers,
         "X-Correlation-Id": correlation_id

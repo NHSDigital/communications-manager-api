@@ -80,7 +80,6 @@ def test_201_message_batch_valid_nhs_number(bearer_token_int):
 
 @pytest.mark.inttest
 def test_201_message_batch_valid_contact_details(
-    nhsd_apim_proxy_url,
     bearer_token_int
 ):
     """
@@ -102,7 +101,7 @@ def test_201_message_batch_valid_contact_details(
     }
 
     resp = requests.post(
-        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
             "Authorization": bearer_token_int.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,

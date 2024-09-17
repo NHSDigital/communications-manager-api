@@ -61,7 +61,7 @@ def test_201_single_message_with_valid_nhs_number(bearer_token_int):
 
 
 @pytest.mark.inttest
-def test_201_message_valid_contact_details(nhsd_apim_proxy_url, bearer_token_int):
+def test_201_message_valid_contact_details(bearer_token_int):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_contact_details.rst
     """
@@ -76,14 +76,14 @@ def test_201_message_valid_contact_details(nhsd_apim_proxy_url, bearer_token_int
         }
     }
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
             "Authorization": bearer_token_int.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE
         }, json=data
     )
 
-    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
+    Assertions.assert_201_response_messages(resp, INT_URL)
 
 
 @pytest.mark.inttest
