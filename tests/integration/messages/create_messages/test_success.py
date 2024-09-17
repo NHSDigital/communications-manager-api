@@ -2,7 +2,7 @@ import requests
 import pytest
 import time
 from lib import Assertions, Generators
-from lib.constants.constants import INT_URL, VALID_CONTENT_TYPE_HEADERS, VALID_ACCEPT_HEADERS, \
+from lib.constants.constants import DEFAULT_CONTENT_TYPE, INT_URL, VALID_CONTENT_TYPE_HEADERS, VALID_ACCEPT_HEADERS, \
     VALID_NHS_NUMBER, VALID_DOB, VALID_ROUTING_PLAN_ID_INT
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.fixtures import *  # NOSONAR
@@ -66,7 +66,7 @@ def test_201_message_valid_contact_details(bearer_token_int):
     .. include:: ../../partials/happy_path/test_201_messages_valid_contact_details.rst
     """
     data = Generators.generate_valid_create_message_body("int")
-    data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
+    data["data"]["attributes"]["recipient"]["nhsNumber"] = VALID_NHS_NUMBER
     data["data"]["attributes"]["recipient"]["contactDetails"] = {
         "sms": "07777777777",
         "email": "ab@cd.co.uk",
@@ -78,8 +78,8 @@ def test_201_message_valid_contact_details(bearer_token_int):
 
     resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
             "Authorization": bearer_token_int.value,
-            "Accept": constants.DEFAULT_CONTENT_TYPE,
-            "Content-Type": constants.DEFAULT_CONTENT_TYPE
+            "Accept": DEFAULT_CONTENT_TYPE,
+            "Content-Type": DEFAULT_CONTENT_TYPE
         }, json=data
     )
 

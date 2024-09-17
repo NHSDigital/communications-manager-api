@@ -447,7 +447,7 @@ def test_invalid_address_contact_details_too_few_lines(bearer_token_int, correla
         }
     })
 
-    error = constants.Error(
+    error = Error(
         "CM_MISSING_VALUE",
         "400",
         "Missing value",
