@@ -61,6 +61,32 @@ def test_201_single_message_with_valid_nhs_number(bearer_token_int):
 
 
 @pytest.mark.inttest
+def test_201_message_valid_contact_details(nhsd_apim_proxy_url, bearer_token_int):
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_contact_details.rst
+    """
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "sms": "07777777777",
+        "email": "ab@cd.co.uk",
+        "address": {
+            "lines": ["Line 1", "Line 2"],
+            "postcode": "LS7 1BN"
+        }
+    }
+
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            "Authorization": bearer_token_int.value,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE
+        }, json=data
+    )
+
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
+
+
+@pytest.mark.inttest
 @pytest.mark.parametrize('dob', VALID_DOB)
 def test_201_single_message_with_valid_dob(bearer_token_int, dob):
     """

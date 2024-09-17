@@ -79,6 +79,45 @@ def test_201_message_batch_valid_nhs_number(bearer_token_int):
 
 
 @pytest.mark.inttest
+def test_201_message_batch_valid_contact_details(
+    nhsd_apim_proxy_url,
+    bearer_token_int
+):
+    """
+    .. include:: ../../partials/happy_path/test_201_message_batch_valid_contact_details.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("int")
+    data["data"]["attributes"]["messages"][0]["recipient"][
+        "nhsNumber"
+    ] = constants.VALID_NHS_NUMBER
+    data["data"]["attributes"]["messages"][0]["recipient"][
+        "contactDetails"
+    ] = {
+        "sms": "07777777777",
+        "email": "ab@cd.co.uk",
+        "address": {
+            "lines": ["Line 1", "Line 2"],
+            "postcode": "LS7 1BN"
+        }
+    }
+
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE,
+        },
+        json=data,
+    )
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
+
+
+@pytest.mark.inttest
 @pytest.mark.parametrize("dob", constants.VALID_DOB)
 def test_201_message_batch_valid_dob(bearer_token_int, dob):
     """
