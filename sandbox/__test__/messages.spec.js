@@ -883,7 +883,7 @@ describe("/api/v1/messages", () => {
           {
             field: "/data/attributes/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Missing value"
+            title: "Too few items"
           }
         ]
       })
@@ -1072,7 +1072,7 @@ describe("/api/v1/messages", () => {
           {
             field: "/data/attributes/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Missing value"
+            title: "Too few items"
           },
         ]
       })

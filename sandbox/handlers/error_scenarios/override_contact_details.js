@@ -121,7 +121,7 @@ function addressValidation(address, path) {
   if (address.lines.length < 2) {
     return validationFailure([
       {
-        title: "Missing value",
+        title: "Too few items",
         field: `${path}/recipient/contactDetails/address`,
         message: "Too few address lines were provided",
       },

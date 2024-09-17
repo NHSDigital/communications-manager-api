@@ -447,7 +447,7 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
     })
 
     error = constants.Error(
-        "CM_MISSING_VALUE",
+        "CM_TOO_FEW_ITEMS",
         "400",
         "Missing value",
         "Too few address lines were provided"

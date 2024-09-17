@@ -1193,7 +1193,7 @@ describe("/api/v1/send", () => {
           {
             field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Missing value"
+            title: "Too few items"
           }
         ]
       })
@@ -1402,7 +1402,7 @@ describe("/api/v1/send", () => {
           {
             field: "/data/attributes/messages/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Missing value"
+            title: "Too few items"
           },
         ]
       })
