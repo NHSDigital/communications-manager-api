@@ -214,7 +214,7 @@ A valid contact detail must be structured in this format: { sms: value, email: v
 | LS1 6AECD | Used to ensure only valid postcode is accepted |
 
 
-## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Missing Value’ response
+## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Too few items’ response
 
 A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
 
@@ -226,7 +226,7 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Missing value’ error
+- Response returns a 400 ‘Too few items’ error
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 

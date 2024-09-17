@@ -193,7 +193,7 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Missing Value’ response
+## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Too few items’ response
 
 A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
 
@@ -205,7 +205,7 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Missing value’ error
+- Response returns a 400 ‘Too few items’ error
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
