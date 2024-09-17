@@ -1,0 +1,15 @@
+description: |+
+  If callbacks are being received at a faster rate than your client can process them, you can respond with a `429` status code to indicate that the callbacks should back-off and retry later. 
+  NHS Notify has a default retry policy which is exponential plus a randomised jitter. 
+  Your client may additionally provide the standard HTTP `Retry-After` response header to specify how long Notify should wait before retrying. NHS Notify will select the most conservative option between the standard retry policy and the `Retry-After` header. 
+  Send a negative value in the `Retry-After` header to stop retrying for that callback event.
+
+headers:
+  Retry-After:
+    schema:
+      type: integer
+      format: duration
+      minimum: 5
+      multipleOf: 1
+      example: 5
+    description: Time to wait between requests in seconds
