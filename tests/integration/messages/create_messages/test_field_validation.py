@@ -187,7 +187,7 @@ def test_invalid_dob(bearer_token_int, dob, correlation_id):
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
                     "nhsNumber": "9990548609",
-                    "dateOfBirth": dob
+                    "dateOfBirth": "2023-01-01"
                 },
                 "personalisation": {}
 
