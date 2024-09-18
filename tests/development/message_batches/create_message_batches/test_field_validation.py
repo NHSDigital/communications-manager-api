@@ -205,28 +205,17 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal_dev, nhs_
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": nhs_number,
-                            "dateOfBirth": "2023-01-01"
-                        }
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = nhs_number
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -243,29 +232,17 @@ def test_invalid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, dob, correl
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": dob
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -281,29 +258,17 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "invalid",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["routingPlanId"] = "invalid"
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -319,29 +284,17 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, bearer_token_inter
     """
     .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "invalid",
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messageBatchReference"] = "invalid"
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -357,29 +310,17 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, bearer_token_internal_de
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "invalid",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["messageReference"] = "invalid"
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -396,22 +337,17 @@ def test_blank_value_under_messages(nhsd_apim_proxy_url, bearer_token_internal_d
     """
     .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    invalid_value
-                ],
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"] = [invalid_value]
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -427,22 +363,17 @@ def test_null_value_under_messages(nhsd_apim_proxy_url, bearer_token_internal_de
     """
     .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    None
-                ],
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"] = [None]
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -459,29 +390,17 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev,
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": personalisation
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["personalisation"] = personalisation
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -498,29 +417,17 @@ def test_null_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, co
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": personalisation
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["personalisation"] = personalisation
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -536,32 +443,17 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
-                            "contactDetails": {
-                                "sms": "077009000021"
-                            }
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {"sms": "077009000021"}
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -632,32 +524,17 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_interna
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
-                            "contactDetails": {
-                                "email": "invalidEmailAddress"
-                            }
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {"email": "invalidEmailAddress"}
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -736,37 +613,22 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
-                            "contactDetails": {
-                                "address": {
-                                    "lines": [
-                                        "1"
-                                    ],
-                                    "postcode": "LS1 6AE"
-                                }
-                            }
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1"],
+            "postcode": "LS1 6AE"
         }
-    })
+    }
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     error = constants.Error(
         "CM_MISSING_VALUE",
@@ -791,42 +653,22 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bea
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
-                            "contactDetails": {
-                                "address": {
-                                    "lines": [
-                                        "1",
-                                        "2",
-                                        "3",
-                                        "4",
-                                        "5",
-                                        "6"
-                                    ],
-                                    "postcode": "LS1 6AE"
-                                }
-                            }
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5", "6"],
+            "postcode": "LS1 6AE"
         }
-    })
+    }
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -845,41 +687,22 @@ def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_to
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
     """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
-                            "contactDetails": {
-                                "address": {
-                                    "lines": [
-                                        "1",
-                                        "2",
-                                        "3",
-                                        "4",
-                                        "5"
-                                    ],
-                                    "postcode": "LS1 6AECD"
-                                }
-                            }
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5"],
+            "postcode": "LS1 6AECD"
         }
-    })
+    }
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
