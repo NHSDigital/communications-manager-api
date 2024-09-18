@@ -140,25 +140,17 @@ def test_invalid_nhs_number(bearer_token_int, nhs_number, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": nhs_number,
-                    "dateOfBirth": "2023-01-01"
-                },
-                "personalisation": {}
-
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["nhsNumber"] = nhs_number
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -175,25 +167,17 @@ def test_invalid_dob(bearer_token_int, dob, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
-                },
-                "personalisation": {}
-
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -209,25 +193,17 @@ def test_invalid_routing_plan(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "invalid",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
-                },
-                "personalisation": {}
-
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["routingPlanId"] = "invalid"
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -243,25 +219,17 @@ def test_invalid_message_reference(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": "invalid",
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
-                },
-                "personalisation": {}
-            }
-
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["messageReference"] = "invalid"
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -278,24 +246,17 @@ def test_invalid_personalisation(bearer_token_int, correlation_id, personalisati
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": "invalid",
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
-                },
-                "personalisation": personalisation
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["personalisation"] = personalisation
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -312,24 +273,17 @@ def test_null_personalisation(bearer_token_int, correlation_id, personalisation)
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": "invalid",
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
-                },
-                "personalisation": personalisation
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["personalisation"] = personalisation
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -345,26 +299,17 @@ def test_invalid_sms_contact_details(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "sms": "07700900002"
-                    }
-                },
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "07700900002"}
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -383,26 +328,17 @@ def test_invalid_email_contact_details(bearer_token_int, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "email": "invalidEmailAddress"
-                    }
-                },
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"email": "invalidEmailAddress"}
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -421,31 +357,22 @@ def test_invalid_address_contact_details_too_few_lines(bearer_token_int, correla
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "address": {
-                            "lines": [
-                                "1"
-                            ],
-                            "postcode": "test"
-                        }
-                    }
-                },
-            }
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1"],
+            "postcode": "test"
         }
-    })
+    }
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     error = Error(
         "CM_MISSING_VALUE",
@@ -470,36 +397,22 @@ def test_invalid_address_contact_details_too_many_lines(bearer_token_int, correl
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "address": {
-                            "lines": [
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5",
-                                "6"
-                            ],
-                            "postcode": "test"
-                        }
-                    }
-                },
-            }
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5", "6"],
+            "postcode": "test"
         }
-    })
+    }
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -518,36 +431,22 @@ def test_invalid_address_contact_details_postcode(bearer_token_int, correlation_
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
     """
-    resp = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "address": {
-                            "lines": [
-                                "1",
-                                "2",
-                                "3",
-                                "4",
-                                "5"
-                            ],
-                            "postcode": "LS1 6AECD"
-                        }
-                    }
-                },
-                "personalisation": {}
-            }
+    data = Generators.generate_valid_create_message_body("dev")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5"],
+            "postcode": "LS1 6AECD"
         }
-    })
+    }
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
