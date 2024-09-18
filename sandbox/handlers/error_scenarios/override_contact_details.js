@@ -176,12 +176,13 @@ export function getAlternateContactDetailsError(
     return [
       400,
       "Client is not allowed to provide alternative contact details",
-      {
+      [{
         code: "CM_CANNOT_SET_CONTACT_DETAILS",
         title: "Cannot set contact details",
-        field: `Authorization`,
+        field: `/data/attributes/recipient/contactDetails`,
         message: "Client is not allowed to provide alternative contact details.",
       },
+    ]
     ];
   }
 
