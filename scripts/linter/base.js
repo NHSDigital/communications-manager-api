@@ -10,7 +10,6 @@ module.exports = {
     node: true,
   },
   extends: [
-    'airbnb',
     'airbnb-base',
     'eslint:recommended',
     'plugin:security/recommended',

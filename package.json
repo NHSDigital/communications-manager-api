@@ -29,7 +29,6 @@
     "@babel/eslint-parser": "^7.25.1",
     "@redocly/cli": "^1.10.6",
     "eslint": "^8.57.1",
-    "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-formatter-gitlab": "^3.0.0",
