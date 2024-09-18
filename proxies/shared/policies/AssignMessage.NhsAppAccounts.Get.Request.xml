@@ -20,6 +20,10 @@
         <Name>requestpath</Name>
         <Value>/api/channels/nhsapp/accounts</Value>
     </AssignVariable>
+    <AssignVariable>
+        <Name>target.url</Name>
+        <Value>https://comms-apim.de-iaho3.communications.national.nhs.uk/api/channels/nhsapp/accounts</Value>
+    </AssignVariable>
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>

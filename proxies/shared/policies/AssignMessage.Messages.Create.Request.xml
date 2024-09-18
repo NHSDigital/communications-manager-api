@@ -25,7 +25,7 @@ variables, this is where we use the variablePrefix and variableSuffix attributes
     </AssignVariable>
     <AssignVariable>
         <Name>target.url</Name>
-        <Value>https://comms-apim.de-iaho3.communications.national.nhs.uk/api/v1/send</Value>
+        <Value>https://comms-apim.de-iaho3.communications.national.nhs.uk/api/v1/messages</Value>
     </AssignVariable>
     <Set>
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
