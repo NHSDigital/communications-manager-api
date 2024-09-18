@@ -672,9 +672,10 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, corr
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_too_few_items_error(source={
-            "pointer": "/data/attributes/messages/recipient/contactDetails/address"
-        }),
+        Generators.generate_too_few_items_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/address",
+            "Too few address lines were provided"
+        ),
         correlation_id
     )
 
