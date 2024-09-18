@@ -29,10 +29,7 @@ module.exports = {
       {
         devDependencies: [
           '.eslintrc.js',
-          'next.config.js',
           '**/*.test.[jt]s?(x)',
-          '**/dotenvConfig.js',
-          '**/webpack.config.js',
           '**/__test__/**/*.js',
           '**/tests/**/*.[jt]s?(x)',
           '**/test-config/*.js',
@@ -91,6 +88,5 @@ module.exports = {
   ignorePatterns: [
     'target',
     'jest.config.js',
-    'chd_api_types.ts',
   ],
 };
