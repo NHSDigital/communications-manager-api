@@ -941,10 +941,11 @@ describe("/api/v1/send", () => {
         message: "Client is not allowed to provide alternative contact details",
         errors: [
           {
+            code: "CM_CANNOT_SET_CONTACT_DETAILS",
             title: 'Cannot set contact details',
             field: `/data/attributes/recipient/contactDetails`,
             message:
-              'Client is not allowed to provide alternative contact details',
+              'Client is not allowed to provide alternative contact details.',
           },
         ],
       })
