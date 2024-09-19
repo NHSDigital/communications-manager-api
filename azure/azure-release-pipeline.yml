@@ -64,6 +64,7 @@ extends:
               test_command: 'make internal-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
+
       - environment: manual-approval
         stage_name: manual_approval_ref
         depends_on:
