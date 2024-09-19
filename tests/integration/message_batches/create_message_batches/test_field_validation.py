@@ -363,22 +363,15 @@ def test_null_value_under_messages(bearer_token_int, correlation_id):
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"] = [None]
-    resp = requests.post(f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "X-Correlation-Id": correlation_id,
-        "Authorization": bearer_token_int.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    None
-                ],
-            }
-        }
-    })
+    resp = requests.post(
+        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "X-Correlation-Id": correlation_id,
+            "Authorization": bearer_token_int.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,

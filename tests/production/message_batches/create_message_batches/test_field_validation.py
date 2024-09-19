@@ -178,28 +178,16 @@ def test_invalid_nhs_number(bearer_token_prod, nhs_number):
     """
     .. include:: ../../partials/validation/test_invalid_nhs_number.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": nhs_number,
-                            "dateOfBirth": "1982-1-11"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["nhsNumber"] = nhs_number
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -215,28 +203,16 @@ def test_invalid_dob(bearer_token_prod, dob):
     """
     .. include:: ../../partials/validation/test_invalid_dob.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": dob
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -251,28 +227,16 @@ def test_invalid_routing_plan(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "invalid",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["routingPlanId"] = "invalid"
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -287,28 +251,16 @@ def test_invalid_message_batch_reference(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_invalid_message_batch_reference.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "invalid",
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messageBatchReference"] = "invalid"
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -323,28 +275,16 @@ def test_invalid_message_reference(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_invalid_message_reference.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "invalid",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2000-01-01"
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["messageReference"] = "invalid"
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -360,21 +300,16 @@ def test_blank_value_under_messages(bearer_token_prod, invalid_value):
     """
     .. include:: ../../partials/validation/test_blank_value_under_messages.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    invalid_value
-                ],
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"] = [invalid_value]
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -389,21 +324,16 @@ def test_null_value_under_messages(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_null_value_under_messages.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    None
-                ],
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"] = [None]
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -419,28 +349,16 @@ def test_invalid_personalisation(bearer_token_prod, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": personalisation
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["personalisation"] = personalisation
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -456,32 +374,186 @@ def test_null_personalisation(bearer_token_prod, personalisation):
     """
     .. include:: ../../partials/validation/test_invalid_personalisation.rst
     """
-    resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "Authorization": bearer_token_prod.value
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
-                        },
-                        "personalisation": personalisation
-                    }
-                ]
-            }
-        }
-    })
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["personalisation"] = personalisation
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            **headers,
+            "Authorization": bearer_token_prod.value
+        },
+        json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
         Generators.generate_null_value_error("/data/attributes/messages/0/personalisation"),
         None
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_sms_contact_details(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {"sms": "077009000021"}
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/sms",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_email_contact_details(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {"email": "invalidEmailAddress"}
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/email",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_few_lines(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1"],
+            "postcode": "LS1 6AE"
+        }
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    error = constants.Error(
+        "CM_MISSING_VALUE",
+        "400",
+        "Missing value",
+        "Too few address lines were provided"
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_error(error, source={
+            "pointer": "/data/attributes/messages/recipient/contactDetails/address"
+        }),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_too_many_lines(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5", "6"],
+            "postcode": "LS1 6AE"
+        }
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/address",
+            "Invalid"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_postcode(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("prod")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5"],
+            "postcode": "LS1 6AECD"
+        }
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/recipient/contactDetails/address",
+            "Postcode input failed format check"
+        ),
+        correlation_id
     )

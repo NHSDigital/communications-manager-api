@@ -431,7 +431,7 @@ def test_invalid_address_contact_details_postcode(bearer_token_int, correlation_
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
     """
-    data = Generators.generate_valid_create_message_body("dev")
+    data = Generators.generate_valid_create_message_body("int")
     data["data"]["attributes"]["recipient"]["contactDetails"] = {
         "address": {
             "lines": ["1", "2", "3", "4", "5"],
