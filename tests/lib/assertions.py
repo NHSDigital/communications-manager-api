@@ -254,7 +254,6 @@ class Assertions():
         assert resp.status_code == code, f"Response: {resp.status_code}: {resp.text}"
 
         if error is not None:
-            print(error)
             # ensure that all errors contain an identifier
             response_errors = resp.json().get("errors")
             current_identifier_num = 0
