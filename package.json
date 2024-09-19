@@ -25,22 +25,16 @@
     ]
   },
   "devDependencies": {
-    "@playwright/test": "^1.42.1",
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
     "@redocly/cli": "^1.10.6",
-    "@types/node": "^20.12.2",
-    "@typescript-eslint/eslint-plugin": "^5.44.0",
-    "@typescript-eslint/parser": "^7.17.0",
-    "eslint": "^8.28.0",
-    "eslint-config-airbnb": "^19.0.4",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-formatter-gitlab": "^3.0.0",
-    "eslint-import-resolver-typescript": "^3.5.2",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-sonarjs": "^0.16.0",
     "eslint-plugin-unicorn": "^45.0.1",
@@ -50,13 +44,11 @@
     "license-checker": "^25.0.1",
     "minimist": "^1.2.2",
     "newman": "^6.1.2",
-    "react-is": "^18.2.0",
     "sinon": "^17.0.1",
     "typescript": "^5.5.4"
   },
   "dependencies": {
     "jsrsasign": "^11.1.0",
-    "jsrsasign-util": "^1.0.5",
-    "playwright": "^1.42.1"
+    "jsrsasign-util": "^1.0.5"
   }
 }
