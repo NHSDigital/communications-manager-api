@@ -101,7 +101,7 @@
                 ]
               },
               "channel": {
-                "type": "any",
+                "type": "string",
                 "enum": [
                   "nhsapp"
                 ]
