@@ -567,7 +567,7 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/sms",
+            "/data/attributes/messages/0/recipient/contactDetails/sms",
             "Input failed format check"
         ),
         correlation_id
@@ -611,7 +611,7 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_interna
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/email",
+            "/data/attributes/messages/0/recipient/contactDetails/email",
             "Input failed format check"
         ),
         correlation_id
@@ -667,7 +667,7 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
         resp,
         400,
         Generators.generate_error(error, source={
-            "pointer": "/data/attributes/messages/recipient/contactDetails/address"
+            "pointer": "/data/attributes/messages/0/recipient/contactDetails/address"
         }),
         correlation_id
     )
@@ -720,7 +720,7 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bea
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/address",
+            "/data/attributes/messages/0/recipient/contactDetails/address",
             "Invalid"
         ),
         correlation_id
@@ -773,7 +773,7 @@ def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_to
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/address",
+            "/data/attributes/messages/0/recipient/contactDetails/address",
             "Postcode input failed format check"
         ),
         correlation_id
