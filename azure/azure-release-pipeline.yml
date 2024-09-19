@@ -40,8 +40,6 @@ extends:
     apigee_deployments:
       - environment: manual-approval
         stage_name: manual_approval_internal
-        depends_on:
-          - internal_dev
       - environment: internal-dev
         depends_on:
           - manual_approval_internal
