@@ -232,7 +232,6 @@ def test_invalid_dob(bearer_token_int, dob, correlation_id):
     """
     data = Generators.generate_valid_create_message_batch_body("int")
     data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
-    data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
