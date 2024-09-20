@@ -179,7 +179,7 @@ export function getAlternateContactDetailsError(
       [{
         code: "CM_CANNOT_SET_CONTACT_DETAILS",
         title: "Cannot set contact details",
-        field: `/data/attributes/recipient/contactDetails`,
+        field: `${path}/recipient/contactDetails`,
         message: "Client is not allowed to provide alternative contact details.",
       },
     ]
