@@ -567,7 +567,59 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/sms",
+            "/data/attributes/messages/0/recipient/contactDetails/sms",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_sms_contact_details_second_message(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "personalisation": {}
+                    },
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1c",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "sms": "077009000021"
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/1/recipient/contactDetails/sms",
             "Input failed format check"
         ),
         correlation_id
@@ -611,7 +663,67 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, bearer_token_interna
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/email",
+            "/data/attributes/messages/0/recipient/contactDetails/email",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_email_contact_details_third_message(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        "Authorization": bearer_token_internal_dev.value,
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "0e38317f-1670-480a-9aa9-b711fb136610",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "personalisation": {}
+                    },
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1c",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01"
+                        },
+                        "personalisation": {}
+                    },
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1d",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "dateOfBirth": "2023-01-01",
+                            "contactDetails": {
+                                "email": "invalidEmailAddress"
+                            }
+                        },
+                        "personalisation": {}
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/2/recipient/contactDetails/email",
             "Input failed format check"
         ),
         correlation_id
@@ -667,7 +779,7 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
         resp,
         400,
         Generators.generate_error(error, source={
-            "pointer": "/data/attributes/messages/recipient/contactDetails/address"
+            "pointer": "/data/attributes/messages/0/recipient/contactDetails/address"
         }),
         correlation_id
     )
@@ -720,7 +832,7 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, bea
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/address",
+            "/data/attributes/messages/0/recipient/contactDetails/address",
             "Invalid"
         ),
         correlation_id
@@ -773,7 +885,7 @@ def test_invalid_address_contact_details_postcode(nhsd_apim_proxy_url, bearer_to
         resp,
         400,
         Generators.generate_invalid_value_error_custom_detail(
-            "/data/attributes/messages/recipient/contactDetails/address",
+            "/data/attributes/messages/0/recipient/contactDetails/address",
             "Postcode input failed format check"
         ),
         correlation_id
