@@ -553,7 +553,7 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
 def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, correlation_id):
     """
-    .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
+    .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
