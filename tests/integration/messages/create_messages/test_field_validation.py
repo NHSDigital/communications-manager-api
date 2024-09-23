@@ -330,7 +330,6 @@ def test_invalid_email_contact_details(bearer_token_int, correlation_id):
     """
     data = Generators.generate_valid_create_message_body("int")
     data["data"]["attributes"]["recipient"]["contactDetails"] = {"email": "invalidEmailAddress"}
-    print(data)
     resp = requests.post(
         f"{INT_URL}{MESSAGES_ENDPOINT}",
         headers={
