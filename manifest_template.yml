@@ -92,7 +92,7 @@ apigee:
         proxies:
           - {{ NAME }}
           - identity-service-{{ ENV.name }}
-{% if ENV.has_mock_auth | default(false) %}
+{% if VARIANT.has_mock_auth | default(false) %}
           - identity-service-mock-{{ ENV.name }}
 {% endif %}
         scopes:
