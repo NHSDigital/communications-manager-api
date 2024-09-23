@@ -58,7 +58,6 @@ apigee:
   - name: {{ ENV.name }}
     products:
 {% for VARIANT in ENV.variants %}
-{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + VARIANT.display_name + ' Environment)' %}
 {% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
       - name: {{ NAME }}
         approvalType: {{ VARIANT.approval_type | default('auto') }}
@@ -107,6 +106,7 @@ apigee:
     api_catalog:
 {% for VARIANT in ENV.variants %}
 {% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
+{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + VARIANT.display_name + ' Environment)' %}
       - edgeAPIProductName: {{ NAME }}
         anonAllowed: true
         description: {{ DESCRIPTION }}
