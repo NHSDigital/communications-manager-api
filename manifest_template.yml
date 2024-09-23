@@ -3,27 +3,26 @@ PRODUCT_DISPLAY_NAME: Communications Manager
 DESCRIPTION: Use this API to send messages to citizens via email, SMS, the NHS App or letter.
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
+    has_mock_auth: true
     variants:
     - name: internal-dev
       display_name: Internal Development
-      has_mock_auth: true
       app_ratelimit: '6000pm'
       app_quota: '1200'
       global_ratelimit: '18000pm'
       global_quota: '6000'
   - name: internal-qa
+    has_mock_auth: true
     variants:
     - name: internal-qa
       display_name: Internal QA
-      has_mock_auth: true
   - name: ref
+    has_mock_auth: true
     variants:
     - name: ref
       display_name: Reference
-      has_mock_auth: true
     - name: 2-ref
       display_name: Reference - 2
-      has_mock_auth: true
   - name: internal-dev-sandbox
     variants:
     - name: internal-dev-sandbox
@@ -92,7 +91,7 @@ apigee:
         proxies:
           - {{ NAME }}
           - identity-service-{{ ENV.name }}
-{% if VARIANT.has_mock_auth | default(false) %}
+{% if ENV.has_mock_auth | default(false) %}
           - identity-service-mock-{{ ENV.name }}
 {% endif %}
         scopes:
