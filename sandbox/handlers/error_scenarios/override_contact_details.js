@@ -194,7 +194,7 @@ export function getAlternateContactDetailsError(
         field: `${path}/recipient/contactDetails`,
         message: "Client is not allowed to provide alternative contact details.",
       },
-    ]
+      ]
     ];
   }
 
