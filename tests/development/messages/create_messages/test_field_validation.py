@@ -363,31 +363,15 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
             "postcode": "test"
         }
     }
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_internal_dev.value,
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "address": {
-                            "lines": [
-                                "1"
-                            ],
-                            "postcode": "test"
-                        }
-                    }
-                },
-            }
-        }
-    })
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
 
     error = constants.Error(
         "CM_MISSING_VALUE",
