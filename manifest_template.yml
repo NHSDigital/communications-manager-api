@@ -56,10 +56,10 @@ apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
   - name: {{ ENV.name }}
+    products:
 {% for VARIANT in ENV.variants %}
 {% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + VARIANT.display_name + ' Environment)' %}
 {% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
-    products:
       - name: {{ NAME }}
         approvalType: {{ VARIANT.approval_type | default('auto') }}
         attributes:
