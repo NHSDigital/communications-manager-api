@@ -15,6 +15,9 @@ APIGEE_ENVIRONMENTS:
   - name: ref
     display_name: Reference
     has_mock_auth: true
+  - name: 2-ref
+    display_name: Reference - 2
+    has_mock_auth: true
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
   - name: internal-qa-sandbox
