@@ -311,7 +311,7 @@ ERROR_NHS_APP_ACCOUNTS_TOO_MANY_REQUESTS = Error(
     "This endpoint is currently receiving a high volume of requests and is being rate limited."
 )
 
-ERROR_CANNOT_SET_CONTACT_DETAIL = Error(
+ERROR_CANNOT_SET_CONTACT_DETAILS = Error(
     "CM_CANNOT_SET_CONTACT_DETAILS",
     "400",
     "Cannot set contact details",
