@@ -110,3 +110,4 @@ apigee:
         visibility: {{ VARIANT.portal_visibility | default(true) }}
         specId: {{ NAME }}
 {% endfor %}
+{% endfor %}
