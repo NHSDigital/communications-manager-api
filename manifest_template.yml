@@ -3,32 +3,48 @@ PRODUCT_DISPLAY_NAME: Communications Manager
 DESCRIPTION: Use this API to send messages to citizens via email, SMS, the NHS App or letter.
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
-    display_name: Internal Development
-    has_mock_auth: true
-    app_ratelimit: '6000pm'
-    app_quota: '1200'
-    global_ratelimit: '18000pm'
-    global_quota: '6000'
+    variants:
+    - name: internal-dev
+      display_name: Internal Development
+      has_mock_auth: true
+      app_ratelimit: '6000pm'
+      app_quota: '1200'
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
   - name: internal-qa
-    display_name: Internal QA
-    has_mock_auth: true
+    variants:
+    - name: internal-qa
+      display_name: Internal QA
+      has_mock_auth: true
   - name: ref
-    display_name: Reference
-    has_mock_auth: true
-  - name: 2-ref
-    display_name: Reference - 2
-    has_mock_auth: true
+    variants:
+    - name: ref
+      display_name: Reference
+      has_mock_auth: true
+    - name: 2-ref
+      display_name: Reference - 2
+      has_mock_auth: true
   - name: internal-dev-sandbox
-    display_name: Internal Development Sandbox
+    variants:
+    - name: internal-dev-sandbox
+      display_name: Internal Development Sandbox
   - name: internal-qa-sandbox
-    display_name: Internal QA Sandbox
+    variants:
+    - name: internal-qa-sandbox
+      display_name: Internal QA Sandbox
   - name: sandbox
-    display_name: Sandbox
+    variants:
+    - name: sandbox
+      display_name: Sandbox
   - name: int
-    display_name: Integration Testing
+    variants:
+    - name: int
+      display_name: Integration Testing
   - name: prod
-    display_name: Production
-    approval_type: manual
+    variants:
+    - name: prod
+      display_name: Production
+      approval_type: manual
 ---
 meta:
   api:
@@ -40,12 +56,13 @@ meta:
 apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
-{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + ENV.display_name + ' Environment)' %}
-{% set NAME = SERVICE_NAME + '-' + ENV.name %}
+{% for VARIANT in ENV.variants %}
+{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + VARIANT.display_name + ' Environment)' %}
+{% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
-        approvalType: {{ ENV.approval_type | default('auto') }}
+        approvalType: {{ VARIANT.approval_type | default('auto') }}
         attributes:
           - name: access
             value: public
@@ -55,19 +72,19 @@ apigee:
                 quota:
                   enabled: true
                   interval: 1
-                  limit: {{ ENV.global_quota | default(6000)}}
+                  limit: {{ VARIANT.global_quota | default(6000)}}
                   timeunit: minute
                 spikeArrest:
                   enabled: true
-                  ratelimit: {{ ENV.global_ratelimit | default('18000pm') }}
+                  ratelimit: {{ VARIANT.global_ratelimit | default('18000pm') }}
               app:
                 quota:
                   enabled: true
                   interval: 1
-                  limit: {{ ENV.app_quota | default(1200)}}
+                  limit: {{ VARIANT.app_quota | default(1200)}}
                   timeunit: minute
                 spikeArrest:
-                  ratelimit: {{ ENV.app_ratelimit | default('6000pm') }}
+                  ratelimit: {{ VARIANT.app_ratelimit | default('6000pm') }}
                   enabled: true
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
@@ -90,6 +107,6 @@ apigee:
         description: {{ DESCRIPTION }}
         requireCallbackUrl: false
         title: {{ TITLE }}
-        visibility: {{ ENV.portal_visibility | default(true) }}
+        visibility: {{ VARIANT.portal_visibility | default(true) }}
         specId: {{ NAME }}
 {% endfor %}
