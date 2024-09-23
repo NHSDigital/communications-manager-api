@@ -359,7 +359,7 @@ def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, correlation_i
         resp,
         400,
         Generators.generate_error(
-            constants.ERROR_CANNOT_SET_CONTACT_DETAIL,
+            constants.ERROR_CANNOT_SET_CONTACT_DETAILS,
             source={
                 "pointer": "/data/attributes/recipient/contactDetails"
                 }),
