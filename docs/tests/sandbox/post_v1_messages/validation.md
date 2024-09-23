@@ -313,6 +313,21 @@ A valid sms contact detail must be structured in this format: { sms: value }
 | 077009000021 | Used to ensure invalid phone number is not accepted |
 
 
+## Scenario: An API consumer submitting a request with an contact details when not allowed receives a 400 ‘Cannot set contact details’ response
+
+**Given** the API consumer provides an message body with contact details
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 Cannot set contact details error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Cannot set contact details’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
 
 A valid personalisation must be structured in this format: { parameter: value }
