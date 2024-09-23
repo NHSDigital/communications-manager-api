@@ -97,10 +97,16 @@ apigee:
         scopes:
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
           - 'urn:nhsd:apim:user-nhs-cis2:aal3:{{ SERVICE_NAME }}'
+{% endfor %}
     specs:
+{% for VARIANT in ENV.variants %}
+{% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
       - name: {{ NAME }}
         path: {{ SERVICE_NAME }}.json
+{% endfor %}
     api_catalog:
+{% for VARIANT in ENV.variants %}
+{% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
       - edgeAPIProductName: {{ NAME }}
         anonAllowed: true
         description: {{ DESCRIPTION }}
