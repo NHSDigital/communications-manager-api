@@ -851,7 +851,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/sms",
+            field: "/data/attributes/messages/0/recipient/contactDetails/sms",
             message: "Input failed format check",
             title: "Invalid value"
           }
@@ -893,7 +893,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/sms",
+            field: "/data/attributes/messages/0/recipient/contactDetails/sms",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -963,7 +963,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/email",
+            field: "/data/attributes/messages/0/recipient/contactDetails/email",
             message: "Input failed format check",
             title: "Invalid value"
           }
@@ -1004,7 +1004,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/email",
+            field: "/data/attributes/messages/0/recipient/contactDetails/email",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1076,7 +1076,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1115,7 +1115,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1157,7 +1157,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_MISSING_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "`lines` is missing",
             title: "Missing value"
           }
@@ -1199,7 +1199,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_TOO_FEW_ITEMS',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Too few address lines were provided",
             title: "Too few items"
           }
@@ -1241,7 +1241,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1283,7 +1283,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1324,7 +1324,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_MISSING_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "`postcode` is missing",
             title: "Missing value"
           }
@@ -1366,7 +1366,7 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/address/postcode",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address/postcode",
             message: "Invalid",
             title: "Invalid value"
           }
@@ -1408,13 +1408,13 @@ describe("/api/v1/send", () => {
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/recipient/contactDetails/email",
+            field: "/data/attributes/messages/0/recipient/contactDetails/email",
             message: "Input failed format check",
             title: "Invalid value"
           },
           {
             code: 'CM_TOO_FEW_ITEMS',
-            field: "/data/attributes/messages/recipient/contactDetails/address",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Too few address lines were provided",
             title: "Too few items"
           },

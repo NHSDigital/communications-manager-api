@@ -71,8 +71,9 @@ export async function batchSend(req, res, next) {
   }
 
   const alternateContactDetails = messages.map((message) => message.recipient?.contactDetails)
+  let messageIndex = 0;
   for (const contactDetail of alternateContactDetails) {
-    const alternateContactDetailsError = getAlternateContactDetailsError(contactDetail, req.headers.authorization, '/data/attributes/messages')
+    const alternateContactDetailsError = getAlternateContactDetailsError(contactDetail, req.headers.authorization, `/data/attributes/messages/${messageIndex}`)
     if (alternateContactDetailsError !== null) {
       const [errorCode, errorMessage, errors] = alternateContactDetailsError
       sendError(
@@ -84,6 +85,7 @@ export async function batchSend(req, res, next) {
       next()
       return;
     }
+    messageIndex += 1; 
   }
 
   writeLog(res, "warn", {
