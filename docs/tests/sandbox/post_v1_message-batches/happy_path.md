@@ -32,7 +32,7 @@ These tests target the API endpoint v1/message-batches testing successful respon
 **Asserts**
 - Response returns a 201 status code
 - Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains request ID
 
 
 ### Scenario: An API consumer creating a batch of messages with a valid content type header receives a 201 response

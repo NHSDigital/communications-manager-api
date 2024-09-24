@@ -8,4 +8,4 @@ Scenario: An API consumer creating a batch of messages with valid contact detail
 **Asserts**
 - Response returns a 201 status code
 - Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains request ID
