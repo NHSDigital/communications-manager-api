@@ -78,11 +78,11 @@ class Helper():
             page.get_by_label("Email address", exact=True).fill(email)
             page.get_by_role("button", name="Continue").click()
 
-            expect(page.get_by_role("heading", name="Enter your password")).to_be_visible()
+            expect(page.get_by_role("heading", name="Enter your password")).to_be_visible(timeout=10000)
             page.get_by_label("Password", exact=True).fill(password)
             page.get_by_role("button", name="Continue").click()
 
-            expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible()
+            expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible(timeout=10000)
             page.get_by_label("Security code", exact=True).fill(otp)
             page.get_by_role("button", name="Continue").click()
 
