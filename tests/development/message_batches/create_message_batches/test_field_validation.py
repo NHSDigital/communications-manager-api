@@ -630,17 +630,10 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, bear
         json=data
     )
 
-    error = constants.Error(
-        "CM_MISSING_VALUE",
-        "400",
-        "Missing value",
-        "Too few address lines were provided"
-    )
-
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_error(error, source={
+        Generators.generate_error(constants.ERROR_TOO_FEW_ADDRESS_LINES, source={
             "pointer": "/data/attributes/messages/0/recipient/contactDetails/address"
         }),
         correlation_id

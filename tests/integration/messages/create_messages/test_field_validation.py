@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.constants.constants import Error, INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
+from lib.constants.constants import ERROR_TOO_FEW_ADDRESS_LINES, INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
     INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
@@ -374,17 +374,10 @@ def test_invalid_address_contact_details_too_few_lines(bearer_token_int, correla
         json=data
     )
 
-    error = Error(
-        "CM_MISSING_VALUE",
-        "400",
-        "Missing value",
-        "Too few address lines were provided"
-    )
-
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_error(error, source={
+        Generators.generate_error(ERROR_TOO_FEW_ADDRESS_LINES, source={
             "pointer": "/data/attributes/recipient/contactDetails/address"
         }),
         correlation_id
