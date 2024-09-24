@@ -1,15 +1,15 @@
 ## Overview
 
-Use this API to send messages to citizens via email, SMS, the NHS App or letter.
+Use this API to send messages to citizens via NHS App, email, text message or letter.
 
-NHS Notify provides:
+[NHS Notify](https://digital.nhs.uk/services/nhs-notify) provides:
 
 * message templating
-* message routing - via SMS, email, letter and NHS App
+* message routing
 * enrichment of recipient details
 * support for accessible formats and multiple languages
 
-For more information about this service's capabilities, see [NHS Notify](https://digital.nhs.uk/services/nhs-notify).
+Learn more about [NHS Notify's features](https://digital.nhs.uk/services/nhs-notify/features).
 
 ## Who can use this API
 
@@ -133,8 +133,6 @@ Rather, use the [production test patient for PDS](https://digital.nhs.uk/develop
 ## Onboarding
 
 You need to get your software approved by us before it can go live with this API. You will also need to undertake the NHS Notify onboarding process which is still being defined. Further details will follow.
-
-NHS Notify sends messages to patients using their contact details obtained from the [Personal Demographics Service](https://digital.nhs.uk/services/personal-demographics-service). In exceptional cases where different contact details are required, this information can be overridden. As overriding contact details is a sensitive action, it requires explicit approval from the onboarding team, who will consult with legal and clinical teams before granting permission.
 
 To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
 
