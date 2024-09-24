@@ -89,7 +89,7 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 <br/>
 **When** the request is submitted
 <br/>
-**Then** the response returns a 400 invalid value error
+**Then** the response returns a 400 too few items error
 <br/>
 
 **Asserts**

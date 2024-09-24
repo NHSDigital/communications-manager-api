@@ -5,7 +5,7 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 
 | **Given** the API consumer provides an message body with with too few address lines
 | **When** the request is submitted
-| **Then** the response returns a 400 invalid value error
+| **Then** the response returns a 400 too few items error
 
 **Asserts**
 - Response returns a 400 'Too few items' error
