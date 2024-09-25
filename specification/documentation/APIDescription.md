@@ -1,15 +1,15 @@
 ## Overview
 
-Use this API to send messages to citizens via email, SMS, the NHS App or letter.
+Use this API to send messages to citizens via NHS App, email, text message or letter.
 
-NHS Notify provides:
+[NHS Notify](https://digital.nhs.uk/services/nhs-notify) provides:
 
 * message templating
-* message routing - via SMS, email, letter and NHS App
+* message routing
 * enrichment of recipient details
 * support for accessible formats and multiple languages
 
-For more information about this service's capabilities, see [NHS Notify](https://digital.nhs.uk/services/nhs-notify).
+Learn more about [NHS Notify's features](https://digital.nhs.uk/services/nhs-notify/features).
 
 ## Who can use this API
 
