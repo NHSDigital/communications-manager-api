@@ -143,6 +143,8 @@ Free-text communications (as opposed to fixed format communications) are possibl
 | Global Routing Plan ID               | Channel/Supplier | Read wait time (before failing channel) | Personalisation field name |
 |--------------------------------------|------------------|-----------------------------------------|----------------------------|
 | 00000000-0000-0000-0000-000000000001 | NHS App          | 24 hours                                | body                       |
+| 00000000-0000-0000-0000-000000000002 | Email            |                                         | email_body, email_subject  |
+| 00000000-0000-0000-0000-000000000003 | SMS              |                                         | sms_body                   |
 
 Please see the Postman collections in the [environments and testing section](#section/Environments-and-testing) for examples.
 
