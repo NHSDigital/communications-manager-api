@@ -44,18 +44,3 @@ export function sendError(res, code, message, errors) {
   });
 }
 
-export function hasValidGlobalTemplatePersonalisation(personalisation) {
-  if (!personalisation) {
-    return false;
-  }
-
-  const personalisationFields = Object.keys(personalisation);
-  if (personalisationFields.length !== 1) {
-    return false;
-  }
-
-  if (personalisationFields[0] !== "body") {
-    return false;
-  }
-  return true;
-}
