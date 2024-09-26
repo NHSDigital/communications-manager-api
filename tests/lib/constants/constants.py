@@ -9,7 +9,7 @@ CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
 CORS_EXPOSE_HEADERS = "x-correlation-id"
 CORS_POLICY = "cross-origin"
 
-VALID_ROUTING_PLAN_ID_PROD = "0e38317f-1670-480a-9aa9-b711fb136610"
+VALID_ROUTING_PLAN_ID_PROD = "00000000-0000-0000-0000-000000000001"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
 VALID_ROUTING_PLAN_ID_INT = "119bdd50-783c-4161-a765-792785e46851"
 VALID_ROUTING_PLAN_ID_DEV = "0e38317f-1670-480a-9aa9-b711fb136610"
@@ -101,6 +101,14 @@ ERROR_MISSING_VALUE = Error(
     "400",
     "Missing property",
     "The property at the specified location is required, but was not present in the request."
+)
+
+# too few address lines
+ERROR_TOO_FEW_ADDRESS_LINES = Error(
+    "CM_MISSING_VALUE",
+    "400",
+    "Missing value",
+    "Too few address lines were provided"
 )
 
 # null value constants

@@ -45,3 +45,5 @@ responses:
         description: Unauthorized
     '403':
         description: Forbidden
+    '429':
+        $ref: ../responses/4xx/callbacks/429_TooManyRequests_Callbacks.yaml

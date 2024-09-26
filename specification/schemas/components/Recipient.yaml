@@ -14,5 +14,36 @@ properties:
     description: 'Date of birth in ISO-8601 format: YYYY-MM-DD.'
     format: date
     example: '1982-03-17'
+  contactDetails:
+    type: object
+    description: 'Overriding contact details is a sensitive action and requires explicit approval from the onboarding team.'
+    properties:
+      email:
+        type: string
+        pattern: '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}'
+        minLength: 6
+        maxLength: 90
+        description: Overriding email address for recipient.
+        example: "recipient@nhs.net"
+      sms:
+        type: string
+        description: Overriding GB mobile telephone number for recipient. Validated using the `libphonenumber-js/mobile` npm package.
+        example: "07777777777"
+      address:
+        type: object
+        description: Overriding address.
+        properties:
+          lines:
+            type: array
+            minItems: 2
+            maxItems: 5
+            description: Lines of overriding address.
+            items:
+              type: string
+            example: ["NHS England","6th Floor","7&8 Wellington Place","Leeds","West Yorkshire"]
+          postcode:
+            type: string
+            description: Postcode of overriding address. A required field when address is specified. Validated using the `postcode` npm package.
+            example: "LS1 4AP"
 required:
   - nhsNumber

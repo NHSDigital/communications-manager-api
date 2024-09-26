@@ -30,4 +30,6 @@ properties:
           additionalProperties: false
           properties:
             pointer:
-              $ref: ../../../types/ErrorPointer.yaml
+              type: string
+              description: Indicates the path to the field in the request where the validation error occurred.
+              example: /data/attributes/recipient/nhsNumber
