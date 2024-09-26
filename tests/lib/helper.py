@@ -68,6 +68,7 @@ class Helper():
             install(playwright.chromium)
             browser = playwright.chromium.launch()
             page = browser.new_page()
+            page.set_default_timeout(15000)
 
             page.goto("https://www-onboardingaos.nhsapp.service.nhs.uk/login")
 
@@ -78,11 +79,11 @@ class Helper():
             page.get_by_label("Email address", exact=True).fill(email)
             page.get_by_role("button", name="Continue").click()
 
-            expect(page.get_by_role("heading", name="Enter your password")).to_be_visible(timeout=10000)
+            expect(page.get_by_role("heading", name="Enter your password")).to_be_visible()
             page.get_by_label("Password", exact=True).fill(password)
             page.get_by_role("button", name="Continue").click()
 
-            expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible(timeout=10000)
+            expect(page.get_by_role("heading", name="Enter the security code")).to_be_visible()
             page.get_by_label("Security code", exact=True).fill(otp)
             page.get_by_role("button", name="Continue").click()
 
