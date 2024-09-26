@@ -19,7 +19,7 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         <LoadBalancer>
-            <Server name="communications-manager-target" />
+            <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
         </LoadBalancer>
         <Path>{requestpath}</Path>
         <Properties>

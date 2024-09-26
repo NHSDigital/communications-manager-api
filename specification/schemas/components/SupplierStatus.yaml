@@ -2,7 +2,10 @@ type: object
 title: CallbackRequest
 properties:
   type:
-    const: ChannelStatus
+    type: string
+    example: "ChannelStatus"
+    enum: 
+      - ChannelStatus
   attributes:
     type: object
     properties:
@@ -11,7 +14,7 @@ properties:
       messageReference:
         $ref: ../../snippets/MessageReferenceSnippet.yaml
       channel:
-        type: any
+        type: string
         enum:
           - nhsapp
         example: nhsapp

@@ -2,7 +2,10 @@ type: object
 title: CallbackRequest
 properties:
   type:
-    const: MessageStatus
+    type: string
+    example: "MessageStatus"
+    enum: 
+      - MessageStatus
   attributes:
     type: object
     properties:
@@ -11,7 +14,6 @@ properties:
       messageReference:
         $ref: ../../snippets/MessageReferenceSnippet.yaml
       messageStatus:
-        type: string
         $ref: ../enums/MessageStatusEnum.yaml 
       messageStatusDescription:
         type: string
