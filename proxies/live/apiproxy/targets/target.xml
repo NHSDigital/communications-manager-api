@@ -18,7 +18,7 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <URL>https://comms-apim.<env>.communications.national.nhs.uk</URL>
+        <URL>https://comms-apim.de-dafu1.communications.national.nhs.uk</URL>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
