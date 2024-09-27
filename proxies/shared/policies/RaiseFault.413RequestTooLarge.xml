@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 406 error response for a missing or invalid Accept header.
+
+ Valid values are:
+    * `*/*`
+    * `application/json`
+    * `application/vnd.api+json`
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.413RequestTooLarge">
+    <DisplayName>RaiseFault.413RequestTooLarge</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <StatusCode>413</StatusCode>
+            <ReasonPhrase>Request message was larger than the service limit</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "@messageid#.0",
+                            "code" : "CM_TOO_LARGE",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "413",
+                            "title" : "Request too large",
+                            "detail" : "Request message was larger than the service limit",
+                            "source" : {
+                                "header" : "Accept"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
