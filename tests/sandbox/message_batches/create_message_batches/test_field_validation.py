@@ -588,7 +588,8 @@ def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, correlation_i
             constants.ERROR_CANNOT_SET_CONTACT_DETAILS,
             source={
                 "pointer": "/data/attributes/messages/0/recipient/contactDetails"
-                }),
+                }
+                ),
         correlation_id
     )
 
