@@ -315,5 +315,5 @@ ERROR_CANNOT_SET_CONTACT_DETAILS = Error(
     "CM_CANNOT_SET_CONTACT_DETAILS",
     "400",
     "Cannot set contact details",
-    "Your account is not allowed to provide alternative contact details."
+    "Client is not allowed to provide alternative contact details."
 )
