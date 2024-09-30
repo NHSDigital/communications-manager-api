@@ -18,10 +18,8 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <LoadBalancer>
-            <Server name="communications-manager-target" />
-        </LoadBalancer>
-        <Path>{requestpath}</Path>
+	<URL>https://comms-apim.de-rake4.communications.national.nhs.uk</URL>
+	<Path>{requestpath}</Path>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
