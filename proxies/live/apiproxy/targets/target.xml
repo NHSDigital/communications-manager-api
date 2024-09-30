@@ -19,7 +19,6 @@
             <Enabled>true</Enabled>
         </SSLInfo>
 	<URL>https://comms-apim.de-rake4.communications.national.nhs.uk</URL>
-	<Path>{requestpath}</Path>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
