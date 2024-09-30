@@ -1,4 +1,4 @@
-hared/partials/Partial.Target.FaultRules.xml:FaultRule name="combined_backend_fault_handler">
+<FaultRule name="combined_backend_fault_handler">
     [% include './partials/Partial.Component.SetResponseDefaults.xml' %]
     <Step>
         <Name>ExtractVariables.ErrorMessage</Name>
