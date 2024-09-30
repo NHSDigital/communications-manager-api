@@ -366,9 +366,10 @@ def test_invalid_address_contact_details_too_few_lines(bearer_token_prod, correl
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         400,
-        Generators.generate_error(constants.ERROR_TOO_FEW_ADDRESS_LINES, source={
-            "pointer": "/data/attributes/recipient/contactDetails/address"
-        }),
+        Generators.generate_too_few_items_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/address",
+            "Too few address lines were provided"
+        ),
         correlation_id
     )
 

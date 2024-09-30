@@ -2,20 +2,15 @@ const errors = context.getVariable('data.errors');
 const messageId = context.getVariable('messageid');
 const statusCode = context.getVariable('response.status.code');
 const links = {
-    about : "{{ ERROR_ABOUT_LINK }}"
+    about: "{{ ERROR_ABOUT_LINK }}"
 };
 
 const enhancedErrors = [];
 
 JSON.parse(errors).forEach((error, index) => {
-    var code = 'CM_INVALID_VALUE';
-    if (error.title === 'Missing value') {
-        code = 'CM_MISSING_VALUE';
-    }
-
     enhancedErrors.push({
         id: messageId + '.' + index,
-        code: code,
+        code: error.code,
         links: links,
         status: String(statusCode),
         title: error.title,
@@ -26,4 +21,4 @@ JSON.parse(errors).forEach((error, index) => {
     });
 });
 
-context.setVariable("error.content", JSON.stringify({errors: enhancedErrors}));
+context.setVariable("error.content", JSON.stringify({ errors: enhancedErrors }));
