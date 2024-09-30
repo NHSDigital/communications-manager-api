@@ -62,6 +62,16 @@ function tooFewItemsError(pointer) {
     )
 }
 
+function tooManyItemsError(pointer) {
+  return createErrorObject(
+    "CM_TOO_MANY_ITEMS",
+    "Too many items",
+    "The property at the specified location contains too many items.",
+    pointer,
+    {}
+  )
+}
+
 function invalidNhsNumberError(pointer) {
     return createErrorObject(
         "CM_INVALID_NHS_NUMBER",
@@ -71,4 +81,3 @@ function invalidNhsNumberError(pointer) {
         { "nhsNumbers": "https://www.datadictionary.nhs.uk/attributes/nhs_number.html" }
     );
 }
-
