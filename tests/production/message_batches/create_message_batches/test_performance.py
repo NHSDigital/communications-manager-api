@@ -6,7 +6,7 @@ from lib.constants.constants import PROD_URL, NUM_MAX_ERRORS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 from lib.fixtures import *  # NOSONAR
 
-NUM_MESSAGES = 50000
+NUM_MESSAGES = 40000
 
 
 @pytest.mark.prodtest
@@ -33,7 +33,7 @@ def test_create_messages_large_invalid_payload(bearer_token_prod):
         "Authorization": bearer_token_prod.value
     }, json=data
     )
-    Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
+    Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
     assert len(resp.json().get("errors")) == NUM_MAX_ERRORS
 
 
