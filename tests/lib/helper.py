@@ -69,6 +69,7 @@ class Helper():
             browser = playwright.chromium.launch()
             page = browser.new_page()
             page.set_default_timeout(15000)
+            expect.set_options(timeout=15000)
 
             page.goto("https://www-onboardingaos.nhsapp.service.nhs.uk/login")
 
