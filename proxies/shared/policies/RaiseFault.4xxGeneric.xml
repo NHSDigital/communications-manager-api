@@ -21,7 +21,6 @@
             }
             </Payload>
             <StatusCode>{generic_status_code}</StatusCode>
-            <ReasonPhrase>Validation failure</ReasonPhrase>
         </Set>
     </FaultResponse>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
