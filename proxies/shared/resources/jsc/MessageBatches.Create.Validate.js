@@ -43,6 +43,7 @@ const validate = () => {
         if (validArray) {
           if (data.attributes.messages.length > 45000) {
             errors.push(tooManyItemsError("/data/attributes/messages"));
+            return null;
           }
           // $.data.attributes.messages.x
           data.attributes.messages.forEach((message, index) => {

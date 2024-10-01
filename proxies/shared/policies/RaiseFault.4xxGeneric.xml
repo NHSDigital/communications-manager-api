@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 4xx error response containing an array of errors populated by the MessageBatches.Create.Validate.js script, the exact status code depends on context variables.
+
+ Since the payload is JSON we can't use the standard {variable.name} syntax for Apigee flow variables, this is where we use the variablePrefix and variableSuffix attributes.
+
+ Raisefault policies stop the execution of the current flow and move to the error flow, which returns the error response defined here to the requesting application.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.400BadRequest">
+    <DisplayName>RaiseFault.4xxGeneric</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <Payload variablePrefix="%" variableSuffix="#">
+            {
+                "errors" : %errors#
+            }
+            </Payload>
+            <StatusCode>errors[0].status</StatusCode>
+            <ReasonPhrase>Validation failure</ReasonPhrase>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</RaiseFault>
