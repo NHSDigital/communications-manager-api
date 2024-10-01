@@ -20,7 +20,7 @@
                 "errors" : %errors#
             }
             </Payload>
-            <StatusCode>errors[0].status</StatusCode>
+            <StatusCode>{errors[0].status}</StatusCode>
             <ReasonPhrase>Validation failure</ReasonPhrase>
         </Set>
     </FaultResponse>
