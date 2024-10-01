@@ -2,7 +2,7 @@ Scenario: An API consumer submitting a request with an contact details when not 
 ======================================================================================================================
 
 
-| **Given** the API consumer provides an message body with contact details
+| **Given** the API consumer provides a message body with contact details
 | **When** the request is submitted
 | **Then** the response returns a 400 Cannot set contact details error
 
