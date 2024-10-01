@@ -41,9 +41,9 @@ const validate = () => {
         // $.data.attributes.messages
         const validArray = validateArray(errors, data.attributes.messages, "/data/attributes/messages", 1)
         if (validArray) {
-          //if (data.attributes.messages.length > 45000) {
-          //  errors.push(tooManyItemsError("/data/attributes/messages"));
-          //}
+          if (data.attributes.messages.length > 45000) {
+            errors.push(tooManyItemsError("/data/attributes/messages"));
+          }
           // $.data.attributes.messages.x
           data.attributes.messages.forEach((message, index) => {
             var pointer = "/data/attributes/messages/" + index;
