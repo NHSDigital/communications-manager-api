@@ -9,13 +9,13 @@ from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 MESSAGE_LIMIT = 45000
 CONTENT_TYPE = "application/json"
 
-@pytest.mark.devtest
-def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.sandboxtest
+def test_too_many_messages(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/too_large/test_too_many_messages.rst
     """
 
-    data = Generators.generate_valid_create_message_batch_body("dev")
+    data = Generators.generate_valid_create_message_batch_body("sandbox")
     messages = []
     data["data"]["attributes"]["messages"] = messages
 
@@ -29,7 +29,6 @@ def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
     # make sure it's less than 6MB to be a fair test
     assert len(json.dumps(data)) < 6000000 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev.value,
             "Accept": CONTENT_TYPE,
             "Content-Type": CONTENT_TYPE
         },
@@ -39,13 +38,13 @@ def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
     Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
     assert len(resp.json()["errors"]) == 1
 
-@pytest.mark.devtest
-def test_payload_too_large(nhsd_apim_proxy_url, bearer_token_internal_dev):
+@pytest.mark.sandboxtest
+def test_payload_too_large(nhsd_apim_proxy_url):
     """
     .. include:: ../../partials/too_large/test_too_many_messages.rst
     """
 
-    data = Generators.generate_valid_create_message_batch_body("dev")
+    data = Generators.generate_valid_create_message_batch_body("sandbox")
     valid_recipient = data["data"]["attributes"]["messages"][0]["recipient"]
     large_personalisation = {'body': 'x'*32}
     messages = []
@@ -64,7 +63,6 @@ def test_payload_too_large(nhsd_apim_proxy_url, bearer_token_internal_dev):
     assert payload_length < 10000000
 
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-            "Authorization": bearer_token_internal_dev.value,
             "Accept": CONTENT_TYPE,
             "Content-Type": CONTENT_TYPE
         },
