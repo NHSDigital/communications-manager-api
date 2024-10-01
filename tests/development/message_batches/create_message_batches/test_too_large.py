@@ -9,6 +9,7 @@ from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 MESSAGE_LIMIT = 45000
 CONTENT_TYPE = "application/json"
 
+
 @pytest.mark.devtest
 def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
@@ -27,7 +28,7 @@ def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
                 }
             })
     # make sure it's less than 6MB to be a fair test
-    assert len(json.dumps(data)) < 6000000 
+    assert len(json.dumps(data)) < 6000000
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
             "Authorization": bearer_token_internal_dev.value,
             "Accept": CONTENT_TYPE,
@@ -38,6 +39,7 @@ def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
 
     Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
     assert len(resp.json()["errors"]) == 1
+
 
 @pytest.mark.devtest
 def test_payload_too_large(nhsd_apim_proxy_url, bearer_token_internal_dev):

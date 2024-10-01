@@ -10,6 +10,7 @@ from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 MESSAGE_LIMIT = 45000
 CONTENT_TYPE = "application/json"
 
+
 @pytest.mark.prodtest
 def test_too_many_messages(bearer_token_prod):
     """
@@ -28,7 +29,7 @@ def test_too_many_messages(bearer_token_prod):
                 }
             })
     # make sure it's less than 6MB to be a fair test
-    assert len(json.dumps(data)) < 6000000 
+    assert len(json.dumps(data)) < 6000000
     resp = requests.post(f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}", headers={
             "Authorization": bearer_token_prod.value,
             "Accept": CONTENT_TYPE,
@@ -39,6 +40,7 @@ def test_too_many_messages(bearer_token_prod):
 
     Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
     assert len(resp.json()["errors"]) == 1
+
 
 @pytest.mark.prodtest
 def test_payload_too_large(bearer_token_prod):
