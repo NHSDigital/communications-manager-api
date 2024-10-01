@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
- This policy raises a 406 error response for a missing or invalid Accept header.
+ This policy raises a 413 error response for a request that was too large
 
  Valid values are:
     * `*/*`
