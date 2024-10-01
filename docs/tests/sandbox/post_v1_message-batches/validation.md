@@ -453,7 +453,7 @@ A valid sms contact detail must be structured in this format: { sms: value }
 
 ## Scenario: An API consumer submitting a request with an contact details when not allowed receives a 400 ‘Cannot set contact details’ response
 
-**Given** the API consumer provides an message body with contact details
+**Given** the API consumer provides a message body with contact details
 <br/>
 **When** the request is submitted
 <br/>
