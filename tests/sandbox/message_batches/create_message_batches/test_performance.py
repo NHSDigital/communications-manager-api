@@ -63,7 +63,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
+    Assertions.assert_error_with_optional_correlation_id(resp, 400, None, None)
     assert len(resp.json().get("errors")) == NUM_MAX_ERRORS
 
 
