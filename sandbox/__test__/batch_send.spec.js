@@ -939,6 +939,15 @@ describe("/api/v1/send", () => {
       })
       .expect(400, {
         message: "Client is not allowed to provide alternative contact details",
+        errors: [
+          {
+            code: "CM_CANNOT_SET_CONTACT_DETAILS",
+            title: 'Cannot set contact details',
+            field: `/data/attributes/messages/0/recipient/contactDetails`,
+            message:
+              'Client is not allowed to provide alternative contact details.',
+          },
+        ],
       })
       .expect("Content-Type", /json/, done);
   });

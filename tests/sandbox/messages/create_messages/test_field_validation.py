@@ -330,6 +330,33 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
+    """
+    data = Generators.generate_valid_create_message_body()
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "07700900002"}
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+        **headers,
+        "X-Correlation-Id": correlation_id,
+        "Authorization": "notAllowedContactDetailOverride"
+    }, json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_error(
+            constants.ERROR_CANNOT_SET_CONTACT_DETAILS,
+            source={
+                "pointer": "/data/attributes/recipient/contactDetails"
+                }),
+        correlation_id
+    )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
 def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
