@@ -19,7 +19,6 @@
         <Set>
             <Headers/>
             <StatusCode>413</StatusCode>
-            <ReasonPhrase>Request message was larger than the service limit</ReasonPhrase>
             <Payload variablePrefix="@" variableSuffix="#">
                 {
                     "errors" : [
