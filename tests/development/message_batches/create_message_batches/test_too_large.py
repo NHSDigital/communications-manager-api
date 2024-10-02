@@ -44,7 +44,7 @@ def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
 @pytest.mark.devtest
 def test_payload_too_large(nhsd_apim_proxy_url, bearer_token_internal_dev):
     """
-    .. include:: ../../partials/too_large/test_too_many_messages.rst
+    .. include:: ../../partials/too_large/test_payload_too_large.rst
     """
 
     data = Generators.generate_valid_create_message_batch_body("dev")

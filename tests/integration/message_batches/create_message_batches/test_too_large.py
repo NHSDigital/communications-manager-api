@@ -45,7 +45,7 @@ def test_too_many_messages(bearer_token_int):
 @pytest.mark.inttest
 def test_payload_too_large(bearer_token_int):
     """
-    .. include:: ../../partials/too_large/test_too_many_messages.rst
+    .. include:: ../../partials/too_large/test_payload_too_large.rst
     """
 
     data = Generators.generate_valid_create_message_batch_body("int")

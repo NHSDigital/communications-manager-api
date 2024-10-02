@@ -7,5 +7,5 @@ Scenario: An API consumer submitting a request with a request body containing 45
 | **And** the response body contains 1 error
 
 **Asserts**
-- Response returns a 413 'Invalid Value' status code
+- Response returns a 413 'Request Entity Too Large' status code
 - Response returns 1 error message block
