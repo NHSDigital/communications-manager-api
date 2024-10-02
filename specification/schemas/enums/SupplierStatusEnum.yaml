@@ -1,0 +1,20 @@
+title: Enum_SupplierStatus
+description: The current status of this message within the channel at the time this response was generated.
+type: string
+enum:
+  - delivered
+  - read
+  - notification_attempted
+  - unnotified
+  - rejected
+  - notified
+  - received
+  - permanent_failure
+  - temporary_failure
+  - technical_failure
+  - accepted
+  - cancelled
+  - pending_virus_check
+  - validation_failed
+  - unknown
+example: delivered

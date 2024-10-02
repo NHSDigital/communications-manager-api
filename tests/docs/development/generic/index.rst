@@ -8,3 +8,4 @@ Generic Tests
    content_types
    headers
    not_found
+   too_many_requests

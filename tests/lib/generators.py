@@ -117,6 +117,12 @@ class Generators():
         })
 
     @staticmethod
+    def generate_invalid_value_error_custom_detail(pointer, detail):
+        return Generators.generate_error_with_custom_detail(constants.ERROR_INVALID_VALUE, detail, source={
+            "pointer": pointer
+        })
+
+    @staticmethod
     def generate_invalid_nhs_number_error(pointer):
         return Generators.generate_error(constants.ERROR_INVALID_NHS_NUMBER, source={
             "pointer": pointer
@@ -125,6 +131,12 @@ class Generators():
     @staticmethod
     def generate_missing_value_error(pointer):
         return Generators.generate_error(constants.ERROR_MISSING_VALUE, source={
+            "pointer": pointer
+        })
+
+    @staticmethod
+    def generate_missing_value_error_custom_detail(pointer, detail):
+        return Generators.generate_error_with_custom_detail(constants.ERROR_MISSING_VALUE, detail, source={
             "pointer": pointer
         })
 
@@ -143,6 +155,12 @@ class Generators():
     @staticmethod
     def generate_too_few_items_error(pointer):
         return Generators.generate_error(constants.ERROR_TOO_FEW_ITEMS, source={
+            "pointer": pointer
+        })
+
+    @staticmethod
+    def generate_too_few_items_error_custom_detail(pointer, detail):
+        return Generators.generate_error_with_custom_detail(constants.ERROR_TOO_FEW_ITEMS, detail, source={
             "pointer": pointer
         })
 
@@ -201,6 +219,12 @@ class Generators():
         return Generators.generate_error(constants.ERROR_QUOTA)
 
     @staticmethod
+    def generate_quota_error_custom(detail):
+        error = constants.ERROR_QUOTA
+        error.detail = detail
+        return Generators.generate_error(error)
+
+    @staticmethod
     def generate_retry_too_early_error():
         return Generators.generate_error(constants.ERROR_RETRY_TOO_EARLY)
 
@@ -232,6 +256,23 @@ class Generators():
             "status": error.status,
             "title": error.title,
             "detail": error.detail
+        }
+
+        if source:
+            ret["source"] = source
+
+        if meta:
+            ret["meta"] = meta
+        return ret
+
+    @staticmethod
+    def generate_error_with_custom_detail(error, detail=None, source=None, meta=None):
+        ret = {
+            "code": error.code,
+            "links": error.links,
+            "status": error.status,
+            "title": error.title,
+            "detail": detail or error.detail
         }
 
         if source:

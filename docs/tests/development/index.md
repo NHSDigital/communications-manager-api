@@ -5,6 +5,7 @@
   * [Content Types](generic/content_types.md)
   * [Header Tests](generic/headers.md)
   * [Not Found Tests](generic/not_found.md)
+  * [Too Many Requests Tests](generic/too_many_requests.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)
   * [Validation Tests](post_v1_message-batches/validation.md)
   * [Invalid Routing Plans](post_v1_message-batches/invalid_routing_plans.md)

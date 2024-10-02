@@ -1,5 +1,5 @@
-type: string
 title: Enum_Error_ServiceUnavailable
+type: string
 enum:
   - CM_SERVICE_UNAVAILABLE
 example: CM_SERVICE_UNAVAILABLE

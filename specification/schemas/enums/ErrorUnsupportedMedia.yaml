@@ -1,5 +1,5 @@
+title: Enum_Error_UnsupportedMedia
 type: string
 enum:
   - CM_UNSUPPORTED_MEDIA
-title: Enum_Error_UnsupportedMedia
 example: CM_UNSUPPORTED_MEDIA

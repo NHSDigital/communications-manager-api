@@ -1,7 +1,7 @@
+title: Enum_Error_CreateMessageInternalServerError
 type: string
 enum:
   - CM_ROUTING_PLAN_DUPLICATE_TEMPLATES
   - CM_MISSING_ROUTING_PLAN_TEMPLATE
   - CM_INTERNAL_SERVER_ERROR
 example: CM_MISSING_ROUTING_PLAN_TEMPLATE
-title: Enum_Error_CreateMessageInternalServerError

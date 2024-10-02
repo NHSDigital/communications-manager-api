@@ -1,5 +1,5 @@
+title: Enum_Error_InternalServerError
 type: string
 enum:
   - CM_INTERNAL_SERVER_ERROR
 example: CM_INTERNAL_SERVER_ERROR
-title: Enum_Error_InternalServerError

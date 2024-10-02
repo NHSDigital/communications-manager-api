@@ -53,6 +53,9 @@
             grant_type != "client_credentials"
         </Condition>
     </Step>
+    <Step>
+        <Name>FlowCallout.ApplyRateLimiting</Name>
+    </Step>
 {% endif %}
 [% include './partials/Partial.PreFlow.ContentNegotiation.xml' %]
 {% if ENVIRONMENT_TYPE == 'sandbox' %}

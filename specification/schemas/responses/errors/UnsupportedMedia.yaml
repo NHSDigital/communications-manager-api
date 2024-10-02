@@ -9,8 +9,8 @@ properties:
     uniqueItems: true
     items:
       type: object
+      additionalProperties: false
       properties:
-        additionalProperties: false
         id:
           $ref: ../../types/ErrorIdentifier.yaml
         code:

@@ -3,25 +3,47 @@ PRODUCT_DISPLAY_NAME: Communications Manager
 DESCRIPTION: Use this API to send messages to citizens via email, SMS, the NHS App or letter.
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
-    display_name: Internal Development
     has_mock_auth: true
+    variants:
+    - name: internal-dev
+      display_name: Internal Development
+      app_ratelimit: '6000pm'
+      app_quota: '1200'
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
   - name: internal-qa
-    display_name: Internal QA
     has_mock_auth: true
+    variants:
+    - name: internal-qa
+      display_name: Internal QA
   - name: ref
-    display_name: Reference
     has_mock_auth: true
+    variants:
+    - name: ref
+      display_name: Reference
+    - name: 2-ref
+      display_name: Reference - 2
   - name: internal-dev-sandbox
-    display_name: Internal Development Sandbox
+    variants:
+    - name: internal-dev-sandbox
+      display_name: Internal Development Sandbox
   - name: internal-qa-sandbox
-    display_name: Internal QA Sandbox
+    variants:
+    - name: internal-qa-sandbox
+      display_name: Internal QA Sandbox
   - name: sandbox
-    display_name: Sandbox
+    variants:
+    - name: sandbox
+      display_name: Sandbox
   - name: int
-    display_name: Integration Testing
+    variants:
+    - name: int
+      display_name: Integration Testing
   - name: prod
-    display_name: Production
-    approval_type: manual
+    variants:
+    - name: prod
+      display_name: Production
+      approval_type: manual
 ---
 meta:
   api:
@@ -33,16 +55,36 @@ meta:
 apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
-{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + ENV.display_name + ' Environment)' %}
-{% set NAME = SERVICE_NAME + '-' + ENV.name %}
   - name: {{ ENV.name }}
     products:
+{% for VARIANT in ENV.variants %}
+{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + VARIANT.display_name + ' Environment)' %}
+{% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
       - name: {{ NAME }}
-        approvalType: {{ ENV.approval_type | default('auto') }}
+        approvalType: {{ VARIANT.approval_type | default('auto') }}
         attributes:
           - name: access
             value: public
-            # rate limiting is handled within the proxy policies directly
+          - name: ratelimiting
+            value:
+              {{ NAME }}:
+                quota:
+                  enabled: true
+                  interval: 1
+                  limit: {{ VARIANT.global_quota | default(6000)}}
+                  timeunit: minute
+                spikeArrest:
+                  enabled: true
+                  ratelimit: {{ VARIANT.global_ratelimit | default('18000pm') }}
+              app:
+                quota:
+                  enabled: true
+                  interval: 1
+                  limit: {{ VARIANT.app_quota | default(1200)}}
+                  timeunit: minute
+                spikeArrest:
+                  ratelimit: {{ VARIANT.app_ratelimit | default('6000pm') }}
+                  enabled: true
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]
@@ -55,15 +97,23 @@ apigee:
         scopes:
           - 'urn:nhsd:apim:app:level3:{{ SERVICE_NAME }}'
           - 'urn:nhsd:apim:user-nhs-cis2:aal3:{{ SERVICE_NAME }}'
+{% endfor %}
     specs:
+{% for VARIANT in ENV.variants %}
+{% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
       - name: {{ NAME }}
         path: {{ SERVICE_NAME }}.json
+{% endfor %}
     api_catalog:
+{% for VARIANT in ENV.variants %}
+{% set NAME = SERVICE_NAME + '-' + VARIANT.name %}
+{% set TITLE = PRODUCT_DISPLAY_NAME + ' (' + VARIANT.display_name + ' Environment)' %}
       - edgeAPIProductName: {{ NAME }}
         anonAllowed: true
         description: {{ DESCRIPTION }}
         requireCallbackUrl: false
         title: {{ TITLE }}
-        visibility: {{ ENV.portal_visibility | default(true) }}
+        visibility: {{ VARIANT.portal_visibility | default(true) }}
         specId: {{ NAME }}
+{% endfor %}
 {% endfor %}

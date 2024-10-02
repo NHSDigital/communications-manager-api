@@ -1,15 +1,15 @@
 ## Overview
 
-Use this API to send messages to citizens via email, SMS, the NHS App or letter.
+Use this API to send messages to citizens via NHS App, email, text message or letter.
 
-NHS Notify provides:
+[NHS Notify](https://digital.nhs.uk/services/nhs-notify) provides:
 
 * message templating
-* message routing - via SMS, email, letter and NHS App
+* message routing
 * enrichment of recipient details
 * support for accessible formats and multiple languages
 
-For more information about this service's capabilities, see [NHS Notify](https://digital.nhs.uk/services/nhs-notify).
+Learn more about [NHS Notify's features](https://digital.nhs.uk/services/nhs-notify/features).
 
 ## Who can use this API
 
@@ -18,6 +18,8 @@ The NHS Notify service is intended for services involved in direct care. This AP
 ## API status and roadmap
 
 This API is [in production, beta](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
+
+We may make additive non-breaking changes to the API without notice, for example the addition of fields to the response, or new optional fields to the request.
 
 You can comment, upvote and view progress on [our roadmap](https://nhs-digital-api-management.featureupvote.com/?order=top&filter=allexceptdone&tag=nhs-notify-api).
 
@@ -44,7 +46,7 @@ This API can generate responses in the following formats:
 
 Both of these formats have the same structure - the API responds with a standard JSON document.
 
-You can control which `Content-Type` is returned by using the `Accept` header.
+You can use the `Accept` header to control which `Content-Type` is returned in the response.
 
 The `Accept` header can contain the following values:
 
@@ -52,14 +54,18 @@ The `Accept` header can contain the following values:
 * `application/json`
 * `application/vnd.api+json`
 
+The `Accept` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `415` error response. If ommited then `utf-8` is assumed. 
+
 Where no `Accept` header is present, this will default to `application/vnd.api+json`
 
-### Request Content Types
+### Request content types
 
 This API will accept request payloads of the following types:
 
 * `application/vnd.api+json` - see [JSON:API specification](https://jsonapi.org/format/#introduction)
 * `application/json`
+
+The `Content-Type` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `406` error response. If ommited then `utf-8` is assumed. 
 
 If you attempt to send a payload without the `Content-Type` header set to either of these values then the API will respond with a `415 Unsupported Media Type` response.
 
@@ -132,11 +138,13 @@ To understand how our online digital onboarding process works, see [digital onbo
 
 ## Free-text communications
 
-Free-text communications (as opposed to fixed format communications) can be achieved by setting up a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
+Free-text communications (as opposed to fixed format communications) are possible via the use of a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
 
 | Global Routing Plan ID               | Channel/Supplier | Read wait time (before failing channel) | Personalisation field name |
 |--------------------------------------|------------------|-----------------------------------------|----------------------------|
 | 00000000-0000-0000-0000-000000000001 | NHS App          | 24 hours                                | body                       |
+| 00000000-0000-0000-0000-000000000002 | Email            |                                         | email_body, email_subject  |
+| 00000000-0000-0000-0000-000000000003 | SMS              |                                         | sms_body                   |
 
 Please see the Postman collections in the [environments and testing section](#section/Environments-and-testing) for examples.
 
@@ -187,7 +195,7 @@ The message status shows an overall aggregate status taken from all of the commu
 
 The channels can have the following supplier statuses:
 
-### NHS APP
+### NHS App
 
 * `delivered` - the message has been successfully delivered to the user
 * `read` - a user has read the message
@@ -197,4 +205,27 @@ The channels can have the following supplier statuses:
 * `notified` - a push notification is reported as having been successfully relayed to one or more devices
 * `received` - the request has been received by the supplier and is queued to be processed
 
-Statuses for other suppliers will be added in future.
+### Email
+
+* `delivered` - the message has been successfully delivered to the user
+* `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
+* `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
+
+### SMS
+
+* `delivered` - the message has been successfully delivered to the user
+* `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
+* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
+* `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
+
+### Letters
+
+* `accepted` - GOV.UK Notify has sent the letter to the provider to be printed
+* `received` - the provider has printed and dispatched the letter
+* `cancelled` - sending cancelled, the letter will not be printed or dispatched
+* `pending_virus_check` - GOV.UK Notify has not completed a virus scan of the precompiled letter file
+* `virus_scan_failed` - GOV.UK Notify found a potential virus in the precompiled letter file
+* `validation_failed` - content in the precompiled letter file is outside the printable area
+* `technical_failure` - GOV.UK Notify had an unexpected error while sending the letter to their printing provider
+* `permanent_failure` - the provider cannot print the letter, the letter will not be dispatched

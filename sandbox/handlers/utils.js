@@ -1,51 +1,46 @@
 import log from "loglevel"
 
-export const write_log = (res, log_level, options = {}) => {
-  if (log.getLevel() > log.levels[log_level.toUpperCase()]) {
+export const writeLog = (res, logLevel, options = {}) => {
+  if (log.getLevel() > log.levels[logLevel.toUpperCase()]) {
     return
   }
+  let processedOptions;
   if (typeof options === "function") {
-    options = options()
+    processedOptions = options()
+  } else {
+    processedOptions = options
   }
-  let log_line = {
+  let logLine = {
     timestamp: Date.now(),
-    level: log_level,
+    level: logLevel,
     correlation_id: res.locals.correlation_id
   }
   if (typeof options === "object") {
-    options = Object.keys(options).reduce(function (obj, x) {
-      let val = options[x]
+    processedOptions = Object.keys(processedOptions).reduce((obj, x) => {
+      const val = processedOptions[x];
+      const returnedObj = obj;
       if (typeof val === "function") {
-        val = val()
+        returnedObj[x] = val()
+      } else {
+        returnedObj[x] = val
       }
-      obj[x] = val;
-      return obj;
+
+      return returnedObj
     }, {});
-    log_line = Object.assign(log_line, options)
+    logLine = Object.assign(logLine, processedOptions)
   }
-  if (Array.isArray(options)) {
-    log_line["log"] = { log: options.map(x => { return typeof x === "function" ? x() : x }) }
+  if (Array.isArray(processedOptions)) {
+    logLine.log = { log: processedOptions.map(x => typeof x === "function" ? x() : x ) }
   }
 
-  log[log_level](JSON.stringify(log_line))
+  log[logLevel](JSON.stringify(logLine))
 };
 
-export function sendError(res, code, message) {
+export function sendError(res, code, message, errors) {
   res.status(code);
   res.json({
-    message: message
+    message,
+    errors
   });
 }
 
-export function hasValidGlobalTemplatePersonalisation(personalisation) {
-  if (!personalisation) {
-    return false;
-  }
-
-  const personalisationFields = Object.keys(personalisation);
-  if (personalisationFields.length != 1) {
-    return false;
-  }
-
-  return personalisationFields[0] === "body";
-}

@@ -1,5 +1,0 @@
-type: string
-enum:
-  - MessageBatch
-title: Type_MessageBatch
-example: MessageBatch

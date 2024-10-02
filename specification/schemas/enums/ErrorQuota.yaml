@@ -1,5 +1,5 @@
-type: string
 title: Enum_Error_Quota
+type: string
 enum:
   - CM_QUOTA
 example: CM_QUOTA

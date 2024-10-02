@@ -1,26 +1,14 @@
-import KSUID from "ksuid"
-import {
-  sendError,
-  write_log,
-  hasValidGlobalTemplatePersonalisation,
-} from "./utils.js"
-import {
-  validSendingGroupIds,
-  invalidRoutingPlanId,
-  sendingGroupIdWithMissingNHSTemplates,
-  sendingGroupIdWithMissingTemplates,
-  sendingGroupIdWithDuplicateTemplates,
-  duplicateTemplates,
-  trigger500SendingGroupId,
-  trigger425SendingGroupId,
-  globalFreeTextNhsAppSendingGroupId,
-  noDefaultOdsClientAuth,
-  noOdsChangeClientAuth,
-} from "./config.js"
+import KSUID from "ksuid";
+import { sendError, writeLog } from "./utils.js";
+import { getGlobalFreeTextError } from "./error_scenarios/global_free_text.js";
+import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
+import { getOdsCodeError } from "./error_scenarios/ods_code.js";
+import { mandatoryBatchMessageFieldValidation } from "./validation/mandatory_batch_message_fields.js";
+import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js";
 
-export async function batch_send(req, res, next) {
+export async function batchSend(req, res, next) {
   const { headers, body } = req;
-  if (headers["authorization"] === "banned") {
+  if (headers.authorization === "banned") {
     sendError(
       res,
       403,
@@ -30,170 +18,75 @@ export async function batch_send(req, res, next) {
     return;
   }
 
-  if (!body) {
-    sendError(res, 400, "Missing request body");
+  const mandatoryFieldError = mandatoryBatchMessageFieldValidation(body);
+  if (mandatoryFieldError !== null) {
+    const [errorCode, errorMessage] = mandatoryFieldError;
+    sendError(res, errorCode, errorMessage);
     next();
     return;
   }
 
-  const data = body.data;
-  if (!data) {
-    sendError(res, 400, "Missing request body data");
-    next();
-    return;
-  }
+  const { routingPlanId, messages } = body.data.attributes;
 
-  const type = data.type;
-  if (!type) {
-    sendError(res, 400, "Missing request body data type");
-    next();
-    return;
-  }
-
-  if (type !== "MessageBatch") {
-    sendError(res, 400, "Request body data type is not MessageBatch");
-    next();
-    return;
-  }
-
-  const attributes = data.attributes;
-  if (!attributes) {
-    sendError(res, 400, "Missing request body data attributes");
-    next();
-    return;
-  }
-
-  const routingPlanId = attributes.routingPlanId;
-  if (!routingPlanId) {
-    sendError(res, 400, "Missing routingPlanId");
-    next();
-    return;
-  }
-
-  if (!attributes.messageBatchReference) {
-    sendError(res, 400, "Missing messageBatchReference");
-    next();
-    return;
-  }
-
-  const messages = attributes.messages;
-  if (!Array.isArray(messages)) {
-    sendError(res, 400, "Missing messages array");
-    next();
-    return;
-  }
-
-  const odsCodes = messages.map((message) => ( message?.originator?.odsCode ));
-  if (odsCodes.includes(undefined) && req.headers["authorization"] === noDefaultOdsClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode must be provided'
-    )
-    next();
-    return;
-  }
-
-  if (odsCodes.filter((o) => o !== undefined).length > 0 && req.headers["authorization"] === noOdsChangeClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode was provided but ODS code override is not enabled for the client'
-    )
-    next();
-    return;
-  }
-
-  const messageReferences = messages.map((message) => message.messageReference);
-  if (messageReferences.includes(undefined)) {
-    sendError(res, 400, "Missing messageReferences");
-    next();
-    return;
-  }
-
-  if (new Set(messageReferences).size !== messageReferences.length) {
-    sendError(res, 400, "Duplicate messageReferences");
-    next();
-    return;
-  }
-
-  if (!validSendingGroupIds[routingPlanId]) {
-    sendError(
-      res,
-      404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${routingPlanId}"`
+  const messagePersonsalisations = messages.map(
+    (message) => message.personalisation
+  );
+  for (const personalisation of messagePersonsalisations) {
+    const globalFreeTextError = getGlobalFreeTextError(
+      personalisation,
+      routingPlanId
     );
+
+    if (globalFreeTextError !== null) {
+      const [errorCode, errorMessage] = globalFreeTextError;
+      sendError(res, errorCode, errorMessage);
+      next();
+      return;
+    }
+  }
+
+  const odsCodes = messages.map(
+    (message) => message && message.originator?.odsCode
+  );
+  for (const odsCode of odsCodes) {
+    const odsCodeError = getOdsCodeError(odsCode, req.headers.authorization);
+
+    if (odsCodeError !== null) {
+      const [errorCode, errorMessage] = odsCodeError;
+      sendError(res, errorCode, errorMessage);
+      next();
+      return;
+    }
+  }
+
+  const sendingGroupIdError = getSendingGroupIdError(routingPlanId);
+  if (sendingGroupIdError !== null) {
+    const [errorCode, errorMessage] = sendingGroupIdError;
+    sendError(res, errorCode, errorMessage);
     next();
     return;
   }
 
-  if (routingPlanId === invalidRoutingPlanId) {
-    sendError(res, 400, "Invalid Routing Config");
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger425SendingGroupId) {
-    sendError(
-      res,
-      425,
-      "Message with this idempotency key is already being processed"
+  const alternateContactDetails = messages.map(
+    (message) => message.recipient?.contactDetails
+  );
+  let messageIndex = 0;
+  for (const contactDetail of alternateContactDetails) {
+    const alternateContactDetailsError = getAlternateContactDetailsError(
+      contactDetail,
+      req.headers.authorization,
+      `/data/attributes/messages/${messageIndex}`
     );
-    next();
-    return;
+    if (alternateContactDetailsError !== null) {
+      const [errorCode, errorMessage, errors] = alternateContactDetailsError;
+      sendError(res, errorCode, errorMessage, errors);
+      next();
+      return;
+    }
+    messageIndex += 1;
   }
 
-  if (
-    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
-    messages.findIndex(
-      (message) =>
-        !hasValidGlobalTemplatePersonalisation(message.personalisation)
-    ) > -1
-  ) {
-    sendError(res, 400, "Expect single personalisation field of 'body'");
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
-    sendError(
-      res,
-      500,
-      `NHS App Template does not exist with internalTemplateId: invalid-template`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingTemplates) {
-    sendError(
-      res,
-      500,
-      `Templates required in "${routingPlanId}" routing config not found`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithDuplicateTemplates) {
-    sendError(
-      res,
-      500,
-      `Duplicate templates in routing config: ${JSON.stringify(
-        duplicateTemplates
-      )}`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger500SendingGroupId) {
-    sendError(res, 500, "Error writing request items to DynamoDB");
-    next();
-    return;
-  }
-
-  write_log(res, "warn", {
+  writeLog(res, "warn", {
     message: "/api/v1/send",
     req: {
       path: req.path,

@@ -1,9 +1,27 @@
 <FaultRule name="combined_backend_fault_handler">
     [% include './partials/Partial.Component.SetResponseDefaults.xml' %]
     <Step>
-        <Name>ExtractVariables.NhsAppAccounts.Error</Name>
+        <Name>ExtractVariables.ErrorMessage</Name>
         <Condition>
             response.content ~~ "\{\u0022message\u0022:\u0022.*\u0022\}"
+        </Condition>
+    </Step>
+    <Step>
+        <Name>ExtractVariables.ErrorDetails</Name>
+        <Condition>
+            response.content ~~ ".*\u0022errors\u0022:.*"
+        </Condition>
+    </Step>
+    <Step>
+        <Name>JavaScript.EnhanceErrorDetails</Name>
+        <Condition>
+            data.errors != null
+        </Condition>
+    </Step>
+    <Step>
+        <Name>JavaScript.TranslateQuotaErrors</Name>
+        <Condition>
+            error.content ~~ "\{.*\u0022scope\u0022:\u0022proxy\u0022.*\}" or error.content ~~ "\{.*\u0022scope\u0022:\u0022application\u0022.*\}"
         </Condition>
     </Step>
     <Step>

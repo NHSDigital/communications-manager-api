@@ -5,9 +5,9 @@ properties:
     type: object
     properties:
       type:
-        $ref: ../enums/TypeMessageBatch.yaml
+        $ref: ../enums/EnumMessageBatch.yaml
       attributes:
-        description: MessageBatch attributes
+        description: MessageBatch attributes.
         type: object
         properties:
           routingPlanId:

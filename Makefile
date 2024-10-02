@@ -10,20 +10,19 @@ install-node:
 	cd sandbox && npm install --legacy-peer-deps
 
 #Configures Git Hooks, which are scripts that run given a specified event.
-.git/hooks/pre-commit:
+git/hooks/pre-commit:
 	cp scripts/pre-commit .git/hooks/pre-commit
 	chmod +x .git/hooks/pre-commit
 
 #Condensed Target to run all targets above.
-install: install-node install-python .git/hooks/pre-commit
+install: install-node install-python git/hooks/pre-commit
 
 #Referenced within readme
 install-hooks: .git/hooks/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
-lint: .check-licenses .ensure-test-documentation-validity
-	npm run lint
-	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
+lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
+	npm run lint 
 
 static-analysis:
 	npm run static-analysis
@@ -47,6 +46,14 @@ build-proxy:
 
 build-test-documentation:
 	cd tests/docs && ./build-docs.sh --build-only && cd ../../
+
+# Lint JavaScript files
+.lint-js:
+	node_modules/.bin/eslint sandbox/
+
+# Lint Python files
+.lint-python:
+	find . -name '*.py' -not -path '**/.venv/*' | xargs poetry run flake8
 
 #Files to loop over in release
 _dist_include="pytest.ini poetry.lock poetry.toml pyproject.toml Makefile build/. tests sandbox package.json package-lock.json postman scripts"
@@ -90,6 +97,18 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
 	    --junitxml=test-report.xml
+
+PERFTEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
+		PYTHONPATH=./tests \
+		poetry run pytest -vv \
+		--color=yes \
+		-n 1 \
+		--api-name=communications-manager \
+		--proxy-name="$(PROXY_NAME)" \
+		-s \
+		--reruns 8 \
+		--reruns-delay 30 \
+	    --junitxml=perftest-report.xml
 
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		PYTHONPATH=./tests \
@@ -144,7 +163,14 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 	tests/development \
 	-m devtest
 
+.internal-dev-perftest:
+	$(PERFTEST_CMD) \
+	tests/development \
+	-m devperftest
+
 internal-dev-test: .internal-dev-test
+
+internal-dev-test-nightly: .internal-dev-test .internal-dev-perftest
 
 internal-qa-test:
 	$(TEST_CMD) \

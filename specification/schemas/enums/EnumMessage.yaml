@@ -1,0 +1,5 @@
+title: Enum_Message
+type: string
+enum:
+  - Message
+example: Message

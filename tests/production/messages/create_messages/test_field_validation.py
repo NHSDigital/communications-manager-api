@@ -280,3 +280,163 @@ def test_null_personalisation(bearer_token_prod, personalisation):
         Generators.generate_null_value_error("/data/attributes/personalisation"),
         None
     )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_sms_contact_details(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
+    """
+    data = Generators.generate_valid_create_message_body("prod")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "07700900002"}
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/sms",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_email_contact_details(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_email.rst
+    """
+    data = Generators.generate_valid_create_message_body("prod")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"email": "invalidEmailAddress"}
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/email",
+            "Input failed format check"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_address_contact_details_too_few_lines(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
+    """
+    data = Generators.generate_valid_create_message_body("prod")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1"],
+            "postcode": "test"
+        }
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_too_few_items_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/address",
+            "Too few address lines were provided"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_address_contact_details_too_many_lines(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_many.rst
+    """
+    data = Generators.generate_valid_create_message_body("prod")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5", "6"],
+            "postcode": "test"
+        }
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/address",
+            "Invalid"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.prodtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
+def test_invalid_address_contact_details_postcode(bearer_token_prod, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_postcode.rst
+    """
+    data = Generators.generate_valid_create_message_body("prod")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2", "3", "4", "5"],
+            "postcode": "LS1 6AECD"
+        }
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+            "X-Correlation-Id": correlation_id
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/address",
+            "Postcode input failed format check"
+        ),
+        correlation_id
+    )

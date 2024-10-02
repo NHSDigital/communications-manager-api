@@ -14,7 +14,7 @@ BAD_GATEWAY_ODS_CODE = 'T00401'  # The mock for the NHS App API will return a 40
 def test_502_bad_gateway(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
 
     """
-    .. include:: ../../partials/bad_gatway/test_502_bad_gateway.rst
+    .. include:: ../../partials/bad_gateway/test_502_bad_gateway.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
         "Authorization": bearer_token_internal_dev.value,

@@ -13,7 +13,7 @@ properties:
         id:
           $ref: ../../../types/ErrorIdentifier.yaml
         code:
-          $ref: ../../../enums/ErrorInvalidNHSNumber.yaml
+          $ref: ../../../enums/ErrorCode.yaml
         links:
           $ref: ../../../types/LinksErrorNHSNumber.yaml
         status:
@@ -22,33 +22,14 @@ properties:
             - '400'
           example: '400'
         title:
-          type: string
-          enum:
-            - Missing property
-            - Property cannot be null
-            - Invalid value
-            - Invalid nhs number
-          example: Invalid nhs number
+          $ref: ../../../enums/ErrorTitle.yaml
         detail:
-          type: string
-          enum:
-            - 'The property at the specified location is required, but was not present in the request.'
-            - 'The property at the specified location is required, but a null value was passed in the request.'
-            - The property at the specified location does not allow this value.
-            - 'The value provided in this nhsNumber field is not a valid NHS number.'
-          example: 'The value provided in this nhsNumber field is not a valid NHS number.'
+          $ref: ../../../types/ErrorDetail.yaml
         source:
           type: object
           additionalProperties: false
           properties:
             pointer:
               type: string
-              enum:
-                - /data/type
-                - /data/attributes
-                - /data/attributes/messageReference
-                - /data/attributes/routingPlanId
-                - /data/attributes/recipient/nhsNumber
-                - /data/attributes/recipient/dateOfBirth
-                - /data/attributes/originator/odsCode
-              example: /data/attributes/messages/0/recipient/nhsNumber
+              description: Indicates the path to the field in the request where the validation error occurred.
+              example: /data/attributes/recipient/nhsNumber

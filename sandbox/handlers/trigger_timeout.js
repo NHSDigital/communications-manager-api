@@ -1,4 +1,4 @@
-export async function trigger_timeout(req, res, next) {
+export async function triggerTimeout(req, res, next) {
   let timeoutLength = 3000;
 
   if (req.query.sleep) {

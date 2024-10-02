@@ -1,30 +1,14 @@
 import KSUID from "ksuid";
-import { sendError, write_log, hasValidGlobalTemplatePersonalisation } from "./utils.js";
-import {
-  sendingGroupIdWithMissingNHSTemplates,
-  sendingGroupIdWithMissingTemplates,
-  sendingGroupIdWithDuplicateTemplates,
-  duplicateTemplates,
-  trigger500SendingGroupId,
-  validSendingGroupIds,
-  globalFreeTextNhsAppSendingGroupId,
-  noDefaultOdsClientAuth,
-  noOdsChangeClientAuth
-} from "./config.js"
-
-// Note: the docker container uses node:12 which does not support optional chaining
-function getOriginatorOdsCode(req) {
-  let odsCode;
-  try {
-    odsCode = req.body.data.attributes.originator.odsCode;
-  } catch {
-    odsCode = undefined;
-  }
-  return odsCode;
-}
+import { sendError, writeLog } from "./utils.js";
+import { validSendingGroupIds } from "./config.js";
+import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
+import { getOdsCodeError } from "./error_scenarios/ods_code.js";
+import { mandatorySingleMessageFieldValidation } from "./validation/mandatory_single_message_fields.js";
+import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js";
+import { getGlobalFreeTextError } from "./error_scenarios/global_free_text.js";
 
 export async function messages(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
+  if (req.headers.authorization === "banned") {
     sendError(
       res,
       403,
@@ -34,92 +18,60 @@ export async function messages(req, res, next) {
     return;
   }
 
-  if (!req.body) {
-    sendError(res, 400, "Missing request body");
+  const mandatoryFieldError = mandatorySingleMessageFieldValidation(req.body);
+  if (mandatoryFieldError !== null) {
+    const [errorCode, errorMessage] = mandatoryFieldError;
+    sendError(res, errorCode, errorMessage);
     next();
     return;
   }
 
-  const routingPlanId = req.body.data.attributes.routingPlanId;
-  if (!validSendingGroupIds[routingPlanId]) {
-    sendError(
-      res,
-      404,
-      `Routing Config does not exist for clientId "sandbox_client_id" and routingPlanId "${req.body.data.attributes.routingPlanId}"`
-    );
+  const { routingPlanId } = req.body.data.attributes;
+
+  const sendingGroupIdError = getSendingGroupIdError(routingPlanId);
+  if (sendingGroupIdError !== null) {
+    const [errorCode, errorMessage] = sendingGroupIdError;
+    sendError(res, errorCode, errorMessage);
     next();
     return;
   }
 
-  const odsCode = getOriginatorOdsCode(req);
-  if (!odsCode && req.headers["authorization"] === noDefaultOdsClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode must be provided'
-    )
+  const personalisation = req.body.data?.attributes?.personalisation;
+  const globalFreeTextError = getGlobalFreeTextError(
+    personalisation,
+    routingPlanId
+  );
+  if (globalFreeTextError !== null) {
+    const [errorCode, errorMessage] = globalFreeTextError;
+    sendError(res, errorCode, errorMessage);
     next();
     return;
   }
 
-  if (odsCode && req.headers["authorization"] === noOdsChangeClientAuth) {
-    sendError(
-      res,
-      400,
-      'odsCode was provided but ODS code override is not enabled for the client'
-    )
+  const odsCode = req.body.data?.attributes?.originator?.odsCode;
+  const odsCodeError = getOdsCodeError(odsCode, req.headers.authorization);
+  if (odsCodeError !== null) {
+    const [errorCode, errorMessage] = odsCodeError;
+    sendError(res, errorCode, errorMessage);
     next();
     return;
   }
 
-  if (
-    routingPlanId === globalFreeTextNhsAppSendingGroupId &&
-    !hasValidGlobalTemplatePersonalisation(req.body.data.attributes.personalisation)
-  ) {
-    sendError(res, 400, "Expect single personalisation field of 'body'");
+  const alternateContactDetails =
+    req.body.data?.attributes?.recipient?.contactDetails;
+  const alternateContactDetailsError = getAlternateContactDetailsError(
+    alternateContactDetails,
+    req.headers.authorization,
+    "/data/attributes"
+  );
+  if (alternateContactDetailsError !== null) {
+    const [errorCode, errorMessage, errors] = alternateContactDetailsError;
+    sendError(res, errorCode, errorMessage, errors);
     next();
     return;
   }
 
-  if (routingPlanId === sendingGroupIdWithMissingNHSTemplates) {
-    sendError(
-      res,
-      500,
-      `NHS App Template does not exist with internalTemplateId: invalid-template`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithMissingTemplates) {
-    sendError(
-      res,
-      500,
-      `Templates required in "${sendingGroupIdWithMissingTemplates}" routing config not found`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === sendingGroupIdWithDuplicateTemplates) {
-    sendError(
-      res,
-      500,
-      `Duplicate templates in routing config: ${JSON.stringify(
-        duplicateTemplates
-      )}`
-    );
-    next();
-    return;
-  }
-
-  if (routingPlanId === trigger500SendingGroupId) {
-    sendError(res, 500, "Error writing request items to DynamoDB");
-    next();
-    return;
-  }
-
-  write_log(res, "warn", {
+  writeLog(res, "warn", {
     message: "/api/v1/messages",
     req: {
       path: req.path,

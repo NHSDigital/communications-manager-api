@@ -101,7 +101,7 @@
                 ]
               },
               "channel": {
-                "type": "any",
+                "type": "string",
                 "enum": [
                   "nhsapp"
                 ]
@@ -123,8 +123,7 @@
                 "format": "date-time"
               },
               "retryCount": {
-                "type": "number",
-                "description": "Contains the amount of times that we have attempted to send this channel."
+                "$ref": "../snippets/RetryCount.yaml"
               }
             },
             "required": [
@@ -143,7 +142,7 @@
                 "type": "string",
                 "format": "uri",
                 "examples": [
-                  "https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS"
+                  "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
                 ]
               }
             },
@@ -178,7 +177,7 @@
         "minLength": 27,
         "maxLength": 27,
         "examples": [
-          "0ujsszwN8NRY24YaXiTIE2VWDTS"
+          "2WL3qFTEFM0qMY8xjRbt1LIKCzM"
         ]
       },
       "Enum_ChannelStatus": {

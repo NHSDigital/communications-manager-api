@@ -2,42 +2,37 @@ type: object
 title: CallbackRequest
 properties:
   type:
-    const: ChannelStatus
+    type: string
+    example: "ChannelStatus"
+    enum: 
+      - ChannelStatus
   attributes:
     type: object
     properties:
       messageId:
-        description: Identifier for the message
         $ref: ../types/KSUID.yaml
       messageReference:
-        type: string
-        format: uuid
-        description: Original reference supplied for the message
-        examples: 
-          - 1642109b-69eb-447f-8f97-ab70a74f5db4
+        $ref: ../../snippets/MessageReferenceSnippet.yaml
       channel:
-        type: any
+        type: string
         enum:
           - nhsapp
         example: nhsapp
       channelStatus:
-        description: The current status of this channel at the time this response was generated.
         $ref: ../enums/ChannelStatus.yaml
       channelStatusDescription:
         type: string
         description: If there is extra information associated with the status of this channel, it is provided here.
-        example: ""
+        example: " "
       supplierStatus:
-        $ref: ../enums/SupplierStatus.yaml
+        $ref: ../enums/SupplierStatusEnum.yaml
       timestamp:
         type: string
         description: Date-time for when the supplier status change was processed.
         format: date-time
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
-        type: number
-        description: Contains the amount of times that we have attempted to send this channel.
-        example: 1
+        $ref: ../../snippets/RetryCount.yaml
     required:
       - messageId
       - messageReference
@@ -52,8 +47,7 @@ properties:
         type: string
         description: URL to retrieve overarching message status from the GET endpoint.
         format: uri
-        examples: 
-          - "https://api.service.nhs.uk/comms/v1/messages/0ujsszwN8NRY24YaXiTIE2VWDTS"
+        example: "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
     required:
       - message
   meta:
@@ -61,9 +55,8 @@ properties:
     properties:
       idempotencyKey:
         type: string
-        description: Contains a value that you can use to deduplicate retried
+        description: Contains a value that you can use to deduplicate retried.
           requests.
-        examples: 
-          - "2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445"
+        example: "2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445"
     required:
       - idempotencyKey

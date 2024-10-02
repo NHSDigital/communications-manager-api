@@ -1,18 +1,18 @@
 import * as  fs from 'fs'
-import { sendError, write_log } from './utils.js'
+import { sendError, writeLog } from './utils.js'
 
-export async function get_message(req, res, next) {
-  if (req.headers["authorization"] === "banned") {
+export async function getMessage(req, res, next) {
+  if (req.headers.authorization === "banned") {
     sendError(res, 403, "Request rejected because client service ban is in effect");
     next();
     return;
   }
 
-  const messageId = req.params.messageId;
+  const { messageId } = req.params;
 
   fs.readFile(`./messages/${messageId}.json`, 'utf8', (err, fileContent) => {
     if (err) {
-      write_log(res, "warn", {
+      writeLog(res, "warn", {
         message: `/api/v1/messages/${messageId}`,
         req: {
           path: req.path,

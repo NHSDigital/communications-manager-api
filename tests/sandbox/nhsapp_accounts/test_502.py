@@ -13,7 +13,7 @@ BAD_GATEWAY_ODS_CODE = 'T00502'
 def test_502_bad_gateway(nhsd_apim_proxy_url, correlation_id):
 
     """
-    .. include:: ../../partials/bad_gatway/test_502_bad_gateway.rst
+    .. include:: ../../partials/bad_gateway/test_502_bad_gateway.rst
     """
     resp = requests.get(f"{nhsd_apim_proxy_url}{NHSAPP_ACCOUNTS_ENDPOINT}", headers={
         "X-Correlation-Id": correlation_id,

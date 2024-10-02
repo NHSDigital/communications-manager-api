@@ -11,7 +11,7 @@ authors = [
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/NHSDigital/communications-manager-api"
-homepage = "https://digital.nhs.uk/developer/api-catalogue/communications-manager"
+homepage = "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
 
@@ -25,8 +25,8 @@ sphinx = "7.1.2"
 sphinx-markdown-builder = "^0.6.6"
 notifications-python-client = "^9.0.0"
 polling = "^0.3.2"
-playwright = "^1.42.0"
-install-playwright = "^0.0.1"
+playwright = "^1.45.0"
+install_playwright = "^0.1.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^5.0.4"

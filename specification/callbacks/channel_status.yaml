@@ -2,7 +2,7 @@
 summary: Channel Status
 description: |-
 
-    NHS Notify can send a supplier status callback when:
+    NHS Notify can send a channel status callback when:
     * the channel status has changed - This refers to the internal statuses used by NHS Notify, which are consistent across all channels
     * the supplier status has changed - This is the raw status value specified by the underlying channel supplier. The possible values are listed [here](#overview--supplier-statuses)
 
@@ -16,15 +16,13 @@ parameters:
           pre-agreed secret
       schema:
           type: string
-          examples: 
-            - 9ee8c6aab877a97600e5c0cd8419f52d3dcdc45002e35220873d11123db6486f
+          example: 9ee8c6aab877a97600e5c0cd8419f52d3dcdc45002e35220873d11123db6486f
     - name: x-api-key
       in: header
       description: Contains the pre-agreed API key.
       schema:
           type: string
-          examples: 
-            - 0bb04a0e-d005-42dd-8993-dacf37410a12
+          example: 0bb04a0e-d005-42dd-8993-dacf37410a12
 requestBody:
   content:
     application/vnd.api+json:
@@ -43,3 +41,5 @@ responses:
         description: Unauthorized
     '403':
         description: Forbidden
+    '429':
+        $ref: ../responses/4xx/callbacks/429_TooManyRequests_Callbacks.yaml

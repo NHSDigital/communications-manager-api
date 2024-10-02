@@ -18,6 +18,11 @@ class AuthenticationCache():
             private_key = os.environ["NON_PROD_PRIVATE_KEY"]
             url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
             kid = "local"
+        elif env == "internal-dev-test-1":
+            api_key = os.environ["NON_PROD_API_KEY_TEST_1"]
+            private_key = os.environ["NON_PROD_PRIVATE_KEY"]
+            url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
+            kid = "local"
         elif env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
@@ -31,19 +36,22 @@ class AuthenticationCache():
         else:
             raise ValueError("Unknown value: ", env)
 
-        _, timestamp_of_last_token_fetch = self.tokens.get(env, (None, 0))
+        _, latest_token_expiry = self.tokens.get(env, (None, 0))
 
-        if env not in self.tokens or timestamp_of_last_token_fetch + 585 < int(time()):
+        # Generate new token if latest token will expire in 15 seconds
+        if env not in self.tokens or latest_token_expiry < int(time()) + 15:
             pk_pem = None
             with open(private_key, "r") as f:
                 pk_pem = f.read()
+
+            token_expiry = int(time()) + 180
 
             claims = {
                 "sub": api_key,
                 "iss": api_key,
                 "jti": str(uuid.uuid4()),
                 "aud": url,
-                "exp": int(time()) + 180,
+                "exp": token_expiry,
             }
             additional_headers = {"kid": kid}
 
@@ -61,7 +69,7 @@ class AuthenticationCache():
             )
             details = json.loads(resp.content)
 
-            self.tokens[env] = (f"Bearer {details.get('access_token')}", int(time()))
+            self.tokens[env] = (f"Bearer {details.get('access_token')}", token_expiry)
 
         bearer_token = self.tokens[env][0]
         return Secret(bearer_token)

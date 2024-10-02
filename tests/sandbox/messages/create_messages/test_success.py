@@ -63,6 +63,30 @@ def test_201_single_message_with_valid_nhs_number(nhsd_apim_proxy_url):
 
 
 @pytest.mark.sandboxtest
+def test_201_single_message_with_valid_contact_details(nhsd_apim_proxy_url):
+    """
+    .. include:: ../../partials/happy_path/test_201_messages_valid_contact_details.rst
+    """
+    data = Generators.generate_valid_create_message_body("sandbox")
+    data["data"]["attributes"]["recipient"]["nhsNumber"] = constants.VALID_NHS_NUMBER
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "sms": "07777777777",
+        "email": "ab@cd.co.uk",
+        "address": {
+            "lines": ["Line 1", "Line 2"],
+            "postcode": "LS7 1BN"
+        }
+    }
+
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }, json=data
+    )
+    Assertions.assert_201_response_messages(resp, nhsd_apim_proxy_url)
+
+
+@pytest.mark.sandboxtest
 @pytest.mark.parametrize('dob', constants.VALID_DOB)
 def test_201_single_message_with_valid_dob(nhsd_apim_proxy_url, dob):
     """

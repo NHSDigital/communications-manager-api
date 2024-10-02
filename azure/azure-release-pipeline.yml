@@ -73,6 +73,22 @@ extends:
           - template: ./templates/run-tests.yml
             parameters:
               test_command: 'make internal-dev-test'
+      
+      - environment: ref
+        stage_name: ref2
+        service_name: "${{ variables.service_name }}-2"
+        short_service_name: "${{ variables.short_service_name }}-2"
+        service_base_path: "${{ variables.service_base_path }}-2"
+        depends_on:
+          - manual_approval_ref
+        jinja_templates:
+          ENVIRONMENT_TYPE: 'internal'
+          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+          TARGET_SERVER_OVERRIDE: communications-manager-target-2
+        post_deploy:
+          - template: ./templates/run-tests.yml
+            parameters:
+              test_command: 'make internal-dev-test'
 
       - environment: manual-approval
         stage_name: manual_approval_internal_qa
