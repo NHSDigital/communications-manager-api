@@ -334,26 +334,14 @@ def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, correlation_i
     """
     .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
+    data = Generators.generate_valid_create_message_body()
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "07700900002"}
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
         "Authorization": "notAllowedContactDetailOverride"
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
-                    "contactDetails": {
-                        "sms": "07700900002"
-                    }
-                },
-            }
-        }
-    })
+    }, json=data
+    )
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
