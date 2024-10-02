@@ -171,6 +171,21 @@ ERROR_NOT_ACCEPTABLE = Error(
     "This service can only generate application/vnd.api+json or application/json."
 )
 
+# request too large
+ERROR_TOO_LARGE = Error(
+    "CM_TOO_LARGE",
+    "413",
+    "Request too large",
+    "Request message was larger than the service limit"
+)
+
+ERROR_TOO_MANY_ITEMS = Error(
+    "CM_TOO_MANY_ITEMS",
+    "413",
+    "Too many items",
+    "The property at the specified location contains too many items."
+)
+
 # unsupported media
 ERROR_UNSUPPORTED_MEDIA = Error(
     "CM_UNSUPPORTED_MEDIA",

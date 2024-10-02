@@ -2,6 +2,7 @@ import requests
 import pytest
 import uuid
 import json
+import lib.constants.constants as constants
 from lib import Assertions, Generators
 from lib.fixtures import *  # NOSONAR
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
@@ -37,8 +38,12 @@ def test_too_many_messages(nhsd_apim_proxy_url, bearer_token_internal_dev):
         json=data
     )
 
-    Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
-    assert len(resp.json()["errors"]) == 1
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        413,
+        Generators.generate_error(constants.ERROR_TOO_MANY_ITEMS),
+        None
+    )
 
 
 @pytest.mark.devtest
@@ -73,5 +78,9 @@ def test_payload_too_large(nhsd_apim_proxy_url, bearer_token_internal_dev):
         json=data
     )
 
-    Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
-    assert len(resp.json()["errors"]) == 1
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        413,
+        Generators.generate_error(constants.ERROR_TOO_LARGE),
+        None
+    )
