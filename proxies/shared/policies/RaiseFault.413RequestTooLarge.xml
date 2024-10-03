@@ -30,10 +30,7 @@
                             },
                             "status" : "413",
                             "title" : "Request too large",
-                            "detail" : "Request message was larger than the service limit",
-                            "source" : {
-                                "header" : "Accept"
-                            }
+                            "detail" : "Request message was larger than the service limit"
                         }
                     ]
                 }
