@@ -38,8 +38,15 @@ def test_too_many_messages(bearer_token_int):
         json=data
     )
 
-    Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
-    assert len(resp.json()["errors"]) == 1
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        413,
+        Generators.generate_error(
+            constants.ERROR_TOO_MANY_ITEMS,
+            source={"pointer": "/data/attributes/messages"}
+        ),
+        None
+    )
 
 
 @pytest.mark.inttest
@@ -74,5 +81,9 @@ def test_payload_too_large(bearer_token_int):
         json=data
     )
 
-    Assertions.assert_error_with_optional_correlation_id(resp, 413, None, None)
-    assert len(resp.json()["errors"]) == 1
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        413,
+        Generators.generate_error(constants.ERROR_TOO_LARGE),
+        None
+    )
