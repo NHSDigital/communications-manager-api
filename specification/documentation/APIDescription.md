@@ -178,10 +178,13 @@ If a request fails, our retry policy will continue to attempt to deliver the cal
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
-* Email: 100,000
-* Letter: 1,000
-* NHS App: 5,000
-* Text message (SMS): 918
+
+| Channel            | Character Limit |
+|--------------------|-----------------|
+| Email              | 100,000         |
+| Letter             | 1,000           |
+| NHS App            | 5,000           |
+| Text message (SMS) | 918             |
 
 ## Message Statuses
 
