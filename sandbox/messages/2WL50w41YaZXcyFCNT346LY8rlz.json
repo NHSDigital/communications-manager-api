@@ -14,6 +14,8 @@
         {
           "type": "sms",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: Contact detail is missing",
           "timestamps": {

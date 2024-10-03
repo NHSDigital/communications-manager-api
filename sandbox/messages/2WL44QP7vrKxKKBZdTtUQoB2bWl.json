@@ -13,6 +13,8 @@
         {
           "type": "nhsapp",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 1,
           "channelStatus": "sending",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",

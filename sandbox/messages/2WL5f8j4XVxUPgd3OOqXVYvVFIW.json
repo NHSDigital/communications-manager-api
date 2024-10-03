@@ -13,6 +13,8 @@
         {
           "type": "nhsapp",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: NHS number not found",
           "timestamps": {
@@ -29,6 +31,8 @@
         {
           "type": "email",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 2,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
           "timestamps": {
@@ -45,6 +49,8 @@
         {
           "type": "sms",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 3,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
           "timestamps": {
@@ -61,6 +67,8 @@
         {
           "type": "letter",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 4,
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
