@@ -1,0 +1,6 @@
+title: Enum_Error_RequestEntityTooLarge
+type: string
+enum:
+  - CM_TOO_LARGE
+  - CM_TOO_MANY_ITEMS
+example: CM_TOO_MANY_ITEMS

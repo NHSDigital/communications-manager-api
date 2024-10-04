@@ -1,0 +1,46 @@
+type: object
+title: Request Entity Too Large
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: ../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../enums/ErrorForbidden.yaml
+        links:
+          $ref: ../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '413'
+          example: '413'
+        title:
+          type: string
+          enum:
+            - Too many items
+            - Request too large
+          example: Request too large
+        detail:
+          type: string
+          enum:
+            - The property at the specified location contains too many items.
+            - Request message was larger than the service limit
+          example: Request message was larger than the service limit
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            pointer:
+              type: string
+              enum:
+                - /
+                - /data/attributes/messages
+              example: /data/attributes/messages
