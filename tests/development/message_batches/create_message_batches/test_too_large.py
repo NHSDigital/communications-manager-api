@@ -84,6 +84,9 @@ def test_payload_too_large(nhsd_apim_proxy_url, bearer_token_internal_dev):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         413,
-        Generators.generate_error(constants.ERROR_TOO_LARGE),
+        Generators.generate_error(
+            constants.ERROR_TOO_LARGE,
+            source={"pointer": "/"}
+        ),
         None
     )

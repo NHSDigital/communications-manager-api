@@ -84,6 +84,9 @@ def test_payload_too_large(bearer_token_prod):
     Assertions.assert_error_with_optional_correlation_id(
         resp,
         413,
-        Generators.generate_error(constants.ERROR_TOO_LARGE),
+        Generators.generate_error(
+            constants.ERROR_TOO_LARGE,
+            source={"pointer": "/"}
+        ),
         None
     )
