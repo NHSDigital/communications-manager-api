@@ -25,14 +25,14 @@ properties:
         title:
           type: string
           enum:
-            - Too many items
             - Request too large
+            - Too many items
           example: Request too large
         detail:
           type: string
           enum:
-            - The property at the specified location contains too many items.
             - Request message was larger than the service limit
+            - The property at the specified location contains too many items.
           example: Request message was larger than the service limit
         source:
           type: object
