@@ -43,4 +43,4 @@ properties:
               enum:
                 - /
                 - /data/attributes/messages
-              example: /data/attributes/messages
+              example: /
