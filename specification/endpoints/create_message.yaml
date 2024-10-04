@@ -31,8 +31,6 @@ responses:
     $ref: ../responses/4xx/406_NotAcceptable.yaml
   '408':
     $ref: ../responses/4xx/408_RequestTimeout.yaml
-  '413':
-    $ref: ../responses/4xx/413_RequestEntityTooLarge.yaml
   '415':
     $ref: ../responses/4xx/415_UnsupportedMedia.yaml
   '425':

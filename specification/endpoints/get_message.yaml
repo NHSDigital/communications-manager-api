@@ -20,8 +20,6 @@ responses:
     $ref: ../responses/4xx/406_NotAcceptable.yaml
   '408':
     $ref: ../responses/4xx/408_RequestTimeout.yaml
-  '413':
-    $ref: ../responses/4xx/413_RequestEntityTooLarge.yaml
   '429':
     $ref: ../responses/4xx/429_TooManyRequests.yaml
   '500':
