@@ -40,7 +40,4 @@ properties:
           properties:
             pointer:
               type: string
-              enum:
-                - /
-                - /data/attributes/messages
               example: /
