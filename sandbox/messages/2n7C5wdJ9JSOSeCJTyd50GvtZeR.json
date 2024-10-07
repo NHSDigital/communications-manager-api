@@ -75,7 +75,8 @@
           "source": "pds",
           "labels": [
             "nhsapp",
-            "sms"
+            "sms",
+            "letter"
           ]
         }
       ]
