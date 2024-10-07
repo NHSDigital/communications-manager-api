@@ -1,0 +1,87 @@
+{
+  "data": {
+    "type": "Message",
+    "id": "2n7C5wdJ9JSOSeCJTyd50GvtZeR",
+    "attributes": {
+      "routingPlan": {
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1"
+      },
+      "messageReference": "d5469ebf-7e26-4dfc-9818-7c74d500097f",
+      "messageStatus": "delivered",
+      "channels": [
+        {
+          "type": "nhsapp",
+          "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 1,
+          "channelStatus": "failed",
+          "channelStatusDescription": "message not ready in in specified timeframe (Delivered, but not read)",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:31:59Z",
+            "failed": "2023-10-09T10:31:59Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        },
+        {
+          "type": "sms",
+          "retryCount": 0,
+          "cascadeType": "secondary",
+          "cascadeOrder": 1,
+          "channelStatus": "delivered",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:32:37Z",
+            "delivered": "2023-10-09T11:48:52Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        },
+        {
+          "type": "letter",
+          "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 2,
+          "channelStatus": "delivered",
+          "timestamps": {
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:32:37Z",
+            "delivered": "2023-10-09T11:48:52Z"
+          },
+          "routingPlan": {
+            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            "version": "1",
+            "type": "original"
+          }
+        }
+      ],
+      "timestamps": {
+        "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:31:59Z",
+        "delivered": "2023-10-09T11:48:52Z"
+      },
+      "metadata": [
+        {
+          "queriedAt": "2023-10-09T10:31:59Z",
+          "version": "23",
+          "source": "pds",
+          "labels": [
+            "nhsapp",
+            "sms"
+          ]
+        }
+      ]
+    },
+    "links": {
+      "self": "%PATH_ROOT%"
+    }
+  }
+}
