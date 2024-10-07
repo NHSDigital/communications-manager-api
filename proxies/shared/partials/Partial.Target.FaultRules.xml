@@ -73,6 +73,12 @@
         <Condition>response.status.code = 404</Condition>
     </Step>
     <Step>
+        <Name>RaiseFault.413RequestTooLarge</Name>
+        <Condition>
+            response.status.code = 413 and response.content Like "*Request Too Long*"
+        </Condition>
+    </Step>
+    <Step>
         <Name>RaiseFault.400BackendException.OdsCodeRequired</Name>
         <Condition>response.status.code = 400 and response.content Like "*odsCode must be provided*"</Condition>
     </Step>

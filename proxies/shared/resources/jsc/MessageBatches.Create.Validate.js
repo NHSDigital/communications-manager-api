@@ -41,6 +41,10 @@ const validate = () => {
         // $.data.attributes.messages
         const validArray = validateArray(errors, data.attributes.messages, "/data/attributes/messages", 1)
         if (validArray) {
+          if (data.attributes.messages.length > 45000) {
+            errors.push(tooManyItemsError("/data/attributes/messages"));
+            return null;
+          }
           // $.data.attributes.messages.x
           data.attributes.messages.forEach((message, index) => {
             var pointer = "/data/attributes/messages/" + index;
@@ -106,7 +110,9 @@ const validate = () => {
 validate();
 
 if (errors.length > 0) {
+  context.setVariable("generic_status_code", errors[0].status);
   context.setVariable("errors", JSON.stringify(errors));
 } else {
+  context.setVariable("generic_status_code", null);
   context.setVariable("errors", null);
 }
