@@ -18,10 +18,9 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <!-- <LoadBalancer>
+        <LoadBalancer>
             <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
-        </LoadBalancer> -->
-        <URL>https://comms-apim.de-iaho3.communications.national.nhs.uk</URL>
+        </LoadBalancer>
         <Path>{requestpath}</Path>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
