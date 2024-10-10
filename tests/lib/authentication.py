@@ -11,7 +11,7 @@ class AuthenticationCache():
     def __init__(self):
         self.tokens = {}
 
-        # Number of consecutive authentication tests before considering it is successful.
+        # Number of consecutive authentication tests before considering it worked.
         # This is required because apigee might be using load balancing.
         self.consecutive_tests = 4
 
@@ -70,18 +70,18 @@ class AuthenticationCache():
     def generate_and_test_new_token(self, api_key, private_key, url, kid, test_url):
         new_token = None
         valid_auth = False
-        time_since_new_token = int(time())
 
         for i in range(self.max_tests):
             print(f"Testing new token, attemp #{i+1}")
             if new_token is None:
                 new_token = self.generate_new_token(api_key, private_key, url, kid)
+                time_since_new_token = int(time())
 
             if self.test_token(test_url, new_token[0]):
                 valid_auth = True
                 break
 
-            # The test fail, give apigee some time to update its cache.
+            # The test failed, give apigee some time to update its cache.
             time.sleep(self.time_between_tests)
 
             if int(time()) - time_since_new_token > (self.token_validity / 2):
