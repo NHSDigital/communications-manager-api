@@ -6,7 +6,7 @@ from lib.fixtures import *  # NOSONAR
 from lib.constants.constants import NUM_MAX_ERRORS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
-NUM_MESSAGES = 50000
+NUM_MESSAGES = 40000
 CONTENT_TYPE = "application/json"
 
 
@@ -17,7 +17,7 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url, bearer_token
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 
-    # around 50k messages gives us close to our max body size
+    # around 40k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
     for _ in range(0, NUM_MESSAGES):
         data["data"]["attributes"]["messages"].append({
@@ -45,7 +45,7 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url, bearer_to
     """
     data = Generators.generate_valid_create_message_batch_body("dev")
 
-    # around 50k messages gives us close to our max body size
+    # around 40k messages gives us close to our max body size
     data["data"]["attributes"]["messages"] = []
     reference = str(uuid.uuid1())
     for _ in range(0, NUM_MESSAGES):

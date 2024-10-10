@@ -14,6 +14,8 @@
         {
           "type": "sms",
           "retryCount": 0,
+          "cascadeType": "primary",
+          "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
           "timestamps": {

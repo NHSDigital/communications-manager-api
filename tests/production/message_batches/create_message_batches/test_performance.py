@@ -6,7 +6,7 @@ from lib.constants.constants import PROD_URL, NUM_MAX_ERRORS
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 from lib.fixtures import *  # NOSONAR
 
-NUM_MESSAGES = 50000
+NUM_MESSAGES = 40000
 
 
 @pytest.mark.prodtest

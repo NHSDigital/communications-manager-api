@@ -159,6 +159,12 @@ class Generators():
         })
 
     @staticmethod
+    def generate_too_few_items_error_custom_detail(pointer, detail):
+        return Generators.generate_error_with_custom_detail(constants.ERROR_TOO_FEW_ITEMS, detail, source={
+            "pointer": pointer
+        })
+
+    @staticmethod
     def generate_access_denied_error():
         return Generators.generate_error(constants.ERROR_ACCESS_DENIED, source={
             "header": "Authorization"

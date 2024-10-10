@@ -1,0 +1,12 @@
+description: |+
+  Either the whole of or some part of the request was too large for the host side to handle and was rejected.
+
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/RequestEntityTooLarge.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/RequestEntityTooLarge.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml

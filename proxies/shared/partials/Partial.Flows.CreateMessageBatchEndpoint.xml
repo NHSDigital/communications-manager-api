@@ -5,7 +5,7 @@
             <Name>JavaScript.MessageBatches.Create.Validate</Name>
         </Step>
         <Step>
-            <Name>RaiseFault.400BadRequest</Name>
+            <Name>RaiseFault.4xxGeneric</Name>
             <Condition>errors != null</Condition>
         </Step>
         <Step>

@@ -24,6 +24,7 @@ function smsValidation(sms, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/sms`,
         message: "Input failed format check",
       },
@@ -34,6 +35,7 @@ function smsValidation(sms, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/sms`,
         message: "Invalid",
       },
@@ -51,6 +53,7 @@ function emailValidation(email, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/email`,
         message: "Input failed format check",
       },
@@ -61,6 +64,7 @@ function emailValidation(email, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/email`,
         message: "Invalid",
       },
@@ -79,6 +83,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "Invalid",
       },
@@ -90,6 +95,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Missing value",
+        code: 'CM_MISSING_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "`lines` is missing",
       },
@@ -100,6 +106,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Missing value",
+        code: 'CM_MISSING_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "`lines` is missing",
       },
@@ -111,6 +118,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "Invalid",
       },
@@ -121,7 +129,8 @@ function addressValidation(address, path) {
   if (address.lines.length < 2) {
     return validationFailure([
       {
-        title: "Missing value",
+        code: 'CM_TOO_FEW_ITEMS',
+        title: "Too few items",
         field: `${path}/recipient/contactDetails/address`,
         message: "Too few address lines were provided",
       },
@@ -132,6 +141,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "Invalid",
       },
@@ -143,6 +153,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Missing value",
+        code: 'CM_MISSING_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "`postcode` is missing",
       },
@@ -154,6 +165,7 @@ function addressValidation(address, path) {
     return validationFailure([
       {
         title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address/postcode`,
         message: "Invalid",
       },
@@ -176,6 +188,14 @@ export function getAlternateContactDetailsError(
     return [
       400,
       "Client is not allowed to provide alternative contact details",
+      [
+        {
+          code: "CM_CANNOT_SET_CONTACT_DETAILS",
+          title: "Cannot set contact details",
+          field: `${path}/recipient/contactDetails`,
+          message: "Client is not allowed to provide alternative contact details.",
+        },
+      ]
     ];
   }
 

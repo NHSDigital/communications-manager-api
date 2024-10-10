@@ -1,9 +1,9 @@
 # Performance Tests
 
 
-## Scenario: An API consumer submitting a request with a request body containing 50,000 messages receives a 201 response
+## Scenario: An API consumer submitting a request with a request body containing 40,000 messages receives a 201 response
 
-**Given** the API consumer provides a message body of around 50k messages
+**Given** the API consumer provides a message body of around 40k messages
 <br/>
 **When** the request is submitted
 <br/>
@@ -16,9 +16,9 @@
 - Response returns a 201 status code
 
 
-## Scenario: An API consumer submitting a request with a large request body containing 50,000 duplicate messages receives a 400 response
+## Scenario: An API consumer submitting a request with a large request body containing 40,000 duplicate messages receives a 400 response
 
-**Given** the API consumer provides a message body of 50,000 duplicate messages
+**Given** the API consumer provides a message body of 40,000 duplicate messages
 <br/>
 **When** the request is submitted
 <br/>
@@ -34,9 +34,9 @@
 - Response returns 100 error message blocks
 
 
-## Scenario: An API consumer submitting a request with a request body containing 50,000 messages receives a 201 response
+## Scenario: An API consumer submitting a request with a request body containing 40,000 messages receives a 201 response
 
-**Given** the API consumer provides a message body of around 50k messages
+**Given** the API consumer provides a message body of around 40k messages
 <br/>
 **When** the request is submitted
 <br/>
