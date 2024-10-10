@@ -1,0 +1,7 @@
+title: Enum_CascadeType
+description: The cascade type of this message. You can set up primary or secondary message cascades in your routing plan. [Learn more about routing plans and message cascades](https://notify.nhs.uk/using-nhs-notify/routing-plans).
+type: string
+enum:
+  - primary
+  - secondary
+example: primary
