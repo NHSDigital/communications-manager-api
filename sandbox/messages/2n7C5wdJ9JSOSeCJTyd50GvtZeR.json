@@ -1,13 +1,13 @@
 {
   "data": {
     "type": "Message",
-    "id": "2WL5eDefrbW31uw1il84WdF8ndH",
+    "id": "2n7C5wdJ9JSOSeCJTyd50GvtZeR",
     "attributes": {
       "routingPlan": {
         "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
         "version": "1"
       },
-      "messageReference": "adcbc45a-a867-4798-8c61-7c02d132e1e6",
+      "messageReference": "d5469ebf-7e26-4dfc-9818-7c74d500097f",
       "messageStatus": "delivered",
       "channels": [
         {
@@ -16,28 +16,11 @@
           "cascadeType": "primary",
           "cascadeOrder": 1,
           "channelStatus": "failed",
-          "channelStatusDescription": "Failed reason: NHS number not found",
+          "channelStatusDescription": "Message not read in specified time frame",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "enriched": "2023-10-09T10:39:37Z",
-            "failed": "2023-10-09T10:52:12Z"
-          },
-          "routingPlan": {
-            "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-            "version": "1",
-            "type": "original"
-          }
-        },
-        {
-          "type": "email",
-          "retryCount": 0,
-          "cascadeType": "primary",
-          "cascadeOrder": 2,
-          "channelStatus": "delivered",
-          "timestamps": {
-            "created": "2023-10-09T10:31:59Z",
-            "enriched": "2023-10-09T10:39:37Z",
-            "delivered": "2023-10-09T11:25:23Z"
+            "enriched": "2023-10-09T10:31:59Z",
+            "failed": "2023-10-09T10:31:59Z"
           },
           "routingPlan": {
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
@@ -48,11 +31,13 @@
         {
           "type": "sms",
           "retryCount": 0,
-          "cascadeType": "primary",
-          "cascadeOrder": 3,
-          "channelStatus": "created",
+          "cascadeType": "secondary",
+          "cascadeOrder": 1,
+          "channelStatus": "delivered",
           "timestamps": {
-            "created": "2023-10-09T10:31:59Z"
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:32:37Z",
+            "delivered": "2023-10-09T11:48:52Z"
           },
           "routingPlan": {
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
@@ -64,10 +49,12 @@
           "type": "letter",
           "retryCount": 0,
           "cascadeType": "primary",
-          "cascadeOrder": 4,
-          "channelStatus": "created",
+          "cascadeOrder": 2,
+          "channelStatus": "delivered",
           "timestamps": {
-            "created": "2023-10-09T10:31:59Z"
+            "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:32:37Z",
+            "delivered": "2023-10-09T11:48:52Z"
           },
           "routingPlan": {
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
@@ -78,8 +65,8 @@
       ],
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "enriched": "2023-10-09T10:39:37Z",
-        "delivered": "2023-10-09T11:25:23Z"
+        "enriched": "2023-10-09T10:31:59Z",
+        "delivered": "2023-10-09T11:48:52Z"
       },
       "metadata": [
         {
@@ -88,7 +75,6 @@
           "source": "pds",
           "labels": [
             "nhsapp",
-            "email",
             "sms",
             "letter"
           ]
