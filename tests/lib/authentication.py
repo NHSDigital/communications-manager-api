@@ -31,7 +31,7 @@ class AuthenticationCache():
         # For the test_url, note that we don't need a message_id that actually exists in
         # the backend. The test will only check that the API doesn't return a 401,
         # a 404 response means the authentication is working.
-        test_url = f"{base_url}/v1/messages"
+        test_url = f"{base_url}/v1/messages/message_id"
 
         if env == "internal-dev":
             api_key = os.environ["NON_PROD_API_KEY"]
