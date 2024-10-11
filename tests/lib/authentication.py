@@ -1,5 +1,5 @@
 import uuid
-from time import time
+from time import time, sleep
 import os
 import jwt
 import requests
@@ -26,35 +26,33 @@ class AuthenticationCache():
         # How long the token will stay valid
         self.token_validity = 180
 
-    def generate_authentication(self, env):
+    def generate_authentication(self, env, base_url):
 
         # For the test_url, note that we don't need a message_id that actually exists in
         # the backend. The test will only check that the API doesn't return a 401,
         # a 404 response means the authentication is working.
+        test_url = f"{base_url}/v1/messages"
+
         if env == "internal-dev":
             api_key = os.environ["NON_PROD_API_KEY"]
             private_key = os.environ["NON_PROD_PRIVATE_KEY"]
             url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
             kid = "local"
-            test_url = "https://internal-dev.api.service.nhs.uk/comms/v1/messages/message_id"
         elif env == "internal-dev-test-1":
             api_key = os.environ["NON_PROD_API_KEY_TEST_1"]
             private_key = os.environ["NON_PROD_PRIVATE_KEY"]
             url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
             kid = "local"
-            test_url = "https://internal-dev.api.service.nhs.uk/comms/v1/messages/message_id"
         elif env == "int":
             api_key = os.environ.get("INTEGRATION_API_KEY")
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
             url = "https://int.api.service.nhs.uk/oauth2/token"
             kid = "local"
-            test_url = "https://int.api.service.nhs.uk/comms/v1/messages/message_id"
         elif env == "prod":
             api_key = os.environ.get("PRODUCTION_API_KEY")
             private_key = os.environ.get("PRODUCTION_PRIVATE_KEY")
             url = "https://api.service.nhs.uk/oauth2/token"
             kid = "prod-1"
-            test_url = "https://api.service.nhs.uk/comms/v1/messages/message_id"
         else:
             raise ValueError("Unknown value: ", env)
 
@@ -82,7 +80,7 @@ class AuthenticationCache():
                 break
 
             # The test failed, give apigee some time to update its cache.
-            time.sleep(self.time_between_tests)
+            sleep(self.time_between_tests)
 
             if int(time()) - time_since_new_token > (self.token_validity / 2):
                 # Token about to expire, generate a new one
