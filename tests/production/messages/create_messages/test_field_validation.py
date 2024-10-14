@@ -256,6 +256,35 @@ def test_invalid_personalisation(bearer_token_prod, personalisation):
 
 
 @pytest.mark.prodtest
+def test_too_large_personalisation(bearer_token_prod):
+    """
+    .. include:: ../../partials/validation/test_too_large_personalisation.rst
+    """
+    data = Generators.generate_valid_create_message_body("prod")
+    data["data"]["attributes"]["routingPlanId"] = constants.GLOBAL_ROUTING_CONFIGURATION_SMS
+    data["data"]["attributes"]["personalisation"] = {
+        'sms_body': 'x'*919
+    }
+    resp = requests.post(
+        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_prod.value,
+            **headers,
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_personalisation_error(
+            "Total personalisation length of 919 exceeding the maximum length of 918",
+            "/data/attributes/personalisation"),
+        None
+    )
+
+
+@pytest.mark.prodtest
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
 def test_null_personalisation(bearer_token_prod, personalisation):
     """
