@@ -1,5 +1,5 @@
 # Communications Manager API
-
+ 
 ![Build](https://github.com/NHSDigital/communications-manager-api/workflows/Build/badge.svg?branch=release)
 
 This is the RESTful API for the [*NHS Notify Service*](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).
