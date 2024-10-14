@@ -14,8 +14,9 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
 
 
 ### Scenario: An API consumer creating a batch of messages with valid contact details receives a 201 response
@@ -29,8 +30,9 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains request ID
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
 
 
 ### Scenario: An API consumer creating a batch of messages with a valid content type header receives a 201 response
@@ -44,8 +46,9 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
 
 
 ### Scenario: An API consumer creating a batch of messages with a valid date of birth receives a 201 response
@@ -59,8 +62,9 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
 
 
 ### Scenario: An API consumer creating a batch of messages with a valid NHS number receives a 201 response
@@ -74,8 +78,9 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
 
 
 ### Scenario: An API consumer submitting a message batches request with a messageBatchReference used in a previous request recieves the same response as the original request
@@ -105,5 +110,6 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
