@@ -269,7 +269,7 @@ class Generators():
     @staticmethod
     def generate_bad_gateway_error():
         return Generators.generate_error(constants.ERROR_BAD_GATEWAY)
-    
+
     @staticmethod
     def generate_invalid_personalisation_error(detail, pointer):
         return Generators.generate_error(
