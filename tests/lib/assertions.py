@@ -151,6 +151,8 @@ class Assertions():
             assert response.get("attributes").get("channels")[c].get("channelStatus") in channel_status
             assert response.get("attributes").get("channels")[c].get("timestamps") is not None
             assert response.get("attributes").get("channels")[c].get("routingPlan") is not None
+            assert response.get("attributes").get("channels")[c].get("cascadeType") in ["primary", "secondary"]
+            assert response.get("attributes").get("channels")[c].get("cascadeOrder") is not None
 
     @staticmethod
     def assert_201_response_messages(resp, environment):
