@@ -1,5 +1,5 @@
 Scenario: An API consumer submitting a request with an contact details when not allowed receives a 400 'Cannot set contact details' response
-======================================================================================================================
+============================================================================================================================================
 
 
 | **Given** the API consumer provides a message body with contact details
