@@ -10,7 +10,7 @@ properties:
         $ref: ../enums/EnumMessageBatch.yaml
       id:
         $ref: ../types/KSUID.yaml
-        description: Identifier for this MessageBatch. You should store this identifier for later lookups.
+        description: The unique identifier for the message batch.
         example: 2ZljUiS8NjJNs95PqiYOO7gAfJb
       attributes:
         type: object
@@ -24,3 +24,16 @@ properties:
           routingPlan:
             description: The routing plan that you requested the messages be sent with.
             $ref: ../types/RoutingPlan.yaml
+          messages:
+            type: array
+            items:
+              type: object
+              title: Message
+              additionalProperties: false
+              properties:
+                messageReference:
+                  $ref: ../../snippets/MessageReferenceSnippet.yaml
+                  example: 703b8008-545d-4a04-bb90-1f2946ce1575
+                id:
+                  $ref: ../types/KSUID.yaml
+
