@@ -266,6 +266,35 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev,
 
 
 @pytest.mark.devtest
+def test_too_large_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev):
+    """
+    .. include:: ../../partials/validation/test_too_large_personalisation.rst
+    """
+    data = Generators.generate_valid_create_message_body("dev")
+    data["data"]["attributes"]["routingPlanId"] = constants.GLOBAL_ROUTING_CONFIGURATION_SMS
+    data["data"]["attributes"]["personalisation"] = {
+        'sms_body': 'x'*919
+    }
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            **headers,
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_personalisation_error(
+            "Total personalisation length of 919 exceeding the maximum length of 918",
+            "/data/attributes/personalisation"),
+        None
+    )
+
+
+@pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", constants.NULL_VALUES)
 def test_null_personalisation(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id, personalisation):
