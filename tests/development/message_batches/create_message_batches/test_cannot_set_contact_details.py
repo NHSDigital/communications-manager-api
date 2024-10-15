@@ -28,6 +28,8 @@ def test_400_cannot_set_contact_details(nhsd_apim_proxy_url, bearer_token_intern
             "postcode": "LS7 1BN"
         }
     }
+    data["data"]["attributes"]["routingPlanId"] = "558a52ab-9d48-406e-9815-7fd517df5b9e"
+    del data["data"]["attributes"]["messages"][0]["originator"]
 
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
