@@ -10,7 +10,7 @@ from lib.constants.constants import CORRELATION_IDS
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_400_cannot_set_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev_test_1, correlation_id):
+def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev_test_1, correlation_id):
     """
     .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
