@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 import json
-import constants.constants as constants
+import lib.constants.constants as constants
 from lib import Assertions, Generators
 from lib.fixtures import *  # NOSONAR
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
