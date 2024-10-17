@@ -96,6 +96,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--reruns-delay 5 \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
+		--only-rerun 'AssertionError: Unexpected 401' \
 	    --junitxml=test-report.xml
 
 PERFTEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \

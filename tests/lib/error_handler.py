@@ -1,18 +1,10 @@
 import lib.constants.constants as constants
 
+codes_to_retry = [401, 429, 504]
+
 
 class error_handler():
     @staticmethod
     def handle_retry(resp):
-        error_handler.handle_429_retry(resp)
-        error_handler.handle_504_retry(resp)
-
-    @staticmethod
-    def handle_429_retry(resp):
-        if resp.status_code == 429:
-            raise constants.UNEXPECTED_429
-
-    @staticmethod
-    def handle_504_retry(resp):
-        if resp.status_code == 504:
-            raise constants.UNEXPECTED_504
+        if resp.status_code in codes_to_retry:
+            raise AssertionError(f'Unexpected {resp.status_code}')

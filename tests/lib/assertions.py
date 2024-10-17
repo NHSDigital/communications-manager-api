@@ -243,14 +243,8 @@ class Assertions():
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
-        if code == 429:
-            # If we are testing a 429 error then only retry on 504 errors
-            error_handler.handle_504_retry(resp)
-        elif code == 504:
-            # If we are testing a 504 error then only retry on 429 errors
-            error_handler.handle_429_retry(resp)
-        else:
-            # We are not testing a 429 or 504, retry if we get either of them
+        if resp.status_code != code:
+            # Unexpected status code, check if the test needs to be retried
             error_handler.handle_retry(resp)
 
         assert resp.status_code == code, f"Response: {resp.status_code}: {resp.text}"
