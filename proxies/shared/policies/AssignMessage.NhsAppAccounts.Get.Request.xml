@@ -17,6 +17,9 @@
         <Value>false</Value>
     </AssignVariable>
     <AssignVariable>
+        <Name>requestpath</Name>
+        <Value>/api/channels/nhsapp/accounts</Value>
+    </AssignVariable>
     {% if ENVIRONMENT_TYPE != 'sandbox' %}
         <AssignVariable>
             <Name>target.url</Name>

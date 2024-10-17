@@ -17,6 +17,9 @@
         <Value>false</Value>
     </AssignVariable>
     <AssignVariable>
+        <Name>requestpath</Name>
+        <Template>/api/v1/messages/{data.messageId}</Template>
+    </AssignVariable>
     {% if ENVIRONMENT_TYPE != 'sandbox' %}
         <AssignVariable>
             <Name>target.url</Name>
