@@ -18,10 +18,7 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <LoadBalancer>
-            <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
-        </LoadBalancer>
-        <Path>{requestpath}</Path>
+<URL>https://comms-apim.de-dafu1.communications.national.nhs.uk</URL>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
