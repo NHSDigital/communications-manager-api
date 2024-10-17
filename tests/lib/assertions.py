@@ -243,7 +243,9 @@ class Assertions():
 
     @staticmethod
     def assert_error_with_optional_correlation_id(resp, code, error, correlation_id):
-        error_handler.handle_retry(resp, excluded_code=code)
+        if resp.status_code != code:
+            # Unexpected status code, check if the test needs to be retried
+            error_handler.handle_retry(resp)
 
         assert resp.status_code == code, f"Response: {resp.status_code}: {resp.text}"
 
