@@ -100,3 +100,4 @@ def rate_limiting(products_api, api_product_name, developer_apps_api):
     rate_limiting = RateLimiting(products_api, developer_apps_api, api_product_name, 5)
     yield rate_limiting
     rate_limiting.set_default_rate_limit()
+    rate_limiting.remove_app_ratelimit('ian.hodges1@nhs.net', 'NHS Notify Test Client 1')
