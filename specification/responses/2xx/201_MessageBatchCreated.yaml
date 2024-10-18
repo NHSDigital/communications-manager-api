@@ -1,7 +1,8 @@
 description: |+
   Your message batch has been created. The backend service will process the messages contained within it according to the routing plan identified in the request.
 
-  The response includes both your `messageBatchReference` and our message batch `id`. You should store this `id` in your database.
+  The response includes an array with your `messageReference` and our message `id` for each message in your request.
+  You should store these IDs so that you can later query the message status using the [Get the status of a message](#get-/v1/messages/-messageId-) endpoint.
 content:
   application/vnd.api+json:
     schema:
