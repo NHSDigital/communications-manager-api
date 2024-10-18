@@ -40,8 +40,6 @@ INT_API_GATEWAY_URL = "https://comms-apim.int.communications.national.nhs.uk"
 PROD_API_GATEWAY_URL = "https://comms-apim.prod.communications.national.nhs.uk"
 UAT_API_GATEWAY_URL = "https://comms-apim.uat.communications.national.nhs.uk"
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
-UNEXPECTED_429 = AssertionError('Unexpected 429')
-UNEXPECTED_504 = AssertionError('Unexpected 504')
 
 VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE]
 VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE]
