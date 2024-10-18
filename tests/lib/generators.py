@@ -271,13 +271,22 @@ class Generators():
         return Generators.generate_error(constants.ERROR_BAD_GATEWAY)
 
     @staticmethod
-    def generate_error(error, source=None, meta=None):
+    def generate_invalid_personalisation_error(detail, pointer):
+        return Generators.generate_error(
+                constants.ERROR_INVALID_PERSONALISATION,
+                detail=detail,
+                source={
+                    "pointer": pointer
+                    })
+
+    @staticmethod
+    def generate_error(error, source=None, meta=None, detail=None):
         ret = {
             "code": error.code,
             "links": error.links,
             "status": error.status,
             "title": error.title,
-            "detail": error.detail
+            "detail": detail or error.detail
         }
 
         if source:
