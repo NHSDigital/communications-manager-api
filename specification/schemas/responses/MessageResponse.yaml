@@ -41,6 +41,10 @@ properties:
                   $ref: ../enums/ChannelType.yaml
                 retryCount:
                   $ref: ../../snippets/RetryCount.yaml
+                cascadeType:
+                  $ref: ../enums/CascadeType.yaml
+                cascadeOrder: 
+                  $ref: ../../snippets/CascadeOrder.yaml
                 channelStatus:
                   description: |-
                     The current status of this channel at the time this response was generated.
