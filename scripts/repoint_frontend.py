@@ -80,12 +80,13 @@ def add_lines_after_block(shortcode, file_path, block_to_follow, lines_to_add):
                     block_match = False
                     break
 
-                new_lines.append()
+                # add inspected lines to the new content
+                new_lines.append(lines[i + j])
 
                 if lines[i + j].strip() != block_to_follow[j]:
                     block_match = False
                     break
-                
+
             # if the block matches fully add lines after the block
             if block_match:
                 block_found = True
