@@ -183,9 +183,7 @@ if check_run_step "remove mTLS (if set)"; then
   domain_name="comms-apim.de-$shortcode.communications.national.nhs.uk"
   domain_status=$(aws apigateway get-domain-name --domain-name $domain_name)
 
-  echo "$domain_status"
-
-  if echo "$domain_status" | jq -e 'has("mutualTlsAuthentication")' > /dev/null 2>&1; then
+  if echo "$domain_status" | jq -re 'has("mutualTlsAuthentication")' > /dev/null 2>&1; then
     aws apigateway update-domain-name \
       --domain-name  $domain_name \
       --patch-operations op=remove,path=/mutualTlsAuthentication/truststoreUri
