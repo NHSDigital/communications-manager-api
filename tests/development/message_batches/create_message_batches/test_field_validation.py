@@ -420,6 +420,8 @@ def test_too_large_personalisation(nhsd_apim_proxy_url, bearer_token_internal_de
     data["data"]["attributes"]["messages"][0]["personalisation"] = {
         'sms_body': 'x'*919
     }
+    while len(data["data"]["attributes"]["messages"]) > 1:
+        del data["data"]["attributes"]["messages"][1]
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
