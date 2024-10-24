@@ -29,7 +29,7 @@ def test_504_timeout_simulate(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/timeouts/test_504_timeout_simulate.rst
     """
-    resp = requests.get(f"{nhsd_apim_proxy_url}/_timeout?sleep=13000", headers={
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_timeout?sleep=3000", headers={
         "X-Correlation-Id": correlation_id
     })
 
