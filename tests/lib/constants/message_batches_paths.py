@@ -34,7 +34,7 @@ INVALID_PROPERTIES_PATHS = [
     ("personalisation", "/data/attributes/messages/0/personalisation"),
 ]
 DUPLICATE_PROPERTIES_PATHS = [
-    ("messageReference", "/data/attributes/messages/3/messageReference"),
+    ("messageReference", "/data/attributes/messages/1/messageReference"),
 ]
 TOO_FEW_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),

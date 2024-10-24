@@ -6,14 +6,10 @@ from urllib.parse import urlparse, parse_qs
 
 class Assertions():
     @staticmethod
-    def assert_201_response(resp, data):
+    def assert_201_response(resp, message_batch_reference, routing_plan_id):
         error_handler.handle_retry(resp)
 
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
-
-        message_batch_reference = data["data"]["attributes"]["messageBatchReference"]
-        routing_plan_id = data["data"]["attributes"]["routingPlanId"]
-        messages = data["data"]["attributes"]["messages"]
 
         response = resp.json().get("data")
         assert response.get("type") == "MessageBatch"
@@ -24,15 +20,6 @@ class Assertions():
         assert response.get("attributes").get("routingPlan").get("id") is not None
         assert response.get("attributes").get("routingPlan").get("id") == routing_plan_id
         assert response.get("attributes").get("routingPlan").get("version") is not None
-        assert response.get("attributes").get("messages") is not None
-        assert len(response.get("attributes").get("messages")) > 0
-        expected_messages = sorted(messages, key=lambda x: x["messageReference"])
-        actual_messages = sorted(response.get("attributes").get("messages"), key=lambda x: x["messageReference"])
-        for i in range(len(actual_messages)):
-            assert actual_messages[i].get("messageReference") is not None
-            assert actual_messages[i].get("messageReference") == expected_messages[i].get("messageReference")
-            assert actual_messages[i].get("id") is not None
-            assert actual_messages[i].get("id") != ""
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"

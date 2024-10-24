@@ -16,15 +16,14 @@
         <Payload variablePrefix="%" variableSuffix="#">
             {
                 "data" : {
-                    "type": "MessageBatch",
-                    "id": "%data.requestId#",
-                    "attributes": {
-                        "messageBatchReference": "%data.messageBatchReference#",
+                    "type" : "MessageBatch",
+                    "id" : "%data.requestId#",
+                    "attributes" : {
+                        "messageBatchReference" : "%data.messageBatchReference#",
                         "routingPlan": {
-                            "id": "%data.routingPlanId#",
-                            "version": "%data.routingPlanVersion#"
-                        },
-                        "messages": %data.messages#
+                            "id" : "%data.routingPlanId#",
+                            "version" : "%data.routingPlanVersion#"
+                        }
                     }
                 }
             }

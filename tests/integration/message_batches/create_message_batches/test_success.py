@@ -24,7 +24,11 @@ def test_201_message_batch_valid_accept_headers(bearer_token_int, accept_headers
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.inttest
@@ -44,7 +48,11 @@ def test_201_message_batch_valid_content_type_headers(bearer_token_int, content_
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.inttest
@@ -63,7 +71,11 @@ def test_201_message_batch_valid_nhs_number(bearer_token_int):
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.inttest
@@ -97,7 +109,11 @@ def test_201_message_batch_valid_contact_details(
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.inttest
@@ -118,7 +134,11 @@ def test_201_message_batch_valid_dob(bearer_token_int, dob):
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.inttest
@@ -138,7 +158,11 @@ def test_request_without_dob(bearer_token_int):
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.inttest
