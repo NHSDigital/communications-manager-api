@@ -174,7 +174,7 @@ This can be achieved by hashing the request body using the HMAC-SHA256 algorithm
 
 Every request includes an `idempotencyKey` field located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
 
-If a request fails, our retry policy will make up to three attempts with intervals of five seconds between each attempt.
+If a request fails our retry policy will continue to attempt to deliver the callback for a period of 15 minutes.
 
 ## Message Statuses
 
