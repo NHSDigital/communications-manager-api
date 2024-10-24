@@ -17,7 +17,7 @@
     <HTTPTargetConnection>
         {{ HOSTED_TARGET_CONNECTION }}
         <Properties>
-            <Property name="io.timeout.millis">10000</Property>
+            <Property name="io.timeout.millis">2000</Property>
         </Properties>
     </HTTPTargetConnection>
 </TargetEndpoint>
