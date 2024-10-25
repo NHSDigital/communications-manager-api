@@ -9,6 +9,10 @@ CORS_ALLOW_HEADERS = "origin, x-requested-with, accept, " \
 CORS_EXPOSE_HEADERS = "x-correlation-id"
 CORS_POLICY = "cross-origin"
 
+GLOBAL_ROUTING_CONFIGURATION_NHSAPP = "00000000-0000-0000-0000-000000000001"
+GLOBAL_ROUTING_CONFIGURATION_EMAIL = "00000000-0000-0000-0000-000000000002"
+GLOBAL_ROUTING_CONFIGURATION_SMS = "00000000-0000-0000-0000-000000000003"
+
 VALID_ROUTING_PLAN_ID_PROD = "00000000-0000-0000-0000-000000000001"
 VALID_ROUTING_PLAN_ID_SANDBOX = "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
 VALID_ROUTING_PLAN_ID_INT = "119bdd50-783c-4161-a765-792785e46851"
@@ -40,8 +44,6 @@ INT_API_GATEWAY_URL = "https://comms-apim.int.communications.national.nhs.uk"
 PROD_API_GATEWAY_URL = "https://comms-apim.prod.communications.national.nhs.uk"
 UAT_API_GATEWAY_URL = "https://comms-apim.uat.communications.national.nhs.uk"
 DEFAULT_CONTENT_TYPE = "application/vnd.api+json"
-UNEXPECTED_429 = AssertionError('Unexpected 429')
-UNEXPECTED_504 = AssertionError('Unexpected 504')
 
 VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE]
 VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE]
@@ -286,6 +288,14 @@ ERROR_BAD_GATEWAY = Error(
     "502",
     "Unable to call service",
     "A downstream service is not responding."
+)
+
+# invalid personalisation error
+ERROR_INVALID_PERSONALISATION = Error(
+    "CM_INVALID_VALUE",
+    "400",
+    "Invalid personalisation",
+    ""
 )
 
 INVALID_REQUEST_TITLE = "Invalid Request"

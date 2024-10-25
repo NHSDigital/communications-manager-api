@@ -13,6 +13,10 @@ properties:
         $ref: ../types/KSUID.yaml
       messageReference:
         $ref: ../../snippets/MessageReferenceSnippet.yaml
+      cascadeType:
+        $ref: ../enums/CascadeType.yaml
+      cascadeOrder: 
+        $ref: ../../snippets/CascadeOrder.yaml        
       channel:
         type: string
         enum:

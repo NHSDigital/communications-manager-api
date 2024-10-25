@@ -267,6 +267,35 @@ def test_invalid_personalisation(bearer_token_int, correlation_id, personalisati
 
 
 @pytest.mark.inttest
+def test_too_large_personalisation(bearer_token_int):
+    """
+    .. include:: ../../partials/validation/test_too_large_personalisation.rst
+    """
+    data = Generators.generate_valid_create_message_body("int")
+    data["data"]["attributes"]["routingPlanId"] = constants.GLOBAL_ROUTING_CONFIGURATION_SMS
+    data["data"]["attributes"]["personalisation"] = {
+        'sms_body': 'x'*919
+    }
+    resp = requests.post(
+        f"{INT_URL}{MESSAGES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_int.value,
+            **headers,
+        },
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_personalisation_error(
+            "Total personalisation length of 919 exceeding the maximum length of 918",
+            "/data/attributes/personalisation"),
+        None
+    )
+
+
+@pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("personalisation", NULL_VALUES)
 def test_null_personalisation(bearer_token_int, correlation_id, personalisation):
