@@ -14,9 +14,6 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response contains routingPlanId
-- Response contains messageBatchReference
-- Response contains a messages array with expected message references and ids
 
 
 ## Scenario: An API consumer submitting a request with a large request body containing 40,000 duplicate messages receives a 400 response
@@ -50,6 +47,3 @@
 
 **Asserts**
 - Response returns a 201 status code
-- Response contains routingPlanId
-- Response contains messageBatchReference
-- Response contains a messages array with expected message references and ids

@@ -102,10 +102,6 @@ export async function batchSend(req, res, next) {
       id: routingPlanId,
       version: "1",
     },
-    messages: messages.map(message => ({
-      messageReference: message.messageReference,
-      id: KSUID.randomSync(new Date()).string
-    }))
   });
   res.end();
   next();
