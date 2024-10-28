@@ -10,8 +10,6 @@ This reference must be a [Universal Unique Identifier (UUID)](https://en.wikiped
 
 The message reference (`messageReference`) needs to be unique across all single messages you have sent. This value is used to store your reference for this specific message and can be used if you lose (or do not recieve) our unique identifier in the response.
 
-If you send through a request with the same `messageReference` on it then the system will respond with the same response as the first time the message was created.
-
 ### Personalisation
 
 You may be required to send through specific personalisation fields based upon the routing plan (`routingPlanId`). These will have been setup during your onboarding process.
