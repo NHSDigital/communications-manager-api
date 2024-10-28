@@ -1,25 +1,5 @@
 #!/bin/bash
 
-: '
-Usage:
-scripts/repoint_frontend.sh -h
-scripts/repoint_frontend.sh --help 
-scripts/repoint_frontend.sh --list-steps
-scripts/repoint_frontend.sh 0000 gith1
-scripts/repoint_frontend.sh 0000 gith1 --from-step 1
-scripts/repoint_frontend.sh 0000 gith1 --only-step 1
-
-When this script is modified the following steps should be taken:
-- Check the script works in standard mode              scripts/repoint_frontend.sh 0000 gith1
-- Check step listing works                             scripts/repoint_frontend.sh --list-steps
-- Check starting from a step works                     scripts/repoint_frontend.sh 0000 gith1 --from-step 1
-- Check running a step in isolation works              scripts/repoint_frontend.sh --only-step 2
-- Check directory requirement is checked and works     cd scripts && scripts/repoint_frontend.sh --list-steps
-- Check AWS login status check works                   aws sso logout && scripts/repoint_frontend.sh
-- Check error is returned on too many positional args  scripts/repoint_frontend.sh 0000 gith1 invalid
-- 
-'
-
 true=0
 false=1
 
@@ -117,11 +97,28 @@ list_steps() {
   echo "STEPS:"
 }
 
+help() {
+  echo "Usage:"
+  echo "  repoint_frontend.sh [ticket ID] [shortcode] [options]"
+  echo ""
+  echo "Positional Arguments:"
+  echo "  ticket ID         Numeric only (e.g., '0000')"
+  echo "  shortcode         Environment identifier (e.g., 'gith1')"
+  echo ""
+  echo "Options:"
+  echo "  --help            Show this help message and exit."
+  echo "  --list-steps      List all steps and exit."
+  echo "  --from-step <n>   Start execution from a specific step."
+  echo "  --only-step <n>   Execute only a specific step."
+  echo ""
+}
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --from-step) from_step=$2; shift 2;;
         --only-step) from_step=$2; single_step=$true; shift 2;;
         --list-steps) list_steps;;
+        --help) help; exit 0;;
         -*) error "unknown option: $1" >&2;;
         *) handle_positional_arg "$1";;
     esac
@@ -197,7 +194,7 @@ if check_run_step "create new branch for proxy modifications"; then
   repsonse=""
   info "current branch is: $current_branch"
   query "do you want to use this branch? (y/n)"
-  
+
   if [[ "$response" != "y" ]]; then
     error "checkout the branch you want to work with first"
   fi
@@ -209,7 +206,7 @@ if check_run_step "create new branch for proxy modifications"; then
 fi
 
 if check_run_step "modify proxy files"; then
-  output=$(python3 scripts/repoint_frontend.py $shortcode 2>&1)
+  output=$(python3 scripts/repoint-frontend/repoint_frontend.py $shortcode 2>&1)
   exit_on_failure "python repoint script failed" "\n $output"
   info_multiline "$output"
 fi
@@ -218,7 +215,7 @@ commit_made=$false
 if check_run_step "stage, commit, and push changes"; then
   git add proxies
   exit_on_failure "filed to stage changes (git add)"
-  
+
   git commit -m "CCM-${ticket_id}: repointed frontend" --no-verify  # verify breaks on my machine, will fix this in due course
   exit_on_failure "failed to commit changes (git commit)"
 
@@ -254,19 +251,19 @@ if check_run_step "mTLS update - await domainName available status (or timeout)"
   done
   echo ""  # prevents the previous info being overwritten
 
-  if [[ $domain_name_available -eq $false ]]; then 
+  if [[ $domain_name_available -eq $false ]]; then
     warn "timeout reached before domain name became available - mTLS update is likely still processing"
   fi
 fi
 
 # final output
 if [[ $commit_made -eq $true ]]; then
-  echo ""  # output spacing
+  echo ""
 
   pr_url="https://github.com/NHSDigital/communications-manager-api/compare/$current_branch...$new_branch?expand=1"
 
   info "Branch $new_branch created, frontend repointed, and changes pushed."
-  echo ""  # output spacing
+  echo ""
   info "To create a pull request for this branch, visit the following link:"
   info "$pr_url"
 fi
