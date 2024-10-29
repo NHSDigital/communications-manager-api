@@ -96,6 +96,7 @@ def get_config(path, endpoint, url, template_tag, environment):
         f"            <Value>{formatted_url}</Value>",
         "        </AssignVariable>",
         "    {% endif %}",
+        "    </AssignVariable>",
     ]
     return file_path, match_block, insertion_lines
 
