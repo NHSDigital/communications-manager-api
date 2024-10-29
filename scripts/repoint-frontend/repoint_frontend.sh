@@ -99,7 +99,7 @@ help() {
   echo ""
   echo "Positional Arguments:"
   echo "  ticket ID         Numeric only (e.g., '0000')"
-  echo "  environment         Environment identifier (e.g., 'de-gith1')"
+  echo "  environment       Environment identifier (e.g., 'de-gith1')"
   echo ""
   echo "Options:"
   echo "  --help            Show this help message and exit."

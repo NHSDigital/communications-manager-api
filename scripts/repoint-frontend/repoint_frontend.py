@@ -96,7 +96,6 @@ def get_config(path, endpoint, url, template_tag, environment):
         f"            <Value>{formatted_url}</Value>",
         "        </AssignVariable>",
         "    {% endif %}",
-        "    </AssignVariable>",
     ]
     return file_path, match_block, insertion_lines
 
@@ -111,7 +110,6 @@ def add_lines_after_block(environment, file_path, match_block, insertion_lines):
     block_found, new_lines = False, []
     i = 0
     while i < len(lines):
-        new_lines.append(lines[i])
         if lines[i].strip() == match_block[0]:
             match = all(
                 lines[i + j].strip() == match_block[j]
@@ -122,6 +120,7 @@ def add_lines_after_block(environment, file_path, match_block, insertion_lines):
                 i += len(match_block)
                 new_lines.extend(f"{line}\n" for line in insertion_lines)
                 continue
+        new_lines.append(lines[i])
         i += 1
 
     if not block_found:
