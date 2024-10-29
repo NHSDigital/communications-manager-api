@@ -9,31 +9,31 @@ remove_lines = [
     "<Path>{requestpath}</Path>",
 ]
 
-replacement_line = "        <URL>https://comms-apim.de-{shortcode}.communications.national.nhs.uk</URL>\n"
+replacement_line = "        <URL>https://comms-apim.{environment}.communications.national.nhs.uk</URL>\n"
 
 configs = [
     (
         "proxies/shared/policies/AssignMessage.MessageBatches.Create.Request.xml",
         "/api/v1/send",
-        "https://comms-apim.de-{shortcode}.communications.national.nhs.uk/api/v1/send",
+        "https://comms-apim.{environment}.communications.national.nhs.uk/api/v1/send",
         False,
     ),
     (
         "proxies/shared/policies/AssignMessage.Messages.Create.Request.xml",
         "/api/v1/messages",
-        "https://comms-apim.de-{shortcode}.communications.national.nhs.uk/api/v1/messages",
+        "https://comms-apim.{environment}.communications.national.nhs.uk/api/v1/messages",
         False,
     ),
     (
         "proxies/shared/policies/AssignMessage.Messages.GetSingle.Request.xml",
         "/api/v1/messages/{data.messageId}",
-        "https://comms-apim.de-{shortcode}.communications.national.nhs.uk/api/v1/messages/{{data.messageId}}",
+        "https://comms-apim.{environment}.communications.national.nhs.uk/api/v1/messages/{{data.messageId}}",
         True,
     ),
     (
         "proxies/shared/policies/AssignMessage.NhsAppAccounts.Get.Request.xml",
         "/api/channels/nhsapp/accounts",
-        "https://comms-apim.de-{shortcode}.communications.national.nhs.uk/api/channels/nhsapp/accounts",
+        "https://comms-apim.{environment}.communications.national.nhs.uk/api/channels/nhsapp/accounts",
         False,
     ),
 ]
@@ -53,8 +53,8 @@ def write_file(file_path, lines):
         file.writelines(lines)
 
 
-def modify_target_file(shortcode, file_path):
-    replaced_line = replacement_line.format(shortcode=shortcode)
+def modify_target_file(environment, file_path):
+    replaced_line = replacement_line.format(environment=environment)
     lines = read_file(file_path)
 
     new_lines = []
@@ -75,10 +75,10 @@ def modify_target_file(shortcode, file_path):
 
     write_file(file_path, new_lines)
 
-    print(f"File at {file_path} successfully updated with shortcode '{shortcode}'.")
+    print(f"File at {file_path} successfully updated with environment '{environment}'.")
 
 
-def get_config(path, endpoint, url, template_tag, shortcode):
+def get_config(path, endpoint, url, template_tag, environment):
     file_path = path
     tag_type = "Template" if template_tag else "Value"
     match_block = [
@@ -88,7 +88,7 @@ def get_config(path, endpoint, url, template_tag, shortcode):
         "</AssignVariable>",
     ]
 
-    formatted_url = url.format(shortcode=shortcode)
+    formatted_url = url.format(environment=environment)
     insertion_lines = [
         "    {% if ENVIRONMENT_TYPE != 'sandbox' %}",
         "        <AssignVariable>",
@@ -100,12 +100,12 @@ def get_config(path, endpoint, url, template_tag, shortcode):
     return file_path, match_block, insertion_lines
 
 
-def add_lines_after_block(shortcode, file_path, match_block, insertion_lines):
+def add_lines_after_block(environment, file_path, match_block, insertion_lines):
     lines = read_file(file_path)
     match_block = [line.strip() for line in match_block]
 
-    # Format lines to add with shortcode where necessary
-    insertion_lines = [line.replace("{shortcode}", shortcode) for line in insertion_lines]
+    # Format lines to add with environment where necessary
+    insertion_lines = [line.replace("{environment}", environment) for line in insertion_lines]
 
     block_found, new_lines = False, []
     i = 0
@@ -141,16 +141,16 @@ if __name__ == "__main__":
         description="Script to modify target.xml based on the environment argument."
     )
     parser.add_argument(
-        "shortcode", type=str, help="Environment identifier (e.g. 'gith1')"
+        "environment", type=str, help="Environment identifier (e.g. 'de-gith1')"
     )
     args = parser.parse_args()
 
     # Modify target.xml file
-    modify_target_file(args.shortcode, "proxies/live/apiproxy/targets/target.xml")
+    modify_target_file(args.environment, "proxies/live/apiproxy/targets/target.xml")
 
     # Process each config entry
     for path, endpoint, url, template_tag in configs:
         file_path, match_block, insertion_lines = get_config(
-            path, endpoint, url, template_tag, args.shortcode
+            path, endpoint, url, template_tag, args.environment
         )
-        add_lines_after_block(args.shortcode, file_path, match_block, insertion_lines)
+        add_lines_after_block(args.environment, file_path, match_block, insertion_lines)
