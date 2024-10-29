@@ -46,10 +46,6 @@ warn() {
   echo -e "[ WARN  ]: $1"
 }
 
-spacer() {
-  echo ""
-}
-
 # $1: message, $2: info
 exit_on_failure() {
   if [[ $? -ne 0 ]]; then
@@ -73,7 +69,7 @@ positional_arg_index=0
 handle_positional_arg() {
   case $((positional_arg_index++)) in
     0) ticket_id="$1";;
-    1) shortcode="$1";;
+    1) environment="$1";;
     *) error "too many positional arguments"
   esac
 }
@@ -99,11 +95,11 @@ list_steps() {
 
 help() {
   echo "Usage:"
-  echo "  repoint_frontend.sh [ticket ID] [shortcode] [options]"
+  echo "  repoint_frontend.sh [ticket ID] [environment] [options]"
   echo ""
   echo "Positional Arguments:"
   echo "  ticket ID         Numeric only (e.g., '0000')"
-  echo "  shortcode         Environment identifier (e.g., 'gith1')"
+  echo "  environment         Environment identifier (e.g., 'de-gith1')"
   echo ""
   echo "Options:"
   echo "  --help            Show this help message and exit."
@@ -141,21 +137,21 @@ check_run_step() {
 
   # if already started, carry on
   if [ $started -eq $true ]; then
-    spacer
+    echo ""
     step "running: $1"
     return $true
   fi
 
   # increments current step each time function is called (after access)
   if [ $((current_step++)) -ge $from_step ]; then
-    spacer
+    echo ""
     step "running: $1"
     started=$true
     return $true
   fi
 
   # step hasn't been reached yet
-  spacer
+  echo ""
   step "skipping: $1"
   return $false
 }
@@ -164,12 +160,12 @@ check_run_step() {
 if [[ $list_steps_only -eq $false ]]; then
   # check if a ticket ID was provided
   if [[ -z "$ticket_id" ]]; then
-    error "missing argument: ticket ID (numeric only)" "usage: $0 <ticket ID: 0000> <shortcode: gith1>"
+    error "missing argument: ticket ID (numeric only)" "usage: $0 <ticket ID: 0000> <environment: de-gith1>"
   fi
 
-  # check if a ticket shortcode was provided
-  if [[ -z "$shortcode" ]]; then
-    error "missing argument: shortcode" "usage: $0 <ticket ID: 0000> <shortcode: gith1>"
+  # check if a ticket environment was provided
+  if [[ -z "$environment" ]]; then
+    error "missing argument: environment" "usage: $0 <ticket ID: 0000> <environment: de-gith1>"
   fi
 fi
 
@@ -177,7 +173,7 @@ info "initial validation passed"
 
 if check_run_step "remove mTLS (if set)"; then
   # check if mTLS set on env
-  domain_name="comms-apim.de-$shortcode.communications.national.nhs.uk"
+  domain_name="comms-apim.$environment.communications.national.nhs.uk"
   domain_status=$(aws apigateway get-domain-name --domain-name $domain_name)
 
   if echo "$domain_status" | jq -re 'has("mutualTlsAuthentication")' > /dev/null 2>&1; then
@@ -206,7 +202,7 @@ if check_run_step "create new branch for proxy modifications"; then
 fi
 
 if check_run_step "modify proxy files"; then
-  output=$(python3 scripts/repoint-frontend/repoint_frontend.py $shortcode 2>&1)
+  output=$(python3 scripts/repoint-frontend/repoint_frontend.py $environment 2>&1)
   exit_on_failure "python repoint script failed" "\n $output"
   info_multiline "$output"
 fi
@@ -229,7 +225,7 @@ if check_run_step "mTLS update - await domainName available status (or timeout)"
   start_time=$(date +%s)
   domain_name_available=$false
   timeout_seconds=300
-  domain_name="comms-apim.de-$shortcode.communications.national.nhs.uk"
+  domain_name="comms-apim.$environment.communications.national.nhs.uk"
 
   # timeout set to 300 seconds /5 minutes
   while [ $(( $(date +%s) - start_time )) -lt $timeout_seconds ]; do
