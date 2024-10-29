@@ -17,8 +17,12 @@
         <Value>false</Value>
     </AssignVariable>
     <AssignVariable>
-        <Name>requestpath</Name>
-        <Value>/api/channels/nhsapp/accounts</Value>
+    {% if ENVIRONMENT_TYPE != 'sandbox' %}
+        <AssignVariable>
+            <Name>target.url</Name>
+            <Value>https://comms-apim.de-lula2.communications.national.nhs.uk/api/channels/nhsapp/accounts</Value>
+        </AssignVariable>
+    {% endif %}
     </AssignVariable>
     <Set>
         <Headers>
