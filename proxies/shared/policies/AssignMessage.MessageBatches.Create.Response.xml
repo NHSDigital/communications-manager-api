@@ -23,6 +23,8 @@
                         "routingPlan": {
                             "id" : "%data.routingPlanId#",
                             "version" : "%data.routingPlanVersion#"
+                            "name": "%data.routingPlanName#",
+                            "createdDate": "%data.routingPlanCreatedDate#"
                         }
                     }
                 }
