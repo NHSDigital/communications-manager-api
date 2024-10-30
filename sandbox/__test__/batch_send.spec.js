@@ -457,6 +457,10 @@ describe("/api/v1/send", () => {
         assert.notEqual(res.body.routingPlan.id, null);
         assert.notEqual(res.body.routingPlan.version, undefined);
         assert.notEqual(res.body.routingPlan.version, null);
+        assert.notEqual(res.body.routingPlan.name, undefined);
+        assert.notEqual(res.body.routingPlan.name, null);
+        assert.notEqual(res.body.routingPlan.createdDate, undefined);
+        assert.notEqual(res.body.routingPlan.createdDate, null);
       })
       .expect("Content-Type", /json/, done);
   });
@@ -543,6 +547,11 @@ describe("/api/v1/send", () => {
         assert.notEqual(res.body.routingPlan.id, null);
         assert.notEqual(res.body.routingPlan.version, undefined);
         assert.notEqual(res.body.routingPlan.version, null);
+        assert.notEqual(res.body.routingPlan.name, undefined);
+        assert.notEqual(res.body.routingPlan.name, null);
+        assert.notEqual(res.body.routingPlan.createdDate, undefined);
+        assert.notEqual(res.body.routingPlan.createdDate, null);
+      })
       })
       .expect("Content-Type", /json/, done);
   });

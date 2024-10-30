@@ -132,6 +132,8 @@ describe("/api/v1/messages", () => {
           "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
         );
         assert.notEqual(attributes.routingPlan.version, undefined);
+        assert.notEqual(attributes.routingPlan.name, undefined)
+        assert.notEqual(attributes.routingPlan.createdDate, undefined)
         assert.equal(
           attributes.messageReference,
           "b5bb84b9-a522-41e9-aa8b-ad1b6a454243"
