@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.constants.constants import ERROR_TOO_FEW_ADDRESS_LINES, INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
+from lib.constants.constants import GLOBAL_ROUTING_CONFIGURATION_SMS, INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
     INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
@@ -272,7 +272,7 @@ def test_too_large_personalisation(bearer_token_int):
     .. include:: ../../partials/validation/test_too_large_personalisation.rst
     """
     data = Generators.generate_valid_create_message_body("int")
-    data["data"]["attributes"]["routingPlanId"] = constants.GLOBAL_ROUTING_CONFIGURATION_SMS
+    data["data"]["attributes"]["routingPlanId"] = GLOBAL_ROUTING_CONFIGURATION_SMS
     data["data"]["attributes"]["personalisation"] = {
         'sms_body': 'x'*919
     }
