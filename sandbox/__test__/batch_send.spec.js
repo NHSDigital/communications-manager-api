@@ -552,7 +552,6 @@ describe("/api/v1/send", () => {
         assert.notEqual(res.body.routingPlan.createdDate, undefined);
         assert.notEqual(res.body.routingPlan.createdDate, null);
       })
-      })
       .expect("Content-Type", /json/, done);
   });
 
