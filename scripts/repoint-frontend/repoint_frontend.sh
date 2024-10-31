@@ -183,8 +183,6 @@ if check_run_step "stage, commit, and push changes"; then
   git commit -m "CCM-${ticket_id}: repointed frontend" --no-verify  # verify breaks on my machine, will fix this in due course
   exit_on_failure "failed to commit changes (git commit)"
 
-  git push --set-upstream origin "$new_branch"
-  exit_on_failure "failed to push changes (git push)"
   commit_made=$true
 fi
 

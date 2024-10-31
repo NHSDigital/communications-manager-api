@@ -147,6 +147,9 @@ def update_file(environment, file_path, match_block, insertion_lines):
                 new_lines.extend(
                     f"{line}\n" for line in insertion_lines
                 )
+            else:
+                new_lines.append(lines[i])
+                i += 1
         else:
             new_lines.append(lines[i])
             i += 1
