@@ -2,6 +2,8 @@
 
 true=0
 false=1
+current_step=0
+list_steps_only=$false
 
 # $1: message
 info() {
@@ -22,7 +24,7 @@ info_multiline() {
 
 # $1: message
 step() {
-  echo -e "[ STEP  ]: $1"
+  echo -e "[ STEP $((current_step++))]: $1"
 }
 
 # $1: message
@@ -50,6 +52,7 @@ warn() {
 exit_on_failure() {
   if [[ $? -ne 0 ]]; then
     error "$1" "$2"
+    exit 1
   fi
 }
 
@@ -74,18 +77,11 @@ handle_positional_arg() {
   esac
 }
 
-# FROM_STEP: where to continue execution from, used to skips steps already run
 # 0: remove mTLS (if set)
 # 1: create new branch for proxy modifications
 # 2: modify proxy files
 # 3: stage, commit, and push changes
 # 4: await domainName available status (or timeout)
-
-from_step=0
-current_step=0
-started=$false
-single_step=$false
-list_steps_only=$false
 
 # sets list_steps_only to true, this is used by check_run_step
 list_steps() {
@@ -94,8 +90,7 @@ list_steps() {
 }
 
 help() {
-  echo "Usage:"
-  echo "  repoint_frontend.sh [ticket ID] [environment] [options]"
+  echo "Usage: $0 [ticket ID] [environment] [options]"
   echo ""
   echo "Positional Arguments:"
   echo "  ticket ID         Numeric only (e.g., '0000')"
@@ -104,15 +99,11 @@ help() {
   echo "Options:"
   echo "  --help            Show this help message and exit."
   echo "  --list-steps      List all steps and exit."
-  echo "  --from-step <n>   Start execution from a specific step."
-  echo "  --only-step <n>   Execute only a specific step."
   echo ""
 }
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --from-step) from_step=$2; shift 2;;
-        --only-step) from_step=$2; single_step=$true; shift 2;;
         --list-steps) list_steps;;
         --help) help; exit 0;;
         -*) error "unknown option: $1" >&2;;
@@ -123,37 +114,16 @@ done
 
 # $1: step description
 check_run_step() {
-  # if only single step and started, exit now
-  if [[ $single_step -eq $true && $started -eq $true ]]; then
-    exit 0
-  fi
 
   # if only listing steps, list step and move on (do not run)
   if [ $list_steps_only -eq $true ]; then
     echo "  $((current_step++)): $1"
-    #current_step=$current_step
     return $false
   fi
 
-  # if already started, carry on
-  if [ $started -eq $true ]; then
-    echo ""
-    step "running: $1"
-    return $true
-  fi
-
-  # increments current step each time function is called (after access)
-  if [ $((current_step++)) -ge $from_step ]; then
-    echo ""
-    step "running: $1"
-    started=$true
-    return $true
-  fi
-
-  # step hasn't been reached yet
   echo ""
-  step "skipping: $1"
-  return $false
+  step "running: $1"
+  return $true
 }
 
 # doesn't validate the positional args if only listing steps
@@ -169,18 +139,13 @@ if [[ $list_steps_only -eq $false ]]; then
   fi
 fi
 
-info "initial validation passed"
+if [[ $list_steps_only -ne $true ]]; then
+  info "initial validation passed"
+fi
 
 if check_run_step "remove mTLS (if set)"; then
-  # check if mTLS set on env
-  domain_name="comms-apim.$environment.communications.national.nhs.uk"
-  domain_status=$(aws apigateway get-domain-name --domain-name $domain_name)
-
-  if echo "$domain_status" | jq -re 'has("mutualTlsAuthentication")' > /dev/null 2>&1; then
-    aws apigateway update-domain-name \
-      --domain-name  $domain_name \
-      --patch-operations op=remove,path=/mutualTlsAuthentication/truststoreUri
-  fi
+  ./scripts/mtls/disable_mtls.sh $environment
+  exit_on_failure echo "Failed to disable mTLS, exiting..."
 fi
 
 if check_run_step "create new branch for proxy modifications"; then
