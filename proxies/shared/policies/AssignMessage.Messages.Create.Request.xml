@@ -20,12 +20,6 @@
         <Name>requestpath</Name>
         <Value>/api/v1/messages</Value>
     </AssignVariable>
-    {% if ENVIRONMENT_TYPE != 'sandbox' %}
-    <AssignVariable>
-        <Name>target.url</Name>
-        <Value>https://comms-apim.de2-aado1.communications.national.nhs.uk/api/v1/messages</Value>
-    </AssignVariable>
-    {% endif %}
     <Set>
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
         <Headers>
