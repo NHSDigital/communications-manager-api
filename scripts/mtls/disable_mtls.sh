@@ -2,6 +2,7 @@
 set -e
 
 help() {
+  echo "This script disables mTLS for a specified environment."
   echo ""
   echo "Usage: $0 [environment]"
   echo ""

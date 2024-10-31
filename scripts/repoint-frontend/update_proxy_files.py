@@ -2,7 +2,7 @@ import argparse
 import os
 import sys
 
-default_config = [
+default_setup = [
     (
         "proxies/shared/policies/AssignMessage.MessageBatches.Create.Request.xml",
         "/api/v1/send",
@@ -29,7 +29,7 @@ default_config = [
     ),
 ]
 
-alternate_config = [
+alternate_setup = [
     ("proxies/live/apiproxy/targets/target.xml", "{environment}"),
 ]
 
@@ -47,8 +47,12 @@ def write_file(file_path, lines):
         file.writelines(lines)
 
 
-def get_config_default(path, endpoint, url, template_tag, environment):
+def setup_default_block(path, endpoint, url, template_tag, environment):
+    """
+    Common setup for most proxy files.
+    """
     tag_type = "Template" if template_tag else "Value"
+    # Block of lines we're looking to replace in the file
     match_block = [
         "<AssignVariable>",
         "<Name>requestpath</Name>",
@@ -56,6 +60,7 @@ def get_config_default(path, endpoint, url, template_tag, environment):
         "</AssignVariable>",
     ]
     formatted_url = url.format(environment=environment)
+    # Lines that will replace `match_block`
     insertion_lines = [
         "    {% if ENVIRONMENT_TYPE == 'sandbox' %}",
         "       <AssignVariable>",
@@ -72,13 +77,18 @@ def get_config_default(path, endpoint, url, template_tag, environment):
     return path, match_block, insertion_lines
 
 
-def get_config_alternate(path, environment):
+def setup_alternate_block(path, environment):
+    """
+    Specific setup for target.xml
+    """
+    # Block of lines we're looking to replace in the file
     match_block = [
         "<LoadBalancer>",
         "<Server name=\"{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}\"/>",
         "</LoadBalancer>",
         "<Path>{requestpath}</Path>",
     ]
+    # Lines that will replace `match_block`
     insertion_lines = [
         "       {% if ENVIRONMENT_TYPE == 'sandbox' %}",
         "           <LoadBalancer>",
@@ -92,11 +102,14 @@ def get_config_alternate(path, environment):
     return path, match_block, insertion_lines
 
 
-def get_config_by_type(block_type, *args):
+def configure_block_by_type(block_type, *args):
+    """
+    Wrapper function to select the appropriate setup
+    """
     if block_type == "default":
-        return get_config_default(*args)
+        return setup_default_block(*args)
     elif block_type == "alternate":
-        return get_config_alternate(*args)
+        return setup_alternate_block(*args)
     else:
         raise ValueError(f"Unknown block type: {block_type}")
 
@@ -122,25 +135,26 @@ def update_file(environment, file_path, match_block, insertion_lines):
             if match:
                 block_found = True
                 i += len(match_block)
+                # Insert new lines
                 new_lines.extend(
                     f"{line}\n" for line in insertion_lines
-                )  # Insert new lines
+                )
                 continue
         new_lines.append(lines[i])
         i += 1
 
     if not block_found:
-        print(f"Error: Block not found in the file at {file_path}.")
+        print(f"Error: No matching block found in the file at {file_path}.")
         return
 
     write_file(file_path, new_lines)
-    print(f"Lines successfully added after the specified block in {file_path}.")
+    print(f"Lines successfully added in {file_path}.")
 
 
 if __name__ == "__main__":
     # Ensure script is run from the correct directory
     if os.path.basename(os.getcwd()) != "communications-manager-api":
-        print("Error: repoint_frontend must be run from the project root.")
+        print("Error: the script must be run from the project root.")
         sys.exit(1)
 
     parser = argparse.ArgumentParser(
@@ -151,16 +165,16 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    # Process `default` block type configs
-    for path, endpoint, url, template_tag in default_config:
-        file_path, match_block, insertion_lines = get_config_by_type(
+    # Process the standard proxy file configurations (default setup)
+    for path, endpoint, url, template_tag in default_setup:
+        file_path, match_block, insertion_lines = configure_block_by_type(
             "default", path, endpoint, url, template_tag, args.environment
         )
         update_file(args.environment, file_path, match_block, insertion_lines)
 
-    # Process `alternate` block type configs
-    for path, environment in alternate_config:
-        file_path, match_block, insertion_lines = get_config_by_type(
+    # Process the target.xml-specific configurations (alternate setup)
+    for path, environment in alternate_setup:
+        file_path, match_block, insertion_lines = configure_block_by_type(
             "alternate", path, args.environment
         )
         update_file(args.environment, file_path, match_block, insertion_lines)

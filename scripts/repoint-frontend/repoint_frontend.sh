@@ -90,6 +90,9 @@ list_steps() {
 }
 
 help() {
+  echo "This script automates the process of reconfiguring the 'communications-manager-api' APIs to point to a dynamic backend environment"
+  echo "in the 'comms-mgr' repository, rather than the default common backend in 'internal-dev'."
+  echo ""
   echo "Usage: $0 [ticket ID] [environment] [options]"
   echo ""
   echo "Positional Arguments:"
@@ -167,7 +170,7 @@ if check_run_step "create new branch for proxy modifications"; then
 fi
 
 if check_run_step "modify proxy files"; then
-  output=$(python3 scripts/repoint-frontend/repoint_frontend.py $environment 2>&1)
+  output=$(python3 scripts/repoint-frontend/update_proxy_files.py $environment 2>&1)
   exit_on_failure "python repoint script failed" "\n $output"
   info_multiline "$output"
 fi
