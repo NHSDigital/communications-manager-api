@@ -113,7 +113,14 @@ def configure_block_by_type(block_type, *args):
     else:
         raise ValueError(f"Unknown block type: {block_type}")
 
-
+#
+# update_file
+#
+# Scans for a set of lines that match match_block exactly
+# When found it will substitute that set of lines with the set of lines
+# defined in insertion_lines, exception where {environment} is replaced
+# with the value of the environment argument
+#
 def update_file(environment, file_path, match_block, insertion_lines):
     lines = read_file(file_path)
     match_block = [line.strip() for line in match_block]
@@ -122,7 +129,8 @@ def update_file(environment, file_path, match_block, insertion_lines):
         line.replace("{environment}", environment) for line in insertion_lines
     ]
 
-    block_found, new_lines = False, []
+    block_found = False
+    new_lines = []
     i = 0
 
     while i < len(lines):
@@ -139,9 +147,9 @@ def update_file(environment, file_path, match_block, insertion_lines):
                 new_lines.extend(
                     f"{line}\n" for line in insertion_lines
                 )
-                continue
-        new_lines.append(lines[i])
-        i += 1
+        else:
+            new_lines.append(lines[i])
+            i += 1
 
     if not block_found:
         print(f"Error: No matching block found in the file at {file_path}.")
@@ -166,6 +174,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Process the standard proxy file configurations (default setup)
+    #
+    # The purpose of this is to edit the files under proxies/shared/policies and
+    # override their target.url variables with a hardcoded URL that points to
+    # the targetted environment
     for path, endpoint, url, template_tag in default_setup:
         file_path, match_block, insertion_lines = configure_block_by_type(
             "default", path, endpoint, url, template_tag, args.environment
@@ -173,6 +185,9 @@ if __name__ == "__main__":
         update_file(args.environment, file_path, match_block, insertion_lines)
 
     # Process the target.xml-specific configurations (alternate setup)
+    #
+    # The purpose of this is to edit target.xml under proxies/live/apiproxy so
+    # that it as a hard-coded URL to point to the given target environment
     for path, environment in alternate_setup:
         file_path, match_block, insertion_lines = configure_block_by_type(
             "alternate", path, args.environment
