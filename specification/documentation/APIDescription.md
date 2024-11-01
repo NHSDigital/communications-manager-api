@@ -182,7 +182,7 @@ Different character limits apply to each of the communication channels as listed
 | Channel            | Character Limit |
 |--------------------|-----------------|
 | Email              | 100,000         |
-| Letter             | 1,000           |
+| Letter             | 15,000          |
 | NHS App            | 5,000           |
 | Text message (SMS) | 918             |
 
