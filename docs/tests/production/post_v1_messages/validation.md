@@ -281,11 +281,11 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
-## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
 
 A valid personalisation must be structured in this format: { parameter: value }
 
-**Given** the API consumer provides an message body with an invalid personalisation
+**Given** the API consumer provides a message body with an invalid personalisation
 <br/>
 **When** the request is submitted
 <br/>
@@ -293,7 +293,7 @@ A valid personalisation must be structured in this format: { parameter: value }
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Invalid Value’ error
+- Response returns a 400 ‘Invalid value’ error
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
@@ -350,11 +350,11 @@ A valid sms contact detail must be structured in this format: { sms: value }
 | 077009000021 | Used to ensure invalid phone number is not accepted |
 
 
-## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
 
 A valid personalisation must be structured in this format: { parameter: value }
 
-**Given** the API consumer provides an message body with an invalid personalisation
+**Given** the API consumer provides a message body with an invalid personalisation
 <br/>
 **When** the request is submitted
 <br/>
@@ -362,7 +362,7 @@ A valid personalisation must be structured in this format: { parameter: value }
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Invalid Value’ error
+- Response returns a 400 ‘Invalid value’ error
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the ‘X-Correlation-Id’ header if provided
 
@@ -410,3 +410,19 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 |--------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
 | 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
+
+
+## Scenario: An API consumer submitting a request with an personalisation field too large receives a 400 ‘Invalid personalisation’ response
+
+Personalisation fields must not be too large for their given template
+
+**Given** the API consumer provides a message body with a personalisation field that is too large
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 Invalid personalisation error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid personalisation’ error
+- Response returns the expected error message body with references to the invalid attribute
