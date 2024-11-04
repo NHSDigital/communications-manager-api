@@ -18,9 +18,13 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <LoadBalancer>
-            <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
-        </LoadBalancer>
+        {% if ENVIRONMENT_TYPE == 'sandbox' %}
+            <LoadBalancer>
+                <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
+            </LoadBalancer>
+        {% else %}
+            <URL>https://comms-apim.de-lula2.communications.national.nhs.uk</URL>
+        {% endif %}
         <Path>{requestpath}</Path>
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
