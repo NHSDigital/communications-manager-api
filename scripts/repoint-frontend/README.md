@@ -26,7 +26,6 @@ The script performs the following steps:
 2. Create a new branch to contain changes to the proxy
 3. Update proxy files with the necessary configuration changes
 4. Stage, commit, and push changes to the remote repository
-5. Await DomainName availability status, with a timeout to prevent indefinite waiting
 
 ## Usage
 
@@ -48,5 +47,3 @@ Options:
 
 - `--help` Display usage information and exit, outlining all available commands
 - `--list-steps` Display a list of each step the script will execute
-- `--from-step <n>` Begin execution from a specified step number
-- `--only-step <n>` Execute only a specified step

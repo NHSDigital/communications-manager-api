@@ -4,6 +4,9 @@ set -e
 help() {
   echo "This script disables mTLS for a specified environment."
   echo ""
+  echo "It is primarily called by repoint_frontend.sh as part of the process for reconfiguring"
+  echo "the communications-manager-api APIs to point to a dynamic backend."
+  echo ""
   echo "Usage: $0 [environment]"
   echo ""
   echo "Positional Arguments:"
@@ -15,7 +18,7 @@ help() {
   exit 1
 }
 
-if [[ "$1" == "--help" ]]; then
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
   help
 fi
 

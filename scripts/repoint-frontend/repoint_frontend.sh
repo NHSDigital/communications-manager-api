@@ -62,10 +62,6 @@ if [[ "$current_dir" != "communications-manager-api" ]]; then
   error "you must be in the project root directory to run this script"
 fi
 
-# check aws login status
-aws sts get-caller-identity > /dev/null 2>&1
-exit_on_failure "you must have an active AWS SSO session to run this script"
-
 positional_arg_index=0
 
 # shifts positional args from arguments into named vars
@@ -81,7 +77,6 @@ handle_positional_arg() {
 # 1: create new branch for proxy modifications
 # 2: modify proxy files
 # 3: stage, commit, and push changes
-# 4: await domainName available status (or timeout)
 
 # sets list_steps_only to true, this is used by check_run_step
 list_steps() {
@@ -90,8 +85,8 @@ list_steps() {
 }
 
 help() {
-  echo "This script automates the process of reconfiguring the 'communications-manager-api' APIs to point to a dynamic backend environment"
-  echo "in the 'comms-mgr' repository, rather than the default common backend in 'internal-dev'."
+  echo "This script automates the process of reconfiguring the 'communications-manager-api' APIs to point to a dynamic"
+  echo "backend environment in the 'comms-mgr' repository, rather than the default common backend in 'internal-dev'."
   echo ""
   echo "Usage: $0 [ticket ID] [environment] [options]"
   echo ""
@@ -108,12 +103,19 @@ help() {
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --list-steps) list_steps;;
-        --help) help; exit 0;;
+        --help|-h) help; exit 0;;
         -*) error "unknown option: $1" >&2;;
         *) handle_positional_arg "$1";;
     esac
     shift || true
 done
+
+
+# Check AWS login status
+if ! aws sts get-caller-identity >/dev/null 2>&1; then
+  echo "You must have an active AWS SSO session to run this script."
+  exit 1
+fi
 
 # $1: step description
 check_run_step() {
@@ -186,38 +188,6 @@ if check_run_step "stage, commit, and push changes"; then
   git push --set-upstream origin "$new_branch"
   exit_on_failure "failed to push changes (git push)"
   commit_made=$true
-fi
-
-# wait for mTLS update to complete
-if check_run_step "mTLS update - await domainName available status (or timeout)"; then
-  start_time=$(date +%s)
-  domain_name_available=$false
-  timeout_seconds=300
-  domain_name="comms-apim.$environment.communications.national.nhs.uk"
-
-  # timeout set to 300 seconds /5 minutes
-  while [ $(( $(date +%s) - start_time )) -lt $timeout_seconds ]; do
-    info_overwrite "waiting for available status (timeout in $(($timeout_seconds - ($(date +%s) - $start_time))) seconds)"
-
-    domain_status=$(aws apigateway get-domain-name --domain-name $domain_name)
-    exit_on_failure "aws sso session may have expired"
-
-    domain_name_status=$( echo "$domain_status" | jq -er '.domainNameStatus')
-
-    if [[ $domain_name_status == "AVAILABLE" ]]; then
-      domain_name_available=$true
-      echo ""  # prevents the previous info being overwritten
-      info_overwrite "mTLS update has completed"
-      break
-    fi
-
-    sleep 1
-  done
-  echo ""  # prevents the previous info being overwritten
-
-  if [[ $domain_name_available -eq $false ]]; then
-    warn "timeout reached before domain name became available - mTLS update is likely still processing"
-  fi
 fi
 
 # final output
