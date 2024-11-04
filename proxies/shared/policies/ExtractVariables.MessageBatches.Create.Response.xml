@@ -21,9 +21,6 @@
         <Variable name="routingPlanVersion" type="string">
             <JSONPath>$.routingPlan.version</JSONPath>
         </Variable>
-        <Variable name="messages" type="string">
-            <JSONPath>$.messages</JSONPath>
-        </Variable>
     </JSONPayload>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </ExtractVariables>

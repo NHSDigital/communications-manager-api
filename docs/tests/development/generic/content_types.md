@@ -85,9 +85,6 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 
 **Asserts**
 - Response returns a 201 status code
-- Response contains routingPlanId
-- Response contains messageBatchReference
-- Response contains a messages array with expected message references and ids
 
 ## 415 - Unsupported Media
 

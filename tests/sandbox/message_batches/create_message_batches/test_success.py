@@ -25,7 +25,11 @@ def test_201_message_batch_valid_accept_headers(nhsd_apim_proxy_url, accept_head
         headers={"Accept": accept_headers, "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.sandboxtest
@@ -42,7 +46,11 @@ def test_201_message_batch_valid_content_type_headers(
         headers={"Accept": "application/json", "Content-Type": content_type},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.sandboxtest
@@ -59,7 +67,11 @@ def test_201_message_batch_valid_routing_plan_id(nhsd_apim_proxy_url, routing_pl
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.sandboxtest
@@ -77,7 +89,11 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.sandboxtest
@@ -105,7 +121,11 @@ def test_201_message_batch_valid_contact_details(nhsd_apim_proxy_url):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.sandboxtest
@@ -122,7 +142,11 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, dob):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )
 
 
 @pytest.mark.sandboxtest
@@ -138,4 +162,8 @@ def test_request_without_dob(nhsd_apim_proxy_url):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
+    )

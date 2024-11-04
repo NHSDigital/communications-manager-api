@@ -23,29 +23,7 @@ class Generators():
                     "messageBatchReference": str(uuid.uuid1()),
                     "messages": [
                         {
-                            "messageReference": str(uuid.uuid1()),
-                            "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
-                            },
-                            "originator": {
-                                "odsCode": "X26"
-                            },
-                            "personalisation": {}
-                        },
-                        {
-                            "messageReference": str(uuid.uuid1()),
-                            "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
-                            },
-                            "originator": {
-                                "odsCode": "X26"
-                            },
-                            "personalisation": {}
-                        },
-                        {
-                            "messageReference": str(uuid.uuid1()),
+                            "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                             "recipient": {
                                 "nhsNumber": "9990548609",
                                 "dateOfBirth": "2023-01-01"
@@ -271,13 +249,22 @@ class Generators():
         return Generators.generate_error(constants.ERROR_BAD_GATEWAY)
 
     @staticmethod
-    def generate_error(error, source=None, meta=None):
+    def generate_invalid_personalisation_error(detail, pointer):
+        return Generators.generate_error(
+                constants.ERROR_INVALID_PERSONALISATION,
+                detail=detail,
+                source={
+                    "pointer": pointer
+                    })
+
+    @staticmethod
+    def generate_error(error, source=None, meta=None, detail=None):
         ret = {
             "code": error.code,
             "links": error.links,
             "status": error.status,
             "title": error.title,
-            "detail": error.detail
+            "detail": detail or error.detail
         }
 
         if source:
