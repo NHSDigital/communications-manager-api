@@ -30,7 +30,7 @@ The script performs the following steps:
 ## Usage
 
 ```bash
-./scripts/repoint-frontend/repoint_frontend.sh <ticket ID> <environment> [options]
+./scripts/repoint-frontend/repoint_frontend.sh <ticket ID> <environment>
 ```
 
 e.g.
@@ -45,5 +45,4 @@ Positional Arguments:
 
 Options:
 
-- `--help` Display usage information and exit, outlining all available commands
-- `--list-steps` Display a list of each step the script will execute
+- `--help` | `-h` Display usage information and exit, outlining all available commands

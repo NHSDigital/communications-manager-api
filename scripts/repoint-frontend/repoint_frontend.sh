@@ -1,25 +1,11 @@
 #!/bin/bash
+set -e
 
-true=0
-false=1
 current_step=0
-list_steps_only=$false
 
 # $1: message
 info() {
   echo -e "[ INFO  ]: $1"
-}
-
-# $1: message
-info_overwrite() {
-  echo -n -e "\r[ INFO  ]: $1"
-}
-
-# $1: lines
-info_multiline() {
-  while IFS= read -r line; do
-    info "$line"
-  done <<< "$1"
 }
 
 # $1: message
@@ -32,28 +18,9 @@ query() {
   read -p "[ QUERY ]: $1: " response
 }
 
-# $1: message, $2: info
 error() {
-  echo -e "[ ERROR ]: $1"
-
-  if [[ -n "$2" ]]; then
-    info "$2"
-  fi
-
+  echo "[ ERROR ]: $1"
   exit 1
-}
-
-# $1: message
-warn() {
-  echo -e "[ WARN  ]: $1"
-}
-
-# $1: message, $2: info
-exit_on_failure() {
-  if [[ $? -ne 0 ]]; then
-    error "$1" "$2"
-    exit 1
-  fi
 }
 
 # check if in project root
@@ -69,40 +36,27 @@ handle_positional_arg() {
   case $((positional_arg_index++)) in
     0) ticket_id="$1";;
     1) environment="$1";;
-    *) error "too many positional arguments"
+    *) error "too many positional arguments";;
   esac
-}
-
-# 0: remove mTLS (if set)
-# 1: create new branch for proxy modifications
-# 2: modify proxy files
-# 3: stage, commit, and push changes
-
-# sets list_steps_only to true, this is used by check_run_step
-list_steps() {
-  list_steps_only=$true
-  echo "STEPS:"
 }
 
 help() {
   echo "This script automates the process of reconfiguring the 'communications-manager-api' APIs to point to a dynamic"
   echo "backend environment in the 'comms-mgr' repository, rather than the default common backend in 'internal-dev'."
   echo ""
-  echo "Usage: $0 [ticket ID] [environment] [options]"
+  echo "Usage: $0 [ticket ID] [environment]"
   echo ""
   echo "Positional Arguments:"
   echo "  ticket ID         Numeric only (e.g., '0000')"
   echo "  environment       Environment identifier (e.g., 'de-gith1')"
   echo ""
   echo "Options:"
-  echo "  --help            Show this help message and exit."
-  echo "  --list-steps      List all steps and exit."
+  echo "  --help | -h       Show this help message and exit."
   echo ""
 }
 
 while [[ "$#" -gt 0 ]]; do
     case $1 in
-        --list-steps) list_steps;;
         --help|-h) help; exit 0;;
         -*) error "unknown option: $1" >&2;;
         *) handle_positional_arg "$1";;
@@ -110,94 +64,69 @@ while [[ "$#" -gt 0 ]]; do
     shift || true
 done
 
-
 # Check AWS login status
 if ! aws sts get-caller-identity >/dev/null 2>&1; then
   echo "You must have an active AWS SSO session to run this script."
   exit 1
 fi
 
-# $1: step description
-check_run_step() {
-
-  # if only listing steps, list step and move on (do not run)
-  if [ $list_steps_only -eq $true ]; then
-    echo "  $((current_step++)): $1"
-    return $false
-  fi
-
-  echo ""
-  step "running: $1"
-  return $true
-}
-
-# doesn't validate the positional args if only listing steps
-if [[ $list_steps_only -eq $false ]]; then
-  # check if a ticket ID was provided
-  if [[ -z "$ticket_id" ]]; then
-    error "missing argument: ticket ID (numeric only)" "usage: $0 <ticket ID: 0000> <environment: de-gith1>"
-  fi
-
-  # check if a ticket environment was provided
-  if [[ -z "$environment" ]]; then
-    error "missing argument: environment" "usage: $0 <ticket ID: 0000> <environment: de-gith1>"
-  fi
+# Check if a ticket ID is provided
+if [[ -z "$ticket_id" ]]; then
+  error "missing arguments: [ticket ID (numeric only)] [environment]. See '$0 --help'"
 fi
 
-if [[ $list_steps_only -ne $true ]]; then
-  info "initial validation passed"
+# Ensure ticket ID is numeric
+if ! [[ "$ticket_id" =~ ^[0-9]+$ ]]; then
+  error "Invalid ticket ID: must be numeric only. See '$0 --help' for usage."
 fi
 
-if check_run_step "remove mTLS (if set)"; then
-  ./scripts/mtls/disable_mtls.sh $environment
-  exit_on_failure echo "Failed to disable mTLS, exiting..."
+# Check if an environment is provided
+if [[ -z "$environment" ]]; then
+  error "missing argument: [environment]. See '$0 --help'"
 fi
 
-if check_run_step "create new branch for proxy modifications"; then
-  current_branch=$(git rev-parse --abbrev-ref HEAD)
-  exit_on_failure "failed to get current git branch"
+info "initial validation passed"
 
-  repsonse=""
-  info "current branch is: $current_branch"
-  query "do you want to use this branch? (y/n)"
+# Step 1: Remove mTLS (if set)
+step "Remove mTLS (if set)"
+./scripts/mtls/disable_mtls.sh "$environment"
 
-  if [[ "$response" != "y" ]]; then
-    error "checkout the branch you want to work with first"
-  fi
+# Step 2: Create new branch for proxy modifications
+step "create new branch for proxy modifications"
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+info "Current branch is: $current_branch"
 
-  # create and checkout the new branch using the ticket ID
-  new_branch="CCM-${ticket_id}_REPOINT_DO_NOT_MERGE"
-  git checkout -b "$new_branch"
-  exit_on_failure "failed to checkout branch $new_branch"
+query "do you want to use this branch? (y/n)"
+
+if [[ "$response" != "y" ]]; then
+  error "checkout the branch you want to work with first"
 fi
 
-if check_run_step "modify proxy files"; then
-  output=$(python3 scripts/repoint-frontend/update_proxy_files.py $environment 2>&1)
-  exit_on_failure "python repoint script failed" "\n $output"
-  info_multiline "$output"
-fi
+new_branch="CCM-${ticket_id}_REPOINT_DO_NOT_MERGE"
+git checkout -b "$new_branch"
+info "Switched to new branch: $new_branch"
 
-commit_made=$false
-if check_run_step "stage, commit, and push changes"; then
-  git add proxies
-  exit_on_failure "filed to stage changes (git add)"
+# Step 3: Modify proxy files
+step "modify proxy files"
+python3 scripts/repoint-frontend/update_proxy_files.py "$environment"
 
-  git commit -m "CCM-${ticket_id}: repointed frontend" --no-verify  # verify breaks on my machine, will fix this in due course
-  exit_on_failure "failed to commit changes (git commit)"
+# Step 4: Stage, commit, and push changes
+step "stage, commit, and push changes"
 
-  git push --set-upstream origin "$new_branch"
-  exit_on_failure "failed to push changes (git push)"
-  commit_made=$true
-fi
+git add proxies
+info "Staged changes for proxy files."
+
+git commit -m "CCM-${ticket_id}: repointed frontend" --no-verify
+info "Committed changes with message: CCM-${ticket_id}: repointed frontend"
+
+git push --set-upstream origin "$new_branch"
+info "Pushed changes to branch: $new_branch"
 
 # final output
-if [[ $commit_made -eq $true ]]; then
-  echo ""
+echo ""
+pr_url="https://github.com/NHSDigital/communications-manager-api/compare/$current_branch...$new_branch?expand=1"
+info "Branch $new_branch created, frontend repointed, and changes pushed."
+echo ""
+info "To create a pull request for this branch, visit the following link:"
+info "$pr_url"
 
-  pr_url="https://github.com/NHSDigital/communications-manager-api/compare/$current_branch...$new_branch?expand=1"
-
-  info "Branch $new_branch created, frontend repointed, and changes pushed."
-  echo ""
-  info "To create a pull request for this branch, visit the following link:"
-  info "$pr_url"
-fi

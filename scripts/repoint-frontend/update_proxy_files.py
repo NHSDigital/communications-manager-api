@@ -90,14 +90,14 @@ def setup_alternate_block(path, environment):
     ]
     # Lines that will replace `match_block`
     insertion_lines = [
-        "       {% if ENVIRONMENT_TYPE == 'sandbox' %}",
-        "           <LoadBalancer>",
-        "	            <Server name=\"{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}\"/>",
-        "           </LoadBalancer>",
-        "           <Path>{requestpath}</Path>",
-        "       {% else %}",
-        f"           <URL>https://comms-apim.{environment}.communications.national.nhs.uk</URL>",
-        "       {% endif %}",
+        "        {% if ENVIRONMENT_TYPE == 'sandbox' %}",
+        "            <LoadBalancer>",
+        "                <Server name=\"{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}\"/>",
+        "            </LoadBalancer>",
+        "            <Path>{requestpath}</Path>",
+        "        {% else %}",
+        f"            <URL>https://comms-apim.{environment}.communications.national.nhs.uk</URL>",
+        "        {% endif %}",
     ]
     return path, match_block, insertion_lines
 
@@ -122,7 +122,8 @@ def update_file(environment, file_path, match_block, insertion_lines):
         line.replace("{environment}", environment) for line in insertion_lines
     ]
 
-    block_found, new_lines = False, []
+    block_found = False
+    new_lines = []
     i = 0
 
     while i < len(lines):
@@ -145,7 +146,7 @@ def update_file(environment, file_path, match_block, insertion_lines):
 
     if not block_found:
         print(f"Error: No matching block found in the file at {file_path}.")
-        return
+        sys.exit(1)
 
     write_file(file_path, new_lines)
     print(f"Lines successfully added in {file_path}.")

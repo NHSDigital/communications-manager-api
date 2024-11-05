@@ -15,17 +15,17 @@ help() {
   echo "Options:"
   echo "  --help            Show this help message and exit."
   echo ""
-  exit 1
 }
 
 if [[ "$1" == "--help" || "$1" == "-h" ]]; then
   help
+  exit 1
 fi
 
 environment="$1"
 if [ -z "$environment" ]; then
-  echo "Environment not specified."
-  help
+  echo "missing argument: [environment]. See '$0 --help'"
+  exit 1
 fi
 
 # Check AWS login status
