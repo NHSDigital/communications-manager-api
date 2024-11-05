@@ -186,7 +186,7 @@ Different character limits apply to each of the communication channels as listed
 | NHS App            | 5,000           |
 | Text message (SMS) | 918             |
 
-## Message Statuses
+## Message statuses
 
 Messages can have the following statuses:
 
@@ -201,7 +201,7 @@ For certain statuses more information can be found within the `messageStatusDesc
 
 The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
 
-## Supplier Statuses
+## Supplier statuses
 
 The channels can have the following supplier statuses:
 
