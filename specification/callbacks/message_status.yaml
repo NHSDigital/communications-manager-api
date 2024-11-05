@@ -1,5 +1,5 @@
 
-summary: Message Status
+summary: Message status
 description: |-
     
     NHS Notify will send a callback when the message status is updated to any of the following (message statuses are only updated for primary channels):

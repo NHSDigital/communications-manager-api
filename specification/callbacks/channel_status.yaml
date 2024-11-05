@@ -1,5 +1,5 @@
 
-summary: Channel Status
+summary: Channel status
 description: |-
 
     NHS Notify can send a channel status callback when:

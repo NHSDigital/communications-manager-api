@@ -176,7 +176,17 @@ Every request includes an `idempotencyKey` field located in the meta collection 
 
 If a request fails, our retry policy will continue to attempt to deliver the callback for a period of 15 minutes.
 
-## Message Statuses
+## Message character limits
+Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
+
+| Channel            | Character Limit |
+|--------------------|-----------------|
+| Email              | 100,000         |
+| Letter             | 15,000          |
+| NHS App            | 5,000           |
+| Text message (SMS) | 918             |
+
+## Message statuses
 
 Messages can have the following statuses:
 
@@ -191,7 +201,7 @@ For certain statuses more information can be found within the `messageStatusDesc
 
 The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
 
-## Supplier Statuses
+## Supplier statuses
 
 The channels can have the following supplier statuses:
 
