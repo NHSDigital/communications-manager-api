@@ -27,7 +27,7 @@ properties:
         example: "recipient@nhs.net"
       sms:
         type: string
-        description: Overriding GB mobile telephone number for recipient. Validated using the `libphonenumber-js/mobile` npm package.
+        description: Overriding UK mobile telephone number for recipient. Must be a valid UK mobile number format (with or without international access code).
         example: "07777777777"
       address:
         type: object
@@ -43,7 +43,7 @@ properties:
             example: ["NHS England","6th Floor","7&8 Wellington Place","Leeds","West Yorkshire"]
           postcode:
             type: string
-            description: Postcode of overriding address. A required field when address is specified. Validated using the `postcode` npm package.
+            description: Postcode of overriding address. A required field when address is specified. Must be a valid UK postcode format.
             example: "LS1 4AP"
 required:
   - nhsNumber
