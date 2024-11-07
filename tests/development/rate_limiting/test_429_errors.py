@@ -32,6 +32,7 @@ def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev,
     """
     .. include:: ../../partials/too_many_requests/test_429_global_app_quota.rst
     """
+    rate_limiting.set_default_rate_limit()
     rate_limiting.set_rate_limit(app_quota=4)
 
     headers = {
@@ -62,6 +63,7 @@ def test_429_triggered_app_spikearrest(nhsd_apim_proxy_url, bearer_token_interna
     """
     .. include:: ../../partials/too_many_requests/test_429_global_app_spikearrest.rst
     """
+    rate_limiting.set_default_rate_limit()
     rate_limiting.set_rate_limit(app_spikearrest="4pm")
 
     headers = {
@@ -91,6 +93,7 @@ def test_429_triggered_proxy_quota(nhsd_apim_proxy_url, bearer_token_internal_de
     """
     .. include:: ../../partials/too_many_requests/test_429_proxy_quota.rst
     """
+    rate_limiting.set_default_rate_limit()
     rate_limiting.set_rate_limit(proxy_quota=4)
 
     headers = {
@@ -120,6 +123,7 @@ def test_429_triggered_proxy_spikearrest(nhsd_apim_proxy_url, bearer_token_inter
     """
     .. include:: ../../partials/too_many_requests/test_429_proxy_spikearrest.rst
     """
+    rate_limiting.set_default_rate_limit()
     rate_limiting.set_rate_limit(proxy_spikearrest="4pm")
 
     headers = {
