@@ -10,10 +10,16 @@ from lib.constants.constants import CORRELATION_IDS
 
 @pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev_test_1, correlation_id):
+def test_not_permitted_to_use_contact_details(
+    nhsd_apim_proxy_url,
+    bearer_token_internal_dev_test_1,
+    correlation_id,
+    rate_limiting
+):
     """
     .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
+    rate_limiting.set_default_rate_limit()
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"][
         "nhsNumber"

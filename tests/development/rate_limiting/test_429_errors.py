@@ -224,7 +224,6 @@ def test_429_triggered_specific_app_spikearrest(nhsd_apim_proxy_url,
 
     assert "Retry-After" in resp.headers
     assert resp.headers.get("Retry-After") == "1"
-    rate_limiting.set_default_rate_limit()
 
 
 @pytest.mark.devperftest
@@ -245,4 +244,3 @@ def test_429_not_triggered_other_specific_spikearrest(nhsd_apim_proxy_url, beare
     resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
 
     assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
-    rate_limiting.set_default_rate_limit()
