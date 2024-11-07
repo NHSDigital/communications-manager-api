@@ -20,6 +20,8 @@ class Assertions():
         assert response.get("attributes").get("routingPlan").get("id") is not None
         assert response.get("attributes").get("routingPlan").get("id") == routing_plan_id
         assert response.get("attributes").get("routingPlan").get("version") is not None
+        assert response.get("attributes").get("routingPlan").get("name") is not None
+        assert response.get("attributes").get("routingPlan").get("createdDate") is not None
 
         # ensure we have our x-content-type-options set correctly
         assert resp.headers.get("X-Content-Type-Options") == "nosniff"
@@ -93,6 +95,8 @@ class Assertions():
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") is not None
         assert response.get("attributes").get("routingPlan").get("version") != ""
+        assert response.get("attributes").get("routingPlan").get("name") is not None
+        assert response.get("attributes").get("routingPlan").get("createdDate") is not None
         assert response.get("attributes").get("timestamps").get("created")
         assert response.get("attributes").get("timestamps").get("created") is not None
         assert response.get("attributes").get("timestamps").get("created") != ""
@@ -158,6 +162,8 @@ class Assertions():
         assert response.get("attributes").get("routingPlan") is not None
         assert response.get("attributes").get("routingPlan").get("id") != ""
         assert response.get("attributes").get("routingPlan").get("version") != ""
+        assert response.get("attributes").get("routingPlan").get("name") is not None
+        assert response.get("attributes").get("routingPlan").get("createdDate") is not None
 
         assert response.get("links").get("self").startswith(environment)
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")

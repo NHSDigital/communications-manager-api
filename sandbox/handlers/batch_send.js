@@ -101,6 +101,8 @@ export async function batchSend(req, res, next) {
     routingPlan: {
       id: routingPlanId,
       version: "1",
+      name: 'routing-plan-name',
+      createdDate: '2022-01-01T00:00:00.000Z'
     },
   });
   res.end();
