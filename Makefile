@@ -108,7 +108,10 @@ PERFTEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--proxy-name="$(PROXY_NAME)" \
 		-s \
 		--reruns 8 \
-		--reruns-delay 30 \
+		--reruns-delay 60 \
+		--only-rerun 'AssertionError: Unexpected 429' \
+		--only-rerun 'AssertionError: Unexpected 504' \
+		--only-rerun 'AssertionError: Unexpected 401' \
 	    --junitxml=perftest-report.xml
 
 PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
