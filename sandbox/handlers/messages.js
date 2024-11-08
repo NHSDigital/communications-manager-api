@@ -91,6 +91,8 @@ export async function messages(req, res, next) {
         routingPlan: {
           id: routingPlanId,
           version: validSendingGroupIds[routingPlanId],
+          name: 'routing-plan-name',
+          createdDate: '2022-01-01T00:00:00.000Z'
         },
         messageReference: req.body.data.attributes.messageReference,
         messageStatus: "created",

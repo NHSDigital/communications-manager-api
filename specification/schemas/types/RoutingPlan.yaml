@@ -6,7 +6,16 @@ properties:
     format: uuid
     description: The identifier for the routing plan.
     example: 'b838b13c-f98c-4def-93f0-515d4e4f4ee1'
+  name:
+    type: string
+    description: The name of the routing plan.
+    example: 'Plan Abc'
   version:
     type: string
     description: This identifies the specific version of the routing plan.
     example: 'ztoe2qRAM8M8vS0bqajhyEBcvXacrGPp'
+  createdDate:
+    type: string
+    description: The creation date of the routing plan.
+    format: date-time
+    example: '2023-11-17T14:27:51.413Z'

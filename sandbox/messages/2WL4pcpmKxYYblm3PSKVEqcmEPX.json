@@ -5,7 +5,9 @@
     "attributes": {
       "routingPlan": {
         "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-        "version": "1"
+        "version": "1",
+        "name": "routing-plan-name",
+        "createdDate": "2022-01-01T00:00:00.000Z"
       },
       "messageReference": "2c98d875-3843-4919-9c79-2034e957e251",
       "messageStatus": "failed",
