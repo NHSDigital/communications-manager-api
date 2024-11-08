@@ -19,10 +19,14 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         {% if ENVIRONMENT_TYPE == 'sandbox' %}
+        {% if ENVIRONMENT_TYPE == 'sandbox' %}
             <LoadBalancer>
                 <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
             </LoadBalancer>
             <Path>{requestpath}</Path>
+        {% else %}
+            <URL>https://comms-apim.de-rake4.communications.national.nhs.uk</URL>
+        {% endif %}
         {% else %}
             <URL>https://comms-apim.de-rake4.communications.national.nhs.uk</URL>
         {% endif %}
