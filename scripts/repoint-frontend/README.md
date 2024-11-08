@@ -15,7 +15,7 @@ The script simplifies this process by automatically:
 
 Before running the "Repoint Frontend" script, ensure the following prerequisites are met:
 
-- You must be logged into an AWS account using SSO authentication
+- You must be logged into a developer AWS account using SSO authentication
 - The repository must be named `communications-manager-api` to avoid potential root path issues
 
 ## Steps
@@ -26,6 +26,31 @@ The script performs the following steps:
 2. Create a new branch to contain changes to the proxy
 3. Update proxy files with the necessary configuration changes
 4. Stage, commit, and push changes to the remote repository
+
+## Post-Script Manual Steps
+
+### Configure Apigee for PR Branch
+
+After successfully running the script, follow these steps to configure Apigee to work with your PR branch. This will allow you to authenticate and send requests to a comms-pr-xxx branch.
+
+- Log in to Apigee
+- Navigate to Publish > Apps
+- Search for comms-manager-local
+- Select Edit
+- Choose Add Product
+- Search for your PR number and add the internal dev product
+
+### Sending a Request
+
+To send a request:
+
+- Set up an internal-dev request and update "comms" in the URL to point to PR number:
+
+```
+https://internal-dev.api.service.nhs.uk/comms-pr-000/
+```
+
+For more information, see [How to point APIM to a backend dynamic environment](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+How+to+point+APIM+to+a+backend+dynamic+environment).
 
 ## Usage
 

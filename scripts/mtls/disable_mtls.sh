@@ -34,6 +34,15 @@ if ! aws sts get-caller-identity >/dev/null 2>&1; then
   exit 1
 fi
 
+# Get the AWS account ID
+account_id=$(aws sts get-caller-identity --query "Account" --output text)
+
+# Check if the account ID matches dev or dev 2
+if [[ "$account_id" != "257995483745" && "$account_id" != "637423498933" ]]; then
+  echo "This script can only be run in a dev or dev 2 account. Current account ID is $account_id."
+  exit 1
+fi
+
 domain_name="comms-apim.$environment.communications.national.nhs.uk"
 
 echo "Starting: remove mTLS (if set) for environment '$environment' on domain '$domain_name'..."
