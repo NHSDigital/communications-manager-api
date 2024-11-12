@@ -1,5 +1,5 @@
 project = 'Test Documentation'
-copyright = '2024, NHSD'
+copyright = '2024, NHSD boiiii'
 author = 'NHSD'
 
 extensions = [
