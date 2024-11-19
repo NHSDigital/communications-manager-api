@@ -21,6 +21,9 @@ properties:
         type: string
         enum:
           - nhsapp
+          - sms
+          - letter
+          - email
         example: nhsapp
       channelStatus:
         $ref: ../enums/ChannelStatus.yaml
