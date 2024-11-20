@@ -43,6 +43,7 @@ Windows users should install [Windows Subsystem for Linux (WSL)](https://learn.m
 * [pyenv](https://github.com/pyenv/pyenv)
 * [poetry](https://github.com/python-poetry/poetry)
 * Java 8+
+* [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
 
 ### Install
 
@@ -131,7 +132,7 @@ Before running any tests you will need to build up your local environment to hav
 
 ##### Set up
 
-Before running the integration tests against dynamic environments you need to generate an [apigee access token](https://nhsd-confluence.digital.nhs.uk/display/APM/Test+Utils+2.0%3A+Running+tests). To generate a token run the following command, you will then be prompted to log in to apigee with your username, password and MFA code.
+Before running the integration tests against dynamic environments you need to generate an [apigee access token](https://nhsd-confluence.digital.nhs.uk/display/APM/Test+Utils+2.0%3A+Running+tests). To generate a token you will first need to make sure you have [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install) installed. Then run the following command, you will then be prompted to log in to apigee with your username, password and MFA code.
 
 ```
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)
