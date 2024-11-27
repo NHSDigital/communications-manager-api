@@ -6,11 +6,15 @@ from lib.fixtures import *  # NOSONAR
 import lib.constants.constants as constants
 from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 
+CORRELATION_IDS = [None, "0f160ae2-9b62-47bf-bdf0-c6a844d59488"]
+
 
 @pytest.mark.devtest
+@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 def test_duplicate_message_request(
     nhsd_apim_proxy_url,
-    bearer_token_internal_dev
+    bearer_token_internal_dev,
+    correlation_id
 ):
     """
     .. include:: ../../partials/duplicate_request/test_422_duplicate_request.rst
@@ -23,6 +27,7 @@ def test_duplicate_message_request(
             "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
+            "X-Correlation-Id": correlation_id
         },
         json=data,
     )
@@ -37,6 +42,7 @@ def test_duplicate_message_request(
             "Authorization": bearer_token_internal_dev.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
+            "X-Correlation-Id": correlation_id
         },
         json=data,
     )
