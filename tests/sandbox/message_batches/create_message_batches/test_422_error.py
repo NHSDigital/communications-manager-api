@@ -7,7 +7,7 @@ CORRELATION_IDS = [None, "0f160ae2-9b62-47bf-bdf0-c6a844d59488"]
 
 @pytest.mark.sandboxtest
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_duplicate_message_request(nhsd_apim_proxy_url, correlation_id):
+def test_duplicate_batch_request(nhsd_apim_proxy_url, correlation_id):
     """
     .. include:: ../../partials/duplicate_request/test_422_duplicate_request.rst
     """
