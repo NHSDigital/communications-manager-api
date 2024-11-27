@@ -1,0 +1,21 @@
+description: |+
+  Request already received and it will be ignored.
+
+  ### Sandbox
+
+  It is possible to trigger this on the sandbox by using the `Prefer` header with a value of `code=422`.
+
+  Here is an example curl request to trigger a `422`:
+
+  ```
+    curl -X GET --header "Prefer: code=422_message" https://sandbox.api.service.nhs.uk/comms/
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/errors/messages/DuplicateMessageRequest.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/errors/messages/DuplicateMessageRequest.yaml
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml
