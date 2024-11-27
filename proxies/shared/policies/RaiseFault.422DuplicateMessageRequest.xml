@@ -7,7 +7,7 @@
  For more information on RaiseFault policies within Apigee see the following resource:
     * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
 -->
-<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.425RetryTooEarly">
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.422DuplicateMessageRequest">
     <DisplayName>RaiseFault.422DuplicateMessageRequest</DisplayName>
     <Properties/>
     <FaultResponse>
