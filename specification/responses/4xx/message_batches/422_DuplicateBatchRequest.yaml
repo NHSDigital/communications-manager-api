@@ -13,9 +13,9 @@ description: |+
 content:
   application/vnd.api+json:
     schema:
-      $ref: ../../schemas/responses/errors/message_batches/DuplicateBatchRequest.yaml
+      $ref: ../../../schemas/responses/errors/message_batches/DuplicateBatchRequest.yaml
   application/json:
     schema:
-      $ref: ../../schemas/responses/errors/message_batches/DuplicateBatchRequest.yaml
+      $ref: ../../../schemas/responses/errors/message_batches/DuplicateBatchRequest.yaml
 headers:
-  $ref: ../../snippets/StandardResponseHeaders.yaml
+  $ref: ../../../snippets/StandardResponseHeaders.yaml

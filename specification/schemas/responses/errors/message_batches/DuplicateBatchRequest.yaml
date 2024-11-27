@@ -12,11 +12,11 @@ properties:
       additionalProperties: false
       properties:
         id:
-          $ref: ../../types/ErrorIdentifier.yaml
+          $ref: ../../../types/ErrorIdentifier.yaml
         code:
-          $ref: ../../enums/ErrorDuplicateRequest.yaml
+          $ref: ../../../enums/ErrorDuplicateRequest.yaml
         links:
-          $ref: ../../types/LinksError.yaml
+          $ref: ../../../types/LinksError.yaml
         status:
           type: string
           enum:
