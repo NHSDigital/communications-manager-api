@@ -3,7 +3,7 @@ description: |+
 
   ### Sandbox
 
-  It is possible to trigger this on the sandbox by using the `Prefer` header with a value of `code=422`.
+  It is possible to trigger this on the sandbox by using the `Prefer` header with a value of `code=422_message`.
 
   Here is an example curl request to trigger a `422`:
 
