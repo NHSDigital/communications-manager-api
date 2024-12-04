@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ This policy raises a 422 for a duplicate request that has already been received and is currently being processed.
+
+ Note that this policy is only used for Sandbox. The live environment uses the more flexible errors array.
+
+ For more information on RaiseFault policies within Apigee see the following resource:
+    * https://docs.apigee.com/api-platform/reference/policies/raise-fault-policy
+-->
+<RaiseFault async="false" continueOnError="false" enabled="true" name="RaiseFault.422DuplicateBatchRequest">
+    <DisplayName>RaiseFault.422DuplicateBatchRequest</DisplayName>
+    <Properties/>
+    <FaultResponse>
+        <Set>
+            <StatusCode>422</StatusCode>
+            <ReasonPhrase>Unprocessable Content</ReasonPhrase>
+            <Payload variablePrefix="@" variableSuffix="#">
+                {
+                    "errors" : [
+                        {
+                            "id" : "@messageid#.0",
+                            "code" : "CM_DUPLICATE_REQUEST",
+                            "links" : {
+                                "about" : "{{ ERROR_ABOUT_LINK }}"
+                            },
+                            "status" : "422",
+                            "title" : "Duplicate batch request",
+                            "detail" : "Request exists with identical messageBatchReference",
+                            "source" : {
+                                "pointer" : "/data/attributes/messageBatchReference"
+                            }
+                        }
+                    ]
+                }
+            </Payload>
+        </Set>
+    </FaultResponse>
+    <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

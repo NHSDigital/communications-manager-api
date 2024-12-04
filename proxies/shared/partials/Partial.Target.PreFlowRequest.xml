@@ -43,6 +43,14 @@
         <Name>RaiseFault.425RetryTooEarly</Name>
         <Condition>request.header.Prefer = "code=425"</Condition>
     </Step>
+    <Step>
+        <Name>RaiseFault.422DuplicateBatchRequest</Name>
+        <Condition>request.header.Prefer = "code=422_batch"</Condition>
+    </Step>
+    <Step>
+        <Name>RaiseFault.422DuplicateMessageRequest</Name>
+        <Condition>request.header.Prefer = "code=422_message"</Condition>
+    </Step>
 {% else %}
     <Step>
         <Name>OauthV2.VerifyAccessToken</Name>
