@@ -233,6 +233,18 @@ class Generators():
         return Generators.generate_error(constants.ERROR_REQUEST_TIMEOUT)
 
     @staticmethod
+    def generate_duplicate_message_request_error():
+        return Generators.generate_error(constants.ERROR_DUPLICATE_MESSAGE_REQUEST, source={
+            "pointer": "/data/attributes/messageReference"
+        })
+
+    @staticmethod
+    def generate_duplicate_batch_request_error():
+        return Generators.generate_error(constants.ERROR_DUPLICATE_BATCH_REQUEST, source={
+            "pointer": "/data/attributes/messageBatchReference"
+        })
+
+    @staticmethod
     def generate_service_unavailable_error():
         return Generators.generate_error(constants.ERROR_SERVICE_UNAVAILABLE)
 

@@ -1,0 +1,5 @@
+title: Enum_Error_DuplicateRequest
+type: string
+enum:
+  - CM_DUPLICATE_REQUEST
+example: CM_DUPLICATE_REQUEST

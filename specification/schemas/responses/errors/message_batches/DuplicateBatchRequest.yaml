@@ -1,0 +1,37 @@
+type: object
+title: Duplicate Request
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    maxItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: ../../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../../enums/ErrorDuplicateRequest.yaml
+        links:
+          $ref: ../../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '422'
+          example: '422'
+        title:
+          type: string
+          example: Duplicate batch request
+        detail:
+          type: string
+          example: Request exists with identical messageBatchReference
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            pointer:
+              type: string
+              example: /data/attributes/messageBatchReference
