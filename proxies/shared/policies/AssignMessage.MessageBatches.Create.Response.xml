@@ -25,9 +25,9 @@
                             "version": "%data.routingPlanVersion#",
                             "name": "%data.routingPlanName#",
                             "createdDate": "%data.routingPlanCreatedDate#"
-                        }
+                        },
+                        "messages": %data.messages#
                     },
-                    "messages": %data.messages#
                 }
             }
         </Payload>
