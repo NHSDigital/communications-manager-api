@@ -104,6 +104,10 @@ export async function batchSend(req, res, next) {
       name: 'routing-plan-name',
       createdDate: '2022-01-01T00:00:00.000Z'
     },
+    messages: messages.map(message => ({
+      messageReference: message.messageReference,
+      id: KSUID.randomSync(new Date()).string
+    }))
   });
   res.end();
   next();
