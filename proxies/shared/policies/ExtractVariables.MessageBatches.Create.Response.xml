@@ -27,6 +27,9 @@
         <Variable name="routingPlanCreatedDate" type="string">
             <JSONPath>$.routingPlan.createdDate</JSONPath>
         </Variable>
+        <Variable name="messages" type="string">
+            <JSONPath>$.messages</JSONPath>
+        </Variable>
     </JSONPayload>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </ExtractVariables>
