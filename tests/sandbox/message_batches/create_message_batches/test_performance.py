@@ -31,11 +31,7 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
 
 
 @pytest.mark.sandboxtest

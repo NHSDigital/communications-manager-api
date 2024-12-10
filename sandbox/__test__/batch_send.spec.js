@@ -461,6 +461,14 @@ describe("/api/v1/send", () => {
         assert.notEqual(res.body.routingPlan.name, null);
         assert.notEqual(res.body.routingPlan.createdDate, undefined);
         assert.notEqual(res.body.routingPlan.createdDate, null);
+        assert.notEqual(res.body.messages, undefined);
+        assert.notEqual(res.body.messages, null);
+        assert.equal(res.body.messages[0].messageReference, "1");
+        assert.notEqual(res.body.messages[0].id, undefined);
+        assert.notEqual(res.body.messages[0].id, null);
+        assert.equal(res.body.messages[1].messageReference, "2");
+        assert.notEqual(res.body.messages[1].id, undefined);
+        assert.notEqual(res.body.messages[1].id, null);
       })
       .expect("Content-Type", /json/, done);
   });
