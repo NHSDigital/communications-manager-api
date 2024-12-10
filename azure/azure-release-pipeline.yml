@@ -38,7 +38,12 @@ extends:
     enable_monitoring: true
     enable_status_monitoring: true
     apigee_deployments:
+      - environment: manual-approval
+        stage_name: manual_approval_internal_dev
+
       - environment: internal-dev
+        depends_on:
+          - manual_approval_internal_dev
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -48,6 +53,8 @@ extends:
               test_command: 'make internal-dev-test'
 
       - environment: internal-dev-sandbox
+        depends_on:
+          - manual_approval_internal_dev
         proxy_path: sandbox
         jinja_templates:
           ENVIRONMENT_TYPE: 'sandbox'
@@ -60,8 +67,6 @@ extends:
 
       - environment: manual-approval
         stage_name: manual_approval_ref
-        depends_on:
-          - internal_dev
             
       - environment: ref
         depends_on:

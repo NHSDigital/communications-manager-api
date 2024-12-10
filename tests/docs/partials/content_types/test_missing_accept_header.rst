@@ -7,3 +7,6 @@ Scenario: An API consumer submitting a request with a missing accept header rece
 
 **Asserts**
 - Response returns a 201 status code
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
