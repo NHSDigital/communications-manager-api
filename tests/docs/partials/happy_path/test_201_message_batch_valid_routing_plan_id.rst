@@ -7,5 +7,6 @@ Scenario: An API consumer creating a batch of messages with a valid routing plan
 
 **Asserts**
 - Response returns a 201 status code
-- Response body matches expected result
-- Response contains correctly formatted link to new message URI
+- Response contains routingPlanId
+- Response contains messageBatchReference
+- Response contains a messages array with expected message references and ids
