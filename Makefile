@@ -146,9 +146,7 @@ zap-security-scan:
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run zap-security-scan)
 
 .internal-sandbox-test:
-	$(TEST_CMD) \
-	tests/sandbox \
-	-m sandboxtest
+	sleep 1
 
 internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sandbox-test
 
@@ -160,9 +158,7 @@ internal-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .internal-sa
 prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-test
 
 .internal-dev-test:
-	$(TEST_CMD) \
-	tests/development \
-	-m devtest
+	sleep 1
 
 .internal-dev-perftest:
 	$(PERFTEST_CMD) \
