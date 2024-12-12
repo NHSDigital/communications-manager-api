@@ -79,10 +79,6 @@ const validate = () => {
 
                 // $.data.attributes.messages.x.recipient.nhsNumber
                 validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber")
-
-                // $.data.attributes.recipients.x.dateOfBirth
-                validateDob(errors, message.recipient.dateOfBirth, "/data/attributes/messages/" + index + "/recipient/dateOfBirth")
-
               }
 
               if (!isUndefined(message.originator)) {

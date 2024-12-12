@@ -34,8 +34,7 @@ def test_no_such_routing_plan(bearer_token_int, correlation_id):
                     "routingPlanId": f"f{str(uuid.uuid1())[1:]}",
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": "9990548609",
-                        "dateOfBirth": "1982-03-17"
+                        "nhsNumber": "9990548609"
                     },
                     "personalisation": {}
                 }
@@ -69,8 +68,7 @@ def test_routing_plan_not_belonging_to_client_id(bearer_token_int, correlation_i
                     "routingPlanId": INVALID_ROUTING_PLAN,
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": "9990548609",
-                        "dateOfBirth": "1982-03-17"
+                        "nhsNumber": "9990548609"
                     },
                     "personalisation": {}
                 }
@@ -104,8 +102,7 @@ def test_routing_plan_missing_templates(bearer_token_int, correlation_id, routin
                 "routingPlanId": routing_plan_id,
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "1982-03-17"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": {}
                 }

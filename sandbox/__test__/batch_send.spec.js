@@ -489,7 +489,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 personalisation: {
                   body: "Free text message 1",
@@ -499,7 +498,6 @@ describe("/api/v1/send", () => {
                 messageReference: "2",
                 recipient: {
                   nhsNumber: "2",
-                  dateOfBirth: "2",
                 },
                 personalisation: {
                   body: "Free text message 2",
@@ -527,7 +525,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 personalisation: {
                   body: "Free text message 1",
@@ -537,7 +534,6 @@ describe("/api/v1/send", () => {
                 messageReference: "2",
                 recipient: {
                   nhsNumber: "2",
-                  dateOfBirth: "2",
                 },
                 personalisation: {
                   body: "Free text message 2",
@@ -577,14 +573,12 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
               },
               {
                 messageReference: "2",
                 recipient: {
                   nhsNumber: "2",
-                  dateOfBirth: "2",
                 },
                 personalisation: {
                   body: "Free text message 2",
@@ -614,7 +608,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 personalisation: {
                   body: "Free text message 1",
@@ -624,7 +617,6 @@ describe("/api/v1/send", () => {
                 messageReference: "2",
                 recipient: {
                   nhsNumber: "2",
-                  dateOfBirth: "2",
                 },
                 personalisation: {
                   unknownField: "Free text message 2",
@@ -654,7 +646,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 personalisation: {
                   body: "Free text message 1",
@@ -664,7 +655,6 @@ describe("/api/v1/send", () => {
                 messageReference: "2",
                 recipient: {
                   nhsNumber: "2",
-                  dateOfBirth: "2",
                 },
                 personalisation: {
                   body: "Free text message 2",
@@ -693,7 +683,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 originator: {
                   odsCode: "X123",
@@ -725,7 +714,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 originator: {
                   odsCode: "X123",
@@ -758,7 +746,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 originator: {
                   odsCode: "X123",
@@ -790,7 +777,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 originator: {
                   odsCode: "X123",
@@ -821,7 +807,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                 },
                 originator: {
                   odsCode: "X123",
@@ -914,7 +899,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     email: "hello",
                   },
@@ -943,7 +927,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     sms: "hello",
                   },
@@ -983,7 +966,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     sms: "hello",
                   },
@@ -1012,7 +994,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     sms: "07700900002",
                   },
@@ -1052,7 +1033,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     sms: {
                       hello: 1,
@@ -1093,7 +1073,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     email: "hello",
                   },
@@ -1122,7 +1101,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     email: "invalidEmailAddress",
                   },
@@ -1162,7 +1140,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     email: {
                       hello: 1,
@@ -1203,7 +1180,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1", "2"],
@@ -1235,7 +1211,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: "hello",
                   },
@@ -1274,7 +1249,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: [],
                   },
@@ -1313,7 +1287,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: "test",
@@ -1356,7 +1329,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1"],
@@ -1399,7 +1371,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1", "2", "3", "4", "5", "6"],
@@ -1441,7 +1412,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1", "2", 3, "4", "5"],
@@ -1483,7 +1453,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1", "2"],
@@ -1525,7 +1494,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1", "2"],
@@ -1566,7 +1534,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     address: {
                       lines: ["1"],
@@ -1616,7 +1583,6 @@ describe("/api/v1/send", () => {
                 messageReference: "1",
                 recipient: {
                   nhsNumber: "1",
-                  dateOfBirth: "1",
                   contactDetails: {
                     email: "hello",
                     sms: "hello",

@@ -101,47 +101,6 @@ def test_201_message_batch_valid_contact_details(
 
 
 @pytest.mark.inttest
-@pytest.mark.parametrize("dob", constants.VALID_DOB)
-def test_201_message_batch_valid_dob(bearer_token_int, dob):
-    """
-    .. include:: ../../partials/happy_path/test_201_message_batch_valid_dob.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("int")
-    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
-
-    resp = requests.post(
-        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_int.value,
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        json=data,
-    )
-    Assertions.assert_201_response(resp, data)
-
-
-@pytest.mark.inttest
-def test_request_without_dob(bearer_token_int):
-    """
-    .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("int")
-    data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
-
-    resp = requests.post(
-        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_int.value,
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        json=data,
-    )
-    Assertions.assert_201_response(resp, data)
-
-
-@pytest.mark.inttest
 def test_201_message_batches_request_idempotency(bearer_token_int):
     """
     .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
