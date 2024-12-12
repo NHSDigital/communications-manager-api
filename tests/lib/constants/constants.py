@@ -342,3 +342,17 @@ ERROR_CANNOT_SET_CONTACT_DETAILS = Error(
     "Cannot set contact details",
     "Client is not allowed to provide alternative contact details."
 )
+
+ERROR_DUPLICATE_MESSAGE_REQUEST = Error(
+    "CM_DUPLICATE_REQUEST",
+    "422",
+    "Duplicate message request",
+    "Request exists with identical messageReference"
+)
+
+ERROR_DUPLICATE_BATCH_REQUEST = Error(
+    "CM_DUPLICATE_REQUEST",
+    "422",
+    "Duplicate batch request",
+    "Request exists with identical messageBatchReference"
+)

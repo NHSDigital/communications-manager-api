@@ -25,11 +25,7 @@ def test_201_message_batch_valid_accept_headers(
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
 
 
 @pytest.mark.devtest
@@ -50,11 +46,7 @@ def test_201_message_batch_valid_content_type_headers(
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
 
 
 @pytest.mark.devtest
@@ -79,11 +71,7 @@ def test_201_message_batch_valid_nhs_number(
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
 
 
 @pytest.mark.devtest
@@ -118,11 +106,7 @@ def test_201_message_batch_valid_contact_details(
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
 
 
 @pytest.mark.devtest
@@ -143,11 +127,7 @@ def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
 
 
 @pytest.mark.devtest
@@ -167,43 +147,4 @@ def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
-
-
-@pytest.mark.devtest
-def test_201_message_batches_request_idempotency(
-    nhsd_apim_proxy_url,
-    bearer_token_internal_dev
-):
-    """
-    .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("dev")
-
-    resp_one = requests.post(
-        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_internal_dev.value,
-            "Accept": constants.DEFAULT_CONTENT_TYPE,
-            "Content-Type": constants.DEFAULT_CONTENT_TYPE,
-        },
-        json=data,
-    )
-
-    time.sleep(5)
-
-    resp_two = requests.post(
-        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_internal_dev.value,
-            "Accept": constants.DEFAULT_CONTENT_TYPE,
-            "Content-Type": constants.DEFAULT_CONTENT_TYPE,
-        },
-        json=data,
-    )
-
-    Assertions.assert_message_batches_idempotency(resp_one, resp_two)
+    Assertions.assert_201_response(resp, data)

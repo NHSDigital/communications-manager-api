@@ -21,8 +21,17 @@ APIGEE_ENVIRONMENTS:
     variants:
     - name: ref
       display_name: Reference
+      app_ratelimit: '108000pm'
+      app_quota: '108000'
+      global_ratelimit: '108000pm'
+      global_quota: '108000'
     - name: 2-ref
       display_name: Reference - 2
+      display_name: Reference
+      app_ratelimit: '108000pm'
+      app_quota: '108000'
+      global_ratelimit: '108000pm'
+      global_quota: '108000'
   - name: internal-dev-sandbox
     variants:
     - name: internal-dev-sandbox

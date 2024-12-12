@@ -33,6 +33,8 @@ responses:
     $ref: ../responses/4xx/408_RequestTimeout.yaml
   '415':
     $ref: ../responses/4xx/415_UnsupportedMedia.yaml
+  '422':
+    $ref: ../responses/4xx/messages/422_DuplicateMessageRequest.yaml
   '425':
     $ref: ../responses/4xx/425_TooEarly.yaml
   '429':

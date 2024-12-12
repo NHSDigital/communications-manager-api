@@ -28,7 +28,7 @@ description: |+
       --header "Accept: */*" \
       --header "Content-type: application/vnd.api+json" \
       --header "Authorization: noOdsChange" \
-      -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17"},"originator": {"odsCode":"X123"},"personalisation": {}}}}' \
+      -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609"},"originator": {"odsCode":"X123"},"personalisation": {}}}}' \
       https://sandbox.api.service.nhs.uk/comms/v1/messages
   ```
 
@@ -39,10 +39,10 @@ description: |+
       --header "Accept: */*" \
       --header "Content-type: application/vnd.api+json" \
       --header "Authorization: notAllowedContactDetailOverride" \
-      -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","dateOfBirth": "1982-03-17","contactDetails": {"sms": "07777000000"}},"personalisation": {}}}}' \
+      -d '{"data": {"type": "Message","attributes": {"routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1","messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728","recipient": {"nhsNumber": "9990548609","contactDetails": {"sms": "07777000000"}},"personalisation": {}}}}' \
       https://sandbox.api.service.nhs.uk/comms/v1/messages
   ```
-  
+
   Contact detail validation errors can be triggered with the following values.
 
   | Field | Value | Description |
