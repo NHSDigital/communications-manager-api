@@ -30,7 +30,6 @@ INVALID_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),
     ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
     ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-    ("dateOfBirth", "/data/attributes/messages/0/recipient/dateOfBirth"),
     ("personalisation", "/data/attributes/messages/0/personalisation"),
 ]
 DUPLICATE_PROPERTIES_PATHS = [

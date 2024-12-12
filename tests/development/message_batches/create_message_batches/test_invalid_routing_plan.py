@@ -29,8 +29,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, co
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -66,8 +65,7 @@ def test_routing_plan_not_belonging_to_client_id(nhsd_apim_proxy_url, bearer_tok
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -109,8 +107,7 @@ def test_routing_plan_missing_templates(
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }

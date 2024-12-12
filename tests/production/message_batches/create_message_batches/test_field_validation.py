@@ -13,7 +13,6 @@ headers = {
 }
 INVALID_MESSAGE_VALUES = [""]
 INVALID_NHS_NUMBER = ["012345678"]
-INVALID_DOB = ["1990-10-1"]
 
 
 @pytest.mark.prodtest
@@ -193,31 +192,6 @@ def test_invalid_nhs_number(bearer_token_prod, nhs_number):
         resp,
         400,
         Generators.generate_invalid_nhs_number_error("/data/attributes/messages/0/recipient/nhsNumber"),
-        None
-    )
-
-
-@pytest.mark.prodtest
-@pytest.mark.parametrize("dob", INVALID_DOB)
-def test_invalid_dob(bearer_token_prod, dob):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("prod")
-    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
-    resp = requests.post(
-        f"{constants.PROD_URL}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            **headers,
-            "Authorization": bearer_token_prod.value
-        },
-        json=data
-    )
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/messages/0/recipient/dateOfBirth"),
         None
     )
 

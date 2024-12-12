@@ -23,8 +23,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
                 "routingPlanId": f"0{str(uuid.uuid1())[1:]}",
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "1982-03-17"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": {}
             }
@@ -58,8 +57,7 @@ def test_500_routing_plan_with_missing_template(nhsd_apim_proxy_url, correlation
                 "routingPlanId": routing_plan_id,
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "1982-03-17"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": {}
             }
