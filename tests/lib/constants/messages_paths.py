@@ -5,7 +5,6 @@ MESSAGES_ENDPOINT = "/v1/messages"
 MESSAGE_REFERENCE_PATH = "/data/attributes/messageReference"
 MESSAGE_RECIPIENT_PATH = "/data/attributes/recipient"
 MESSAGE_RECIPIENT_NHSNUMBER_PATH = "/data/attributes/recipient/nhsNumber"
-MESSAGE_RECIPIENT_DOB_PATH = "/data/attributes/recipient/dateOfBirth"
 MESSAGE_PERSONALISATION_PATH = "/data/attributes/personalisation"
 
 MISSING_PROPERTIES_PATHS = [
@@ -27,7 +26,6 @@ INVALID_PROPERTIES_PATHS = [
     ("routingPlanId", ROUTING_PLAN_ID_PATH),
     ("messageReference", MESSAGE_REFERENCE_PATH),
     ("recipient", MESSAGE_RECIPIENT_PATH),
-    ("dateOfBirth", MESSAGE_RECIPIENT_DOB_PATH),
     ("personalisation", MESSAGE_PERSONALISATION_PATH),
 ]
 

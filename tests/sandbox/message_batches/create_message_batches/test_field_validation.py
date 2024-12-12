@@ -208,8 +208,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": nhs_number,
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": nhs_number
                         },
                         "personalisation": {}
                     }
@@ -222,43 +221,6 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
         resp,
         400,
         Generators.generate_invalid_nhs_number_error("/data/attributes/messages/0/recipient/nhsNumber"),
-        correlation_id
-    )
-
-
-@pytest.mark.sandboxtest
-@pytest.mark.parametrize("dob", constants.INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": dob
-                        },
-                        "personalisation": {}
-                    }
-                ]
-            }
-        }
-    })
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/messages/0/recipient/dateOfBirth"),
         correlation_id
     )
 
@@ -282,8 +244,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -319,8 +280,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -356,8 +316,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "invalid",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -453,8 +412,7 @@ def test_validation_returns_at_max_errors(nhsd_apim_proxy_url, correlation_id, n
                     {
                         "messageReference": duplicate_message_reference,
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     } for _ in range(number_of_errors)
@@ -493,8 +451,7 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": personalisation
                     }
@@ -531,8 +488,7 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": personalisation
                     }
@@ -597,7 +553,6 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
                             "contactDetails": {
                                 "sms": "07700900002"
                             }
@@ -639,7 +594,6 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, correlation_id):
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
                             "contactDetails": {
                                 "email": "invalidEmailAddress"
                             }
@@ -681,7 +635,6 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, corr
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
                             "contactDetails": {
                                 "address": {
                                     "lines": [
@@ -728,7 +681,6 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, cor
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
                         "recipient": {
                             "nhsNumber": "9990548609",
-                            "dateOfBirth": "2023-01-01",
                             "contactDetails": {
                                 "address": {
                                     "lines": [

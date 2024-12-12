@@ -145,8 +145,7 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
-                    "nhsNumber": nhs_number,
-                    "dateOfBirth": "2023-01-01"
+                    "nhsNumber": nhs_number
                 },
                 "personalisation": {}
 
@@ -158,40 +157,6 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, nhs_number, correlation_id):
         resp,
         400,
         Generators.generate_invalid_nhs_number_error("/data/attributes/recipient/nhsNumber"),
-        correlation_id
-    )
-
-
-@pytest.mark.sandboxtest
-@pytest.mark.parametrize("dob", constants.INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_dob(nhsd_apim_proxy_url, dob, correlation_id):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "Message",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": str(uuid.uuid1()),
-                "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": dob
-                },
-                "personalisation": {}
-
-            }
-        }
-    })
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/recipient/dateOfBirth"),
         correlation_id
     )
 
@@ -212,8 +177,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
                 "routingPlanId": "invalid",
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": {}
 
@@ -245,8 +209,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
                 "messageReference": "invalid",
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": {}
             }
@@ -279,8 +242,7 @@ def test_invalid_personalisation(nhsd_apim_proxy_url, correlation_id, personalis
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
                 "messageReference": "invalid",
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": personalisation
             }
@@ -312,8 +274,7 @@ def test_null_personalisation(nhsd_apim_proxy_url, correlation_id, personalisati
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
                 "messageReference": "invalid",
                 "recipient": {
-                    "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01"
+                    "nhsNumber": "9990548609"
                 },
                 "personalisation": personalisation
             }
@@ -372,7 +333,6 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
                     "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
                     "contactDetails": {
                         "sms": "07700900002"
                     }
@@ -409,7 +369,6 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, correlation_id):
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
                     "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
                     "contactDetails": {
                         "email": "invalidEmailAddress"
                     }
@@ -446,7 +405,6 @@ def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, corr
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
                     "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
                     "contactDetails": {
                         "address": {
                             "lines": [
@@ -488,7 +446,6 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, cor
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {
                     "nhsNumber": "9990548609",
-                    "dateOfBirth": "2023-01-01",
                     "contactDetails": {
                         "address": {
                             "lines": [

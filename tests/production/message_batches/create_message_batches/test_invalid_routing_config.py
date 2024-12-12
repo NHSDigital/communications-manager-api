@@ -26,8 +26,7 @@ def test_no_such_routing_plan(bearer_token_prod):
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -61,8 +60,7 @@ def test_routing_plan_not_belonging_to_client_id(bearer_token_prod):
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }

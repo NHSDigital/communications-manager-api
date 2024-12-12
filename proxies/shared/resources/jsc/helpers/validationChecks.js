@@ -106,21 +106,6 @@ const validateArray = (errors, fieldValue, fieldPointer, minElements) => {
     return true
 }
 
-const validateDob = (errors, fieldValue, fieldPointer) => {
-    if (
-        !isUndefined(fieldValue)
-        && (
-            fieldValue === null
-            || typeof fieldValue !== "string"
-            || !dobRegex.test(fieldValue)
-        )
-    ) {
-        errors.push(invalidError(fieldPointer));
-        return false
-    }
-    return true
-}
-
 const validateOdsCode = (errors, fieldValue, fieldPointer) => {
     if (
         !isUndefined(fieldValue)

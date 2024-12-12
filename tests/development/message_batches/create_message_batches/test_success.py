@@ -106,45 +106,8 @@ def test_201_message_batch_valid_contact_details(
         },
         json=data,
     )
-    Assertions.assert_201_response(resp, data)
-
-
-@pytest.mark.devtest
-@pytest.mark.parametrize("dob", constants.VALID_DOB)
-def test_201_message_batch_valid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, dob):
-    """
-    .. include:: ../../partials/happy_path/test_201_message_batch_valid_dob.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("dev")
-    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
-
-    resp = requests.post(
-        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_internal_dev.value,
-            "Accept": constants.DEFAULT_CONTENT_TYPE,
-            "Content-Type": constants.DEFAULT_CONTENT_TYPE,
-        },
-        json=data,
+    Assertions.assert_201_response(
+        resp,
+        data["data"]["attributes"]["messageBatchReference"],
+        data["data"]["attributes"]["routingPlanId"],
     )
-    Assertions.assert_201_response(resp, data)
-
-
-@pytest.mark.devtest
-def test_request_without_dob(nhsd_apim_proxy_url, bearer_token_internal_dev):
-    """
-    .. include:: ../../partials/happy_path/test_201_message_batch_without_dob.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("dev")
-    data["data"]["attributes"]["messages"][0]["recipient"].pop("dateOfBirth")
-
-    resp = requests.post(
-        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_internal_dev.value,
-            "Accept": constants.DEFAULT_CONTENT_TYPE,
-            "Content-Type": constants.DEFAULT_CONTENT_TYPE,
-        },
-        json=data,
-    )
-    Assertions.assert_201_response(resp, data)

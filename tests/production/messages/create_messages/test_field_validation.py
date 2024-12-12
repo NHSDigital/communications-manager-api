@@ -150,33 +150,6 @@ def test_invalid_nhs_number(bearer_token_prod, nhs_number):
 
 
 @pytest.mark.prodtest
-@pytest.mark.parametrize("dob", constants.INVALID_DOB)
-def test_invalid_dob(bearer_token_prod, dob):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    resp = requests.post(
-        f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
-        headers={
-            **headers,
-            "Authorization": bearer_token_prod.value
-        },
-        json=Permutations.new_dict_with_new_value(
-            Generators.generate_valid_create_message_body("prod"),
-            "dateOfBirth",
-            dob
-        ),
-    )
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/recipient/dateOfBirth"),
-        None
-    )
-
-
-@pytest.mark.prodtest
 def test_invalid_routing_plan(bearer_token_prod):
     """
     .. include:: ../../partials/validation/test_invalid_routing_plan.rst

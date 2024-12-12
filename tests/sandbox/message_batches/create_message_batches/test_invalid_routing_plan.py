@@ -29,8 +29,7 @@ def test_no_such_routing_plan(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -65,8 +64,7 @@ def test_invalid_routing_plan(nhsd_apim_proxy_url, correlation_id):
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
@@ -105,8 +103,7 @@ def test_500_missing_routing_plan(nhsd_apim_proxy_url, correlation_id, routing_p
                     {
                         "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                         "recipient": {
-                            "nhsNumber": "9990548609",
-                            "dateOfBirth": "1982-03-17"
+                            "nhsNumber": "9990548609"
                         },
                         "personalisation": {}
                     }
