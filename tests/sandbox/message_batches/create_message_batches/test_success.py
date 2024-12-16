@@ -105,8 +105,4 @@ def test_201_message_batch_valid_contact_details(nhsd_apim_proxy_url):
         headers={"Accept": "application/json", "Content-Type": "application/json"},
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)

@@ -106,8 +106,4 @@ def test_201_message_batch_valid_contact_details(
         },
         json=data,
     )
-    Assertions.assert_201_response(
-        resp,
-        data["data"]["attributes"]["messageBatchReference"],
-        data["data"]["attributes"]["routingPlanId"],
-    )
+    Assertions.assert_201_response(resp, data)
