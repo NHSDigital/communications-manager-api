@@ -25,8 +25,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
+                                "nhsNumber": "9990548609"
                             },
                             "originator": {
                                 "odsCode": "X26"
@@ -36,8 +35,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
+                                "nhsNumber": "9990548609"
                             },
                             "originator": {
                                 "odsCode": "X26"

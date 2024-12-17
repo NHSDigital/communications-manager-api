@@ -2603,28 +2603,6 @@
 							"body": null
 						},
 						{
-							"name": "200 - Failed reason: PDS response date of birth does not match given date of birth",
-							"originalRequest": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{base_url}}/v1/messages/2WL4g2f7GQ2F9HZmgonIFiXAPku",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"v1",
-										"messages",
-										"2WL4g2f7GQ2F9HZmgonIFiXAPku"
-									]
-								}
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"body": null
-						},
-						{
 							"name": "200 - Failed reason: Name response is invalid: Contact detail is malformed",
 							"originalRequest": {
 								"method": "GET",
