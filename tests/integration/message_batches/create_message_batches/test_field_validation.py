@@ -418,6 +418,9 @@ def test_too_large_personalisation(bearer_token_int):
     data["data"]["attributes"]["messages"][0]["personalisation"] = {
         'sms_body': 'x'*919
     }
+    while len(data["data"]["attributes"]["messages"]) > 1:
+        del data["data"]["attributes"]["messages"][1]
+
     resp = requests.post(
         f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
         headers={
