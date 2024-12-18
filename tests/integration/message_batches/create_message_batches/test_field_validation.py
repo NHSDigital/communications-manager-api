@@ -409,7 +409,6 @@ def test_invalid_personalisation(bearer_token_int, correlation_id, personalisati
 
 
 @pytest.mark.inttest
-@pytest.mark.thistest
 def test_too_large_personalisation(bearer_token_int):
     """
     .. include:: ../../partials/validation/test_too_large_personalisation.rst
