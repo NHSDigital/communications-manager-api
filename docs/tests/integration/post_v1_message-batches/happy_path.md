@@ -83,7 +83,6 @@
 - Response contains a messages array with expected message references and ids
 
 
-
 ### Scenario: An API consumer creating a batch of messages with a date of birth receives a 201 response
 
 **Given** the API consumer does not provide a date of birth for a recipient in their new message batch
