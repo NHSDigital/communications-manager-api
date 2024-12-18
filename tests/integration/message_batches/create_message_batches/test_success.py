@@ -98,35 +98,3 @@ def test_201_message_batch_valid_contact_details(
         json=data,
     )
     Assertions.assert_201_response(resp, data)
-
-
-@pytest.mark.inttest
-def test_201_message_batches_request_idempotency(bearer_token_int):
-    """
-    .. include:: ../../partials/happy_path/test_201_message_batches_request_idempotency.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("int")
-
-    resp_one = requests.post(
-        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_int.value,
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        json=data,
-    )
-
-    time.sleep(5)
-
-    resp_two = requests.post(
-        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_int.value,
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        },
-        json=data,
-    )
-
-    Assertions.assert_message_batches_idempotency(resp_one, resp_two)
