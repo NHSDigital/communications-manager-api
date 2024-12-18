@@ -3,22 +3,6 @@
 These tests target the API endpoint POST /v1/messages testing successful responses when valid data is provided.
 
 
-## Scenario: An API consumer submitting a message request with a messageReference used in a previous request recieves the same response as the original request
-
-**Given** the API consumer submits a message request
-<br/>
-**And** the API consumer submits a second messages request containing the same messageReference as the first request
-<br/>
-**When** the request is submitted
-<br/>
-**Then** the response is the same contents as the first request
-<br/>
-
-**Asserts**
-- Response returns a 201 status code
-- Response body matches the first request
-
-
 ## Scenario: An API consumer creating a message with valid contact details receives a 201 response
 
 **Given** the API consumer provides valid contact details for the recipient in their new message
