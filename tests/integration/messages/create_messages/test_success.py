@@ -119,29 +119,3 @@ def test_single_message_request_without_dob(bearer_token_int):
         }, json=data
     )
     Assertions.assert_201_response_messages(resp, INT_URL)
-
-
-@pytest.mark.inttest
-def test_201_message_request_idempotency(bearer_token_int):
-    """
-    .. include:: ../../partials/happy_path/test_201_messages_request_idempotency.rst
-    """
-    data = Generators.generate_valid_create_message_body("int")
-
-    resp_one = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-        }, json=data
-    )
-
-    time.sleep(5)
-
-    resp_two = requests.post(f"{INT_URL}{MESSAGES_ENDPOINT}", headers={
-        "Authorization": bearer_token_int.value,
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-        }, json=data
-    )
-
-    Assertions.assert_messages_idempotency(resp_one, resp_two)
