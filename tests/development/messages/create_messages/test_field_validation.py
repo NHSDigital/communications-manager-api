@@ -160,33 +160,6 @@ def test_invalid_nhs_number(nhsd_apim_proxy_url, bearer_token_internal_dev, nhs_
 
 
 @pytest.mark.devtest
-@pytest.mark.parametrize("dob", constants.INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_dob(nhsd_apim_proxy_url, bearer_token_internal_dev, dob, correlation_id):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    data = Generators.generate_valid_create_message_body("dev")
-    data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
-    resp = requests.post(
-        f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_internal_dev.value,
-            **headers,
-            "X-Correlation-Id": correlation_id
-        },
-        json=data
-    )
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/recipient/dateOfBirth"),
-        correlation_id
-    )
-
-
-@pytest.mark.devtest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_routing_plan(nhsd_apim_proxy_url, bearer_token_internal_dev, correlation_id):
     """

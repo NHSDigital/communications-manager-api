@@ -114,7 +114,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -157,7 +156,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -182,7 +180,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -224,7 +221,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -249,7 +245,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -277,7 +272,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -306,7 +300,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -333,7 +326,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -361,7 +353,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -388,7 +379,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -414,7 +404,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -440,7 +429,6 @@ describe("/api/v1/messages", () => {
             messageReference: "request-ref-id",
             recipient: {
               nhsNumber: "999999999",
-              dateOfBirth: "2000-01-01",
             },
             originator: {
               odsCode: "X123",
@@ -467,7 +455,6 @@ describe("/api/v1/messages", () => {
             messageReference: "request-ref-id",
             recipient: {
               nhsNumber: "999999999",
-              dateOfBirth: "2000-01-01",
             },
             originator: {
               odsCode: "X123",
@@ -494,7 +481,6 @@ describe("/api/v1/messages", () => {
             messageReference: "request-ref-id",
             recipient: {
               nhsNumber: "999999999",
-              dateOfBirth: "2000-01-01",
             },
             originator: {
               odsCode: "X123",
@@ -521,7 +507,6 @@ describe("/api/v1/messages", () => {
             messageReference: "request-ref-id",
             recipient: {
               nhsNumber: "999999999",
-              dateOfBirth: "2000-01-01",
             },
             originator: {
               odsCode: "X123",
@@ -548,7 +533,6 @@ describe("/api/v1/messages", () => {
             messageReference: "request-ref-id",
             recipient: {
               nhsNumber: "999999999",
-              dateOfBirth: "2000-01-01",
             },
             originator: {
               odsCode: "X123",
@@ -575,7 +559,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             personalisation: {},
           },
@@ -599,7 +582,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
             },
             originator: {
               odsCode: "X123",
@@ -627,7 +609,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 email: "hello",
               },
@@ -652,7 +633,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 sms: "hello",
               },
@@ -688,7 +668,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 sms: "hello",
               },
@@ -713,7 +692,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 sms: "07700900002",
               },
@@ -749,7 +727,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 sms: {
                   hello: 1,
@@ -786,7 +763,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 email: "hello",
               },
@@ -811,7 +787,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 email: "invalidEmailAddress",
               },
@@ -847,7 +822,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 email: {
                   hello: 1,
@@ -884,7 +858,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1", "2"],
@@ -912,7 +885,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: "hello",
               },
@@ -947,7 +919,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: [],
               },
@@ -982,7 +953,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: "test",
@@ -1021,7 +991,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1"],
@@ -1060,7 +1029,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1", "2", "3", "4", "5", "6"],
@@ -1098,7 +1066,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1", "2", 3, "4", "5"],
@@ -1136,7 +1103,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1", "2"],
@@ -1174,7 +1140,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1", "2"],
@@ -1211,7 +1176,6 @@ describe("/api/v1/messages", () => {
             messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 address: {
                   lines: ["1"],
@@ -1258,7 +1222,6 @@ describe("/api/v1/messages", () => {
             messageReference: "1",
             recipient: {
               nhsNumber: "1",
-              dateOfBirth: "1",
               contactDetails: {
                 email: "hello",
                 sms: "hello",

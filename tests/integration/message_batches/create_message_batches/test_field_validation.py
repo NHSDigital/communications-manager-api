@@ -224,33 +224,6 @@ def test_invalid_nhs_number(bearer_token_int, nhs_number, correlation_id):
 
 
 @pytest.mark.inttest
-@pytest.mark.parametrize("dob", constants.INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
-def test_invalid_dob(bearer_token_int, dob, correlation_id):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    data = Generators.generate_valid_create_message_batch_body("int")
-    data["data"]["attributes"]["messages"][0]["recipient"]["dateOfBirth"] = dob
-    resp = requests.post(
-        f"{constants.INT_URL}{MESSAGE_BATCHES_ENDPOINT}",
-        headers={
-            **headers,
-            "X-Correlation-Id": correlation_id,
-            "Authorization": bearer_token_int.value
-        },
-        json=data
-    )
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/messages/0/recipient/dateOfBirth"),
-        correlation_id
-    )
-
-
-@pytest.mark.inttest
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_invalid_routing_plan(bearer_token_int, correlation_id):
     """
