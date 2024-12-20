@@ -65,4 +65,3 @@
 - Response contains routingPlanId
 - Response contains messageBatchReference
 - Response contains a messages array with expected message references and ids
-
