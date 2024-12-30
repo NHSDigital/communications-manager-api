@@ -274,5 +274,9 @@
             <enabled>true</enabled>
             <level>MEDIUM</level>
         </p90033>
+        <p10004>
+            <enabled>true</enabled>
+            <level>INFO</level>
+        </p10004>
     </plugins>
 </configuration>
