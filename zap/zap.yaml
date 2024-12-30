@@ -91,6 +91,12 @@ jobs:
         # This rule only checks for credit card details, no other PII.
         # See https://github.com/NHSDigital/communications-manager-api/pull/548 for more information.
 
+      - id: 10004
+        name: Tech Detection
+        threshold: Info
+        # ZAP is flagging HSTS as a failure.
+        # HSTS is a positive feature enforcing HTTPS, so we set this to 'Info' to avoid pipeline failures.
+
   # load the zap specific openapi specification
   - type: openapi
     parameters:
