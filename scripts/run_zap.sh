@@ -30,7 +30,7 @@ docker container run \
     -v $TEMP_DIR:/zap/tmp/:rw \
     -v $(pwd)/zap/comms-manager-json/:/home/zap/.ZAP/reports/comms-manager-json/:rw \
     -t zap \
-    bash -c "./zap.sh -d -addoninstallall -cmd -autorun /zap/wrk/zap/zap.yaml"
+    bash -c "./zap.sh -cmd -autorun /zap/wrk/zap/zap.yaml"
 
 # generate our nunit report from the zap JSON report
 ./node_modules/.bin/hbs --data $TEMP_DIR/zap-report.json zap/nunit-template.hbs -s > zap-report.xml
