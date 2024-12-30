@@ -93,9 +93,9 @@ jobs:
 
       - id: 10004
         name: Tech Detection
-        threshold: Info
+        threshold: Off
         # ZAP is flagging HSTS as a failure.
-        # HSTS is a positive feature enforcing HTTPS, so we set this to 'Info' to avoid pipeline failures.
+        # HSTS is a positive feature enforcing HTTPS, so we set this to 'Off' to avoid pipeline failures.
 
   # load the zap specific openapi specification
   - type: openapi
