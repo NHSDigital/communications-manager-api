@@ -5,4 +5,3 @@ COPY ./zap/policies/ /home/zap/.ZAP/policies/
 RUN ./zap.sh -addoninstallall -cmd
 RUN ./zap.sh -addonuninstall communityScripts -cmd
 RUN ./zap.sh -addonuninstall packpentester -cmd
-RUN ./zap.sh -addonuninstall wappalyzer -cmd
