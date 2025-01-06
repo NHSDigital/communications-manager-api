@@ -192,10 +192,15 @@ integration-test: .run-postman-int .integration-test
 
 production-test: .production-test
 
-mtls-test:
+mtls-test-dev:
 	$(TEST_CMD) \
 	tests/mtls \
-	-m mtlstest
+	-m "mtlstest and devtest or uattest"
+
+mtls-test-prod:
+	$(TEST_CMD) \
+	tests/mtls \
+	-m "mtlstest and inttest or prodtest"
 
 e2e-test-internal-dev:
 	$(TEST_CMD) \

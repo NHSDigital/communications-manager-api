@@ -1,0 +1,44 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger: none
+pr: none
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: NHSDigital/api-management-utils
+      ref: refs/heads/edge
+      endpoint: NHSDigital
+
+schedules:
+  - cron: '*/10 * * * *'
+    displayName: every 10 minutes
+    branches:
+      include: ['release']
+    always: true
+
+pool:
+  name: 'AWS-ECS'
+
+variables:
+  - template: project.yml
+  - name: SERVICE_ARTIFACT_NAME
+    value: ''
+
+steps:
+# Set up the teams alert webhook
+  - template: ./templates/teams-alert-setup.yml
+    parameters:
+      webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'
+
+# Executes the tests
+  - bash: |
+      make install-python && make mtls-test-prod
+    timeoutInMinutes: 2
+
+# If the test run did not succeed posts an alert to teams
+  - template: ./templates/teams-alert.yml
+    parameters:
+      title: 'mTLS Prod'
+      webhook_uri: 'ALERTS_PROD_API_WEBHOOK_URI'

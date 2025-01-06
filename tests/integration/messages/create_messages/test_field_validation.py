@@ -2,7 +2,7 @@ import requests
 import pytest
 import uuid
 from lib import Assertions, Permutations, Generators
-from lib.constants.constants import GLOBAL_ROUTING_CONFIGURATION_SMS, INT_URL, INVALID_NHS_NUMBER, INVALID_DOB, \
+from lib.constants.constants import ERROR_TOO_FEW_ADDRESS_LINES, INT_URL, INVALID_NHS_NUMBER, \
     INVALID_PERSONALISATION_VALUES, NULL_VALUES, CORRELATION_IDS
 from lib.constants.messages_paths import MISSING_PROPERTIES_PATHS, NULL_PROPERTIES_PATHS, \
     INVALID_PROPERTIES_PATHS, MESSAGES_ENDPOINT
@@ -156,33 +156,6 @@ def test_invalid_nhs_number(bearer_token_int, nhs_number, correlation_id):
         resp,
         400,
         Generators.generate_invalid_nhs_number_error("/data/attributes/recipient/nhsNumber"),
-        correlation_id
-    )
-
-
-@pytest.mark.inttest
-@pytest.mark.parametrize("dob", INVALID_DOB)
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_invalid_dob(bearer_token_int, dob, correlation_id):
-    """
-    .. include:: ../../partials/validation/test_invalid_dob.rst
-    """
-    data = Generators.generate_valid_create_message_body("int")
-    data["data"]["attributes"]["recipient"]["dateOfBirth"] = dob
-    resp = requests.post(
-        f"{INT_URL}{MESSAGES_ENDPOINT}",
-        headers={
-            "Authorization": bearer_token_int.value,
-            **headers,
-            "X-Correlation-Id": correlation_id
-        },
-        json=data
-    )
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_invalid_value_error("/data/attributes/recipient/dateOfBirth"),
         correlation_id
     )
 

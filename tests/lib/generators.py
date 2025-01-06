@@ -25,8 +25,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
+                                "nhsNumber": "9990548609"
                             },
                             "originator": {
                                 "odsCode": "X26"
@@ -36,8 +35,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
+                                "nhsNumber": "9990548609"
                             },
                             "originator": {
                                 "odsCode": "X26"
@@ -47,8 +45,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01"
+                                "nhsNumber": "9990548609"
                             },
                             "originator": {
                                 "odsCode": "X26"
@@ -78,8 +75,7 @@ class Generators():
                     "routingPlanId": routing_plan_id,
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": "9990548609",
-                        "dateOfBirth": "2023-01-01"
+                        "nhsNumber": "9990548609"
                     },
                     "originator": {
                         "odsCode": "X26"
@@ -93,13 +89,10 @@ class Generators():
     def generate_send_message_body(channel, environment, personalisation="Hello"):
         if environment == "internal-dev":
             nhs_number = "9627193232"
-            date_of_birth = "1998-03-21"
             if channel == "nhsapp":
                 nhs_number = "9842434109"
-                date_of_birth = "2002-10-23"
         elif environment == "internal-qa":
             nhs_number = "9730617953"
-            date_of_birth = "2009-09-02"
         else:
             raise ValueError(f"Invalid environment value provided: {environment}")
         if channel == "nhsapp":
@@ -119,8 +112,7 @@ class Generators():
                     "routingPlanId": routing_plan_id,
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": nhs_number,
-                        "dateOfBirth": date_of_birth
+                        "nhsNumber": nhs_number
                     },
                     "originator": {
                         "odsCode": "X26"

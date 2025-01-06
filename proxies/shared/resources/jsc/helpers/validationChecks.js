@@ -1,7 +1,6 @@
 // Regex to validate the id is a valid UUID
 const uuidRegex = /^[0-9a-f]{8}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{12}$/i
 const nhsNumberRegex = /^\d{10}$/i
-const dobRegex = /^\d{4}-\d{2}-\d{2}$/i
 const messageId = context.getVariable("messageid");
 
 const isUndefined = (val) => {
@@ -101,21 +100,6 @@ const validateArray = (errors, fieldValue, fieldPointer, minElements) => {
         return false
     } else if (fieldValue.length < minElements) {
         errors.push(tooFewItemsError(fieldPointer));
-        return false
-    }
-    return true
-}
-
-const validateDob = (errors, fieldValue, fieldPointer) => {
-    if (
-        !isUndefined(fieldValue)
-        && (
-            fieldValue === null
-            || typeof fieldValue !== "string"
-            || !dobRegex.test(fieldValue)
-        )
-    ) {
-        errors.push(invalidError(fieldPointer));
         return false
     }
     return true
