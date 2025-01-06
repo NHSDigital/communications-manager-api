@@ -45,8 +45,7 @@ def test_425_retry_too_early(nhsd_apim_proxy_url, correlation_id):
                         {
                             "messageReference": "703b8008-545d-4a04-bb90-1f2946ce1575",
                             "recipient": {
-                                "nhsNumber": "9990548609",
-                                "dateOfBirth": "2023-01-01",
+                                "nhsNumber": "9990548609"
                             },
                             "personalisation": {},
                         }
