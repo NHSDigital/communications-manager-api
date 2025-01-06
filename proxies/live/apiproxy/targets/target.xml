@@ -18,10 +18,14 @@
         <SSLInfo>
             <Enabled>true</Enabled>
         </SSLInfo>
-        <LoadBalancer>
-            <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
-        </LoadBalancer>
-        <Path>{requestpath}</Path>
+        {% if ENVIRONMENT_TYPE == 'sandbox' %}
+            <LoadBalancer>
+                <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
+            </LoadBalancer>
+            <Path>{requestpath}</Path>
+        {% else %}
+            <URL>https://comms-apim.de2-aado1.communications.national.nhs.uk</URL>
+        {% endif %}
         <Properties>
             <Property name="io.timeout.millis">29000</Property>
         </Properties>
