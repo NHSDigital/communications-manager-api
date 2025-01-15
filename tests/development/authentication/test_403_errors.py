@@ -8,13 +8,7 @@ CORRELATION_IDS = [None, "76491414-d0cf-4655-ae20-a4d1368472f3"]
 
 
 @pytest.mark.devtest
-@pytest.mark.nhsd_apim_authorization(
-    {
-        "access": "healthcare_worker",
-        "level": "aal3",
-        "login_form": {"username": "656005750104"},
-    }
-)
+@pytest.mark.nhsd_apim_authorization({"healthcare_worker": "nhs-cis2", "patient": "nhs-login"})
 @pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
