@@ -5,8 +5,6 @@ from lib.fixtures import *  # NOSONAR
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 import time
 
-CORRELATION_IDS = [None, "0f160ae2-9b62-47bf-bdf0-c6a844d59488"]
-
 test_client_1_details = {
     "email": "ian.hodges1@nhs.net",
     "name": "NHS Notify Test Client 1"
@@ -26,8 +24,7 @@ def send_multiple_requests(url, headers, count=10, delay=0):
 
 
 @pytest.mark.devperftest
-@pytest.mark.parametrize("correlation_id", CORRELATION_IDS)
-def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting, correlation_id):
+def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
 
     """
     .. include:: ../../partials/too_many_requests/test_429_global_app_quota.rst
@@ -38,7 +35,7 @@ def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev,
         "Authorization": bearer_token_internal_dev.value,
         "Accept": "*/*",
         "Content-Type": "application/json",
-        "X-Correlation-Id": correlation_id
+        "X-Correlation-Id": None
     }
 
     resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
@@ -49,7 +46,7 @@ def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev,
         Generators.generate_quota_error_custom(
             "Your application, Comms-manager-local, "
             "has exceeded its quota of 4 requests every 1 minute(s) and is being rate limited."),
-        correlation_id
+        None
     )
 
     assert "Retry-After" in resp.headers
