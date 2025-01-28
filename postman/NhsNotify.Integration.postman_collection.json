@@ -115,7 +115,7 @@
                   "    clearTimeout(interval);    ",
                   "});"
                ],
-               "id" : "6d182916-1352-4f7e-bc2f-5402971ea2d3",
+               "id" : "ff9efab8-042e-4df9-8c1d-4c7246878785",
                "type" : "text/javascript"
             }
          },
@@ -125,25 +125,25 @@
                "exec" : [
                   ""
                ],
-               "id" : "dc1945c6-e8f1-4c50-ae33-7014b01dbbc0",
+               "id" : "0fbc974b-ce93-4a5f-b0ff-2fa68ed08235",
                "type" : "text/javascript"
             }
          }
       ],
       "info" : {
-         "_postman_id" : "fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "createdAt" : null,
-         "description" : "This collection enables you to make requests against our integration test environment.\n\nThis environment requires you to be authenticated and authorised to make these requests, plus you must have completed (or be in the progress of) onboarding onto the Communications Manager Service.\n\nFor more information on the Communications Manager API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).\n\n## Authentication\n\nThis collection will carry out the [signed JWT authentication flow](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) for you automatically.\n\nYou must provide your API key and private key within the environment variables.\n\nIf you have not yet created an API client with an API key and private key, then please [refer to the documentation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication). Instructions are given here on how to create an application and how to generate a key pair for generating bearer tokens.\n\nMake sure to create your API application in the `Integration Testing` environment, and to request access to the `Communications Manager (Integration Testing)` API. Your API application will be granted access to this API automatically.\n\nOnce you have your API key and your private key, put these into the `api_key` and `private_key` variables within the `Integration` environment.\n\nRequests will now have a bearer token attached to them automatically, authenticating your requests.\n\nIf you have not yet started the onboarding process with the Communications Manager service then your requests, although authenticated, will return a `403 - Forbidden` response.\n\n**Ensure that your API key and private key are kept secret at all times!**\n\n**If you publish/share your API key or private key you must revoke them via the** [NHS onboarding portal](https://onboarding.prod.api.platform.nhs.uk/) **immediately.**\n\nLeaking these credentials will allow other people to generate tokens to call the API on your behalf.",
-         "lastUpdatedBy" : null,
-         "name" : "Communications Manager - Integration",
+         "_postman_id" : "9c132bcd-f76f-448f-a58c-ba38c5d64d4f",
+         "createdAt" : "2025-01-28T17:00:28.000Z",
+         "description" : "This collection enables you to make requests against our integration test environment.\n\nThis environment requires you to be authenticated and authorised to make these requests, plus you must have completed (or be in the progress of) onboarding onto the NHS Notify Service.\n\nFor more information on the NHS Notify API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).\n\n## Authentication\n\nThis collection will carry out the [signed JWT authentication flow](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication) for you automatically.\n\nYou must provide your API key and private key within the environment variables.\n\nIf you have not yet created an API client with an API key and private key, then please [refer to the documentation](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication). Instructions are given here on how to create an application and how to generate a key pair for generating bearer tokens.\n\nMake sure to create your API application in the `Integration Testing` environment, and to request access to the `NHS Notify (Integration Testing)` API. Your API application will be granted access to this API automatically.\n\nOnce you have your API key and your private key, put these into the `api_key` and `private_key` variables within the `Integration` environment.\n\nRequests will now have a bearer token attached to them automatically, authenticating your requests.\n\nIf you have not yet started the onboarding process with the NHS Notify service then your requests, although authenticated, will return a `403 - Forbidden` response.\n\n**Ensure that your API key and private key are kept secret at all times!**\n\n**If you publish/share your API key or private key you must revoke them via the** [NHS onboarding portal](https://onboarding.prod.api.platform.nhs.uk/) **immediately.**\n\nLeaking these credentials will allow other people to generate tokens to call the API on your behalf.",
+         "lastUpdatedBy" : "41628342",
+         "name" : "NHS Notify - Integration",
          "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-         "uid" : "28740466-fbe32763-302e-4a0b-b6e9-3a20f1bde923",
-         "updatedAt" : "2024-06-27T13:15:35.000Z"
+         "uid" : "41628342-9c132bcd-f76f-448f-a58c-ba38c5d64d4f",
+         "updatedAt" : "2025-01-28T17:00:29.000Z"
       },
       "item" : [
          {
             "description" : "These example calls show how to use the send messages endpoint. This endpoint allows you to create a `MessageBatch`.\n\nFor more information on this endpoint [refer to the documentation](https://digital.nhs.uk/developer/api-catalogue/nhs-notify#post-/v1/message-batches).",
-            "id" : "f5ca3438-8247-4f80-a0f2-29dfb6ee85d3",
+            "id" : "3a741c32-5b4c-4306-82fd-9e7b5efa19a3",
             "item" : [
                {
                   "event" : [
@@ -153,7 +153,7 @@
                            "exec" : [
                               ""
                            ],
-                           "id" : "832ce22d-e604-4477-8b49-6add91920812",
+                           "id" : "8e1504c8-e0e3-4ee7-8a60-57764decbafb",
                            "packages" : {},
                            "type" : "text/javascript"
                         }
@@ -176,13 +176,13 @@
                               "    pm.response.to.have.status(201);\r",
                               "});"
                            ],
-                           "id" : "59dadc53-94c6-4329-8f96-668bd304968b",
+                           "id" : "b8b43e42-a61c-4305-8c36-da4764e98073",
                            "packages" : {},
                            "type" : "text/javascript"
                         }
                      }
                   ],
-                  "id" : "1c5c08e7-9088-4ab8-aa82-75bcf21a805d",
+                  "id" : "9cbeab24-3374-47e5-89be-40916eb34d4f",
                   "name" : "201 - Message Batch Created",
                   "protocolProfileBehavior" : {
                      "disableBodyPruning" : true
@@ -233,7 +233,7 @@
                      }
                   },
                   "response" : [],
-                  "uid" : "28740466-1c5c08e7-9088-4ab8-aa82-75bcf21a805d"
+                  "uid" : "41628342-9cbeab24-3374-47e5-89be-40916eb34d4f"
                },
                {
                   "event" : [
@@ -243,7 +243,7 @@
                            "exec" : [
                               ""
                            ],
-                           "id" : "832ce22d-e604-4477-8b49-6add91920812",
+                           "id" : "ce480a3c-dee9-4812-bec3-6b8144c0dd53",
                            "packages" : {},
                            "type" : "text/javascript"
                         }
@@ -266,13 +266,13 @@
                               "    pm.response.to.have.status(201);\r",
                               "});"
                            ],
-                           "id" : "59dadc53-94c6-4329-8f96-668bd304968b",
+                           "id" : "ed7bc9d8-9b2c-43d7-a9f0-a6598ff51032",
                            "packages" : {},
                            "type" : "text/javascript"
                         }
                      }
                   ],
-                  "id" : "611761b4-f4aa-408b-85a3-4cc4a4eec71a",
+                  "id" : "90a4ab92-8959-4579-bc1f-fcab1673bcf9",
                   "name" : "201 - Send Single Message",
                   "protocolProfileBehavior" : {
                      "disableBodyPruning" : true
@@ -319,17 +319,17 @@
                      }
                   },
                   "response" : [],
-                  "uid" : "28740466-611761b4-f4aa-408b-85a3-4cc4a4eec71a"
+                  "uid" : "41628342-90a4ab92-8959-4579-bc1f-fcab1673bcf9"
                }
             ],
             "name" : "Send Messages",
-            "uid" : "28740466-f5ca3438-8247-4f80-a0f2-29dfb6ee85d3"
+            "uid" : "41628342-3a741c32-5b4c-4306-82fd-9e7b5efa19a3"
          },
          {
-            "id" : "10354e32-504e-478c-b130-ecc063814e1a",
+            "id" : "04acb90e-bd17-4a69-b198-ac64acc561d6",
             "item" : [
                {
-                  "id" : "4dbe3915-b971-4cae-8590-9d3cb7e62f14",
+                  "id" : "784918ee-ea64-4008-a6e1-c2ae3494f1aa",
                   "name" : "200 - Get Message",
                   "protocolProfileBehavior" : {
                      "disableBodyPruning" : true
@@ -356,14 +356,14 @@
                      }
                   },
                   "response" : [],
-                  "uid" : "28740466-4dbe3915-b971-4cae-8590-9d3cb7e62f14"
+                  "uid" : "41628342-784918ee-ea64-4008-a6e1-c2ae3494f1aa"
                }
             ],
             "name" : "Get Message",
-            "uid" : "28740466-10354e32-504e-478c-b130-ecc063814e1a"
+            "uid" : "41628342-04acb90e-bd17-4a69-b198-ac64acc561d6"
          },
          {
-            "id" : "6536f61f-354e-4d1b-9894-fa2ea43d06ce",
+            "id" : "ed012ff6-abd8-49a4-a71e-eb9e160dea7e",
             "item" : [
                {
                   "event" : [
@@ -375,13 +375,13 @@
                               "    pm.response.to.have.status(200);",
                               "});"
                            ],
-                           "id" : "18a3007b-fcfd-431c-b688-ff2e6fd26fb0",
+                           "id" : "cd9304fc-d712-4e40-8e59-8564be7c4bed",
                            "packages" : {},
                            "type" : "text/javascript"
                         }
                      }
                   ],
-                  "id" : "ba8f0088-6184-42ae-8e99-95a32f417fbe",
+                  "id" : "f3881d9b-5f4a-4132-88b2-a541494373f3",
                   "name" : "200 - NHS App Account - Multipage",
                   "protocolProfileBehavior" : {
                      "disableBodyPruning" : true
@@ -418,11 +418,11 @@
                      }
                   },
                   "response" : [],
-                  "uid" : "28740466-ba8f0088-6184-42ae-8e99-95a32f417fbe"
+                  "uid" : "41628342-f3881d9b-5f4a-4132-88b2-a541494373f3"
                }
             ],
             "name" : "NHS App Account",
-            "uid" : "28740466-6536f61f-354e-4d1b-9894-fa2ea43d06ce"
+            "uid" : "41628342-ed012ff6-abd8-49a4-a71e-eb9e160dea7e"
          }
       ],
       "variable" : [

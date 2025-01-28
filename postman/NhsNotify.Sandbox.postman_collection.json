@@ -1,0 +1,3531 @@
+{
+   "collection" : {
+      "event" : [
+         {
+            "listen" : "prerequest",
+            "script" : {
+               "exec" : [
+                  "var uuid = require('uuid');",
+                  "",
+                  "//assign the message batch reference",
+                  "pm.variables.set(\"message_batch_reference\", uuid.v4());",
+                  "",
+                  "//assign the message batch reference",
+                  "pm.variables.set(\"message_reference\", uuid.v4());",
+                  "",
+                  "//assign the correlation id",
+                  "pm.variables.set(\"correlation_id\", uuid.v4());"
+               ],
+               "id" : "39376b08-c145-40c0-89d5-e2425fd4b263",
+               "type" : "text/javascript"
+            }
+         },
+         {
+            "listen" : "test",
+            "script" : {
+               "exec" : [
+                  ""
+               ],
+               "id" : "a653d5bb-96bf-401c-af43-629cbf69bb20",
+               "type" : "text/javascript"
+            }
+         }
+      ],
+      "info" : {
+         "_postman_id" : "33dcc9d0-8ccc-4756-8ccb-237fd78337f5",
+         "createdAt" : "2025-01-28T17:02:22.000Z",
+         "description" : "This collection allows you to run a number of pre-generated requests to simulate responses from our sandbox environment.\n\nThis environment requires no authentication and no upfront setup for you to use.\n\nFor more information on the NHS Notify API please refer to [the documentation](https://digital.nhs.uk/developer/api-catalogue/nhs-notify).",
+         "lastUpdatedBy" : "41628342",
+         "name" : "NHS Notify - Sandbox",
+         "schema" : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+         "uid" : "41628342-33dcc9d0-8ccc-4756-8ccb-237fd78337f5",
+         "updatedAt" : "2025-01-28T17:02:23.000Z"
+      },
+      "item" : [
+         {
+            "description" : "This folder contains requests that allow you to simulate all of the different responses when sending a batch of messages.",
+            "id" : "b48eb771-b123-4fcd-9ad9-fb1273fc61c1",
+            "item" : [
+               {
+                  "description" : "This folder contains example requests that trigger validation errors when attempting to send a batch of messages.",
+                  "id" : "c5979023-9d93-4b72-a8c6-f15d19de231a",
+                  "item" : [
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "5524e3f3-f3db-447d-8991-8a4f3b62dfd9",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "693ec0d9-578c-4c20-a7a6-afe1c09092da",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "f43e7f4f-4f1e-4347-be53-199d5ffaa02c",
+                        "name" : "400 -  Too Few Items",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This responses sends 0 message objects in the messages collection triggering the too few items error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-f43e7f4f-4f1e-4347-be53-199d5ffaa02c"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "0ca0a65f-0abe-4856-b4e1-f80f616f8472",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "86c74741-1039-43f6-8c48-867e42366b25",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "0b88b4bf-a794-459f-9228-2ce7a49ff85a",
+                        "name" : "400 - Duplicate Items",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    },\r\n                                        {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request sends two message objects with the same `messageReference` value. This triggers a duplicate items error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-0b88b4bf-a794-459f-9228-2ce7a49ff85a"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "7b49d408-e538-41d4-8e5b-ae7ecdb9dd8d",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "61ab5f30-c727-438c-9afe-5ba9740f7244",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "f6be87f7-6f07-4249-a724-9e90cf756066",
+                        "name" : "400 - Null Value",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": null,\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": null,\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request sends a null `type` and a null `recipient` on the request, triggering the null value error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-f6be87f7-6f07-4249-a724-9e90cf756066"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "1a58ec69-46e1-4e07-a444-8911dc6bf66c",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "7e867377-6ada-4e57-aad1-09a1c13bfb1d",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "72ec0872-56ca-4d85-857c-65e35e2d85f9",
+                        "name" : "400 - Invalid Value",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"invalid\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"invalid\",\r\n                \"messageBatchReference\": \"invalid\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"invalid\",\r\n                        \"recipient\": \"invalid\",\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request sends several invalid values on properties. Each of these triggers its own invalid value error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-72ec0872-56ca-4d85-857c-65e35e2d85f9"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "279d25c1-38f2-481d-9729-ff1b07760503",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "7a43f0aa-8cbe-464a-b6a7-71e4ea536387",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "9c24e120-9193-4b25-a185-45ecbee62c26",
+                        "name" : "400 - Missing Property",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request misses the `type` and the `messageBatchReference` properties. This triggers the missing property error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-9c24e120-9193-4b25-a185-45ecbee62c26"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "aede5ad9-ac95-45d9-92e3-3d1d8d6eb64f",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "9756ff05-6c5d-45c7-9f56-e88edca6ff88",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "f0af4508-5634-4f5c-bc38-6a88bac03958",
+                        "name" : "400 - Invalid Value - Body",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "}{@SA}{}SAD"
+                           },
+                           "description" : "This request sends through an invalid JSON body payload, which triggers the invalid value error at the body level.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-f0af4508-5634-4f5c-bc38-6a88bac03958"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "b800bc9c-68de-4c23-bfd1-4930a9ebcbf1",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 404\", () => {\r",
+                                    "    pm.response.to.have.status(404);\r",
+                                    "});"
+                                 ],
+                                 "id" : "58374a75-0afe-487a-ac53-7038fe7c743d",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "c1458afc-d257-4874-8c28-32b058907721",
+                        "name" : "404 - Invalid Routing Plan Id",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"c118b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request sends an invalid routing plan id. As the system cannot find this routing plan it triggers a 404 error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "message-batches"
+                              ],
+                              "raw" : "{{base_url}}/v1/message-batches"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-c1458afc-d257-4874-8c28-32b058907721"
+                     }
+                  ],
+                  "name" : "Validation Errors",
+                  "uid" : "41628342-c5979023-9d93-4b72-a8c6-f15d19de231a"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "a8251064-de25-4b9f-94e6-6b7d1521c6da",
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "ed791e00-5157-40dc-93fe-2c5f54016924",
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "b99b52aa-3e4f-492a-a901-c6e1188031da",
+                  "name" : "201 - Message Batch Created",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message batch.",
+                     "header" : [
+                        {
+                           "key" : "Content-Type",
+                           "type" : "default",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Accept",
+                           "type" : "default",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "type" : "text",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "message-batches"
+                        ],
+                        "raw" : "{{base_url}}/v1/message-batches"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-b99b52aa-3e4f-492a-a901-c6e1188031da"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "662cc4ef-c9dc-4b9b-af4b-ff483a7e63b8",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "1edb6159-3247-43ba-861c-624fc06c8af8",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "92c2cd6d-10e7-47bc-954f-26007dce60da",
+                  "name" : "201 - Message Batch Created - Free-text NHS App",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"00000000-0000-0000-0000-000000000001\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"messageReference\": \"990b5b3d-d24b-40f9-83b6-d124597e92e0\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9800100369\",\r\n                            \"dateOfBirth\": \"1983-12-03\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message batch using the NHS App free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Content-Type",
+                           "type" : "default",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Accept",
+                           "type" : "default",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "type" : "text",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "message-batches"
+                        ],
+                        "raw" : "{{base_url}}/v1/message-batches"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-92c2cd6d-10e7-47bc-954f-26007dce60da"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "7f9e5596-f1dd-486d-9b28-6fe9c0f39364",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "4ec1df62-78e6-4876-adc2-f178a502f746",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "dabcf004-6761-4f34-a4ee-ad7b5cd13e0c",
+                  "name" : "201 - Message Batch Created - Free-text Email",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"00000000-0000-0000-0000-000000000002\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"email_subject\": \"Smoking Cessation\",\r\n                            \"email_body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"messageReference\": \"990b5b3d-d24b-40f9-83b6-d124597e92e0\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9800100369\",\r\n                            \"dateOfBirth\": \"1983-12-03\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"email_subject\": \"Smoking Cessation\",\r\n                            \"email_body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message batch using the email free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "message-batches"
+                        ],
+                        "raw" : "{{base_url}}/v1/message-batches"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-dabcf004-6761-4f34-a4ee-ad7b5cd13e0c"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "aad05d0d-4320-48a1-9c69-ef38aca0ecfb",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "7016afb1-36af-457e-8eaf-241f5ae4251d",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "be2d4747-929b-4cae-a917-e363de14bfe1",
+                  "name" : "201 - Message Batch Created - Free-text SMS",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"00000000-0000-0000-0000-000000000003\",\r\n                \"messageBatchReference\": \"{{message_batch_reference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"sms_body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"messageReference\": \"990b5b3d-d24b-40f9-83b6-d124597e92e0\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9800100369\",\r\n                            \"dateOfBirth\": \"1983-12-03\"\r\n                        },\r\n                        \"personalisation\": {\r\n                            \"sms_body\": \"Please contact your practice to book into our smoking cessation clinic\"\r\n                        }\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message batch using the SMS free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "message-batches"
+                        ],
+                        "raw" : "{{base_url}}/v1/message-batches"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-be2d4747-929b-4cae-a917-e363de14bfe1"
+               }
+            ],
+            "name" : "Send Message Batches",
+            "uid" : "41628342-b48eb771-b123-4fcd-9ad9-fb1273fc61c1"
+         },
+         {
+            "description" : "This folder contains all requests related to errors that the API can throw on any endpoint.",
+            "id" : "14cc8457-d7dd-4fac-a600-2ac4d1781922",
+            "item" : [
+               {
+                  "description" : "This collection of requests shows how to trigger timeout and quota errors.",
+                  "id" : "6e1409d4-771d-4614-bd79-6707b5f8a2df",
+                  "item" : [
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "ad6e6c2b-22de-451a-a674-ee587ec426db",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 408\", () => {\r",
+                                    "    pm.response.to.have.status(408);\r",
+                                    "});\r",
+                                    ""
+                                 ],
+                                 "id" : "24e6debf-30ef-4842-93e2-7a413f1c5f85",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "4118a784-d455-4f0b-bbe8-57bb1a359e7d",
+                        "name" : "408 - Request Timeout",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "description" : "This request simulates the request timeout error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "default",
+                                 "value" : "code=408"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-4118a784-d455-4f0b-bbe8-57bb1a359e7d"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "8d126755-db97-4257-b330-c04038ab4436",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 429\", () => {\r",
+                                    "    pm.response.to.have.status(429);\r",
+                                    "});\r",
+                                    ""
+                                 ],
+                                 "id" : "9eb02b22-f358-4181-b5c3-5bf1b7aa46ce",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "6c07ee6b-b7ed-452f-b0c0-2b35a63558e3",
+                        "name" : "429 - Too Many Requests",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "description" : "This request simulates the too many requests error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "default",
+                                 "value" : "code=429"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-6c07ee6b-b7ed-452f-b0c0-2b35a63558e3"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "1e3de229-846e-4f63-b345-3e58838e5afe",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 504\", () => {\r",
+                                    "    pm.response.to.have.status(504);\r",
+                                    "});"
+                                 ],
+                                 "id" : "c6d17859-4a22-485b-b9bb-49758e185181",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "c6fc0456-c0fc-48f3-a90a-f1fe6ac24bb6",
+                        "name" : "504 - Gateway Timeout",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true,
+                           "disabledSystemHeaders" : {
+                              "accept" : true
+                           }
+                        },
+                        "request" : {
+                           "description" : "This request simulates the gateway timeout error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "default",
+                                 "value" : "code=504"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-c6fc0456-c0fc-48f3-a90a-f1fe6ac24bb6"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 425\", () => {\r",
+                                    "    pm.response.to.have.status(425);\r",
+                                    "});"
+                                 ],
+                                 "id" : "d2892386-01b2-4681-91e6-c8f14b316f94",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "9e493736-26dd-4b99-912d-01c7f059a9eb",
+                        "name" : "425 - Retry Too Early",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : ""
+                           },
+                           "description" : "This request simulates the retry too early error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "text",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "text",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "text",
+                                 "value" : "code=425"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-9e493736-26dd-4b99-912d-01c7f059a9eb"
+                     }
+                  ],
+                  "name" : "Timeouts & Quotas",
+                  "uid" : "41628342-6e1409d4-771d-4614-bd79-6707b5f8a2df"
+               },
+               {
+                  "description" : "This collection of requests shows how to trigger authentication and authorization errors.",
+                  "id" : "b3f807ff-47a4-43e8-a751-fa19213c4001",
+                  "item" : [
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "fc0fd0a6-fbb8-4aad-9086-1ef4a85d0024",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 401\", () => {\r",
+                                    "    pm.response.to.have.status(401);\r",
+                                    "});\r",
+                                    ""
+                                 ],
+                                 "id" : "2b07d16a-83d8-452e-a3c0-a5dbe5c3893a",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "e988af96-89d7-4ccd-97f5-ab6e44989537",
+                        "name" : "401 - Unauthorized",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "description" : "This request simulates the unauthorized error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "text",
+                                 "value" : "code=401"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-e988af96-89d7-4ccd-97f5-ab6e44989537"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "08aec7a0-4ff7-4f8b-b909-3ec9271b0179",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 403\", () => {\r",
+                                    "    pm.response.to.have.status(403);\r",
+                                    "});\r",
+                                    ""
+                                 ],
+                                 "id" : "2970206b-5a3e-416b-be4f-584760fcb081",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "25416914-221c-45fa-b26a-bb6257f016f5",
+                        "name" : "403 - Forbidden",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "description" : "This request simulates the forbidden error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "default",
+                                 "value" : "{{correlation_id}}"
+                              },
+                              {
+                                 "key" : "Prefer",
+                                 "type" : "default",
+                                 "value" : "code=403"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-25416914-221c-45fa-b26a-bb6257f016f5"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "98690330-23de-4350-af4a-f95abebebd50",
+                                 "packages" : {},
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Status code is 403\", () => {\r",
+                                    "    pm.response.to.have.status(403);\r",
+                                    "});\r",
+                                    ""
+                                 ],
+                                 "id" : "fe87dcbe-2aaa-4294-b580-0d0207a64b85",
+                                 "packages" : {},
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "fbe0992c-2807-4280-93a3-20c1ae3790de",
+                        "name" : "403 - Service Ban",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "description" : "This request simulates the client service ban error response from the API.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Authorization",
+                                 "value" : "banned"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "test-id-123"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/test-id-123"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-fbe0992c-2807-4280-93a3-20c1ae3790de"
+                     }
+                  ],
+                  "name" : "Authentication errors",
+                  "uid" : "41628342-b3f807ff-47a4-43e8-a751-fa19213c4001"
+               },
+               {
+                  "description" : "This collection of requests shows how to trigger mime type errors.",
+                  "id" : "1a527236-d8f5-413f-9de3-0cfefadc1299",
+                  "item" : [
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "ede21be6-2557-42ec-9b09-433edf96e4b5",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 406\", () => {\r",
+                                    "    pm.response.to.have.status(406);\r",
+                                    "});"
+                                 ],
+                                 "id" : "014a83ea-b3c8-4073-afad-3ce6a1aa7fca",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "22897766-bd80-44ef-9614-ac1a66073b7d",
+                        "name" : "406 - Not Acceptable",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{base_url}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request asks the server to generate a response that it cannot, triggering a not acceptable error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "not/valid"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-22897766-bd80-44ef-9614-ac1a66073b7d"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "prerequest",
+                              "script" : {
+                                 "exec" : [
+                                    ""
+                                 ],
+                                 "id" : "9dbd6591-4c76-48d8-9c5c-33a3ca618593",
+                                 "type" : "text/javascript"
+                              }
+                           },
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 415\", () => {\r",
+                                    "    pm.response.to.have.status(415);\r",
+                                    "});"
+                                 ],
+                                 "id" : "423354a7-5ece-4b09-a84d-273add1d018b",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "b125b868-a5ab-4114-a91b-34152b32e93a",
+                        "name" : "415 - Unsupported Media",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n        \"data\": {\r\n            \"type\": \"MessageBatch\",\r\n            \"attributes\": {\r\n                \"routingPlanId\": \"{{routing_plan_id}}\",\r\n                \"messageBatchReference\": \"{{messageBatchReference}}\",\r\n                \"messages\": [\r\n                    {\r\n                        \"messageReference\": \"703b8008-545d-4a04-bb90-1f2946ce1575\",\r\n                        \"recipient\": {\r\n                            \"nhsNumber\": \"9990548609\",\r\n                            \"dateOfBirth\": \"1932-01-06\"\r\n                        },\r\n                        \"personalisation\": {}\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n}"
+                           },
+                           "description" : "This request attempts to send data in an unknown format, triggering an unsupported media error.",
+                           "header" : [
+                              {
+                                 "key" : "Content-Type",
+                                 "type" : "default",
+                                 "value" : "not/valid"
+                              },
+                              {
+                                 "key" : "Accept",
+                                 "type" : "default",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "type" : "text",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "raw" : "{{base_url}}"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-b125b868-a5ab-4114-a91b-34152b32e93a"
+                     }
+                  ],
+                  "name" : "Mime type errors",
+                  "uid" : "41628342-1a527236-d8f5-413f-9de3-0cfefadc1299"
+               }
+            ],
+            "name" : "Errors",
+            "uid" : "41628342-14cc8457-d7dd-4fac-a600-2ac4d1781922"
+         },
+         {
+            "id" : "13a10959-94b6-4439-95ea-66890f73ec29",
+            "item" : [
+               {
+                  "id" : "0e1c4e8d-05cf-4237-b70d-58208f78c520",
+                  "item" : [
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "c11403a3-3b41-4725-8979-ea6a5a88998e",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "6bc5f1ab-6f9f-40cc-81a5-55ea1cae2273",
+                        "name" : "400 - Invalid Value",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"invalid\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"invalid\",\r\n            \"messageReference\": \"invalid\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"invalid\",\r\n                \"dateOfBirth\": \"invalid\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                           },
+                           "description" : "This request sends several invalid values on properties. Each of these triggers its own invalid value error.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-6bc5f1ab-6f9f-40cc-81a5-55ea1cae2273"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "8f276d0b-a8a9-446c-8f0c-1e86566947a0",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "b36091fc-4d21-4c9f-9402-7bdeec05a9b4",
+                        "name" : "400 - Invalid Value - Body",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : ""
+                           },
+                           "description" : "This request sends through an invalid JSON body payload, which triggers the invalid value error at the body level.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-b36091fc-4d21-4c9f-9402-7bdeec05a9b4"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "06f1dd58-8abe-45fd-8216-58814165ad76",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "0174a18c-19af-4ad2-990a-e59f6e7afa03",
+                        "name" : "400 - Missing Property",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n    \"data\": {\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"b838b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                           },
+                           "description" : "This request misses the `type` and the `messageReference` properties. This triggers the missing property error.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-0174a18c-19af-4ad2-990a-e59f6e7afa03"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 400\", () => {\r",
+                                    "    pm.response.to.have.status(400);\r",
+                                    "});"
+                                 ],
+                                 "id" : "6865198e-e3cc-47fa-be92-d6c4b2203287",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "3792a210-219e-4126-9741-dfa7daf84b7d",
+                        "name" : "400 - Null Value",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n    \"data\": {\r\n        \"type\": null,\r\n        \"attributes\": {\r\n            \"routingPlanId\": null,\r\n            \"messageReference\": null,\r\n            \"recipient\": {\r\n                \"nhsNumber\": null,\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                           },
+                           "description" : "This request sends a null `type,` `routingPlanId,` `messageReference` and `nhsNumber` on the request, triggering the null value error.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-3792a210-219e-4126-9741-dfa7daf84b7d"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 404\", () => {\r",
+                                    "    pm.response.to.have.status(404);\r",
+                                    "});"
+                                 ],
+                                 "id" : "0ab09df8-1d7c-4b64-be21-e82e8ed5a3b0",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "c6284b34-5099-461b-8981-9223d3d46a1e",
+                        "name" : "404 - No Such Routing Plan",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"c999b13c-f98c-4def-93f0-515d4e4f4dd2\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                           },
+                           "description" : "This request sends an invalid routing plan id. As the system cannot find this routing plan it triggers a 404 error.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-c6284b34-5099-461b-8981-9223d3d46a1e"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 500\", () => {\r",
+                                    "    pm.response.to.have.status(500);\r",
+                                    "});"
+                                 ],
+                                 "id" : "23ff4770-2bae-457f-b927-fe15d157d182",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "d749c14e-37a3-44e1-a44e-cd79fd2817c2",
+                        "name" : "500 - Duplicate Routing Plan Template",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"a3a4e55d-7a21-45a6-9286-8eb595c872a8\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                           },
+                           "description" : "This request sends a routing plan id that references a duplicate template. This routing plan triggers a 500 error.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-d749c14e-37a3-44e1-a44e-cd79fd2817c2"
+                     },
+                     {
+                        "event" : [
+                           {
+                              "listen" : "test",
+                              "script" : {
+                                 "exec" : [
+                                    "pm.test(\"Correlation identifier is returned\", () => {\r",
+                                    "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                                    "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                                    "});\r",
+                                    "\r",
+                                    "pm.test(\"Status code is 500\", () => {\r",
+                                    "    pm.response.to.have.status(500);\r",
+                                    "});"
+                                 ],
+                                 "id" : "112b3887-a3dd-4f43-b29a-06ac9e64242e",
+                                 "type" : "text/javascript"
+                              }
+                           }
+                        ],
+                        "id" : "c713899e-366d-480e-b5eb-325442c79565",
+                        "name" : "500 - Missing Routing Plan Template",
+                        "protocolProfileBehavior" : {
+                           "disableBodyPruning" : true
+                        },
+                        "request" : {
+                           "body" : {
+                              "mode" : "raw",
+                              "options" : {
+                                 "raw" : {
+                                    "language" : "json"
+                                 }
+                              },
+                              "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"c8857ccf-06ec-483f-9b3a-7fc732d9ad48\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                           },
+                           "description" : "This request sends a routing plan id that references a missing template. This routing plan triggers a 500 error.",
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "Content-Type",
+                                 "value" : "application/vnd.api+json"
+                              },
+                              {
+                                 "key" : "X-Correlation-Id",
+                                 "value" : "{{correlation_id}}"
+                              }
+                           ],
+                           "method" : "POST",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages"
+                           }
+                        },
+                        "response" : [],
+                        "uid" : "41628342-c713899e-366d-480e-b5eb-325442c79565"
+                     }
+                  ],
+                  "name" : "Validation Errors",
+                  "uid" : "41628342-0e1c4e8d-05cf-4237-b70d-58208f78c520"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "c710b9af-713a-4d50-ac88-30a3676f9527",
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "b74b95f6-7c7d-42b4-9d1a-acbc5b3ec932",
+                  "name" : "201 - Message Created",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "options" : {
+                           "raw" : {
+                              "language" : "json"
+                           }
+                        },
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"b838b13c-f98c-4def-93f0-515d4e4f4ee1\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {}\r\n        }\r\n    }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message.",
+                     "header" : [
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-b74b95f6-7c7d-42b4-9d1a-acbc5b3ec932"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "a55ca8fa-a070-4f06-8c7f-601b7e78b89f",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "af036d49-bcb2-4603-a9d9-6d91d802bf14",
+                  "name" : "201 - Message Created - Free-text NHS App",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "options" : {
+                           "raw" : {
+                              "language" : "json"
+                           }
+                        },
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"00000000-0000-0000-0000-000000000001\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {\r\n                \"body\": \"Your appointment has been booked for 28/02/2024 at 2:15 PM, please bring your medication with you\"\r\n            }\r\n        }\r\n    }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message using the NHS App free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-af036d49-bcb2-4603-a9d9-6d91d802bf14"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "efd278c7-f41a-4c3f-a736-2adfa5f24f12",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "36ab3c87-afea-4178-ab4b-f7c7db7d4486",
+                  "name" : "201 - Message Created - Free-text Email",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "options" : {
+                           "raw" : {
+                              "language" : "json"
+                           }
+                        },
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"00000000-0000-0000-0000-000000000002\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {\r\n\t\t\t\t\t\t\t  \"email_subject\": \"Appointment Information\",\r\n                \"email_body\": \"Your appointment has been booked for 28/02/2024 at 2:15 PM, please bring your medication with you\"\r\n            }\r\n        }\r\n    }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message using the email free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-36ab3c87-afea-4178-ab4b-f7c7db7d4486"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Correlation identifier is returned\", () => {\r",
+                              "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                              "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Status code is 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});"
+                           ],
+                           "id" : "81ab9947-1870-451d-b0d6-d1962f0c1986",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "1ca78fde-12fa-4a1b-aeef-efc9a1d2d72e",
+                  "name" : "201 - Message Created - Free-text SMS",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "body" : {
+                        "mode" : "raw",
+                        "options" : {
+                           "raw" : {
+                              "language" : "json"
+                           }
+                        },
+                        "raw" : "{\r\n    \"data\": {\r\n        \"type\": \"Message\",\r\n        \"attributes\": {\r\n            \"routingPlanId\": \"00000000-0000-0000-0000-000000000003\",\r\n            \"messageReference\": \"{{message_reference}}\",\r\n            \"recipient\": {\r\n                \"nhsNumber\": \"9990548609\",\r\n                \"dateOfBirth\": \"2023-01-01\"\r\n            },\r\n            \"personalisation\": {\r\n                \"sms_body\": \"Your appointment has been booked for 28/02/2024 at 2:15 PM, please bring your medication with you\"\r\n            }\r\n        }\r\n    }\r\n}"
+                     },
+                     "description" : "This request successfully creates a message using the SMS free-text global routing plan.",
+                     "header" : [
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "Content-Type",
+                           "value" : "application/vnd.api+json"
+                        },
+                        {
+                           "key" : "X-Correlation-Id",
+                           "value" : "{{correlation_id}}"
+                        }
+                     ],
+                     "method" : "POST",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-1ca78fde-12fa-4a1b-aeef-efc9a1d2d72e"
+               }
+            ],
+            "name" : "Send Message",
+            "uid" : "41628342-13a10959-94b6-4439-95ea-66890f73ec29"
+         },
+         {
+            "id" : "94d7c3ff-75e7-4589-a667-922fa2765db6",
+            "item" : [
+               {
+                  "id" : "3ab97943-d3f8-4158-8eb1-c817dc6736f0",
+                  "name" : "200 - Get Message",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true,
+                     "disabledSystemHeaders" : {
+                        "accept" : true
+                     }
+                  },
+                  "request" : {
+                     "description" : "This request successfully retrieves a message status.",
+                     "header" : [
+                        {
+                           "key" : "Accept",
+                           "value" : "application/vnd.api+json"
+                        }
+                     ],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages",
+                           "2WL5TWl7F7PondWbZ1vctlEtOZ3"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages/2WL5TWl7F7PondWbZ1vctlEtOZ3"
+                     }
+                  },
+                  "response" : [
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "0bd4a18b-f6d5-41da-8ee6-f423a6174d20",
+                        "name" : "200 - All Channels - SMS Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL5eYSWGzCHlGmzNxuqVusPxDg"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL5eYSWGzCHlGmzNxuqVusPxDg"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-0bd4a18b-f6d5-41da-8ee6-f423a6174d20"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "21410270-6255-40ee-9997-51b222efd12c",
+                        "name" : "200 - All Channels - Letter Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL5f8j4XVxUPgd3OOqXVYvVFIW"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL5f8j4XVxUPgd3OOqXVYvVFIW"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-21410270-6255-40ee-9997-51b222efd12c"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "5b07cd36-902d-4cad-bc1c-ca5d85770d1f",
+                        "name" : "200 - All Channels - NHS App Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL5TWl7F7PondWbZ1vctlEtOZ3"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL5TWl7F7PondWbZ1vctlEtOZ3"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-5b07cd36-902d-4cad-bc1c-ca5d85770d1f"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "51a243c2-2d04-47b9-a4ba-7c336b66041e",
+                        "name" : "200 - NHS App - Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL3qFTEFM0qMY8xjRbt1LIKCzM"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-51a243c2-2d04-47b9-a4ba-7c336b66041e"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "27182165-1e98-4a43-b704-976306378776",
+                        "name" : "200 - NHS App - Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL5qbEa7TzSWZXU2IAOCCrLXVL"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL5qbEa7TzSWZXU2IAOCCrLXVL"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-27182165-1e98-4a43-b704-976306378776"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "cc0e8986-e47c-4b37-b56e-b6b03cf51259",
+                        "name" : "200 - NHS App - Sending",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL44QP7vrKxKKBZdTtUQoB2bWl"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL44QP7vrKxKKBZdTtUQoB2bWl"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-cc0e8986-e47c-4b37-b56e-b6b03cf51259"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "0f9eeeec-c184-4275-9c16-1bd1060c233e",
+                        "name" : "200 - NHS App - Failed reason: NHS number not found",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL45YuHOLATvC3GspEu0oSioux"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL45YuHOLATvC3GspEu0oSioux"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-0f9eeeec-c184-4275-9c16-1bd1060c233e"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "28a7214b-710e-4d79-83e8-9fb310de520b",
+                        "name" : "200 - NHS App - Failed reason: Contact detail is missing",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4vHFZzInmaYwq6HRNDqTX8dH"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4vHFZzInmaYwq6HRNDqTX8dH"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-28a7214b-710e-4d79-83e8-9fb310de520b"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "f32909c1-c7e8-4eb6-b23d-893cc66e86d6",
+                        "name" : "200 - NHS App - Failed reason: NHS number not found",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL5eDefrbW31uw1il84WdF8ndH"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL5eDefrbW31uw1il84WdF8ndH"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-f32909c1-c7e8-4eb6-b23d-893cc66e86d6"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "12f4ca7c-49b8-4d9a-a105-0a393d0c03e8",
+                        "name" : "200 - Email - Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL3wwFhpZ6blJNIoh747bDEFNv"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL3wwFhpZ6blJNIoh747bDEFNv"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-12f4ca7c-49b8-4d9a-a105-0a393d0c03e8"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "d653e4b6-3e02-4518-a311-c28437178301",
+                        "name" : "200 - Email - Sending",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4GEeFVxXG9S57nRlefBwwKxp"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4GEeFVxXG9S57nRlefBwwKxp"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-d653e4b6-3e02-4518-a311-c28437178301"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "af9b50a5-0d4e-4bab-b48a-92f54201bedc",
+                        "name" : "200 - Email - Failed reason: Contact detail is missing",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4xcWKvz4F32g0htBEl8DINzn"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4xcWKvz4F32g0htBEl8DINzn"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-af9b50a5-0d4e-4bab-b48a-92f54201bedc"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "37deb375-7fad-4bdd-b05d-f37139716fb9",
+                        "name" : "200 - Email - Failed reason: The provider could not deliver the message. This can happen when the recipient’s inbox is full or their anti-spam filter rejects your email. Check your content does not look like spam before you try to send the message again.",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4W9RgbuLLByXdR77H8vjKSDd"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4W9RgbuLLByXdR77H8vjKSDd"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-37deb375-7fad-4bdd-b05d-f37139716fb9"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "29663adb-4909-4038-8193-60a9adc1684d",
+                        "name" : "200 - SMS - Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL3ydEEk37IzREoWRhuAdolFCE"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL3ydEEk37IzREoWRhuAdolFCE"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-29663adb-4909-4038-8193-60a9adc1684d"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "e8b1237e-0bc8-47e1-8076-a0ae4e9542e9",
+                        "name" : "200 - SMS - Sending",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4JXrfauCaQnSFbAujoImSKwo"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4JXrfauCaQnSFbAujoImSKwo"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-e8b1237e-0bc8-47e1-8076-a0ae4e9542e9"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "27d8fab4-7895-4ff8-a671-8fcb05719c54",
+                        "name" : "200 - SMS - Failed reason: Contact detail is missing",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL50w41YaZXcyFCNT346LY8rlz"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL50w41YaZXcyFCNT346LY8rlz"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-27d8fab4-7895-4ff8-a671-8fcb05719c54"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "02c48341-a78a-4338-a659-6b7fc1a0cf1b",
+                        "name" : "200 - SMS - Failed reason: Contact detail is missing",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2bBBpsiMl2rnQt99qm6JLZ6w1vq"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2bBBpsiMl2rnQt99qm6JLZ6w1vq"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-02c48341-a78a-4338-a659-6b7fc1a0cf1b"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "4a697323-2f4f-4289-82ff-07d93c9cbe97",
+                        "name" : "200 - Letter - Delivered",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL3zxCY9e5vm2VP1ZfYMb53WPF"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL3zxCY9e5vm2VP1ZfYMb53WPF"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-4a697323-2f4f-4289-82ff-07d93c9cbe97"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "794bac1c-b9c3-45a3-a002-6cf6c7ad539e",
+                        "name" : "200 - Letter - Sending",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4LuyNMtoGAsJQIpTxZLl8e3e"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4LuyNMtoGAsJQIpTxZLl8e3e"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-794bac1c-b9c3-45a3-a002-6cf6c7ad539e"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "f3534ea2-d775-4a08-aa31-6620c25c55cd",
+                        "name" : "200 - Letter - Failed reason: Contact detail is missing",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL54x0XQjCbWeE5lN0DKQZcokU"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL54x0XQjCbWeE5lN0DKQZcokU"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-f3534ea2-d775-4a08-aa31-6620c25c55cd"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "b3d4a8cc-c207-4bd9-bde4-90d08f97751b",
+                        "name" : "200 - Letter - Failed reason: We had an unexpected error while sending the letter to our printing provider.",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4MOuSeCTODDAScFG7KIq9a5r"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4MOuSeCTODDAScFG7KIq9a5r"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-b3d4a8cc-c207-4bd9-bde4-90d08f97751b"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "8924e5a4-5618-4bba-bae3-0e36aabe058c",
+                        "name" : "200 - Failed reason: Patient record invalidated.",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4cPfBRuPKa44JxhyXYf2kr1E"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4cPfBRuPKa44JxhyXYf2kr1E"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-8924e5a4-5618-4bba-bae3-0e36aabe058c"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "258b7895-4b78-4094-998c-8b7a142af4ba",
+                        "name" : "200 - Failed reason: Patient is formally dead",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4ibGoigirgbH4yQwqbPaJXyQ"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4ibGoigirgbH4yQwqbPaJXyQ"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-258b7895-4b78-4094-998c-8b7a142af4ba"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "73fefe52-df77-4e89-bb2f-398ea57ee41a",
+                        "name" : "200 - Failed reason: Patient is informally dead",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4khXn32dOOj4bB4bi8Tkllrq"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4khXn32dOOj4bB4bi8Tkllrq"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-73fefe52-df77-4e89-bb2f-398ea57ee41a"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "762c814d-fc1b-4a0e-8045-904fe6db97d3",
+                        "name" : "200 - Failed reason: Patient has exit code",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4mvx6eBva8dcIK60VEGIfcgZ"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4mvx6eBva8dcIK60VEGIfcgZ"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-762c814d-fc1b-4a0e-8045-904fe6db97d3"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "3bd6beb9-787a-4df3-9be5-f26f5e6feaeb",
+                        "name" : "200 - Failed reason: Patient does not exist in PDS",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4QcKGjNHvHFQeKgYbapZJGHK"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4QcKGjNHvHFQeKgYbapZJGHK"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-3bd6beb9-787a-4df3-9be5-f26f5e6feaeb"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "7805c91e-abd0-4b92-8918-a6e87fdce12e",
+                        "name" : "200 - Failed reason: Name response is invalid: Contact detail is malformed",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4pcpmKxYYblm3PSKVEqcmEPX"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4pcpmKxYYblm3PSKVEqcmEPX"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-7805c91e-abd0-4b92-8918-a6e87fdce12e"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "b44954c8-8b37-46db-bb80-c976a092743e",
+                        "name" : "200 - Failed reason: The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to pho",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2WL4JtCiOe7l2TT4szwPjNJah3z"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2WL4JtCiOe7l2TT4szwPjNJah3z"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-b44954c8-8b37-46db-bb80-c976a092743e"
+                     },
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "773fbc0a-3bf7-4cdb-924d-787ab2a304e7",
+                        "name" : "200 - Parallel send - NHS App Failed and SMS Delivered",
+                        "originalRequest" : {
+                           "header" : [
+                              {
+                                 "key" : "Accept",
+                                 "value" : "application/vnd.api+json"
+                              }
+                           ],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "v1",
+                                 "messages",
+                                 "2n7C5wdJ9JSOSeCJTyd50GvtZeR"
+                              ],
+                              "raw" : "{{base_url}}/v1/messages/2n7C5wdJ9JSOSeCJTyd50GvtZeR"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-773fbc0a-3bf7-4cdb-924d-787ab2a304e7"
+                     }
+                  ],
+                  "uid" : "41628342-3ab97943-d3f8-4158-8eb1-c817dc6736f0"
+               },
+               {
+                  "id" : "3694e907-1f76-4d32-8574-78fb5a1a1967",
+                  "name" : "404 - Not Found",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "This request attempts to retrieve a message that does not exist",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "v1",
+                           "messages",
+                           "does-not-exist"
+                        ],
+                        "raw" : "{{base_url}}/v1/messages/does-not-exist"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-3694e907-1f76-4d32-8574-78fb5a1a1967"
+               }
+            ],
+            "name" : "Get Message",
+            "uid" : "41628342-94d7c3ff-75e7-4589-a667-922fa2765db6"
+         },
+         {
+            "id" : "7b66fdee-f8c4-4233-8319-fba300aeab8b",
+            "item" : [
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 200\", () => {",
+                              "    pm.response.to.have.status(200);",
+                              "});"
+                           ],
+                           "id" : "2963ec53-610d-4e34-a658-5eeb52a38f3d",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "73baf466-87c0-4f13-832f-a93f166241ec",
+                  "name" : "200 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request succesfully retreives NHS numbers registered for notifications in the NHS app against an ODS code",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "X26"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=X26"
+                     }
+                  },
+                  "response" : [
+                     {
+                        "_postman_previewlanguage" : "Text",
+                        "body" : "",
+                        "cookie" : [],
+                        "header" : [],
+                        "id" : "ef87bb4a-716a-48c1-836e-3a93480f82c8",
+                        "name" : "200 - NHS App Account - T0001 returns the same data as X26",
+                        "originalRequest" : {
+                           "header" : [],
+                           "method" : "GET",
+                           "url" : {
+                              "host" : [
+                                 "{{base_url}}"
+                              ],
+                              "path" : [
+                                 "channels",
+                                 "nhsapp",
+                                 "accounts"
+                              ],
+                              "query" : [
+                                 {
+                                    "key" : "ods-organisation-code",
+                                    "value" : "T00001"
+                                 }
+                              ],
+                              "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00001"
+                           }
+                        },
+                        "responseTime" : null,
+                        "uid" : "41628342-ef87bb4a-716a-48c1-836e-3a93480f82c8"
+                     }
+                  ],
+                  "uid" : "41628342-73baf466-87c0-4f13-832f-a93f166241ec"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 200\", () => {",
+                              "    pm.response.to.have.status(200);",
+                              "});"
+                           ],
+                           "id" : "58b685e1-6dc4-432e-8be4-4fd9a817c552",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "5f8cdf60-82bc-4d5d-8046-05a607a71536",
+                  "name" : "200 - NHS App Account - Multipage",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request successfully retrieves NHS numbers registered for notifications in the NHS App against an ODS code, adding the \"page\" parameter allows you to access the full paginated response",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00001"
+                           },
+                           {
+                              "key" : "page",
+                              "value" : "2"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00001&page=2"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-5f8cdf60-82bc-4d5d-8046-05a607a71536"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 400\", () => {",
+                              "    pm.response.to.have.status(400);",
+                              "});"
+                           ],
+                           "id" : "2a8d4c0a-038f-44d7-8087-fb3aaad39b84",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "4f020bda-4bb0-4349-b7b0-ec45c35b9a16",
+                  "name" : "400 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a 400 invalid code when an invalid ODS code is provided",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : ""
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code="
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-4f020bda-4bb0-4349-b7b0-ec45c35b9a16"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 404\", () => {",
+                              "    pm.response.to.have.status(404);",
+                              "});"
+                           ],
+                           "id" : "0c29182d-3967-4313-8823-aba8109ac402",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "3ac94670-1957-44b8-b4e4-117049d56da0",
+                  "name" : "404 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a 404 not found code when a user attempts to access data that does not exist",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "x26"
+                           },
+                           {
+                              "key" : "page",
+                              "value" : "10"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=x26&page=10"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-3ac94670-1957-44b8-b4e4-117049d56da0"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 429\", () => {",
+                              "    pm.response.to.have.status(429);",
+                              "});"
+                           ],
+                           "id" : "abf351cd-f341-4573-909a-957b4023bb7c",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "56005db0-6532-4137-b046-bce247fb37bd",
+                  "name" : "429 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a simulated 429 error for too many requests",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00429"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00429"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-56005db0-6532-4137-b046-bce247fb37bd"
+               },
+               {
+                  "event" : [
+                     {
+                        "listen" : "prerequest",
+                        "script" : {
+                           "exec" : [
+                              ""
+                           ],
+                           "id" : "60e5f8ed-4d76-4ed1-90cf-3c546a378c4a",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     },
+                     {
+                        "listen" : "test",
+                        "script" : {
+                           "exec" : [
+                              "pm.test(\"Status code is 502\", () => {",
+                              "    pm.response.to.have.status(502);",
+                              "});"
+                           ],
+                           "id" : "b7d3abed-3e87-46cf-92ba-62b88771cf99",
+                           "packages" : {},
+                           "type" : "text/javascript"
+                        }
+                     }
+                  ],
+                  "id" : "12200111-8eba-4290-ba74-ef1a6037b1cb",
+                  "name" : "502 - NHS App Account",
+                  "protocolProfileBehavior" : {
+                     "disableBodyPruning" : true
+                  },
+                  "request" : {
+                     "description" : "The request returns a 502 simulation for bad gateway",
+                     "header" : [],
+                     "method" : "GET",
+                     "url" : {
+                        "host" : [
+                           "{{base_url}}"
+                        ],
+                        "path" : [
+                           "channels",
+                           "nhsapp",
+                           "accounts"
+                        ],
+                        "query" : [
+                           {
+                              "key" : "ods-organisation-code",
+                              "value" : "T00502"
+                           }
+                        ],
+                        "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00502"
+                     }
+                  },
+                  "response" : [],
+                  "uid" : "41628342-12200111-8eba-4290-ba74-ef1a6037b1cb"
+               }
+            ],
+            "name" : "NHS App Account",
+            "uid" : "41628342-7b66fdee-f8c4-4233-8319-fba300aeab8b"
+         },
+         {
+            "event" : [
+               {
+                  "listen" : "prerequest",
+                  "script" : {
+                     "exec" : [
+                        ""
+                     ],
+                     "id" : "73b8bd73-123c-4529-a8df-5ac28309457e",
+                     "type" : "text/javascript"
+                  }
+               },
+               {
+                  "listen" : "test",
+                  "script" : {
+                     "exec" : [
+                        "pm.test(\"Correlation identifier is returned\", () => {\r",
+                        "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                        "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                        "});\r",
+                        "\r",
+                        "pm.test(\"Status code is 200\", () => {\r",
+                        "    pm.response.to.have.status(200);\r",
+                        "});\r",
+                        "\r",
+                        "pm.test(\"Response Header Contains Access-Control-Request-Method Provided\", () => {\r",
+                        "    pm.expect(pm.response.headers.get('Access-Control-Request-Method')).to.eql(pm.request.headers.get('Access-Control-Request-Method'));\r",
+                        "});\r",
+                        "\r",
+                        "pm.test(\"Response Header Contains Origin Provided\", () => {\r",
+                        "    pm.expect(pm.response.headers.get('Origin')).to.eql(\"https://my.website\");\r",
+                        "});\r",
+                        "\r",
+                        "pm.test(\"Response Header Contains Origin Provided\", () => {\r",
+                        "    pm.expect(pm.response.headers.get('Origin')).to.eql(\"https://my.website\");\r",
+                        "});"
+                     ],
+                     "id" : "c28875f8-403e-4e0d-993d-7c4c61c69bad",
+                     "type" : "text/javascript"
+                  }
+               }
+            ],
+            "id" : "20f08d44-fbee-4260-a184-6cb5ba80ed30",
+            "name" : "200 - CORS",
+            "protocolProfileBehavior" : {
+               "disableBodyPruning" : true
+            },
+            "request" : {
+               "description" : "A request showing the CORS header responses.",
+               "header" : [
+                  {
+                     "key" : "Accept",
+                     "type" : "default",
+                     "value" : "application/vnd.api+json"
+                  },
+                  {
+                     "key" : "Origin",
+                     "type" : "default",
+                     "value" : "https://my.website"
+                  },
+                  {
+                     "key" : "Access-Control-Request-Method",
+                     "type" : "default",
+                     "value" : "POST"
+                  },
+                  {
+                     "key" : "X-Correlation-Id",
+                     "type" : "text",
+                     "value" : "{{correlation_id}}"
+                  }
+               ],
+               "method" : "OPTIONS",
+               "url" : {
+                  "host" : [
+                     "{{base_url}}"
+                  ],
+                  "raw" : "{{base_url}}"
+               }
+            },
+            "response" : [],
+            "uid" : "41628342-20f08d44-fbee-4260-a184-6cb5ba80ed30"
+         },
+         {
+            "event" : [
+               {
+                  "listen" : "prerequest",
+                  "script" : {
+                     "exec" : [
+                        ""
+                     ],
+                     "id" : "71825cf9-9914-420e-9646-82fbb494b95a",
+                     "type" : "text/javascript"
+                  }
+               },
+               {
+                  "listen" : "test",
+                  "script" : {
+                     "exec" : [
+                        "pm.test(\"Correlation identifier is returned\", () => {\r",
+                        "    pm.response.to.have.header(\"x-correlation-id\");\r",
+                        "    pm.response.to.be.header(\"x-correlation-id\", pm.variables.get(\"correlation_id\"));\r",
+                        "});\r",
+                        "\r",
+                        "pm.test(\"Status code is 404\", () => {\r",
+                        "    pm.response.to.have.status(404);\r",
+                        "});"
+                     ],
+                     "id" : "3a94305f-2ced-4801-a6f3-9cb1ee94a93c",
+                     "type" : "text/javascript"
+                  }
+               }
+            ],
+            "id" : "f11d52f4-4562-47f9-ad58-a33cd9242df8",
+            "name" : "404 - Not Found - Invalid URL",
+            "protocolProfileBehavior" : {
+               "disableBodyPruning" : true
+            },
+            "request" : {
+               "description" : "This request triggers a 404 not found error.",
+               "header" : [
+                  {
+                     "key" : "Accept",
+                     "type" : "default",
+                     "value" : "application/vnd.api+json"
+                  },
+                  {
+                     "key" : "X-Correlation-Id",
+                     "type" : "text",
+                     "value" : "{{correlation_id}}"
+                  }
+               ],
+               "method" : "GET",
+               "url" : {
+                  "host" : [
+                     "{{base_url}}"
+                  ],
+                  "path" : [
+                     "does",
+                     "not",
+                     "exist"
+                  ],
+                  "raw" : "{{base_url}}/does/not/exist"
+               }
+            },
+            "response" : [],
+            "uid" : "41628342-f11d52f4-4562-47f9-ad58-a33cd9242df8"
+         }
+      ],
+      "variable" : [
+         {
+            "key" : "base_url",
+            "type" : "string",
+            "value" : "https://sandbox.api.service.nhs.uk/comms"
+         },
+         {
+            "key" : "routing_plan_id",
+            "type" : "string",
+            "value" : "b838b13c-f98c-4def-93f0-515d4e4f4ee1"
+         }
+      ]
+   }
+}
