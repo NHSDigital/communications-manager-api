@@ -22,7 +22,7 @@ install-hooks: .git/hooks/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
 lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
-	npm run lint 
+	npm run lint
 
 static-analysis:
 	npm run static-analysis
@@ -97,6 +97,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
 		--only-rerun 'AssertionError: Unexpected 401' \
+		--only-rerun 'AssertionError: Unexpected 502' \
 	    --junitxml=test-report.xml
 
 PERFTEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
@@ -131,10 +132,10 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 .run-sandbox-unit-tests:
 	(cd sandbox; rm -rf node_modules; npm install --legacy-peer-deps; npm run test)
 
-.run-postman-sandbox: 
+.run-postman-sandbox:
 	(rm -rf node_modules; npm install --legacy-peer-deps; npm run sandbox-postman-collection)
 
-.run-postman-int: 
+.run-postman-int:
 	(rm -rf node_modules; npm install --legacy-peer-deps; \
 	npm run integration-postman-collection)
 

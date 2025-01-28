@@ -1,6 +1,6 @@
 import lib.constants.constants as constants
 
-codes_to_retry = [401, 429, 504]
+codes_to_retry = [401, 429, 504, 502]
 
 
 class error_handler():
