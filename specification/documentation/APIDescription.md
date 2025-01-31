@@ -128,7 +128,7 @@ Alternatively you can find our postman collection source in our [public reposito
 
 You must not send communications to real patients for smoke testing in the production environment.
 
-Rather, use the [production test patient for PDS](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir/pds-fhir-api-test-data#production-smoke-testing).
+Smoke testing is permitted only using the NHS Notify production test patients. When you onboard to NHS Notify, our onboarding team will get in touch to put together a smoke test plan. Smoke testing will be done one day prior to go live.
 
 ## Onboarding
 
