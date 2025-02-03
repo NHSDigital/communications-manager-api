@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+import re
 from install_playwright import install
 from playwright.sync_api import expect, sync_playwright
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
@@ -91,7 +92,8 @@ class Helper():
             page.wait_for_url('**/patient/')
 
             expect(page.get_by_text('NHS number: 973 061')).to_be_visible()
-            page.get_by_role("link", name="View your messages").click()
+            link_text = re.compile(r"You have \d+ unread messages")
+            page.get_by_role("link", name=link_text).click()
 
             expect(page.get_by_role("heading", name="Messages")).to_be_visible()
             page.get_by_role("link", name="Your NHS healthcare services").click()
@@ -103,5 +105,5 @@ class Helper():
                 .locator("..").get_by_label("Unread message from NHS").click()
 
             page.wait_for_url("**/patient/messages/app-messaging/app-message?messageId=**")
-            expect(page.get_by_role("heading", name="Message from: NHS ENGLAND -")).to_be_visible()
+            expect(page.get_by_role("heading", name="NHS ENGLAND - X26")).to_be_visible()
             expect(page.get_by_text(f"APIM end to end test: {personalisation}")).to_be_visible()
