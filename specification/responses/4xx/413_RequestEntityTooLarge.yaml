@@ -1,5 +1,5 @@
 description: |+
-  Either the whole of or some part of the request was too large for the host side to handle and was rejected.
+  This endpoint accepts a maximum of 45,000 messages per request, or a payload size of 5.2MB (whichever is the smaller). Requests containing more that 45,000 messages or exceeding the 5.2MB limit will be rejected with a HTTP 413 "Payload too large" status code.
 
 content:
   application/vnd.api+json:
