@@ -112,8 +112,8 @@ def url(api_product_name):
     else:
         suffix = "comms"
 
-    environment = os.environ['APIGEE_ENVIRONMENT']
-    if environment == "prod-1":
+    environment = os.environ['API_ENVIRONMENT']
+    if environment == "prod":
         return "https://api.service.nhs.uk/comms"
     else:
         return f"https://{environment}.api.service.nhs.uk/{suffix}"
@@ -121,8 +121,8 @@ def url(api_product_name):
 
 @pytest.fixture()
 def bearer_token(authentication_cache):
-    environment = os.environ['APIGEE_ENVIRONMENT']
-    if environment == "prod-1":
+    environment = os.environ['API_ENVIRONMENT']
+    if environment == "prod":
         url = PROD_URL
     else:
         url = f"https://{environment}.api.service.nhs.uk/comms"

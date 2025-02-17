@@ -80,12 +80,14 @@ steps:
       - bash: |
           export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
           export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ elseif eq(parameters.environment, 'int') }}:
       - bash: |
           export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ elseif eq(parameters.environment, 'sandbox') }}:
@@ -106,6 +108,7 @@ steps:
       - bash: |
           export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
           export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
           export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
@@ -125,6 +128,7 @@ steps:
           apigee_username: $(APIGEE_USERNAME)
           apigee_password: $(APIGEE_PASSWORD)
       - bash: |
+          export API_ENVIRONMENT="${{parameters.environment}}"
           export PROXY_NAME="communications-manager-${{parameters.environment}}"
           export NON_PROD_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(NON_PROD_PRIVATE_KEY)"
           export NON_PROD_API_KEY="$(NON_PROD_API_KEY)"
@@ -162,6 +166,7 @@ steps:
         export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
         export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
         export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
+        export API_ENVIRONMENT="${{parameters.environment}}"
         ${{ parameters.test_command }}
       workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
       displayName: Run test suite
