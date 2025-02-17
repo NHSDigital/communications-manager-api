@@ -106,13 +106,13 @@ def rate_limiting(products_api, api_product_name, developer_apps_api):
 
 @pytest.fixture(scope='session')
 def url(api_product_name):
-    if api_product_name.startswith('communications-manager-pr-'):
+    if api_product_name is not None and api_product_name.startswith('communications-manager-pr-'):
         pr_number = re.search(r'\d+', api_product_name).group()
         suffix = f"comms-pr-{pr_number}"
     else:
         suffix = "comms"
 
-    environment = os.environ['API_ENVIRONMENT']
+    environment = os.environ['APIGEE_ENVIRONMENT']
     if environment == "prod-1":
         return "https://api.service.nhs.uk/comms"
     else:
@@ -121,7 +121,7 @@ def url(api_product_name):
 
 @pytest.fixture()
 def bearer_token(authentication_cache):
-    environment = os.environ['API_ENVIRONMENT']
+    environment = os.environ['APIGEE_ENVIRONMENT']
     if environment == "prod-1":
         url = PROD_URL
     else:
