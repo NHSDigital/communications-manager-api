@@ -76,6 +76,9 @@ steps:
     retryCountOnTaskFailure: 10
 
   - ${{ if parameters.nightly }}:
+    - bash: |
+          export API_ENVIRONMENT="${{parameters.environment}}"
+          export PROXY_NAME="communications-manager-${{parameters.environment}}"
     - ${{ if eq(parameters.environment, 'prod') }}:
       - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
         parameters:
@@ -94,8 +97,6 @@ steps:
       - bash: |
           export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
           export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
-          export API_ENVIRONMENT="${{parameters.environment}}"
-          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ elseif eq(parameters.environment, 'int') }}:
@@ -116,9 +117,6 @@ steps:
       - bash: |
           export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
-          export API_ENVIRONMENT="${{parameters.environment}}"
-          export PROXY_NAME="communications-manager-${{parameters.environment}}"
-
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ elseif eq(parameters.environment, 'sandbox') }}:
@@ -139,8 +137,6 @@ steps:
       - bash: |
           export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
           export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
-          export API_ENVIRONMENT="${{parameters.environment}}"
-          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ else }}:
@@ -159,8 +155,6 @@ steps:
           apigee_username: $(APIGEE_USERNAME)
           apigee_password: $(APIGEE_PASSWORD)
       - bash: |
-          export API_ENVIRONMENT="${{parameters.environment}}"
-          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           export NON_PROD_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(NON_PROD_PRIVATE_KEY)"
           export NON_PROD_API_KEY="$(NON_PROD_API_KEY)"
           export NON_PROD_API_KEY_TEST_1="$(NON_PROD_API_KEY_TEST_1)"
