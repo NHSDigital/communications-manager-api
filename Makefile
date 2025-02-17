@@ -212,3 +212,8 @@ e2e-test-uat:
 	$(TEST_CMD) \
 	tests/end_to_end \
 	-m "e2e and uattest"
+
+test:
+	$(TEST_CMD) \
+	tests/api \
+	-m "test"
