@@ -33,7 +33,7 @@ class AuthenticationCache():
         # a 404 response means the authentication is working.
         test_url = f"{base_url}/v1/messages/message_id"
 
-        if env == "internal-dev":
+        if env == "internal-dev" or env == "internal-qa":
             api_key = os.environ["NON_PROD_API_KEY"]
             private_key = os.environ["NON_PROD_PRIVATE_KEY"]
             url = "https://internal-dev.api.service.nhs.uk/oauth2/token"
@@ -48,7 +48,7 @@ class AuthenticationCache():
             private_key = os.environ.get("INTEGRATION_PRIVATE_KEY")
             url = "https://int.api.service.nhs.uk/oauth2/token"
             kid = "local"
-        elif env == "prod":
+        elif env == "prod-1":
             api_key = os.environ.get("PRODUCTION_API_KEY")
             private_key = os.environ.get("PRODUCTION_PRIVATE_KEY")
             url = "https://api.service.nhs.uk/oauth2/token"

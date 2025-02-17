@@ -1,5 +1,6 @@
 import pytest
 import os
+import re
 from .authentication import AuthenticationCache
 from .app_keys import ensure_api_product_in_application, ensure_api_product_not_in_application
 from .rate_limiting import RateLimiting
@@ -101,3 +102,28 @@ def rate_limiting(products_api, api_product_name, developer_apps_api):
     yield rate_limiting
     rate_limiting.set_default_rate_limit()
     rate_limiting.remove_app_ratelimit('ian.hodges1@nhs.net', 'NHS Notify Test Client 1')
+
+
+@pytest.fixture(scope='session')
+def url(api_product_name):
+    if api_product_name.startswith('communications-manager-pr-'):
+        pr_number = re.search(r'\d+', api_product_name).group()
+        suffix = f"comms-pr-{pr_number}"
+    else:
+        suffix = "comms"
+
+    environment = os.environ['API_ENVIRONMENT']
+    if environment == "prod-1":
+        return "https://api.service.nhs.uk/comms"
+    else:
+        return f"https://{environment}.api.service.nhs.uk/{suffix}"
+
+
+@pytest.fixture()
+def bearer_token(authentication_cache):
+    environment = os.environ['API_ENVIRONMENT']
+    if environment == "prod-1":
+        url = PROD_URL
+    else:
+        url = f"https://{environment}.api.service.nhs.uk/comms"
+    return authentication_cache.generate_authentication(environment, url)
