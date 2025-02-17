@@ -49,7 +49,7 @@ steps:
     parameters:
       nightly: true
       environment: 'internal-qa'
-      test_command: 'make test'
+      test_command: 'make internal-qa-test'
 
 # If the test run did not succeed posts an alert to teams
   - template: ./templates/teams-alert.yml
