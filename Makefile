@@ -213,7 +213,17 @@ e2e-test-uat:
 	tests/end_to_end \
 	-m "e2e and uattest"
 
-test:
+test-dev:
 	$(TEST_CMD) \
+	tests/api \
+	-m "test"
+
+test-performance:
+	$(PERFTEST_CMD) \
+	tests/api \
+	-m "test"
+
+test-prod:
+	$(PROD_TEST_CMD) \
 	tests/api \
 	-m "test"
