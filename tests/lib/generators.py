@@ -5,6 +5,14 @@ from lib.constants.shared_paths import ROUTING_PLAN_ID_PATH
 
 class Generators():
     @staticmethod
+    def generate_valid_headers(auth):
+        return {
+            "Authorization": auth,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+
+    @staticmethod
     def generate_valid_create_message_batch_body(environment="sandbox"):
         routing_plan_id = constants.VALID_ROUTING_PLAN_ID_SANDBOX
 
@@ -59,28 +67,21 @@ class Generators():
 
     @staticmethod
     def generate_valid_create_message_body(environment="sandbox"):
-        routing_plan_id = constants.VALID_ROUTING_PLAN_ID_SANDBOX
-
-        if environment == "int":
-            routing_plan_id = constants.VALID_ROUTING_PLAN_ID_INT
-        elif environment == "prod":
-            routing_plan_id = constants.VALID_ROUTING_PLAN_ID_PROD
-        elif environment == "dev":
-            routing_plan_id = constants.VALID_ROUTING_PLAN_ID_DEV
-
         return {
             "data": {
                 "type": "Message",
                 "attributes": {
-                    "routingPlanId": routing_plan_id,
+                    "routingPlanId": constants.GLOBAL_ROUTING_CONFIGURATION_NHSAPP,
                     "messageReference": str(uuid.uuid1()),
                     "recipient": {
-                        "nhsNumber": "9990548609"
+                        "nhsNumber": constants.VALID_NHS_NUMBER
                     },
                     "originator": {
                         "odsCode": "X26"
                     },
-                    "personalisation": {}
+                    "personalisation": {
+                        "body": "test"
+                    }
                 }
             }
         }

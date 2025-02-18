@@ -212,3 +212,17 @@ e2e-test-uat:
 	$(TEST_CMD) \
 	tests/end_to_end \
 	-m "e2e and uattest"
+
+.environment:
+	@if [ -n "$(API_ENVIRONMENT)" ]; then \
+		printf "\n\nTests are running on $(API_ENVIRONMENT)\n\n\n"; \
+	else \
+		printf "\nMissing environment variables\n\n"; exit 1; \
+	fi
+	
+.test:
+	$(TEST_CMD) \
+	tests/api \
+	-m "test"
+
+test: .environment .test

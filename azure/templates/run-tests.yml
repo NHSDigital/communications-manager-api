@@ -77,15 +77,47 @@ steps:
 
   - ${{ if parameters.nightly }}:
     - ${{ if eq(parameters.environment, 'prod') }}:
+      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+        parameters:
+          secret_ids:
+            - ptl/azure-devops/apigee-prod/APIGEE_PASSWORD
+            - ptl/azure-devops/apigee-prod/APIGEE_OTP_KEY
+            - ptl/azure-devops/apigee-prod/APIGEE_USERNAME
+      - template: "azure/components/get-mfa-code.yml@common"
+        parameters:
+          apigee_otp_key: $(APIGEE_OTP_KEY)
+      - template: "azure/components/get-access-token.yml@common"
+        parameters:
+          apigee_organization: "prod"
+          apigee_username: $(APIGEE_USERNAME)
+          apigee_password: $(APIGEE_PASSWORD)
       - bash: |
           export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
           export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
+          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ elseif eq(parameters.environment, 'int') }}:
+      - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
+        parameters:
+          secret_ids:
+            - ptl/azure-devops/apigee-prod/APIGEE_PASSWORD
+            - ptl/azure-devops/apigee-prod/APIGEE_OTP_KEY
+            - ptl/azure-devops/apigee-prod/APIGEE_USERNAME
+      - template: "azure/components/get-mfa-code.yml@common"
+        parameters:
+          apigee_otp_key: $(APIGEE_OTP_KEY)
+      - template: "azure/components/get-access-token.yml@common"
+        parameters:
+          apigee_organization: "prod"
+          apigee_username: $(APIGEE_USERNAME)
+          apigee_password: $(APIGEE_PASSWORD)
       - bash: |
           export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
+          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
     - ${{ elseif eq(parameters.environment, 'sandbox') }}:
@@ -106,6 +138,7 @@ steps:
       - bash: |
           export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
           export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
           export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
@@ -125,7 +158,6 @@ steps:
           apigee_username: $(APIGEE_USERNAME)
           apigee_password: $(APIGEE_PASSWORD)
       - bash: |
-          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           export NON_PROD_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(NON_PROD_PRIVATE_KEY)"
           export NON_PROD_API_KEY="$(NON_PROD_API_KEY)"
           export NON_PROD_API_KEY_TEST_1="$(NON_PROD_API_KEY_TEST_1)"
@@ -137,6 +169,8 @@ steps:
           export UAT_NHS_APP_USERNAME="$(UAT_NHS_APP_USERNAME)"
           export UAT_NHS_APP_PASSWORD="$(UAT_NHS_APP_PASSWORD)"
           export UAT_NHS_APP_OTP="$(UAT_NHS_APP_OTP)"
+          export API_ENVIRONMENT="${{parameters.environment}}"
+          export PROXY_NAME="communications-manager-${{parameters.environment}}"
           ${{ parameters.test_command }}
         displayName: Run nightly test suite
 
@@ -151,6 +185,7 @@ steps:
   - ${{ else }}:
     - bash: |
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
+        export API_ENVIRONMENT="${{parameters.environment}}"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
         export APIGEE_APP_ID="$(SANDBOX_APP_ID)"
         export STATUS_ENDPOINT_API_KEY="$(STATUS_ENDPOINT_API_KEY)"
