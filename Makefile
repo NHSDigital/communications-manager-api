@@ -162,7 +162,7 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 
 .internal-dev-test:
 	$(TEST_CMD) \
-	tests/development \
+	tests/development tests/api \
 	-m devtest
 
 .internal-dev-perftest:
@@ -176,19 +176,19 @@ internal-dev-test-nightly: .internal-dev-test .internal-dev-perftest
 
 internal-qa-test:
 	$(TEST_CMD) \
-	tests/development \
+	tests/development tests/api \
 	-m "not devtestonly and devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \
-	tests/integration \
+	tests/integration tests/api \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
 
 .production-test:
 	$(PROD_TEST_CMD) \
-	tests/production \
+	tests/production tests/api \
 	-m prodtest
 
 production-test: .production-test
