@@ -12,7 +12,6 @@ from lib.fixtures import *  # NOSONAR
 def test_200_get_message(url, bearer_token):
     """
     .. include:: ../partials/happy_path/test_200_messages_message_id.rst
-    .. include:: ../partials/valid_message_ids.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body(url)
