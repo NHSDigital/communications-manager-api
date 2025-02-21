@@ -217,7 +217,7 @@ e2e-test-uat:
 	@if [ -n "$(API_ENVIRONMENT)" ]; then \
 		printf "\n\nTests are running on $(API_ENVIRONMENT)\n\n\n"; \
 	else \
-		printf "\nMissing environment variables\n\n"; exit 1; \
+		printf "\nMissing API_ENVIRONMENT environment variable\n\n"; exit 1; \
 	fi
 	
 .test:
