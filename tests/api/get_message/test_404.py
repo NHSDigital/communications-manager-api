@@ -6,9 +6,12 @@ from lib.constants.messages_paths import MESSAGES_ENDPOINT
 
 
 @pytest.mark.test
+@pytest.mark.devtest
+@pytest.mark.inttest
+@pytest.mark.prodtest
 def test_message_id_that_does_not_exist(url, bearer_token):
     """
-    .. include:: ../../partials/not_found/test_message_id_that_does_not_exist.rst
+    .. include:: ../partials/not_found/test_message_id_that_does_not_exist.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
 
