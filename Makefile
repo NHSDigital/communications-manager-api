@@ -162,7 +162,7 @@ prod-sandbox-test: .run-sandbox-unit-tests .run-postman-sandbox .prod-sandbox-te
 
 .internal-dev-test:
 	$(TEST_CMD) \
-	tests/development \
+	tests/development tests/api \
 	-m devtest
 
 .internal-dev-perftest:
@@ -176,19 +176,19 @@ internal-dev-test-nightly: .internal-dev-test .internal-dev-perftest
 
 internal-qa-test:
 	$(TEST_CMD) \
-	tests/development \
+	tests/development tests/api \
 	-m "not devtestonly and devtest or uattest"
 
 .integration-test:
 	$(TEST_CMD) \
-	tests/integration \
+	tests/integration tests/api \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
 
 .production-test:
 	$(PROD_TEST_CMD) \
-	tests/production \
+	tests/production tests/api \
 	-m prodtest
 
 production-test: .production-test
@@ -212,3 +212,17 @@ e2e-test-uat:
 	$(TEST_CMD) \
 	tests/end_to_end \
 	-m "e2e and uattest"
+
+.environment:
+	@if [ -n "$(API_ENVIRONMENT)" ]; then \
+		printf "\n\nTests are running on $(API_ENVIRONMENT)\n\n\n"; \
+	else \
+		printf "\nMissing API_ENVIRONMENT environment variable\n\n"; exit 1; \
+	fi
+	
+.test:
+	$(TEST_CMD) \
+	tests/api \
+	-m "test"
+
+test: .environment .test
