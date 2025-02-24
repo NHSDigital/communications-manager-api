@@ -29,7 +29,9 @@ class Generators():
                             "originator": {
                                 "odsCode": "X26"
                             },
-                            "personalisation": {}
+                            "personalisation": {
+                                "body": "test"
+                            }
                         },
                         {
                             "messageReference": str(uuid.uuid1()),
@@ -39,7 +41,9 @@ class Generators():
                             "originator": {
                                 "odsCode": "X26"
                             },
-                            "personalisation": {}
+                            "personalisation": {
+                                "body": "test"
+                            }
                         },
                         {
                             "messageReference": str(uuid.uuid1()),
@@ -49,7 +53,9 @@ class Generators():
                             "originator": {
                                 "odsCode": "X26"
                             },
-                            "personalisation": {}
+                            "personalisation": {
+                                "body": "test"
+                            }
                         }
                     ]
                 }
