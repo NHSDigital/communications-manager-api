@@ -5,3 +5,4 @@ Generic Tests
    :maxdepth: 1
 
    content_types
+   headers

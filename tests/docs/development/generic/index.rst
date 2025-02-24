@@ -5,6 +5,5 @@ Generic Tests
    :maxdepth: 1
 
    authentication
-   headers
    not_found
    too_many_requests

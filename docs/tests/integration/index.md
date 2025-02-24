@@ -4,7 +4,6 @@ The Integration test suite is a collection of tests ran against the integration 
 
 * [Generic Tests](generic/index.md)
   * [Authentication Tests](generic/authentication.md)
-  * [Header Tests](generic/headers.md)
   * [Not Found Tests](generic/not_found.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)
   * [Validation Tests](post_v1_message-batches/validation.md)
