@@ -8,5 +8,5 @@ Scenario: An API consumer submitting a request with a valid accept header receiv
 **Asserts**
 - Response returns the expected accept header
 
-.. include:: ../../partials/valid_accept_headers.rst
-.. include:: ../../partials/methods.rst
+.. include:: /partials/valid_accept_headers.rst
+.. include:: /partials/methods.rst

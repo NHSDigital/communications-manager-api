@@ -4,7 +4,6 @@ The Production test suite is a collection of tests ran against the production en
 
 * [Generic Tests](generic/index.md)
   * [Authentication Tests](generic/authentication.md)
-  * [Content Types](generic/content_types.md)
   * [Header Tests](generic/headers.md)
   * [Not Found Tests](generic/not_found.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)

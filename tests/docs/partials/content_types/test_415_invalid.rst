@@ -12,6 +12,6 @@ Scenario: An API consumer submitting a request with an invalid content type rece
 - Response returns the 'X-Correlation-Id' header if provided
 - Response returns the default content type if none is provided
 
-.. include:: ../../partials/invalid_content_type_headers.rst
-.. include:: ../../partials/methods.rst
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/invalid_content_type_headers.rst
+.. include:: /partials/methods.rst
+.. include:: /partials/correlation_ids.rst

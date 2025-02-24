@@ -14,26 +14,17 @@ class Generators():
 
     @staticmethod
     def generate_valid_create_message_batch_body(environment="sandbox"):
-        routing_plan_id = constants.VALID_ROUTING_PLAN_ID_SANDBOX
-
-        if environment == "int":
-            routing_plan_id = constants.VALID_ROUTING_PLAN_ID_INT
-        elif environment == "prod":
-            routing_plan_id = constants.VALID_ROUTING_PLAN_ID_PROD
-        elif environment == "dev":
-            routing_plan_id = constants.VALID_ROUTING_PLAN_ID_DEV
-
         return {
             "data": {
                 "type": "MessageBatch",
                 "attributes": {
-                    "routingPlanId": routing_plan_id,
+                    "routingPlanId": constants.GLOBAL_ROUTING_CONFIGURATION_NHSAPP,
                     "messageBatchReference": str(uuid.uuid1()),
                     "messages": [
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609"
+                                "nhsNumber": constants.VALID_NHS_NUMBER
                             },
                             "originator": {
                                 "odsCode": "X26"
@@ -43,7 +34,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609"
+                                "nhsNumber": constants.VALID_NHS_NUMBER
                             },
                             "originator": {
                                 "odsCode": "X26"
@@ -53,7 +44,7 @@ class Generators():
                         {
                             "messageReference": str(uuid.uuid1()),
                             "recipient": {
-                                "nhsNumber": "9990548609"
+                                "nhsNumber": constants.VALID_NHS_NUMBER
                             },
                             "originator": {
                                 "odsCode": "X26"
