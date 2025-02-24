@@ -245,7 +245,7 @@ def test_too_large_personalisation(bearer_token_int):
     .. include:: ../../partials/validation/test_too_large_personalisation.rst
     """
     data = Generators.generate_valid_create_message_body("int")
-    data["data"]["attributes"]["routingPlanId"] = constants.GLOBAL_ROUTING_CONFIGURATION_SMS
+    data["data"]["attributes"]["routingPlanId"] = GLOBAL_ROUTING_CONFIGURATION_SMS
     data["data"]["attributes"]["personalisation"] = {
         'sms_body': 'x'*919
     }
