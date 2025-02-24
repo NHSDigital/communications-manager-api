@@ -8,7 +8,7 @@ CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 VALID_CONTENT_TYPE_HEADERS = ["application/json", "application/vnd.api+json"]
 
 
-@pytest.mark.devtest
+@pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
 @pytest.mark.prodtest

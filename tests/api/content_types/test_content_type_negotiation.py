@@ -27,7 +27,7 @@ ACCEPT_HEADERS = [
 ]
 
 
-@pytest.mark.devtest
+@pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
 @pytest.mark.prodtest

@@ -10,7 +10,7 @@ METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_IDS = [None, "88b10816-5d45-4992-bed0-ea685aaa0e1f"]
 
 
-@pytest.mark.devtest
+@pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
 @pytest.mark.prodtest
