@@ -51,6 +51,7 @@ VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE]
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
 
 INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
+# Set to PDS production smoke test user
 VALID_NHS_NUMBER = "9990548609"
 
 INVALID_PERSONALISATION_VALUES = [5, "", "some-string", []]
