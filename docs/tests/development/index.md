@@ -2,7 +2,6 @@
 
 * [Generic Tests](generic/index.md)
   * [Authentication Tests](generic/authentication.md)
-  * [Content Types](generic/content_types.md)
   * [Header Tests](generic/headers.md)
   * [Not Found Tests](generic/not_found.md)
   * [Too Many Requests Tests](generic/too_many_requests.md)

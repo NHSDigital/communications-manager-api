@@ -24,6 +24,8 @@
 * [End to end test suite](end_to_end/index.md)
   * [Gov Notify Tests](end_to_end/gov_notify/index.md)
   * [NHS App Tests](end_to_end/nhsapp/index.md)
+* [Generic Tests](generic/index.md)
+  * [Content Types](generic/content_types.md)
 * [GET /v1/messages](get_v1_messages/index.md)
   * [Happy Path Tests](get_v1_messages/happy_path.md)
   * [404 Tests](get_v1_messages/404.md)

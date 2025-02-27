@@ -5,6 +5,5 @@ Generic Tests
    :maxdepth: 1
 
    authentication
-   content_types
    headers
    not_found

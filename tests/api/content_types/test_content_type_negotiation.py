@@ -27,16 +27,19 @@ ACCEPT_HEADERS = [
 ]
 
 
+@pytest.mark.test
 @pytest.mark.devtest
+@pytest.mark.inttest
+@pytest.mark.prodtest
 @pytest.mark.parametrize("accept_headers", ACCEPT_HEADERS)
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_application_response_type(nhsd_apim_proxy_url, bearer_token_internal_dev, accept_headers, method, endpoints):
+def test_application_response_type(url, bearer_token, accept_headers, method, endpoints):
     """
-    .. include:: ../../partials/content_types/test_application_response_type.rst
+    .. include:: ../partials/content_types/test_application_response_type.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev.value,
+    resp = getattr(requests, method)(f"{url}{endpoints}", headers={
+        "Authorization": bearer_token.value,
         **accept_headers.get("headers")
     })
 
