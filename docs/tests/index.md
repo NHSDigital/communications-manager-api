@@ -26,6 +26,7 @@
   * [NHS App Tests](end_to_end/nhsapp/index.md)
 * [Generic Tests](generic/index.md)
   * [Content Types](generic/content_types.md)
+  * [Header Tests](generic/headers.md)
 * [GET /v1/messages](get_v1_messages/index.md)
   * [Happy Path Tests](get_v1_messages/happy_path.md)
   * [404 Tests](get_v1_messages/404.md)

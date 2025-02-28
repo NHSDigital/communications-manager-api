@@ -10,17 +10,20 @@ TEST_METHODS = ["get", "post", "put", "delete"]
 ORIGIN = "https://my.website"
 
 
+@pytest.mark.test
 @pytest.mark.devtest
+@pytest.mark.inttest
+@pytest.mark.prodtest
 @pytest.mark.parametrize("method", METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_cors_options(nhsd_apim_proxy_url, bearer_token_internal_dev, method, endpoints):
+def test_cors_options(url, bearer_token, method, endpoints):
     """
     ..py:function:: test_cors_options
 
-    .. include :: ../../partials/headers/test_cors_options.rst
+    .. include :: ../partials/headers/test_cors_options.rst
     """
-    resp = requests.options(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev.value,
+    resp = requests.options(f"{url}{endpoints}", headers={
+        "Authorization": bearer_token.value,
         "Accept": "*/*",
         "Origin": ORIGIN,
         "Access-Control-Request-Method": method
@@ -28,17 +31,20 @@ def test_cors_options(nhsd_apim_proxy_url, bearer_token_internal_dev, method, en
     Assertions.assert_cors_response(resp, ORIGIN)
 
 
+@pytest.mark.test
 @pytest.mark.devtest
+@pytest.mark.inttest
+@pytest.mark.prodtest
 @pytest.mark.parametrize("method", TEST_METHODS)
 @pytest.mark.parametrize("endpoints", VALID_ENDPOINTS)
-def test_cors(nhsd_apim_proxy_url, bearer_token_internal_dev, method, endpoints):
+def test_cors(url, bearer_token, method, endpoints):
     """
     ..py:function:: test_cors
 
-    .. include :: ../../partials/headers/test_cors.rst
+    .. include :: ../partials/headers/test_cors.rst
     """
-    resp = getattr(requests, method)(f"{nhsd_apim_proxy_url}{endpoints}", headers={
-        "Authorization": bearer_token_internal_dev.value,
+    resp = getattr(requests, method)(f"{url}{endpoints}", headers={
+        "Authorization": bearer_token.value,
         "Accept": "*/*",
         "Origin": ORIGIN
     })

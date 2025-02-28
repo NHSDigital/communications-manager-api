@@ -3,9 +3,9 @@
 ## CORS Responses
 
 
-### Scenario: An API consumer submitting a request with an ‘Origin’ header receives the expected cors headers in response
+..py:function:: test_cors
 
-CORS allows the API to be used whilst within a web browser, from websites that are hosted on a different domain to that of the API. This is important as users utilising our API documentation must be able to send test requests from that page using the ‘try it now’ functionality.
+### Scenario: An API consumer submitting a request with an ‘Origin’ header receives the expected cors headers in response
 
 **Given** the API consumer provides an Origin header
 <br/>
@@ -34,9 +34,9 @@ This test makes use of different HTTP methods, if the method is either HEAD or O
 | OPTIONS |
 
 
-### Scenario: An API consumer submitting a request with cors headers receives a response reflecting the cors headers values
+..py:function:: test_cors_options
 
-CORS allows the API to be used whilst within a web browser, from websites that are hosted on a different domain to that of the API. This is important as users utilising our API documentation must be able to send test requests from that page using the ‘try it now’ functionality.
+### Scenario: An API consumer submitting a request with cors headers receives a response reflecting the cors headers values
 
 **Given** the API consumer wants to make a request using CORS
 <br/>
@@ -53,8 +53,25 @@ CORS allows the API to be used whilst within a web browser, from websites that a
 - Response contains ‘Access-Control-Allow-Headers’ headers matching the API’s allowed headers
 - Response contains ‘Cross-Origin-Resource-Policy’ header matching ‘cross-origin’
 
+## X-AMZ Responses
+
+
+### Scenario: An API consumer submitting a request with x-amz headers does not have x-amz headers returned
+
+**Given** the API consumer provides an x-amz header
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response is does not contains an x-amz header
+<br/>
+
+**Asserts**
+- Response does not contain x-amz headers
+
 ## Correlation Id
 
+
+..py:function:: test_request_with_x_correlation_id
 
 ### Scenario: An API consumer submitting a request with to a request with an ‘X-Correlation-Id’ header receives a response reflecting the X-Correlation-Id value
 
