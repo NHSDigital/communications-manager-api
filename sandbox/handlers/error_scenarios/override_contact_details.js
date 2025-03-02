@@ -1,6 +1,6 @@
 import { notAllowedContactDetailOverride } from "../config.js";
 
-const invalidPhoneNumber = "07700900002";
+const invalidPhoneNumber = "11111111111";
 const invalidEmailAddress = "invalidEmailAddress";
 
 function validationSuccess() {

@@ -47,7 +47,7 @@ description: |+
 
   | Field | Value | Description |
   | ---------- | ----- | ----------- |
-  | sms | 07700900002 | Returns 'Input failed format check' error with a pointer to sms. |
+  | sms | 11111111111 | Returns 'Input failed format check' error with a pointer to sms. |
   | email | invalidEmailAddress | Returns 'Input failed format check' error with a pointer to email. |
 content:
   application/vnd.api+json:

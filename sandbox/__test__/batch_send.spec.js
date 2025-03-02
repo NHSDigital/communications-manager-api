@@ -995,7 +995,7 @@ describe("/api/v1/send", () => {
                 recipient: {
                   nhsNumber: "1",
                   contactDetails: {
-                    sms: "07700900002",
+                    sms: "11111111111",
                   },
                 },
               },

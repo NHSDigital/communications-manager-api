@@ -262,7 +262,7 @@ def test_invalid_sms_contact_details(bearer_token_prod, correlation_id):
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
     data = Generators.generate_valid_create_message_body("prod")
-    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "07700900002"}
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "11111111111"}
     resp = requests.post(
         f"{constants.PROD_URL}{MESSAGES_ENDPOINT}",
         headers={
