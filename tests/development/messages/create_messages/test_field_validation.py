@@ -301,8 +301,7 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, bearer_token_internal_
     .. include:: ../../partials/validation/test_invalid_contact_details_sms.rst
     """
     data = Generators.generate_valid_create_message_body("dev")
-    # 07700900002 should fail and need changing.
-    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "07700900002"}
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {"sms": "11111111111"}
     resp = requests.post(
         f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}",
         headers={
