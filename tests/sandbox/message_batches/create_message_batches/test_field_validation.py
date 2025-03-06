@@ -512,7 +512,7 @@ def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, correlation_i
     .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
     data = Generators.generate_valid_create_message_batch_body()
-    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {"sms": "07700900002"}
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {"sms": "11111111111"}
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,
         "X-Correlation-Id": correlation_id,
@@ -554,7 +554,7 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
                         "recipient": {
                             "nhsNumber": "9990548609",
                             "contactDetails": {
-                                "sms": "07700900002"
+                                "sms": "11111111111"
                             }
                         },
                     }
@@ -706,7 +706,7 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, cor
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/address",
-            "Invalid"
+            "Too many address lines were provided"
         ),
         correlation_id
     )

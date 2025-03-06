@@ -693,7 +693,7 @@ describe("/api/v1/messages", () => {
             recipient: {
               nhsNumber: "1",
               contactDetails: {
-                sms: "07700900002",
+                sms: "11111111111",
               },
             },
             personalisation: {},
@@ -1041,12 +1041,12 @@ describe("/api/v1/messages", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'lines': Invalid",
+        message: "Invalid recipient contact details. Field 'lines': Too many address lines were provided",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
             field: "/data/attributes/recipient/contactDetails/address",
-            message: "Invalid",
+            message: "Too many address lines were provided",
             title: "Invalid value",
           },
         ],

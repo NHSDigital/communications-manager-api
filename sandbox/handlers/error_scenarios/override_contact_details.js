@@ -1,6 +1,6 @@
 import { notAllowedContactDetailOverride } from "../config.js";
 
-const invalidPhoneNumber = "07700900002";
+const invalidPhoneNumber = "11111111111";
 const invalidEmailAddress = "invalidEmailAddress";
 
 function validationSuccess() {
@@ -143,9 +143,9 @@ function addressValidation(address, path) {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
-        message: "Invalid",
+        message: "Too many address lines were provided",
       },
-      `Field 'lines': Invalid`,
+      `Field 'lines': Too many address lines were provided`,
     ]);
   }
 
