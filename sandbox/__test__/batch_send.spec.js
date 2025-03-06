@@ -1384,7 +1384,7 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'lines': Invalid",
+        message: "Invalid recipient contact details. Field 'lines': Too many address lines were provided",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
