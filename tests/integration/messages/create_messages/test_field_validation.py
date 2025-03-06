@@ -415,7 +415,7 @@ def test_invalid_address_contact_details_too_many_lines(bearer_token_int, correl
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/recipient/contactDetails/address",
-            "Invalid"
+            "Too many address lines were provided"
         ),
         correlation_id
     )

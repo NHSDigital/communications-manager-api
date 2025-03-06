@@ -1046,7 +1046,7 @@ describe("/api/v1/messages", () => {
           {
             code: 'CM_INVALID_VALUE',
             field: "/data/attributes/recipient/contactDetails/address",
-            message: "Invalid",
+            message: "Too many address lines were provided",
             title: "Invalid value",
           },
         ],
