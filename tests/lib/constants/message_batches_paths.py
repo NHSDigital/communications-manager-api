@@ -16,7 +16,6 @@ MISSING_PROPERTIES_PATHS = [
     ("messages", MESSAGES_PATH),
     ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
     ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
-    ("nhsNumber", FIRST_MESSAGE_RECIPIENT_NHSNUMBER_PATH),
 ]
 NULL_PROPERTIES_PATHS = [
     ("data", "/data"),
