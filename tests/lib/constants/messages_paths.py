@@ -14,7 +14,6 @@ MISSING_PROPERTIES_PATHS = [
     ("routingPlanId", ROUTING_PLAN_ID_PATH),
     ("messageReference", MESSAGE_REFERENCE_PATH),
     ("recipient", MESSAGE_RECIPIENT_PATH),
-    ("nhsNumber", MESSAGE_RECIPIENT_NHSNUMBER_PATH),
 ]
 NULL_PROPERTIES_PATHS = [
     ("data", "/data"),

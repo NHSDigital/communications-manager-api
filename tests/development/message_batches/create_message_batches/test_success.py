@@ -75,6 +75,29 @@ def test_201_message_batch_valid_nhs_number(
 
 
 @pytest.mark.devtest
+def test_201_message_batch_undefined_nhs_number(
+    nhsd_apim_proxy_url,
+    bearer_token_internal_dev
+):
+    """
+    .. include:: ../../partials/happy_path/test_201_message_batch_undefined_nhs_number.rst
+    """
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"].pop("nhsNumber", None)
+
+    resp = requests.post(
+        f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers={
+            "Authorization": bearer_token_internal_dev.value,
+            "Accept": constants.DEFAULT_CONTENT_TYPE,
+            "Content-Type": constants.DEFAULT_CONTENT_TYPE,
+        },
+        json=data,
+    )
+    Assertions.assert_201_response(resp, data)
+
+
+@pytest.mark.devtest
 def test_201_message_batch_valid_contact_details(
     nhsd_apim_proxy_url,
     bearer_token_internal_dev
