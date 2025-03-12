@@ -73,17 +73,15 @@ const validateConstantString = (errors, fieldValue, fieldPointer, requiredValue)
     return true
 }
 const validateNhsNumber = (errors, fieldValue, fieldPointer) => {
-    if (isUndefined(fieldValue)) {
-        errors.push(missingError(fieldPointer));
-        return false
-    }
-    if (fieldValue === null) {
-        errors.push(nullError(fieldPointer));
-        return false
-    }
-    if (typeof fieldValue !== "string" || !isValidNhsNumber(fieldValue, nhsNumberRegex)) {
-        errors.push(invalidNhsNumberError(fieldPointer));
-        return false
+    if (!isUndefined(fieldValue)) {
+        if (fieldValue === null) {
+            errors.push(nullError(fieldPointer));
+            return false
+        }
+        if (typeof fieldValue !== "string" || !isValidNhsNumber(fieldValue, nhsNumberRegex)) {
+            errors.push(invalidNhsNumberError(fieldPointer));
+            return false
+        }
     }
     return true
 }
