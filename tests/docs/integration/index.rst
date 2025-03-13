@@ -7,5 +7,4 @@ The Integration test suite is a collection of tests ran against the integration 
    :maxdepth: 2
 
    generic/index.rst
-   post_v1_messages/index.rst
    get_channels_nhsapp_accounts/index.rst
