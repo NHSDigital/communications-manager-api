@@ -13,7 +13,6 @@
 **Asserts**
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Request Properties**
 
@@ -30,15 +29,6 @@ Below is a table showing the required attributes and their locations as seen in 
 | messageReference | /data/attributes/messageReference    |
 | recipient        | /data/attributes/recipient           |
 | nhsNumber        | /data/attributes/recipient/nhsNumber |
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
 ## Scenario: An API consumer submitting a message with an empty required attribute in the request body receives a 400 ‘Null Value’ response
@@ -53,7 +43,6 @@ This test uses the ‘X-Correlation-Id’ header, when provided in a request it 
 **Asserts**
 - Response returns a 400 ‘Null Value’ error
 - Response returns the expected error message body with references to the null attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Request Properties**
 
@@ -70,15 +59,6 @@ Below is a table showing the required attributes and their locations as seen in 
 | messageReference | /data/attributes/messageReference    |
 | recipient        | /data/attributes/recipient           |
 | nhsNumber        | /data/attributes/recipient/nhsNumber |
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
 ## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Too few items’ response
@@ -135,16 +115,6 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 **Asserts**
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body
-- Response returns the ‘X-Correlation-Id’ header if provided
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
 ## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
@@ -182,16 +152,6 @@ The message reference must be in a UUID format, for more information on UUID, lo
 **Asserts**
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
 ## Scenario: An API consumer submitting a request with an invalid NHS number receives a 400 ‘Invalid NHS Number’ response
@@ -208,16 +168,6 @@ An NHS Number is a 10 digit number used to identify patients, for more informati
 **Asserts**
 - Response returns a 400 ‘Invalid NHS Number’ error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
@@ -256,16 +206,6 @@ The routing plan must be in a UUID format, for more information on UUID, look [h
 **Asserts**
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 
 ## Scenario: An API consumer submitting a request with an invalid sms receives a 400 ‘Invalid Value’ response
@@ -301,7 +241,6 @@ A valid sms contact detail must be structured in this format: { sms: value }
 **Asserts**
 - Response returns a 400 ‘Cannot set contact details’ error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
@@ -338,7 +277,6 @@ A valid personalisation must be structured in this format: { parameter: value }
 **Asserts**
 - Response returns a 400 ‘Missing Value’ error
 - Response returns the expected error message body with references to the missing attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Request Properties**
 
@@ -355,12 +293,3 @@ Below is a table showing the required attributes and their locations as seen in 
 | messageReference | /data/attributes/messageReference    |
 | recipient        | /data/attributes/recipient           |
 | nhsNumber        | /data/attributes/recipient/nhsNumber |
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |

@@ -80,10 +80,10 @@ def bearer_token_internal_dev(authentication_cache, api_product_in_comms_manager
 
 
 @pytest.fixture
-def bearer_token_internal_dev_test_1(authentication_cache,
-                                     api_product_in_nhs_notify_test_client_1,
-                                     nhsd_apim_proxy_url):
-    return authentication_cache.generate_authentication('internal-dev-test-1', nhsd_apim_proxy_url)
+def bearer_token_internal_dev_test_1(authentication_cache):
+    environment = os.environ['API_ENVIRONMENT']
+    return authentication_cache.generate_authentication(
+        'internal-dev-test-1', f"https://{environment}.api.service.nhs.uk/comms")
 
 
 @pytest.fixture
