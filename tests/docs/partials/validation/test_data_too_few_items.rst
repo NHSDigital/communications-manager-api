@@ -8,7 +8,5 @@ Scenario: An API consumer submitting a request with too few attributes in the re
 **Asserts**
 - Response returns a 400 'Too Few Items' error
 - Response returns the expected error message body with references to the removed attribute
-- Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/message_batch_request_properties.rst
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/message_request_properties.rst

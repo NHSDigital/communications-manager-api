@@ -10,4 +10,4 @@ Scenario: An API consumer submitting a request with an invalid routing plan rece
 - Response returns the expected error message body referencing the invalid attribute
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/correlation_ids.rst

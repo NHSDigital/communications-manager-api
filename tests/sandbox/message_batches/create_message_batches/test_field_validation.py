@@ -338,7 +338,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
 @pytest.mark.parametrize("correlation_id", constants.CORRELATION_IDS)
 def test_blank_value_under_messages(nhsd_apim_proxy_url, invalid_value, correlation_id):
     """
-    .. include:: ../../partials/validation/test_blank_value_under_messages.rst
+    .. include:: ../../partials/validation/test_invalid_value_under_messages.rst
     """
     resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
         **headers,

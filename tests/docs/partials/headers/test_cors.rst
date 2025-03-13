@@ -1,7 +1,7 @@
 Scenario: An API consumer submitting a request with an 'Origin' header receives the expected cors headers in response
 =====================================================================================================================
 
-.. include:: ../../partials/cors.rst
+.. include:: /partials/cors.rst
 
 | **Given** the API consumer provides an Origin header
 | **When** the request is submitted

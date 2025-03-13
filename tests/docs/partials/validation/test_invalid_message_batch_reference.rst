@@ -10,6 +10,3 @@ The message batch reference must be in a UUID format, for more information on UU
 **Asserts**
 - Response returns a 400 'Invalid Value' error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

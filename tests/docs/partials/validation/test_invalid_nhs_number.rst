@@ -10,6 +10,3 @@ An NHS Number is a 10 digit number used to identify patients, for more informati
 **Asserts**
 - Response returns a 400 'Invalid NHS Number' error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

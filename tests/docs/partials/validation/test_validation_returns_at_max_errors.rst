@@ -8,6 +8,3 @@ Scenario: An API consumer submitting a request with that will generate a set num
 
 **Asserts**
 - Response returns the expected number of errors
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

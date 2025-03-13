@@ -9,4 +9,3 @@ Scenario: An API consumer submitting a request with an contact details when not 
 **Asserts**
 - Response returns a 400 'Cannot set contact details' error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the 'X-Correlation-Id' header if provided
