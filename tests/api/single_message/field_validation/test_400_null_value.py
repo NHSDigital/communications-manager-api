@@ -16,6 +16,7 @@ def test_data_null(url, bearer_token, property, pointer):
     .. include:: ../partials/validation/test_messages_null.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
+
     resp = requests.post(
         f"{url}{MESSAGES_ENDPOINT}",
         headers=headers,

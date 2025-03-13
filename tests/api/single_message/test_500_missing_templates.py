@@ -1,6 +1,5 @@
 import requests
 import pytest
-import uuid
 from lib import Assertions, Generators
 from lib.fixtures import *  # NOSONAR
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
@@ -18,7 +17,7 @@ def test_routing_plan_missing_templates(
     routing_plan_id
 ):
     """
-    .. include:: ../partials/invalid_routing_plans/test_500_missing_routing_plan.rst
+    .. include:: /partials/invalid_routing_plans/test_500_missing_routing_plan.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")

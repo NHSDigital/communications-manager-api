@@ -1,64 +1,17 @@
 # Validation Tests
 
 
-## Scenario: An API consumer submitting a message with an invalid required attribute in the request body receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer has sent a duplicate request
 
-**Given** the API consumer provides an message body with an invalid attribute
+**Given** an API consumer
 <br/>
-**When** the request is submitted
+**When** a duplicate request is submitted
 <br/>
-**Then** the response returns a 400 invalid value error
-<br/>
-
-**Asserts**
-- Response returns a 400 ‘Invalid Value’ error
-- Response returns the expected error message body with references to the invalid attribute
-
-**Request Properties**
-
-This test uses a method to replace the values in the response body, it sets the new value, and sets the value of the location of where the attribute has been changed.
-
-Below is a table showing the required attributes and their locations as seen in the response body.
-
-| Attribute        | Location                             |
-|------------------|--------------------------------------|
-| data             | /data                                |
-| type             | /data/type                           |
-| attributes       | /data/attributes                     |
-| routingPlanId    | /data/attributes/routingPlanId       |
-| messageReference | /data/attributes/messageReference    |
-| recipient        | /data/attributes/recipient           |
-| nhsNumber        | /data/attributes/recipient/nhsNumber |
-
-
-## Scenario: An API consumer submitting a message with an empty required attribute in the request body receives a 400 ‘Null Value’ response
-
-**Given** the API consumer provides an message body with a null attribute
-<br/>
-**When** the request is submitted
-<br/>
-**Then** the response returns a 400 null value error
+**Then** the response returns a 422 duplicate request error
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Null Value’ error
-- Response returns the expected error message body with references to the null attribute
-
-**Request Properties**
-
-This test uses a method to replace the values in the response body, it sets the new value, and sets the value of the location of where the attribute has been changed.
-
-Below is a table showing the required attributes and their locations as seen in the response body.
-
-| Attribute        | Location                             |
-|------------------|--------------------------------------|
-| data             | /data                                |
-| type             | /data/type                           |
-| attributes       | /data/attributes                     |
-| routingPlanId    | /data/attributes/routingPlanId       |
-| messageReference | /data/attributes/messageReference    |
-| recipient        | /data/attributes/recipient           |
-| nhsNumber        | /data/attributes/recipient/nhsNumber |
+- Response returns a 422 ‘Duplicate Request’ error
 
 
 ## Scenario: An API consumer submitting a request with an invalid address postcode receives a 400 ‘Invalid Value’ response
@@ -124,6 +77,48 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 | [ “1”, “2”, “3”, “4”, “5”, “6” ] | Used to ensure list of more than 5 values is not accepted |
 
 
+## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
+
+A valid contact detail must be structured in this format: { email: Value }
+
+**Given** the API consumer provides an message body with an invalid email address
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+| Value               | Description                                          |
+|---------------------|------------------------------------------------------|
+| invalidEmailAddress | Used to ensure invalid email address is not accepted |
+
+
+## Scenario: An API consumer submitting a request with an invalid sms receives a 400 ‘Invalid Value’ response
+
+A valid sms contact detail must be structured in this format: { sms: value }
+
+**Given** the API consumer provides an message body with an invalid sms
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 invalid value error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid Value’ error
+- Response returns the expected error message body with references to the invalid attribute
+- Response returns the ‘X-Correlation-Id’ header if provided
+
+|        Value | Description                                         |
+|--------------|-----------------------------------------------------|
+| 077009000021 | Used to ensure invalid phone number is not accepted |
+
+
 ## Scenario: An API consumer submitting a message with an invalid required attribute in the request body receives a 400 ‘Invalid Value’ response
 
 **Given** the API consumer provides an message body with an invalid attribute
@@ -154,11 +149,9 @@ Below is a table showing the required attributes and their locations as seen in 
 | nhsNumber        | /data/attributes/recipient/nhsNumber |
 
 
-## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request without a request body receives a 400 ‘Invalid Value’ response
 
-A valid contact detail must be structured in this format: { email: Value }
-
-**Given** the API consumer provides an message body with an invalid email address
+**Given** the API consumer provides an empty message body
 <br/>
 **When** the request is submitted
 <br/>
@@ -167,12 +160,7 @@ A valid contact detail must be structured in this format: { email: Value }
 
 **Asserts**
 - Response returns a 400 ‘Invalid Value’ error
-- Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
-
-| Value               | Description                                          |
-|---------------------|------------------------------------------------------|
-| invalidEmailAddress | Used to ensure invalid email address is not accepted |
+- Response returns the expected error message body
 
 
 ## Scenario: An API consumer submitting a request with an invalid message reference receives a 400 ‘Invalid Value’ response
@@ -245,25 +233,34 @@ The routing plan must be in a UUID format, for more information on UUID, look [h
 - Response returns the expected error message body with references to the invalid attribute
 
 
-## Scenario: An API consumer submitting a request with an invalid sms receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a message with an empty required attribute in the request body receives a 400 ‘Null Value’ response
 
-A valid sms contact detail must be structured in this format: { sms: value }
-
-**Given** the API consumer provides an message body with an invalid sms
+**Given** the API consumer provides an message body with a null attribute
 <br/>
 **When** the request is submitted
 <br/>
-**Then** the response returns a 400 invalid value error
+**Then** the response returns a 400 null value error
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Invalid Value’ error
-- Response returns the expected error message body with references to the invalid attribute
-- Response returns the ‘X-Correlation-Id’ header if provided
+- Response returns a 400 ‘Null Value’ error
+- Response returns the expected error message body with references to the null attribute
 
-|        Value | Description                                         |
-|--------------|-----------------------------------------------------|
-| 077009000021 | Used to ensure invalid phone number is not accepted |
+**Request Properties**
+
+This test uses a method to replace the values in the response body, it sets the new value, and sets the value of the location of where the attribute has been changed.
+
+Below is a table showing the required attributes and their locations as seen in the response body.
+
+| Attribute        | Location                             |
+|------------------|--------------------------------------|
+| data             | /data                                |
+| type             | /data/type                           |
+| attributes       | /data/attributes                     |
+| routingPlanId    | /data/attributes/routingPlanId       |
+| messageReference | /data/attributes/messageReference    |
+| recipient        | /data/attributes/recipient           |
+| nhsNumber        | /data/attributes/recipient/nhsNumber |
 
 
 ## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
@@ -316,3 +313,35 @@ Below is a table showing the required attributes and their locations as seen in 
 | messageReference | /data/attributes/messageReference    |
 | recipient        | /data/attributes/recipient           |
 | nhsNumber        | /data/attributes/recipient/nhsNumber |
+
+
+## Scenario: An API consumer submitting a request with an personalisation field too large receives a 400 ‘Invalid personalisation’ response
+
+Personalisation fields must not be too large for their given template
+
+**Given** the API consumer provides a message body with a personalisation field that is too large
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 Invalid personalisation error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid personalisation’ error
+- Response returns the expected error message body with references to the invalid attribute
+
+
+## Scenario: An API consumer submitting a request with an personalisation field too large receives a 400 ‘Invalid personalisation’ response
+
+Personalisation fields must not be too large for their given template
+
+**Given** the API consumer provides a message body with a personalisation field that is too large
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response returns a 400 Invalid personalisation error
+<br/>
+
+**Asserts**
+- Response returns a 400 ‘Invalid personalisation’ error
+- Response returns the expected error message body with references to the invalid attribute

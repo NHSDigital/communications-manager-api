@@ -14,7 +14,7 @@ CORRELATION_IDS = [None, "0f160ae2-9b62-47bf-bdf0-c6a844d59488"]
 @pytest.mark.prodtest
 def test_duplicate_message_request(url, bearer_token):
     """
-    .. include:: ../../partials/duplicate_request/test_422_duplicate_request.rst
+    .. include:: /partials/duplicate_request/test_422_duplicate_request.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")

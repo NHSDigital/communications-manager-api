@@ -10,7 +10,7 @@ from lib.constants.constants import VALID_NHS_NUMBER, ERROR_CANNOT_SET_CONTACT_D
 @pytest.mark.devtest
 def test_not_permitted_to_use_contact_details(url, bearer_token_internal_dev_test_1):
     """
-    .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
+    .. include:: ../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
     headers = Generators.generate_valid_headers(bearer_token_internal_dev_test_1.value)
     data = Generators.generate_valid_create_message_body("dev")

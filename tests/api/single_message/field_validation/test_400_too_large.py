@@ -20,6 +20,7 @@ def test_too_large_personalisation(url, bearer_token):
     data["data"]["attributes"]["personalisation"] = {
         'sms_body': 'x'*919
     }
+
     resp = requests.post(
         f"{url}{MESSAGES_ENDPOINT}",
         headers=headers,

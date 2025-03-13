@@ -13,7 +13,7 @@ from lib.constants.constants import INVALID_ROUTING_PLAN
 @pytest.mark.prodtest
 def test_no_such_routing_plan(url, bearer_token):
     """
-    .. include:: ../partials/invalid_routing_plans/test_no_such_routing_plan.rst
+    .. include:: /partials/invalid_routing_plans/test_no_such_routing_plan.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")
@@ -39,7 +39,7 @@ def test_no_such_routing_plan(url, bearer_token):
 @pytest.mark.prodtest
 def test_routing_plan_not_belonging_to_client_id(url, bearer_token):
     """
-    .. include:: ../partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
+    .. include:: /partials/invalid_routing_plans/test_routing_plan_not_belonging_to_client_id.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")
