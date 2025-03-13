@@ -14,9 +14,10 @@ from lib.constants.constants import VALID_ACCEPT_HEADERS, DEFAULT_CONTENT_TYPE, 
 @pytest.mark.parametrize('accept_headers', VALID_ACCEPT_HEADERS)
 def test_201_message_valid_accept_headers(url, bearer_token, accept_headers):
     """
-    .. include:: ../../partials/happy_path/test_201_messages_valid_accept_headers.rst
+    .. include:: /partials/happy_path/test_201_messages_valid_accept_headers.rst
     """
     data = Generators.generate_valid_create_message_body("dev")
+
     resp = requests.post(f"{url}{MESSAGES_ENDPOINT}", headers={
             "Authorization": bearer_token.value,
             "Accept": accept_headers,
@@ -34,7 +35,7 @@ def test_201_message_valid_accept_headers(url, bearer_token, accept_headers):
 @pytest.mark.parametrize('content_type', VALID_CONTENT_TYPE_HEADERS)
 def test_201_message_valid_content_type_headers(url, bearer_token, content_type):
     """
-    .. include:: ../../partials/happy_path/test_201_messages_valid_content_type_headers.rst
+    .. include:: /partials/happy_path/test_201_messages_valid_content_type_headers.rst
     """
     data = Generators.generate_valid_create_message_body("dev")
     resp = requests.post(f"{url}{MESSAGES_ENDPOINT}", headers={
@@ -53,7 +54,7 @@ def test_201_message_valid_content_type_headers(url, bearer_token, content_type)
 @pytest.mark.prodtest
 def test_201_message_valid_nhs_number(url, bearer_token):
     """
-    .. include:: ../../partials/happy_path/test_201_messages_valid_nhs_number.rst
+    .. include:: /partials/happy_path/test_201_messages_valid_nhs_number.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")
@@ -74,7 +75,7 @@ def test_201_message_valid_nhs_number(url, bearer_token):
 @pytest.mark.prodtest
 def test_201_message_undefined_nhs_number(url, bearer_token):
     """
-    .. include:: ../../partials/happy_path/test_201_messages_undefined_nhs_number.rst
+    .. include:: /partials/happy_path/test_201_messages_undefined_nhs_number.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")
@@ -95,7 +96,7 @@ def test_201_message_undefined_nhs_number(url, bearer_token):
 @pytest.mark.prodtest
 def test_201_message_valid_contact_details(url, bearer_token):
     """
-    .. include:: ../../partials/happy_path/test_201_messages_valid_contact_details.rst
+    .. include:: /partials/happy_path/test_201_messages_valid_contact_details.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")

@@ -9,10 +9,7 @@ from lib.constants.messages_paths import MESSAGES_ENDPOINT, MISSING_PROPERTIES_P
 @pytest.mark.devtest
 @pytest.mark.inttest
 @pytest.mark.prodtest
-@pytest.mark.parametrize(
-    "property, pointer",
-    MISSING_PROPERTIES_PATHS
-)
+@pytest.mark.parametrize("property, pointer", MISSING_PROPERTIES_PATHS)
 def test_property_missing(url, bearer_token, property, pointer):
     """
     .. include:: ../partials/validation/test_messages_property_missing.rst
