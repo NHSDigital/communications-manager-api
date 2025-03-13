@@ -12,3 +12,4 @@ Test Suite
    generic/index
    get_v1_messages/index
    post_v1_message-batches/index
+   post_v1_messages/index
