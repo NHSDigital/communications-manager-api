@@ -12,4 +12,4 @@ Scenario: An API consumer submitting a request with an 'Origin' header receives 
 - Response contains 'Access-Control-Expose-Headers' header matching 'x-correlation-id'
 - Response contains 'Cross-Origin-Resource-Policy' header matching 'cross-origin'
 
-.. include:: ../../partials/methods.rst
+.. include:: /partials/methods.rst

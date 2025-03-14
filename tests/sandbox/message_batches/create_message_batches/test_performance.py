@@ -22,7 +22,9 @@ def test_create_messages_large_valid_payload(nhsd_apim_proxy_url):
             {
                 "messageReference": str(uuid.uuid1()),
                 "recipient": {"nhsNumber": "9990548609"},
-                "personalisation": {},
+                "personalisation": {
+                    "body": "test"
+                },
             }
         )
 
@@ -50,7 +52,9 @@ def test_create_messages_large_invalid_payload(nhsd_apim_proxy_url):
                 "recipient": {
                     "nhsNumber": "not valid",
                 },
-                "personalisation": {},
+                "personalisation": {
+                    "body": "test"
+                },
             }
         )
 
@@ -80,7 +84,9 @@ def test_create_messages_large_not_unique_payload(nhsd_apim_proxy_url):
                 "recipient": {
                     "nhsNumber": "not valid",
                 },
-                "personalisation": {},
+                "personalisation": {
+                    "body": "test"
+                },
             }
         )
 
