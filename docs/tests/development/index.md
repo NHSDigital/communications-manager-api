@@ -1,7 +1,6 @@
 # Development test suite
 
 * [Generic Tests](generic/index.md)
-  * [Authentication Tests](generic/authentication.md)
   * [Not Found Tests](generic/not_found.md)
   * [Too Many Requests Tests](generic/too_many_requests.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)

@@ -31,15 +31,6 @@ This test makes use of different HTTP methods, if the method is either HEAD or O
 | HEAD    |
 | OPTIONS |
 
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
-
 
 ### Scenario: An API consumer submitting a request with authentication with insufficient access receives a 401 ‘Access Denied’ response
 
@@ -68,15 +59,6 @@ This test makes use of different HTTP methods, if the method is either HEAD or O
 | DELETE  |
 | HEAD    |
 | OPTIONS |
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |
 
 ## 403 - Forbidden
 
@@ -108,12 +90,3 @@ This test makes use of different HTTP methods, if the method is either HEAD or O
 | DELETE  |
 | HEAD    |
 | OPTIONS |
-
-**Correlation IDs**
-
-This test uses the ‘X-Correlation-Id’ header, when provided in a request it is returned in the response.
-
-| Value                                | Description                                                                                                   |
-|--------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| None                                 | Is tested to ensure that we do not send back a correlation identifier if one was not provided in the request. |
-| 76491414-d0cf-4655-ae20-a4d1368472f3 | Is tested to ensure that when a correlation identifier is sent, we respond with the same value.               |

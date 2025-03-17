@@ -11,5 +11,4 @@ Scenario: An API consumer submitting a request with authentication with insuffic
 - Response returns the expected error message body
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/methods.rst
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/methods.rst
