@@ -8,7 +8,7 @@ import lib.constants.constants as constants
 
 
 @pytest.mark.devtest
-def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, bearer_token_internal_dev_test_1):
+def test_not_permitted_to_use_contact_details(url, bearer_token_internal_dev_test_1):
     """
     .. include:: ../../partials/validation/test_not_permitted_to_use_contact_details.rst
     """
@@ -25,7 +25,7 @@ def test_not_permitted_to_use_contact_details(nhsd_apim_proxy_url, bearer_token_
     data["data"]["attributes"]["routingPlanId"] = "558a52ab-9d48-406e-9815-7fd517df5b9e"
     del data["data"]["attributes"]["originator"]
 
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}", headers={
+    resp = requests.post(f"{url}{MESSAGES_ENDPOINT}", headers={
             "Authorization": bearer_token_internal_dev_test_1.value,
             "Accept": constants.DEFAULT_CONTENT_TYPE,
             "Content-Type": constants.DEFAULT_CONTENT_TYPE,
