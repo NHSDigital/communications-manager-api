@@ -1,8 +1,0 @@
-502 Tests
-================
-
-These tests target the API endpoint GET /channels/nhsapp/accounts testing that 502 is returned when the BE can't contact the NHS App API
-
-.. automodule:: development.nhsapp_accounts.test_502
-    :noindex:
-    :members:

@@ -12,7 +12,3 @@ The Production test suite is a collection of tests ran against the production en
 * [POST /v1/messages](post_v1_messages/index.md)
   * [Validation Tests](post_v1_messages/validation.md)
   * [Invalid Routing Plans](post_v1_messages/invalid_routing_plans.md)
-* [GET /channels/nhsapp/accounts](get_channels_nhsapp_accounts/index.md)
-  * [Happy Path Tests](get_channels_nhsapp_accounts/happy_path.md)
-  * [404 Tests](get_channels_nhsapp_accounts/404.md)
-  * [400 Tests](get_channels_nhsapp_accounts/400.md)

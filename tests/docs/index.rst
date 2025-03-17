@@ -11,3 +11,4 @@ Test Suite
    end_to_end/index
    generic/index
    get_v1_messages/index
+   get_channels_nhsapp_accounts/index
