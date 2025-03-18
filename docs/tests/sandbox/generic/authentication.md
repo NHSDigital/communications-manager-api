@@ -15,7 +15,6 @@
 **Asserts**
 - Response returns a 401 ‘Access Denied’ error
 - Response returns the expected error message body
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Methods**
 

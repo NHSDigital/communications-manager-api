@@ -9,6 +9,5 @@ Scenario: An API consumer submitting a request with an invalid authorization tok
 **Asserts**
 - Response returns a 401 'Access Denied' error
 - Response returns the expected error message body
-- Response returns the 'X-Correlation-Id' header if provided
 
 .. include:: /partials/methods.rst

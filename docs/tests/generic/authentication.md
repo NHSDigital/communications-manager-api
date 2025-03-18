@@ -15,7 +15,6 @@
 **Asserts**
 - Response returns a 401 ‘Access Denied’ error
 - Response returns the expected error message body
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Methods**
 
@@ -44,7 +43,6 @@ This test makes use of different HTTP methods, if the method is either HEAD or O
 **Asserts**
 - Response returns a 401 ‘Access Denied’ error
 - Response returns the expected error message body
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Methods**
 
@@ -75,7 +73,6 @@ Scenario: An API consumer submitting a request with an invalid authentication ty
 **Asserts**
 - Response returns a 403 ‘Forbidden’ error
 - Response returns the expected error message body
-- Response returns the ‘X-Correlation-Id’ header if provided
 
 **Methods**
 
