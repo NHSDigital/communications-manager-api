@@ -10,7 +10,6 @@ from lib.constants.message_batches_paths import MESSAGE_BATCHES_ENDPOINT
 @pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
-@pytest.mark.prodtest
 @pytest.mark.parametrize("accept_headers", VALID_ACCEPT_HEADERS)
 def test_201_message_batch_valid_accept_headers(url, bearer_token, accept_headers):
     """
@@ -33,7 +32,6 @@ def test_201_message_batch_valid_accept_headers(url, bearer_token, accept_header
 @pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
-@pytest.mark.prodtest
 @pytest.mark.parametrize("content_type", VALID_CONTENT_TYPE_HEADERS)
 def test_201_message_batch_valid_content_type_headers(url, bearer_token, content_type):
     """
@@ -57,7 +55,6 @@ def test_201_message_batch_valid_content_type_headers(url, bearer_token, content
 @pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
-@pytest.mark.prodtest
 def test_201_message_batch_valid_nhs_number(url, bearer_token):
     """
     .. include:: ../partials/happy_path/test_201_message_batch_valid_nhs_number.rst
@@ -78,7 +75,6 @@ def test_201_message_batch_valid_nhs_number(url, bearer_token):
 @pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
-@pytest.mark.prodtest
 def test_201_message_batch_undefined_nhs_number(url, bearer_token):
     """
     .. include:: ../partials/happy_path/test_201_message_batch_undefined_nhs_number.rst
@@ -98,7 +94,6 @@ def test_201_message_batch_undefined_nhs_number(url, bearer_token):
 @pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
-@pytest.mark.prodtest
 def test_201_message_batch_valid_contact_details(url, bearer_token):
     """
     .. include:: ../partials/happy_path/test_201_message_batch_valid_contact_details.rst

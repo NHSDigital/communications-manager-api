@@ -93,7 +93,6 @@ def test_201_message_undefined_nhs_number(url, bearer_token):
 @pytest.mark.test
 @pytest.mark.devtest
 @pytest.mark.inttest
-@pytest.mark.prodtest
 def test_201_message_valid_contact_details(url, bearer_token):
     """
     .. include:: /partials/happy_path/test_201_messages_valid_contact_details.rst
