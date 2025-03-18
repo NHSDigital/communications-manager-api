@@ -6,7 +6,6 @@ from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.constants.constants import VALID_NHS_NUMBER, ERROR_CANNOT_SET_CONTACT_DETAILS
 
 
-@pytest.mark.test
 @pytest.mark.devtest
 def test_not_permitted_to_use_contact_details(url, bearer_token_internal_dev_test_1):
     """
