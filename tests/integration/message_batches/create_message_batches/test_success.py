@@ -67,8 +67,10 @@ def test_201_message_batch_valid_nhs_number(bearer_token_int):
 
 
 @pytest.mark.inttest
+@pytest.mark.parametrize('valid_sms_numbers', constants.VALID_SMS_NUMBERS)
 def test_201_message_batch_valid_contact_details(
-    bearer_token_int
+    bearer_token_int,
+    valid_sms_numbers
 ):
     """
     .. include:: ../../partials/happy_path/test_201_message_batch_valid_contact_details.rst
@@ -80,7 +82,7 @@ def test_201_message_batch_valid_contact_details(
     data["data"]["attributes"]["messages"][0]["recipient"][
         "contactDetails"
     ] = {
-        "sms": "07777777777",
+        "sms": valid_sms_numbers,
         "email": "ab@cd.co.uk",
         "address": {
             "lines": ["Line 1", "Line 2"],

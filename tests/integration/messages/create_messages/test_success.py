@@ -3,7 +3,7 @@ import pytest
 import time
 from lib import Assertions, Generators
 from lib.constants.constants import DEFAULT_CONTENT_TYPE, INT_URL, VALID_CONTENT_TYPE_HEADERS, VALID_ACCEPT_HEADERS, \
-    VALID_NHS_NUMBER, VALID_ROUTING_PLAN_ID_INT
+    VALID_NHS_NUMBER, VALID_SMS_NUMBERS
 from lib.constants.messages_paths import MESSAGES_ENDPOINT
 from lib.fixtures import *  # NOSONAR
 
@@ -61,14 +61,15 @@ def test_201_single_message_with_valid_nhs_number(bearer_token_int):
 
 
 @pytest.mark.inttest
-def test_201_message_valid_contact_details(bearer_token_int):
+@pytest.mark.parametrize('valid_sms_numbers', VALID_SMS_NUMBERS)
+def test_201_message_valid_contact_details(bearer_token_int, valid_sms_numbers):
     """
     .. include:: ../../partials/happy_path/test_201_messages_valid_contact_details.rst
     """
     data = Generators.generate_valid_create_message_body("int")
     data["data"]["attributes"]["recipient"]["nhsNumber"] = VALID_NHS_NUMBER
     data["data"]["attributes"]["recipient"]["contactDetails"] = {
-        "sms": "07777777777",
+        "sms": valid_sms_numbers,
         "email": "ab@cd.co.uk",
         "address": {
             "lines": ["Line 1", "Line 2"],
