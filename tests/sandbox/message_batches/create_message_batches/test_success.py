@@ -81,7 +81,8 @@ def test_201_message_batch_valid_nhs_number(nhsd_apim_proxy_url):
 
 
 @pytest.mark.sandboxtest
-def test_201_message_batch_valid_contact_details(nhsd_apim_proxy_url):
+@pytest.mark.parametrize('valid_sms_numbers', constants.VALID_SMS_NUMBERS)
+def test_201_message_batch_valid_contact_details(nhsd_apim_proxy_url, valid_sms_numbers):
     """
     .. include:: ../../partials/happy_path/test_201_message_batch_valid_contact_details.rst
     """
@@ -92,7 +93,7 @@ def test_201_message_batch_valid_contact_details(nhsd_apim_proxy_url):
     data["data"]["attributes"]["messages"][0]["recipient"][
         "contactDetails"
     ] = {
-        "sms": "07777777777",
+        "sms": valid_sms_numbers,
         "email": "ab@cd.co.uk",
         "address": {
             "lines": ["Line 1", "Line 2"],

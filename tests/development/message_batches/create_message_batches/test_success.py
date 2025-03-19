@@ -98,9 +98,11 @@ def test_201_message_batch_undefined_nhs_number(
 
 
 @pytest.mark.devtest
+@pytest.mark.parametrize('valid_sms_numbers', constants.VALID_SMS_NUMBERS)
 def test_201_message_batch_valid_contact_details(
     nhsd_apim_proxy_url,
-    bearer_token_internal_dev
+    bearer_token_internal_dev,
+    valid_sms_numbers
 ):
     """
     .. include:: ../../partials/happy_path/test_201_message_batch_valid_contact_details.rst
@@ -112,7 +114,7 @@ def test_201_message_batch_valid_contact_details(
     data["data"]["attributes"]["messages"][0]["recipient"][
         "contactDetails"
     ] = {
-        "sms": "07777777777",
+        "sms": valid_sms_numbers,
         "email": "ab@cd.co.uk",
         "address": {
             "lines": ["Line 1", "Line 2"],
