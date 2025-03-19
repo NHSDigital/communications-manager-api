@@ -10,7 +10,6 @@ A valid personalisation must be structured in this format: { parameter: value }
 **Asserts**
 - Response returns a 400 'Invalid value' error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the 'X-Correlation-Id' header if provided
 
 .. list-table::
     :widths: 50 50

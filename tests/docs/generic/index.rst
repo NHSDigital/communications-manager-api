@@ -7,3 +7,4 @@ Generic Tests
    authentication
    content_types
    headers
+   not_found

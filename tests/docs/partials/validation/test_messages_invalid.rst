@@ -10,5 +10,4 @@ Scenario: An API consumer submitting a message with an invalid required attribut
 - Response returns the expected error message body with references to the invalid attribute
 - Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/message_request_properties.rst
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/message_request_properties.rst

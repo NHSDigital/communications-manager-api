@@ -8,7 +8,5 @@ Scenario: An API consumer submitting a message with an empty required attribute 
 **Asserts**
 - Response returns a 400 'Null Value' error
 - Response returns the expected error message body with references to the null attribute
-- Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/message_request_properties.rst
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/message_request_properties.rst

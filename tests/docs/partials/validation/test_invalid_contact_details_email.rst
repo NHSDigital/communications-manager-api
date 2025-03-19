@@ -10,7 +10,6 @@ A valid contact detail must be structured in this format: { email: Value }
 **Asserts**
 - Response returns a 400 'Invalid Value' error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the 'X-Correlation-Id' header if provided
 
 .. list-table::
     :widths: 50 50
