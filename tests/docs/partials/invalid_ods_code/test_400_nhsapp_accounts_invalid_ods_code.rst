@@ -7,8 +7,6 @@ Scenario: An API consumer submitting a GET NHS App Accounts request an invalid O
 
 **Asserts**
 - Response returns a 400 'Invalid' error
-- Response returns the expected error message body
-- Response returns the 'X-Correlation-Id' header if provided
+- Response returns the expected error message bodys
 
-.. include:: ../../partials/correlation_ids.rst
-.. include:: ../../partials/nhsapp_accounts_pages.rst
+.. include:: /partials/nhsapp_accounts_pages.rst
