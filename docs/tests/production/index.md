@@ -3,7 +3,6 @@
 The Production test suite is a collection of tests ran against the production environment. These tests are ran as part of the [release pipeline](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=620) and the [nightly production integration test run](https://dev.azure.com/NHSD-APIM/API%20Platform/_build?definitionId=635)
 
 * [Generic Tests](generic/index.md)
-  * [Authentication Tests](generic/authentication.md)
   * [Not Found Tests](generic/not_found.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)
   * [Validation Tests](post_v1_message-batches/validation.md)
