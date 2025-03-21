@@ -27,6 +27,7 @@ function smsValidation(sms, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/sms`,
         message: "Input failed format check",
+        statusCode: 400,
       },
       `Field 'sms': Input failed format check`,
     ]);
@@ -38,6 +39,7 @@ function smsValidation(sms, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/sms`,
         message: "Invalid",
+        statusCode: 400,
       },
       `Field 'sms': Invalid`,
     ]);
@@ -56,6 +58,7 @@ function emailValidation(email, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/email`,
         message: "Input failed format check",
+        statusCode: 400,
       },
       `Field 'email': Input failed format check`,
     ]);
@@ -67,6 +70,7 @@ function emailValidation(email, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/email`,
         message: "Invalid",
+        statusCode: 400,
       },
       `Field 'email': Invalid`,
     ]);
@@ -86,6 +90,7 @@ function addressValidation(address, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "Invalid",
+        statusCode: 400,
       },
       `Field 'address': Invalid`,
     ]);
@@ -98,6 +103,7 @@ function addressValidation(address, path) {
         code: 'CM_MISSING_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "`lines` is missing",
+        statusCode: 400,
       },
       `Field 'lines': 'lines' is missing`,
     ]);
@@ -109,6 +115,7 @@ function addressValidation(address, path) {
         code: 'CM_MISSING_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "`lines` is missing",
+        statusCode: 400,
       },
       `Field 'lines': 'lines' is missing`,
     ]);
@@ -121,6 +128,7 @@ function addressValidation(address, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "Invalid",
+        statusCode: 400,
       },
       `Field 'lines': Invalid`,
     ]);
@@ -133,6 +141,7 @@ function addressValidation(address, path) {
         title: "Too few items",
         field: `${path}/recipient/contactDetails/address`,
         message: "Too few address lines were provided",
+        statusCode: 400,
       },
       `Field 'lines': Too few address lines were provided`,
     ]);
@@ -144,6 +153,7 @@ function addressValidation(address, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "Too many address lines were provided",
+        statusCode: 400,
       },
       `Field 'lines': Too many address lines were provided`,
     ]);
@@ -156,6 +166,7 @@ function addressValidation(address, path) {
         code: 'CM_MISSING_VALUE',
         field: `${path}/recipient/contactDetails/address`,
         message: "`postcode` is missing",
+        statusCode: 400,
       },
       `Field 'postcode': 'postcode' is missing`,
     ]);
@@ -168,6 +179,7 @@ function addressValidation(address, path) {
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address/postcode`,
         message: "Invalid",
+        statusCode: 400,
       },
       `Field 'postcode': Invalid`,
     ]);
@@ -194,6 +206,7 @@ export function getAlternateContactDetailsError(
           title: "Cannot set contact details",
           field: `${path}/recipient/contactDetails`,
           message: "Client is not allowed to provide alternative contact details.",
+          statusCode: 400,
         },
       ]
     ];
