@@ -4,7 +4,7 @@ import re
 from .authentication import AuthenticationCache
 from .app_keys import ensure_api_product_in_application, ensure_api_product_not_in_application
 from .rate_limiting import RateLimiting
-from lib.constants.constants import INT_URL, PROD_URL
+from lib.constants.constants import PROD_URL
 
 
 @pytest.fixture(scope='session')
@@ -75,25 +75,10 @@ def authentication_cache():
 
 
 @pytest.fixture
-def bearer_token_internal_dev(authentication_cache, api_product_in_comms_manager_local, nhsd_apim_proxy_url):
-    return authentication_cache.generate_authentication('internal-dev', nhsd_apim_proxy_url)
-
-
-@pytest.fixture
 def bearer_token_internal_dev_test_1(authentication_cache,
                                      api_product_in_nhs_notify_test_client_1,
                                      nhsd_apim_proxy_url):
     return authentication_cache.generate_authentication('internal-dev-test-1', nhsd_apim_proxy_url)
-
-
-@pytest.fixture
-def bearer_token_int(authentication_cache):
-    return authentication_cache.generate_authentication('int', INT_URL)
-
-
-@pytest.fixture
-def bearer_token_prod(authentication_cache):
-    return authentication_cache.generate_authentication('prod', PROD_URL)
 
 
 @pytest.fixture(scope='session')
@@ -120,7 +105,7 @@ def url(api_product_name):
 
 
 @pytest.fixture()
-def bearer_token(authentication_cache):
+def bearer_token(authentication_cache, api_product_in_comms_manager_local):
     environment = os.environ['API_ENVIRONMENT']
     if environment == "prod":
         url = PROD_URL
