@@ -7,6 +7,8 @@
 
 ### Scenario: An API consumer submitting a request with an ‘Origin’ header receives the expected cors headers in response
 
+CORS allows the API to be used whilst within a web browser, from websites that are hosted on a different domain to that of the API. This is important as users utilising our API documentation must be able to send test requests from that page using the ‘try it now’ functionality.
+
 **Given** the API consumer provides an Origin header
 <br/>
 **When** the request is submitted

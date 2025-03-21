@@ -8,6 +8,3 @@ Scenario: An API consumer submitting a request to an unknown endpoint receives a
 **Asserts**
 - Response returns a 404 'Not Found' error
 - Response returns the expected error message body
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

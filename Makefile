@@ -181,14 +181,14 @@ internal-qa-test:
 
 .integration-test:
 	$(TEST_CMD) \
-	tests/integration tests/api \
+	tests/api \
 	-m inttest
 
 integration-test: .run-postman-int .integration-test
 
 .production-test:
 	$(PROD_TEST_CMD) \
-	tests/production tests/api \
+	tests/api \
 	-m prodtest
 
 production-test: .production-test
