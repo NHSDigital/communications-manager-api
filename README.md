@@ -90,7 +90,7 @@ There are `make` commands that alias some of this functionality:
 * `serve` -- Serves a preview of the specification in human-readable format - your browser will automatically open the documentation
 * `build-test-documentation` -- Builds the test documentation that is checked into the repository under `docs/tests`
 
-### Testing
+## Testing
 
 The tests written in this repository target the NHS Notify API. The testing covered include:
 
@@ -102,9 +102,9 @@ The tests written in this repository target the NHS Notify API. The testing cove
 
 For details on test cases covered in the Integration and End-to-End test suites, see the [test documentation](docs/tests/index.md).
 
-#### Set Up
+### Set Up
 
-##### Python
+### Python
 Before running tests, you need to set up your local environment. Use the `poetry install` command to install dependencies and populate the `.venv` directory.
 
 Activate the virtual environment with the following commands based on your shell:
@@ -115,14 +115,14 @@ Activate the virtual environment with the following commands based on your shell
 * nushell: `source .venv/bin/activate.nu`
 * powershell: `. .venv/bin/activate.ps1`
 
-##### Authentication
+### Authentication
 
 Our API integration tests support two authentication methods:
 
 * Bearer Token Authentication (via API key and private key) - Used for most integration tests.
 * Apigee Authentication (using pytest-nhsd-apim) - Used for internal-dev and internal-dev-sandbox.
 
-##### Bearer Token Authentication
+#### Bearer Token Authentication
 
 To be able to generate bearer token authentication for tests you need to declare the API_ENVIRONMENT environment variable. i.e:
 
@@ -148,7 +148,7 @@ The authentication process uses `API_ENVIRONMENT` to generate authentication for
 
 Ensure these variables are set and sourced in your .env file before running tests.
 
-###### Generate An Apigee Access Token
+#### Generate An Apigee Access Token
 
 To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Note that tokens expire approximately once per day and require refreshing.
 
@@ -166,7 +166,7 @@ If your token does not refresh, try clearing the cache:
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)
 ```
 
-###### Set Proxy Name
+#### Set Proxy Name
 Set the `PROXY_NAME` environment variable to specify the environment for test execution. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager'.
 
 Examples of available proxy names:
@@ -176,7 +176,7 @@ Examples of available proxy names:
 * communications-manager-pr-{num}
 * communications-manager-pr-{num}-sandbox
 
-###### Set Up End to End Tests
+### Set Up End to End Tests
 
 If you are running the end to end tests you will need to set the following environment variables:
 * `GUKN_API_KEY` - Gov UK API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
@@ -188,9 +188,9 @@ If you are running the end to end tests you will need to set the following envir
 **Note**
 When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
 
-#### Running Tests
+### Running Tests
 
-##### Unit Tests
+#### Unit Tests
 
 These tests live within the `/sandbox` folder and can be executed by:
 
@@ -202,7 +202,7 @@ $ npm run test
 
 Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
 
-##### Integration tests
+#### Integration tests
 
 Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment
 
@@ -211,18 +211,18 @@ Integration tests live within the `/tests/api/` directory and use pytest markers
 * inttest - can be ran against the int environment
 * prodtest - can be ran against the production environment
 
-###### Running with make
+##### Running with make
 
 Tests can be ran via make command. A full list of available commands can be found in the Makefile, however, below is a table of commonly used make commands for testing:
 
 |Environment|Command|Description|
-|internal-dev-sandbox|`make internal-sandbox-test`| Runs sandbox unit tests, sandbox postman tests and sandbox integration tests against internal-dev-sandbox|
-|internal-dev|`make internal-dev-test`| Runs integration tests against internal-dev|
-|internal-dev|`make e2e-test-internal-dev`| Runs end to end tests against internal-dev|
-|internal-qa|`make internal-qa-test`| Runs integration tests against internal-qa|
-|internal-qa|`make e2e-test-uat`| Runs end to end tests against internal-qa|
+|internal-dev-sandbox|`make internal-sandbox-test`|Runs sandbox unit tests, sandbox postman tests and sandbox integration tests against internal-dev-sandbox|
+|internal-dev|`make internal-dev-test`|Runs integration tests against internal-dev|
+|internal-dev|`make e2e-test-internal-dev`|Runs end to end tests against internal-dev|
+|internal-qa|`make internal-qa-test` Runs integration tests against internal-qa|
+|internal-qa|`make e2e-test-uat`|Runs end to end tests against internal-qa|
 |int|`make integration-test`|Runs integration tests against int|
-|prod|`make production-test`||
+|prod|`make production-test`|Runs integration tests against prod|
 
 
 ##### Running with poetry
