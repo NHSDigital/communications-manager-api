@@ -104,7 +104,7 @@ For details on test cases covered in the Integration and End-to-End test suites,
 
 ### Set Up
 
-### Python
+#### Python
 Before running tests, you need to set up your local environment. Use the `poetry install` command to install dependencies and populate the `.venv` directory.
 
 ```
@@ -117,16 +117,16 @@ Activate the virtual environment with the following command:
 source .venv/bin/activate
 ```
 
-### Authentication
+#### Authentication
 
 Our API integration tests support two authentication methods:
 
 * Bearer Token Authentication (via API key and private key) - Used for most integration tests.
-* Apigee Authentication (using pytest-nhsd-apim) - Used for internal-dev and internal-dev-sandbox.
+* Apigee Authentication (using pytest-nhsd-apim) - Used for internal-dev and internal-dev-sandbox tests.
 
-### Bearer Token Authentication
+#### Bearer Token Authentication
 
-To be able to generate bearer token authentication for tests you need to declare the API_ENVIRONMENT environment variable. i.e:
+To be able to generate bearer token authentication for tests you need to declare the API_ENVIRONMENT environment variable:
 
 ```
 export API_ENVIRONMENT=internal-dev
@@ -150,9 +150,9 @@ The authentication process uses `API_ENVIRONMENT` to generate authentication for
 
 Ensure these variables are set and sourced in your .env file before running tests.
 
-### Generate An Apigee Access Token
+#### Generate An Apigee Access Token
 
-To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Note that tokens expire approximately once per day and require refreshing.
+To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. *Note* that tokens expire approximately once per day and require refreshing.
 
 * Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
 * Run the following command and log in with your Apigee credentials when prompted:
@@ -164,7 +164,7 @@ export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)
 ```
 
-### Set Proxy Name
+#### Set Proxy Name
 Set the `PROXY_NAME` environment variable to specify the environment for test execution. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager'.
 
 ```
@@ -187,12 +187,11 @@ If you are running the end to end tests you will need to set the following envir
 * `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 * `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 
-**Note**
-When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
+*Note* when exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
 
 ### Running Tests
 
-### Unit Tests
+#### Unit Tests
 
 These tests live within the `/sandbox` folder and can be executed by:
 
@@ -204,16 +203,16 @@ $ npm run test
 
 Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
 
-### Integration tests
+#### Integration tests
 
 Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment
 
-* all - available to run against all environments
-* devtest - can be ran against the internal-dev or internal-qa environments
-* inttest - can be ran against the int environment
-* prodtest - can be ran against the production environment
+* `all` - available to run against all environments
+* `devtest` - can be ran against the internal-dev or internal-qa environments
+* `inttest` - can be ran against the int environment
+* `prodtest` - can be ran against the production environment
 
-### Running with make
+#### Running with make
 
 Tests can be ran via make command.
 
@@ -234,7 +233,7 @@ A full list of available commands can be found in the Makefile, however, below i
 |prod|`make production-test`|Runs integration tests against prod|
 
 
-### Running with poetry
+#### Running with poetry
 
 Tests can be ran via poetry command. You can use poetry to specify a specific directory or test to run without having to run the full test suite.
 
@@ -243,21 +242,22 @@ To run a poetry test run the following command in the root folder
 ```
 PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN  --color=yes --junitxml=test-report.xml -k <test name>
 ```
+|Argument|Description|
+|--------|-----------|
+|`PYTHONPATH=./tests`|Sets the root directory of the tests|
+|`poetry run pytest`|Runs pytest through poetry|
+|`-v`|Marks logs as verbose (Optional)|
+|`-m <TAG>`|Specifies tag name (Optional)|
+|`<relative path to file>`|Targets a specific file to run tests for, useful when developing new tests (Optional)|
+|`--api-name=communications-manager`|Specifies api name|
+|`--proxy-name=$PROXY_NAME`|Retrieves the PROXY_NAME environment variable and sets it to the proxy-name argument|
+|`--apigee-access-token=$APIGEE_ACCESS_TOKEN`|Retrieves the APIGEE_ACCESS_TOKEN environment variable and sets it to the apigee-access-token argument|
+|`--color=yes`|Displays logs in an easy to read format (Optional)|
+|`--junitxml=test-report.xml`|Sets the output of the test run, this will be located in the python path root directory for the tests|
+|`-k`|specify a specific test to run|
 
-- `PYTHONPATH=./tests` - Sets the root directory of the tests
-- `poetry run pytest` - Runs pytest through poetry
-- `-v` - Marks logs as verbose (Optional)
-- `-m <TAG>` - Specifies tag name (Optional)
-- `<relative path to file>` - Targets a specific file to run tests for, useful when developing new tests (Optional)
-- `--api-name=communications-manager` - Specifies api name
-- `--proxy-name=$PROXY_NAME` - Retrieves the PROXY_NAME environment variable and sets it to the proxy-name argument
-- `--apigee-access-token=$APIGEE_ACCESS_TOKEN` - Retrieves the APIGEE_ACCESS_TOKEN environment variable and sets it to the apigee-access-token argument
-- `--color=yes` - Displays logs in an easy to read format (Optional)
-- `--junitxml=test-report.xml` - Sets the output of the test run, this will be located in the python path root directory for the tests
-- `-k` - specify a specific test to run
 
-
-### Zap security scanner
+#### Zap security scanner
 
 You can run the Zap security scanner using the `zap-security-scan` make command:
 
@@ -267,7 +267,7 @@ $ make zap-security-scan
 
 The project uses the [Zap automation framework](https://www.zaproxy.org/docs/automate/automation-framework/). The configuration for this is held in the `zap/` folder.
 
-### Postman collection tests
+#### Postman collection tests
 
 You can test the postman collections by using the `postman-test` make command:
 
