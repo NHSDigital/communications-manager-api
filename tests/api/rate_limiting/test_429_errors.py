@@ -11,8 +11,8 @@ test_client_1_details = {
 }
 
 
-def default_request_url(nhsd_apim_proxy_url):
-    return f"{nhsd_apim_proxy_url}{MESSAGES_ENDPOINT}/pending_enrichment_request_item_id"
+def default_request_url(url):
+    return f"{url}{MESSAGES_ENDPOINT}/pending_enrichment_request_item_id"
 
 
 def send_multiple_requests(url, headers, count=10, delay=0):
@@ -24,21 +24,14 @@ def send_multiple_requests(url, headers, count=10, delay=0):
 
 
 @pytest.mark.devperftest
-def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
+def test_429_triggered_app_quota(url, bearer_token, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_global_app_quota.rst
+    .. include:: ../partials/too_many_requests/test_429_global_app_quota.rst
     """
     rate_limiting.set_rate_limit(app_quota=4)
-
-    headers = {
-        "Authorization": bearer_token_internal_dev.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json",
-        "X-Correlation-Id": None
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    headers = Generators.generate_valid_headers(bearer_token.value)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -54,20 +47,15 @@ def test_429_triggered_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev,
 
 
 @pytest.mark.devperftest
-def test_429_triggered_app_spikearrest(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
+def test_429_triggered_app_spikearrest(url, bearer_token, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_global_app_spikearrest.rst
+    .. include:: ../partials/too_many_requests/test_429_global_app_spikearrest.rst
     """
     rate_limiting.set_rate_limit(app_spikearrest="4pm")
+    headers = Generators.generate_valid_headers(bearer_token.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -83,20 +71,15 @@ def test_429_triggered_app_spikearrest(nhsd_apim_proxy_url, bearer_token_interna
 
 
 @pytest.mark.devperftest
-def test_429_triggered_proxy_quota(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
+def test_429_triggered_proxy_quota(url, bearer_token, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_proxy_quota.rst
+    .. include:: ../partials/too_many_requests/test_429_proxy_quota.rst
     """
     rate_limiting.set_rate_limit(proxy_quota=4)
+    headers = Generators.generate_valid_headers(bearer_token.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -112,20 +95,15 @@ def test_429_triggered_proxy_quota(nhsd_apim_proxy_url, bearer_token_internal_de
 
 
 @pytest.mark.devperftest
-def test_429_triggered_proxy_spikearrest(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
+def test_429_triggered_proxy_spikearrest(url, bearer_token, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_proxy_spikearrest.rst
+    .. include:: ../partials/too_many_requests/test_429_proxy_spikearrest.rst
     """
     rate_limiting.set_rate_limit(proxy_spikearrest="4pm")
+    headers = Generators.generate_valid_headers(bearer_token.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -141,21 +119,16 @@ def test_429_triggered_proxy_spikearrest(nhsd_apim_proxy_url, bearer_token_inter
 
 
 @pytest.mark.devperftest
-def test_429_triggered_specific_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev_test_1, rate_limiting):
+def test_429_triggered_specific_app_quota(url, bearer_token_internal_dev_test_1, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_specific_app_quota.rst
+    .. include:: ../partials/too_many_requests/test_429_specific_app_quota.rst
     """
     rate_limiting.set_default_rate_limit()
     rate_limiting.set_app_ratelimit(test_client_1_details["email"], test_client_1_details["name"], quota=4)
+    headers = Generators.generate_valid_headers(bearer_token_internal_dev_test_1.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev_test_1.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -171,44 +144,34 @@ def test_429_triggered_specific_app_quota(nhsd_apim_proxy_url, bearer_token_inte
 
 
 @pytest.mark.devperftest
-def test_429_not_triggered_other_specific_app_quota(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
+def test_429_not_triggered_other_specific_app_quota(url, bearer_token, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_200_specific_app_quota_different_app.rst
+    .. include:: ../partials/too_many_requests/test_200_specific_app_quota_different_app.rst
     """
     rate_limiting.set_default_rate_limit()
     rate_limiting.set_app_ratelimit(test_client_1_details["email"], test_client_1_details["name"], quota=4)
+    headers = Generators.generate_valid_headers(bearer_token.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
 
 
 @pytest.mark.devperftest
-def test_429_triggered_specific_app_spikearrest(nhsd_apim_proxy_url,
-                                                bearer_token_internal_dev,
+def test_429_triggered_specific_app_spikearrest(url,
+                                                bearer_token,
                                                 bearer_token_internal_dev_test_1,
                                                 rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_429_specific_app_spikearrest.rst
+    .. include:: ../partials/too_many_requests/test_429_specific_app_spikearrest.rst
     """
     rate_limiting.set_default_rate_limit()
     rate_limiting.set_app_ratelimit(test_client_1_details["email"], test_client_1_details["name"], spikearrest="4pm")
+    headers = Generators.generate_valid_headers(bearer_token_internal_dev_test_1.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev_test_1.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     Assertions.assert_error_with_optional_correlation_id(
         resp,
@@ -224,20 +187,15 @@ def test_429_triggered_specific_app_spikearrest(nhsd_apim_proxy_url,
 
 
 @pytest.mark.devperftest
-def test_429_not_triggered_other_specific_spikearrest(nhsd_apim_proxy_url, bearer_token_internal_dev, rate_limiting):
+def test_429_not_triggered_other_specific_spikearrest(url, bearer_token, rate_limiting):
 
     """
-    .. include:: ../../partials/too_many_requests/test_200_specific_app_spikearrest_different_app.rst
+    .. include:: ../partials/too_many_requests/test_200_specific_app_spikearrest_different_app.rst
     """
     rate_limiting.set_default_rate_limit()
     rate_limiting.set_app_ratelimit(test_client_1_details["email"], test_client_1_details["name"], spikearrest="4pm")
+    headers = Generators.generate_valid_headers(bearer_token.value)
 
-    headers = {
-        "Authorization": bearer_token_internal_dev.value,
-        "Accept": "*/*",
-        "Content-Type": "application/json"
-    }
-
-    resp = send_multiple_requests(default_request_url(nhsd_apim_proxy_url), headers)
+    resp = send_multiple_requests(default_request_url(url), headers)
 
     assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"

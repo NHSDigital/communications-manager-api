@@ -8,6 +8,3 @@ Scenario: An API consumer submitting requests when exceeding the global app quot
 **Asserts**
 - Response returns a 429 Too Many Requests error
 - Response returns the expected error message body
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

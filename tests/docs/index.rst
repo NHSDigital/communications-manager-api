@@ -11,4 +11,3 @@ Test Suite
    get_channels_nhsapp_accounts/index
    generic/index
    sandbox/index
-   development/index
