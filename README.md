@@ -92,37 +92,22 @@ There are `make` commands that alias some of this functionality:
 
 ### Testing
 
-You can view the documentation about all of the test cases that are covered with the test suites in the [test documentation](docs/tests/index.md).
+The tests written in this repository target the NHS Notify API. The testing covered include:
 
-There are:
-
-* Sandbox mock unit tests
+* Unit tests
 * Integration tests
+* End to End tests
 * Zap security scan tests
 * Postman collection tests
 
-#### Node unit tests
+For details on test cases covered in the Integration and End-to-End test suites, see the [test documentation](docs/tests/index.md).
 
-These tests live within the `/sandbox` folder and can be executed by:
+#### Set Up
 
-```
-$ cd sandbox
-$ npm i
-$ npm run test
-```
+##### Python
+Before running tests, you need to set up your local environment. Use the `poetry install` command to install dependencies and populate the `.venv` directory.
 
-Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
-
-#### Integration tests - dynamic environments
-
-There are several integration test suites configured within the `pytest.ini`, two of these are for testing our dynamic environments - `internal-dev`, `internal-qa` and `sandbox`:
-
-* sandboxtest
-* devtest
-
-##### Python setup
-
-Before running any tests you will need to build up your local environment to have access to the resources you need to successfully run tests, to do this run the `poetry install` command. This will populate the .venv directory. To source the .venv file, run source .venv/bin/activate in your shell type of choice:
+Activate the virtual environment with the following commands based on your shell:
 
 * bash/zsh: `source .venv/bin/activate`
 * csh: `source .venv/bin/activate.csh`
@@ -130,20 +115,68 @@ Before running any tests you will need to build up your local environment to hav
 * nushell: `source .venv/bin/activate.nu`
 * powershell: `. .venv/bin/activate.ps1`
 
-##### Set up
+##### Authentication
 
-Before running the integration tests against dynamic environments you need to generate an [apigee access token](https://nhsd-confluence.digital.nhs.uk/display/APM/Test+Utils+2.0%3A+Running+tests). To generate a token you will first need to make sure you have [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install) installed. Then run the following command, you will then be prompted to log in to apigee with your username, password and MFA code.
+Our API integration tests support two authentication methods:
+
+* Bearer Token Authentication (via API key and private key) - Used for most integration tests.
+* Apigee Authentication (using pytest-nhsd-apim) - Used for internal-dev and internal-dev-sandbox.
+
+##### Bearer Token Authentication
+
+To be able to generate bearer token authentication for tests you need to declare the API_ENVIRONMENT environment variable. i.e:
+
+```
+export API_ENVIRONMENT=internal-dev
+```
+
+Available values for `API_ENVIRONMENT` include:
+* internal-dev
+* internal-dev-test-1
+* internal-qa
+* int
+* prod
+
+The authentication process uses `API_ENVIRONMENT` to generate authentication for a given environment using the following environment variables:
+
+|Environment|API Key Variable|Private Key Variable|
+|-----------|----------------|--------------------|
+|internal-dev, internal-qa|`NON_PROD_API_KEY`|`NON_PROD_PRIVATE_KEY`|
+|internal-dev-test-1|`NON_PROD_API_KEY_TEST_1`|`NON_PROD_PRIVATE_KEY`|
+|int|`INTEGRATION_API_KEY`|`INTEGRATION_PRIVATE_KEY`|
+|prod|`PRODUCTION_API_KEY`|`PRODUCTION_PRIVATE_KEY`|
+
+Ensure these variables are set and sourced in your .env file before running tests.
+
+###### Generate An Apigee Access Token
+
+To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Note that tokens expire approximately once per day and require refreshing.
+
+Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
+
+Run the following command and log in with your Apigee credentials when prompted:
 
 ```
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)
 ```
 
-Set the `PROXY_NAME` environment variable to the environment you want to run the tests on. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager', this will show you a list of available proxies, eg:
+If your token does not refresh, try clearing the cache:
+
+```
+export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)
+```
+
+###### Set Proxy Name
+Set the `PROXY_NAME` environment variable to specify the environment for test execution. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager'.
+
+Examples of available proxy names:
 
 * communications-manager-internal-dev
 * communications-manager-internal-dev-sandbox
 * communications-manager-pr-{num}
 * communications-manager-pr-{num}-sandbox
+
+###### Set Up End to End Tests
 
 If you are running the end to end tests you will need to set the following environment variables:
 * `GUKN_API_KEY` - Gov UK API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
@@ -155,19 +188,51 @@ If you are running the end to end tests you will need to set the following envir
 **Note**
 When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
 
-##### Running with make
+#### Running Tests
 
-In the root folder run the following command:
+##### Unit Tests
 
-* devtest - `make internal-dev-test`
-* sandboxtest - `make internal-sandbox-test` or `make prod-sandbox-test` depending on the environment
+These tests live within the `/sandbox` folder and can be executed by:
+
+```
+$ cd sandbox
+$ npm i
+$ npm run test
+```
+
+Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
+
+##### Integration tests
+
+Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment
+
+* all - available to run against all environments
+* devtest - can be ran against the internal-dev or internal-qa environments
+* inttest - can be ran against the int environment
+* prodtest - can be ran against the production environment
+
+###### Running with make
+
+Tests can be ran via make command. A full list of available commands can be found in the Makefile, however, below is a table of commonly used make commands for testing:
+
+|Environment|Command|Description|
+|internal-dev-sandbox|`make internal-sandbox-test`| Runs sandbox unit tests, sandbox postman tests and sandbox integration tests against internal-dev-sandbox|
+|internal-dev|`make internal-dev-test`| Runs integration tests against internal-dev|
+|internal-dev|`make e2e-test-internal-dev`| Runs end to end tests against internal-dev|
+|internal-qa|`make internal-qa-test`| Runs integration tests against internal-qa|
+|internal-qa|`make e2e-test-uat`| Runs end to end tests against internal-qa|
+|int|`make integration-test`|Runs integration tests against int|
+|prod|`make production-test`||
+
 
 ##### Running with poetry
 
-In the root folder run the following command
+Tests can be ran via poetry command. You can use poetry to specify a specific directory or test to run without having to run the full test suite.
+
+To run a poetry test run the following command in the root folder
 
 ```
-PYTHONPATH=./tests poetry run pytest -v -m <TAG> <Path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN  --color=yes --junitxml=test-report.xml
+PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN  --color=yes --junitxml=test-report.xml -k <test name>
 ```
 
 - `PYTHONPATH=./tests` - Sets the root directory of the tests
@@ -180,67 +245,8 @@ PYTHONPATH=./tests poetry run pytest -v -m <TAG> <Path to file> --api-name=commu
 - `--apigee-access-token=$APIGEE_ACCESS_TOKEN` - Retrieves the APIGEE_ACCESS_TOKEN environment variable and sets it to the apigee-access-token argument
 - `--color=yes` - Displays logs in an easy to read format (Optional)
 - `--junitxml=test-report.xml` - Sets the output of the test run, this will be located in the python path root directory for the tests
+- `-k` - specify a specific test to run
 
-##### Troubleshooting
-
-If your apigee access token does not refresh when generating a new token, try clearing cache before reattempting:
-
-```export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)```
-
-#### Integration tests - long lived environments
-
-There are several integration test suites configured within the `pytest.ini`, three of these are for testing our long lived environments - `int` and `prod`:
-
-* inttest
-* prodtest
-* mtlstest
-
-##### Python setup
-
-Before running any tests you will need to build up your local environment to have access to the resources you need to successfully run tests, to do this run the `poetry install` command. This will populate the .venv directory. To source the .venv file, run source .venv/bin/activate in your shell type of choice:
-
-* bash/zsh: `source .venv/bin/activate`
-* csh: `source .venv/bin/activate.csh`
-* fish: `source .venv/bin/activate.fish`
-* nushell: `source .venv/bin/activate.nu`
-* powershell: `. .venv/bin/activate.ps1`
-
-##### Set up
-
-For running tests against the integration and prod environments you must have created a client application within the [NHS onboarding portal](https://onboarding.prod.api.platform.nhs.uk/). The NHS onboarding portal allows you to create a client app that can be used to generate authorization bearer tokens to the API. This API uses [signed JWT authentication](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation/application-restricted-restful-apis-signed-jwt-authentication).
-
-Once you have configured your client application you must then configure the following environmental variables:
-
-* `INTEGRATION_API_KEY` - the API key for your integration environment application
-* `INTEGRATION_PRIVATE_KEY` - the private key for your integration environment application
-* `PRODUCTION_API_KEY` - the API key for your production environment application
-* `PRODUCTION_PRIVATE_KEY` - the private key for your production environment application
-
-Once these are set you can run the relevant integration (`inttest`) or production (`prodtest`) test suite.
-
-##### Running with make
-
-In the root folder run the following command:
-
-* inttest - `make integration-test`
-* prodtest - `make production-test`
-* mtlstest - `make mtls-test`
-
-##### Running with poetry
-
-In the root folder run the following command
-
-```
-PYTHONPATH=./tests poetry run pytest -v -m <TAG> <Path to file> --color=yes --junitxml=test-report.xml
-```
-
-- `PYTHONPATH=./tests` - Sets the root directory of the tests
-- `poetry run pytest` - Runs pytest through poetry
-- `-v` - Marks logs as verbose (Optional)
-- `-m <TAG>` - Specifies tag name (Optional)
-- `<relative path to file>` - Targets a specific file to run tests for, useful when developing new tests (Optional)
-- `--color=yes` - Displays logs in an easy to read format (Optional)
-- `--junitxml=test-report.xml` - Sets the output of the test run, this will be located in the python path root directory for the tests
 
 #### Zap security scanner
 
