@@ -107,13 +107,15 @@ For details on test cases covered in the Integration and End-to-End test suites,
 ### Python
 Before running tests, you need to set up your local environment. Use the `poetry install` command to install dependencies and populate the `.venv` directory.
 
-Activate the virtual environment with the following commands based on your shell:
+```
+poetry install
+```
 
-* bash/zsh: `source .venv/bin/activate`
-* csh: `source .venv/bin/activate.csh`
-* fish: `source .venv/bin/activate.fish`
-* nushell: `source .venv/bin/activate.nu`
-* powershell: `. .venv/bin/activate.ps1`
+Activate the virtual environment with the following command:
+
+```
+source .venv/bin/activate
+```
 
 ### Authentication
 
@@ -152,22 +154,22 @@ Ensure these variables are set and sourced in your .env file before running test
 
 To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Note that tokens expire approximately once per day and require refreshing.
 
-Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
-
-Run the following command and log in with your Apigee credentials when prompted:
-
+* Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
+* Run the following command and log in with your Apigee credentials when prompted:
 ```
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)
 ```
-
-If your token does not refresh, try clearing the cache:
-
+* If your token does not refresh, try clearing the cache:
 ```
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)
 ```
 
 ### Set Proxy Name
 Set the `PROXY_NAME` environment variable to specify the environment for test execution. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager'.
+
+```
+export PROXY_NAME=communications-manager-internal-dev
+```
 
 Examples of available proxy names:
 
@@ -213,14 +215,20 @@ Integration tests live within the `/tests/api/` directory and use pytest markers
 
 ### Running with make
 
-Tests can be ran via make command. A full list of available commands can be found in the Makefile, however, below is a table of commonly used make commands for testing:
+Tests can be ran via make command.
+
+```
+make test
+```
+
+A full list of available commands can be found in the Makefile, however, below is a table of commonly used make commands for testing:
 
 |Environment|Command|Description|
 |-----------|-------|-----------|
 |internal-dev-sandbox|`make internal-sandbox-test`|Runs sandbox unit tests, sandbox postman tests and sandbox integration tests against internal-dev-sandbox|
 |internal-dev|`make internal-dev-test`|Runs integration tests against internal-dev|
 |internal-dev|`make e2e-test-internal-dev`|Runs end to end tests against internal-dev|
-|internal-qa|`make internal-qa-test` Runs integration tests against internal-qa|
+|internal-qa|`make internal-qa-test`|Runs integration tests against internal-qa|
 |internal-qa|`make e2e-test-uat`|Runs end to end tests against internal-qa|
 |int|`make integration-test`|Runs integration tests against int|
 |prod|`make production-test`|Runs integration tests against prod|
