@@ -152,7 +152,7 @@ Ensure these variables are set and sourced in your .env file before running test
 
 #### Generate An Apigee Access Token
 
-To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. *Note* that tokens expire approximately once per day and require refreshing.
+To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Tokens expire once per day and require refreshing.
 
 * Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
 * Run the following command and log in with your Apigee credentials when prompted:
@@ -187,7 +187,7 @@ If you are running the end to end tests you will need to set the following envir
 * `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 * `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 
-*Note* when exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
+When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
 
 ### Running Tests
 
@@ -235,13 +235,14 @@ A full list of available commands can be found in the Makefile, however, below i
 
 #### Running with poetry
 
-Tests can be ran via poetry command. You can use poetry to specify a specific directory or test to run without having to run the full test suite.
-
-To run a poetry test run the following command in the root folder
+Tests can be ran via poetry command. To run a poetry test run the following command in the root folder
 
 ```
 PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN  --color=yes --junitxml=test-report.xml -k <test name>
 ```
+
+You can use poetry to specify a specific directory or test to run without having to run the full test suite. Below is a table that lists the poetry test command arguments and how they are used to run a test
+
 |Argument|Description|
 |--------|-----------|
 |`PYTHONPATH=./tests`|Sets the root directory of the tests|
