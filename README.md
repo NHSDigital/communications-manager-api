@@ -122,7 +122,7 @@ Our API integration tests support two authentication methods:
 * Bearer Token Authentication (via API key and private key) - Used for most integration tests.
 * Apigee Authentication (using pytest-nhsd-apim) - Used for internal-dev and internal-dev-sandbox.
 
-#### Bearer Token Authentication
+### Bearer Token Authentication
 
 To be able to generate bearer token authentication for tests you need to declare the API_ENVIRONMENT environment variable. i.e:
 
@@ -148,7 +148,7 @@ The authentication process uses `API_ENVIRONMENT` to generate authentication for
 
 Ensure these variables are set and sourced in your .env file before running tests.
 
-#### Generate An Apigee Access Token
+### Generate An Apigee Access Token
 
 To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Note that tokens expire approximately once per day and require refreshing.
 
@@ -166,7 +166,7 @@ If your token does not refresh, try clearing the cache:
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)
 ```
 
-#### Set Proxy Name
+### Set Proxy Name
 Set the `PROXY_NAME` environment variable to specify the environment for test execution. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager'.
 
 Examples of available proxy names:
@@ -190,7 +190,7 @@ When exporting values on your local machine, be sure to escape special character
 
 ### Running Tests
 
-#### Unit Tests
+### Unit Tests
 
 These tests live within the `/sandbox` folder and can be executed by:
 
@@ -202,7 +202,7 @@ $ npm run test
 
 Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
 
-#### Integration tests
+### Integration tests
 
 Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment
 
@@ -211,11 +211,12 @@ Integration tests live within the `/tests/api/` directory and use pytest markers
 * inttest - can be ran against the int environment
 * prodtest - can be ran against the production environment
 
-##### Running with make
+### Running with make
 
 Tests can be ran via make command. A full list of available commands can be found in the Makefile, however, below is a table of commonly used make commands for testing:
 
 |Environment|Command|Description|
+|-----------|-------|-----------|
 |internal-dev-sandbox|`make internal-sandbox-test`|Runs sandbox unit tests, sandbox postman tests and sandbox integration tests against internal-dev-sandbox|
 |internal-dev|`make internal-dev-test`|Runs integration tests against internal-dev|
 |internal-dev|`make e2e-test-internal-dev`|Runs end to end tests against internal-dev|
@@ -225,7 +226,7 @@ Tests can be ran via make command. A full list of available commands can be foun
 |prod|`make production-test`|Runs integration tests against prod|
 
 
-##### Running with poetry
+### Running with poetry
 
 Tests can be ran via poetry command. You can use poetry to specify a specific directory or test to run without having to run the full test suite.
 
@@ -248,7 +249,7 @@ PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=commu
 - `-k` - specify a specific test to run
 
 
-#### Zap security scanner
+### Zap security scanner
 
 You can run the Zap security scanner using the `zap-security-scan` make command:
 
@@ -258,7 +259,7 @@ $ make zap-security-scan
 
 The project uses the [Zap automation framework](https://www.zaproxy.org/docs/automate/automation-framework/). The configuration for this is held in the `zap/` folder.
 
-#### Postman collection tests
+### Postman collection tests
 
 You can test the postman collections by using the `postman-test` make command:
 
@@ -268,7 +269,7 @@ $ make postman-test
 
 The postman collections can be found in the `postman/` folder.
 
-### Caveats
+## Caveats
 
 #### Apigee Portal
 
