@@ -139,7 +139,7 @@ Available values for `API_ENVIRONMENT` include:
 * `int`
 * `prod`
 
-The authentication process uses `API_ENVIRONMENT` to generate authentication for a given client by using an api and private keying pairing suitable for a client on its given environment.
+The authentication process uses `API_ENVIRONMENT` to generate authentication for a given client by using an api and private key pairing suitable for a client on its given environment.
 
 |Environment|API Key Variable|Private Key Variable|
 |-----------|----------------|--------------------|
