@@ -2,16 +2,25 @@
 summary: Message status
 description: |-
     
-    NHS Notify will send a callback when the message status is updated to any of the following (message statuses are only updated for primary channels):
+    Message status callbacks send POST requests to your service with real time updates when the status of a message has changed.
 
-    * `delivered` - the message has been delivered (via any channel)
-    * `failed` - the message could not be delivered by any channel
+    This is an automated way to get the status of messages.
 
-    Callbacks can be received for additional state transitions subject to the needs of the user. These additional state transitions can be requested during onboarding. These statuses are:
+    <a href="https://notify.nhs.uk/using-nhs-notify/message-channel-supplier-status" target="_new">Find out more about message statuses and which statuses you can receive (opens in a new tab)</a>.
 
-    * `pending_enrichment` - the message is currently pending enrichment
-    * `enriched` - NHS Notify has queried PDS for this patient's details and now know how to contact this individual
-    * `sending` - the message is in the process of being sent - this can occur multiple times for a single message if multiple channels are to be attempted
+    If you're onboarding with NHS Notify and need to use the channel and supplier status callback, contact the onboarding team to tell them what statuses you want to subscribe to.
+
+    If you're live with NHS Notify and need to use the channel and supplier status callback, [raise a Service Now ticket](https://nhsdigitallive.service-now.com/csm).
+
+    ### Deciding which message status callbacks to receive
+
+    It's your organisation or service's responsibility to decide which statuses to receive callbacks for.
+    
+    The message status callbacks are typically used for finding out if a recipient has been contacted with any of the channels in a routing plan.
+    
+    For example, if you only want updating when your patients have been contacted and do not need updating when each message channel was used, choose the `delivered` and `failed` message statuses.
+    
+    If you need additional real time updates when the status of a channel changes, you can also use the channel and supplier status callback.
 operationId: post-v1-message-callbacks
 parameters:
     - name: x-hmac-sha256-signature

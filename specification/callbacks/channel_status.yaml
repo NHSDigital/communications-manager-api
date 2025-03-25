@@ -1,13 +1,28 @@
 
-summary: Channel status
+summary: Channel and supplier status
 description: |-
+  The channel and supplier status callback sends POST requests to your service with real time updates when the status of a channel or supplier has changed.
 
-    NHS Notify can send a channel status callback when:
-    * the channel status has changed - This refers to the internal statuses used by NHS Notify, which are consistent across all channels
-    * the supplier status has changed - This is the raw status value specified by the underlying channel supplier. The possible values are listed [here](#overview--supplier-statuses)
+  This is an automated way to get the status of each channel used in a routing plan.
+  
+  <a href="https://notify.nhs.uk/using-nhs-notify/message-channel-supplier-status#channel-and-supplier-status" target="_new">Find out more about channel statuses and which statuses you can receive (opens in a new tab)</a>.
 
-    The specific state transitions that trigger a callback will be agreed as part of onboarding in order to minimise unnecessary traffic.
+  For more detailed statuses about specific channels, you can also receive supplier statuses.
 
+  <a href="https://notify.nhs.uk/using-nhs-notify/message-channel-supplier-status#supplier-status-descriptions" target="_new">Find out more about supplier statuses and and which statuses you can receive (opens in a new tab)</a>.
+
+  If you're onboarding with NHS Notify and need to use the channel and supplier status callback, contact the onboarding team to tell them what statuses you want to subscribe to.
+
+  If you're live with NHS Notify and need to use the channel and supplier status callback, [raise a Service Now ticket](https://nhsdigitallive.service-now.com/csm).
+
+  ### Deciding which message status callbacks to receive
+  It's your organisation or service's responsibility to decide which statuses to receive callbacks for.
+
+  You may need to subscribe to a combination of channel and supplier statuses if you:
+
+  - want to send your own fallback messages based on specific statuses
+  - need to know exactly how a message has performed in real time with each of your recipients
+  - need to know what happened to a message sent using a <a href="https://notify.nhs.uk/using-nhs-notify/routing-plans#secondary-cascades" target="_new">secondary cascade (opens in a new tab)
 operationId: post-v1-channel-callbacks
 parameters:
     - name: x-hmac-sha256-signature

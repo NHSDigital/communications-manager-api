@@ -54,7 +54,7 @@ The `Accept` header can contain the following values:
 * `application/json`
 * `application/vnd.api+json`
 
-The `Accept` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `415` error response. If ommited then `utf-8` is assumed. 
+The `Accept` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `415` error response. If omitted then `utf-8` is assumed. 
 
 Where no `Accept` header is present, this will default to `application/vnd.api+json`
 
@@ -65,7 +65,7 @@ This API will accept request payloads of the following types:
 * `application/vnd.api+json` - see [JSON:API specification](https://jsonapi.org/format/#introduction)
 * `application/json`
 
-The `Content-Type` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `406` error response. If ommited then `utf-8` is assumed. 
+The `Content-Type` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `406` error response. If omitted then `utf-8` is assumed. 
 
 If you attempt to send a payload without the `Content-Type` header set to either of these values then the API will respond with a `415 Unsupported Media Type` response.
 
@@ -146,7 +146,7 @@ Free-text communications (as opposed to fixed format communications) are possibl
 | 00000000-0000-0000-0000-000000000002 | Email            |                                         | email_body, email_subject  |
 | 00000000-0000-0000-0000-000000000003 | SMS              |                                         | sms_body                   |
 
-Please see the Postman collections in the [environments and testing section](#section/Environments-and-testing) for examples.
+Please see the Postman collections in the [environments and testing section](#overview--environments-and-testing) for examples.
 
 ## Errors
 
@@ -185,57 +185,3 @@ Different character limits apply to each of the communication channels as listed
 | Letter             | 15,000          |
 | NHS App            | 5,000           |
 | Text message (SMS) | 918             |
-
-## Message statuses
-
-Messages can have the following statuses:
-
-* `created` - the message has been created, but has received no processing
-* `pending_enrichment` - the message is currently pending enrichment
-* `enriched` - we have queried PDS for this patient's details and now know how to contact this individual
-* `sending` - the message is in the process of being sent
-* `delivered` - the message has been delivered
-* `failed` - we have failed to deliver the message
-
-For certain statuses more information can be found within the `messageStatusDescription` field.
-
-The message status shows an overall aggregate status taken from all of the communication channels that we have attempted to deliver the message using.
-
-## Supplier statuses
-
-The channels can have the following supplier statuses:
-
-### NHS App
-
-* `delivered` - the message has been successfully delivered to the user
-* `read` - a user has read the message
-* `notification_attempted` - a push notification is reported as having been sent to one or more devices, but does not indicate whether the notification was received or displayed
-* `unnotified` - it has been determined that a push notification has not been successfully relayed to any devices
-* `rejected` - the request to send the communication was rejected by the supplier
-* `notified` - a push notification is reported as having been successfully relayed to one or more devices
-* `received` - the request has been received by the supplier and is queued to be processed
-
-### Email
-
-* `delivered` - the message has been successfully delivered to the user
-* `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
-* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
-* `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
-
-### SMS
-
-* `delivered` - the message has been successfully delivered to the user
-* `permanent_failure` - the Email/SMS provider could not deliver the message, this can happen if the phone number was wrong or if the network operator rejects the message
-* `temporary_failure` - the Email/SMS provider could not deliver the message, this can happen when the recipient's phone is off, has no signal, or their text message inbox is full
-* `technical_failure` - the message was not sent because there was a problem between GOV.UK Notify and the Email/SMS provider
-
-### Letters
-
-* `accepted` - GOV.UK Notify has sent the letter to the provider to be printed
-* `received` - the provider has printed and dispatched the letter
-* `cancelled` - sending cancelled, the letter will not be printed or dispatched
-* `pending_virus_check` - GOV.UK Notify has not completed a virus scan of the precompiled letter file
-* `virus_scan_failed` - GOV.UK Notify found a potential virus in the precompiled letter file
-* `validation_failed` - content in the precompiled letter file is outside the printable area
-* `technical_failure` - GOV.UK Notify had an unexpected error while sending the letter to their printing provider
-* `permanent_failure` - the provider cannot print the letter, the letter will not be dispatched
