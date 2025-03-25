@@ -92,7 +92,7 @@ There are `make` commands that alias some of this functionality:
 
 ## Testing
 
-The tests written in this repository target the NHS Notify API. The types of testing this repository includes are:
+The tests written in this repository target the NHS Notify API. The types of testing this repository include are:
 
 * Unit tests
 * Integration tests
@@ -121,12 +121,12 @@ source .venv/bin/activate
 
 Our API integration tests support two authentication methods:
 
-* Bearer Token Authentication (via API key and private key) - Used for common integration tests across all environments.
-* Apigee Authentication (using pytest-nhsd-apim) - Used for some internal-dev and dev tests and all internal-dev-sandbox and sandbox tests.
+* __Bearer Token Authentication (via API key and private key)__ - Used for common integration tests across all environments.
+* __Apigee Authentication (using pytest-nhsd-apim)__ - Used for some internal-dev and dev tests and all internal-dev-sandbox and sandbox tests.
 
 #### Bearer Token Authentication
 
-To be able to generate bearer token authentication for tests you need to declare the API_ENVIRONMENT environment variable:
+To be able to generate bearer token authentication for tests you need to declare the `API_ENVIRONMENT` environment variable:
 
 ```
 export API_ENVIRONMENT=internal-dev
@@ -139,7 +139,7 @@ Available values for `API_ENVIRONMENT` include:
 * `int`
 * `prod`
 
-The authentication process uses `API_ENVIRONMENT` to generate authentication for a given environment by using the api key and private key pair appropriate for its environment and client:
+The authentication process uses `API_ENVIRONMENT` to generate authentication for a given client by using an api and private keying pairing suitable for a client on its given environment.
 
 |Environment|API Key Variable|Private Key Variable|
 |-----------|----------------|--------------------|
@@ -148,7 +148,7 @@ The authentication process uses `API_ENVIRONMENT` to generate authentication for
 |int|`INTEGRATION_API_KEY`|`INTEGRATION_PRIVATE_KEY`|
 |prod|`PRODUCTION_API_KEY`|`PRODUCTION_PRIVATE_KEY`|
 
-Ensure these variables are set and sourced in your .env file before running tests.
+__Ensure these variables are set and sourced in your .env file before running tests.__
 
 #### Generate An Apigee Access Token
 
@@ -207,10 +207,13 @@ Basic test coverage is enforced through NYC - this is configured within `/sandbo
 
 #### Integration tests
 
-Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment.
+Integration tests live within the `tests/api/` directory and use pytest markers to call out tests for a specific environment.
 
-* `all` - available to run against all environments
+* `all` - can be ran against all environments
 * `devtest` - can be ran against the internal-dev or internal-qa environments
+* `devtestonly` - can only be ran against internal-dev environment
+* `devperftest` - can only be ran on internal-dev - separate from the standard internal-dev test run on the nightly pipeline
+* `uattest` - can only be ran on internal-qa environment
 * `inttest` - can be ran against the int environment
 * `prodtest` - can be ran against the production environment
 
