@@ -92,7 +92,7 @@ There are `make` commands that alias some of this functionality:
 
 ## Testing
 
-The tests written in this repository target the NHS Notify API. The testing covered include:
+The tests written in this repository target the NHS Notify API. The types of testing this repository includes are:
 
 * Unit tests
 * Integration tests
@@ -121,8 +121,8 @@ source .venv/bin/activate
 
 Our API integration tests support two authentication methods:
 
-* Bearer Token Authentication (via API key and private key) - Used for most integration tests.
-* Apigee Authentication (using pytest-nhsd-apim) - Used for internal-dev and internal-dev-sandbox tests.
+* Bearer Token Authentication (via API key and private key) - Used for common integration tests across all environments.
+* Apigee Authentication (using pytest-nhsd-apim) - Used for some internal-dev and dev tests and all internal-dev-sandbox and sandbox tests.
 
 #### Bearer Token Authentication
 
@@ -133,13 +133,13 @@ export API_ENVIRONMENT=internal-dev
 ```
 
 Available values for `API_ENVIRONMENT` include:
-* internal-dev
-* internal-dev-test-1
-* internal-qa
-* int
-* prod
+* `internal-dev`
+* `internal-dev-test-1`
+* `internal-qa`
+* `int`
+* `prod`
 
-The authentication process uses `API_ENVIRONMENT` to generate authentication for a given environment using the following environment variables:
+The authentication process uses `API_ENVIRONMENT` to generate authentication for a given environment by using the api key and private key pair appropriate for its environment and client:
 
 |Environment|API Key Variable|Private Key Variable|
 |-----------|----------------|--------------------|
@@ -152,7 +152,9 @@ Ensure these variables are set and sourced in your .env file before running test
 
 #### Generate An Apigee Access Token
 
-To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. Tokens expire once per day and require refreshing.
+To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. 
+
+__Tokens expire once per day and require refreshing.__
 
 * Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
 * Run the following command and log in with your Apigee credentials when prompted:
@@ -171,23 +173,23 @@ Set the `PROXY_NAME` environment variable to specify the environment for test ex
 export PROXY_NAME=communications-manager-internal-dev
 ```
 
-Examples of available proxy names:
+Available values for `PROXY_NAME` include:
 
-* communications-manager-internal-dev
-* communications-manager-internal-dev-sandbox
-* communications-manager-pr-{num}
-* communications-manager-pr-{num}-sandbox
+* `communications-manager-internal-dev`
+* `communications-manager-internal-dev-sandbox`
+* `communications-manager-pr-{num}`
+* `communications-manager-pr-{num}-sandbox`
 
 ### Set Up End to End Tests
 
 If you are running the end to end tests you will need to set the following environment variables:
-* `GUKN_API_KEY` - Gov UK API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
-* `UAT_GUKN_API_KEY` - Gov UK API Key for the UAT environment, this value can be found in AWS parameter store under /comms/govuknotify/uat/api_key
+* `GUKN_API_KEY` - Gov UK Notify API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key
+* `UAT_GUKN_API_KEY` - Gov UK Notify API Key for the UAT environment, this value can be found in AWS parameter store under /comms/govuknotify/uat/api_key
 * `UAT_NHS_APP_USERNAME` - NHS App username, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 * `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 * `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
 
-When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`
+__When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`__
 
 ### Running Tests
 
@@ -205,7 +207,7 @@ Basic test coverage is enforced through NYC - this is configured within `/sandbo
 
 #### Integration tests
 
-Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment
+Integration tests live within the `/tests/api/` directory and use pytest markers to call out tests for a specific environment.
 
 * `all` - available to run against all environments
 * `devtest` - can be ran against the internal-dev or internal-qa environments
@@ -220,7 +222,9 @@ Tests can be ran via make command.
 make test
 ```
 
-A full list of available commands can be found in the Makefile, however, below is a table of commonly used make commands for testing:
+A full list of available commands can be found in the Makefile. 
+
+The table below lists common make commands used for testing:
 
 |Environment|Command|Description|
 |-----------|-------|-----------|
@@ -238,10 +242,12 @@ A full list of available commands can be found in the Makefile, however, below i
 Tests can be ran via poetry command. To run a poetry test run the following command in the root folder
 
 ```
-PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN  --color=yes --junitxml=test-report.xml -k <test name>
+PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN -n 4 --only-rerun 'AssertionError: Unexpected 429' --reruns 5 --reruns-delay 5 --color=yes --junitxml=test-report.xml -k <test name>
 ```
 
-You can use poetry to specify a specific directory or test to run without having to run the full test suite. Below is a table that lists the poetry test command arguments and how they are used to run a test
+You can use poetry to specify a specific directory or test to run without having to run the full test suite. 
+
+The table below lists the arguments used in a poetry test and how they are used to specify a test:
 
 |Argument|Description|
 |--------|-----------|
@@ -253,6 +259,10 @@ You can use poetry to specify a specific directory or test to run without having
 |`--api-name=communications-manager`|Specifies api name|
 |`--proxy-name=$PROXY_NAME`|Retrieves the PROXY_NAME environment variable and sets it to the proxy-name argument|
 |`--apigee-access-token=$APIGEE_ACCESS_TOKEN`|Retrieves the APIGEE_ACCESS_TOKEN environment variable and sets it to the apigee-access-token argument|
+|`-n 4`|The number of parallel runners the tests are executed on|
+|`--only-rerun 'AssertionError: Unexpected 429`|The condition to retry on test failure|
+|`--reruns 5`|The number of times a test is attempted if it fails on a specified condition|
+|`--reruns-delay 5`|The number of seconds to wait before a test is retried|
 |`--color=yes`|Displays logs in an easy to read format (Optional)|
 |`--junitxml=test-report.xml`|Sets the output of the test run, this will be located in the python path root directory for the tests|
 |`-k`|specify a specific test to run|
