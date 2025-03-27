@@ -945,6 +945,7 @@ describe("/api/v1/send", () => {
             field: `/data/attributes/messages/0/recipient/contactDetails`,
             message:
               'Client is not allowed to provide alternative contact details.',
+            statusCode: 400,
           },
         ],
       })
@@ -1012,6 +1013,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/sms",
             message: "Input failed format check",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1052,6 +1054,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/sms",
             message: "Invalid",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1119,6 +1122,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/email",
             message: "Input failed format check",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1159,6 +1163,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/email",
             message: "Invalid",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1228,6 +1233,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1266,6 +1272,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1308,6 +1315,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "`lines` is missing",
             title: "Missing value",
+            statusCode: 400,
           },
         ],
       })
@@ -1349,7 +1357,8 @@ describe("/api/v1/send", () => {
             code: 'CM_TOO_FEW_ITEMS',
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Too few items"
+            title: "Too few items",
+            statusCode: 400,
           }
         ]
       })
@@ -1391,6 +1400,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Too many address lines were provided",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1432,6 +1442,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Invalid",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1473,6 +1484,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "`postcode` is missing",
             title: "Missing value",
+            statusCode: 400,
           },
         ],
       })
@@ -1514,6 +1526,7 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/address/postcode",
             message: "Invalid",
             title: "Invalid value",
+            statusCode: 400,
           },
         ],
       })
@@ -1556,12 +1569,14 @@ describe("/api/v1/send", () => {
             field: "/data/attributes/messages/0/recipient/contactDetails/email",
             message: "Input failed format check",
             title: "Invalid value",
+            statusCode: 400,
           },
           {
             code: 'CM_TOO_FEW_ITEMS',
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
             message: "Too few address lines were provided",
-            title: "Too few items"
+            title: "Too few items",
+            statusCode: 400,
           },
         ],
       })
