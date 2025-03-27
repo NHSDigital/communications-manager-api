@@ -1,8 +1,0 @@
-429 Tests
-================
-
-These tests target the API endpoint GET /channels/nhsapp/accounts testing that 429 is returned when the BE has reached a quota limit with the NHS App API
-
-.. automodule:: development.nhsapp_accounts.test_429
-    :noindex:
-    :members:

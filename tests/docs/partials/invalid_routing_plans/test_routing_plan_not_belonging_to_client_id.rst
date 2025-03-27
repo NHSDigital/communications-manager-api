@@ -8,6 +8,3 @@ Scenario: An API consumer submitting a request with a routing plan routing plan 
 **Asserts**
 - Response returns a 404 'No Such Routing Plan' error
 - Response returns the expected error message body
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

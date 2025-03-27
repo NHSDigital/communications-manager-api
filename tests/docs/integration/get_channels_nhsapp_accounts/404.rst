@@ -1,8 +1,0 @@
-404 Tests
-================
-
-These tests target the API endpoint GET /channels/nhsapp/accounts testing that 404 is returned when a page does not exist
-
-.. automodule:: integration.nhsapp_accounts.test_404
-    :noindex:
-    :members:

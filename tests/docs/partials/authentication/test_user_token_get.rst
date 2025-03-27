@@ -7,7 +7,5 @@ Scenario: An API consumer submitting a request with an invalid authentication ty
 **Asserts**
 - Response returns a 403 'Forbidden' error
 - Response returns the expected error message body
-- Response returns the 'X-Correlation-Id' header if provided
 
-.. include:: ../../partials/methods.rst
-.. include:: ../../partials/correlation_ids.rst
+.. include:: /partials/methods.rst

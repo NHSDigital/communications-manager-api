@@ -1,7 +1,7 @@
 Scenario: An API consumer submitting a request with cors headers receives a response reflecting the cors headers values
 =======================================================================================================================
 
-.. include:: ../../partials/cors.rst
+.. include:: /partials/cors.rst
 
 | **Given** the API consumer wants to make a request using CORS
 | **When** a browser is used to send the initial OPTIONS request

@@ -8,6 +8,3 @@ Scenario: An API consumer submitting a request with a routing plan referencing t
 **Asserts**
 - Response returns a 500 'Duplicate Routing Plan' error
 - Response returns the expected error message body referencing the duplicate template values
-- Response returns the 'X-Correlation-Id' header if provided
-
-.. include:: ../../partials/correlation_ids.rst

@@ -33,7 +33,6 @@ EMAIL_ROUTING_PLAN = "f757f27b-63ee-4059-ba94-571c41e99807"
 SMS_ROUTING_PLAN = "83686da4-06c8-4cf2-aebe-abe1857fb750"
 LETTER_ROUTING_PLAN = "e5edd3db-503e-4997-b870-88ac9215cb47"
 
-TOKENS = [None, "Bearer xyzcba", "Bearer", "junk"]
 METHODS = ["get", "post", "put", "patch", "delete", "head", "options"]
 CORRELATION_ID = ["76491414-d0cf-4655-ae20-a4d1368472f3"]
 CORRELATION_IDS = [None] + CORRELATION_ID
@@ -49,6 +48,13 @@ VALID_ACCEPT_HEADERS = ["*/*", DEFAULT_CONTENT_TYPE]
 VALID_CONTENT_TYPE_HEADERS = [DEFAULT_CONTENT_TYPE]
 
 INVALID_MESSAGE_VALUES = ["", [], 5, 0.1]
+VALID_SMS_NUMBERS = [
+      '+7 (8) (495) 123-45-67',
+      '007 (8) (495) 123-45-67',
+      '+33122334455',
+      '07723456789',
+      '+447723456789',
+    ]
 
 INVALID_NHS_NUMBER = ["999054860", "99905486090", "abcdefghij", "", [], {}, 5, 0.1]
 # Set to PDS production smoke test user

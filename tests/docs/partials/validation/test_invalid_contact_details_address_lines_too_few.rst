@@ -10,7 +10,6 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 **Asserts**
 - Response returns a 400 'Too few items' error
 - Response returns the expected error message body with references to the invalid attribute
-- Response returns the 'X-Correlation-Id' header if provided
 
 .. list-table::
     :widths: 50 50
