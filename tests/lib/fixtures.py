@@ -100,6 +100,9 @@ def url(api_product_name):
     environment = os.environ['API_ENVIRONMENT']
     if environment == "prod":
         return "https://api.service.nhs.uk/comms"
+    # authentication for ref and ref2 is shared with internal-dev
+    elif environment in ["ref", "ref2"]:
+        return "https://internal-dev.api.service.nhs.uk/comms"
     else:
         return f"https://{environment}.api.service.nhs.uk/{suffix}"
 
@@ -109,6 +112,9 @@ def bearer_token(authentication_cache, api_product_in_comms_manager_local):
     environment = os.environ['API_ENVIRONMENT']
     if environment == "prod":
         url = PROD_URL
+    # the ref2 url is structured slightly differently so it needs to be explicitly called out here
+    elif environment == "ref2":
+        url = "https://ref.api.service.nhs.uk/comms-2"
     else:
         url = f"https://{environment}.api.service.nhs.uk/comms"
     return authentication_cache.generate_authentication(environment, url)
