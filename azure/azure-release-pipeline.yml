@@ -91,7 +91,6 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-            environment:
               environment: 'ref2'
               test_command: 'make internal-dev-test'
 
