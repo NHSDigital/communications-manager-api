@@ -58,7 +58,6 @@ extends:
             parameters:
               environment: 'internal-dev-sandbox'
               test_command: 'make internal-sandbox-test'
-              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: manual-approval
         stage_name: manual_approval_ref
@@ -128,7 +127,6 @@ extends:
             parameters:
               environment: 'internal-dev-sandbox'
               test_command: 'make internal-sandbox-test'
-              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: manual-approval
         stage_name: manual_approval_sandbox
@@ -147,7 +145,6 @@ extends:
             parameters:
               environment: 'sandbox'
               test_command: 'make prod-sandbox-test'
-              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
       - environment: manual-approval
         stage_name: manual_approval_int
