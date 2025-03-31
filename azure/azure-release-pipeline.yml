@@ -177,5 +177,5 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
-              'environment': 'prod'
+              environment: 'prod'
               test_command: 'make production-test'
