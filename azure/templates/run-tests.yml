@@ -104,13 +104,12 @@ steps:
           secret_ids:
             - ptl/azure-devops/apigee-nonprod/APIGEE_OTP_KEY
             - ptl/azure-devops/apigee-nonprod/APIGEE_PASSWORD
+          config_ids:
+            - /ptl/azure-devops/apigee-nonprod/APIGEE_USERNAME
       - template: "azure/components/get-mfa-code.yml@common"
         parameters:
-          apigee_otp_key: $(APIGEE_OTP_KEY)
-      - template: "azure/components/get-access-token.yml@common"
-        parameters:
           apigee_username: $(APIGEE_USERNAME)
-          apigee_password: $(APIGEE_PASSWORD)
+          apigee_password: $(APIGEE_PASSWORD)      
       - bash: |
           export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
