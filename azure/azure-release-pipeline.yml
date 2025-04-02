@@ -45,6 +45,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'internal-dev'
               test_command: 'make internal-dev-test'
 
       - environment: internal-dev-sandbox
@@ -55,6 +56,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'internal-dev-sandbox'
               test_command: 'make internal-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
@@ -72,6 +74,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'ref'
               test_command: 'make internal-dev-test'
       
       - environment: ref
@@ -88,6 +91,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'ref2'
               test_command: 'make internal-dev-test'
 
       - environment: manual-approval
@@ -104,6 +108,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'internal-qa'
               test_command: 'make internal-qa-test'
 
       - environment: manual-approval
@@ -121,6 +126,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'internal-qa-sandbox'
               test_command: 'make internal-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
@@ -139,6 +145,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'sandbox'
               test_command: 'make prod-sandbox-test'
               unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
 
@@ -156,6 +163,7 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'int'
               test_command: 'make integration-test'
 
       - environment: prod
@@ -168,4 +176,5 @@ extends:
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
+              environment: 'prod'
               test_command: 'make production-test'
