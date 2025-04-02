@@ -92,6 +92,7 @@ steps:
           apigee_username: $(APIGEE_USERNAME)
           apigee_password: $(APIGEE_PASSWORD)
       - bash: |
+          export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
           export PRODUCTION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(PRODUCTION_PRIVATE_KEY)"
           export PRODUCTION_API_KEY="$(PRODUCTION_API_KEY)"
           export API_ENVIRONMENT="${{parameters.environment}}"
@@ -102,15 +103,19 @@ steps:
       - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
         parameters:
           secret_ids:
-            - ptl/azure-devops/apigee-nonprod/APIGEE_OTP_KEY
-            - ptl/azure-devops/apigee-nonprod/APIGEE_PASSWORD
-          config_ids:
-            - /ptl/azure-devops/apigee-nonprod/APIGEE_USERNAME
+            - ptl/azure-devops/apigee-prod/APIGEE_PASSWORD
+            - ptl/azure-devops/apigee-prod/APIGEE_OTP_KEY
+            - ptl/azure-devops/apigee-prod/APIGEE_USERNAME
       - template: "azure/components/get-mfa-code.yml@common"
         parameters:
+          apigee_otp_key: $(APIGEE_OTP_KEY)
+      - template: "azure/components/get-access-token.yml@common"
+        parameters:
+          apigee_organization: "prod"
           apigee_username: $(APIGEE_USERNAME)
-          apigee_password: $(APIGEE_PASSWORD)      
+          apigee_password: $(APIGEE_PASSWORD)
       - bash: |
+          export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
           export INTEGRATION_PRIVATE_KEY="$(Pipeline.Workspace)/secrets/$(INTEGRATION_PRIVATE_KEY)"
           export INTEGRATION_API_KEY="$(INTEGRATION_API_KEY)"
           export API_ENVIRONMENT="${{parameters.environment}}"
