@@ -102,15 +102,13 @@ steps:
       - template: "azure/components/get-aws-secrets-and-ssm-params.yml@common"
         parameters:
           secret_ids:
-            - ptl/azure-devops/apigee-prod/APIGEE_PASSWORD
-            - ptl/azure-devops/apigee-prod/APIGEE_OTP_KEY
-            - ptl/azure-devops/apigee-prod/APIGEE_USERNAME
+            - ptl/azure-devops/apigee-nonprod/APIGEE_OTP_KEY
+            - ptl/azure-devops/apigee-nonprod/APIGEE_PASSWORD
       - template: "azure/components/get-mfa-code.yml@common"
         parameters:
           apigee_otp_key: $(APIGEE_OTP_KEY)
       - template: "azure/components/get-access-token.yml@common"
         parameters:
-          apigee_organization: "prod"
           apigee_username: $(APIGEE_USERNAME)
           apigee_password: $(APIGEE_PASSWORD)
       - bash: |
