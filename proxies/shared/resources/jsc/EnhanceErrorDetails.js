@@ -1,6 +1,5 @@
 const errors = context.getVariable('data.errors');
 const messageId = context.getVariable('messageid');
-const statusCode = context.getVariable('response.status.code');
 const links = {
     about: "{{ ERROR_ABOUT_LINK }}"
 };
@@ -8,17 +7,21 @@ const links = {
 const enhancedErrors = [];
 
 JSON.parse(errors).forEach((error, index) => {
-    enhancedErrors.push({
+    var translatedError = {
         id: messageId + '.' + index,
         code: error.code,
         links: links,
-        status: String(statusCode),
+        status: String(error.statusCode),
         title: error.title,
-        detail: error.message,
-        source: {
+        detail: error.message
+    };
+    if (error.field) {
+        translatedError.source = {
             pointer: error.field
-        }
-    });
+        };
+    }
+
+    enhancedErrors.push(translatedError);
 });
 
 context.setVariable("error.content", JSON.stringify({ errors: enhancedErrors }));
