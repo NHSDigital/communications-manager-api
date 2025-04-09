@@ -136,17 +136,52 @@ You need to get your software approved by us before it can go live with this API
 
 To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
 
-## Free-text communications
+## Enable users to write and send messages from your software
 
-Free-text communications (as opposed to fixed format communications) are possible via the use of a generic template and making use of the personalisation fields to provide the content of the message.  In order to make this more convenient the service provides some globally available routing plans that any client can use.
+NHS Notify can deliver NHS App messages, emails and text messages that your users write in your software's free-text inputs.
 
-| Global Routing Plan ID               | Channel/Supplier | Read wait time (before failing channel) | Personalisation field name |
-|--------------------------------------|------------------|-----------------------------------------|----------------------------|
-| 00000000-0000-0000-0000-000000000001 | NHS App          | 24 hours                                | body                       |
-| 00000000-0000-0000-0000-000000000002 | Email            |                                         | email_body, email_subject  |
-| 00000000-0000-0000-0000-000000000003 | SMS              |                                         | sms_body                   |
+This is also useful if you:
 
-Please see the Postman collections in the [environments and testing section](#overview--environments-and-testing) for examples.
+* do not need to set up reusable templates for multiple recipients
+* want to send individual messages
+
+### Setting up your free-text inputs
+You'll need to configure your free-text inputs to populate one of our personalisation fields. Each personalisation field is specific to a message channel and will contain the entire message content that your user will enter in your software.
+
+You'll then need to include this personalisation field in your request.
+
+###	Making your request to send messages from your software
+Use the following routing plan IDs and personalisation fields that match the message channel your user will send their message with.
+
+| Message channel | Personalisation field      | Routing plan ID                      | 
+|-----------------|----------------------------|--------------------------------------|
+| NHS App message | body                       | 00000000-0000-0000-0000-000000000001 |
+| Email           | email_subject, email_body  | 00000000-0000-0000-0000-000000000002 |
+| Text message    | sms_body                   | 00000000-0000-0000-0000-000000000003 |
+
+For email, use the personalisation field `email_subject` to allow your user to add the email subject line.
+
+Complete your request in the same way you [send a single message](#post-/v1/messages) or [send a batch of messages](#post-/v1/message-batches).
+
+When you make your request, we'll aim to deliver the message within:
+* 24 hours for NHS App messages 
+* 72 hours for emails
+* 72 hours for text messages
+
+Your message will have a 'failed' status if it's not delivered within this time. Find out more about [message, channel and supplier statuses](https://notify.nhs.uk/using-nhs-notify/message-channel-supplier-status).
+
+You can try out example requests in the sandbox environment in our [Postman collection](#overview--environments-and-testing).
+
+### Formatting messages written in your software
+You can use Markdown to add formatting that your users apply to NHS App messages and emails they write in your software.
+
+For NHS App messages, follow the <a href="https://digital.nhs.uk/developer/api-catalogue/nhs-app#post-/communication/in-app/FHIR/R4/CommunicationRequest" target="new">Markdown guidance in the 'contentString' section of the schema (opens in a new tab)</a>.
+
+For emails, follow the Markdown guidance for:
+* <a href="https://www.notifications.service.gov.uk/using-notify/links-and-URLs" target="_new">links and URLs (opens in a new tab)</a>
+* <a href="https://www.notifications.service.gov.uk/using-notify/formatting" target="_new">bullet points, headings, horizontal lines, inset text and numbered steps (opens in a new tab)</a>
+
+Your users will not be able to use <a href="https://notify.nhs.uk/using-nhs-notify/personalisation" target="_new">personalisation offered by NHS Notify (opens in a new tab)</a> in messages they write from your software.
 
 ## Errors
 
