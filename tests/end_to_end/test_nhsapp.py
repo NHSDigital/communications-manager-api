@@ -6,7 +6,7 @@ from lib.fixtures import *  # NOSONAR
 
 @pytest.mark.e2e
 @pytest.mark.devtest
-def test_nhsapp_end_to_end(url, headers):
+def test_nhsapp_end_to_end(url, bearer_token):
     """
     .. include:: ../../partials/happy_path/test_nhsapp_end_to_end_internal_dev.rst
     """
