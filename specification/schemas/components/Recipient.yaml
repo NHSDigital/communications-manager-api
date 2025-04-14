@@ -8,7 +8,7 @@ properties:
     minLength: 10
     maxLength: 10
     example: "9990548609"
-    description: The [NHS number](https://digital.nhs.uk/services/nhs-number) of the recipient. Only [valid NHS Numbers](https://www.datadictionary.nhs.uk/attributes/nhs_number.html) will be accepted. This will be used to lookup the recipients details with the [Personal Demographics Service](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir).
+    description: The [NHS number](https://digital.nhs.uk/services/nhs-number) of the recipient. Only [valid NHS Numbers](https://www.datadictionary.nhs.uk/attributes/nhs_number.html) will be accepted. This will be used to lookup the recipients details with the [Personal Demographics Service](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir). Normally a required field, unless prior agreement with the Onboarding team is in place to enable the Anonymous Patients feature.
   contactDetails:
     type: object
     description: "Overriding contact details is a sensitive action and requires explicit approval from the onboarding team."
@@ -47,5 +47,27 @@ properties:
             type: string
             description: Postcode of overriding address. A required field when address is specified. Must be a valid UK postcode format.
             example: "LS1 4AP"
-required:
-  - nhsNumber
+      name:
+        type: object
+        description: Overriding name fields for the recipient.
+        properties:
+          prefix:
+            type: string
+            description: Prefix of overriding name.
+            example: Dr.
+          firstName:
+            type: string
+            description: First name of overriding name.
+            example: John
+          middleNames:
+            type: string
+            description: Middle names of overriding name.
+            example: Andrew Robert
+          lastName:
+            type: string
+            description: Last name of overriding name. A required field when name is specified.
+            example: Smith
+          suffix:
+            type: string
+            description: Suffix of overriding name.
+            example: Jr.
