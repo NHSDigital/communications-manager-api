@@ -38,10 +38,10 @@ function smsValidation(sms, path) {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/sms`,
-        message: "Invalid",
+        message: "Input is not a string",
         statusCode: 400,
       },
-      `Field 'sms': Invalid`,
+      `Field 'sms': Input is not a string`,
     ]);
   }
   return validationSuccess();
@@ -69,10 +69,10 @@ function emailValidation(email, path) {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/email`,
-        message: "Invalid",
+        message: "Input is not a string",
         statusCode: 400,
       },
-      `Field 'email': Invalid`,
+      `Field 'email': Input is not a string`,
     ]);
   }
   return validationSuccess();
@@ -105,7 +105,7 @@ function addressValidation(address, path) {
         message: "`lines` is missing",
         statusCode: 400,
       },
-      `Field 'lines': 'lines' is missing`,
+      `Field 'address': 'lines' is missing`,
     ]);
   }
   if (!Array.isArray(address.lines)) {
@@ -117,7 +117,7 @@ function addressValidation(address, path) {
         message: "`lines` is missing",
         statusCode: 400,
       },
-      `Field 'lines': 'lines' is missing`,
+      `Field 'address': 'lines' is missing`,
     ]);
   }
 
@@ -127,10 +127,10 @@ function addressValidation(address, path) {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/address`,
-        message: "Invalid",
+        message: "Lines contain non-string or empty line",
         statusCode: 400,
       },
-      `Field 'lines': Invalid`,
+      `Field 'address': Lines contain non-string or empty line`,
     ]);
   }
 
@@ -143,7 +143,7 @@ function addressValidation(address, path) {
         message: "Too few address lines were provided",
         statusCode: 400,
       },
-      `Field 'lines': Too few address lines were provided`,
+      `Field 'address': Too few address lines were provided`,
     ]);
   }
   if (address.lines.length > 5) {
@@ -155,7 +155,7 @@ function addressValidation(address, path) {
         message: "Too many address lines were provided",
         statusCode: 400,
       },
-      `Field 'lines': Too many address lines were provided`,
+      `Field 'address': Too many address lines were provided`,
     ]);
   }
 
@@ -168,7 +168,7 @@ function addressValidation(address, path) {
         message: "`postcode` is missing",
         statusCode: 400,
       },
-      `Field 'postcode': 'postcode' is missing`,
+      `Field 'address': 'postcode' is missing`,
     ]);
   }
 
@@ -177,11 +177,110 @@ function addressValidation(address, path) {
       {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
-        field: `${path}/recipient/contactDetails/address/postcode`,
+        field: `${path}/recipient/contactDetails/address`,
+        message: "'postcode' is not a string",
+        statusCode: 400,
+      },
+      `Field 'address': 'postcode' is not a string`,
+    ]);
+  }
+  return validationSuccess();
+}
+
+function nameValidation(name, path) {
+
+  if (!name) {
+    return validationSuccess();
+  }
+
+  if (typeof name !== "object" || Array.isArray(name)) {
+    return validationFailure([
+      {
+        title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
         message: "Invalid",
         statusCode: 400,
       },
-      `Field 'postcode': Invalid`,
+      `Field 'name': Invalid`,
+    ]);
+  }
+
+  if (typeof name.prefix !== "string") {
+    return validationFailure([
+      {
+        title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
+        message: "'prefix' is not a string",
+        statusCode: 400,
+      },
+      `Field 'name': 'prefix' is not a string`,
+    ]);
+  }
+
+  if (typeof name.firstName !== "string") {
+    return validationFailure([
+      {
+        title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
+        message: "'firstName' is not a string",
+        statusCode: 400,
+      },
+      `Field 'name': 'firstName' is not a string`,
+    ]);
+  }
+
+  if (typeof name.middleNames !== "string") {
+    return validationFailure([
+      {
+        title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
+        message: "'middleNames' is not a string",
+        statusCode: 400,
+      },
+      `Field 'name': 'middleNames' is not a string`,
+    ]);
+  }
+
+  if (typeof name.lastName === "undefined") {
+    return validationFailure([
+      {
+        title: "Missing value",
+        code: 'CM_MISSING_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
+        message: "`lastName` is missing",
+        statusCode: 400,
+      },
+      `Field 'name': 'lastName' is missing`,
+    ]);
+  }
+
+  if (typeof name.lastName !== "string") {
+    return validationFailure([
+      {
+        title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
+        message: "'lastName' must be a non-empty string",
+        statusCode: 400,
+      },
+      `Field 'name': 'lastName' must be a non-empty string`,
+    ]);
+  }
+
+  if (typeof name.suffix !== "string") {
+    return validationFailure([
+      {
+        title: "Invalid value",
+        code: 'CM_INVALID_VALUE',
+        field: `${path}/recipient/contactDetails/name`,
+        message: "'suffix' is not a string",
+        statusCode: 400,
+      },
+      `Field 'name': 'suffix' is not a string`,
     ]);
   }
   return validationSuccess();
@@ -244,6 +343,17 @@ export function getAlternateContactDetailsError(
 
   if (!addressValid) {
     const [errors, errorMessage] = addressErrors;
+    validationErrors.push(errors);
+    validationErrorMessages.push(errorMessage);
+  }
+
+  const { valid: nameValid, result: nameErrors } = nameValidation(
+    contactDetails.name,
+    path
+  );
+
+  if (!nameValid) {
+    const [errors, errorMessage] = nameErrors;
     validationErrors.push(errors);
     validationErrorMessages.push(errorMessage);
   }
