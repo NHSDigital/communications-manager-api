@@ -9,7 +9,7 @@ Use this API to send messages to citizens via NHS App, email, text message or le
 * enrichment of recipient details
 * support for accessible formats and multiple languages
 
-Learn more about [NHS Notify's features](https://digital.nhs.uk/services/nhs-notify/features).
+Learn more about [NHS Notify's features](https://notify.nhs.uk/features/).
 
 ## Who can use this API
 
