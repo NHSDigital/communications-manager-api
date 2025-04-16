@@ -1208,6 +1208,32 @@ describe("/api/v1/messages", () => {
       .expect("Content-Type", /json/, done);
   });
 
+  it("returns a 201 when only lastName is provided for name alternate contact details", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "Message",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              contactDetails: {
+                name: {
+                  lastName: "Smith"
+                },
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(201)
+      .expect("Content-Type", /json/, done);
+  });
+
   it("returns a 400 when string for name alternate contact detail is provided", (done) => {
     request(server)
       .post("/api/v1/messages")
@@ -1460,6 +1486,47 @@ describe("/api/v1/messages", () => {
                   firstName: "John",
                   middleNames: "Little",
                   lastName: [],
+                  suffix: "Jr"
+                },
+              },
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': 'lastName' must be a non-empty string",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/recipient/contactDetails/name",
+            message: "'lastName' must be a non-empty string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when lastName contains empty-string value in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "Message",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+              contactDetails: {
+                name: {
+                  prefix: "Mr",
+                  firstName: "John",
+                  middleNames: "Little",
+                  lastName: "",
                   suffix: "Jr"
                 },
               },

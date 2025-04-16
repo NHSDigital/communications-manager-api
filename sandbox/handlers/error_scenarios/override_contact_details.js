@@ -206,7 +206,7 @@ function nameValidation(name, path) {
     ]);
   }
 
-  if (typeof name.prefix !== "string") {
+  if ("prefix" in name && typeof name.prefix !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
@@ -219,7 +219,7 @@ function nameValidation(name, path) {
     ]);
   }
 
-  if (typeof name.firstName !== "string") {
+  if ("firstName" in name && typeof name.firstName !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
@@ -232,7 +232,7 @@ function nameValidation(name, path) {
     ]);
   }
 
-  if (typeof name.middleNames !== "string") {
+  if ("middleNames" in name && typeof name.middleNames !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
@@ -258,7 +258,7 @@ function nameValidation(name, path) {
     ]);
   }
 
-  if (typeof name.lastName !== "string") {
+  if (typeof name.lastName !== "string" || name.lastName.trim() === "") {
     return validationFailure([
       {
         title: "Invalid value",
@@ -271,7 +271,7 @@ function nameValidation(name, path) {
     ]);
   }
 
-  if (typeof name.suffix !== "string") {
+  if ("suffix" in name && typeof name.suffix !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
