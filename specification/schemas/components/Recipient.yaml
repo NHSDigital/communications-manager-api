@@ -8,7 +8,7 @@ properties:
     minLength: 10
     maxLength: 10
     example: "9990548609"
-    description: The [NHS number](https://digital.nhs.uk/services/nhs-number) of the recipient. Only [valid NHS Numbers](https://www.datadictionary.nhs.uk/attributes/nhs_number.html) will be accepted. This will be used to lookup the recipients details with the [Personal Demographics Service](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir). Normally a required field, unless prior agreement with the Onboarding team is in place to enable the Anonymous Patients feature.
+    description: The [NHS number](https://digital.nhs.uk/services/nhs-number) of the recipient. Only [valid NHS Numbers](https://www.datadictionary.nhs.uk/attributes/nhs_number.html) will be accepted. This will be used to lookup the recipients details with the [Personal Demographics Service](https://digital.nhs.uk/developer/api-catalogue/personal-demographics-service-fhir). Normally a required field, unless prior agreement with the Onboarding team is in place.
   contactDetails:
     type: object
     description: "Overriding contact details is a sensitive action and requires explicit approval from the onboarding team."
