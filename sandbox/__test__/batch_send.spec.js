@@ -1047,12 +1047,12 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'sms': Invalid",
+        message: "Invalid recipient contact details. Field 'sms': Input is not a string",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
             field: "/data/attributes/messages/0/recipient/contactDetails/sms",
-            message: "Invalid",
+            message: "Input is not a string",
             title: "Invalid value",
             statusCode: 400,
           },
@@ -1156,12 +1156,12 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'email': Invalid",
+        message: "Invalid recipient contact details. Field 'email': Input is not a string",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
             field: "/data/attributes/messages/0/recipient/contactDetails/email",
-            message: "Invalid",
+            message: "Input is not a string",
             title: "Invalid value",
             statusCode: 400,
           },
@@ -1308,7 +1308,7 @@ describe("/api/v1/send", () => {
       })
       .expect(400, {
         message:
-          "Invalid recipient contact details. Field 'lines': 'lines' is missing",
+          "Invalid recipient contact details. Field 'address': 'lines' is missing",
         errors: [
           {
             code: 'CM_MISSING_VALUE',
@@ -1351,7 +1351,7 @@ describe("/api/v1/send", () => {
       })
       .expect(400, {
         message:
-          "Invalid recipient contact details. Field 'lines': Too few address lines were provided",
+          "Invalid recipient contact details. Field 'address': Too few address lines were provided",
         errors: [
           {
             code: 'CM_TOO_FEW_ITEMS',
@@ -1393,7 +1393,7 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'lines': Too many address lines were provided",
+        message: "Invalid recipient contact details. Field 'address': Too many address lines were provided",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
@@ -1435,12 +1435,12 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'lines': Invalid",
+        message: "Invalid recipient contact details. Field 'address': Lines contain non-string or empty line",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
             field: "/data/attributes/messages/0/recipient/contactDetails/address",
-            message: "Invalid",
+            message: "Lines contain non-string or empty line",
             title: "Invalid value",
             statusCode: 400,
           },
@@ -1477,7 +1477,7 @@ describe("/api/v1/send", () => {
       })
       .expect(400, {
         message:
-          "Invalid recipient contact details. Field 'postcode': 'postcode' is missing",
+          "Invalid recipient contact details. Field 'address': 'postcode' is missing",
         errors: [
           {
             code: 'CM_MISSING_VALUE',
@@ -1519,11 +1519,84 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(400, {
-        message: "Invalid recipient contact details. Field 'postcode': Invalid",
+        message: "Invalid recipient contact details. Field 'address': 'postcode' is not a string",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
-            field: "/data/attributes/messages/0/recipient/contactDetails/address/postcode",
+            field: "/data/attributes/messages/0/recipient/contactDetails/address",
+            message: "'postcode' is not a string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 200 when name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: "Mr",
+                      firstName: "John",
+                      middleNames: "Little",
+                      lastName: "Smith",
+                      suffix: "Jr"
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(200)
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when string for name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: "hello",
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': Invalid",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
             message: "Invalid",
             title: "Invalid value",
             statusCode: 400,
@@ -1532,6 +1605,316 @@ describe("/api/v1/send", () => {
       })
       .expect("Content-Type", /json/, done);
   });
+
+  it("returns a 400 when array for name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: [],
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': Invalid",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "Invalid",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when prefix contains non-string value in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: 0,
+                      firstName: "John",
+                      middleNames: "Little",
+                      lastName: "Smith",
+                      suffix: "Jr"
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': 'prefix' is not a string",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "'prefix' is not a string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when firstName contains non-string value in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: "Mr",
+                      firstName: 0,
+                      middleNames: "Little",
+                      lastName: "Smith",
+                      suffix: "Jr"
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': 'firstName' is not a string",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "'firstName' is not a string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when middleNames contains non-string value in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: "Mr",
+                      firstName: "John",
+                      middleNames: 0,
+                      lastName: "Smith",
+                      suffix: "Jr"
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': 'middleNames' is not a string",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "'middleNames' is not a string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when no lastName is provided in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: "Mr",
+                      firstName: "John",
+                      middleNames: "Little",
+                      suffix: "Jr"
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message:
+          "Invalid recipient contact details. Field 'name': 'lastName' is missing",
+        errors: [
+          {
+            code: 'CM_MISSING_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "`lastName` is missing",
+            title: "Missing value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when lastName contains non-string value in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: "Mr",
+                      firstName: "John",
+                      middleNames: "Little",
+                      lastName: 0,
+                      suffix: "Jr"
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': 'lastName' must be a non-empty string",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "'lastName' must be a non-empty string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
+  it("returns a 400 when suffix contains non-string value in name alternate contact detail is provided", (done) => {
+    request(server)
+      .post("/api/v1/send")
+      .set({ Authorization: "allowedContactDetailOverride" })
+      .send({
+        data: {
+          type: "MessageBatch",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageBatchReference: "request-id",
+            messages: [
+              {
+                messageReference: "1",
+                recipient: {
+                  nhsNumber: "1",
+                  contactDetails: {
+                    name: {
+                      prefix: "Mr",
+                      firstName: "John",
+                      middleNames: "Little",
+                      lastName: "Smith",
+                      suffix: 0
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        },
+      })
+      .expect(400, {
+        message: "Invalid recipient contact details. Field 'name': 'suffix' is not a string",
+        errors: [
+          {
+            code: 'CM_INVALID_VALUE',
+            field: "/data/attributes/messages/0/recipient/contactDetails/name",
+            message: "'suffix' is not a string",
+            title: "Invalid value",
+            statusCode: 400,
+          },
+        ],
+      })
+      .expect("Content-Type", /json/, done);
+  });
+
   it("returns a 400 and multiple errors when there are multiple issues in contact details provided", (done) => {
     request(server)
       .post("/api/v1/send")
@@ -1562,7 +1945,7 @@ describe("/api/v1/send", () => {
       })
       .expect(400, {
         message:
-          "Invalid recipient contact details. Field 'email': Input failed format check. Field 'lines': Too few address lines were provided",
+          "Invalid recipient contact details. Field 'email': Input failed format check. Field 'address': Too few address lines were provided",
         errors: [
           {
             code: 'CM_INVALID_VALUE',
@@ -1604,6 +1987,13 @@ describe("/api/v1/send", () => {
                     address: {
                       lines: ["1", "2"],
                       postcode: "hello",
+                    },
+                    name: {
+                      prefix: "Mr",
+                      firstName: "John",
+                      middleNames: "Little",
+                      lastName: "Smith",
+                      suffix: "Jr"
                     },
                   },
                 },
