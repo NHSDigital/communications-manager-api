@@ -81,6 +81,8 @@ To use your local `.env` file make sure to source it:
 $ source .env
 ```
 
+As a reminder: environment variable changes from the `.env` file take place only when the workspace is reloaded (e.g. through a new cli or `direnv allow`)
+
 ### Make commands
 
 There are `make` commands that alias some of this functionality:
@@ -126,7 +128,11 @@ Our API integration tests support two authentication methods:
 
 #### Bearer Token Authentication
 
-To be able to generate bearer token authentication for tests you need to declare the `API_ENVIRONMENT` environment variable:
+>**Notice:** This section contains the handling of secrets. As a reminder, secrets should only be shared via secure methods (e.g. NHS Mail) and MUST NOT be committed to source control
+
+##### Set the Environment
+
+To be able to generate bearer token authentication for tests you need to declare the `API_ENVIRONMENT` environment variable, e.g.:
 
 ```
 export API_ENVIRONMENT=internal-dev
@@ -139,7 +145,13 @@ Available values for `API_ENVIRONMENT` include:
 * `int`
 * `prod`
 
-The authentication process uses `API_ENVIRONMENT` to generate authentication for a given client by using an api and private key pairing suitable for a client on its given environment.
+This defines the scope of tests that will be executed and the Apigee App/Product  that will be used to service requests.
+
+The authentication process uses an API and private key pairing for the application defined by the `API_ENVIRONMENT`
+
+##### API Key
+
+To define the API Key, the following envars are used:
 
 |Environment|API Key Variable|Private Key Variable|
 |-----------|----------------|--------------------|
@@ -148,7 +160,20 @@ The authentication process uses `API_ENVIRONMENT` to generate authentication for
 |int|`INTEGRATION_API_KEY`|`INTEGRATION_PRIVATE_KEY`|
 |prod|`PRODUCTION_API_KEY`|`PRODUCTION_PRIVATE_KEY`|
 
-__Ensure these variables are set and sourced in your .env file before running tests.__
+To find the values for the `*_API_KEY` values:
+* Identify the correct envar for your `API_ENVIRONMENT` from the table above
+* Navigate to the Apigee App that will serve that environment e.g. `Comms-manager-local`
+* Copy the value of the `Key` found in the credentials section to your envar in `.env`
+
+In addition the `API_KEY` envar is also used and should use the same value.
+
+##### Private Key
+
+The value of the `*_PRIVATE_KEY` envars are a *file path* to the location of a private key file.
+
+The keys are held securely within the Management Account - talk to existing team members for more information on sourcing and configuring these values
+
+>__Ensure these variables are set and sourced in your .env file before running tests.__
 
 #### Generate An Apigee Access Token
 
@@ -410,4 +435,3 @@ The collections must be kept in sync manually, this is done by setting the `INTE
 
 
 Our release process is [documented here](https://nhsd-confluence.digital.nhs.uk/pages/viewpage.action?pageId=789753975).
-
