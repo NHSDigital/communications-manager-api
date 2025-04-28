@@ -29,6 +29,9 @@ properties:
               $ref: ../enums/ChannelType.yaml
             channelStatus:
               $ref: ../enums/ChannelStatus.yaml
+              enum:
+                - delivered
+                - failed
       timestamp:
         type: string
         description: Timestamp of the callback event.
