@@ -22,7 +22,10 @@ properties:
         example: "recipient@nhs.net"
       sms:
         type: string
-        description: Overriding mobile telephone number for recipient. Must be a valid mobile number in either UK format (with or without a country code) or international format (starting with a country code).
+        description: |+
+          Overriding mobile number for the recipient. Must be in a valid UK format or international format with a country code.
+
+          Learn more about [sending text messages to international numbers](https://notify.nhs.uk/pricing/text-messages#sending-text-messages-to-international-numbers).
         example: "07777777777"
       address:
         type: object
