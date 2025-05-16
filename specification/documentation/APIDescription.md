@@ -153,11 +153,12 @@ You'll then need to include this personalisation field in your request.
 ###	Making your request to send messages from your software
 Use the following routing plan IDs and personalisation fields that match the message channel your user will send their message with.
 
-| Message channel | Personalisation field      | Routing plan ID                      | 
-|-----------------|----------------------------|--------------------------------------|
-| NHS App message | body                       | 00000000-0000-0000-0000-000000000001 |
-| Email           | email_subject, email_body  | 00000000-0000-0000-0000-000000000002 |
-| Text message    | sms_body                   | 00000000-0000-0000-0000-000000000003 |
+| Message channel                          | Personalisation field                  | Routing plan ID                      | 
+|------------------------------------------|----------------------------------------|--------------------------------------|
+| NHS App message                          | body                                   | 00000000-0000-0000-0000-000000000001 |
+| Email                                    | email_subject, email_body              | 00000000-0000-0000-0000-000000000002 |
+| Text message                             | sms_body                               | 00000000-0000-0000-0000-000000000003 |
+| NHS App message with a fallback to email | nhsapp_body, email_subject, email_body | 00000000-0000-0000-0000-000000000004 |
 
 For email, use the personalisation field `email_subject` to allow your user to add the email subject line.
 
