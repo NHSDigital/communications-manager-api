@@ -33,46 +33,6 @@ Below is a table showing the required attributes and their locations as seen in 
 | nhsNumber             | /data/attributes/messages/0/recipient/nhsNumber |
 
 
-## Scenario: An API consumer submitting a request with an invalid address postcode receives a 400 ‘Invalid Value’ response
-
-A valid contact detail must be structured in this format: { sms: value, email: value, address: { lines: [], postcode: value } }
-
-**Given** the API consumer provides an message body with an invalid postcode
-<br/>
-**When** the request is submitted
-<br/>
-**Then** the response returns a 400 invalid value error
-<br/>
-
-**Asserts**
-- Response returns a 400 ‘Invalid Value’ error
-- Response returns the expected error message body with references to the invalid attribute
-
-| Value     | Description                                    |
-|-----------|------------------------------------------------|
-| LS1 6AECD | Used to ensure only valid postcode is accepted |
-
-
-## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Too few items’ response
-
-A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
-
-**Given** the API consumer provides an message body with with too few address lines
-<br/>
-**When** the request is submitted
-<br/>
-**Then** the response returns a 400 too few items error
-<br/>
-
-**Asserts**
-- Response returns a 400 ‘Too few items’ error
-- Response returns the expected error message body with references to the invalid attribute
-
-| Value   | Description                                               |
-|---------|-----------------------------------------------------------|
-| [ “1” ] | Used to ensure list of less than 2 values is not accepted |
-
-
 ## Scenario: An API consumer submitting a request with invalid address lines (too many) receives a 400 ‘Invalid Value’ response
 
 A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
