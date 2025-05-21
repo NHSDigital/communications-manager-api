@@ -20,17 +20,6 @@
         <Name>requestpath</Name>
         <Template>/api/v1/messages/{data.messageId}</Template>
     </AssignVariable>
-    {% if ENVIRONMENT_TYPE == 'sandbox' %}
-       <AssignVariable>
-           <Name>requestpath</Name>
-           <Template>/api/v1/messages/{data.messageId}</Template>
-       </AssignVariable>
-    {% else %}
-        <AssignVariable>
-            <Name>target.url</Name>
-            <Value>https://comms-apim.de-iaho3.communications.national.nhs.uk/api/v1/messages/{data.messageId}</Value>
-        </AssignVariable>
-    {% endif %}
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
