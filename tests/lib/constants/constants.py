@@ -127,6 +127,14 @@ ERROR_DUPLICATE_VALUE = Error(
     "are not allowed."
 )
 
+# too few items constants
+ERROR_TOO_FEW_ITEMS = Error(
+    "CM_TOO_FEW_ITEMS",
+    "400",
+    "Too few items",
+    "The property at the specified location contains too few items."
+)
+
 # access denied
 ERROR_ACCESS_DENIED = Error(
     "CM_DENIED",
