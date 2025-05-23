@@ -16,7 +16,7 @@ homepage = "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
 
-[poetry.dependencies]
+[tool.poetry.dependencies]
 python = "^3.13"
 pytest-nhsd-apim = "^5.0.0"
 pytest-xdist = "^3.6.1"
@@ -29,7 +29,7 @@ polling = "^0.3.2"
 playwright = "^1.52.0"
 install_playwright = "^0.1.0"
 
-[poetry.dev-dependencies]
+[poetry.group.dev.dependencies]
 flake8 = "^5.0.4"
 black = "^24.4"
 pip-licenses = "^4.3.4"
