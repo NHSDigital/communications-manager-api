@@ -10,5 +10,5 @@ variables:
     value: '{requestpath}'
   - name: error_about_link
     value: 'https://digital.nhs.uk/developer/api-catalogue/nhs-notify'
-  - name: python_verison
+  - name: python_version
     value: '3.13'
