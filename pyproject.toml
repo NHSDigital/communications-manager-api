@@ -1,13 +1,14 @@
 [project]
 python = "^3.13"
-
-[tool.poetry]
 name = "communications-manager"
 version = "0.0.1-alpha"
 description = "Public facing API for the Communications Manager service"
 authors = [
-    "NHS Digital"
+    { name = "NHS Digital" }
 ]
+
+[tool.poetry]
+package-mode = false
 readme = "README.md"
 license = "MIT"
 repository = "https://github.com/NHSDigital/communications-manager-api"
@@ -15,7 +16,7 @@ homepage = "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
 
-[tool.poetry.dependencies]
+[poetry.dependencies]
 python = "^3.13"
 pytest-nhsd-apim = "^5.0.0"
 pytest-xdist = "^3.6.1"
@@ -28,7 +29,7 @@ polling = "^0.3.2"
 playwright = "^1.52.0"
 install_playwright = "^0.1.0"
 
-[tool.poetry.dev-dependencies]
+[poetry.dev-dependencies]
 flake8 = "^5.0.4"
 black = "^24.4"
 pip-licenses = "^4.3.4"
@@ -42,4 +43,4 @@ pytest = "^8.3.4"
 coverage = "^7.4.4"
 pytest-asyncio = "^0.20.3"
 
-[tool.poetry.scripts]
+[poetry.scripts]
