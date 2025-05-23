@@ -37,6 +37,7 @@ extends:
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
     hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
+    python_version: ${{ variables.python_version }}
     apigee_deployments:
       - environment: internal-dev
         jinja_templates:
