@@ -199,7 +199,7 @@ def test_invalid_address_contact_details_lines_not_string_array(url, bearer_toke
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/address",
-            "Field 'address': 'lines' is not a string array"
+            "'lines' is not a string array"
         ),
         None
     )
@@ -233,7 +233,7 @@ def test_invalid_address_contact_details_postcode_not_string(url, bearer_token):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/address",
-            "Field 'address': 'postcode' is not a string"
+            "'postcode' is not a string"
         ),
         None
     )
