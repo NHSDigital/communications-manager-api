@@ -163,11 +163,11 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 - Response returns the expected error message body
 
 
-## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with a non-string email address receives a 400 ‘Invalid Value’ response
 
-A valid contact detail must be structured in this format: { email: Value }
+A valid email contact detail must be structured in this format: { email: Value } where Value is a string
 
-**Given** the API consumer provides an message body with an invalid email address
+**Given** the API consumer provides a message body with a non-string email address
 <br/>
 **When** the request is submitted
 <br/>
@@ -178,9 +178,9 @@ A valid contact detail must be structured in this format: { email: Value }
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
-| Value               | Description                                          |
-|---------------------|------------------------------------------------------|
-| invalidEmailAddress | Used to ensure invalid email address is not accepted |
+| Value   | Description                                            |
+|---------|--------------------------------------------------------|
+| []      | Used to ensure only a string email address is accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid message batch reference receives a 400 ‘Invalid Value’ response
@@ -268,11 +268,11 @@ The routing plan must be in a UUID format, for more information on UUID, look [h
 - Response returns the expected error message body with references to the invalid attribute
 
 
-## Scenario: An API consumer submitting a request with an invalid sms receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with a non-string sms receives a 400 ‘Invalid Value’ response
 
-A valid sms contact detail must be structured in this format: { sms: value }
+A valid sms contact detail must be structured in this format: { sms: value } where Value is a string
 
-**Given** the API consumer provides an message body with an invalid sms
+**Given** the API consumer provides a message body with a non-string sms
 <br/>
 **When** the request is submitted
 <br/>
@@ -283,9 +283,9 @@ A valid sms contact detail must be structured in this format: { sms: value }
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
-|        Value | Description                                         |
-|--------------|-----------------------------------------------------|
-| 077009000021 | Used to ensure invalid phone number is not accepted |
+| Value   | Description                                           |
+|---------|-------------------------------------------------------|
+| []      | Used to ensure only a string phone number is accepted |
 
 
 ## Scenario: An API consumer submitting a request with an invalid message value receives a 400 ‘Invalid Value’ response
