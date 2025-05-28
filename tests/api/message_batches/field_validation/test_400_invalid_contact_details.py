@@ -211,7 +211,7 @@ def test_invalid_address_contact_details_lines_not_string_array(url, bearer_toke
 @pytest.mark.prodtest
 def test_invalid_address_contact_details_postcode_not_string(url, bearer_token):
     """
-    .. include:: ../partials/validation/test_invalid_contact_details_address_lines.rst
+    .. include:: ../partials/validation/test_invalid_contact_details_address_postcode.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_batch_body("dev")

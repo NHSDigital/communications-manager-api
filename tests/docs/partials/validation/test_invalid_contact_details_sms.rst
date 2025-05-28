@@ -1,7 +1,7 @@
 Scenario: An API consumer submitting a request with a non-string sms receives a 400 'Invalid Value' response
 ============================================================================================================
 
-A valid sms contact detail must be structured in this format: { sms: value } where Value is a string
+A valid sms contact detail must be structured in this format: { sms: Value } where Value is a string
 
 | **Given** the API consumer provides a message body with a non-string sms
 | **When** the request is submitted

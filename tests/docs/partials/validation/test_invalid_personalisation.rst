@@ -1,14 +1,14 @@
-Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 'Invalid value' response
+Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 'Invalid Value' response
 ======================================================================================================================
 
-A valid personalisation must be structured in this format: { parameter: value }
+A valid personalisation must be structured in this format: { parameter: Value }
 
 | **Given** the API consumer provides a message body with an invalid personalisation
 | **When** the request is submitted
 | **Then** the response returns a 400 invalid value error
 
 **Asserts**
-- Response returns a 400 'Invalid value' error
+- Response returns a 400 'Invalid Value' error
 - Response returns the expected error message body with references to the invalid attribute
 
 .. list-table::

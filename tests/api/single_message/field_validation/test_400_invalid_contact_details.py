@@ -98,6 +98,40 @@ def test_invalid_address_contact_details_too_many_lines(url, bearer_token):
     )
 
 
+@pytest.mark.test
+@pytest.mark.devtest
+@pytest.mark.inttest
+@pytest.mark.prodtest
+def test_invalid_address_contact_details_lines_not_string_array(url, bearer_token):
+    """
+    .. include:: ../partials/validation/test_invalid_contact_details_address_lines.rst
+    """
+    headers = Generators.generate_valid_headers(bearer_token.value)
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": [1, 2, 3],
+            "postcode": "test"
+        }
+    }
+
+    resp = requests.post(
+        f"{url}{MESSAGES_ENDPOINT}",
+        headers=headers,
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/recipient/contactDetails/address",
+            "'lines' is not a string array"
+        ),
+        None
+    )
+
+
 @pytest.mark.devtest
 def test_not_permitted_to_use_contact_details(url, bearer_token_internal_dev_test_1):
     """
