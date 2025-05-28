@@ -104,10 +104,10 @@ def test_invalid_address_contact_details_too_many_lines(url, bearer_token):
 @pytest.mark.prodtest
 def test_invalid_address_contact_details_lines_not_string_array(url, bearer_token):
     """
-    .. include:: ../partials/validation/test_invalid_contact_details_address_lines.rst
+    .. include:: /partials/validation/test_invalid_contact_details_address_lines.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
-    data = Generators.generate_valid_create_message_batch_body("dev")
+    data = Generators.generate_valid_create_message_body("dev")
     data["data"]["attributes"]["recipient"]["contactDetails"] = {
         "address": {
             "lines": [1, 2, 3],
