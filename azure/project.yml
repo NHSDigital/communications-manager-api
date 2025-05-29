@@ -11,4 +11,4 @@ variables:
   - name: error_about_link
     value: 'https://digital.nhs.uk/developer/api-catalogue/nhs-notify'
   - name: python_version
-    value: '3.10'
+    value: '3.13'
