@@ -25,8 +25,6 @@ const validSendingGroupIds = {
     [globalFreeTextSmsSendingGroupId]: "xoERWoahq12cq8WMXya4yed9hZtZbMxJ"
 };
 
-const invalidEmailAddress = "invalidEmailAddress";
-
 const duplicateTemplates = [
     {
         name: "EMAIL_TEMPLATE",
@@ -68,6 +66,5 @@ export {
     globalFreeTextSmsSendingGroupId,
     noDefaultOdsClientAuth,
     noOdsChangeClientAuth,
-    notAllowedContactDetailOverride,
-    invalidEmailAddress
+    notAllowedContactDetailOverride
 }

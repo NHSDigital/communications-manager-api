@@ -1,8 +1,5 @@
 import { notAllowedContactDetailOverride } from "../config.js";
 
-const invalidPhoneNumber = "11111111111";
-const invalidEmailAddress = "invalidEmailAddress";
-
 function validationSuccess() {
   return {
     valid: true,
@@ -20,28 +17,16 @@ function smsValidation(sms, path) {
   if (!sms) {
     return validationSuccess();
   }
-  if (sms === invalidPhoneNumber) {
-    return validationFailure([
-      {
-        title: "Invalid value",
-        code: 'CM_INVALID_VALUE',
-        field: `${path}/recipient/contactDetails/sms`,
-        message: "Input failed format check",
-        statusCode: 400,
-      },
-      `Field 'sms': Input failed format check`,
-    ]);
-  }
   if (typeof sms !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/sms`,
-        message: "Input is not a string",
+        message: "'sms' is not a string",
         statusCode: 400,
       },
-      `Field 'sms': Input is not a string`,
+      `Field 'sms': 'sms' is not a string`,
     ]);
   }
   return validationSuccess();
@@ -51,28 +36,16 @@ function emailValidation(email, path) {
   if (!email) {
     return validationSuccess();
   }
-  if (email === invalidEmailAddress) {
-    return validationFailure([
-      {
-        title: "Invalid value",
-        code: 'CM_INVALID_VALUE',
-        field: `${path}/recipient/contactDetails/email`,
-        message: "Input failed format check",
-        statusCode: 400,
-      },
-      `Field 'email': Input failed format check`,
-    ]);
-  }
   if (typeof email !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/email`,
-        message: "Input is not a string",
+        message: "'email' is not a string",
         statusCode: 400,
       },
-      `Field 'email': Input is not a string`,
+      `Field 'email': 'email' is not a string`,
     ]);
   }
   return validationSuccess();
@@ -96,83 +69,48 @@ function addressValidation(address, path) {
     ]);
   }
 
-  if (!address.lines) {
-    return validationFailure([
-      {
-        title: "Missing value",
-        code: 'CM_MISSING_VALUE',
-        field: `${path}/recipient/contactDetails/address`,
-        message: "`lines` is missing",
-        statusCode: 400,
-      },
-      `Field 'address': 'lines' is missing`,
-    ]);
-  }
-  if (!Array.isArray(address.lines)) {
-    return validationFailure([
-      {
-        title: "Missing value",
-        code: 'CM_MISSING_VALUE',
-        field: `${path}/recipient/contactDetails/address`,
-        message: "`lines` is missing",
-        statusCode: 400,
-      },
-      `Field 'address': 'lines' is missing`,
-    ]);
+  if ("lines" in address) {
+    if (!Array.isArray(address.lines)) {
+      return validationFailure([
+        {
+          title: "Invalid value",
+          code: 'CM_INVALID_VALUE',
+          field: `${path}/recipient/contactDetails/address`,
+          message: "'lines' is not a string array",
+          statusCode: 400,
+        },
+        `Field 'address': 'lines' is not a string array`,
+      ]);
+    }
+
+    if (address.lines.some((line) => typeof line !== "string")) {
+      return validationFailure([
+        {
+          title: "Invalid value",
+          code: 'CM_INVALID_VALUE',
+          field: `${path}/recipient/contactDetails/address`,
+          message: "'lines' is not a string array",
+          statusCode: 400,
+        },
+        `Field 'address': 'lines' is not a string array`,
+      ]);
+    }
+
+    if (address.lines.length > 5) {
+      return validationFailure([
+        {
+          title: "Invalid value",
+          code: 'CM_INVALID_VALUE',
+          field: `${path}/recipient/contactDetails/address`,
+          message: "Too many address lines were provided",
+          statusCode: 400,
+        },
+        `Field 'address': Too many address lines were provided`,
+      ]);
+    }
   }
 
-  if (address.lines.some((line) => typeof line !== "string")) {
-    return validationFailure([
-      {
-        title: "Invalid value",
-        code: 'CM_INVALID_VALUE',
-        field: `${path}/recipient/contactDetails/address`,
-        message: "Lines contain non-string or empty line",
-        statusCode: 400,
-      },
-      `Field 'address': Lines contain non-string or empty line`,
-    ]);
-  }
-
-  if (address.lines.length < 2) {
-    return validationFailure([
-      {
-        code: 'CM_TOO_FEW_ITEMS',
-        title: "Too few items",
-        field: `${path}/recipient/contactDetails/address`,
-        message: "Too few address lines were provided",
-        statusCode: 400,
-      },
-      `Field 'address': Too few address lines were provided`,
-    ]);
-  }
-  if (address.lines.length > 5) {
-    return validationFailure([
-      {
-        title: "Invalid value",
-        code: 'CM_INVALID_VALUE',
-        field: `${path}/recipient/contactDetails/address`,
-        message: "Too many address lines were provided",
-        statusCode: 400,
-      },
-      `Field 'address': Too many address lines were provided`,
-    ]);
-  }
-
-  if (!address.postcode) {
-    return validationFailure([
-      {
-        title: "Missing value",
-        code: 'CM_MISSING_VALUE',
-        field: `${path}/recipient/contactDetails/address`,
-        message: "`postcode` is missing",
-        statusCode: 400,
-      },
-      `Field 'address': 'postcode' is missing`,
-    ]);
-  }
-
-  if (typeof address.postcode !== "string") {
+  if ("postcode" in address && typeof address.postcode !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
@@ -188,7 +126,6 @@ function addressValidation(address, path) {
 }
 
 function nameValidation(name, path) {
-
   if (!name) {
     return validationSuccess();
   }
@@ -245,29 +182,16 @@ function nameValidation(name, path) {
     ]);
   }
 
-  if (typeof name.lastName === "undefined") {
-    return validationFailure([
-      {
-        title: "Missing value",
-        code: 'CM_MISSING_VALUE',
-        field: `${path}/recipient/contactDetails/name`,
-        message: "`lastName` is missing",
-        statusCode: 400,
-      },
-      `Field 'name': 'lastName' is missing`,
-    ]);
-  }
-
-  if (typeof name.lastName !== "string" || name.lastName.trim() === "") {
+  if ("lastName" in name && typeof name.lastName !== "string") {
     return validationFailure([
       {
         title: "Invalid value",
         code: 'CM_INVALID_VALUE',
         field: `${path}/recipient/contactDetails/name`,
-        message: "'lastName' must be a non-empty string",
+        message: "'lastName' is not a string",
         statusCode: 400,
       },
-      `Field 'name': 'lastName' must be a non-empty string`,
+      `Field 'name': 'lastName' is not a string`,
     ]);
   }
 

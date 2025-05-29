@@ -1,11 +1,11 @@
 # Validation Tests
 
 
-## Scenario: An API consumer submitting a request with an invalid address postcode receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with a non-string array address lines receives a 400 ‘Invalid Value’ response
 
-A valid contact detail must be structured in this format: { sms: value, email: value, address: { lines: [], postcode: value } }
+A valid address lines contact detail must be structured in this format: { address: { lines: Value } } where Value is a string array
 
-**Given** the API consumer provides an message body with an invalid postcode
+**Given** the API consumer provides a message body with a non-string array address lines
 <br/>
 **When** the request is submitted
 <br/>
@@ -16,34 +16,14 @@ A valid contact detail must be structured in this format: { sms: value, email: v
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
-| Value     | Description                                    |
-|-----------|------------------------------------------------|
-| LS1 6AECD | Used to ensure only valid postcode is accepted |
-
-
-## Scenario: An API consumer submitting a request with invalid address lines (too few) receives a 400 ‘Too few items’ response
-
-A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
-
-**Given** the API consumer provides an message body with with too few address lines
-<br/>
-**When** the request is submitted
-<br/>
-**Then** the response returns a 400 too few items error
-<br/>
-
-**Asserts**
-- Response returns a 400 ‘Too few items’ error
-- Response returns the expected error message body with references to the invalid attribute
-
-| Value   | Description                                               |
-|---------|-----------------------------------------------------------|
-| [ “1” ] | Used to ensure list of less than 2 values is not accepted |
+| Value   | Description                                                  |
+|---------|--------------------------------------------------------------|
+| [1,2]   | Used to ensure only a string array address lines is accepted |
 
 
 ## Scenario: An API consumer submitting a request with invalid address lines (too many) receives a 400 ‘Invalid Value’ response
 
-A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
+A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: Value } }
 
 **Given** the API consumer provides an message body with with too many address lines
 <br/>
@@ -61,11 +41,11 @@ A valid contact detail must be structured in this format: { address: { lines: [ 
 | [ “1”, “2”, “3”, “4”, “5”, “6” ] | Used to ensure list of more than 5 values is not accepted |
 
 
-## Scenario: An API consumer submitting a request with an invalid email receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with a non-string email address receives a 400 ‘Invalid Value’ response
 
-A valid contact detail must be structured in this format: { email: Value }
+A valid email contact detail must be structured in this format: { email: Value } where Value is a string
 
-**Given** the API consumer provides an message body with an invalid email address
+**Given** the API consumer provides a message body with a non-string email address
 <br/>
 **When** the request is submitted
 <br/>
@@ -76,16 +56,16 @@ A valid contact detail must be structured in this format: { email: Value }
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
-| Value               | Description                                          |
-|---------------------|------------------------------------------------------|
-| invalidEmailAddress | Used to ensure invalid email address is not accepted |
+| Value   | Description                                            |
+|---------|--------------------------------------------------------|
+| []      | Used to ensure only a string email address is accepted |
 
 
-## Scenario: An API consumer submitting a request with an invalid sms receives a 400 ‘Invalid Value’ response
+## Scenario: An API consumer submitting a request with a non-string sms receives a 400 ‘Invalid Value’ response
 
-A valid sms contact detail must be structured in this format: { sms: value }
+A valid sms contact detail must be structured in this format: { sms: Value } where Value is a string
 
-**Given** the API consumer provides an message body with an invalid sms
+**Given** the API consumer provides a message body with a non-string sms
 <br/>
 **When** the request is submitted
 <br/>
@@ -96,9 +76,9 @@ A valid sms contact detail must be structured in this format: { sms: value }
 - Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
-|        Value | Description                                         |
-|--------------|-----------------------------------------------------|
-| 077009000021 | Used to ensure invalid phone number is not accepted |
+| Value   | Description                                           |
+|---------|-------------------------------------------------------|
+| []      | Used to ensure only a string phone number is accepted |
 
 
 ## Scenario: An API consumer submitting a request with an contact details when not allowed receives a 400 ‘Cannot set contact details’ response
@@ -192,9 +172,9 @@ An NHS Number is a 10 digit number used to identify patients, for more informati
 - Response returns the expected error message body with references to the invalid attribute
 
 
-## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
+## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
 
-A valid personalisation must be structured in this format: { parameter: value }
+A valid personalisation must be structured in this format: { parameter: Value }
 
 **Given** the API consumer provides a message body with an invalid personalisation
 <br/>
@@ -204,7 +184,7 @@ A valid personalisation must be structured in this format: { parameter: value }
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Invalid value’ error
+- Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
 | Value                    | Description                                                               |
@@ -259,9 +239,9 @@ Below is a table showing the required attributes and their locations as seen in 
 | nhsNumber        | /data/attributes/recipient/nhsNumber |
 
 
-## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid value’ response
+## Scenario: An API consumer submitting a request with an invalid personalisation receives a 400 ‘Invalid Value’ response
 
-A valid personalisation must be structured in this format: { parameter: value }
+A valid personalisation must be structured in this format: { parameter: Value }
 
 **Given** the API consumer provides a message body with an invalid personalisation
 <br/>
@@ -271,7 +251,7 @@ A valid personalisation must be structured in this format: { parameter: value }
 <br/>
 
 **Asserts**
-- Response returns a 400 ‘Invalid value’ error
+- Response returns a 400 ‘Invalid Value’ error
 - Response returns the expected error message body with references to the invalid attribute
 
 | Value                    | Description                                                               |

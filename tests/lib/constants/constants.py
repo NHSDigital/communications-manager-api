@@ -109,14 +109,6 @@ ERROR_MISSING_VALUE = Error(
     "The property at the specified location is required, but was not present in the request."
 )
 
-# too few address lines
-ERROR_TOO_FEW_ADDRESS_LINES = Error(
-    "CM_MISSING_VALUE",
-    "400",
-    "Missing value",
-    "Too few address lines were provided"
-)
-
 # null value constants
 ERROR_NULL_VALUE = Error(
     "CM_NULL_VALUE",

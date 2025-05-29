@@ -1,7 +1,7 @@
 Scenario: An API consumer submitting a request with invalid address lines (too many) receives a 400 'Invalid Value' response
 ===============================================================================================================================
 
-A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: value } }
+A valid contact detail must be structured in this format: { address: { lines: [ Value1, Value2 ], postcode: Value } }
 
 | **Given** the API consumer provides an message body with with too many address lines
 | **When** the request is submitted

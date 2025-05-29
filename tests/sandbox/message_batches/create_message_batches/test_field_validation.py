@@ -554,7 +554,7 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
                         "recipient": {
                             "nhsNumber": "9990548609",
                             "contactDetails": {
-                                "sms": "11111111111"
+                                "sms": 1234
                             }
                         },
                     }
@@ -568,7 +568,7 @@ def test_invalid_sms_contact_details(nhsd_apim_proxy_url, correlation_id):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/sms",
-            "Input failed format check"
+            "'sms' is not a string"
         ),
         correlation_id
     )
@@ -595,7 +595,7 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, correlation_id):
                         "recipient": {
                             "nhsNumber": "9990548609",
                             "contactDetails": {
-                                "email": "invalidEmailAddress"
+                                "email": 1234
                             }
                         },
                     }
@@ -609,53 +609,7 @@ def test_invalid_email_contact_details(nhsd_apim_proxy_url, correlation_id):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/email",
-            "Input failed format check"
-        ),
-        correlation_id
-    )
-
-
-@pytest.mark.sandboxtest
-@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
-def test_invalid_address_contact_details_too_few_lines(nhsd_apim_proxy_url, correlation_id):
-    """
-    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
-    """
-    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
-        **headers,
-        "X-Correlation-Id": correlation_id
-    }, json={
-        "data": {
-            "type": "MessageBatch",
-            "attributes": {
-                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": str(uuid.uuid1()),
-                "messages": [
-                    {
-                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
-                        "recipient": {
-                            "nhsNumber": "9990548609",
-                            "contactDetails": {
-                                "address": {
-                                    "lines": [
-                                        "1"
-                                    ],
-                                    "postcode": "test"
-                                }
-                            }
-                        },
-                    }
-                ]
-            }
-        }
-    })
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_too_few_items_error_custom_detail(
-            "/data/attributes/messages/0/recipient/contactDetails/address",
-            "Too few address lines were provided"
+            "'email' is not a string"
         ),
         correlation_id
     )
@@ -707,6 +661,50 @@ def test_invalid_address_contact_details_too_many_lines(nhsd_apim_proxy_url, cor
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/address",
             "Too many address lines were provided"
+        ),
+        correlation_id
+    )
+
+
+@pytest.mark.sandboxtest
+@pytest.mark.parametrize("correlation_id", constants.CORRELATION_ID)
+def test_invalid_address_contact_details_lines_not_string_array(nhsd_apim_proxy_url, correlation_id):
+    """
+    .. include:: ../../partials/validation/test_invalid_contact_details_address_lines.rst
+    """
+    resp = requests.post(f"{nhsd_apim_proxy_url}{MESSAGE_BATCHES_ENDPOINT}", headers={
+        **headers,
+        "X-Correlation-Id": correlation_id
+    }, json={
+        "data": {
+            "type": "MessageBatch",
+            "attributes": {
+                "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+                "messageBatchReference": str(uuid.uuid1()),
+                "messages": [
+                    {
+                        "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
+                        "recipient": {
+                            "nhsNumber": "9990548609",
+                            "contactDetails": {
+                                "address": {
+                                    "lines": [1, 2, 3],
+                                    "postcode": "test"
+                                }
+                            }
+                        },
+                    }
+                ]
+            }
+        }
+    })
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/0/recipient/contactDetails/address",
+            "'lines' is not a string array"
         ),
         correlation_id
     )

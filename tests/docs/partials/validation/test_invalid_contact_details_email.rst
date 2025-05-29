@@ -1,9 +1,9 @@
-Scenario: An API consumer submitting a request with an invalid email receives a 400 'Invalid Value' response
+Scenario: An API consumer submitting a request with a non-string email address receives a 400 'Invalid Value' response
 ======================================================================================================================
 
-A valid contact detail must be structured in this format: { email: Value }
+A valid email contact detail must be structured in this format: { email: Value } where Value is a string
 
-| **Given** the API consumer provides an message body with an invalid email address
+| **Given** the API consumer provides a message body with a non-string email address
 | **When** the request is submitted
 | **Then** the response returns a 400 invalid value error
 
@@ -17,6 +17,6 @@ A valid contact detail must be structured in this format: { email: Value }
 
     * - Value
       - Description
-    * - invalidEmailAddress
-      - Used to ensure invalid email address is not accepted
+    * - []
+      - Used to ensure only a string email address is accepted
 
