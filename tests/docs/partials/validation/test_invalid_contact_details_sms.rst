@@ -1,9 +1,9 @@
-Scenario: An API consumer submitting a request with an invalid sms receives a 400 'Invalid Value' response
-======================================================================================================================
+Scenario: An API consumer submitting a request with a non-string sms receives a 400 'Invalid Value' response
+============================================================================================================
 
-A valid sms contact detail must be structured in this format: { sms: value }
+A valid sms contact detail must be structured in this format: { sms: Value } where Value is a string
 
-| **Given** the API consumer provides an message body with an invalid sms
+| **Given** the API consumer provides a message body with a non-string sms
 | **When** the request is submitted
 | **Then** the response returns a 400 invalid value error
 
@@ -17,6 +17,6 @@ A valid sms contact detail must be structured in this format: { sms: value }
 
     * - Value
       - Description
-    * - 077009000021
-      - Used to ensure invalid phone number is not accepted
+    * - []
+      - Used to ensure only a string phone number is accepted
 

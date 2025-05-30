@@ -18,7 +18,7 @@ def test_invalid_sms_contact_details(url, bearer_token):
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"] = {
         "contactDetails": {
-            "sms": "077009000021"
+            "sms": 1234
         }
     }
 
@@ -33,7 +33,7 @@ def test_invalid_sms_contact_details(url, bearer_token):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/sms",
-            "Input failed format check"
+            "'sms' is not a string"
         ),
         None
     )
@@ -51,7 +51,7 @@ def test_invalid_sms_contact_details_second_message(url, bearer_token):
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][1]["recipient"] = {
         "contactDetails": {
-            "sms": "077009000021"
+            "sms": 1234
         }
     }
 
@@ -66,7 +66,7 @@ def test_invalid_sms_contact_details_second_message(url, bearer_token):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/1/recipient/contactDetails/sms",
-            "Input failed format check"
+            "'sms' is not a string"
         ),
         None
     )
@@ -84,7 +84,7 @@ def test_invalid_email_contact_details(url, bearer_token):
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"] = {
         "contactDetails": {
-            "email": "invalidEmailAddress"
+            "email": 1234
         }
     }
 
@@ -99,7 +99,7 @@ def test_invalid_email_contact_details(url, bearer_token):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/email",
-            "Input failed format check"
+            "'email' is not a string"
         ),
         None
     )
@@ -117,7 +117,7 @@ def test_invalid_email_contact_details_third_message(url, bearer_token):
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][2]["recipient"] = {
         "contactDetails": {
-            "email": "invalidEmailAddress"
+            "email": 1234
         }
     }
 
@@ -131,41 +131,7 @@ def test_invalid_email_contact_details_third_message(url, bearer_token):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/2/recipient/contactDetails/email",
-            "Input failed format check"
-        ),
-        None
-    )
-
-
-@pytest.mark.test
-@pytest.mark.devtest
-@pytest.mark.inttest
-@pytest.mark.prodtest
-def test_invalid_address_contact_details_too_few_lines(url, bearer_token):
-    """
-    .. include:: ../partials/validation/test_invalid_contact_details_address_lines_too_few.rst
-    """
-    headers = Generators.generate_valid_headers(bearer_token.value)
-    data = Generators.generate_valid_create_message_batch_body("dev")
-    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
-        "address": {
-            "lines": ["1"],
-            "postcode": "LS1 6AE"
-        }
-    }
-
-    resp = requests.post(
-        f"{url}{MESSAGE_BATCHES_ENDPOINT}",
-        headers=headers,
-        json=data
-    )
-
-    Assertions.assert_error_with_optional_correlation_id(
-        resp,
-        400,
-        Generators.generate_too_few_items_error_custom_detail(
-            "/data/attributes/messages/0/recipient/contactDetails/address",
-            "Too few address lines were provided"
+            "'email' is not a string"
         ),
         None
     )
@@ -209,16 +175,16 @@ def test_invalid_address_contact_details_too_many_lines(url, bearer_token):
 @pytest.mark.devtest
 @pytest.mark.inttest
 @pytest.mark.prodtest
-def test_invalid_address_contact_details_postcode(url, bearer_token):
+def test_invalid_address_contact_details_lines_not_string_array(url, bearer_token):
     """
-    .. include:: ../partials/validation/test_invalid_contact_details_address_postcode.rst
+    .. include:: ../partials/validation/test_invalid_contact_details_address_lines.rst
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_batch_body("dev")
     data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
         "address": {
-            "lines": ["1", "2", "3", "4", "5"],
-            "postcode": "LS1 6AECD"
+            "lines": [1, 2, 3],
+            "postcode": "LS1 6AE"
         }
     }
 
@@ -233,7 +199,41 @@ def test_invalid_address_contact_details_postcode(url, bearer_token):
         400,
         Generators.generate_invalid_value_error_custom_detail(
             "/data/attributes/messages/0/recipient/contactDetails/address",
-            "Postcode input failed format check"
+            "'lines' is not a string array"
+        ),
+        None
+    )
+
+
+@pytest.mark.test
+@pytest.mark.devtest
+@pytest.mark.inttest
+@pytest.mark.prodtest
+def test_invalid_address_contact_details_postcode_not_string(url, bearer_token):
+    """
+    .. include:: ../partials/validation/test_invalid_contact_details_address_postcode.rst
+    """
+    headers = Generators.generate_valid_headers(bearer_token.value)
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"]["contactDetails"] = {
+        "address": {
+            "lines": ["1", "2"],
+            "postcode": []
+        }
+    }
+
+    resp = requests.post(
+        f"{url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers=headers,
+        json=data
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        400,
+        Generators.generate_invalid_value_error_custom_detail(
+            "/data/attributes/messages/0/recipient/contactDetails/address",
+            "'postcode' is not a string"
         ),
         None
     )
