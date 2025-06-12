@@ -16,10 +16,17 @@
         <Name>target.copy.pathsuffix</Name>
         <Value>false</Value>
     </AssignVariable>
-    <AssignVariable>
-        <Name>requestpath</Name>
-        <Value>/api/channels/nhsapp/accounts</Value>
-    </AssignVariable>
+    {% if ENVIRONMENT_TYPE == 'sandbox' %}
+       <AssignVariable>
+           <Name>requestpath</Name>
+           <Value>/api/channels/nhsapp/accounts</Value>
+       </AssignVariable>
+    {% else %}
+        <AssignVariable>
+            <Name>target.url</Name>
+            <Value>https://comms-apim.de-sila7.communications.national.nhs.uk/api/channels/nhsapp/accounts</Value>
+        </AssignVariable>
+    {% endif %}
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
