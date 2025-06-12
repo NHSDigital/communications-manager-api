@@ -31,6 +31,8 @@ properties:
 
               This value is used internally to de-duplicate messages. If you send the same value through multiple times only one of the requests will be actioned.
             example: da0b1495-c7cb-468c-9d81-07dee089d728
+          billingReference:
+            $ref: ../../snippets/BillingReferenceSnippet.yaml
           recipient:
             $ref: ../components/Recipient.yaml
           originator:
