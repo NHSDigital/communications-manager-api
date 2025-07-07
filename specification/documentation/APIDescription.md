@@ -210,7 +210,7 @@ This can be achieved by hashing the request body using the HMAC-SHA256 algorithm
 
 Every request includes an `idempotencyKey` field located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
 
-If a request fails, our retry policy will continue to attempt to deliver the callback for a period of 15 minutes.
+If a request fails, our retry policy will continue to attempt to deliver the callback for a period of 2 hours.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
