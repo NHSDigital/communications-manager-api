@@ -12,6 +12,7 @@
       "messageReference": "1226417c-f683-4d68-afe8-2d52321a6b70",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: Contact detail is missing",
+      "messageFailureReasonCode": "MFR_PDSV_0002",
       "channels": [
         {
           "type": "sms",
@@ -20,6 +21,7 @@
           "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: Contact detail is missing",
+          "channelFailureReasonCode": "CFR_PDSV_0002",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:52:12Z"

@@ -19,6 +19,10 @@ properties:
         type: string
         description: If there is extra information associated with the status of this message, it is provided here.
         example: " "
+      messageFailureReasonCode:
+        type: string
+        description: If there is a failed reason code associated with this message, it is provided here.
+        example: "MFR_PDSV_0005"
       channels:
         type: array
         minItems: 0

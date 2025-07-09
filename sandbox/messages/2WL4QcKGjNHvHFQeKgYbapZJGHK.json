@@ -12,6 +12,7 @@
       "messageReference": "4fbc5f73-0f7c-4304-b848-5c6ccb781c84",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: Patient does not exist in PDS",
+      "messageFailureReasonCode": "MFR_PDSV_0006",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:40Z",

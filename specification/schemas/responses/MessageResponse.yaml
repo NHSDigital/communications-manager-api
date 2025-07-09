@@ -26,6 +26,10 @@ properties:
             type: string
             description: If there is extra information associated with the status of this message, it is provided here.
             example: ""
+          messageFailureReasonCode:
+            type: string
+            description: If there is a failed reason code associated with this message, it is provided here.
+            example: "MFR_PDSV_0005"
           channels:
             type: array
             description: |-
@@ -55,6 +59,10 @@ properties:
                   type: string
                   description: If there is extra information associated with the status of this channel, it is provided here.
                   example: ""
+                channelFailureReasonCode:
+                  type: string
+                  description: If there is a failed reason code associated with this channel, it is provided here.
+                  example: "MFR_DSV_0005"
                 supplierStatus:
                   description: |-
                     The current status of this message within the channel at the time this response was generated.
