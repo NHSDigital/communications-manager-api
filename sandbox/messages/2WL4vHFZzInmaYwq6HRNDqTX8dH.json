@@ -12,6 +12,7 @@
       "messageReference": "d1cc6082-729e-4e31-8842-ac3279d3f72d",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: Contact detail is missing",
+      "messageFailureReasonCode": "MFR_PDSV_0002",
       "channels": [
         {
           "type": "nhsapp",
@@ -20,6 +21,7 @@
           "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: Contact detail is missing",
+          "channelFailureReasonCode": "CFR_PDSV_0002",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
             "enriched": "2023-10-09T10:31:59Z",

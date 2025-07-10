@@ -12,6 +12,7 @@
       "messageReference": "e21cd9c0-75af-4596-9e9a-57fa7581fe59",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
+      "messageFailureReasonCode": "MFR_SUPE_0007",
       "channels": [
         {
           "type": "sms",
@@ -20,6 +21,7 @@
           "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: The provider could not deliver the message. This can happen when the recipient’s phone is off, has no signal, or their text message inbox is full. You can try to send the message again. You’ll still be charged for text messages to phones that are not accepting messages.",
+          "channelFailureReasonCode": "CFR_SUPE_0007",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
             "enriched": "2023-10-09T10:31:59Z",

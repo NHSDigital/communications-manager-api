@@ -18,7 +18,7 @@ set -e
 # ==============================================================================
 
 # SEE: https://hub.docker.com/r/sonarsource/sonar-scanner-cli/tags, use the `linux/amd64` os/arch
-image_version=5.0.1@sha256:494ecc3b5b1ee1625bd377b3905c4284e4f0cc155cff397805a244dee1c7d575
+image_version=11.3@sha256:7462f132388135e32b948f8f18ff0db9ae28a87c6777f1df5b2207e04a6d7c5c
 
 # ==============================================================================
 
