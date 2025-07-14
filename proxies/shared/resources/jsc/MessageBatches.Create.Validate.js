@@ -35,9 +35,6 @@ const validate = () => {
         // $.data.attributes.routingPlanId
         validateUuid(errors, data.attributes.routingPlanId, "/data/attributes/routingPlanId")
 
-        // $.data.attributes.messageBatchReference
-        validateUuid(errors, data.attributes.messageBatchReference, "/data/attributes/messageBatchReference")
-
         // $.data.attributes.messages
         const validArray = validateArray(errors, data.attributes.messages, "/data/attributes/messages", 1)
         if (validArray) {
@@ -64,13 +61,10 @@ const validate = () => {
 
               // $.data.attributes.messages.x.messageReference
               pointer = "/data/attributes/messages/" + index + "/messageReference"
-              const validMessageReferenceUuid = validateUuid(errors, message.messageReference, pointer)
-              if (validMessageReferenceUuid) {
-                if (seenMessages[message.messageReference]) {
-                  errors.push(duplicateError(pointer));
-                } else {
-                  seenMessages[message.messageReference] = 1;
-                }
+              if (seenMessages[message.messageReference]) {
+                errors.push(duplicateError(pointer));
+              } else {
+                seenMessages[message.messageReference] = 1;
               }
 
               // $.data.attributes.messages.x.recipient
