@@ -123,6 +123,52 @@ class Generators():
         }
 
     @staticmethod
+    def generate_invalid_send_message_body(channel, environment, personalisation="Hello"):
+        if environment == "internal-dev":
+            nhs_number = "9627193232"
+            if channel == "nhsapp":
+                nhs_number = "9842434109"
+        elif environment == "internal-qa":
+            nhs_number = "9730617953"
+        else:
+            raise ValueError(f"Invalid environment value provided: {environment}")
+        if channel == "nhsapp":
+            routing_plan_id = constants.NHS_APP_ROUTING_PLAN
+        elif channel == "email":
+            routing_plan_id = constants.EMAIL_ROUTING_PLAN
+        elif channel == "sms":
+            routing_plan_id = constants.SMS_ROUTING_PLAN
+        elif channel == "letter":
+            routing_plan_id = constants.LETTER_ROUTING_PLAN
+        else:
+            raise ValueError(f"Invalid channel value provided: {channel}")
+        return {
+            "data": {
+                "type": "Message",
+                "attributes": {
+                    "routingPlanId": routing_plan_id,
+                    "messageReference": str(uuid.uuid1()),
+                    "recipient": {
+                        "nhsNumber": nhs_number,
+                        "contactDetails": {
+                            "sms": "aaa",
+                            "email": "aaa",
+                            "address": {
+                                "lines": []
+                            }
+                        }
+                    },
+                    "originator": {
+                        "odsCode": "X26"
+                    },
+                    "personalisation": {
+                        "exampleParameter": personalisation
+                    }
+                }
+            }
+        }
+
+    @staticmethod
     def generate_invalid_value_error(pointer):
         return Generators.generate_error(constants.ERROR_INVALID_VALUE, source={
             "pointer": pointer

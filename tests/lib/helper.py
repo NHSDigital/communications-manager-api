@@ -45,10 +45,6 @@ class Helper():
                 message_status = get_message_response.json().get("data").get("attributes").get("messageStatus")
             time.sleep(10)
 
-            if message_status == "failed":
-                raise ValueError(f"Request ended up in an unexpected state. \
-                                 Message status: {message_status}, Message ID: {message_id}")
-
         if message_status != end_state:
             raise TimeoutError(f"Request took too long to be processed. \
                                Message status: {message_status}, Message ID: {message_id}")
