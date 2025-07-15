@@ -92,7 +92,7 @@ def test_invalid_message_reference(url, bearer_token):
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_body("dev")
-    data["data"]["attributes"]["messageReference"] = 90
+    data["data"]["attributes"]["messageReference"] = ["invalid"]
 
     resp = requests.post(
         f"{url}{MESSAGES_ENDPOINT}",

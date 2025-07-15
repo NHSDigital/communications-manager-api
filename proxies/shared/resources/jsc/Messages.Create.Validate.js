@@ -36,6 +36,9 @@ const validate = () => {
                 // $.data.attributes.routingPlanId
                 validateUuid(errors, data.attributes.routingPlanId, "/data/attributes/routingPlanId")
 
+                // $.data.attributes.messageBatchReference
+                validateString(errors, data.attributes.messageReference, "/data/attributes/messageReference")
+
                 // $.data.attributes.recipient
                 const validRecipientObject = validateObject(errors, data.attributes.recipient, "/data/attributes/recipient")
                 if (validRecipientObject) {

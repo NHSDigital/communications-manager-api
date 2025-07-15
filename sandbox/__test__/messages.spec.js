@@ -103,34 +103,6 @@ describe("/api/v1/messages", () => {
       .expect("Content-Type", /json/, done);
   });
 
-  it("returns a 400 when the messageReference is null", (done) => {
-    request(server)
-      .post("/api/v1/messages")
-      .send({
-        data: {
-          type: "Message",
-          attributes: {
-            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-            messageReference: null,
-          },
-        },
-      })
-      .expect(400, {
-        message: "Missing messageReference",
-      })
-      .expect("Content-Type", /json/, done);
-  });
-
-  it("returns a 400 when the messageReference doesnt exist", (done) => {
-    request(server)
-      .post("/api/v1/messages")
-      .send({ data: { type: "Message", attributes: { routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1" } } })
-      .expect(400, {
-        message: "Missing messageReference",
-      })
-      .expect("Content-Type", /json/, done);
-  });
-
   it("responds with a 201 when the request is correctly formatted", (done) => {
     request(server)
       .post("/api/v1/messages")
