@@ -207,7 +207,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
             "type": "Message",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageReference": "invalid",
+                "messageReference": ["invalid"],
                 "recipient": {
                     "nhsNumber": "9990548609"
                 },
