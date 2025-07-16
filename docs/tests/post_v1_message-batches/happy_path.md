@@ -3,6 +3,24 @@
 ## 201 - Success
 
 
+### Scenario: An API consumer creating a message that has a terminal status of FAILED
+
+**Given** the API consumer provides valid contact details for the recipient in their new message
+<br/>
+**When** the request is submitted
+<br/>
+**Then** the response is a 201 success
+<br/>
+
+**Asserts**
+- Response returns a 201 status code
+- Response body matches expected result
+- Response contains correctly formatted link to new message URI
+- Message in NHS Notify reaches terminal status of FAILED
+- Message has expected failure reason and code
+- Channel has expected failure reason and code
+
+
 ### Scenario: An API consumer creating a batch of messages with an undefined NHS number receives a 201 response
 
 **Given** the API consumer does not provide an NHS number for a recipient in their new message batch and the allowAnonymousPatient flag is set to true
