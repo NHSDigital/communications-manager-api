@@ -21,30 +21,23 @@ const validate = () => {
     var seenMessages = {};
     var data = all.data;
 
-    // $.data
     const validDataObject = validateObject(errors, data, "/data")
     if (validDataObject) {
-      // $.data.type
       validateConstantString(errors, data.type, "/data/type", "MessageBatch")
 
-      // $.data.attributes
       const validAttributesObject = validateObject(errors, data.attributes, "/data/attributes")
       if (validAttributesObject) {
 
-        // $.data.attributes.routingPlanId
         validateUuid(errors, data.attributes.routingPlanId, "/data/attributes/routingPlanId")
 
-        // $.data.attributes.messageBatchReference
         validateString(errors, data.attributes.messageBatchReference, "/data/attributes/messageBatchReference")
 
-        // $.data.attributes.messages
         const validArray = validateArray(errors, data.attributes.messages, "/data/attributes/messages", 1)
         if (validArray) {
           if (data.attributes.messages.length > 45000) {
             errors.push(tooManyItemsError("/data/attributes/messages"));
             return null;
           }
-          // $.data.attributes.messages.x
           data.attributes.messages.forEach((message, index) => {
             var pointer = "/data/attributes/messages/" + index;
             // Limit the amount of errors returned to 100 entries
@@ -61,7 +54,6 @@ const validate = () => {
               errors.push(invalidError(pointer));
             } else {
 
-              // $.data.attributes.messages.x.messageReference
               var pointer = "/data/attributes/messages/" + index + "/messageReference";
               const validMessageReference = validateString(errors, message.messageReference, pointer)
               if (validMessageReference) {
@@ -72,24 +64,19 @@ const validate = () => {
                 }
               }
 
-              // $.data.attributes.messages.x.recipient
               const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient")
               if (validRecipientObject) {
 
-                // $.data.attributes.messages.x.recipient.nhsNumber
                 validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber")
               }
 
               if (!isUndefined(message.originator)) {
-                // $.data.attributes.messages.x.originator
                 const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator")
                 if (validOriginatorObject) {
-                  // $.data.attributes.messages.x.originator.odsCode
                   validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode")
                 }
               }
 
-              // $.data.attributes.messages.x.personalisation
               pointer = "/data/attributes/messages/" + index + "/personalisation";
               if (!isUndefined(message.personalisation)) {
                 validateObject(errors, message.personalisation, pointer)
