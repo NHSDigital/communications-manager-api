@@ -5,7 +5,6 @@ properties:
   messageReference:
     type: string
     description: This reference needs to be unique per message within this batch. If there are duplicate values then a 400 exception will be thrown highlighting the values that have been duplicated.
-    format: uuid
     example: 703b8008-545d-4a04-bb90-1f2946ce1575
   billingReference:
     $ref: ../../snippets/BillingReferenceSnippet.yaml

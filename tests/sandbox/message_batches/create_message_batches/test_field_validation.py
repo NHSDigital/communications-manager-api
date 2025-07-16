@@ -275,7 +275,7 @@ def test_invalid_message_batch_reference(nhsd_apim_proxy_url, correlation_id):
             "type": "MessageBatch",
             "attributes": {
                 "routingPlanId": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-                "messageBatchReference": "invalid",
+                "messageBatchReference": ["invalid"],
                 "messages": [
                     {
                         "messageReference": "72f2fa29-1570-47b7-9a67-63dc4b28fc1b",
@@ -314,7 +314,7 @@ def test_invalid_message_reference(nhsd_apim_proxy_url, correlation_id):
                 "messageBatchReference": str(uuid.uuid1()),
                 "messages": [
                     {
-                        "messageReference": "invalid",
+                        "messageReference": ["invalid"],
                         "recipient": {
                             "nhsNumber": "9990548609"
                         },
