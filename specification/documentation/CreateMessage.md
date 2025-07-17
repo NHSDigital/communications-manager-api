@@ -6,8 +6,6 @@ Use this endpoint to send a single message to an NHS patient.
 
 You must provide a single reference value within the payload to this endpoint that is a message reference.
 
-This reference must be a [Universal Unique Identifier (UUID)](https://en.wikipedia.org/wiki/Universally_unique_identifier).
-
 The message reference (`messageReference`) needs to be unique across all single messages you have sent. This value is used to store your reference for this specific message and can be used if you lose (or do not recieve) our unique identifier in the response.
 
 ### Personalisation

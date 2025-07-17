@@ -23,7 +23,6 @@ NULL_PROPERTIES_PATHS = [
 INVALID_PROPERTIES_PATHS = [
     ("type", "/data/type"),
     ("routingPlanId", ROUTING_PLAN_ID_PATH),
-    ("messageReference", MESSAGE_REFERENCE_PATH),
     ("recipient", MESSAGE_RECIPIENT_PATH),
     ("personalisation", MESSAGE_PERSONALISATION_PATH),
 ]

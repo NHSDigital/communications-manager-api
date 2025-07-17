@@ -235,8 +235,6 @@ Below is a table showing the required attributes and their locations as seen in 
 
 ## Scenario: An API consumer submitting a request with an invalid message batch reference receives a 400 ‘Invalid Value’ response
 
-The message batch reference must be in a UUID format, for more information on UUID, look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
-
 **Given** the API consumer provides an message body with an invalid message batch reference
 <br/>
 **When** the request is submitted
@@ -250,8 +248,6 @@ The message batch reference must be in a UUID format, for more information on UU
 
 
 ## Scenario: An API consumer submitting a request with an invalid message reference receives a 400 ‘Invalid Value’ response
-
-The message reference must be in a UUID format, for more information on UUID, look [here](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
 **Given** the API consumer provides an message body with an invalid message reference
 <br/>

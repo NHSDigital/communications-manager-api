@@ -219,7 +219,7 @@ e2e-test-uat:
 	else \
 		printf "\nMissing API_ENVIRONMENT environment variable\n\n"; exit 1; \
 	fi
-	
+
 .test:
 	$(TEST_CMD) \
 	tests/api \

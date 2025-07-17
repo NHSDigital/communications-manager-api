@@ -24,10 +24,6 @@ NULL_PROPERTIES_PATHS = [
 ]
 INVALID_PROPERTIES_PATHS = [
     ("type", "/data/type"),
-    ("routingPlanId", ROUTING_PLAN_ID_PATH),
-    ("messageBatchReference", MESSAGE_BATCH_REFERENCE_PATH),
-    ("messages", MESSAGES_PATH),
-    ("messageReference", FIRST_MESSAGE_REFERENCE_PATH),
     ("recipient", FIRST_MESSAGE_RECIPIENT_PATH),
     ("personalisation", "/data/attributes/messages/0/personalisation"),
 ]

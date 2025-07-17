@@ -9,8 +9,6 @@ You must provide two reference values within the payload to this endpoint:
 -   A message batch reference
 -   A per message reference
 
-Both of these references must be a [Universal Unique Identifier (UUID)](https://en.wikipedia.org/wiki/Universally_unique_identifier).
-
 The message batch reference (`messageBatchReference`) is unique for you. This value is used to store your reference for this batch of messages.
 
 The per message reference (`messageReference`) needs to be unique within the message batch. This value is used to store your reference for this specific message within the batch.
