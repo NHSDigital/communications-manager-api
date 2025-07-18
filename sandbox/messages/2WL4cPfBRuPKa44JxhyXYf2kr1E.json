@@ -12,6 +12,7 @@
       "messageReference": "d85be1f0-1593-41b0-94d2-beae6ee7dcc0",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: patient record invalidated",
+      "messageFailureReasonCode": "MFR_PDSV_0008",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:45Z",

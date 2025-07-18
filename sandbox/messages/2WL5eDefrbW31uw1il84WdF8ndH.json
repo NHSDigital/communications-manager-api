@@ -19,6 +19,7 @@
           "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: NHS number not found",
+          "channelFailureReasonCode": "CFR_PDSV_0004",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
             "enriched": "2023-10-09T10:39:37Z",
