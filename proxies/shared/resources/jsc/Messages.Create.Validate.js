@@ -22,41 +22,31 @@ const validate = () => {
     if (all) {
         var data = all.data;
 
-        // $.data
         const validDataObject = validateObject(errors, data, "/data")
         if (validDataObject) {
 
-            // $.data.type
             validateConstantString(errors, data.type, "/data/type", "Message")
 
-            // $.data.attributes
             const validAttributesObject = validateObject(errors, data.attributes, "/data/attributes")
             if (validAttributesObject) {
 
-                // $.data.attributes.routingPlanId
                 validateUuid(errors, data.attributes.routingPlanId, "/data/attributes/routingPlanId")
 
-                // $.data.attributes.messageReference
-                validateUuid(errors, data.attributes.messageReference, "/data/attributes/messageReference")
+                validateString(errors, data.attributes.messageReference, "/data/attributes/messageReference")
 
-                // $.data.attributes.recipient
                 const validRecipientObject = validateObject(errors, data.attributes.recipient, "/data/attributes/recipient")
                 if (validRecipientObject) {
 
-                    // $.data.attributes.recipient.nhsNumber
                     validateNhsNumber(errors, data.attributes.recipient.nhsNumber, "/data/attributes/recipient/nhsNumber")
                 }
 
                 if (!isUndefined(data.attributes.originator)) {
-                  // $.data.attributes.originator
                   const validOriginatorObject = validateObject(errors, data.attributes.originator, "/data/attributes/originator")
                   if (validOriginatorObject) {
-                    // $.data.attributes.originator.odsCode
                     validateOdsCode(errors, data.attributes.originator.odsCode, "/data/attributes/originator/odsCode")
                   }
                 }
 
-                // $.data.attributes.personalisation
                 if (!isUndefined(data.attributes.personalisation)) {
                   validateObject(errors, data.attributes.personalisation, "/data/attributes/personalisation")
                 }

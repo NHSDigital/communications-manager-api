@@ -125,7 +125,7 @@ def test_invalid_message_batch_reference(url, bearer_token):
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_batch_body("dev")
-    data["data"]["attributes"]["messageBatchReference"] = "invalid"
+    data["data"]["attributes"]["messageBatchReference"] = ["invalid"]
 
     resp = requests.post(
         f"{url}{MESSAGE_BATCHES_ENDPOINT}",
@@ -151,7 +151,7 @@ def test_invalid_message_reference(url, bearer_token):
     """
     headers = Generators.generate_valid_headers(bearer_token.value)
     data = Generators.generate_valid_create_message_batch_body("dev")
-    data["data"]["attributes"]["messages"][0]["messageReference"] = "invalid"
+    data["data"]["attributes"]["messages"][0]["messageReference"] = ["invalid"]
 
     resp = requests.post(
         f"{url}{MESSAGE_BATCHES_ENDPOINT}",

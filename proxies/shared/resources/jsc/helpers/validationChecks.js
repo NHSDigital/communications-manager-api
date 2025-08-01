@@ -72,6 +72,7 @@ const validateConstantString = (errors, fieldValue, fieldPointer, requiredValue)
     }
     return true
 }
+
 const validateNhsNumber = (errors, fieldValue, fieldPointer) => {
     if (!isUndefined(fieldValue)) {
         if (fieldValue === null) {
@@ -99,6 +100,26 @@ const validateArray = (errors, fieldValue, fieldPointer, minElements) => {
     } else if (fieldValue.length < minElements) {
         errors.push(tooFewItemsError(fieldPointer));
         return false
+    }
+    return true
+}
+
+const validateString = (errors, fieldValue, fieldPointer) => {
+    if (isUndefined(fieldValue)) {
+        errors.push(missingError(fieldPointer));
+        return false
+    }
+    if (fieldValue === null) {
+        errors.push(nullError(fieldPointer));
+        return false
+    }
+    if (typeof fieldValue !== "string") {
+        errors.push(invalidError(fieldPointer));
+        return false;
+    }
+    if (fieldValue.trim().length === 0) {
+        errors.push(invalidError(fieldPointer));
+        return false;
     }
     return true
 }

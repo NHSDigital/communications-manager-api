@@ -1,4 +1,3 @@
 type: string
-format: uuid
 description: Original reference supplied for the message.
 example: 1642109b-69eb-447f-8f97-ab70a74f5db4
