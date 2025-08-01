@@ -12,6 +12,7 @@
       "messageReference": "68cc8e05-c404-405a-a41d-92cdb8afd9e3",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: Patient is informally dead",
+      "messageFailureReasonCode": "MFR_PDSV_0111",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:59Z",

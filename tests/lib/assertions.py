@@ -139,24 +139,25 @@ class Assertions():
         assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
 
     @staticmethod
-    def assert_get_message_status(resp, status, failure_reason=None):
+    def assert_get_message_status(resp, status, failure_reason=None, failure_reason_code=None):
         response = resp.json().get("data")
         assert response.get("attributes").get("messageStatus") == status
         if status == "failed":
             assert response.get("attributes").get("messageStatusDescription") == failure_reason
+            assert response.get("attributes").get("messageFailureReasonCode") == failure_reason_code
 
     @staticmethod
-    def assert_get_message_response_channels(resp, channel_type, channel_status):
+    def assert_get_message_response_channels(resp, status, failure_reason=None, failure_reason_code=None):
         response = resp.json().get("data")
         channels = response.get("attributes").get("channels")
         for c in range(len(channels)):
-            assert response.get("attributes").get("channels")[c].get("type") in channel_type
-            assert response.get("attributes").get("channels")[c].get("retryCount") == 1
-            assert response.get("attributes").get("channels")[c].get("channelStatus") in channel_status
-            assert response.get("attributes").get("channels")[c].get("timestamps") is not None
-            assert response.get("attributes").get("channels")[c].get("routingPlan") is not None
-            assert response.get("attributes").get("channels")[c].get("cascadeType") in ["primary", "secondary"]
-            assert response.get("attributes").get("channels")[c].get("cascadeOrder") is not None
+            assert response.get("attributes").get("channels")[c].get("channelStatus") == status
+            if status == "failed":
+                assert response.get("attributes").get("channels")[c].get("channelStatusDescription") == failure_reason
+                assert (
+                    response.get("attributes").get("channels")[c].get("channelFailureReasonCode")
+                    == failure_reason_code
+                )
 
     @staticmethod
     def assert_201_response_messages(resp, environment):

@@ -1,6 +1,6 @@
 import requests
 import pytest
-from lib import Assertions, Generators
+from lib import Assertions, Helper, Generators
 from lib.fixtures import *  # NOSONAR
 from lib.constants.constants import VALID_ACCEPT_HEADERS, DEFAULT_CONTENT_TYPE, \
     VALID_CONTENT_TYPE_HEADERS, VALID_NHS_NUMBER, VALID_SMS_NUMBERS
@@ -125,3 +125,52 @@ def test_201_message_batch_valid_contact_details(
         json=data,
     )
     Assertions.assert_201_response(resp, data)
+
+
+@pytest.mark.test
+@pytest.mark.devtest
+def test_201_message_batch_terminal_failed_status(
+    url,
+    bearer_token
+):
+    """
+    .. include:: ../partials/happy_path/test_201_message_batch_terminal_failed_status.rst
+    """
+    headers = Generators.generate_valid_headers(bearer_token.value)
+    data = Generators.generate_valid_create_message_batch_body("dev")
+    data["data"]["attributes"]["messages"][0]["recipient"].pop("nhsNumber", None)
+    data["data"]["attributes"]["messages"][0]["recipient"][
+        "contactDetails"
+    ] = {
+        "name": {
+            "firstName": "name",
+            "lastName": "last"
+        }
+    }
+
+    resp = requests.post(
+        f"{url}{MESSAGE_BATCHES_ENDPOINT}",
+        headers=headers,
+        json=data,
+    )
+    Assertions.assert_201_response(resp, data)
+
+    message_id = resp.json().get("data").get("attributes").get("messages")[0].get("id")
+
+    Helper.poll_get_message(url=url, headers=headers, message_id=message_id, end_state="failed")
+
+    resp = Helper.get_message(url, headers, message_id)
+
+    Assertions.assert_get_message_status(
+        resp,
+        "failed",
+        "Failed reason: No valid request item plans were generated",
+        "MFR_CFGV_0005"
+    )
+
+    Assertions.assert_get_message_response_channels(
+        resp,
+        "failed",
+        "Failed reason: Not registered with NHS App",
+        "CFR_SUPE_0001"
+    )

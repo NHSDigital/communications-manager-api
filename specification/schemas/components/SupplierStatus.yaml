@@ -30,7 +30,11 @@ properties:
       channelStatusDescription:
         type: string
         description: If there is extra information associated with the status of this channel, it is provided here.
-        example: " "
+        example: "Failed reason: Contact detail is missing"
+      channelFailureReasonCode:
+        type: string
+        description: If there is a failed reason code associated with this channel, it is provided here.
+        example: "CFR_PDSV_0002"
       supplierStatus:
         $ref: ../enums/SupplierStatusEnum.yaml
       timestamp:
