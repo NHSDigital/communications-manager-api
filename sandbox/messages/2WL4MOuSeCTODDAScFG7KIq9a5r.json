@@ -12,6 +12,7 @@
       "messageReference": "b9603694-5542-4043-b905-1e570b26d4c2",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: We had an unexpected error while sending the letter to our printing provider.",
+      "messageFailureReasonCode": "MFR_SUPE_0007",
       "channels": [
         {
           "type": "letter",
@@ -20,6 +21,7 @@
           "cascadeOrder": 1,
           "channelStatus": "failed",
           "channelStatusDescription": "Failed reason: We had an unexpected error while sending the letter to our printing provider.",
+          "channelFailureReasonCode": "CFR_SUPE_0007",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
             "enriched": "2023-10-09T10:31:59Z",

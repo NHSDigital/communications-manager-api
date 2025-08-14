@@ -132,9 +132,9 @@ Smoke testing is permitted only using the NHS Notify production test patients. W
 
 ## Onboarding
 
-You need to get your software approved by us before it can go live with this API. You will also need to undertake the NHS Notify onboarding process which is still being defined. Further details will follow.
+You need to get your software approved by us before it can go live with this API.
 
-To understand how our online digital onboarding process works, see [digital onboarding](https://digital.nhs.uk/developer/guides-and-documentation/digital-onboarding).
+You will also need to follow our steps to [onboard with NHS Notify](https://notify.nhs.uk/get-started/onboard-with-nhs-notify).
 
 ## Enable users to write and send messages from your software
 
