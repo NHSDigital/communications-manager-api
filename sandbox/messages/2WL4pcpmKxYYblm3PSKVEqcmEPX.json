@@ -12,6 +12,7 @@
       "messageReference": "2c98d875-3843-4919-9c79-2034e957e251",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: Name response is invalid: Contact detail is malformed",
+      "messageFailureReasonCode": "MFR_PDSV_0001",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:59Z",

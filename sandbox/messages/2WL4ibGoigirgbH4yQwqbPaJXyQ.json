@@ -12,6 +12,7 @@
       "messageReference": "2f2e071c-9fba-4dde-bf8d-8dd0c8060300",
       "messageStatus": "failed",
       "messageStatusDescription": "Failed reason: Patient is formally dead",
+      "messageFailureReasonCode": "MFR_PDSV_0112",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
         "enriched": "2023-10-09T10:31:59Z",

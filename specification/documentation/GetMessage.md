@@ -22,6 +22,7 @@ Key values that are returned for each of these channels are:
 * `type` - the channel type
 * `channelStatus` - the status of that channel
 * `channelStatusDescription` - the channel status description
+* `channelFailureReasonCode` - the channel failed reason code
 * `supplierStatus` - the status provided by the supplier for this channel
 * `retryCount` - the number of times we have attempted delivery
 * `timestamps` - timestamps of key events
