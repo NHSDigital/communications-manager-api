@@ -2,6 +2,7 @@ import request from "supertest";
 import { assert } from "chai";
 import * as uuid from "uuid";
 import { setup } from "./helpers.js";
+import { duplicateRequestCorrelationId } from "../handlers/config.js";
 
 describe("/api/v1/messages", () => {
   let env;
@@ -167,6 +168,30 @@ describe("/api/v1/messages", () => {
       .set("X-Correlation-Id", correlationId)
       .expect(201)
       .expect("X-Correlation-Id", correlationId, done);
+  });
+
+  it("responds with a 422 when provided with the correct correlation ID", (done) => {
+    request(server)
+      .post("/api/v1/messages")
+      .send({
+        data: {
+          type: "Message",
+          attributes: {
+            routingPlanId: "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+            messageReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
+            recipient: {
+              nhsNumber: "1",
+            },
+            originator: {
+              odsCode: "X123",
+            },
+            personalisation: {},
+          },
+        },
+      })
+      .set("X-Correlation-Id", duplicateRequestCorrelationId)
+      .expect(422)
+      .expect("Content-Type", /json/, done);
   });
 
   it("responds with a 201 for a valid global NHS app routing plan", (done) => {

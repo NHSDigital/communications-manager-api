@@ -52,6 +52,8 @@ const noDefaultOdsClientAuth = "noDefaultOds";
 const noOdsChangeClientAuth = "noOdsChange";
 const notAllowedContactDetailOverride = "notAllowedContactDetailOverride"
 
+const duplicateRequestCorrelationId = "cb8c06ea-505b-4c4b-a4c4-317178ecb5b5"
+
 export {
     invalidRoutingPlanId,
     trigger500SendingGroupId,
@@ -66,5 +68,6 @@ export {
     globalFreeTextSmsSendingGroupId,
     noDefaultOdsClientAuth,
     noOdsChangeClientAuth,
-    notAllowedContactDetailOverride
+    notAllowedContactDetailOverride,
+    duplicateRequestCorrelationId
 }

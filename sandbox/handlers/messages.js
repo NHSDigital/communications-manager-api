@@ -6,6 +6,7 @@ import { getOdsCodeError } from "./error_scenarios/ods_code.js";
 import { mandatorySingleMessageFieldValidation } from "./validation/mandatory_single_message_fields.js";
 import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js";
 import { getGlobalFreeTextError } from "./error_scenarios/global_free_text.js";
+import { getCorrelationIdError } from "./error_scenarios/correlation_id.js";
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
@@ -69,6 +70,15 @@ export async function messages(req, res, next) {
     sendError(res, errorCode, errorMessage, errors);
     next();
     return;
+  }
+
+  const correlationIdError = getCorrelationIdError(req.headers["x-correlation-id"]);
+  if (correlationIdError !== null) {
+    const [errorCode, errorMessage] = correlationIdError;
+    sendError(res, errorCode, errorMessage);
+    next();
+    return;
+
   }
 
   writeLog(res, "warn", {
