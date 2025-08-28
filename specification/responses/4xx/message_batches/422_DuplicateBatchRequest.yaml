@@ -1,5 +1,5 @@
 description: |+
-  Request already received and it will be ignored. Note that NHS Notify retains details of your original request for up to 16 months. Duplicate submissions received after this period will still be accepted.
+  Request already received and it will be ignored. Note that NHS Notify retains details of your original request for up to 9 months. Duplicate submissions received after this period will still be accepted.
 
   ### Sandbox
 
