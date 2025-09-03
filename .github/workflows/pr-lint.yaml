@@ -5,15 +5,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check ticket name conforms to requirements
-        run: echo ${{ github.event.pull_request.head.ref }} | grep -i -E -q "(ccm-[0-9]+)|(dependabot\/)"
+        env:
+          BRANCH_REF: ${{ github.event.pull_request.head.ref }}
+        run: echo "$BRANCH_REF" | grep -i -E -q "(ccm-[0-9]+)|(dependabot\/)"
         continue-on-error: true
 
       - name: Grab ticket name
         if: contains(github.event.pull_request.head.ref, 'ccm-') || contains(github.event.pull_request.head.ref, 'CCM-')
-        run: echo ::set-env name=TICKET_NAME::$(echo ${{ github.event.pull_request.head.ref }} | grep -i -o '\(ccm-[0-9]\+\)' | tr '[:lower:]' '[:upper:]')
-        continue-on-error: true
         env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+          BRANCH_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          TICKET=$(echo "$BRANCH_REF" | grep -i -o '\(ccm-[0-9]\+\)' | tr '[:lower:]' '[:upper:]')
+          echo "TICKET_NAME=$TICKET" >> $GITHUB_ENV
+        continue-on-error: true
 
       - name: Comment on PR with link to JIRA ticket
         if: contains(github.event.pull_request.head.ref, 'ccm-') || contains(github.event.pull_request.head.ref, 'CCM-')
