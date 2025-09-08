@@ -46,41 +46,34 @@ const validate = () => {
               return null;
             }
 
-            if (isUndefined(message)) {
-              errors.push(missingError(pointer));
-            } else if (message === null) {
-              errors.push(nullError(pointer));
-            } else if (typeof message !== "object" || Array.isArray(message)) {
-              errors.push(invalidError(pointer));
-            } else {
+            if (!validateObject(errors, message, pointer)) return;
 
-              pointer = "/data/attributes/messages/" + index + "/messageReference";
-              const validMessageReference = validateString(errors, message.messageReference, pointer)
-              if (validMessageReference) {
-                if (seenMessages[message.messageReference]) {
-                  errors.push(duplicateError(pointer));
-                } else {
-                  seenMessages[message.messageReference] = 1;
-                }
+            pointer = "/data/attributes/messages/" + index + "/messageReference";
+            const validMessageReference = validateString(errors, message.messageReference, pointer)
+            if (validMessageReference) {
+              if (seenMessages[message.messageReference]) {
+                errors.push(duplicateError(pointer));
+              } else {
+                seenMessages[message.messageReference] = 1;
               }
+            }
 
-              const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient")
-              if (validRecipientObject) {
+            const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient")
+            if (validRecipientObject) {
 
-                validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber")
+              validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber")
+            }
+
+            if (!isUndefined(message.originator)) {
+              const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator")
+              if (validOriginatorObject) {
+                validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode")
               }
+            }
 
-              if (!isUndefined(message.originator)) {
-                const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator")
-                if (validOriginatorObject) {
-                  validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode")
-                }
-              }
-
-              pointer = "/data/attributes/messages/" + index + "/personalisation";
-              if (!isUndefined(message.personalisation)) {
-                validateObject(errors, message.personalisation, pointer)
-              }
+            pointer = "/data/attributes/messages/" + index + "/personalisation";
+            if (!isUndefined(message.personalisation)) {
+              validateObject(errors, message.personalisation, pointer)
             }
           });
         }
