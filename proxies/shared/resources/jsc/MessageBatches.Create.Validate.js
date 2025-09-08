@@ -54,7 +54,7 @@ const validate = () => {
               errors.push(invalidError(pointer));
             } else {
 
-              var pointer = "/data/attributes/messages/" + index + "/messageReference";
+              pointer = "/data/attributes/messages/" + index + "/messageReference";
               const validMessageReference = validateString(errors, message.messageReference, pointer)
               if (validMessageReference) {
                 if (seenMessages[message.messageReference]) {

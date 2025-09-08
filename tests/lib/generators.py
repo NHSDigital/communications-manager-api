@@ -130,7 +130,7 @@ class Generators():
 
     @staticmethod
     def generate_invalid_value_error_custom_detail(pointer, detail):
-        return Generators.generate_error_with_custom_detail(constants.ERROR_INVALID_VALUE, detail, source={
+        return Generators.generate_error(constants.ERROR_INVALID_VALUE, detail, source={
             "pointer": pointer
         })
 
@@ -148,7 +148,7 @@ class Generators():
 
     @staticmethod
     def generate_missing_value_error_custom_detail(pointer, detail):
-        return Generators.generate_error_with_custom_detail(constants.ERROR_MISSING_VALUE, detail, source={
+        return Generators.generate_error(constants.ERROR_MISSING_VALUE, detail, source={
             "pointer": pointer
         })
 
@@ -172,7 +172,7 @@ class Generators():
 
     @staticmethod
     def generate_too_few_items_error_custom_detail(pointer, detail):
-        return Generators.generate_error_with_custom_detail(constants.ERROR_TOO_FEW_ITEMS, detail, source={
+        return Generators.generate_error(constants.ERROR_TOO_FEW_ITEMS, detail, source={
             "pointer": pointer
         })
 
@@ -276,13 +276,13 @@ class Generators():
     def generate_invalid_personalisation_error(detail, pointer):
         return Generators.generate_error(
                 constants.ERROR_INVALID_PERSONALISATION,
-                detail=detail,
+                detail,
                 source={
                     "pointer": pointer
                     })
 
     @staticmethod
-    def generate_error(error, source=None, meta=None, detail=None):
+    def generate_error(error, detail=None, source=None, meta=None):
         ret = {
             "code": error.code,
             "links": error.links,
@@ -297,5 +297,3 @@ class Generators():
         if meta:
             ret["meta"] = meta
         return ret
-
-    generate_error_with_custom_detail = generate_error
