@@ -16,7 +16,7 @@ def default_request_url(url):
 
 
 def send_multiple_requests(url, headers, count=10, delay=0):
-    for i in range(count):
+    for _ in range(count):
         resp = requests.get(url, headers=headers)
         if delay > 0:
             time.sleep(delay)

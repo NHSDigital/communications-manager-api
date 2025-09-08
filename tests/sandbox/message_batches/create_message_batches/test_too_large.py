@@ -21,7 +21,7 @@ def test_too_many_messages(nhsd_apim_proxy_url):
     messages = []
     data["data"]["attributes"]["messages"] = messages
 
-    for i in range(MESSAGE_LIMIT+1):
+    for _ in range(MESSAGE_LIMIT+1):
         messages.append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {

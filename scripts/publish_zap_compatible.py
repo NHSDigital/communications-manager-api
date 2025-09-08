@@ -1,25 +1,32 @@
 import json
 
 
+def clean_dict(obj, mappings):
+    new_obj = {}
+    for k, v in obj.items():
+        should_remove = False
+        for m in mappings:
+            if k == m[0] and (m[1] is None or v == m[1]):
+                should_remove = True
+        if not should_remove:
+            new_obj[k] = scan_and_remove(v, mappings)
+    return new_obj
+
+
+def clean_list(obj, mappings):
+    new_list = []
+    for i in obj:
+        new_list.append(scan_and_remove(i, mappings))
+    return new_list
+
+
 def scan_and_remove(obj, mappings):
     t = type(obj)
 
     if t is dict:
-        new_obj = {}
-        for k, v in obj.items():
-            found = False
-            for m in mappings:
-                if k == m[0] and (m[1] is None or v == m[1]):
-                    found = True
-            if not found:
-                new_obj[k] = scan_and_remove(v, mappings)
-        return new_obj
+        return clean_dict(obj, mappings)
     elif t is list:
-        new_list = []
-        for i in obj:
-            new_list.append(scan_and_remove(i, mappings))
-        return new_list
-
+        return clean_list(obj, mappings)
     return obj
 
 

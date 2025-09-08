@@ -298,19 +298,4 @@ class Generators():
             ret["meta"] = meta
         return ret
 
-    @staticmethod
-    def generate_error_with_custom_detail(error, detail=None, source=None, meta=None):
-        ret = {
-            "code": error.code,
-            "links": error.links,
-            "status": error.status,
-            "title": error.title,
-            "detail": detail or error.detail
-        }
-
-        if source:
-            ret["source"] = source
-
-        if meta:
-            ret["meta"] = meta
-        return ret
+    generate_error_with_custom_detail = generate_error
