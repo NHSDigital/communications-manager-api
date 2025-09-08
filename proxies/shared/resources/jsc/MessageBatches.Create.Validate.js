@@ -15,70 +15,77 @@ try {
   errors.push(invalidError("/"))
 }
 
+function validateBatchMessage(errors, message, index, seenMessages) {
+  var pointer = "/data/attributes/messages/" + index;
+
+  // Limit the amount of errors returned to 100 entries
+  if (errors.length >= 100) {
+    errors = errors.slice(0, 100);
+    return null;
+  }
+
+  if (!validateObject(errors, message, pointer)) return;
+
+  pointer = "/data/attributes/messages/" + index + "/messageReference";
+  const validMessageReference = validateString(errors, message.messageReference, pointer);
+  if (validMessageReference) {
+    if (seenMessages[message.messageReference]) {
+      errors.push(duplicateError(pointer));
+    } else {
+      seenMessages[message.messageReference] = 1;
+    }
+  }
+
+  const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient");
+  if (validRecipientObject) {
+    validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber");
+  }
+
+  if (!isUndefined(message.originator)) {
+    const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator");
+    if (validOriginatorObject) {
+      validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode");
+    }
+  }
+
+  pointer = "/data/attributes/messages/" + index + "/personalisation";
+  if (!isUndefined(message.personalisation)) {
+    validateObject(errors, message.personalisation, pointer);
+  }
+}
+
+function validateBatchAttributes(errors, attributes, seenMessages) {
+  const validAttributesObject = validateObject(errors, attributes, "/data/attributes");
+  if (validAttributesObject) {
+    validateUuid(errors, attributes.routingPlanId, "/data/attributes/routingPlanId");
+    validateString(errors, attributes.messageBatchReference, "/data/attributes/messageBatchReference");
+
+    const validArray = validateArray(errors, attributes.messages, "/data/attributes/messages", 1);
+    if (validArray) {
+      if (attributes.messages.length > 45000) {
+        errors.push(tooManyItemsError("/data/attributes/messages"));
+        return null;
+      }
+      attributes.messages.forEach((message, index) => {
+        validateBatchMessage(errors, message, index, seenMessages);
+      });
+    }
+  }
+}
+
+function validateBatchData(errors, data, seenMessages) {
+  const validDataObject = validateObject(errors, data, "/data");
+  if (validDataObject) {
+    validateConstantString(errors, data.type, "/data/type", "MessageBatch");
+    validateBatchAttributes(errors, data.attributes, seenMessages);
+  }
+}
 
 const validate = () => {
   if (all) {
     var seenMessages = {};
     var data = all.data;
-
-    const validDataObject = validateObject(errors, data, "/data")
-    if (validDataObject) {
-      validateConstantString(errors, data.type, "/data/type", "MessageBatch")
-
-      const validAttributesObject = validateObject(errors, data.attributes, "/data/attributes")
-      if (validAttributesObject) {
-
-        validateUuid(errors, data.attributes.routingPlanId, "/data/attributes/routingPlanId")
-
-        validateString(errors, data.attributes.messageBatchReference, "/data/attributes/messageBatchReference")
-
-        const validArray = validateArray(errors, data.attributes.messages, "/data/attributes/messages", 1)
-        if (validArray) {
-          if (data.attributes.messages.length > 45000) {
-            errors.push(tooManyItemsError("/data/attributes/messages"));
-            return null;
-          }
-          data.attributes.messages.forEach((message, index) => {
-            var pointer = "/data/attributes/messages/" + index;
-            // Limit the amount of errors returned to 100 entries
-            if (errors.length >= 100) {
-              errors = errors.slice(0, 100);
-              return null;
-            }
-
-            if (!validateObject(errors, message, pointer)) return;
-
-            pointer = "/data/attributes/messages/" + index + "/messageReference";
-            const validMessageReference = validateString(errors, message.messageReference, pointer)
-            if (validMessageReference) {
-              if (seenMessages[message.messageReference]) {
-                errors.push(duplicateError(pointer));
-              } else {
-                seenMessages[message.messageReference] = 1;
-              }
-            }
-
-            const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient")
-            if (validRecipientObject) {
-
-              validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber")
-            }
-
-            if (!isUndefined(message.originator)) {
-              const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator")
-              if (validOriginatorObject) {
-                validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode")
-              }
-            }
-
-            pointer = "/data/attributes/messages/" + index + "/personalisation";
-            if (!isUndefined(message.personalisation)) {
-              validateObject(errors, message.personalisation, pointer)
-            }
-          });
-        }
-      }
-    }
+    validateBatchData(errors, data, seenMessages);
   }
 }
 
