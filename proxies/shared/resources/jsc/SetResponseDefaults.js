@@ -32,13 +32,8 @@ headerNames.forEach(function (header)  {
 });
 
 // format errors and response objects
-try {
-  const errorContent = context.getVariable("error.content")
-  const responseContent = context.getVariable("response.content")
+const errorContent = context.getVariable("error.content")
+const responseContent = context.getVariable("response.content")
 
-  if (errorContent) context.setVariable("error.content", JSON.stringify(JSON.parse(errorContent)))
-  if (responseContent) context.setVariable("response.content", JSON.stringify(JSON.parse(responseContent)))
-
-} catch (e) {
-  //
-}
+if (errorContent) context.setVariable("error.content", JSON.stringify(JSON.parse(errorContent)))
+if (responseContent) context.setVariable("response.content", JSON.stringify(JSON.parse(responseContent)))
