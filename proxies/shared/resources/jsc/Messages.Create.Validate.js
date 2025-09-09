@@ -10,10 +10,12 @@ var content = context.getVariable("request.content")
 var errors = []
 
 var all
+var parseFailed = false;
 try {
     all = JSON.parse(content)
 } catch (e) {
     errors.push(invalidError("/"))
+    parseFailed = true;
 }
 
 function validateRecipient(errors, recipient) {
@@ -57,6 +59,7 @@ function validateData(errors, data) {
 }
 
 const validate = () => {
+    if (parseFailed) return;
     if (all) {
         var data = all.data;
         validateData(errors, data);

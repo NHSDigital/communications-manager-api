@@ -9,10 +9,12 @@ var content = context.getVariable("request.content")
 var errors = []
 
 var all
+var parseFailed = false;
 try {
-  all = JSON.parse(content)
+    all = JSON.parse(content)
 } catch (e) {
-  errors.push(invalidError("/"))
+    errors.push(invalidError("/"))
+    parseFailed = true;
 }
 
 function validateBatchMessage(errors, message, index, seenMessages) {
@@ -81,6 +83,7 @@ function validateBatchData(errors, data, seenMessages) {
 }
 
 const validate = () => {
+  if (parseFailed) return;
   if (all) {
     var seenMessages = {};
     var data = all.data;
