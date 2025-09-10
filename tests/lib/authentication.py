@@ -91,7 +91,7 @@ class AuthenticationCache():
             return new_token
 
         print("Could not generate token")
-        raise Exception("Could not generate token")
+        raise RuntimeError("Could not generate token")
 
     def generate_new_token(self, api_key, private_key, url, kid):
         pk_pem = None

@@ -13,7 +13,7 @@ class RateLimiting:
 
     def extract_ratelimiting_attribute(self):
         if self.product["attributes"] is None:
-            raise Exception(f'Product "{self.api_product_name}" does not have any attributes')
+            raise ValueError(f'Product "{self.api_product_name}" does not have any attributes')
 
         ratelimit = None
         for attribute in self.product["attributes"]:
@@ -22,7 +22,7 @@ class RateLimiting:
                 break
 
         if ratelimit is None:
-            raise Exception(f'Product "{self.api_product_name}" does not have a ratelimit attribute')
+            raise ValueError(f'Product "{self.api_product_name}" does not have a ratelimit attribute')
 
         return ratelimit
 
