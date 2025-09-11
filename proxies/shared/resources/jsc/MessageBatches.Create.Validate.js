@@ -22,6 +22,7 @@ function validateBatchMessage(errors, message, index, seenMessages) {
 
   // Limit the amount of errors returned to 100 entries
   if (errors.length >= 100) {
+    errors = errors.slice(0, 100);
     return null;
   }
 
