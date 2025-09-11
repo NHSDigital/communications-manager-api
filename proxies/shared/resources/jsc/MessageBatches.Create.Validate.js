@@ -5,16 +5,16 @@
  * It is called by the JavaScript.MessageBatches.Create.Validate policy.
  */
 
-var content = context.getVariable("request.content")
-var errors = []
+var content = context.getVariable("request.content");
+var errors = [];
 
-var all
+var all;
 var parseFailed = false;
 try {
-    all = JSON.parse(content)
+  all = JSON.parse(content);
 } catch (e) {
-    errors.push(invalidError("/"))
-    parseFailed = true;
+  errors.push(invalidError("/"));
+  parseFailed = true;
 }
 
 function validateBatchMessage(errors, message, index, seenMessages) {
@@ -22,14 +22,17 @@ function validateBatchMessage(errors, message, index, seenMessages) {
 
   // Limit the amount of errors returned to 100 entries
   if (errors.length >= 100) {
-    // errors = errors.slice(0, 100);
     return null;
   }
 
   if (!validateObject(errors, message, pointer)) return;
 
   pointer = "/data/attributes/messages/" + index + "/messageReference";
-  const validMessageReference = validateString(errors, message.messageReference, pointer);
+  const validMessageReference = validateString(
+    errors,
+    message.messageReference,
+    pointer
+  );
   if (validMessageReference) {
     if (seenMessages[message.messageReference]) {
       errors.push(duplicateError(pointer));
@@ -38,15 +41,31 @@ function validateBatchMessage(errors, message, index, seenMessages) {
     }
   }
 
-  const validRecipientObject = validateObject(errors, message.recipient, "/data/attributes/messages/" + index + "/recipient");
+  const validRecipientObject = validateObject(
+    errors,
+    message.recipient,
+    "/data/attributes/messages/" + index + "/recipient"
+  );
   if (validRecipientObject) {
-    validateNhsNumber(errors, message.recipient.nhsNumber, "/data/attributes/messages/" + index + "/recipient/nhsNumber");
+    validateNhsNumber(
+      errors,
+      message.recipient.nhsNumber,
+      "/data/attributes/messages/" + index + "/recipient/nhsNumber"
+    );
   }
 
   if (!isUndefined(message.originator)) {
-    const validOriginatorObject = validateObject(errors, message.originator, "/data/attributes/messages/" + index + "/originator");
+    const validOriginatorObject = validateObject(
+      errors,
+      message.originator,
+      "/data/attributes/messages/" + index + "/originator"
+    );
     if (validOriginatorObject) {
-      validateOdsCode(errors, message.originator.odsCode, "/data/attributes/messages/" + index + "/originator/odsCode");
+      validateOdsCode(
+        errors,
+        message.originator.odsCode,
+        "/data/attributes/messages/" + index + "/originator/odsCode"
+      );
     }
   }
 
@@ -57,12 +76,29 @@ function validateBatchMessage(errors, message, index, seenMessages) {
 }
 
 function validateBatchAttributes(errors, attributes, seenMessages) {
-  const validAttributesObject = validateObject(errors, attributes, "/data/attributes");
+  const validAttributesObject = validateObject(
+    errors,
+    attributes,
+    "/data/attributes"
+  );
   if (validAttributesObject) {
-    validateUuid(errors, attributes.routingPlanId, "/data/attributes/routingPlanId");
-    validateString(errors, attributes.messageBatchReference, "/data/attributes/messageBatchReference");
+    validateUuid(
+      errors,
+      attributes.routingPlanId,
+      "/data/attributes/routingPlanId"
+    );
+    validateString(
+      errors,
+      attributes.messageBatchReference,
+      "/data/attributes/messageBatchReference"
+    );
 
-    const validArray = validateArray(errors, attributes.messages, "/data/attributes/messages", 1);
+    const validArray = validateArray(
+      errors,
+      attributes.messages,
+      "/data/attributes/messages",
+      1
+    );
     if (validArray) {
       if (attributes.messages.length > 45000) {
         errors.push(tooManyItemsError("/data/attributes/messages"));
@@ -90,7 +126,8 @@ const validate = () => {
     var data = all.data;
     validateBatchData(errors, data, seenMessages);
   }
-}
+  errors = errors.slice(0, 100);
+};
 
 validate();
 
