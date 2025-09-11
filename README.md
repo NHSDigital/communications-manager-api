@@ -47,38 +47,38 @@ Windows users should install [Windows Subsystem for Linux (WSL)](https://learn.m
 
 ### Install
 
-```
-$ nvm install && nvm use
-$ pyenv install -s && pyenv shell && pyenv local
-$ make install
+```shell
+nvm install && nvm use
+pyenv install -s && pyenv shell && pyenv local
+make install
 ```
 
 #### Updating hooks
 
 You can install some pre-commit hooks to ensure you can't commit invalid spec changes by accident. These are also run in CI, but it's useful to run them locally too.
 
-```
-$ make install-hooks
+```shell
+make install-hooks
 ```
 
-There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found [here](nhsd-git-secrets/README.md).
+There is a specific pre-commit hook for secret scanning. Documentation on how to enable this can be found in [nhsd-git-secrets/README.md](nhsd-git-secrets/README.md).
 
 ### Environment Variables
 
 Various scripts and commands rely on environment variables being set. These are documented with the commands.
 
-There is an example `.env` file [here](https://github.com/NHSDigital/communications-manager-api/blob/release/example.env).
+There is an example `.env` file: [example.env](example.env).
 
 To create your own version:
 
-```
-$ cp example.env .env
+```shell
+cp example.env .env
 ```
 
 To use your local `.env` file make sure to source it:
 
-```
-$ source .env
+```shell
+source .env
 ```
 
 As a reminder: environment variable changes from the `.env` file take place only when the workspace is reloaded (e.g. through a new cli or `direnv allow`)
@@ -107,15 +107,16 @@ For details on test cases covered in the Integration and End-to-End test suites,
 ### Set Up
 
 #### Python
+
 Before running tests, you need to set up your local environment. Use the `poetry install` command to install dependencies and populate the `.venv` directory.
 
-```
+```shell
 poetry install
 ```
 
 Activate the virtual environment with the following command:
 
-```
+```shell
 source .venv/bin/activate
 ```
 
@@ -123,8 +124,8 @@ source .venv/bin/activate
 
 Our API integration tests support two authentication methods:
 
-* __Bearer Token Authentication (via API key and private key)__ - Used for common integration tests across all environments.
-* __Apigee Authentication (using pytest-nhsd-apim)__ - Used for some internal-dev and dev tests and all internal-dev-sandbox and sandbox tests.
+* **Bearer Token Authentication (via API key and private key)** - Used for common integration tests across all environments.
+* **Apigee Authentication (using pytest-nhsd-apim)** - Used for some internal-dev and dev tests and all internal-dev-sandbox and sandbox tests.
 
 #### Bearer Token Authentication
 
@@ -134,11 +135,12 @@ Our API integration tests support two authentication methods:
 
 To be able to generate bearer token authentication for tests you need to declare the `API_ENVIRONMENT` environment variable, e.g.:
 
-```
+```shell
 export API_ENVIRONMENT=internal-dev
 ```
 
 Available values for `API_ENVIRONMENT` include:
+
 * `internal-dev`
 * `internal-dev-test-1`
 * `internal-qa`
@@ -161,6 +163,7 @@ To define the API Key, the following envars are used:
 |prod|`PRODUCTION_API_KEY`|`PRODUCTION_PRIVATE_KEY`|
 
 To find the values for the `*_API_KEY` values:
+
 * Identify the correct envar for your `API_ENVIRONMENT` from the table above
 * Navigate to the Apigee App that will serve that environment e.g. `Comms-manager-local`
 * Copy the value of the `Key` found in the credentials section to your envar in `.env`
@@ -173,28 +176,32 @@ The value of the `*_PRIVATE_KEY` envars are a *file path* to the location of a p
 
 The keys are held securely within the Management Account - talk to existing team members for more information on sourcing and configuring these values
 
->__Ensure these variables are set and sourced in your .env file before running tests.__
+>**Ensure these variables are set and sourced in your .env file before running tests.**
 
 #### Generate An Apigee Access Token
 
-To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token. 
+To generate authentication using Apigee, you must have access to an Apigee account and use `get_token` via the command line and generate an Apigee access token.
 
-__Tokens expire once per day and require refreshing.__
+**Tokens expire once per day and require refreshing.**
 
 * Install [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
 * Run the following command and log in with your Apigee credentials when prompted:
-```
+
+```shell
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token)
 ```
+
 * If your token does not refresh, try clearing the cache:
-```
+
+```shell
 export APIGEE_ACCESS_TOKEN=$(SSO_LOGIN_URL=https://login.apigee.com get_token --clear-sso-cache)
 ```
 
 #### Set Proxy Name
+
 Set the `PROXY_NAME` environment variable to specify the environment for test execution. You can find the proxy name by logging into [Apigee](https://apigee.com/edge), navigating to 'API Proxies' and searching for 'communications-manager'.
 
-```
+```shell
 export PROXY_NAME=communications-manager-internal-dev
 ```
 
@@ -208,13 +215,14 @@ Available values for `PROXY_NAME` include:
 ### Set Up End to End Tests
 
 If you are running the end to end tests you will need to set the following environment variables:
+
 * `GUKN_API_KEY` - Gov UK Notify API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key in the 'NHS Digital Comms Mgr Dev' account
 * `UAT_GUKN_API_KEY` - Gov UK Notify API Key for the UAT environment, this value can be found in AWS parameter store under /comms/govuknotify/uat/api_key in the 'NHS Digital Comms Mgr Test' account
-* `UAT_NHS_APP_USERNAME` - NHS App username, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
-* `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
-* `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found [here](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments)
+* `UAT_NHS_APP_USERNAME` - NHS App username, this value can be found on the [NHS App Test User and Environments](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments) Confluence page
+* `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found on the [NHS App Test User and Environments](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments) Confluence page
+* `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found on the [NHS App Test User and Environments](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments) Confluence page
 
-__When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`__
+**When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`**
 
 ### Running Tests
 
@@ -222,10 +230,10 @@ __When exporting values on your local machine, be sure to escape special charact
 
 These tests live within the `/sandbox` folder and can be executed by:
 
-```
-$ cd sandbox
-$ npm i
-$ npm run test
+```shell
+cd sandbox
+npm i
+npm run test
 ```
 
 Basic test coverage is enforced through NYC - this is configured within `/sandbox/.nycrc.json`. If the tests fail or coverage does not meet the targets set out in the NYC configuration then the unit tests will fail.
@@ -246,11 +254,11 @@ Integration tests live within the `tests/api/` directory and use pytest markers 
 
 Tests can be ran via make command.
 
-```
+```shell
 make test
 ```
 
-A full list of available commands can be found in the Makefile. 
+A full list of available commands can be found in the Makefile.
 
 The table below lists common make commands used for testing:
 
@@ -264,16 +272,15 @@ The table below lists common make commands used for testing:
 |int|`make integration-test`|Runs integration tests against int|
 |prod|`make production-test`|Runs integration tests against prod|
 
-
 #### Running with poetry
 
 Tests can be ran via poetry command. To run a poetry test run the following command in the root folder
 
-```
+```shell
 PYTHONPATH=./tests poetry run pytest -v -m <TAG> <path to file> --api-name=communications-manager --proxy-name=$PROXY_NAME --apigee-access-token=$APIGEE_ACCESS_TOKEN -n 4 --only-rerun 'AssertionError: Unexpected 429' --reruns 5 --reruns-delay 5 --color=yes --junitxml=test-report.xml -k <test name>
 ```
 
-You can use poetry to specify a specific directory or test to run without having to run the full test suite. 
+You can use poetry to specify a specific directory or test to run without having to run the full test suite.
 
 The table below lists the arguments used in a poetry test and how they are used to specify a test:
 
@@ -295,13 +302,12 @@ The table below lists the arguments used in a poetry test and how they are used 
 |`--junitxml=test-report.xml`|Sets the output of the test run, this will be located in the python path root directory for the tests|
 |`-k`|specify a specific test to run|
 
-
 #### Zap security scanner
 
 You can run the Zap security scanner using the `zap-security-scan` make command:
 
-```
-$ make zap-security-scan
+```shell
+make zap-security-scan
 ```
 
 The project uses the [Zap automation framework](https://www.zaproxy.org/docs/automate/automation-framework/). The configuration for this is held in the `zap/` folder.
@@ -310,21 +316,21 @@ The project uses the [Zap automation framework](https://www.zaproxy.org/docs/aut
 
 You can test the postman collections by using the `postman-test` make command:
 
-```
-$ make postman-test
+```shell
+make postman-test
 ```
 
 The postman collections can be found in the `postman/` folder.
 
 ## Caveats
 
-#### Apigee Portal
+### Apigee Portal
 
 The Apigee portal will not automatically pull examples from schemas, you must specify them manually.
 
-### Detailed folder walk through
+## Detailed folder walk through
 
-#### `/.github`:
+### `/.github`
 
 This folder contains templates that can be customised for items such as opening pull requests or issues within the repo
 
@@ -334,20 +340,21 @@ This folder contains templates that can be customised for items such as opening 
 * `continuous-integration.yml`: This workflow handles the publishing of new releases
 * `build.yml`: This workflow builds and lints the project, its status drives the badge in the readme
 
-#### `/azure`:
+### `/azure`
 
 Contains templates defining Azure Devops pipelines. By default the following pipelines are available:
 
-*  `azure-build-pipeline.yml` - Assembles the contents of the repository into a single file ("artifact") on Azure Devops and pushes any containers to the APIM Docker registry. By default this pipeline is enabled for all branches apart from master.
+* `azure-build-pipeline.yml` - Assembles the contents of the repository into a single file ("artifact") on Azure Devops and pushes any containers to the APIM Docker registry. By default this pipeline is enabled for all branches apart from master.
 * `azure-pr-pipeline.yml` - Deploys ephemeral versions of the proxy/spec to Apigee (and docker containers on AWS) to internal environments. You can run automated and manual tests against these while you develop. By default this pipeline will deploy to internal-dev, but the template can be amended to add other environments as required.
 * `azure-release-pipeline.yml` - Deploys the long-lived version of the pipeline to internal and external environments - this is run on releases and on merges into release
 * `nightly-int-dev-pipeline.yml` - Runs the `dev-test` suite of tests against the internal-dev environment every night. Failures can be subscribed to on the azure devops CI.
 * `periodic-mtls-pipeline.yml` - Runs the `mtls-test` suite of tests against the internal-dev, integration and production load balancer targets to ensure that mutual TLS is being enforced. This pipeline runs every 10 minutes. Failures can be subscribed to on the azure devops CI.
 
 `/azure/templates`: Contains our re-usable actions, including:
+
 * `run-tests.yml`: The standard pipeline template for running our test suites.
 
-#### `/proxies`:
+### `/proxies`
 
 This folder contains files relating to the Communications Manager Apigee API proxy.
 
@@ -358,9 +365,9 @@ The `/shared` folder contains policies, partials and resources that are used wit
 * `[% ... %]` - block start and end
 * `[[ ... ]]` - variable start and end
 
-The proxy has been documented [here](docs/proxies.md).
+The proxy has been documented in [docs/proxies.md](docs/proxies.md).
 
-#### `/sandbox`:
+### `/sandbox`
 
 This folder contains the sandbox mock application. This is a basic express application that mirrors the responses from the existing backend service.
 
@@ -370,7 +377,7 @@ The sandbox mock contains the following npm run commands:
 * `start:hotreload` - runs the sandbox mock with hotreloading enables
 * `test` - run the sandbox mock unit test suite
 
-#### `/scripts`:
+### `/scripts`
 
 Contains useful scripts that are used throughout the project, these are:
 
@@ -384,15 +391,15 @@ Contains useful scripts that are used throughout the project, these are:
 * `set_version.py` - sets the version number within the OAS spec file during build time
 * `sync_postman_collections.sh` - synchronises the postman collections into the repo
 
-#### `/specification`:
+### `/specification`
 
 This folder contains the Open API specification for the Communications Manager API. The specification is broken down into multiple files to aid readability and reuse.
 
-#### `/tests`:
+### `/tests`
 
 The integration test suite, see the previous testing section for more information on running the test suites.
 
-#### `ecs-proxies-containers.yml ` and `ecs-proxies-deploy.yml`:
+### `ecs-proxies-containers.yml` and `ecs-proxies-deploy.yml`
 
 These files define the sandbox mock application container deployment to ECS:
 
@@ -401,7 +408,7 @@ These files define the sandbox mock application container deployment to ECS:
 
 For more information about deploying ECS containers see the [API Producer Zone confluence](https://nhsd-confluence.digital.nhs.uk/display/APM/Developing+ECS+proxies#DevelopingECSproxies-Buildingandpushingdockercontainers).
 
-#### `manifest_template.yml`:
+### `manifest_template.yml`
 
 This defines the Apigee API, including:
 
@@ -411,13 +418,13 @@ This defines the Apigee API, including:
 * environments supported by the API
 * rate limiting & quotas
 
-#### Package management:
+## Package management
 
 This template uses poetry for python dependency management, and uses these files: poetry.lock, poetry.toml, pyproject.toml.
 
 Node dependencies of this template project and some npm scripts are listed in: package.json, package-lock.json.
 
-#### Postman:
+## Postman
 
 Included in this repo are postman collections that allows the user to interact with the sandbox and integration APIs.
 
@@ -432,6 +439,5 @@ To use the collections:
 The collections must be kept in sync manually, this is done by setting the `INTEGRATION_COLLECTION_API_KEY` and `SANDBOX_COLLECTION_API_KEY` environment variables then running the `scripts/sync_postman_collections.sh` script.
 
 ## Releasing
-
 
 Our release process is [documented here](https://nhsd-confluence.digital.nhs.uk/pages/viewpage.action?pageId=789753975).
