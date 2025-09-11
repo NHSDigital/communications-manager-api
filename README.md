@@ -38,12 +38,30 @@ Windows users should install [Windows Subsystem for Linux (WSL)](https://learn.m
 
 ### Requirements
 
+#### Required Tools
+
 * make
 * [nvm](https://github.com/nvm-sh/nvm)
 * [pyenv](https://github.com/pyenv/pyenv)
-* [poetry](https://github.com/python-poetry/poetry)
 * Java 8+
 * [get\_token](https://docs.apigee.com/api-platform/system-administration/auth-tools#install)
+* [asdf](https://asdf-vm.com/)
+
+#### Using asdf to Install Tools
+
+One `asdf` has been installed, you will need to install the required `asdf` plugins:
+
+```shell
+asdf plugin add poetry https://github.com/asdf-community/asdf-poetry.git
+asdf plugin add jq https://github.com/lsanwick/asdf-jq.git
+asdf plugin add python https://github.com/danhper/asdf-python.git
+```
+
+Now you can use `asdf` to install the versions of the development tools specified in [.tool-versions](.tool-versions), and they will be runnable from within the communications-manager-api directory:
+
+```shell
+asdf install
+```
 
 ### Install
 
