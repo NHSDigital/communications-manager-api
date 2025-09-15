@@ -38,7 +38,6 @@ try {
 
   if (errorContent) context.setVariable("error.content", JSON.stringify(JSON.parse(errorContent)))
   if (responseContent) context.setVariable("response.content", JSON.stringify(JSON.parse(responseContent)))
-
-} catch (e) {
-  //
+} catch (e) { // NOSONAR
+  // Intentionally ignore parsing errors.
 }

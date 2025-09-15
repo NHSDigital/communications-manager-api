@@ -10,48 +10,59 @@ var content = context.getVariable("request.content")
 var errors = []
 
 var all
+var parseFailed = false;
 try {
     all = JSON.parse(content)
 } catch (e) {
     errors.push(invalidError("/"))
+    parseFailed = true;
 }
 
+function validateRecipient(errors, recipient) {
+    const validRecipientObject = validateObject(errors, recipient, "/data/attributes/recipient");
+    if (validRecipientObject) {
+        validateNhsNumber(errors, recipient.nhsNumber, "/data/attributes/recipient/nhsNumber");
+    }
+}
 
+function validateOriginator(errors, originator) {
+    const validOriginatorObject = validateObject(errors, originator, "/data/attributes/originator");
+    if (validOriginatorObject) {
+        validateOdsCode(errors, originator.odsCode, "/data/attributes/originator/odsCode");
+    }
+}
+
+function validateAttributes(errors, attributes) {
+    const validAttributesObject = validateObject(errors, attributes, "/data/attributes");
+    if (validAttributesObject) {
+        validateUuid(errors, attributes.routingPlanId, "/data/attributes/routingPlanId");
+        validateString(errors, attributes.messageReference, "/data/attributes/messageReference");
+
+        validateRecipient(errors, attributes.recipient);
+
+        if (!isUndefined(attributes.originator)) {
+            validateOriginator(errors, attributes.originator);
+        }
+
+        if (!isUndefined(attributes.personalisation)) {
+            validateObject(errors, attributes.personalisation, "/data/attributes/personalisation");
+        }
+    }
+}
+
+function validateData(errors, data) {
+    const validDataObject = validateObject(errors, data, "/data");
+    if (validDataObject) {
+        validateConstantString(errors, data.type, "/data/type", "Message");
+        validateAttributes(errors, data.attributes);
+    }
+}
 
 const validate = () => {
+    if (parseFailed) return;
     if (all) {
         var data = all.data;
-
-        const validDataObject = validateObject(errors, data, "/data")
-        if (validDataObject) {
-
-            validateConstantString(errors, data.type, "/data/type", "Message")
-
-            const validAttributesObject = validateObject(errors, data.attributes, "/data/attributes")
-            if (validAttributesObject) {
-
-                validateUuid(errors, data.attributes.routingPlanId, "/data/attributes/routingPlanId")
-
-                validateString(errors, data.attributes.messageReference, "/data/attributes/messageReference")
-
-                const validRecipientObject = validateObject(errors, data.attributes.recipient, "/data/attributes/recipient")
-                if (validRecipientObject) {
-
-                    validateNhsNumber(errors, data.attributes.recipient.nhsNumber, "/data/attributes/recipient/nhsNumber")
-                }
-
-                if (!isUndefined(data.attributes.originator)) {
-                  const validOriginatorObject = validateObject(errors, data.attributes.originator, "/data/attributes/originator")
-                  if (validOriginatorObject) {
-                    validateOdsCode(errors, data.attributes.originator.odsCode, "/data/attributes/originator/odsCode")
-                  }
-                }
-
-                if (!isUndefined(data.attributes.personalisation)) {
-                  validateObject(errors, data.attributes.personalisation, "/data/attributes/personalisation")
-                }
-            }
-        }
+        validateData(errors, data);
     }
 }
 

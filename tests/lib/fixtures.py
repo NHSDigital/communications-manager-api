@@ -6,6 +6,9 @@ from .app_keys import ensure_api_product_in_application, ensure_api_product_not_
 from .rate_limiting import RateLimiting
 from lib.constants.constants import PROD_URL
 
+EMAIL = 'ian.hodges1@nhs.net'
+APP_NAME = 'NHS Notify Test Client 1'
+
 
 @pytest.fixture(scope='session')
 def proxy_name():
@@ -52,14 +55,14 @@ def api_product_in_nhs_notify_test_client_1(developer_app_keys_api, api_product_
     if api_product_name.startswith('communications-manager-pr-'):
         yield ensure_api_product_in_application(
                 developer_app_keys_api,
-                'ian.hodges1@nhs.net',
-                'NHS Notify Test Client 1',
+                EMAIL,
+                APP_NAME,
                 os.environ['NON_PROD_API_KEY_TEST_1'],
                 api_product_name)
         ensure_api_product_not_in_application(
                 developer_app_keys_api,
-                'ian.hodges1@nhs.net',
-                'NHS Notify Test Client 1',
+                EMAIL,
+                APP_NAME,
                 os.environ['NON_PROD_API_KEY_TEST_1'],
                 api_product_name)
     else:
@@ -86,7 +89,7 @@ def rate_limiting(products_api, api_product_name, developer_apps_api):
     rate_limiting = RateLimiting(products_api, developer_apps_api, api_product_name, 5)
     yield rate_limiting
     rate_limiting.set_default_rate_limit()
-    rate_limiting.remove_app_ratelimit('ian.hodges1@nhs.net', 'NHS Notify Test Client 1')
+    rate_limiting.remove_app_ratelimit(EMAIL, APP_NAME)
 
 
 @pytest.fixture(scope='session')

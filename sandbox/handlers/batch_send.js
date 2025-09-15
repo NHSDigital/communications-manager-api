@@ -46,7 +46,7 @@ export async function batchSend(req, res, next) {
   }
 
   const odsCodes = messages.map(
-    (message) => message && message.originator?.odsCode
+    (message) => message?.originator?.odsCode
   );
   for (const odsCode of odsCodes) {
     const odsCodeError = getOdsCodeError(odsCode, req.headers.authorization);
