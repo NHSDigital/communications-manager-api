@@ -1,4 +1,4 @@
-FROM softwaresecurityproject/zap-stable:2.16.1
+FROM zaproxy/zap-stable:2.16.1
 
 COPY ./zap/policies/ /home/zap/.ZAP/policies/
 
