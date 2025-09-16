@@ -38,7 +38,7 @@
     "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-sonarjs": "^0.16.0",
     "eslint-plugin-unicorn": "^45.0.1",
-    "eslint-plugin-workspaces": "^0.7.0",
+    "eslint-plugin-workspaces": "^0.11.0",
     "eslint-plugin-yml": "^1.2.0",
     "hbs-cli": "^1.4.1",
     "license-checker": "^25.0.1",
