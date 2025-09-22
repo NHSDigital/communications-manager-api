@@ -29,7 +29,6 @@ function main() {
 }
 
 function create-report() {
-  file sandbox/coverage/lcov.info
 
   docker run --rm --platform linux/amd64 \
     --volume $PWD:/usr/src \
