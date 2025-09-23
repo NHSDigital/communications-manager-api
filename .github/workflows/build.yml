@@ -58,8 +58,9 @@ jobs:
           cd sandbox
           npm run test
           cd -
-          mkdir coverage
-          TMPDIR="./coverage" npx lcov-result-merger sandbox/coverage/lcov.info coverage/lcov.info --prepend-source-files
+          mkdir coverage coverage-temp
+          TMPDIR="./coverage-temp" npx lcov-result-merger sandbox/coverage/lcov.info coverage/lcov.info --prepend-source-files
+          rm -r coverage-temp
 
       - name: Check licenses
         run: make check-licenses
