@@ -1,187 +1,115 @@
+import json
+from tests.lib.assertion_utils import get_message
 from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
 from .error_handler import error_handler
-import json
-from urllib.parse import urlparse, parse_qs
+from lib.assertion_utils import common, message_batches, messages, headers, nhsapp_accounts
 
 
 class Assertions():
     @staticmethod
-    def assert_201_response(resp, data):
+    def assert_cors_response(resp, website):
+        error_handler.handle_retry(resp)
+        assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
+
+        headers.assert_access_control_allow_origin(resp, website)
+        headers.assert_access_control_allow_methods(resp, CORS_METHODS)
+        headers.assert_access_control_max_age(resp, CORS_MAX_AGE)
+        headers.assert_access_control_allow_headers(resp, CORS_ALLOW_HEADERS)
+        headers.assert_access_control_resource_policy(resp, CORS_POLICY)
+
+    @staticmethod
+    def assert_cors_headers(resp, website):
         error_handler.handle_retry(resp)
 
+        headers.assert_access_control_allow_origin(resp, website)
+        headers.assert_access_control_expose_headers(resp, CORS_EXPOSE_HEADERS)
+        headers.assert_access_control_resource_policy(resp, CORS_POLICY)
+
+    @staticmethod
+    def assert_no_aws_headers(resp):
+        headers.assert_no_aws_headers(resp)
+
+    @staticmethod
+    def assert_201_response(resp, data):
+        error_handler.handle_retry(resp)
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
 
-        message_batch_reference = data["data"]["attributes"]["messageBatchReference"]
-        routing_plan_id = data["data"]["attributes"]["routingPlanId"]
-        messages = data["data"]["attributes"]["messages"]
-
-        response = resp.json().get("data")
-        assert response.get("type") == "MessageBatch"
-        assert response.get("id") is not None
-        assert response.get("id") != ""
-        assert response.get("attributes").get("messageBatchReference") is not None
-        assert response.get("attributes").get("messageBatchReference") == message_batch_reference
-        assert response.get("attributes").get("routingPlan").get("id") is not None
-        assert response.get("attributes").get("routingPlan").get("id") == routing_plan_id
-        assert response.get("attributes").get("routingPlan").get("version") is not None
-        assert response.get("attributes").get("routingPlan").get("name") is not None
-        assert response.get("attributes").get("routingPlan").get("createdDate") is not None
-        assert response.get("attributes").get("messages") is not None
-        assert len(response.get("attributes").get("messages")) > 0
-        expected_messages = sorted(messages, key=lambda x: x["messageReference"])
-        actual_messages = sorted(response.get("attributes").get("messages"), key=lambda x: x["messageReference"])
-        for i in range(len(actual_messages)):
-            assert actual_messages[i].get("messageReference") is not None
-            assert actual_messages[i].get("messageReference") == expected_messages[i].get("messageReference")
-            assert actual_messages[i].get("id") is not None
-            assert actual_messages[i].get("id") != ""
-
-        # ensure we have our x-content-type-options set correctly
-        assert resp.headers.get("X-Content-Type-Options") == "nosniff"
-
-        # ensure we have our cache-control set correctly
-        assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
+        common.assert_message_type(resp, "MessageBatch")
+        common.assert_request_id(resp)
+        common.assert_routing_plan_id(resp, data["data"]["attributes"]["routingPlanId"])
+        common.assert_routing_plan_version(resp)
+        common.assert_routing_plan_name(resp)
+        common.assert_routing_plan_created_date(resp)
+        message_batches.assert_message_batch_reference(resp, data["data"]["attributes"]["messageBatchReference"])
+        message_batches.assert_messages(resp, data["data"]["attributes"]["messages"])
+        headers.assert_x_content_type_options(resp, "nosniff")
+        headers.assert_cache_control(resp, "no-cache, no-store, must-revalidate")
 
     @staticmethod
     def assert_200_response_nhsapp_accounts(resp, base_url, ods_code, page):
         error_handler.handle_retry(resp)
-
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
+        last_page_number = nhsapp_accounts.get_page_number_from_url(resp.json()["links"]["last"])
+        self_page_number = nhsapp_accounts.get_page_number_from_url(resp.json()["links"]["self"])
 
-        response = resp.json()
-        data = response.get("data")
-
-        assert data.get("id") is not None
-        assert data.get("id") == ods_code
-        assert data.get("type") == "NhsAppAccounts"
-        assert data.get("attributes").get("accounts") is not None
-        assert len(data.get("attributes").get("accounts")) > 0
-        for i in range(len(data.get("attributes").get("accounts"))):
-            assert data.get("attributes").get("accounts")[i].get("nhsNumber") is not None
-            assert data.get("attributes").get("accounts")[i].get("nhsNumber") != ""
-            assert data.get("attributes").get("accounts")[i].get("notificationsEnabled") is not None
-        assert response.get("links").get("self").startswith(base_url)
-        assert response.get("links").get("self") \
-            .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={page}")
-
-        last_link = response.get("links").get("last")
-        parsed_last_link = urlparse(last_link)
-        last_link_query_params = parse_qs(parsed_last_link.query)
-        last_page_number = int(last_link_query_params["page"][0])
-
-        assert last_link.startswith(base_url)
-        assert response.get("links").get("last") \
-            .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={last_page_number}")
-
-        self_link = response.get("links").get("self")
-        parsed_self_link = urlparse(self_link)
-        self_link_query_params = parse_qs(parsed_self_link.query)
-        self_page_number = int(self_link_query_params["page"][0])
-
-        if self_page_number == last_page_number:
-            assert response.get("links").get("next") is None
-        else:
-            next_page_number = self_page_number + 1
-            assert response.get("links").get("next").startswith(base_url)
-            assert response.get("links").get("next") \
-                .endswith(f"/channels/nhsapp/accounts?ods-organisation-code={ods_code}&page={next_page_number}")
+        common.assert_message_type(resp, "NhsAppAccounts")
+        nhsapp_accounts.assert_ods_code(resp, ods_code)
+        nhsapp_accounts.assert_accounts(resp)
+        nhsapp_accounts.assert_self_link(resp, base_url, ods_code, page)
+        nhsapp_accounts.assert_last_link(resp, base_url, ods_code, last_page_number)
+        nhsapp_accounts.assert_next_link(resp, base_url, ods_code, self_page_number, last_page_number)
 
     @staticmethod
     def assert_200_response_message(resp, base_url):
         error_handler.handle_retry(resp)
-
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
+        message_status = resp.json().get("data").get("attributes").get("messageStatus")
 
-        response = resp.json().get("data")
-        message_status = response.get("attributes").get("messageStatus")
-
-        assert response.get("type") == "Message"
-        assert response.get("id") is not None
-        assert response.get("id") != ""
-        assert response.get("attributes").get("messageStatus") is not None
-        assert response.get("attributes").get("messageStatus") != ""
-        assert response.get("attributes").get("messageReference") is not None
-        assert response.get("attributes").get("messageReference") != ""
-        assert response.get("attributes").get("routingPlan") is not None
-        assert response.get("attributes").get("routingPlan") != ""
-        assert response.get("attributes").get("routingPlan").get("id") is not None
-        assert response.get("attributes").get("routingPlan").get("id") != ""
-        assert response.get("attributes").get("routingPlan").get("version") is not None
-        assert response.get("attributes").get("routingPlan").get("version") != ""
-        assert response.get("attributes").get("routingPlan").get("name") is not None
-        assert response.get("attributes").get("routingPlan").get("createdDate") is not None
-        assert response.get("attributes").get("timestamps").get("created")
-        assert response.get("attributes").get("timestamps").get("created") is not None
-        assert response.get("attributes").get("timestamps").get("created") != ""
+        common.assert_request_id(resp)
+        common.assert_routing_plan_id(resp)
+        common.assert_routing_plan_version(resp)
+        common.assert_routing_plan_name(resp)
+        common.assert_routing_plan_created_date(resp)
+        get_message.assert_message_status(resp)
+        get_message.assert_message_reference(resp)
+        get_message.assert_created_timestamp(resp)
+        get_message.assert_self_link(resp, base_url)
         if message_status != "pending_enrichment":
-            assert response.get("attributes").get("metadata") is not None
-            assert response.get("attributes").get("metadata") != ""
-            assert response.get("attributes").get("metadata")[0].get("queriedAt") is not None
-            assert response.get("attributes").get("metadata")[0].get("queriedAt") != ""
-            assert response.get("attributes").get("metadata")[0].get("source") is not None
-            assert response.get("attributes").get("metadata")[0].get("source") != ""
-            assert response.get("attributes").get("metadata")[0].get("version") is not None
-            assert response.get("attributes").get("metadata")[0].get("version") != ""
-            assert response.get("attributes").get("metadata")[0].get("labels") != ""
+            get_message.assert_metadata(resp)
         if message_status == "sending" or message_status == "delivered":
-            assert response.get("attributes").get("channels") is not None
-            assert response.get("attributes").get("channels")[0].get("type") is not None
-            assert response.get("attributes").get("channels")[0].get("type") != ""
-            assert response.get("attributes").get("channels")[0].get("retryCount") is not None
-            assert response.get("attributes").get("channels")[0].get("retryCount") != ""
-            assert response.get("attributes").get("channels")[0].get("channelStatus") is not None
-            assert response.get("attributes").get("channels")[0].get("channelStatus") != ""
-            assert response.get("attributes").get("channels")[0].get("timestamps") is not None
-            assert response.get("attributes").get("channels")[0].get("timestamps") != ""
-            assert response.get("attributes").get("channels")[0].get("routingPlan") is not None
-            assert response.get("attributes").get("channels")[0].get("routingPlan") != ""
-        assert response.get("links").get("self").startswith(base_url)
-        assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
+            get_message.assert_channels(resp)
 
     @staticmethod
     def assert_get_message_status(resp, status, failure_reason=None, failure_reason_code=None):
-        response = resp.json().get("data")
-        assert response.get("attributes").get("messageStatus") == status
+        get_message.assert_message_status(resp, status)
         if status == "failed":
-            assert response.get("attributes").get("messageStatusDescription") == failure_reason
-            assert response.get("attributes").get("messageFailureReasonCode") == failure_reason_code
+            get_message.assert_message_status_description(resp, failure_reason)
+            get_message.assert_failure_reason_code(resp, failure_reason_code)
 
     @staticmethod
     def assert_get_message_response_channels(resp, status, failure_reason=None, failure_reason_code=None):
         response = resp.json().get("data")
         channels = response.get("attributes").get("channels")
-        for c in range(len(channels)):
-            assert response.get("attributes").get("channels")[c].get("channelStatus") == status
+        for channel in channels:
+            get_message.assert_channel_status(channel, status)
             if status == "failed":
-                assert response.get("attributes").get("channels")[c].get("channelStatusDescription") == failure_reason
-                assert (
-                    response.get("attributes").get("channels")[c].get("channelFailureReasonCode")
-                    == failure_reason_code
-                )
+                get_message.assert_channel_status_description(channel, failure_reason)
+                get_message.assert_channel_failure_reason_code(channel, failure_reason_code)
 
     @staticmethod
-    def assert_201_response_messages(resp, environment):
+    def assert_201_response_messages(resp, base_url):
         error_handler.handle_retry(resp)
-
         assert resp.status_code == 201, f"Response: {resp.status_code}: {resp.text}"
 
-        response = resp.json().get("data")
-        assert response.get("type") == "Message"
-        assert response.get("id") is not None
-        assert response.get("id") != ""
-        assert response.get("attributes").get("messageStatus") == "created"
-        assert response.get("attributes").get("timestamps").get("created")
-        assert response.get("attributes").get("timestamps").get("created") is not None
-        assert response.get("attributes").get("timestamps").get("created") != ""
-        assert response.get("attributes").get("routingPlan") is not None
-        assert response.get("attributes").get("routingPlan").get("id") != ""
-        assert response.get("attributes").get("routingPlan").get("version") != ""
-        assert response.get("attributes").get("routingPlan").get("name") is not None
-        assert response.get("attributes").get("routingPlan").get("createdDate") is not None
-
-        assert response.get("links").get("self").startswith(environment)
-        assert response.get("links").get("self").endswith(f"/v1/messages/{response.get('id')}")
-        assert resp.headers.get("Location") == f"/v1/messages/{response.get('id')}"
+        common.assert_message_type(resp, "Message")
+        common.assert_request_id(resp)
+        common.assert_routing_plan_id(resp)
+        common.assert_routing_plan_version(resp)
+        common.assert_routing_plan_name(resp)
+        common.assert_routing_plan_created_date(resp)
+        messages.assert_message_status(resp, "created")
+        messages.assert_created_timestamp(resp)
+        messages.assert_self_link(resp, base_url)
 
     @staticmethod
     def assert_200_valid_message_id_response_body(resp, message_id, url):
@@ -291,12 +219,8 @@ class Assertions():
                 assert error in response_errors
 
         Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)
-
-        # ensure we have our x-content-type-options set correctly
-        assert resp.headers.get("X-Content-Type-Options") == "nosniff"
-
-        # ensure we have our cache-control set correctly
-        assert resp.headers.get("Cache-Control") == "no-cache, no-store, must-revalidate"
+        headers.assert_x_content_type_options(resp, "nosniff")
+        headers.assert_cache_control(resp, "no-cache, no-store, must-revalidate")
 
     @staticmethod
     def assert_correlation_id(res_correlation_id, correlation_id):
@@ -305,28 +229,3 @@ class Assertions():
             assert res_correlation_id == correlation_id
         else:
             assert res_correlation_id.startswith('rrt')
-
-    @staticmethod
-    def assert_cors_response(resp, website):
-        error_handler.handle_retry(resp)
-
-        assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
-        assert resp.headers.get("Access-Control-Allow-Origin") == website
-        assert resp.headers.get("Access-Control-Allow-Methods") == CORS_METHODS
-        assert resp.headers.get("Access-Control-Max-Age") == CORS_MAX_AGE
-        assert resp.headers.get("Access-Control-Allow-Headers") == CORS_ALLOW_HEADERS
-        assert resp.headers.get("Cross-Origin-Resource-Policy") == CORS_POLICY
-
-    @staticmethod
-    def assert_cors_headers(resp, website):
-        error_handler.handle_retry(resp)
-
-        assert resp.headers.get("Access-Control-Allow-Origin") == website
-        assert resp.headers.get("Access-Control-Expose-Headers") == CORS_EXPOSE_HEADERS
-        assert resp.headers.get("Cross-Origin-Resource-Policy") == CORS_POLICY
-
-    @staticmethod
-    def assert_no_aws_headers(resp):
-        assert "X-Amzn-Trace-Id" not in resp.headers
-        assert "x-amzn-RequestId" not in resp.headers
-        assert "x-amz-apigw-id" not in resp.headers
