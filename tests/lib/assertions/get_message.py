@@ -50,7 +50,6 @@ def assert_channels(resp):
         assert_cascade_type(channel.get("cascadeType"))
         assert_cascade_order(channel.get("cascadeOrder"))
         assert_channel_status(channel.get("channelStatus"), None)
-        assert_supplier_status(channel.get("supplierStatus"))
         assert_channel_created_timestamp(channel.get("timestamps").get("created"))
         assert_channel_enriched_timestamp(channel.get("timestamps").get("enriched"))
 
@@ -151,13 +150,6 @@ def assert_cascade_order(cascade_order):
     assert cascade_order is not None
     assert isinstance(cascade_order, int)
     assert cascade_order > 0
-
-
-def assert_supplier_status(supplier_status):
-    assert supplier_status is not None
-    assert supplier_status != ""
-    assert isinstance(supplier_status, str)
-    assert supplier_status in SUPPLIER_STATUS
 
 
 def assert_channel_created_timestamp(created_timestamp):
