@@ -21,6 +21,7 @@
           "channelStatusDescription": "Message not read in specified time frame",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:51:59Z",
             "failed": "2023-10-09T10:31:59Z"
           },
           "routingPlan": {
@@ -37,6 +38,7 @@
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:51:59Z",
             "delivered": "2023-10-09T11:48:52Z"
           },
           "routingPlan": {
@@ -53,6 +55,7 @@
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
+            "enriched": "2023-10-09T10:51:59Z",
             "delivered": "2023-10-09T11:48:52Z"
           },
           "routingPlan": {
