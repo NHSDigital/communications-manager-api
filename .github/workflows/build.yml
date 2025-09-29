@@ -71,9 +71,7 @@ jobs:
       - name: Static analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          echo ${{ github.event.pull_request.head.ref }}
-          make static-analysis
+        run: make static-analysis
 
       - name: Compile spec
         run: make publish
