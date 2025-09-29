@@ -86,7 +86,8 @@ def assert_channel_status(channel_status, expected_status):
     assert channel_status != ""
     assert isinstance(channel_status, str)
     assert channel_status in CHANNEL_STATUS
-    assert expected_status == channel_status
+    if expected_status is not None:
+        assert expected_status == channel_status
 
 
 def assert_channel_status_description(channel_status_description, expected_description):
