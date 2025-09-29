@@ -8,16 +8,9 @@ export async function getMessage(req, res, next) {
     return;
   }
 
-  var foo1 = 'break sonar'
-  var foo2 = 'break sonar'
-  var foo3 = 'break sonar'
-  var foo4 = 'break sonar'
-  var foo5 = 'break sonar'
-  var foo6 = 'break sonar'
-  var foo7 = 'break sonar'
-  var foo8 = 'break sonar'
-  var foo9 = 'break sonar'
-  var foo10 = 'break sonar'
+  // Not really a password, just something to try and trigger a SonarQube failure.
+  // eslint-disable-next-line no-unused-vars
+  const password = "SuperSecret123";
 
   const { messageId } = req.params;
 
