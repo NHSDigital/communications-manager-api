@@ -1,8 +1,8 @@
 import json
-from tests.lib.assertion_utils import get_message
-from .constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
-from .error_handler import error_handler
-from lib.assertion_utils import common, message_batches, messages, headers, nhsapp_accounts
+from tests.lib.assertions import get_message
+from lib.constants.constants import CORS_METHODS, CORS_MAX_AGE, CORS_ALLOW_HEADERS, CORS_EXPOSE_HEADERS, CORS_POLICY
+from lib.error_handler import error_handler
+from lib.assertions import common, message_batches, messages, headers, nhsapp_accounts
 
 
 class Assertions():
