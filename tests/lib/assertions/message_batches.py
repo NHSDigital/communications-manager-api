@@ -17,7 +17,9 @@ def assert_messages(resp, expected_messages):
     expected_messages = sorted(expected_messages, key=lambda x: x["messageReference"])
     actual_messages = sorted(actual_messages, key=lambda x: x["messageReference"])
     for i in range(len(actual_messages)):
-        assert_message_reference(actual_messages[i].get("messageReference"), expected_messages[i].get("messageReference"))
+        assert_message_reference(
+            actual_messages[i].get("messageReference"), expected_messages[i].get("messageReference")
+        )
         assert_message_id(actual_messages[i].get("id"))
 
 
