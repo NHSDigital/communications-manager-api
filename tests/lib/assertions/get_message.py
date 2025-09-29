@@ -46,7 +46,7 @@ def assert_channels(resp):
     assert isinstance(channels, list)
     assert len(channels) > 0
     for channel in channels:
-        assert_channel_type(channel.get("channelType"))
+        assert_channel_type(channel.get("type"))
         assert_cascade_type(channel.get("cascadeType"))
         assert_cascade_order(channel.get("cascadeOrder"))
         assert_channel_status(channel.get("channelStatus"), None)
