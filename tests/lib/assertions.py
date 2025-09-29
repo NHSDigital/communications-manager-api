@@ -91,10 +91,14 @@ class Assertions():
         response = resp.json().get("data")
         channels = response.get("attributes").get("channels")
         for channel in channels:
-            get_message.assert_channel_status(channel, status)
+            get_message.assert_channel_status(channel.get("channelStatus"), status)
             if status == "failed":
-                get_message.assert_channel_status_description(channel, failure_reason)
-                get_message.assert_channel_failure_reason_code(channel, failure_reason_code)
+                get_message.assert_channel_status_description(
+                    channel.get("channelStatusDescription"), failure_reason
+                )
+                get_message.assert_channel_failure_reason_code(
+                    channel.get("channelFailureReasonCode"), failure_reason_code
+                )
 
     @staticmethod
     def assert_201_response_messages(resp, base_url):
