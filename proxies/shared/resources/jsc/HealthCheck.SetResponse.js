@@ -8,7 +8,7 @@ function json_tryparse(raw) {
     try {
         return JSON.parse(raw);
     }
-    catch (e) {
+    catch (e) { // NOSONAR
         return raw;
     }
 }

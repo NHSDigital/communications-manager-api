@@ -18,7 +18,12 @@ They are also run every 10 minutes, with failures sent to Teams.
 
 import requests
 import pytest
-from lib.constants.constants import *
+from lib.constants.constants import (
+    INT_API_GATEWAY_URL,
+    DEV_API_GATEWAY_URL,
+    PROD_API_GATEWAY_URL,
+    UAT_API_GATEWAY_URL,
+)
 
 
 @pytest.mark.mtlstest

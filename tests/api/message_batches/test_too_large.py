@@ -21,7 +21,7 @@ def test_too_many_messages(url, bearer_token):
     messages = []
     data["data"]["attributes"]["messages"] = messages
 
-    for i in range(MESSAGE_LIMIT+1):
+    for _ in range(MESSAGE_LIMIT+1):
         messages.append({
             "messageReference": str(uuid.uuid1()),
             "recipient": {
@@ -59,7 +59,7 @@ def test_payload_too_large(url, bearer_token):
     messages = []
     data["data"]["attributes"]["messages"] = messages
 
-    for i in range(MESSAGE_LIMIT):
+    for _ in range(MESSAGE_LIMIT):
         messages.append({
             "messageReference": str(uuid.uuid1()),
             "recipient": valid_recipient,

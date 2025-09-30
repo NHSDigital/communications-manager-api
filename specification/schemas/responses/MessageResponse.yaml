@@ -78,11 +78,6 @@ properties:
                       description: The date and time that this channel was created at.
                       format: date-time
                       example: '2023-11-17T14:27:51.413Z'
-                    enriched:
-                      type: string
-                      description: The date and time when we last enriched the contact details associated with this channel.
-                      format: date-time
-                      example: '2023-11-17T14:27:51.413Z'
                     delivered:
                       type: string
                       description: The date and time that this channel was successfully delivered.
