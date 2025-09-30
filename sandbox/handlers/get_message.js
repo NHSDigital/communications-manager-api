@@ -8,10 +8,6 @@ export async function getMessage(req, res, next) {
     return;
   }
 
-  // Not really a password, just something to try and trigger a SonarQube failure.
-  // eslint-disable-next-line no-unused-vars
-  const password = "SuperSecret123";
-
   const { messageId } = req.params;
 
   fs.readFile(`./messages/${messageId}.json`, 'utf8', (err, fileContent) => {
