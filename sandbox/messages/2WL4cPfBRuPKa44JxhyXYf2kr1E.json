@@ -15,7 +15,6 @@
       "messageFailureReasonCode": "MFR_PDSV_0008",
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
-        "enriched": "2023-10-09T10:31:45Z",
         "failed": "2023-10-09T10:31:59Z"
       },
       "metadata": [
