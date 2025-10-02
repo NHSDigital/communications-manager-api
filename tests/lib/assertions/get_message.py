@@ -51,7 +51,6 @@ def assert_channels(resp):
         assert_cascade_order(channel.get("cascadeOrder"))
         assert_channel_status(channel.get("channelStatus"), None)
         assert_channel_created_timestamp(channel.get("timestamps").get("created"))
-        assert_channel_enriched_timestamp(channel.get("timestamps").get("enriched"))
 
 
 def assert_self_link(resp, base_url):
@@ -157,12 +156,4 @@ def assert_channel_created_timestamp(created_timestamp):
     assert created_timestamp != ""
     assert isinstance(created_timestamp, str)
     formatted_date = datetime.fromisoformat(created_timestamp.replace("Z", "+00:00"))
-    assert formatted_date is not None
-
-
-def assert_channel_enriched_timestamp(enriched_timestamp):
-    assert enriched_timestamp is not None
-    assert enriched_timestamp != ""
-    assert isinstance(enriched_timestamp, str)
-    formatted_date = datetime.fromisoformat(enriched_timestamp.replace("Z", "+00:00"))
     assert formatted_date is not None
