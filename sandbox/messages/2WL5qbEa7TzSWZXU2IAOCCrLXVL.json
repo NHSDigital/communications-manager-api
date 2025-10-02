@@ -20,7 +20,6 @@
           "channelStatus": "delivered",
           "timestamps": {
             "created": "2023-10-09T10:31:59Z",
-            "enriched": "2023-10-09T10:31:59Z",
             "delivered": "2023-10-09T10:52:12Z"
           },
           "routingPlan": {
@@ -32,6 +31,7 @@
       ],
       "timestamps": {
         "created": "2023-10-09T10:31:37Z",
+        "enriched": "2023-10-09T10:31:59Z",
         "delivered": "2023-10-09T10:52:12Z"
       },
       "metadata": [
