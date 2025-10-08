@@ -63,6 +63,30 @@ VALID_NHS_NUMBER = "9990548609"
 INVALID_PERSONALISATION_VALUES = [5, "", "some-string", []]
 NULL_VALUES = [None]
 
+MESSAGE_TYPES = ["MessageBatch", "Message", "NhsAppAccounts"]
+MESSAGE_STATUS = ["created", "pending_enrichment", "enriched", "sending", "delivered", "failed"]
+CHANNEL_STATUS = ["created", "sending", "delivered", "failed", "skipped"]
+CHANNEL_TYPE = ["nhsapp", "email", "sms", "letter"]
+CASCADE_TYPE = ["primary", "secondary"]
+SUPPLIER_STATUS = [
+    "delivered",
+    "read",
+    "notification_attempted",
+    "unnotified",
+    "rejected",
+    "notified",
+    "received",
+    "permanent_failure",
+    "temporary_failure",
+    "technical_failure",
+    "accepted",
+    "cancelled",
+    "pending_virus_check",
+    "validation_failed",
+    "unknown"
+]
+ROUTING_PLAN_TYPE = ["original", "override"]
+
 
 class Error():
     def __init__(self, code, status, title, detail, links={}):
