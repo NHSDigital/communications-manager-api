@@ -12,8 +12,6 @@ def assert_valid_string(string):
 def assert_valid_list(lst):
     assert lst is not None
     assert isinstance(lst, list)
-    for item in lst:
-        assert_valid_dict(item)
 
 
 def assert_valid_int(integer):
@@ -24,11 +22,6 @@ def assert_valid_int(integer):
 def assert_valid_bool(value):
     assert value is not None
     assert isinstance(value, bool)
-
-
-def assert_valid_dict(dct):
-    assert dct is not None
-    assert isinstance(dct, dict)
 
 
 def assert_message_type(resp, type):
