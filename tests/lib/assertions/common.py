@@ -2,24 +2,34 @@ from datetime import datetime
 from lib.constants.constants import MESSAGE_TYPES
 import re
 
+
 def assert_valid_string(string):
     assert string is not None
     assert string != ""
     assert isinstance(string, str)
 
+
 def assert_valid_list(lst):
     assert lst is not None
     assert isinstance(lst, list)
     for item in lst:
-        assert_valid_string(item)
+        assert_valid_dict(item)
+
 
 def assert_valid_int(integer):
     assert integer is not None
     assert isinstance(integer, int)
 
+
 def assert_valid_bool(value):
     assert value is not None
     assert isinstance(value, bool)
+
+
+def assert_valid_dict(dct):
+    assert dct is not None
+    assert isinstance(dct, dict)
+
 
 def assert_message_type(resp, type):
     message_type = resp.json().get("data").get("type")
@@ -48,7 +58,9 @@ def assert_routing_plan_version(resp):
 
 def assert_routing_plan_name(resp):
     actual_routing_plan_name = resp.json().get("data").get("attributes").get("routingPlan").get("name")
-    assert_valid_string(actual_routing_plan_name)
+    # If routing plan name is not present on the routing plan, it will return an empty string
+    assert actual_routing_plan_name is not None
+    assert isinstance(actual_routing_plan_name, str)
 
 
 def assert_routing_plan_created_date(resp):

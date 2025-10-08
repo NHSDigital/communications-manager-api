@@ -43,6 +43,7 @@ def assert_channels(resp):
         assert_cascade_order(channel.get("cascadeOrder"))
         assert_channel_status(channel.get("channelStatus"), None)
         assert_channel_created_timestamp(channel.get("timestamps").get("created"))
+        assert_routing_plan(channel.get("routingPlan"))
 
 
 def assert_self_link(resp, base_url):
@@ -121,3 +122,9 @@ def assert_channel_created_timestamp(created_timestamp):
     assert_valid_string(created_timestamp)
     formatted_date = datetime.fromisoformat(created_timestamp.replace("Z", "+00:00"))
     assert isinstance(formatted_date, datetime)
+
+
+def assert_routing_plan(routing_plan):
+    assert_valid_string(routing_plan.get("id"))
+    assert_valid_string(routing_plan.get("type"))
+    assert_valid_string(routing_plan.get("version"))

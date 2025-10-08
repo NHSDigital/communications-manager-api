@@ -65,6 +65,7 @@ class Assertions():
         assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
         message_status = resp.json().get("data").get("attributes").get("messageStatus")
 
+        common.assert_message_type(resp, "Message")
         common.assert_request_id(resp)
         common.assert_routing_plan_id(resp)
         common.assert_routing_plan_version(resp)
@@ -114,6 +115,7 @@ class Assertions():
         messages.assert_message_status(resp, "created")
         messages.assert_created_timestamp(resp)
         messages.assert_self_link(resp, base_url)
+        headers.assert_location_header(resp)
 
     @staticmethod
     def assert_200_valid_message_id_response_body(resp, message_id, url):

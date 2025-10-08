@@ -51,3 +51,9 @@ def assert_no_aws_headers(resp):
     assert "X-Amzn-Trace-Id" not in resp.headers
     assert "x-amzn-RequestId" not in resp.headers
     assert "x-amz-apigw-id" not in resp.headers
+
+
+def assert_location_header(resp):
+    location_header = resp.headers.get("Location")
+    expected_value = f"/v1/messages/{resp.json().get('data').get('id')}"
+    assert location_header == expected_value

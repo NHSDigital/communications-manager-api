@@ -23,6 +23,7 @@ def assert_accounts(resp):
         assert_nhs_number(accounts[i].get("nhsNumber"))
         assert_notifications_enabled(accounts[i].get("notificationsEnabled"))
 
+
 def assert_self_link(resp, base_url, ods_code, page):
     self_link = resp.json().get("links").get("self")
     assert self_link.startswith(base_url)
