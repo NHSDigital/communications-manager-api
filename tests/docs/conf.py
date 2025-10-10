@@ -16,3 +16,7 @@ source_suffix = {
     '.txt': 'markdown',
     '.md': 'markdown',
 }
+
+autodoc_mock_imports = [
+    "tests"
+]
