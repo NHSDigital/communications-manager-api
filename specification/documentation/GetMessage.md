@@ -24,7 +24,7 @@ Key values that are returned for each of these channels are:
 * `channelStatusDescription` - the channel status description
 * `channelFailureReasonCode` - the channel failed reason code
 * `supplierStatus` - the status provided by the supplier for this channel
-* `retryCount` - the number of times we have attempted delivery
+* `retryCount` - the number of times we have attempted delivery, only returned if sending is retried one or more times.
 * `timestamps` - timestamps of key events
 * `routingPlan` - the routing plan that was used to generate the channel
 
