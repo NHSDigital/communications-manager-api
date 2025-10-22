@@ -17,7 +17,7 @@ The per message reference (`messageReference`) needs to be unique within the mes
 
 You may be required to send through specific personalisation fields based upon the routing plan (`routingPlanId`). These will have been setup during your [onboarding](#overview--onboarding) process.
 
-These are validated according to the routing plan when we store your message batch. If there are missing values then the entire batch will be rejected with a CM_INVALID_VALUE code. The detail and source fields will provide further information about the error.
+These are validated according to the routing plan when we store your message batch. If there are missing values then the entire batch will be rejected with a `CM_INVALID_VALUE` code. The detail and source fields will provide further information about the error.
 
 ### Sandbox
 
