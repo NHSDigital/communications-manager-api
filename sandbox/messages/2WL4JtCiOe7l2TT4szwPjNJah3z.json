@@ -16,7 +16,6 @@
       "channels": [
         {
           "type": "sms",
-          "retryCount": 0,
           "cascadeType": "primary",
           "cascadeOrder": 1,
           "channelStatus": "failed",
