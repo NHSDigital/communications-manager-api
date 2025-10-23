@@ -31,6 +31,7 @@
         },
         {
           "type": "email",
+          "retryCount": 1,
           "cascadeType": "primary",
           "cascadeOrder": 2,
           "channelStatus": "failed",
@@ -48,7 +49,6 @@
         },
         {
           "type": "sms",
-          "retryCount": 1,
           "cascadeType": "primary",
           "cascadeOrder": 3,
           "channelStatus": "delivered",
