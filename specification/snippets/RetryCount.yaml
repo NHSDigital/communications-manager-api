@@ -1,3 +1,3 @@
 type: integer
-description: Contains the number of times that we have attempted to send this message to this channel.
+description: Contains the number of times that we have attempted to send this message to this channel. Only returned if sending is retried one or more times.
 example: 1
