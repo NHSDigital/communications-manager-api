@@ -14,7 +14,6 @@
       "channels": [
         {
           "type": "nhsapp",
-          "retryCount": 0,
           "cascadeType": "primary",
           "cascadeOrder": 1,
           "channelStatus": "delivered",
@@ -30,7 +29,6 @@
         },
         {
           "type": "email",
-          "retryCount": 0,
           "cascadeType": "primary",
           "cascadeOrder": 2,
           "channelStatus": "created",
@@ -45,7 +43,6 @@
         },
         {
           "type": "sms",
-          "retryCount": 0,
           "cascadeType": "primary",
           "cascadeOrder": 3,
           "channelStatus": "created",
@@ -60,7 +57,6 @@
         },
         {
           "type": "letter",
-          "retryCount": 0,
           "cascadeType": "primary",
           "cascadeOrder": 4,
           "channelStatus": "created",

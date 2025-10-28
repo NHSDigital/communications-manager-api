@@ -16,7 +16,7 @@
       "channels": [
         {
           "type": "nhsapp",
-          "retryCount": 0,
+          "retryCount": 1,
           "cascadeType": "primary",
           "cascadeOrder": 1,
           "channelStatus": "failed",
