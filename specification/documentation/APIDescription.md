@@ -159,6 +159,9 @@ Use the following routing plan IDs and personalisation fields that match the mes
 | Email                                    | email_subject, email_body              | 00000000-0000-0000-0000-000000000002 |
 | Text message                             | sms_body                               | 00000000-0000-0000-0000-000000000003 |
 | NHS App message with a fallback to email | nhsapp_body, email_subject, email_body | 00000000-0000-0000-0000-000000000004 |
+| NHS App message with a 4hr fallback to email | nhsapp_body, email_subject, email_body | 00000000-0000-0000-0000-000000000005 |
+| NHS App message with a 24hr fallback to Text message | nhsapp_body, sms_body | 00000000-0000-0000-0000-000000000006 |
+| NHS App message with a 4hr fallback to Text message | nhsapp_body, sms_body | 00000000-0000-0000-0000-000000000007 |
 
 For email, use the personalisation field `email_subject` to allow your user to add the email subject line.
 
