@@ -153,25 +153,28 @@ You'll then need to include this personalisation field in your request.
 ###	Making your request to send messages from your software
 Use the following routing plan IDs and personalisation fields that match the message channel your user will send their message with.
 
-| Message channel                          | Personalisation field                  | Routing plan ID                      | 
-|------------------------------------------|----------------------------------------|--------------------------------------|
-| NHS App message                          | body                                   | 00000000-0000-0000-0000-000000000001 |
-| Email                                    | email_subject, email_body              | 00000000-0000-0000-0000-000000000002 |
-| Text message                             | sms_body                               | 00000000-0000-0000-0000-000000000003 |
-| NHS App message with a fallback to email | nhsapp_body, email_subject, email_body | 00000000-0000-0000-0000-000000000004 |
+| Message channel                                       | First message channel delivery failure time | Second message channel delivery failure time | Personalisation fields                 | Routing plan ID                      | 
+|-------------------------------------------------------|---------------------------------------------|----------------------------------------------|----------------------------------------|--------------------------------------|
+| NHS App message                                       | 24 hours                                    | -                                            | body                                   | 00000000-0000-0000-0000-000000000001 |
+| Email                                                 | 72 hours                                    | -                                            | email_subject, email_body              | 00000000-0000-0000-0000-000000000002 |
+| Text message                                          | 72 hours                                    | -                                            | sms_body                               | 00000000-0000-0000-0000-000000000003 |
+| NHS App message with a fallback to Email              | 24 hours                                    | 72 hours                                     | nhsapp_body, email_subject, email_body | 00000000-0000-0000-0000-000000000004 |
+| NHS App message with a fallback to Email              | 4 hours                                     | 72 hours                                     | nhsapp_body, email_subject, email_body | 00000000-0000-0000-0000-000000000005 |
+| NHS App message with a fallback to Text message       | 24 hours                                    | 72 hours                                     | nhsapp_body, sms_body                  | 00000000-0000-0000-0000-000000000006 |
+| NHS App message with a fallback to Text message       | 4 hours                                     | 72 hours                                     | nhsapp_body, sms_body                  | 00000000-0000-0000-0000-000000000007 |
 
 For email, use the personalisation field `email_subject` to allow your user to add the email subject line.
 
 Complete your request in the same way you [send a single message](#post-/v1/messages) or [send a batch of messages](#post-/v1/message-batches).
 
-When you make your request, we'll aim to deliver the message within:
-* 24 hours for NHS App messages 
-* 72 hours for emails
-* 72 hours for text messages
-
-Your message will have a 'failed' status if it's not delivered within this time. Find out more about [message, channel and supplier statuses](https://notify.nhs.uk/using-nhs-notify/message-channel-supplier-status).
-
 You can try out example requests in the sandbox environment in our [Postman collection](#overview--environments-and-testing).
+
+### Delivery failure or fallback time
+This is the maximum amount of time we'll attempt to deliver the message for each message channel in the routing plan before the message gets a 'failed' status.
+
+We'll then attempt to deliver the message using the second available message channel, if the routing plan includes one.
+
+Find out more about [message, channel and supplier statuses](https://notify.nhs.uk/using-nhs-notify/message-channel-supplier-status).
 
 ### Formatting messages written in your software
 You can use Markdown to add formatting that your users apply to NHS App messages and emails they write in your software.
