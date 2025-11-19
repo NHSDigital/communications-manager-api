@@ -6,7 +6,7 @@ install-python:
 
 #Installs dependencies using npm.
 install-node:
-	npm install --legacy-peer-deps
+	npm install --legacy-peer-deps --verbose
 	cd sandbox && npm install --legacy-peer-deps
 
 #Configures Git Hooks, which are scripts that run given a specified event.
