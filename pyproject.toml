@@ -1,45 +1,43 @@
 [project]
-python = "^3.8"
-
-[tool.poetry]
 name = "communications-manager"
 version = "0.0.1-alpha"
 description = "Public facing API for the Communications Manager service"
-authors = [
-    "NHS Digital"
-]
+authors = [{ name = "NHS Digital" }]
 readme = "README.md"
-license = "MIT"
+license = { text = "MIT" }
+requires-python = "^3.13.2"
 repository = "https://github.com/NHSDigital/communications-manager-api"
 homepage = "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
+dependencies = [
+  "pytest-nhsd-apim>=5.0.2",
+  "pytest-xdist>=3.6.1",
+  "pre-commit>=4.2.0",
+  "pytest-rerunfailures>=15.1",
+  "sphinx>=8.2.3",
+  "sphinx-markdown-builder>=0.6.8",
+  "notifications-python-client>=10.0.1",
+  "polling>=0.3.2",
+  "playwright>=1.52.0",
+  "install_playwright>=0.1.0"
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-pytest-nhsd-apim = "^5.0.2"
-pytest-xdist = "^3.5.0"
-pre-commit = "^3.5.0"
-pytest-rerunfailures = "^14.0"
-sphinx = "7.1.2"
-sphinx-markdown-builder = "^0.6.7"
-notifications-python-client = "^10.0.1"
-polling = "^0.3.2"
-playwright = "^1.48.0"
-install_playwright = "^0.1.0"
+[tool.poetry]
+package-mode = false
 
-[tool.poetry.dev-dependencies]
-flake8 = "^5.0.4"
-black = "^24.4"
-pip-licenses = "^4.3.4"
+[tool.poetry.group.dev.dependencies]
+flake8 = "^7.2.0"
+black = "^25.1.0"
+pip-licenses = "^5.0.0"
 jinja2 = "^3.1.6"
-pyyaml = "^6.0"
+pyyaml = "^6.0.3"
 docopt = "^0.6.2"
 jsonpath-rw = "^1.4.0"
 semver = "^3.0.4"
-gitpython = "^3.1.43"
+gitpython = "^3.1.44"
 pytest = "^8.3.5"
-coverage = "^7.4.4"
-pytest-asyncio = "^0.24.0"
+coverage = "^7.8.1"
+pytest-asyncio = "^0.26.0"
 
 [tool.poetry.scripts]
