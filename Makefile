@@ -203,16 +203,6 @@ mtls-test-prod:
 	tests/mtls \
 	-m "mtlstest and inttest or prodtest"
 
-e2e-test-internal-dev:
-	$(TEST_CMD) \
-	tests/end_to_end \
-	-m "e2e and devtest"
-
-e2e-test-uat:
-	$(TEST_CMD) \
-	tests/end_to_end \
-	-m "e2e and uattest"
-
 .environment:
 	@if [ -n "$(API_ENVIRONMENT)" ]; then \
 		printf "\n\nTests are running on $(API_ENVIRONMENT)\n\n\n"; \
