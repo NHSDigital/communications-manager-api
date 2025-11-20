@@ -1,8 +1,5 @@
 # Test Suite
 
-* [End to end test suite](end_to_end/index.md)
-  * [Gov Notify Tests](end_to_end/gov_notify/index.md)
-  * [NHS App Tests](end_to_end/nhsapp/index.md)
 * [POST /v1/message-batches](post_v1_message-batches/index.md)
   * [Validation Tests](post_v1_message-batches/validation.md)
   * [Invalid Routing Plans](post_v1_message-batches/invalid_routing_plans.md)

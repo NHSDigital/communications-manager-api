@@ -131,37 +131,6 @@ class Assertions():
         assert actual == expected
 
     @staticmethod
-    def assert_email_gov_uk(response, message_id):
-        for message in response:
-            if message_id in message.get("reference"):
-                assert message.get("status") == "delivered"
-                assert message.get("type") == "email"
-                assert message.get("body") is not None
-                assert message.get("subject") is not None
-                assert message.get("email_address") is not None
-                break
-
-    @staticmethod
-    def assert_sms_gov_uk(response, message_id):
-        for message in response:
-            if message_id in message.get("reference"):
-                assert message.get("status") == "delivered"
-                assert message.get("type") == "sms"
-                assert message.get("body") is not None
-                assert message.get("phone_number") is not None
-                break
-
-    @staticmethod
-    def assert_letter_gov_uk(response, message_id):
-        for message in response:
-            if message_id in message.get("reference"):
-                assert message.get("status") == "received"
-                assert message.get("type") == "letter"
-                assert message.get("subject") is not None
-                assert message.get("body") is not None
-                break
-
-    @staticmethod
     def assert_message_batches_idempotency(resp_one, resp_two):
         error_handler.handle_retry(resp_one)
         error_handler.handle_retry(resp_two)
