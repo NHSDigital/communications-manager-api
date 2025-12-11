@@ -116,7 +116,6 @@ The tests written in this repository target the NHS Notify API. The types of tes
 
 * Unit tests
 * Integration tests
-* End to End tests
 * Zap security scan tests
 * Postman collection tests
 
@@ -230,18 +229,6 @@ Available values for `PROXY_NAME` include:
 * `communications-manager-pr-{num}`
 * `communications-manager-pr-{num}-sandbox`
 
-### Set Up End to End Tests
-
-If you are running the end to end tests you will need to set the following environment variables:
-
-* `GUKN_API_KEY` - Gov UK Notify API Key for the internal dev environment, this value can be found in AWS parameter store under /comms/govuknotify/internal-dev/api_key in the 'NHS Digital Comms Mgr Dev' account
-* `UAT_GUKN_API_KEY` - Gov UK Notify API Key for the UAT environment, this value can be found in AWS parameter store under /comms/govuknotify/uat/api_key in the 'NHS Digital Comms Mgr Test' account
-* `UAT_NHS_APP_USERNAME` - NHS App username, this value can be found on the [NHS App Test User and Environments](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments) Confluence page
-* `UAT_NHS_APP_PASSWORD` - NHS App password, this value can be found on the [NHS App Test User and Environments](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments) Confluence page
-* `UAT_NHS_APP_OTP` - NHS App one time passcode, this value can be found on the [NHS App Test User and Environments](https://nhsd-confluence.digital.nhs.uk/display/RIS/NHS+Notify+%7C+NHS+App+Test+User+and+Environments) Confluence page
-
-**When exporting values on your local machine, be sure to escape special characters i.e: `\! \# \$`**
-
 ### Running Tests
 
 #### Unit Tests
@@ -284,9 +271,7 @@ The table below lists common make commands used for testing:
 |-----------|-------|-----------|
 |internal-dev-sandbox|`make internal-sandbox-test`|Runs sandbox unit tests, sandbox postman tests and sandbox integration tests against internal-dev-sandbox|
 |internal-dev|`make internal-dev-test`|Runs integration tests against internal-dev|
-|internal-dev|`make e2e-test-internal-dev`|Runs end to end tests against internal-dev|
 |internal-qa|`make internal-qa-test`|Runs integration tests against internal-qa|
-|internal-qa|`make e2e-test-uat`|Runs end to end tests against internal-qa|
 |int|`make integration-test`|Runs integration tests against int|
 |prod|`make production-test`|Runs integration tests against prod|
 
