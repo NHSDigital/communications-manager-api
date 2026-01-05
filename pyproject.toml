@@ -11,7 +11,7 @@ homepage = "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"
 keywords = ["healthcare", "uk", "nhs", "communications", "email", "sms", "letter"]
 
 dependencies = [
-  "pytest-nhsd-apim>=5.0.2",
+  "pytest-nhsd-apim>=5.0.14",
   "pytest-xdist>=3.6.1",
   "pre-commit>=4.2.0",
   "pytest-rerunfailures>=15.1",
