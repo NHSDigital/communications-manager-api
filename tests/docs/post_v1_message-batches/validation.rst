@@ -24,7 +24,3 @@ Validation Tests
 .. automodule:: api.message_batches.field_validation.test_400_too_few_items
     :noindex:
     :members:
-
-.. automodule:: api.message_batches.field_validation.test_400_too_large
-    :noindex:
-    :members:

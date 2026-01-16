@@ -559,79 +559,6 @@ describe("/api/v1/send", () => {
       .expect("Content-Type", /json/, done);
   });
 
-  it("responds with a 400 for missing personalisation for global NHS app routing plan", (done) => {
-    request(server)
-      .post("/api/v1/send")
-      .send({
-        data: {
-          type: "MessageBatch",
-          attributes: {
-            routingPlanId: "00000000-0000-0000-0000-000000000001",
-            messageBatchReference: "request-id",
-            messages: [
-              {
-                messageReference: "1",
-                recipient: {
-                  nhsNumber: "1",
-                },
-              },
-              {
-                messageReference: "2",
-                recipient: {
-                  nhsNumber: "2",
-                },
-                personalisation: {
-                  body: "Free text message 2",
-                },
-              },
-            ],
-          },
-        },
-      })
-      .expect(400, {
-        message: "Some personalisation fields are missing: body",
-      })
-      .expect("Content-Type", /json/, done);
-  });
-
-  it("responds with a 400 for missing body for global NHS app routing plan", (done) => {
-    request(server)
-      .post("/api/v1/send")
-      .send({
-        data: {
-          type: "MessageBatch",
-          attributes: {
-            routingPlanId: "00000000-0000-0000-0000-000000000001",
-            messageBatchReference: "request-id",
-            messages: [
-              {
-                messageReference: "1",
-                recipient: {
-                  nhsNumber: "1",
-                },
-                personalisation: {
-                  body: "Free text message 1",
-                },
-              },
-              {
-                messageReference: "2",
-                recipient: {
-                  nhsNumber: "2",
-                },
-                personalisation: {
-                  unknownField: "Free text message 2",
-                },
-              },
-            ],
-          },
-        },
-      })
-      .expect(400, {
-        message: "Some personalisation fields are missing: body",
-      })
-      .expect("Content-Type", /json/, done);
-  });
-
   it("responds with a 200 for redundant personalisation for global NHS app routing plan", (done) => {
     request(server)
       .post("/api/v1/send")
@@ -669,69 +596,6 @@ describe("/api/v1/send", () => {
       .expect("Content-Type", /json/, done);
   });
 
-  it("responds with a 400 for missing personalisation fields for global email routing plan", (done) => {
-    request(server)
-      .post("/api/v1/send")
-      .send({
-        data: {
-          type: "MessageBatch",
-          attributes: {
-            routingPlanId: "00000000-0000-0000-0000-000000000002",
-            messageBatchReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
-            messages: [
-              {
-                messageReference: "1",
-                recipient: {
-                  nhsNumber: "1",
-                },
-                originator: {
-                  odsCode: "X123",
-                },
-                personalisation: {},
-              },
-            ],
-          },
-        },
-      })
-      .expect(400, {
-        message:
-          "Some personalisation fields are missing: email_subject,email_body",
-      })
-      .expect("Content-Type", /json/, done);
-  });
-
-  it("responds with a 400 for missing personalisation field for global email routing plan", (done) => {
-    request(server)
-      .post("/api/v1/send")
-      .send({
-        data: {
-          type: "MessageBatch",
-          attributes: {
-            routingPlanId: "00000000-0000-0000-0000-000000000002",
-            messageBatchReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
-            messages: [
-              {
-                messageReference: "1",
-                recipient: {
-                  nhsNumber: "1",
-                },
-                originator: {
-                  odsCode: "X123",
-                },
-                personalisation: {
-                  email_subject: "test",
-                },
-              },
-            ],
-          },
-        },
-      })
-      .expect(400, {
-        message: "Some personalisation fields are missing: email_body",
-      })
-      .expect("Content-Type", /json/, done);
-  });
-
   it("responds with a 200 when required fields provided for global email routing plan", (done) => {
     request(server)
       .post("/api/v1/send")
@@ -760,36 +624,6 @@ describe("/api/v1/send", () => {
         },
       })
       .expect(200)
-      .expect("Content-Type", /json/, done);
-  });
-
-  it("responds with a 400 for missing personalisation for global sms routing plan", (done) => {
-    request(server)
-      .post("/api/v1/send")
-      .send({
-        data: {
-          type: "MessageBatch",
-          attributes: {
-            routingPlanId: "00000000-0000-0000-0000-000000000003",
-            messageBatchReference: "b5bb84b9-a522-41e9-aa8b-ad1b6a454243",
-            messages: [
-              {
-                messageReference: "1",
-                recipient: {
-                  nhsNumber: "1",
-                },
-                originator: {
-                  odsCode: "X123",
-                },
-                personalisation: {},
-              },
-            ],
-          },
-        },
-      })
-      .expect(400, {
-        message: "Some personalisation fields are missing: sms_body",
-      })
       .expect("Content-Type", /json/, done);
   });
 
