@@ -1,6 +1,5 @@
 import KSUID from "ksuid";
 import { sendError, writeLog } from "./utils.js";
-import { getGlobalFreeTextError } from "./error_scenarios/global_free_text.js";
 import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
 import { getOdsCodeError } from "./error_scenarios/ods_code.js";
 import { mandatoryBatchMessageFieldValidation } from "./validation/mandatory_batch_message_fields.js";
@@ -27,23 +26,6 @@ export async function batchSend(req, res, next) {
   }
 
   const { routingPlanId, messages } = body.data.attributes;
-
-  const messagePersonsalisations = messages.map(
-    (message) => message.personalisation
-  );
-  for (const personalisation of messagePersonsalisations) {
-    const globalFreeTextError = getGlobalFreeTextError(
-      personalisation,
-      routingPlanId
-    );
-
-    if (globalFreeTextError !== null) {
-      const [errorCode, errorMessage] = globalFreeTextError;
-      sendError(res, errorCode, errorMessage);
-      next();
-      return;
-    }
-  }
 
   const odsCodes = messages.map(
     (message) => message?.originator?.odsCode
