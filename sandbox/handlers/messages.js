@@ -5,7 +5,6 @@ import { getSendingGroupIdError } from "./error_scenarios/sending_group_id.js";
 import { getOdsCodeError } from "./error_scenarios/ods_code.js";
 import { mandatorySingleMessageFieldValidation } from "./validation/mandatory_single_message_fields.js";
 import { getAlternateContactDetailsError } from "./error_scenarios/override_contact_details.js";
-import { getGlobalFreeTextError } from "./error_scenarios/global_free_text.js";
 
 export async function messages(req, res, next) {
   if (req.headers.authorization === "banned") {
@@ -31,18 +30,6 @@ export async function messages(req, res, next) {
   const sendingGroupIdError = getSendingGroupIdError(routingPlanId);
   if (sendingGroupIdError !== null) {
     const [errorCode, errorMessage] = sendingGroupIdError;
-    sendError(res, errorCode, errorMessage);
-    next();
-    return;
-  }
-
-  const personalisation = req.body.data?.attributes?.personalisation;
-  const globalFreeTextError = getGlobalFreeTextError(
-    personalisation,
-    routingPlanId
-  );
-  if (globalFreeTextError !== null) {
-    const [errorCode, errorMessage] = globalFreeTextError;
     sendError(res, errorCode, errorMessage);
     next();
     return;
