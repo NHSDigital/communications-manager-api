@@ -16,10 +16,17 @@
         <Name>target.copy.pathsuffix</Name>
         <Value>false</Value>
     </AssignVariable>
-    <AssignVariable>
-        <Name>requestpath</Name>
-        <Value>/api/v1/send</Value>
-    </AssignVariable>
+    {% if ENVIRONMENT_TYPE == 'sandbox' %}
+       <AssignVariable>
+           <Name>requestpath</Name>
+           <Value>/api/v1/send</Value>
+       </AssignVariable>
+    {% else %}
+        <AssignVariable>
+            <Name>target.url</Name>
+            <Value>https://comms-apim.de-chel5.communications.national.nhs.uk/api/v1/send</Value>
+        </AssignVariable>
+    {% endif %}
     <Set>
         <Payload contentType="application/json" variablePrefix="%" variableSuffix="#">%data.payload#</Payload>
         <Headers>
