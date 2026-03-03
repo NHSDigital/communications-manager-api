@@ -1,0 +1,15 @@
+type: object
+additionalProperties: false
+properties:
+  version:
+    type: string
+    description: The Source Change Number
+    example: '2'
+  queriedAt:
+    type: date-time
+    description: The timestamp when the source was queried
+    example: '2023-11-17T14:27:51.413Z'
+  source:
+    type: string
+    description: This identifies the source of the metadata. This is a free text field and can be used to identify the system that provided the metadata.
+    example: 'pds'
