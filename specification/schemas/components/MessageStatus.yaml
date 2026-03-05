@@ -45,7 +45,7 @@ properties:
         $ref: ../types/RoutingPlan.yaml
       metadata:
         type: array
-        minItems: 0
+        minItems: 1
         items:
           $ref: ../types/Metadata.yaml
     required:

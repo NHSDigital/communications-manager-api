@@ -3,7 +3,7 @@ additionalProperties: false
 properties:
   version:
     type: string
-    description: The Source Change Number
+    description: The version identifier of the source data at the time it was queried
     example: '2'
   queriedAt:
     type: date-time
@@ -13,3 +13,6 @@ properties:
     type: string
     description: This identifies the source of the metadata. This is a free text field and can be used to identify the system that provided the metadata.
     example: 'pds'
+required:
+  - queriedAt
+  - source
