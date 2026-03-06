@@ -44,6 +44,8 @@ properties:
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
         $ref: ../../snippets/RetryCount.yaml
+      recipientContact:
+        $ref: ../../snippets/recipientContact.yaml
     required:
       - messageId
       - messageReference
