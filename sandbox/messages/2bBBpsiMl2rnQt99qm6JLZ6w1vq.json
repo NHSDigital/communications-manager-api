@@ -4,8 +4,8 @@
     "id": "2bBBpsiMl2rnQt99qm6JLZ6w1vq",
     "attributes": {
       "routingPlan": {
-        "id" : "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
-        "version" : "1",
+        "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
+        "version": "1",
         "name": "routing-plan-name",
         "createdDate": "2022-01-01T00:00:00.000Z"
       },
@@ -26,10 +26,14 @@
             "created": "2023-10-09T10:31:59Z",
             "failed": "2023-10-09T10:52:12Z"
           },
-          "routingPlan" : {
-            "id" : "9ba00d23-cd6f-4aca-8688-00abc85a7980",
-            "type" : "override",
-            "version" : "5"
+          "routingPlan": {
+            "id": "9ba00d23-cd6f-4aca-8688-00abc85a7980",
+            "type": "override",
+            "version": "5"
+          },
+          "recipientContact": {
+            "id": "a1b2c3d4",
+            "source": "pds"
           }
         }
       ],
@@ -42,7 +46,9 @@
         {
           "queriedAt": "2023-10-09T10:31:59Z",
           "version": "23",
-          "labels":["sms"],
+          "labels": [
+            "sms"
+          ],
           "source": "pds"
         }
       ]

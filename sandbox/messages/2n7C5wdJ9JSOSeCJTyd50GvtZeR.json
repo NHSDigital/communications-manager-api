@@ -43,6 +43,10 @@
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             "version": "1",
             "type": "original"
+          },
+          "recipientContact": {
+            "id": "m5n6o7p8",
+            "source": "pds"
           }
         },
         {
@@ -58,6 +62,10 @@
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             "version": "1",
             "type": "original"
+          },
+          "recipientContact": {
+            "id": "q9r0s1t2",
+            "source": "pds"
           }
         }
       ],
