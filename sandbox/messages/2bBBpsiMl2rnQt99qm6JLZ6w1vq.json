@@ -31,10 +31,13 @@
             "type": "override",
             "version": "5"
           },
-          "recipientContact": {
-            "id": "a1b2c3d4",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "a1b2c3d4",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

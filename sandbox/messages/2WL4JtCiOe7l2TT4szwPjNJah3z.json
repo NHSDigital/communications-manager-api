@@ -31,10 +31,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "u1v2w3x4",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "u1v2w3x4",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

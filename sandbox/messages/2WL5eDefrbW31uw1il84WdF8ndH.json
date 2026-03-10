@@ -43,10 +43,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "c9d0e1f2",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "c9d0e1f2",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         },
         {
           "type": "sms",
@@ -61,10 +64,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "g3h4i5j6",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "g3h4i5j6",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         },
         {
           "type": "letter",
@@ -79,10 +85,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "k7l8m9n0",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "k7l8m9n0",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

@@ -44,10 +44,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "m5n6o7p8",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "m5n6o7p8",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         },
         {
           "type": "letter",
@@ -63,10 +66,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "q9r0s1t2",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "q9r0s1t2",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

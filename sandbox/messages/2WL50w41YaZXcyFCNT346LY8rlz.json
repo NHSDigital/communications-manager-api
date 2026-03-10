@@ -31,9 +31,12 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

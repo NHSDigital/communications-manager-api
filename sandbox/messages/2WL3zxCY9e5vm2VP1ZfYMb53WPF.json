@@ -26,10 +26,13 @@
             "version": "1",
             "type": "original"
           },
-          "recipientContact": {
-            "id": "i9j0k1l2",
-            "source": "pds"
-          }
+          "metadata": [
+            {
+              "id": "i9j0k1l2",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

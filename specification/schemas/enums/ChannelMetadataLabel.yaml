@@ -1,0 +1,6 @@
+title: Enum_ChannelMetadataLabel
+description: The label associated with the metadata for this channel at the time this response was generated.
+type: string
+enum:
+  - recipient_contact
+example: recipient_contact
