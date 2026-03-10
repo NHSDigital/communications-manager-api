@@ -50,7 +50,7 @@ properties:
       retryCount:
         $ref: ../../snippets/RetryCount.yaml
       metadata:
-        $ref: ../../snippets/ChannelMetadata.yaml
+        $ref: ../types/ChannelMetadata.yaml
     required:
       - messageId
       - messageReference

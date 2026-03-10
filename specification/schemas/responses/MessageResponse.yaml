@@ -128,7 +128,7 @@ properties:
                       description: Identifies if this is the original routing plan that was requested, or if a conditional override has been used.
                       $ref: ../enums/RoutingPlanType.yaml
                 metadata:
-                  $ref: ../../snippets/ChannelMetadata.yaml
+                  $ref: ../types/ChannelMetadata.yaml
           timestamps:
             type: object
             additionalProperties: false

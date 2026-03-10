@@ -20,4 +20,4 @@ items:
       description: The source of the metadata.
       example: pds
     label:
-      $ref: ../schemas/enums/ChannelMetadataLabel.yaml
+      $ref: ../enums/ChannelMetadataLabel.yaml
