@@ -43,6 +43,11 @@ properties:
         example: '2023-11-17T14:27:51.413Z'
       routingPlan:
         $ref: ../types/RoutingPlan.yaml
+      metadata:
+        type: array
+        minItems: 1
+        items:
+          $ref: ../types/Metadata.yaml
     required:
       - messageId
       - messageReference
