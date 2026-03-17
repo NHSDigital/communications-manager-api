@@ -24,7 +24,14 @@
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             "version": "1",
             "type": "original"
-          }
+          },
+          "metadata": [
+            {
+              "id": "y5z6a7b8",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {

@@ -5,6 +5,10 @@ properties:
   data:
     type: object
     additionalProperties: false
+    required:
+      - type
+      - id
+      - attributes
     properties:
       type:
         $ref: ../enums/TypeNhsAppAccounts.yaml
@@ -14,12 +18,17 @@ properties:
       attributes:
         type: object
         additionalProperties: false
+        required:
+          - accounts
         properties:
           accounts:
             type: array
             items:
               type: object
               additionalProperties: false
+              required:
+                - nhsNumber
+                - notificationsEnabled
               properties:
                 nhsNumber:
                   description: The patient's NHS number.
@@ -32,6 +41,9 @@ properties:
     type: object
     additionalProperties: false
     description: Contains links to related objects.
+    required:
+      - last
+      - self
     properties:
       last:
         type: string

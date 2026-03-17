@@ -5,6 +5,10 @@ properties:
   data:
     type: object
     additionalProperties: false
+    required:
+      - type
+      - id
+      - attributes
     properties:
       type:
         $ref: ../enums/EnumMessageBatch.yaml
@@ -15,6 +19,10 @@ properties:
       attributes:
         type: object
         additionalProperties: false
+        required:
+          - messageBatchReference
+          - routingPlan
+          - messages
         properties:
           messageBatchReference:
             type: string
@@ -29,6 +37,9 @@ properties:
               type: object
               title: Message
               additionalProperties: false
+              required:
+                - messageReference
+                - id
               properties:
                 messageReference:
                   $ref: ../../snippets/MessageReferenceSnippet.yaml

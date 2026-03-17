@@ -5,6 +5,11 @@ properties:
   data:
     type: object
     additionalProperties: false
+    required:
+      - type
+      - id
+      - attributes
+      - links
     properties:
       type:
         $ref: ../enums/EnumMessage.yaml
@@ -13,6 +18,11 @@ properties:
       attributes:
         type: object
         additionalProperties: false
+        required:
+          - messageReference
+          - messageStatus
+          - timestamps
+          - routingPlan
         properties:
           messageReference:
             $ref: ../types/MessageReference.yaml
@@ -40,6 +50,13 @@ properties:
             items:
               type: object
               additionalProperties: false
+              required:
+                - type
+                - cascadeType
+                - cascadeOrder
+                - channelStatus
+                - timestamps
+                - routingPlan
               properties:
                 type:
                   $ref: ../enums/ChannelType.yaml
@@ -72,6 +89,8 @@ properties:
                 timestamps:
                   type: object
                   additionalProperties: false
+                  required:
+                    - created
                   properties:
                     created:
                       type: string
@@ -92,6 +111,9 @@ properties:
                   type: object
                   additionalProperties: false
                   description: The routing plan that this channel was generated from.
+                  required:
+                    - id
+                    - type
                   properties:
                     id:
                       type: string
@@ -105,9 +127,13 @@ properties:
                     type:
                       description: Identifies if this is the original routing plan that was requested, or if a conditional override has been used.
                       $ref: ../enums/RoutingPlanType.yaml
+                metadata:
+                  $ref: ../types/ChannelMetadata.yaml
           timestamps:
             type: object
             additionalProperties: false
+            required:
+              - created
             properties:
               created:
                 type: string
@@ -142,6 +168,9 @@ properties:
             items:
               type: object
               additionalProperties: false
+              required:
+                - queriedAt
+                - source
               properties:
                 version:
                   description: This is the version of the document that was received from this source.
@@ -176,6 +205,9 @@ properties:
               data:
                 type: object
                 additionalProperties: false
+                required:
+                  - type
+                  - id
                 properties:
                   type:
                     $ref: ../enums/EnumMessageBatch.yaml

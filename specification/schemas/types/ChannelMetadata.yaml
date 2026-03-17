@@ -1,0 +1,23 @@
+type: array
+minItems: 0
+description: |-
+  This array includes a list of all metadata lookups done for this channel within the system.
+
+  Currently only PDS is used for lookups.
+items:
+  type: object
+  additionalProperties: false
+  required:
+    - source
+    - label
+  properties:
+    id:
+      type: string
+      description: The source’s identifier for the metadata.
+      example: y5z6a7b8
+    source:
+      type: string
+      description: The source of the metadata.
+      example: pds
+    label:
+      $ref: ../enums/ChannelMetadataLabel.yaml

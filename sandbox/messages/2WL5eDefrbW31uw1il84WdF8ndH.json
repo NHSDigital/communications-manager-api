@@ -42,7 +42,14 @@
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             "version": "1",
             "type": "original"
-          }
+          },
+          "metadata": [
+            {
+              "id": "c9d0e1f2",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         },
         {
           "type": "sms",
@@ -56,7 +63,14 @@
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             "version": "1",
             "type": "original"
-          }
+          },
+          "metadata": [
+            {
+              "id": "g3h4i5j6",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         },
         {
           "type": "letter",
@@ -70,7 +84,14 @@
             "id": "b838b13c-f98c-4def-93f0-515d4e4f4ee1",
             "version": "1",
             "type": "original"
-          }
+          },
+          "metadata": [
+            {
+              "id": "k7l8m9n0",
+              "source": "pds",
+              "label": "recipient_contact"
+            }
+          ]
         }
       ],
       "timestamps": {
