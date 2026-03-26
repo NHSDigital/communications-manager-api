@@ -1,6 +1,8 @@
 type: object
 additionalProperties: false
 description: Contains links to related objects.
+required:
+  - self
 properties:
   self:
     type: string

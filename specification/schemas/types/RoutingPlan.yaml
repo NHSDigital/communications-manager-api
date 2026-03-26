@@ -1,5 +1,9 @@
 type: object
 additionalProperties: false
+required:
+  - id
+  - name
+  - createdDate
 properties:
   id:
     type: string

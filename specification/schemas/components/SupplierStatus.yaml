@@ -1,5 +1,10 @@
 type: object
 title: CallbackRequest
+required:
+  - type
+  - attributes
+  - links
+  - meta
 properties:
   type:
     type: string
@@ -44,9 +49,13 @@ properties:
         example: '2023-11-17T14:27:51.413Z'
       retryCount:
         $ref: ../../snippets/RetryCount.yaml
+      metadata:
+        $ref: ../types/ChannelMetadata.yaml
     required:
       - messageId
       - messageReference
+      - cascadeType
+      - cascadeOrder
       - channel
       - channelStatus
       - timestamp
