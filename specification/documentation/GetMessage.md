@@ -63,15 +63,15 @@ Personalisation and contact details are not returned within the messages. This i
 
 ### Sandbox
 
-When sending this request on sandbox you can use one of these 5 message identifiers:
+When sending this request on sandbox you can use one of these 5 message references:
 
 * single message status of delivered - `2WL3qFTEFM0qMY8xjRbt1LIKCzM`
 * single message delivered using multiple channels - `2WL5eYSWGzCHlGmzNxuqVusPxDg`
 * single message status of sending - `2WL4GEeFVxXG9S57nRlefBwwKxp`
-* single message failed as patient has no exit code - `2WL4mvx6eBva8dcIK60VEGIfcgZ`
+* single message failed as patient has an exit code - `2WL4mvx6eBva8dcIK60VEGIfcgZ`
 * single message routing plan overriden - `2bBBpsiMl2rnQt99qm6JLZ6w1vq`
 
-Here's an example curl command using one of the above message Id's:
+Here's an example curl command using one of the above message references:
 
 ```
 curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
