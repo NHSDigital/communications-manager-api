@@ -53,6 +53,7 @@
     "jsrsasign-util": "^1.0.5"
   },
   "overrides": {
+    "handlebars": "^4.7.9",
     "newman": {
       "postman-runtime": "^7.53.0"
     }
