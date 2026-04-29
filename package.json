@@ -57,9 +57,6 @@
     "flatted": "^3.4.2",
     "postcss": "^8.5.12",
     "lodash": "^4.18.1",
-    "underscore": "^1.13.8",
-    "newman": {
-      "postman-runtime": "^7.53.0"
-    }
+    "underscore": "^1.13.8"
   }
 }
