@@ -27,9 +27,9 @@ If you have any other queries, [contact us](https://digital.nhs.uk/developer/hel
 
 ## Service level
 
-This service is a [silver](https://digital.nhs.uk/services/reference-guide#service-levels) service, meaning it is available 24 hours a day, 365 days a year and supported from 8am to 6pm, Monday to Friday excluding bank holidays.
+This service is a [gold](https://digital.nhs.uk/services/reference-guide#service-levels) service, meaning it is available and supported 24 hours a day, 365 days a year.
 
-For more details, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
+For more details, including incident resolution times, see [service levels](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#service-levels).
 
 ## Technology
 
