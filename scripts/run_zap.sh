@@ -22,18 +22,21 @@ export INTEGRATION_PRIVATE_KEY_CONTENTS=$(cat $INTEGRATION_PRIVATE_KEY)
 
 docker build -t zap -f ./zap/Dockerfile .
 
+echo "running zap"
 # run zap in a container
 docker container run \
     --env INTEGRATION_PRIVATE_KEY_CONTENTS="$INTEGRATION_PRIVATE_KEY_CONTENTS" \
-    --env INTEGRATION_API_KEY="$INTEGRATION_API_KEY" \
-    -v $(pwd):/zap/wrk/:rw \
-    -v $TEMP_DIR:/zap/tmp/:rw \
-    -v $(pwd)/zap/comms-manager-json/:/home/zap/.ZAP/reports/comms-manager-json/:rw \
-    -t zap \
-    bash -c "./zap.sh -cmd -autorun /zap/wrk/zap/zap.yaml"
+   --env INTEGRATION_API_KEY="$INTEGRATION_API_KEY" \
+   -v $(pwd):/zap/wrk/:rw \
+   -v $TEMP_DIR:/zap/tmp/:rw \
+   -v $(pwd)/zap/comms-manager-json/:/home/zap/.ZAP/reports/comms-manager-json/:rw \
+   -t zap \
+   bash -c "./zap.sh -cmd -autorun /zap/wrk/zap/zap.yaml"
+
+echo "ended running zap"
 
 # generate our nunit report from the zap JSON report
-./node_modules/.bin/hbs --data $TEMP_DIR/zap-report.json zap/nunit-template.hbs -s > zap-report.xml
+node scripts/render_hbs.js $TEMP_DIR/zap-report.json zap/nunit-template.hbs > zap-report.xml
 
 # delete our zap compatible report
 rm build/communications-manager-zap.json
