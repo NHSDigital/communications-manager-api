@@ -46,6 +46,8 @@ APIGEE_ENVIRONMENTS:
     - name: prod
       display_name: Production
       approval_type: manual
+      global_quota: '12000'
+      global_ratelimit: '36000pm'
 ---
 meta:
   api:
