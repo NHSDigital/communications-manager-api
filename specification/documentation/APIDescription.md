@@ -215,6 +215,20 @@ Every request includes an `idempotencyKey` field located in the meta collection 
 
 If a request fails, our retry policy will continue to attempt to deliver the callback for a period of 2 hours.
 
+## Two-way messaging
+
+**This feature is currently under development and is not yet ready to use.**
+
+The two way messaging feature lets the message recipient to receive a question and then reply choosing from a list of pre-defined responses.
+
+e.g.
+Question: Can you still attend your appointment tomorrow?
+Answer options: [Yes, No]
+
+In order to present the recipient with answers include the `answerOptions` field.
+
+This is currently only supported by the NHSAPP channel.
+
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
 
