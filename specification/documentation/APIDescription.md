@@ -219,15 +219,15 @@ If a request fails, our retry policy will continue to attempt to deliver the cal
 
 **This feature is currently under development and is not yet ready to use.**
 
-The two way messaging feature lets the message recipient to receive a question and then reply choosing from a list of pre-defined responses.
+The two way messaging is intended for scenarios where a simple question can be sent to the receipient with a pick list of responses.  The receipient is able to reply to the integrator with one of the responses on the pick list.
 
 e.g.
-Question: Can you still attend your appointment tomorrow?
+Question: Can you still attend your GP appointment on Tuesday 26th May at 14:00?
 Answer options: [Yes, No]
 
 In order to present the recipient with answers include the `answerOptions` field.
 
-This is currently only supported by the NHSAPP channel.
+This feature is currently only supported by the NHSAPP channel.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
