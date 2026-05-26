@@ -1,0 +1,8 @@
+type: object
+title: AnswerOption
+properties:
+  code:
+    type: string
+    example: "Yes"
+    description: |-
+      This is the code that will be sent back to you in the callback when a recipient selects this option. It is for your reference to understand which option the recipient has selected. It is also the display value shown to the recipient. 

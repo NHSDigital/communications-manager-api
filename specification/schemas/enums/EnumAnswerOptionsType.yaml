@@ -1,6 +1,0 @@
-title: Enum_AnswerOptionsType
-description: The type of answer options available for this message.
-type: string
-enum:
-  - NHSAPP
-example: NHSAPP

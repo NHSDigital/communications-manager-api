@@ -1,0 +1,15 @@
+type: object
+optional: true
+description: |-
+  The answer options for this message. These are channel specific.
+
+  If you provide answer options, then they will be presented to the receipient for reply options. These will then be sent back via the two-way messaging callback mechanism.
+
+  This feature needs to be enabled on your account and is subject to the relevant callback integration being completed.
+properties:
+  NHSAPP:
+    type: array
+    minItems: 1
+    maxItems: 6
+    items:
+      $ref: ./AnswerOption.yaml

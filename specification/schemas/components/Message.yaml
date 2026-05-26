@@ -16,27 +16,7 @@ properties:
     type: object
     description: The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).
   answerOptions:
-    type: object
-    optional: true
-    description: |-
-      The answer options for this message. These are channel specific.
-
-      If you provide answer options, then they will be presented to the receipient for reply options. These will then be sent back via the two-way messaging callback mechanism.
-
-      This feature needs to be enabled on your account and is subject to the relevant callback integration being completed.
-      properties:
-        type:
-          $ref: ../enums/EnumAnswerOptionsType.yaml
-        options:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                description: |-
-                  This is the code that will be sent back to you in the callback when a recipient selects this option. It is for your reference to understand which option the recipient has selected. It is also the display value shown to the recipient.
-                type: string
-                example: Yes
+          $ref: ./AnswerOptions.yaml
 required:
   - messageReference
   - recipient
