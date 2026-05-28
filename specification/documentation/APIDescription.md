@@ -219,7 +219,7 @@ If a request fails, our retry policy will continue to attempt to deliver the cal
 
 **This feature is currently under development and is not yet ready to use.**
 
-The two way messaging is intended for scenarios where a simple question can be sent to the receipient with a pick list of responses.  The receipient is able to reply to the integrator with one of the responses on the pick list.
+Two-way messaging lets a service send a simple question to a recipient through the NHS App and provide a fixed list of possible answers. The recipient can choose one answer from the list, and that response is sent back to the service.
 
 e.g.
 Question: Can you still attend your GP appointment on Tuesday 26th May at 14:00?
