@@ -16,7 +16,11 @@ properties:
     type: object
     description: The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).
   answerOptions:
-          $ref: ./AnswerOptions.yaml
+    example:
+      NHSAPP:
+        - code: Yes
+        - code: No
+    $ref: ./AnswerOptions.yaml
 required:
   - messageReference
   - recipient

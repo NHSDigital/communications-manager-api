@@ -40,6 +40,10 @@ properties:
             type: object
             description: "The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding)."
           answerOptions:
+            example:
+              NHSAPP:
+                - code: Yes
+                - code: No
             $ref: ../components/AnswerOptions.yaml
     required:
       - type
