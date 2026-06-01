@@ -17,7 +17,7 @@ The NHS Notify service is intended for services involved in direct care. This AP
 
 ## API status and roadmap
 
-This API is [in production, beta](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
+This API is [in production](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
 
 We may make additive non-breaking changes to the API without notice, for example the addition of fields to a response or callback, or new optional fields to a request.
 
