@@ -17,7 +17,7 @@ The NHS Notify service is intended for services involved in direct care. This AP
 
 ## API status and roadmap
 
-This API is [in production, beta](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
+This API is [in production](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses). We are onboarding partners to use it.
 
 We may make additive non-breaking changes to the API without notice, for example the addition of fields to a response or callback, or new optional fields to a request.
 
@@ -214,6 +214,20 @@ This can be achieved by hashing the request body using the HMAC-SHA256 algorithm
 Every request includes an `idempotencyKey` field located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
 
 If a request fails, our retry policy will continue to attempt to deliver the callback for a period of 2 hours.
+
+## Two-way messaging
+
+**This feature is currently under development and is not yet ready to use.**
+
+Two-way messaging lets a service send a simple question to a recipient through the NHS App and provide a fixed list of possible answers. The recipient can choose one answer from the list, and that response is sent back to the service.
+
+e.g.
+Question: Can you still attend your GP appointment on Tuesday 26th May at 14:00?
+Answer options: [Yes, No]
+
+In order to present the recipient with answers include the `answerOptions` field.
+
+This feature is currently only supported by the NHSAPP channel.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
