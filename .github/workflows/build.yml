@@ -71,7 +71,9 @@ jobs:
       - name: Static analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: make static-analysis
+        run: |
+          rm -rf sandbox/coverage/tmp
+          make static-analysis
 
       - name: Compile spec
         run: make publish
