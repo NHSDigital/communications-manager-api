@@ -227,7 +227,7 @@ This can be achieved by hashing the request body using the HMAC-SHA256 algorithm
 
 ### Deduplication
 
-The NHS Notify callback service attempts to guarantee at-least-once delivery, which may mean that in unusual circumstances the same callback may arrive more than once.
+The NHS Notify callback service attempts to guarantee at-least-once delivery, which means that sometimes the same callback may arrive more than once.
 
 To help ensure that your system remains idempotent and capable of managing duplicate delivery of callbacks, every request includes an `idempotencyKey` field located in the meta collection of the body.
 
@@ -253,9 +253,7 @@ Answer options: [Yes, No]
 
 In order to present the recipient with answers, include the `answerOptions` field.
 
-If you subscribe to recipient response callbacks, NHS Notify will send you a callback when a recipient responds to a message. See [the recipient response callback](#post-/<client-provided-recipient-response-URI>) for more details.
-
-Note: this feature is currently only supported by the `nhsapp` channel.
+If you subscribe to recipient response callbacks, NHS Notify will send you a callback when a recipient responds to a message (currently only NHS App supports this). See [the recipient response callback](#post-/<client-provided-recipient-response-URI>) for more details.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
