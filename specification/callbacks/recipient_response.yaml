@@ -1,6 +1,6 @@
 summary: Recipient response
 description: |-
-  The recipient response callback sends POST requests to your service with real time updates when a recipient has responded to an NHS App message using a keyword.
+  The recipient response callback sends a POST request to your service when a recipient responds to an NHS App message using one of the response options provided. (Note that free-text responses are not supported.)
 
   This is an automated way to receive responses from recipients who interact with your messages in the NHS App.
 
