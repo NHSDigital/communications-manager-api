@@ -54,7 +54,7 @@ The `Accept` header can contain the following values:
 * `application/json`
 * `application/vnd.api+json`
 
-The `Accept` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `415` error response. If omitted then `utf-8` is assumed. 
+The `Accept` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `415` error response. If omitted then `utf-8` is assumed.
 
 Where no `Accept` header is present, this will default to `application/vnd.api+json`
 
@@ -65,7 +65,7 @@ This API will accept request payloads of the following types:
 * `application/vnd.api+json` - see [JSON:API specification](https://jsonapi.org/format/#introduction)
 * `application/json`
 
-The `Content-Type` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `406` error response. If omitted then `utf-8` is assumed. 
+The `Content-Type` header may optionally include a `charset` attribute. If included, it **must** be set to `charset=utf-8` Any other `charset` value will result in a `406` error response. If omitted then `utf-8` is assumed.
 
 If you attempt to send a payload without the `Content-Type` header set to either of these values then the API will respond with a `415 Unsupported Media Type` response.
 
@@ -153,7 +153,7 @@ You'll then need to include this personalisation field in your request.
 ###	Making your request to send messages from your software
 Use the following routing plan IDs and personalisation fields that match the message channel your user will send their message with.
 
-| Message channel                                       | First message channel delivery failure time | Second message channel delivery failure time | Personalisation fields                 | Routing plan ID                      | 
+| Message channel                                       | First message channel delivery failure time | Second message channel delivery failure time | Personalisation fields                 | Routing plan ID                      |
 |-------------------------------------------------------|---------------------------------------------|----------------------------------------------|----------------------------------------|--------------------------------------|
 | NHS App message                                       | 24 hours                                    | -                                            | body                                   | 00000000-0000-0000-0000-000000000001 |
 | Email                                                 | 72 hours                                    | -                                            | email_subject, email_body              | 00000000-0000-0000-0000-000000000002 |
@@ -203,7 +203,21 @@ You may develop one or many endpoints on your service if you want to receive cal
 
 We have created an OpenAPI specification detailing the behaviour of the endpoint that consumers should create to subscribe to callbacks.
 
-We will send your API key in the `x-api-key header`. Your service should respond with:
+### Mutual TLS
+
+**This feature is currently under development and is not yet ready to use.**
+
+We are currently developing a new callbacks service which uses mutual TLS (mTLS).
+
+If you are using the newer callbacks mechanism, then your service must check the client certificate which is presented to your service during the callback in order to verify that the response has come from NHS Notify. Your service must reject connection attempts where the client certificate can not be verified by the NHS Notify root CA certificate.
+
+If the client certificate can not be verified, your service should respond with `403 Forbidden`.
+
+### HMAC-SHA256 signature checking
+
+If you are still using the older (original) callbacks mechanism, mTLS is not supported.
+
+Instead, we will send your API key in the `x-api-key` header. Your service should respond with:
 
 * `401 Unauthorized` if the API key is not received
 * `401 Unauthorized` if the API key is invalid
@@ -211,9 +225,21 @@ We will send your API key in the `x-api-key header`. Your service should respond
 We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from NHS Notify.
 This can be achieved by hashing the request body using the HMAC-SHA256 algorithm with a secret value that is comprised of a concatenation of your APIM application ID and the API key that we provide you. The secret takes the following form `[APPLICATION_ID].[API_KEY]`. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
 
-Every request includes an `idempotencyKey` field located in the meta collection of the body. This can help ensure your system remains idempotent, capable of managing duplicate delivery of callbacks. It's important to note that requests may be delivered non-sequentially.
+### Deduplication
 
-If a request fails, our retry policy will continue to attempt to deliver the callback for a period of 2 hours.
+The NHS Notify callback service attempts to guarantee at-least-once delivery, which means that sometimes the same callback may arrive more than once.
+
+To help ensure that your system remains idempotent and capable of managing duplicate delivery of callbacks, every request includes an `idempotencyKey` field located in the meta collection of the body.
+
+It's important to note that requests may be delivered non-sequentially.
+
+### Retrying and rate limiting
+
+If a callback fails, our retry policy will continue to attempt to deliver the callback for a period of 2 hours. If you are using the newer callback mechanism, this is extendable on request for a period of up to 12 hours.
+
+If you are using the newer callback mechanism, it is also possible to limit the rate which NHS Notify will send callbacks. This can be done per-endpoint.
+
+Speak to our onboarding team if you need to set a rate limit or extend the retry period.
 
 ## Two-way messaging
 
@@ -225,9 +251,9 @@ e.g.
 Question: Can you still attend your GP appointment on Tuesday 26th May at 14:00?
 Answer options: [Yes, No]
 
-In order to present the recipient with answers include the `answerOptions` field.
+In order to present the recipient with answers, include the `answerOptions` field.
 
-This feature is currently only supported by the NHSAPP channel.
+If you subscribe to recipient response callbacks, NHS Notify will send you a callback when a recipient responds to a message (currently only NHS App supports this). See [the recipient response callback](#post-/<client-provided-recipient-response-URI>) for more details.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.

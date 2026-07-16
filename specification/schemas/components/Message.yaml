@@ -17,7 +17,7 @@ properties:
     description: The personalisation keys and values for this message. These are linked to the routingPlanId provided and are agreed upon during [onboarding](#overview--onboarding).
   answerOptions:
     example:
-      NHSAPP:
+      nhsapp:
         - code: Yes
         - code: No
     $ref: ./AnswerOptions.yaml
