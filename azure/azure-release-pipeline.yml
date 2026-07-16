@@ -37,6 +37,8 @@ extends:
     prod_producer_approval: true
     apigee_deployments:
       - environment: internal-dev
+        enable_monitoring: false
+        enable_status_monitoring: false
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -48,6 +50,8 @@ extends:
 
       - environment: internal-dev-sandbox
         proxy_path: sandbox
+        enable_monitoring: false
+        enable_status_monitoring: false
         jinja_templates:
           ENVIRONMENT_TYPE: 'sandbox'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -66,6 +70,8 @@ extends:
       - environment: ref
         depends_on:
           - manual_approval_ref
+        enable_monitoring: false
+        enable_status_monitoring: false
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -83,6 +89,8 @@ extends:
       - environment: internal-qa
         depends_on:
           - manual_approval_internal_qa
+        enable_monitoring: false
+        enable_status_monitoring: false
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -101,6 +109,8 @@ extends:
         proxy_path: sandbox
         depends_on:
           - manual_approval_internal_qa_sandbox
+        enable_monitoring: false
+        enable_status_monitoring: false
         jinja_templates:
           ENVIRONMENT_TYPE: 'sandbox'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
@@ -120,6 +130,8 @@ extends:
         depends_on:
           - manual_approval_sandbox
         proxy_path: sandbox
+        enable_monitoring: false
+        enable_status_monitoring: false
         jinja_templates:
           ENVIRONMENT_TYPE: 'sandbox'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
