@@ -7,7 +7,7 @@ description: |-
 
   This feature needs to be enabled on your account and is subject to the relevant callback integration being completed.
 properties:
-  NHSAPP:
+  nhsapp:
     type: array
     minItems: 1
     maxItems: 6

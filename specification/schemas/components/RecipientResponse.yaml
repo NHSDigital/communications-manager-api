@@ -1,0 +1,88 @@
+type: object
+title: CallbackRequest
+required:
+  - type
+  - attributes
+  - links
+  - meta
+properties:
+  type:
+    type: string
+    example: "RecipientResponse"
+    enum:
+      - RecipientResponse
+  attributes:
+    type: object
+    properties:
+      messageId:
+        $ref: ../types/KSUID.yaml
+      messageReference:
+        $ref: ../../snippets/MessageReferenceSnippet.yaml
+      cascadeType:
+        $ref: ../enums/CascadeType.yaml
+      channel:
+        type: string
+        enum:
+          - nhsapp
+        example: nhsapp
+      channelStatus:
+        type: string
+        description: The status of the channel at the time the response was received.
+        enum:
+          - sending
+          - delivered
+          - failed
+        example: delivered
+      channelFailureReasonCode:
+        type: string
+        description: If there is a failed reason code associated with this channel, it is provided here.
+        example: "CFR_NHSAPP_0001"
+      code:
+        type: string
+        description: The keyword code from the recipient's response.
+        example: "YES"
+      responseId:
+        type: string
+        description: The unique identifier for the recipient response.
+        format: uuid
+        example: "33333333-3333-4333-8333-333333333333"
+      authoredAt:
+        type: string
+        description: The date-time the recipient authored the response.
+        format: date-time
+        example: '2026-01-15T10:30:00Z'
+      timestamp:
+        type: string
+        description: Date-time for when the response was processed.
+        format: date-time
+        example: '2026-01-15T10:30:05Z'
+    required:
+      - messageId
+      - messageReference
+      - cascadeType
+      - channel
+      - channelStatus
+      - code
+      - responseId
+      - authoredAt
+      - timestamp
+  links:
+    type: object
+    properties:
+      recipientResponse:
+        type: string
+        description: URL to retrieve the recipient response details.
+        format: uri
+        example: "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/recipient-response/33333333-3333-4333-8333-333333333333"
+    required:
+      - recipientResponse
+  meta:
+    type: object
+    properties:
+      idempotencyKey:
+        type: string
+        description: Contains a value that you can use to deduplicate retried
+          requests.
+        example: "2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445"
+    required:
+      - idempotencyKey

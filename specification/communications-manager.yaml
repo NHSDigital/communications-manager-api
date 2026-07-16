@@ -43,3 +43,7 @@ paths:
     post:
       $ref: callbacks/channel_status.yaml
       tags: ['Callbacks']
+  /<client-provided-recipient-response-URI>:
+    post:
+      $ref: callbacks/recipient_response.yaml
+      tags: ['Callbacks']
