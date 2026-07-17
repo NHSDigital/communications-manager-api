@@ -253,7 +253,7 @@ Answer options: [Yes, No]
 
 In order to present the recipient with answers, include the `answerOptions` field.
 
-If you subscribe to recipient response callbacks, NHS Notify will send you a callback when a recipient responds to a message (currently only NHS App supports this). See [the recipient response callback](#post-/<client-provided-recipient-response-URI>) for more details.
+If you subscribe to recipient response callbacks, NHS Notify will send you a callback when a recipient responds to a message (currently only NHS App supports this). See [the recipient response callback](#post-/{client-provided-recipient-response-URI}) for more details.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.

@@ -42,8 +42,8 @@ with open('build/communications-manager-zap.json', 'w') as f:
             (
                 ("format", "date"),
                 ("personalisation", None),
-                ("/<client-provided-message-status-URI>", None),
-                ("/<client-provided-channel-status-URI>", None),
+                ("/{client-provided-message-status-URI}", None),
+                ("/{client-provided-channel-status-URI}", None),
             )
         ),
         f
