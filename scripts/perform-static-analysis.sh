@@ -30,6 +30,8 @@ function main() {
 
 function create-report() {
 
+  rm -rf sandbox/coverage/tmp
+
   docker run --rm --platform linux/amd64 \
     --volume $PWD:/usr/src \
     sonarsource/sonar-scanner-cli:$image_version \
