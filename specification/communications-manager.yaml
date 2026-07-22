@@ -35,11 +35,15 @@ paths:
   /channels/nhsapp/accounts:
      get:
       $ref: endpoints/get_nhsapp_account_details.yaml
-  /<client-provided-message-status-URI>:
+  /{client-provided-message-status-URI}:
     post:
       $ref: callbacks/message_status.yaml
       tags: ['Callbacks']
-  /<client-provided-channel-status-URI>:
+  /{client-provided-channel-status-URI}:
     post:
       $ref: callbacks/channel_status.yaml
+      tags: ['Callbacks']
+  /{client-provided-recipient-response-URI}:
+    post:
+      $ref: callbacks/recipient_response.yaml
       tags: ['Callbacks']
