@@ -15,6 +15,8 @@ APIGEE_ENVIRONMENTS:
     has_mock_auth: true
     variants:
     - name: internal-qa
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
       display_name: Internal QA
   - name: ref
     has_mock_auth: true
@@ -29,18 +31,26 @@ APIGEE_ENVIRONMENTS:
     variants:
     - name: internal-dev-sandbox
       display_name: Internal Development Sandbox
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
   - name: internal-qa-sandbox
     variants:
     - name: internal-qa-sandbox
       display_name: Internal QA Sandbox
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
   - name: sandbox
     variants:
     - name: sandbox
       display_name: Sandbox
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
   - name: int
     variants:
     - name: int
       display_name: Integration Testing
+      global_ratelimit: '18000pm'
+      global_quota: '6000'
   - name: prod
     variants:
     - name: prod
@@ -73,11 +83,11 @@ apigee:
                 quota:
                   enabled: true
                   interval: 1
-                  limit: {{ VARIANT.global_quota | default(6000)}}
+                  limit: {{ VARIANT.global_quota | default(12000)}}
                   timeunit: minute
                 spikeArrest:
                   enabled: true
-                  ratelimit: {{ VARIANT.global_ratelimit | default('18000pm') }}
+                  ratelimit: {{ VARIANT.global_ratelimit | default('36000pm') }}
               app:
                 quota:
                   enabled: true

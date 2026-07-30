@@ -24,6 +24,12 @@ install-hooks: .git/hooks/pre-commit
 lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
 	npm run lint
 
+merge-coverage-reports:
+	mkdir -p coverage coverage-temp
+	TMPDIR="./coverage-temp" npm run merge-coverage-reports
+	rm -r coverage-temp
+	rm -rf sandbox/coverage/tmp
+
 static-analysis:
 	npm run static-analysis
 

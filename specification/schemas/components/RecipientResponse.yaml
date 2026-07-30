@@ -69,13 +69,13 @@ properties:
   links:
     type: object
     properties:
-      recipientResponse:
+      messageResponses:
         type: string
         description: URL to retrieve the recipient response details.
         format: uri
-        example: "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/recipient-response/33333333-3333-4333-8333-333333333333"
+        example: "https://api.service.nhs.uk/comms/v1/message-responses/2WL3qFTEFM0qMY8xjRbt1LIKCzM"
     required:
-      - recipientResponse
+      - messageResponses
   meta:
     type: object
     properties:
