@@ -1,7 +1,9 @@
 import requests
 import pytest
 from lib import Assertions, Generators
-from lib.constants.message_responses_paths import MESSAGE_RESPONSES_ENDPOINT, CORRELATION_IDS, TOO_MANY_RESPONSES_MESSAGE_ID
+from lib.constants.message_responses_paths import (
+    MESSAGE_RESPONSES_ENDPOINT, CORRELATION_IDS, TOO_MANY_RESPONSES_MESSAGE_ID
+)
 
 
 @pytest.mark.sandboxtest
