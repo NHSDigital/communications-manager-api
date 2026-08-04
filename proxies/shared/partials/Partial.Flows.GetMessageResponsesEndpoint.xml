@@ -1,0 +1,24 @@
+<Flow name="GetMessageResponsesEndpoint">
+    <Description>Handle get message responses</Description>
+    <Request>
+        <Step>
+            <Name>ExtractVariables.MessageResponses.Get.Request</Name>
+        </Step>
+        <Step>
+            <Name>AssignMessage.MessageResponses.Get.Request</Name>
+        </Step>
+        {% if ENVIRONMENT_TYPE != 'sandbox' %}
+            <Step>
+                <Name>AssignMessage.AuthenticationDetails</Name>
+            </Step>
+        {% endif %}
+    </Request>
+    <Response>
+        <Step>
+            <Name>AssignMessage.MessageResponses.Get.Response</Name>
+        </Step>
+    </Response>
+    <Condition>
+        (proxy.pathsuffix MatchesPath "/v1/message-responses/{messageId}") and (request.verb = "GET")
+    </Condition>
+</Flow>
