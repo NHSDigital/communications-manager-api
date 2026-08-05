@@ -1,0 +1,48 @@
+type: object
+title: ResponseItem
+additionalProperties: false
+required:
+  - type
+  - id
+  - attributes
+properties:
+  type:
+    type: string
+    enum:
+      - Response
+    example: Response
+  id:
+    type: string
+    description: The unique identifier for the recipient response.
+    format: uuid
+    example: "33333333-3333-4333-8333-333333333333"
+  attributes:
+    type: object
+    additionalProperties: false
+    required:
+      - messageId
+      - code
+      - authoredAt
+      - channel
+    properties:
+      messageId:
+        $ref: ../types/KSUID.yaml
+      code:
+        type: string
+        description: The keyword code from the recipient's response.
+        example: "YES"
+      authoredAt:
+        type: string
+        description: The date-time the recipient authored the response.
+        format: date-time
+        example: '2026-01-15T10:30:00Z'
+      timestamp:
+        type: string
+        description: Date-time for when the response was processed.
+        format: date-time
+        example: '2026-01-15T10:30:05Z'
+      channel:
+        type: string
+        enum:
+          - nhsapp
+        example: nhsapp

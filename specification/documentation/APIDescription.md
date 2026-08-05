@@ -255,6 +255,10 @@ In order to present the recipient with answers, include the `answerOptions` fiel
 
 If you subscribe to recipient response callbacks, NHS Notify will send you a callback when a recipient responds to a message (currently only NHS App supports this). See [the recipient response callback](#post-/-client-provided-recipient-response-URI-) for more details.
 
+### Retrieving responses via the API
+
+Use the [get message responses](#get-/v1/messages/-messageId-/responses) endpoint to query historical responses for a given message. Responses are available for up to 9 months after the message was sent.
+
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.
 

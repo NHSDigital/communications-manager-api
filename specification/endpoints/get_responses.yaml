@@ -1,0 +1,40 @@
+summary: Get responses for a message
+description:
+  $ref: ../documentation/GetResponses.md
+operationId: get-message-responses
+parameters:
+  - $ref: ../snippets/AuthorizationParameter.yaml
+  - $ref: ../snippets/CorrelationParameter.yaml
+  - name: cursor
+    in: query
+    required: false
+    description: |-
+      An opaque cursor value returned in the `links.next` or `links.prev` field of a previous response.
+      Use this to retrieve the next or previous page of results.
+      If omitted, the first page of results is returned.
+    schema:
+      type: string
+      example: eyJsYXN0S2V5IjoidGVzdCJ9
+responses:
+  '200':
+    $ref: ../responses/2xx/200_Responses.yaml
+  '400':
+    $ref: ../responses/4xx/message_responses/400_UnableToGetResponses.yaml
+  '401':
+    $ref: ../responses/4xx/401_AccessDenied.yaml
+  '403':
+    $ref: ../responses/4xx/403_Forbidden.yaml
+  '405':
+    $ref: ../responses/4xx/405_NotAllowed.yaml
+  '406':
+    $ref: ../responses/4xx/406_NotAcceptable.yaml
+  '408':
+    $ref: ../responses/4xx/408_RequestTimeout.yaml
+  '429':
+    $ref: ../responses/4xx/429_TooManyRequests.yaml
+  '500':
+    $ref: ../responses/5xx/500_InternalServerError.yaml
+  '503':
+    $ref: ../responses/5xx/503_ServiceUnavailable.yaml
+  '504':
+    $ref: ../responses/5xx/504_ServiceTimeout.yaml

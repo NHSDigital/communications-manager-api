@@ -1,0 +1,30 @@
+description: |+
+  The message ID in the request path is not a valid KSUID.
+
+  The following validation error can occur:
+
+  | Error code | Title | Description |
+  | ---------- | ----- | ----------- |
+  | `CM_INVALID_VALUE` | Invalid value | The `messageId` path parameter is not a valid KSUID. |
+
+  ### Sandbox
+
+  It is possible to trigger the `CM_INVALID_VALUE` error in the sandbox by sending the header `Prefer` with a value of `code=400`.
+
+  Here is an example curl request:
+
+  ```
+    curl -X GET \
+      --header "Accept: application/vnd.api+json" \
+      --header "Prefer: code=400" \
+      https://sandbox.api.service.nhs.uk/comms/v1/messages/not-a-valid-id/responses
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../../schemas/responses/errors/message_responses/UnableToGetResponses.yaml
+  application/json:
+    schema:
+      $ref: ../../../schemas/responses/errors/message_responses/UnableToGetResponses.yaml
+headers:
+  $ref: ../../../snippets/StandardResponseHeaders.yaml

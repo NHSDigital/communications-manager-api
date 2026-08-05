@@ -1,0 +1,42 @@
+title: GetResponsesSuccess
+type: object
+additionalProperties: false
+required:
+  - data
+  - links
+properties:
+  data:
+    type: array
+    items:
+      $ref: ../components/ResponseItem.yaml
+  links:
+    type: object
+    additionalProperties: false
+    required:
+      - self
+    properties:
+      self:
+        type: string
+        format: uri
+        description: The URL of the current page of results.
+        example: "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses"
+      next:
+        type: string
+        format: uri
+        nullable: true
+        description: The URL of the next page of results. Absent if there are no further pages.
+        example: "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses?cursor=eyJsYXN0S2V5IjoidGVzdCJ9"
+      prev:
+        type: string
+        format: uri
+        nullable: true
+        description: The URL of the previous page of results. Absent if there is no previous page.
+        example: null
+  meta:
+    type: object
+    additionalProperties: false
+    properties:
+      totalCount:
+        type: integer
+        description: The total number of responses available for this message.
+        example: 3
