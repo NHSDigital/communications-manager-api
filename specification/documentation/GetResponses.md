@@ -27,12 +27,6 @@ GET /v1/messages/{messageId}/responses
 | --------- | ---- | -------- | ----------- |
 | `messageId` | KSUID | Yes | The unique identifier of the message for which you are retrieving responses. |
 
-#### Query parameters
-
-| Parameter | Type | Required | Description |
-| --------- | ---- | -------- | ----------- |
-| `cursor` | string | No | An opaque cursor value from `links.next` or `links.prev` in a previous response. Omit to retrieve the first page. |
-
 #### Headers
 
 | Header | Required | Description |
@@ -59,27 +53,17 @@ A successful `200` response returns a JSON:API collection containing all respons
 
 ```json
 {
-  "data": [
+  "messageId": "2WL3qFTEFM0qMY8xjRbt1LIKCzM",
+  "responses": [
     {
-      "type": "Response",
-      "id": "33333333-3333-4333-8333-333333333333",
-      "attributes": {
-        "messageId": "2WL3qFTEFM0qMY8xjRbt1LIKCzM",
-        "code": "YES",
-        "authoredAt": "2026-01-15T10:30:00Z",
-        "timestamp": "2026-01-15T10:30:05Z",
-        "channel": "nhsapp"
-      }
+      "responseId": "33333333-3333-4333-8333-333333333333",
+      "authoredAt": "2026-01-15T10:30:00Z",
+      "channel": "nhsapp",
+      "channelStatus": "delivered",
+      "code": "YES",
+      "messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728"
     }
-  ],
-  "links": {
-    "self": "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses",
-    "next": null,
-    "prev": null
-  },
-  "meta": {
-    "totalCount": 1
-  }
+  ]
 }
 ```
 
@@ -87,57 +71,14 @@ A successful `200` response returns a JSON:API collection containing all respons
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| `data` | array | Array of response items. Empty if no responses exist. |
-| `data[].type` | string | Always `"Response"`. |
-| `data[].id` | string (UUID) | The unique identifier for this response. |
-| `data[].attributes.messageId` | string (KSUID) | The identifier of the message this response belongs to. |
-| `data[].attributes.code` | string | The keyword code selected by the recipient. |
-| `data[].attributes.authoredAt` | string (date-time) | The date-time the recipient submitted their response. |
-| `data[].attributes.timestamp` | string (date-time) | The date-time the response was processed by NHS Notify. |
-| `data[].attributes.channel` | string | The channel through which the response was received. Currently always `nhsapp`. |
-| `links.self` | string (URI) | The URL of the current page. |
-| `links.next` | string (URI) or null | The URL of the next page. Absent or null if there are no further pages. |
-| `links.prev` | string (URI) or null | The URL of the previous page. Absent or null if there is no previous page. |
-| `meta.totalCount` | integer | The total number of responses available for this message. |
-
-### Pagination
-
-This endpoint uses cursor-based pagination. The response includes a `links` object containing `next` and `prev` URLs when additional pages are available.
-
-To retrieve all responses for a message:
-
-1. Send an initial request without a `cursor` parameter.
-2. If `links.next` is present and non-null, send a subsequent request using the value of `links.next` as your URL (or extract the `cursor` query parameter from it).
-3. Continue until `links.next` is null or absent.
-
-The cursor value is opaque — do not attempt to construct or parse it. Always use the full URL from `links.next`.
-
-#### Pagination example
-
-**First page:**
-
-```
-GET /v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses
-```
-
-Response:
-
-```json
-{
-  "data": [...],
-  "links": {
-    "self": "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses",
-    "next": "https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses?cursor=eyJsYXN0S2V5IjoidGVzdCJ9",
-    "prev": null
-  }
-}
-```
-
-**Second page:**
-
-```
-GET /v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses?cursor=eyJsYXN0S2V5IjoidGVzdCJ9
-```
+| `messageId` | string (KSUID) | The identifier of the message. |
+| `responses` | array | Array of response items. |
+| `responses[].responseId` | string (UUID) | The unique identifier for this response. |
+| `responses[].authoredAt` | string (date-time) | The date-time the recipient submitted their response. |
+| `responses[].channel` | string | The channel through which the response was received. Currently always `nhsapp`. |
+| `responses[].channelStatus` | string | The status of the channel at the time the response was received. One of `sending`, `delivered`, or `failed`. |
+| `responses[].code` | string | The keyword code selected by the recipient. |
+| `responses[].messageReference` | string | The reference for the message, as provided when the message was created. |
 
 ### Error responses
 
@@ -175,6 +116,42 @@ Returned when the request is not authorised.
       "status": "403",
       "title": "Forbidden",
       "detail": "Client not recognised or not yet onboarded."
+    }
+  ]
+}
+```
+
+#### 404 — Not found
+
+Returned when no responses exist for the given message ID.
+
+```json
+{
+  "errors": [
+    {
+      "id": "rrt-1931948104716186917-c-geu2-10664-3111479-3.0",
+      "code": "CM_NOT_FOUND",
+      "status": "404",
+      "title": "Not Found",
+      "detail": "No responses found for the specified message ID."
+    }
+  ]
+}
+```
+
+#### 422 — Too many responses
+
+Returned when more than 1000 responses exist for the given message ID.
+
+```json
+{
+  "errors": [
+    {
+      "id": "rrt-1931948104716186917-c-geu2-10664-3111479-3.0",
+      "code": "CM_TOO_MANY_RESPONSES",
+      "status": "422",
+      "title": "Too many responses",
+      "detail": "There are too many responses to return."
     }
   ]
 }
@@ -227,6 +204,7 @@ To simulate error responses in the sandbox, use the `Prefer` header:
 | -------------- | ------------------ |
 | `code=400` | 400 Invalid message ID |
 | `code=403` | 403 Forbidden |
+| `code=422` | 422 Too many responses |
 | `code=503` | 503 Service unavailable |
 
 Example:

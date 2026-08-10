@@ -2,47 +2,41 @@ type: object
 title: ResponseItem
 additionalProperties: false
 required:
-  - type
-  - id
-  - attributes
+  - responseId
+  - authoredAt
+  - channel
+  - channelStatus
+  - code
+  - messageReference
 properties:
-  type:
+  responseId:
+    type: string
+    format: uuid
+    description: The unique identifier for this response.
+    example: "33333333-3333-4333-8333-333333333333"
+  authoredAt:
+    type: string
+    description: The date-time the recipient submitted their response.
+    format: date-time
+    example: '2026-01-15T10:30:00Z'
+  channel:
     type: string
     enum:
-      - Response
-    example: Response
-  id:
+      - nhsapp
+    example: nhsapp
+  channelStatus:
     type: string
-    description: The unique identifier for the recipient response.
-    format: uuid
-    example: "33333333-3333-4333-8333-333333333333"
-  attributes:
-    type: object
-    additionalProperties: false
-    required:
-      - messageId
-      - code
-      - authoredAt
-      - channel
-    properties:
-      messageId:
-        $ref: ../types/KSUID.yaml
-      code:
-        type: string
-        description: The keyword code from the recipient's response.
-        example: "YES"
-      authoredAt:
-        type: string
-        description: The date-time the recipient authored the response.
-        format: date-time
-        example: '2026-01-15T10:30:00Z'
-      timestamp:
-        type: string
-        description: Date-time for when the response was processed.
-        format: date-time
-        example: '2026-01-15T10:30:05Z'
-      channel:
-        type: string
-        enum:
-          - nhsapp
-        example: nhsapp
+    description: The status of the channel at the time the response was received.
+    enum:
+      - sending
+      - delivered
+      - failed
+    example: delivered
+  code:
+    type: string
+    description: The keyword code from the recipient's response.
+    example: "YES"
+  messageReference:
+    type: string
+    description: The reference for the message, as provided when the message was created.
+    example: "da0b1495-c7cb-468c-9d81-07dee089d728"

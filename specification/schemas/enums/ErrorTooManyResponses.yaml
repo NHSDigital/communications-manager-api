@@ -1,0 +1,5 @@
+title: Enum_Error_TooManyResponses
+type: string
+enum:
+  - CM_TOO_MANY_RESPONSES
+example: CM_TOO_MANY_RESPONSES

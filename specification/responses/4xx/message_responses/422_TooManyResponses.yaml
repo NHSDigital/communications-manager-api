@@ -1,0 +1,24 @@
+description: |+
+  There are too many responses associated with this message to return in a single response. This error occurs when more than 1000 responses exist for the given message ID.
+
+  ### Sandbox
+
+  It is possible to trigger this error in the sandbox by sending the header `Prefer` with a value of `code=422`.
+
+  Here is an example curl request:
+
+  ```
+    curl -X GET \
+      --header "Accept: application/vnd.api+json" \
+      --header "Prefer: code=422" \
+      https://sandbox.api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM/responses
+  ```
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../../schemas/responses/errors/message_responses/TooManyResponses.yaml
+  application/json:
+    schema:
+      $ref: ../../../schemas/responses/errors/message_responses/TooManyResponses.yaml
+headers:
+  $ref: ../../../snippets/StandardResponseHeaders.yaml
