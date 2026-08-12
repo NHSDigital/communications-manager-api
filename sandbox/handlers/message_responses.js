@@ -39,29 +39,32 @@ export async function messageResponses(req, res, next) {
     return;
   }
 
-  res.type('json').status(200).json(getDefaultResponse(messageId));
+  res.type('json').status(200).json(getDefaultResponse());
 }
 
-function getDefaultResponse(messageId) {
-  return {
-    messageId,
-    responses: [
-      {
-        responseId: '22222222-2222-4222-8222-222222222222',
-        messageReference: 'msg-ref-1',
-        code: 'YES',
-        channel: 'nhsapp',
-        channelStatus: 'delivered',
-        authoredAt: '2026-01-02T09:00:00.000Z'
-      },
-      {
-        responseId: '33333333-3333-4333-8333-333333333333',
-        messageReference: 'msg-ref-1',
-        code: 'NO',
-        channel: 'nhsapp',
-        channelStatus: 'delivered',
-        authoredAt: '2026-01-02T09:05:00.000Z'
-      }
-    ]
-  };
+function getDefaultResponse() {
+  return [
+    {
+      responseId: '22222222-2222-4222-8222-222222222222',
+      messageId: '2WL3qFTEFM0qMY8xjRbt1LIKCzM',
+      messageReference: 'msg-ref-1',
+      channel: 'nhsapp',
+      channelStatus: 'delivered',
+      cascadeType: 'primary',
+      code: 'YES',
+      authoredAt: '2026-01-02T09:00:00.000Z',
+      timestamp: '2026-01-02T09:00:02.345Z'
+    },
+    {
+      responseId: '33333333-3333-4333-8333-333333333333',
+      messageId: '2WL3qFTEFM0qMY8xjRbt1LIKCzM',
+      messageReference: 'msg-ref-1',
+      channel: 'nhsapp',
+      channelStatus: 'delivered',
+      cascadeType: 'secondary',
+      code: 'NO',
+      authoredAt: '2026-01-02T09:05:00.000Z',
+      timestamp: '2026-01-02T09:05:01.678Z'
+    }
+  ];
 }

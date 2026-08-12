@@ -257,7 +257,7 @@ If you subscribe to recipient response callbacks, NHS Notify will send you a cal
 
 ### Retrieving responses via the API
 
-Use the [get message responses](#get-/v1/messages/-messageId-/responses) endpoint to query historical responses for a given message. Responses are available for up to 9 months after the message was sent.
+Use the [get message responses](#get-/v1/message-responses/-messageId-) endpoint to query historical responses for a given message. Responses are available for up to 9 months after the message was sent.
 
 ## Message character limits
 Different character limits apply to each of the communication channels as listed below. NHS Notify will validate that any personalisation fields submitted in the send message request do not exceed these limits but it is the client's responsibility to ensure that when personalisation is combined with any templated text, the channel character limit is not exceeded.

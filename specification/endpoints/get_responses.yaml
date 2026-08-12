@@ -1,6 +1,6 @@
 summary: Get responses for a message
 description:
-  $ref: ../documentation/GetResponses.md
+  $ref: ../documentation/GetMessageResponses.md
 operationId: get-message-responses
 parameters:
   - $ref: ../snippets/AuthorizationParameter.yaml

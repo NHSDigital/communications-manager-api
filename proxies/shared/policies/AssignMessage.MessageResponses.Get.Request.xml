@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
- Sets the backend request path to /api/response/{messageId} and forwards correlation ID and query parameters.
+ Sets the backend request path to /api/response/{messageId} and forwards correlation ID.
 -->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageResponses.Get.Request">
     <DisplayName>AssignMessage.MessageResponses.Get.Request</DisplayName>
@@ -20,14 +20,5 @@
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
         </Headers>
         <Verb>GET</Verb>
-        <QueryParams>
-            <QueryParam name="responseId">{data.responseId}</QueryParam>
-            <QueryParam name="clientId">{data.clientId}</QueryParam>
-            <QueryParam name="correlationId">{data.correlationId}</QueryParam>
-            <QueryParam name="cursor">{data.cursor}</QueryParam>
-            <QueryParam name="pageSize">{data.pageSize}</QueryParam>
-            <QueryParam name="authoredAtFrom">{data.authoredAtFrom}</QueryParam>
-            <QueryParam name="authoredAtTo">{data.authoredAtTo}</QueryParam>
-        </QueryParams>
     </Set>
 </AssignMessage>

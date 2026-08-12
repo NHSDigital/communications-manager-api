@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
- Extracts the messageId from the URI path and optional query parameters into data.* flow variables.
+ Extracts the messageId from the URI path into data.* flow variables.
 -->
 <ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.MessageResponses.Get.Request">
     <VariablePrefix>data</VariablePrefix>
@@ -8,26 +8,5 @@
     <URIPath>
         <Pattern ignoreCase="true">/v1/message-responses/{messageId}</Pattern>
     </URIPath>
-    <QueryParam name="responseId">
-        <Pattern ignoreCase="true">{responseId}</Pattern>
-    </QueryParam>
-    <QueryParam name="clientId">
-        <Pattern ignoreCase="true">{clientId}</Pattern>
-    </QueryParam>
-    <QueryParam name="correlationId">
-        <Pattern ignoreCase="true">{correlationId}</Pattern>
-    </QueryParam>
-    <QueryParam name="cursor">
-        <Pattern ignoreCase="true">{cursor}</Pattern>
-    </QueryParam>
-    <QueryParam name="pageSize">
-        <Pattern ignoreCase="true">{pageSize}</Pattern>
-    </QueryParam>
-    <QueryParam name="authoredAtFrom">
-        <Pattern ignoreCase="true">{authoredAtFrom}</Pattern>
-    </QueryParam>
-    <QueryParam name="authoredAtTo">
-        <Pattern ignoreCase="true">{authoredAtTo}</Pattern>
-    </QueryParam>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </ExtractVariables>

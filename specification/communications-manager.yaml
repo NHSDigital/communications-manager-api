@@ -32,7 +32,7 @@ paths:
         description: The unique identifier for the message.
     get:
       $ref: endpoints/get_message.yaml
-  /v1/messages/{messageId}/responses:
+  /v1/message-responses/{messageId}:
     parameters:
       - schema:
           $ref: schemas/types/KSUID.yaml
