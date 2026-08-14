@@ -1,34 +1,17 @@
 type: object
 title: Too many responses
 additionalProperties: false
+required:
+  - error
+  - message
 properties:
-  errors:
-    type: array
-    minItems: 1
-    maxItems: 1
-    uniqueItems: true
-    items:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          $ref: ../../../types/ErrorIdentifier.yaml
-        code:
-          $ref: ../../../enums/ErrorTooManyResponses.yaml
-        links:
-          $ref: ../../../types/LinksError.yaml
-        status:
-          type: string
-          enum:
-            - '422'
-          example: '422'
-        title:
-          type: string
-          enum:
-            - Too many responses
-          example: Too many responses
-        detail:
-          type: string
-          enum:
-            - There are too many responses to return.
-          example: There are too many responses to return.
+  error:
+    type: string
+    enum:
+      - response_too_large
+    example: response_too_large
+  message:
+    type: string
+    enum:
+      - There are too many responses to return.
+    example: There are too many responses to return.

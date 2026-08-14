@@ -2,11 +2,13 @@
 
 Use this endpoint to retrieve recipient responses associated with a specific message.
 
+Recipient responses are the keyword answers selected by a recipient for a message sent through the NHS App. For more information, see the [recipient response callback](#post-/-client-provided-recipient-response-URI-).
+
 Responses are available for retrieval for up to 9 months after the message was sent.
 
 ### Response structure
 
-A successful response returns a flat JSON array of response items.
+A successful response returns an array of response items.
 
 Each item includes:
 
@@ -25,17 +27,16 @@ If no responses exist for the given message, a `404` response is returned.
 
 ### Sandbox
 
-When sending this request on sandbox you can use any valid message ID format.
+When sending this request on sandbox you can use any valid UUID v4 message ID.
 
 To simulate error responses in the sandbox, use the following message IDs:
 
 * not found - `00000000-0000-4000-8000-000000000404`
-* bad gateway - `00000000-0000-4000-8000-000000000502`
-* too many responses - `00000000-0000-4000-8000-000000000500`
+* too many responses - `00000000-0000-4000-8000-000000000422`
 
 Here's an example curl command:
 
 ```
-curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-responses/2WL3qFTEFM0qMY8xjRbt1LIKCzM' \
-     --header 'Accept: application/vnd.api+json'
+curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-responses/11111111-1111-4111-8111-111111111111' \
+     --header 'Accept: application/json'
 ```

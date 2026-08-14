@@ -1,43 +1,11 @@
 type: object
 title: Unable to get responses
 additionalProperties: false
+required:
+  - error
 properties:
-  errors:
-    type: array
-    minItems: 1
-    maxItems: 1
-    uniqueItems: true
-    items:
-      type: object
-      additionalProperties: false
-      properties:
-        id:
-          $ref: ../../../types/ErrorIdentifier.yaml
-        code:
-          $ref: ../../../enums/ErrorInvalidValue.yaml
-        links:
-          $ref: ../../../types/LinksError.yaml
-        status:
-          type: string
-          enum:
-            - '400'
-          example: '400'
-        title:
-          type: string
-          enum:
-            - Invalid value
-          example: Invalid value
-        detail:
-          type: string
-          enum:
-            - The message ID provided is not a valid KSUID.
-          example: The message ID provided is not a valid KSUID.
-        source:
-          type: object
-          additionalProperties: false
-          properties:
-            parameter:
-              type: string
-              enum:
-                - messageId
-              example: messageId
+  error:
+    type: string
+    enum:
+      - Invalid messageId format
+    example: Invalid messageId format

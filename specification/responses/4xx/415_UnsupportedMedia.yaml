@@ -1,14 +1,6 @@
 description: |+
-  The `Content-Type` of the request is not supported. This endpoint supports:
-
-  * `application/json`
-  * `application/vnd.api+json`
-  * `application/json; charset=utf-8`
-  * `application/vnd.api+json; charset=utf-8`
+  The `Content-Type` of the request is not supported. This endpoint supports `application/json`.
 content:
-  application/vnd.api+json:
-    schema:
-      $ref: ../../schemas/responses/errors/UnsupportedMedia.yaml
   application/json:
     schema:
       $ref: ../../schemas/responses/errors/UnsupportedMedia.yaml

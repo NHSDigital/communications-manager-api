@@ -17,16 +17,18 @@ def test_200_success(nhsd_apim_proxy_url, correlation_id):
 
     assert resp.status_code == 200, f"Response: {resp.status_code}: {resp.text}"
     body = resp.json()
-    assert body.get("messageId") == VALID_MESSAGE_ID
-    assert isinstance(body.get("responses"), list)
-    assert len(body["responses"]) > 0
+    assert isinstance(body, list)
+    assert len(body) > 0
 
-    first = body["responses"][0]
+    first = body[0]
     assert "responseId" in first
+    assert first["messageId"] == VALID_MESSAGE_ID
     assert "messageReference" in first
     assert "code" in first
     assert "channel" in first
     assert "channelStatus" in first
+    assert "cascadeType" in first
     assert "authoredAt" in first
+    assert "timestamp" in first
 
     Assertions.assert_correlation_id(resp.headers.get("X-Correlation-Id"), correlation_id)

@@ -35,7 +35,8 @@ paths:
   /v1/message-responses/{messageId}:
     parameters:
       - schema:
-          $ref: schemas/types/KSUID.yaml
+          type: string
+          format: uuid
         name: messageId
         in: path
         required: true

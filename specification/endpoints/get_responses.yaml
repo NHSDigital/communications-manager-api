@@ -18,10 +18,10 @@ responses:
     $ref: ../responses/4xx/404_NotFound.yaml
   '405':
     $ref: ../responses/4xx/405_NotAllowed.yaml
-  '406':
-    $ref: ../responses/4xx/406_NotAcceptable.yaml
   '408':
     $ref: ../responses/4xx/408_RequestTimeout.yaml
+  '415':
+    $ref: ../responses/4xx/415_UnsupportedMedia.yaml
   '422':
     $ref: ../responses/4xx/message_responses/422_TooManyResponses.yaml
   '429':

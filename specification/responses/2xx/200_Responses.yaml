@@ -2,9 +2,6 @@ description: The responses for the given message have been retrieved successfull
 headers:
   $ref: ../../snippets/StandardResponseHeaders.yaml
 content:
-  application/vnd.api+json:
-    schema:
-      $ref: ../../schemas/responses/MessageResponses.yaml
   application/json:
     schema:
       $ref: ../../schemas/responses/MessageResponses.yaml
