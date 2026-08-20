@@ -1,0 +1,35 @@
+type: object
+title: Internal server error
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: ../../../types/ErrorIdentifier.yaml
+        code:
+          $ref: ../../../enums/ErrorMessageResponsesInternalServerError.yaml
+        links:
+          $ref: ../../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '500'
+          example: '500'
+        title:
+          type: string
+          enum:
+            - Too many responses
+            - Error processing request
+          example: Too many responses
+        detail:
+          type: string
+          enum:
+            - 'There are too many responses to return.'
+            - 'There was an internal error whilst processing this request.'
+          example: 'There are too many responses to return.'

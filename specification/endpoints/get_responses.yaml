@@ -9,7 +9,7 @@ responses:
   '200':
     $ref: ../responses/2xx/200_Responses.yaml
   '400':
-    $ref: ../responses/4xx/message_responses/400_UnableToGetResponses.yaml
+    $ref: ../responses/4xx/message_responses/400_MessageResponsesInvalidRequest.yaml
   '401':
     $ref: ../responses/4xx/401_AccessDenied.yaml
   '403':
@@ -22,12 +22,10 @@ responses:
     $ref: ../responses/4xx/408_RequestTimeout.yaml
   '415':
     $ref: ../responses/4xx/415_UnsupportedMedia.yaml
-  '422':
-    $ref: ../responses/4xx/message_responses/422_TooManyResponses.yaml
   '429':
     $ref: ../responses/4xx/429_TooManyRequests.yaml
   '500':
-    $ref: ../responses/5xx/500_InternalServerError.yaml
+    $ref: ../responses/5xx/message_responses/500_MessageResponsesInternalServerError.yaml
   '503':
     $ref: ../responses/5xx/503_ServiceUnavailable.yaml
   '504':

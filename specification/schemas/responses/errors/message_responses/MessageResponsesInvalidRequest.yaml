@@ -1,0 +1,46 @@
+type: object
+title: Invalid request
+additionalProperties: false
+properties:
+  errors:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: ../../../types/ErrorIdentifier.yaml
+        code:
+          type: string
+          enum:
+            - CM_INVALID_REQUEST
+          example: CM_INVALID_REQUEST
+          title: Enum_Error_InvalidGetMessageResponses_Request
+        links:
+          $ref: ../../../types/LinksError.yaml
+        status:
+          type: string
+          enum:
+            - '400'
+          example: '400'
+        title:
+          type: string
+          enum:
+            - Invalid Request
+          example: Invalid Request
+        detail:
+          type: string
+          enum:
+            - The messageId path parameter is not a valid UUID.
+          example: 'The messageId path parameter is not a valid UUID.'
+        source:
+          type: object
+          additionalProperties: false
+          properties:
+            parameter:
+              type: string
+              enum:
+                - messageId
+              example: messageId

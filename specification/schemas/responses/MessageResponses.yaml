@@ -1,4 +1,0 @@
-title: MessageResponses
-type: array
-items:
-  $ref: ../components/ResponseItem.yaml

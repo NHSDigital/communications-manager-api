@@ -1,7 +1,0 @@
-description: There are too many responses associated with this message to return in a single response. This error occurs when more than 1000 responses exist for the given message ID.
-content:
-  application/json:
-    schema:
-      $ref: ../../../schemas/responses/errors/message_responses/TooManyResponses.yaml
-headers:
-  $ref: ../../../snippets/StandardResponseHeaders.yaml

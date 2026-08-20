@@ -1,7 +1,0 @@
-description: The `messageId` path parameter is not a valid UUID.
-content:
-  application/json:
-    schema:
-      $ref: ../../../schemas/responses/errors/message_responses/UnableToGetResponses.yaml
-headers:
-  $ref: ../../../snippets/StandardResponseHeaders.yaml
