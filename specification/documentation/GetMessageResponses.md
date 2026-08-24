@@ -65,5 +65,5 @@ Here's an example curl command:
 
 ```
 curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-responses/11111111-1111-4111-8111-111111111111' \
-     --header 'Accept: application/json'
+     --header 'Accept: application/vnd.api+json'
 ```
