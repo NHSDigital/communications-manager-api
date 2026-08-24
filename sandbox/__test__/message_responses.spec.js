@@ -34,14 +34,7 @@ describe('/api/v1/message-responses/:messageId', () => {
             .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
             .set({ Authorization: 'banned' })
             .expect(403, {
-                errors: [
-                    {
-                        code: 'CM_FORBIDDEN',
-                        status: '403',
-                        title: 'Forbidden',
-                        detail: 'Client not recognised or not yet onboarded.'
-                    }
-                ]
+                error: 'Forbidden'
             })
             .expect('Content-Type', /json/, done);
     });
@@ -100,15 +93,7 @@ describe('/api/v1/message-responses/:messageId', () => {
             .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
             .set('Content-Type', 'text/plain')
             .expect(415, {
-                errors: [
-                    {
-                        code: 'CM_UNSUPPORTED_MEDIA',
-                        status: '415',
-                        title: 'Unsupported media',
-                        detail: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.',
-                        source: { header: 'Content-Type' }
-                    }
-                ]
+                message: 'Unsupported media type.'
             })
             .expect('Content-Type', /json/, done);
     });

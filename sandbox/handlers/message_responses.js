@@ -1,3 +1,5 @@
+import { sendError } from './utils.js'
+
 const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 const notFoundMessageId = '00000000-0000-4000-8000-000000000404';
@@ -6,32 +8,13 @@ const supportedContentTypes = ['application/json', 'application/vnd.api+json'];
 
 export async function messageResponses(req, res, next) {
   if (req.headers.authorization === 'banned') {
-    res.status(403).json({
-      errors: [
-        {
-          code: 'CM_FORBIDDEN',
-          status: '403',
-          title: 'Forbidden',
-          detail: 'Client not recognised or not yet onboarded.'
-        }
-      ]
-    });
+    res.status(403).json({ error: 'Forbidden' });
     next();
     return;
   }
 
   if (req.headers['content-type'] && !supportedContentTypes.includes(req.headers['content-type'])) {
-    res.status(415).json({
-      errors: [
-        {
-          code: 'CM_UNSUPPORTED_MEDIA',
-          status: '415',
-          title: 'Unsupported media',
-          detail: 'Invalid content-type, this API only supports application/vnd.api+json or application/json.',
-          source: { header: 'Content-Type' }
-        }
-      ]
-    });
+    sendError(res, 415, 'Unsupported media type.');
     next();
     return;
   }
