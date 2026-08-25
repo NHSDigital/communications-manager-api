@@ -1,14 +1,11 @@
-<TargetEndpoint name="communications-manager-target">
+<TargetEndpoint name="app-response-target">
     <PreFlow>
         <Request>
             [% include './partials/Partial.Target.PreFlowRequest.xml' %]
         </Request>
     </PreFlow>
     <Flows>
-        [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
-        [% include './partials/Partial.Flows.CreateMessageEndpoint.xml' %]
-        [% include './partials/Partial.Flows.GetMessageEndpoint.xml' %]
-        [% include './partials/Partial.Flows.GetNhsAppAccountsEndpoint.xml' %]
+        [% include './partials/Partial.Flows.GetMessageResponsesEndpoint.xml' %]
     </Flows>
     [% include './partials/Partial.Target.PostFlow.xml' %]
     <FaultRules>
@@ -19,7 +16,7 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         <LoadBalancer>
-            <Server name="{{ TARGET_SERVER_OVERRIDE | default('communications-manager-target') }}"/>
+            <Server name="app-response-target"/>
         </LoadBalancer>
         <Path>{requestpath}</Path>
         <Properties>

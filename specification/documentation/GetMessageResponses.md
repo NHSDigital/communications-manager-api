@@ -14,7 +14,7 @@ A successful response returns a JSON:API document containing an array of recipie
 {
   "data": [
     {
-      "type": "RecipientResponseSnapshot",
+      "type": "RecipientResponse",
       "id": "33333333-3333-4333-8333-333333333333",
       "attributes": {
         "messageId": "11111111-1111-4111-8111-111111111111",
@@ -33,7 +33,7 @@ A successful response returns a JSON:API document containing an array of recipie
 
 Each resource has:
 
-* `type` - the resource type, always `RecipientResponseSnapshot`
+* `type` - the resource type, always `RecipientResponse`
 * `id` - the unique identifier for this response
 
 Each resource's `attributes` include:
@@ -50,8 +50,6 @@ Each resource's `attributes` include:
 
 If no responses exist for the given message, a `404` response is returned.
 
-If there are more than 1000 responses for the given message, a `500` response with the `CM_TOO_MANY_RESPONSES` error code is returned instead.
-
 ### Sandbox
 
 When sending this request on sandbox you can use any valid UUID v4 message ID.
@@ -59,7 +57,6 @@ When sending this request on sandbox you can use any valid UUID v4 message ID.
 To simulate error responses in the sandbox, use the following message IDs:
 
 * not found - `00000000-0000-4000-8000-000000000404`
-* too many responses - `00000000-0000-4000-8000-000000000500`
 
 Here's an example curl command:
 

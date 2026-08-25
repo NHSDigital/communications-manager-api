@@ -1,5 +1,0 @@
-title: Enum_RecipientResponseSnapshot
-type: string
-enum:
-  - RecipientResponseSnapshot
-example: RecipientResponseSnapshot

@@ -4,7 +4,7 @@ headers:
 content:
   application/vnd.api+json:
     schema:
-      $ref: ../../schemas/responses/RecipientResponseSnapshot.yaml
+      $ref: ../../schemas/responses/RecipientResponse.yaml
   application/json:
     schema:
-      $ref: ../../schemas/responses/RecipientResponseSnapshot.yaml
+      $ref: ../../schemas/responses/RecipientResponse.yaml

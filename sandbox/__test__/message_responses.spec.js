@@ -4,7 +4,7 @@ import { setup } from './helpers.js'
 
 const VALID_MESSAGE_ID = '11111111-1111-4111-8111-111111111111';
 const NOT_FOUND_MESSAGE_ID = '00000000-0000-4000-8000-000000000404';
-const TOO_MANY_RESPONSES_MESSAGE_ID = '00000000-0000-4000-8000-000000000500';
+const NON_V4_MESSAGE_ID = '11111111-1111-1111-8111-111111111111';
 
 describe('/api/v1/message-responses/:messageId', () => {
     let env;
@@ -56,6 +56,13 @@ describe('/api/v1/message-responses/:messageId', () => {
             .expect('Content-Type', /json/, done);
     });
 
+    it('returns a 200 for a non-v4 UUID messageId', (done) => {
+        request(server)
+            .get(`/api/v1/message-responses/${NON_V4_MESSAGE_ID}`)
+            .expect(200)
+            .expect('Content-Type', /json/, done);
+    });
+
     it('returns a 404 when no responses are found', (done) => {
         request(server)
             .get(`/api/v1/message-responses/${NOT_FOUND_MESSAGE_ID}`)
@@ -66,22 +73,6 @@ describe('/api/v1/message-responses/:messageId', () => {
                         status: '404',
                         title: 'Resource not found',
                         detail: 'The resource at the requested URI was not found.'
-                    }
-                ]
-            })
-            .expect('Content-Type', /json/, done);
-    });
-
-    it('returns a 500 when too many responses are returned', (done) => {
-        request(server)
-            .get(`/api/v1/message-responses/${TOO_MANY_RESPONSES_MESSAGE_ID}`)
-            .expect(500, {
-                errors: [
-                    {
-                        code: 'CM_TOO_MANY_RESPONSES',
-                        status: '500',
-                        title: 'Too many responses',
-                        detail: 'There are too many responses to return.'
                     }
                 ]
             })
@@ -125,7 +116,7 @@ describe('/api/v1/message-responses/:messageId', () => {
                 if (!Array.isArray(body.data)) throw new Error('response must contain a data array');
                 const first = body.data[0];
                 if (!first.id) throw new Error('missing id');
-                if (first.type !== 'RecipientResponseSnapshot') throw new Error('incorrect type');
+                if (first.type !== 'RecipientResponse') throw new Error('incorrect type');
                 const { attributes } = first;
                 if (attributes.messageId !== VALID_MESSAGE_ID) throw new Error('incorrect messageId');
                 if (!attributes.messageReference) throw new Error('missing messageReference');

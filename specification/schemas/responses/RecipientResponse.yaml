@@ -1,4 +1,4 @@
-title: RecipientResponseSnapshot
+title: RecipientResponse
 type: object
 additionalProperties: false
 properties:
@@ -13,7 +13,7 @@ properties:
         - attributes
       properties:
         type:
-          $ref: ../enums/EnumRecipientResponseSnapshot.yaml
+          $ref: ../enums/EnumRecipientResponse.yaml
         id:
           type: string
           format: uuid

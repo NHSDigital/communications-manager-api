@@ -25,7 +25,7 @@ responses:
   '429':
     $ref: ../responses/4xx/429_TooManyRequests.yaml
   '500':
-    $ref: ../responses/5xx/message_responses/500_MessageResponsesInternalServerError.yaml
+    $ref: ../responses/5xx/500_InternalServerError.yaml
   '503':
     $ref: ../responses/5xx/503_ServiceUnavailable.yaml
   '504':

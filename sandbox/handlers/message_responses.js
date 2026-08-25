@@ -1,9 +1,9 @@
 import { sendError } from './utils.js'
 
-const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+// Mirrors the RFC 9562 UUID validation used by the app-response bounded context (versions 1-8, plus the nil/max UUIDs).
+const uuidRegex = /^([0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/i;
 
 const notFoundMessageId = '00000000-0000-4000-8000-000000000404';
-const tooManyResponsesMessageId = '00000000-0000-4000-8000-000000000500';
 const supportedContentTypes = ['application/json', 'application/vnd.api+json'];
 
 export async function messageResponses(req, res, next) {
@@ -67,21 +67,6 @@ export async function messageResponses(req, res, next) {
     return;
   }
 
-  if (messageId === tooManyResponsesMessageId) {
-    res.status(500).json({
-      errors: [
-        {
-          code: 'CM_TOO_MANY_RESPONSES',
-          status: '500',
-          title: 'Too many responses',
-          detail: 'There are too many responses to return.'
-        }
-      ]
-    });
-    next();
-    return;
-  }
-
   res.type('json').status(200).json(getDefaultResponse(messageId));
 }
 
@@ -89,7 +74,7 @@ function getDefaultResponse(messageId) {
   return {
     data: [
       {
-        type: 'RecipientResponseSnapshot',
+        type: 'RecipientResponse',
         id: '22222222-2222-4222-8222-222222222222',
         attributes: {
           messageId,
@@ -103,7 +88,7 @@ function getDefaultResponse(messageId) {
         }
       },
       {
-        type: 'RecipientResponseSnapshot',
+        type: 'RecipientResponse',
         id: '33333333-3333-4333-8333-333333333333',
         attributes: {
           messageId,
