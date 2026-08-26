@@ -4,6 +4,15 @@
         <Step>
             <Name>ExtractVariables.MessageResponses.Get.Request</Name>
         </Step>
+        {% if ENVIRONMENT_TYPE != 'sandbox' %}
+            <Step>
+                <Name>JavaScript.MessageResponses.Get.Validate</Name>
+            </Step>
+            <Step>
+                <Name>RaiseFault.4xxGeneric</Name>
+                <Condition>errors != null</Condition>
+            </Step>
+        {% endif %}
         <Step>
             <Name>AssignMessage.MessageResponses.Get.Request</Name>
         </Step>

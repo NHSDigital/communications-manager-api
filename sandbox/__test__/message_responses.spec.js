@@ -4,7 +4,7 @@ import { setup } from './helpers.js'
 
 const VALID_MESSAGE_ID = '11111111-1111-4111-8111-111111111111';
 const NOT_FOUND_MESSAGE_ID = '00000000-0000-4000-8000-000000000404';
-const NON_V4_MESSAGE_ID = '11111111-1111-1111-8111-111111111111';
+const UUID_VERSIONS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 describe('/api/v1/message-responses/:messageId', () => {
     let env;
@@ -39,28 +39,15 @@ describe('/api/v1/message-responses/:messageId', () => {
             .expect('Content-Type', /json/, done);
     });
 
-    it('returns a 400 when messageId is not a UUID', (done) => {
-        request(server)
-            .get('/api/v1/message-responses/not-a-valid-uuid')
-            .expect(400, {
-                errors: [
-                    {
-                        code: 'CM_INVALID_REQUEST',
-                        status: '400',
-                        title: 'Invalid Request',
-                        detail: 'The messageId path parameter is not a valid UUID.',
-                        source: { parameter: 'messageId' }
-                    }
-                ]
-            })
-            .expect('Content-Type', /json/, done);
-    });
+    UUID_VERSIONS.forEach((version) => {
+        it(`returns a 200 for a valid UUID v${version} messageId`, (done) => {
+            const messageId = `11111111-1111-${version}111-8111-111111111111`;
 
-    it('returns a 200 for a non-v4 UUID messageId', (done) => {
-        request(server)
-            .get(`/api/v1/message-responses/${NON_V4_MESSAGE_ID}`)
-            .expect(200)
-            .expect('Content-Type', /json/, done);
+            request(server)
+                .get(`/api/v1/message-responses/${messageId}`)
+                .expect(200)
+                .expect('Content-Type', /json/, done);
+        });
     });
 
     it('returns a 404 when no responses are found', (done) => {

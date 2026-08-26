@@ -1,8 +1,5 @@
 import { sendError } from './utils.js'
 
-// Mirrors the RFC 9562 UUID validation used by the app-response bounded context (versions 1-8, plus the nil/max UUIDs).
-const uuidRegex = /^([0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/i;
-
 const notFoundMessageId = '00000000-0000-4000-8000-000000000404';
 const supportedContentTypes = ['application/json', 'application/vnd.api+json'];
 
@@ -35,22 +32,6 @@ export async function messageResponses(req, res, next) {
   }
 
   const { messageId } = req.params;
-
-  if (!uuidRegex.test(messageId)) {
-    res.status(400).json({
-      errors: [
-        {
-          code: 'CM_INVALID_REQUEST',
-          status: '400',
-          title: 'Invalid Request',
-          detail: 'The messageId path parameter is not a valid UUID.',
-          source: { parameter: 'messageId' }
-        }
-      ]
-    });
-    next();
-    return;
-  }
 
   if (messageId === notFoundMessageId) {
     res.status(404).json({
