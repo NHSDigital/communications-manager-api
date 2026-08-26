@@ -45,6 +45,22 @@ function invalidError(pointer) {
     );
 }
 
+function invalidParameterError(parameter, detail) {
+    return {
+        "id": messageId + "." + errors.length,
+        "code": "CM_INVALID_REQUEST",
+        "links": {
+            "about": "https://digital.nhs.uk/developer/api-catalogue/nhs-notify"
+        },
+        "status": "400",
+        "title": "Invalid Request",
+        "detail": detail,
+        "source": {
+            "parameter": parameter
+        }
+    };
+}
+
 function duplicateError(pointer) {
     return createErrorObject(
         "CM_DUPLICATE_VALUE",

@@ -319,6 +319,13 @@ ERROR_INVALID_PERSONALISATION = Error(
     ""
 )
 
+ERROR_MESSAGE_RESPONSES_INVALID_MESSAGE_ID = Error(
+    "CM_INVALID_REQUEST",
+    "400",
+    "Invalid Request",
+    "The messageId path parameter is not a valid UUID."
+)
+
 INVALID_REQUEST_TITLE = "Invalid Request"
 
 # NHS App Accounts errors

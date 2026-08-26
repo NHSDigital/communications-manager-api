@@ -57,6 +57,17 @@ const validateUuid = (errors, fieldValue, fieldPointer) => {
     return true
 }
 
+const validateUuidParameter = (errors, fieldValue, parameter) => {
+    if (typeof fieldValue !== "string" || !uuidRegex.test(fieldValue)) {
+        errors.push(invalidParameterError(
+            parameter,
+            "The messageId path parameter is not a valid UUID."
+        ));
+        return false
+    }
+    return true
+}
+
 const validateConstantString = (errors, fieldValue, fieldPointer, requiredValue) => {
     if (isUndefined(fieldValue)) {
         errors.push(missingError(fieldPointer));
