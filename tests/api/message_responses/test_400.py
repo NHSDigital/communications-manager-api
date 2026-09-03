@@ -1,9 +1,16 @@
+import os
 import requests
 import pytest
 from lib import Assertions, Generators
 import lib.constants.constants as constants
 from lib.constants.message_responses_paths import MESSAGE_RESPONSES_ENDPOINT, INVALID_MESSAGE_IDS
 from lib.fixtures import *  # NOSONAR
+
+# ref has no app-response backend; the endpoint is deliberately disabled there
+pytestmark = pytest.mark.skipif(
+    os.environ.get("API_ENVIRONMENT") == "ref",
+    reason="message-responses endpoint is not available in ref"
+)
 
 
 @pytest.mark.devtest

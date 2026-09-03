@@ -1,6 +1,11 @@
 <Flow name="GetMessageResponsesEndpoint">
     <Description>Handle get message responses</Description>
     <Request>
+        <!-- app-response has no ref-tier backend; fail fast instead of routing to an undefined TargetServer -->
+        <Step>
+            <Name>RaiseFault.404NotFound</Name>
+            <Condition>environment.name = "ref"</Condition>
+        </Step>
         <Step>
             <Name>ExtractVariables.MessageResponses.Get.Request</Name>
         </Step>
