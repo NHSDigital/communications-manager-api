@@ -26,7 +26,7 @@ INVALID_PAGES = [
 ]
 
 LIVE_ODS_CODES = [
-    "X26"
+    "J82001"
 ]
 
 VALID_MULTI_PAGE_NUMBERS = [None, 1, 2, 3, 4, 5, 6, 7, 8]
