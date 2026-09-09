@@ -382,7 +382,7 @@
                      }
                   ],
                   "id" : "f3881d9b-5f4a-4132-88b2-a541494373f3",
-                  "name" : "200 - NHS App Account - Multipage",
+                  "name" : "200 - NHS App Account",
                   "protocolProfileBehavior" : {
                      "disableBodyPruning" : true
                   },
@@ -407,11 +407,11 @@
                         "query" : [
                            {
                               "key" : "ods-organisation-code",
-                              "value" : "T00001"
+                              "value" : "J82001"
                            },
                            {
                               "key" : "page",
-                              "value" : "2"
+                              "value" : "1"
                            }
                         ],
                         "raw" : "{{base_url}}/channels/nhsapp/accounts?ods-organisation-code=T00001&page=2"
