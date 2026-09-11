@@ -1,0 +1,36 @@
+<Flow name="GetMessageResponsesEndpoint">
+    <Description>Handle get message responses</Description>
+    <Request>
+        <!-- app-response has no ref-tier backend; fail fast instead of routing to an undefined TargetServer -->
+        <Step>
+            <Name>RaiseFault.404NotFound</Name>
+            <Condition>environment.name = "ref"</Condition>
+        </Step>
+        <Step>
+            <Name>ExtractVariables.MessageResponses.Get.Request</Name>
+        </Step>
+        <Step>
+            <Name>JavaScript.MessageResponses.Get.Validate</Name>
+        </Step>
+        <Step>
+            <Name>RaiseFault.4xxGeneric</Name>
+            <Condition>errors != null</Condition>
+        </Step>
+        <Step>
+            <Name>AssignMessage.MessageResponses.Get.Request</Name>
+        </Step>
+        {% if ENVIRONMENT_TYPE != 'sandbox' %}
+            <Step>
+                <Name>AssignMessage.AuthenticationDetails</Name>
+            </Step>
+        {% endif %}
+    </Request>
+    <Response>
+        <Step>
+            <Name>AssignMessage.MessageResponses.Get.Response</Name>
+        </Step>
+    </Response>
+    <Condition>
+        (proxy.pathsuffix MatchesPath "/v1/message-responses/{messageId}") and (request.verb = "GET")
+    </Condition>
+</Flow>

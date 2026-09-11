@@ -32,6 +32,17 @@ paths:
         description: The unique identifier for the message.
     get:
       $ref: endpoints/get_message.yaml
+  /v1/message-responses/{messageId}:
+    parameters:
+      - schema:
+          type: string
+          format: uuid
+        name: messageId
+        in: path
+        required: true
+        description: The unique identifier for the message.
+    get:
+      $ref: endpoints/get_responses.yaml
   /channels/nhsapp/accounts:
      get:
       $ref: endpoints/get_nhsapp_account_details.yaml

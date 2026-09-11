@@ -1,0 +1,6 @@
+title: Enum_Error_MessageResponsesInternalServerError
+type: string
+enum:
+  - CM_TOO_MANY_RESPONSES
+  - CM_INTERNAL_SERVER_ERROR
+example: CM_TOO_MANY_RESPONSES

@@ -1,14 +1,10 @@
-<TargetEndpoint name="sandbox">
-    <PreFlow name="PreFlow">
+<TargetEndpoint name="app-response-target">
+    <PreFlow>
         <Request>
             [% include './partials/Partial.Target.PreFlowRequest.xml' %]
         </Request>
     </PreFlow>
     <Flows>
-        [% include './partials/Partial.Flows.CreateMessageBatchEndpoint.xml' %]
-        [% include './partials/Partial.Flows.CreateMessageEndpoint.xml' %]
-        [% include './partials/Partial.Flows.GetMessageEndpoint.xml' %]
-        [% include './partials/Partial.Flows.GetNhsAppAccountsEndpoint.xml' %]
         [% include './partials/Partial.Flows.GetMessageResponsesEndpoint.xml' %]
     </Flows>
     [% include './partials/Partial.Target.PostFlow.xml' %]
@@ -16,9 +12,15 @@
         [% include './partials/Partial.Target.FaultRules.xml' %]
     </FaultRules>
     <HTTPTargetConnection>
-        {{ HOSTED_TARGET_CONNECTION }}
+        <SSLInfo>
+            <Enabled>true</Enabled>
+        </SSLInfo>
+        <LoadBalancer>
+            <Server name="app-response-target"/>
+        </LoadBalancer>
+        <Path>{requestpath}</Path>
         <Properties>
-            <Property name="io.timeout.millis">10000</Property>
+            <Property name="io.timeout.millis">29000</Property>
         </Properties>
     </HTTPTargetConnection>
 </TargetEndpoint>

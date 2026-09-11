@@ -1,0 +1,5 @@
+title: Enum_RecipientResponse
+type: string
+enum:
+  - RecipientResponse
+example: RecipientResponse

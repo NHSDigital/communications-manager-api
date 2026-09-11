@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Extracts the messageId from the URI path into data.* flow variables.
+-->
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="ExtractVariables.MessageResponses.Get.Request">
+    <VariablePrefix>data</VariablePrefix>
+    <Source>request</Source>
+    <URIPath>
+        <Pattern ignoreCase="true">/v1/message-responses/{messageId}</Pattern>
+    </URIPath>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</ExtractVariables>

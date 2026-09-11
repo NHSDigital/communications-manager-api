@@ -1,0 +1,20 @@
+description: |+
+  An error has occurred that is stopping your request from being processed.
+
+  The following errors can occur:
+
+  | Error code                 | Title                    | Description                                                 |
+  | -------------------------- | ------------------------ | ----------------------------------------------------------- |
+  | `CM_TOO_MANY_RESPONSES`    | Too many responses       | There are too many responses to return.                     |
+  | `CM_INTERNAL_SERVER_ERROR` | Error processing request | There was an internal error whilst processing this request. |
+
+  The `CM_TOO_MANY_RESPONSES` error occurs when more than 1000 responses exist for the given message ID.
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../../schemas/responses/errors/message_responses/MessageResponsesInternalServerError.yaml
+  application/json:
+    schema:
+      $ref: ../../../schemas/responses/errors/message_responses/MessageResponsesInternalServerError.yaml
+headers:
+  $ref: ../../../snippets/StandardResponseHeaders.yaml
