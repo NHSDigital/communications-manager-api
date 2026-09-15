@@ -12,6 +12,7 @@ pytestmark = pytest.mark.skipif(
 )
 
 
+@pytest.mark.devtestonly
 @pytest.mark.devtest
 def test_200_success(url, bearer_token):
     headers = Generators.generate_valid_headers(bearer_token.value)

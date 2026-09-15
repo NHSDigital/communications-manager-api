@@ -13,6 +13,7 @@ pytestmark = pytest.mark.skipif(
 )
 
 
+@pytest.mark.devtestonly
 @pytest.mark.devtest
 @pytest.mark.parametrize("message_id", INVALID_MESSAGE_IDS)
 def test_400_invalid_message_id(url, bearer_token, message_id):
