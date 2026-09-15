@@ -4,6 +4,7 @@ import { setup } from './helpers.js'
 
 const VALID_MESSAGE_ID = '11111111-1111-4111-8111-111111111111';
 const NOT_FOUND_MESSAGE_ID = '00000000-0000-4000-8000-000000000404';
+const BAD_GATEWAY_MESSAGE_ID = '00000000-0000-4000-8000-000000000502';
 const UUID_VERSIONS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 describe('/api/v1/message-responses/:messageId', () => {
@@ -62,6 +63,15 @@ describe('/api/v1/message-responses/:messageId', () => {
                         detail: 'The resource at the requested URI was not found.'
                     }
                 ]
+            })
+            .expect('Content-Type', /json/, done);
+    });
+
+    it('returns a 502 when the downstream service is not responding', (done) => {
+        request(server)
+            .get(`/api/v1/message-responses/${BAD_GATEWAY_MESSAGE_ID}`)
+            .expect(502, {
+                message: 'Bad Gateway'
             })
             .expect('Content-Type', /json/, done);
     });

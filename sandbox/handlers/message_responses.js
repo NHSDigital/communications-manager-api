@@ -1,6 +1,7 @@
 import { sendError } from './utils.js'
 
 const notFoundMessageId = '00000000-0000-4000-8000-000000000404';
+const badGatewayMessageId = '00000000-0000-4000-8000-000000000502';
 const supportedContentTypes = ['application/json', 'application/vnd.api+json'];
 
 export async function messageResponses(req, res, next) {
@@ -44,6 +45,12 @@ export async function messageResponses(req, res, next) {
         }
       ]
     });
+    next();
+    return;
+  }
+
+  if (messageId === badGatewayMessageId) {
+    sendError(res, 502, 'Bad Gateway');
     next();
     return;
   }

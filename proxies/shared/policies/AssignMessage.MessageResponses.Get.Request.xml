@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--
- Sets the backend request path to /api/response/{messageId} and forwards correlation ID.
+ Sets the backend request path and forwards correlation ID.
 -->
 <AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageResponses.Get.Request">
     <DisplayName>AssignMessage.MessageResponses.Get.Request</DisplayName>
@@ -13,11 +13,18 @@
     </AssignVariable>
     <AssignVariable>
         <Name>requestpath</Name>
+        {% if ENVIRONMENT_TYPE == 'sandbox' %}
+        <Template>/api/v1/message-responses/{data.messageId}</Template>
+        {% else %}
         <Template>/api/response/{data.messageId}</Template>
+        {% endif %}
     </AssignVariable>
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
+            {% if ENVIRONMENT_TYPE != 'sandbox' %}
+            <Header name="NHSD-Client-Id">{client_id}</Header>
+            {% endif %}
         </Headers>
         <Verb>GET</Verb>
     </Set>
