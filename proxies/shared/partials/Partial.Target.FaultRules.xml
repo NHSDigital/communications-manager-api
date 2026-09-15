@@ -69,6 +69,11 @@
       </Condition>
     </Step>
     <Step>
+        <!-- app-response returns JSON:API errors that EnhanceErrorDetails cannot map; standardise directly -->
+        <Name>RaiseFault.404NotFound</Name>
+        <Condition>(proxy.pathsuffix MatchesPath "/v1/message-responses/{messageId}") and response.status.code = 404</Condition>
+    </Step>
+    <Step>
         <Name>RaiseFault.404NotFound</Name>
         <Condition>response.status.code = 404 and data.errors == null</Condition>
     </Step>
