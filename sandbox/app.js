@@ -22,12 +22,13 @@ function setup(options = {}) {
 
 function start(options = {}) {
     const server = app.listen(options.PORT || 9000, () => {
+        const address = server.address();
         log.info(JSON.stringify({
             timestamp: Date.now(),
             level: "info",
             app: app.locals.app_name,
             msg: "startup",
-            server_port: server.address().port,
+            server_port: address ? address.port : null,
             version: app.locals.version_info
         }))
     });
@@ -84,7 +85,7 @@ function afterRequest(req, res, next) {
         logEntry.res.headers = res.rawHeaders;
     }
     log.info(JSON.stringify(logEntry));
-    
+
     next();
     return undefined;
 }
