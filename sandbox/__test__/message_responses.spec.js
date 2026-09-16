@@ -7,7 +7,7 @@ const NOT_FOUND_MESSAGE_ID = '00000000-0000-4000-8000-000000000404';
 const BAD_GATEWAY_MESSAGE_ID = '00000000-0000-4000-8000-000000000502';
 const UUID_VERSIONS = [1, 2, 3, 4, 5, 6, 7, 8];
 
-describe('/api/v1/message-responses/:messageId', () => {
+describe('/api/response/:messageId', () => {
     let env;
     let server;
 
@@ -24,7 +24,7 @@ describe('/api/v1/message-responses/:messageId', () => {
     it('returns a X-Correlation-Id when provided', (done) => {
         const correlationId = uuid.v4();
         request(server)
-            .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
+            .get(`/api/response/${VALID_MESSAGE_ID}`)
             .set('X-Correlation-Id', correlationId)
             .expect(200)
             .expect('X-Correlation-Id', correlationId, done);
@@ -32,7 +32,7 @@ describe('/api/v1/message-responses/:messageId', () => {
 
     it('returns a service ban (403) when the user is banned', (done) => {
         request(server)
-            .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
+            .get(`/api/response/${VALID_MESSAGE_ID}`)
             .set({ Authorization: 'banned' })
             .expect(403, {
                 error: 'Forbidden'
@@ -45,7 +45,7 @@ describe('/api/v1/message-responses/:messageId', () => {
             const messageId = `11111111-1111-${version}111-8111-111111111111`;
 
             request(server)
-                .get(`/api/v1/message-responses/${messageId}`)
+                .get(`/api/response/${messageId}`)
                 .expect(200)
                 .expect('Content-Type', /json/, done);
         });
@@ -53,7 +53,7 @@ describe('/api/v1/message-responses/:messageId', () => {
 
     it('returns a 404 when no responses are found', (done) => {
         request(server)
-            .get(`/api/v1/message-responses/${NOT_FOUND_MESSAGE_ID}`)
+            .get(`/api/response/${NOT_FOUND_MESSAGE_ID}`)
             .expect(404, {
                 errors: [
                     {
@@ -69,7 +69,7 @@ describe('/api/v1/message-responses/:messageId', () => {
 
     it('returns a 502 when the downstream service is not responding', (done) => {
         request(server)
-            .get(`/api/v1/message-responses/${BAD_GATEWAY_MESSAGE_ID}`)
+            .get(`/api/response/${BAD_GATEWAY_MESSAGE_ID}`)
             .expect(502, {
                 message: 'Bad Gateway'
             })
@@ -78,7 +78,7 @@ describe('/api/v1/message-responses/:messageId', () => {
 
     it('returns a 415 when the content type is not supported', (done) => {
         request(server)
-            .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
+            .get(`/api/response/${VALID_MESSAGE_ID}`)
             .set('Content-Type', 'text/plain')
             .expect(415, {
                 message: 'Unsupported media type.'
@@ -88,7 +88,7 @@ describe('/api/v1/message-responses/:messageId', () => {
 
     it('returns a 429 when the request is rate limited', (done) => {
         request(server)
-            .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
+            .get(`/api/response/${VALID_MESSAGE_ID}`)
             .set('Prefer', 'code=429')
             .expect(429, {
                 errors: [
@@ -105,7 +105,7 @@ describe('/api/v1/message-responses/:messageId', () => {
 
     it('returns a 200 with correct response structure for a valid messageId', (done) => {
         request(server)
-            .get(`/api/v1/message-responses/${VALID_MESSAGE_ID}`)
+            .get(`/api/response/${VALID_MESSAGE_ID}`)
             .expect(200)
             .expect('Content-Type', /json/)
             .expect((res) => {

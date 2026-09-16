@@ -13,11 +13,7 @@
     </AssignVariable>
     <AssignVariable>
         <Name>requestpath</Name>
-        {% if ENVIRONMENT_TYPE == 'sandbox' %}
-        <Template>/api/v1/message-responses/{data.messageId}</Template>
-        {% else %}
         <Template>/api/response/{data.messageId}</Template>
-        {% endif %}
     </AssignVariable>
     <Set>
         <Headers>
