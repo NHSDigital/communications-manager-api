@@ -15,6 +15,10 @@
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     [% include './partials/Partial.Proxy.Routes.xml' %]
+    <RouteRule name="app-response-target">
+        <Condition>(proxy.pathsuffix MatchesPath "/v1/message-responses/{messageId}") and (request.verb = "GET")</Condition>
+        <TargetEndpoint>app-response-target</TargetEndpoint>
+    </RouteRule>
     <RouteRule name="communications-manager-target">
         <TargetEndpoint>communications-manager-target</TargetEndpoint>
     </RouteRule>

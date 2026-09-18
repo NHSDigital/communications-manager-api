@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Passthrough response policy — no body transformation required for this endpoint.
+-->
+<AssignMessage async="false" continueOnError="false" enabled="true" name="AssignMessage.MessageResponses.Get.Response">
+    <DisplayName>AssignMessage.MessageResponses.Get.Response</DisplayName>
+    <Properties/>
+    <AssignTo createNew="false" transport="http" type="response"/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

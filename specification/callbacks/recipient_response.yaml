@@ -29,7 +29,7 @@ requestBody:
             type: array
             minItems: 1
             items:
-              $ref: ../schemas/components/RecipientResponse.yaml
+              $ref: ../schemas/components/RecipientResponseCallback.yaml
 responses:
     '202':
         description: Accepted
