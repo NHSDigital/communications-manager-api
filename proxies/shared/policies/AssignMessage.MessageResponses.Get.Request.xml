@@ -18,9 +18,6 @@
     <Set>
         <Headers>
             <Header name="X-Correlation-Id">{backendCorrelationId}</Header>
-            {% if ENVIRONMENT_TYPE != 'sandbox' %}
-            <Header name="NHSD-Client-Id">{client_id}</Header>
-            {% endif %}
         </Headers>
         <Verb>GET</Verb>
     </Set>

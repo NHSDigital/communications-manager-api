@@ -57,7 +57,7 @@ const validateUuid = (errors, fieldValue, fieldPointer) => {
     return true
 }
 
-const validateUuidParameter = (errors, fieldValue, parameter) => {
+const validateUuidMessageId = (errors, fieldValue, parameter) => {
     if (typeof fieldValue !== "string" || !uuidRegex.test(fieldValue)) {
         errors.push(invalidParameterError(
             parameter,

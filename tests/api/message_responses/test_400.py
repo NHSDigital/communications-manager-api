@@ -33,3 +33,25 @@ def test_400_invalid_message_id(url, bearer_token, message_id):
         ),
         None
     )
+
+
+@pytest.mark.devtestonly
+@pytest.mark.devtest
+@pytest.mark.nhsd_apim_authorization(
+    access="healthcare_worker",
+    level="aal3",
+    login_form={"username": "656005750104"},
+    authentication="separate",
+)
+def test_403_user_token(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}{MESSAGE_RESPONSES_ENDPOINT}/{constants.VALID_MESSAGE_ID}",
+        headers=nhsd_apim_auth_headers
+    )
+
+    Assertions.assert_error_with_optional_correlation_id(
+        resp,
+        403,
+        Generators.generate_forbidden_error(),
+        None
+    )

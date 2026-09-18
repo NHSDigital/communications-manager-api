@@ -1,8 +1,8 @@
-/* global context, validateUuidParameter */
+/* global context, validateUuidMessageId */
 
 const errors = []
 
-validateUuidParameter(errors, context.getVariable("data.messageId"), "messageId");
+validateUuidMessageId(errors, context.getVariable("data.messageId"), "messageId");
 
 if (errors.length > 0) {
     context.setVariable("generic_status_code", errors[0].status);
