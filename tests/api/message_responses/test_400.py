@@ -3,7 +3,7 @@ import requests
 import pytest
 from lib import Assertions, Generators
 import lib.constants.constants as constants
-from lib.constants.message_responses_paths import MESSAGE_RESPONSES_ENDPOINT, INVALID_MESSAGE_IDS
+from lib.constants.message_responses_paths import MESSAGE_RESPONSES_ENDPOINT, INVALID_MESSAGE_IDS, VALID_MESSAGE_ID
 from lib.fixtures import *  # NOSONAR
 
 # ref has no app-response backend; the endpoint is deliberately disabled there
@@ -45,7 +45,7 @@ def test_400_invalid_message_id(url, bearer_token, message_id):
 )
 def test_403_user_token(nhsd_apim_proxy_url, nhsd_apim_auth_headers):
     resp = requests.get(
-        f"{nhsd_apim_proxy_url}{MESSAGE_RESPONSES_ENDPOINT}/{constants.VALID_MESSAGE_ID}",
+        f"{nhsd_apim_proxy_url}{MESSAGE_RESPONSES_ENDPOINT}/{VALID_MESSAGE_ID}",
         headers=nhsd_apim_auth_headers
     )
 
