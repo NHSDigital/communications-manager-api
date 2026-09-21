@@ -25,11 +25,9 @@ properties:
           type: string
           enum:
             - Too many responses
-            - Error processing request
           example: Too many responses
         detail:
           type: string
           enum:
             - 'There are too many responses to return.'
-            - 'There was an internal error whilst processing this request.'
           example: 'There are too many responses to return.'
