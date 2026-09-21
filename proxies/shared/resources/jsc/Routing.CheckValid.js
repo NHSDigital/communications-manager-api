@@ -26,6 +26,10 @@ const validPaths = [
   {
     match: /^\/channels\/nhsapp\/accounts$/,
     methods: ['get']
+  },
+  {
+    match: /^\/v1\/message-responses\/.*$/,
+    methods: ['get']
   }
 ];
 

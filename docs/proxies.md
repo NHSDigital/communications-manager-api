@@ -421,6 +421,37 @@ flowchart
     MRESP --> E
 ```
 
+### Get Message Responses
+
+This flow maps get message responses requests to the app-response service and maps the response to the public API format.
+
+Source: [proxies/shared/partials/Partial.Flows.GetMessageResponsesEndpoint.xml](https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/partials/Partial.Flows.GetMessageResponsesEndpoint.xml)
+
+```mermaid
+flowchart
+    S[Start] --> Q1{Matches get message responses endpoint?}
+    Q1 --> |No| E[End]
+    Q1 --> |Yes| EV[Extract messageId from request
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/ExtractVariables.MessageResponses.Get.Request.xml'>ExtractVariables.MessageResponses.Get.Request</a></em>]
+    EV --> V[Validate messageId
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/JavaScript.MessageResponses.Get.Validate.xml'>JavaScript.MessageResponses.Get.Validate</a></em>]
+    V --> Q2{Validation errors found?}
+    Q2 --> |Yes| 400[Raise 400 error
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/RaiseFault.4xxGeneric.xml'>RaiseFault.4xxGeneric</a></em>]
+    400 --> E
+    Q2 --> |No| MR[Create app-response request
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.MessageResponses.Get.Request.xml'>AssignMessage.MessageResponses.Get.Request</a></em>]
+    MR --> SEND[Send request to app-response service]
+    SEND --> RESP[Convert response
+
+    <em><a href='https://github.com/NHSDigital/communications-manager-api/blob/release/proxies/shared/policies/AssignMessage.MessageResponses.Get.Response.xml'>AssignMessage.MessageResponses.Get.Response</a></em>]
+    RESP --> E
+```
+
 ### Target Post Flow
 
 This flow runs on all outgoing responses from the target.
