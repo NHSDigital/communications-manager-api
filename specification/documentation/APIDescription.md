@@ -207,7 +207,7 @@ We have created an OpenAPI specification detailing the behaviour of the endpoint
 
 Our new callbacks mechanism uses Mutual TLS (mTLS) to verify the autheticity of the callback to ensure that it has come from NHS Notify.
 
-Your service must request the client certificate during the callback and you must verify the following:
+Your service must request the client certificate (during the callback connection TLS negotiation) and must verify the following:
 
 1. **Chain of trust**: the certificate must be signed by the correct CA for the environment (see table below).
 2. **Certificate expiry**: the current date/time must not fall outside `notBefore` and `notAfter`.
