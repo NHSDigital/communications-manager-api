@@ -5,8 +5,9 @@
   "sourceType": "module",
   "scripts": {
     "lint": "redocly lint specification/communications-manager.yaml",
-    "publish": "mkdir -p build && redocly bundle specification/communications-manager.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py > build/communications-manager.json",
+    "publish": "mkdir -p build && redocly bundle specification/communications-manager.yaml --dereferenced --remove-unused-components --ext json | poetry run python scripts/set_version.py | poetry run python scripts/inline_assets.py > build/communications-manager.json.tmp && mv build/communications-manager.json.tmp build/communications-manager.json",
     "serve": "redocly preview-docs -p 5000 build/communications-manager.json",
+    "watch": "nodemon --watch specification --ext yaml,md,json --ignore build --exec \"npm run publish\"",
     "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL --failOn AGPL",
     "sandbox-postman-collection": "newman run postman/NhsNotify.Sandbox.postman_collection.json",
     "integration-postman-collection": "poetry run python scripts/build_postman_environment.py && newman run postman/NhsNotify.Integration.postman_collection.json -e postman/Integration.test.postman_environment.json",
@@ -46,6 +47,7 @@
     "license-checker": "^25.0.1",
     "minimist": "^1.2.2",
     "newman": "^6.2.2",
+    "nodemon": "^3.1.0",
     "sinon": "^17.0.1",
     "typescript": "^5.5.4"
   },
