@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Validates the messageId extracted from the get message responses request.
+-->
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="5000" name="JavaScript.MessageResponses.Get.Validate">
+    <DisplayName>JavaScript.MessageResponses.Get.Validate</DisplayName>
+    <Properties/>
+    <IncludeURL>jsc://helpers/validationErrors.js</IncludeURL>
+    <IncludeURL>jsc://helpers/validationChecks.js</IncludeURL>
+    <ResourceURL>jsc://MessageResponses.Get.Validate.js</ResourceURL>
+</Javascript>

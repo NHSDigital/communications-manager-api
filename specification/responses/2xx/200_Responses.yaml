@@ -1,0 +1,10 @@
+description: The responses for the given message have been retrieved successfully.
+headers:
+  $ref: ../../snippets/StandardResponseHeaders.yaml
+content:
+  application/vnd.api+json:
+    schema:
+      $ref: ../../schemas/responses/RecipientResponse.yaml
+  application/json:
+    schema:
+      $ref: ../../schemas/responses/RecipientResponse.yaml

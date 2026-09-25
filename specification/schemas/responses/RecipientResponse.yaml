@@ -1,0 +1,81 @@
+title: RecipientResponse
+type: object
+additionalProperties: false
+properties:
+  data:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - type
+        - id
+        - attributes
+      properties:
+        type:
+          $ref: ../enums/EnumRecipientResponse.yaml
+        id:
+          type: string
+          format: uuid
+          description: The unique identifier for this response.
+          example: "33333333-3333-4333-8333-333333333333"
+        attributes:
+          type: object
+          additionalProperties: false
+          required:
+            - authoredAt
+            - cascadeType
+            - channel
+            - channelStatus
+            - code
+            - messageId
+            - messageReference
+            - timestamp
+          properties:
+            messageId:
+              type: string
+              description: The unique identifier of the message this response relates to.
+              format: uuid
+              example: "11111111-1111-4111-8111-111111111111"
+            messageReference:
+              type: string
+              description: The reference for the message, as provided when the message was created.
+              example: "da0b1495-c7cb-468c-9d81-07dee089d728"
+            channel:
+              type: string
+              enum:
+                - nhsapp
+              example: nhsapp
+            channelStatus:
+              type: string
+              description: The status of the channel at the time the response was received.
+              enum:
+                - sending
+                - delivered
+                - failed
+              example: delivered
+            channelFailureReasonCode:
+              type: string
+              description: The reason code for the channel failure. Only present when channelStatus is failed.
+              example: "CFR_SUPE_0001"
+            cascadeType:
+              type: string
+              description: Whether this is a primary or secondary cascade response.
+              enum:
+                - primary
+                - secondary
+              example: primary
+            code:
+              type: string
+              description: The keyword code from the recipient's response.
+              example: "YES"
+            authoredAt:
+              type: string
+              description: The date-time the recipient submitted their response.
+              format: date-time
+              example: "2026-06-15T14:30:00.000Z"
+            timestamp:
+              type: string
+              description: The date-time the response was recorded by NHS Notify.
+              format: date-time
+              example: "2026-06-15T14:30:05.123Z"

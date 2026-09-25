@@ -22,12 +22,13 @@ function setup(options = {}) {
 
 function start(options = {}) {
     const server = app.listen(options.PORT || 9000, () => {
+        const address = server.address();
         log.info(JSON.stringify({
             timestamp: Date.now(),
             level: "info",
             app: app.locals.app_name,
             msg: "startup",
-            server_port: server.address().port,
+            server_port: address ? address.port : null,
             version: app.locals.version_info
         }))
     });
@@ -84,7 +85,7 @@ function afterRequest(req, res, next) {
         logEntry.res.headers = res.rawHeaders;
     }
     log.info(JSON.stringify(logEntry));
-    
+
     next();
     return undefined;
 }
@@ -129,6 +130,7 @@ app.post("/api/v1/send", handlers.batchSend);
 app.post("/api/v1/messages", handlers.messages);
 app.get("/api/v1/messages/:messageId", handlers.getMessage);
 app.get("/api/channels/nhsapp/accounts", handlers.nhsappAccounts);
+app.get("/api/response/:messageId", handlers.messageResponses);
 app.get("/_timeout", handlers.triggerTimeout);
 app.get("/_invalid_certificate", handlers.backend403);
 app.get("/_timeout_408", handlers.backend408);
