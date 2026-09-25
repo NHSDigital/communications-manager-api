@@ -209,13 +209,13 @@ Our new callbacks mechanism uses Mutual TLS (mTLS) to verify the autheticity of 
 
 Your service must request the client certificate during the callback and you must verify the following:
 
-1. **Chain of trust**: the certificate be signed by the correct CA for the environment (see table below).
-2. **Certificate expiry**: ensure that the current date and time is not outside `notBefore` and `notAfter`.
+1. **Chain of trust**: the certificate must be signed by the correct CA for the environment (see table below).
+2. **Certificate expiry**: the current date/time must not fall outside `notBefore` and `notAfter`.
 
-In addition, we recommend that you also verify the following fields:
+We also recommend that you also verify the following fields:
 
-* The DN Common Name (CN) is: `NHS Notify Callbacks`
-* The Subject Alternative Name (SAN) is correct for the environment (see table below)
+* The DN Common Name (CN) should be `NHS Notify Callbacks`
+* The Subject Alternative Name (SAN) URI should be the correct value for the environment (see table below)
 
 | Environment | CA Certificate | SAN URI |
 | --- | --- | --- |
