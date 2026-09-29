@@ -16,7 +16,7 @@
             <Enabled>true</Enabled>
         </SSLInfo>
         <LoadBalancer>
-            <Server name="app-response-target"/>
+            <Server name="{{ APP_RESPONSE_TARGET_SERVER | default('app-response-target') }}"/>
         </LoadBalancer>
         <Path>{requestpath}</Path>
         <Properties>
