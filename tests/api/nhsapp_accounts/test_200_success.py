@@ -7,9 +7,7 @@ from lib.fixtures import *  # NOSONAR
 
 
 @pytest.mark.test
-@pytest.mark.devtest
-@pytest.mark.inttest
-@pytest.mark.prodtest
+@pytest.mark.devtestonly
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", VALID_SINGLE_PAGE_NUMBERS)
 def test_single_page(url, bearer_token, ods_code, page):
@@ -30,7 +28,6 @@ def test_single_page(url, bearer_token, ods_code, page):
 
 
 @pytest.mark.devtestonly
-@pytest.mark.devtest
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", VALID_MULTI_PAGE_NUMBERS)
 def test_multi_pages(url, bearer_token, ods_code, page):
