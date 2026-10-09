@@ -199,23 +199,32 @@ Errors specific to each API are shown in the Endpoints section, under Response. 
 
 ## Receive a callback
 
-You may develop one or many endpoints on your service if you want to receive callbacks from NHS Notify.
+You may develop one or multiple endpoints on your service if you want to receive callbacks from NHS Notify.
 
 We have created an OpenAPI specification detailing the behaviour of the endpoint that consumers should create to subscribe to callbacks.
 
 ### Mutual TLS
 
-**This feature is currently under development and is not yet ready to use.**
+Our new callbacks mechanism uses Mutual TLS (mTLS) to verify the autheticity of the callback to ensure that it has come from NHS Notify.
 
-We are currently developing a new callbacks service which uses mutual TLS (mTLS).
+Your service must request the client certificate (during the callback connection TLS negotiation) and must verify the following:
 
-If you are using the newer callbacks mechanism, then your service must check the client certificate which is presented to your service during the callback in order to verify that the response has come from NHS Notify. Your service must reject connection attempts where the client certificate can not be verified by the NHS Notify root CA certificate.
+1. **Chain of trust**: the certificate must be signed by the correct CA for the environment (see table below).
+2. **Certificate expiry**: the current date/time must not fall outside `notBefore` and `notAfter`.
 
-If the client certificate can not be verified, your service should respond with `403 Forbidden`.
+We also recommend that you also verify the following fields:
+
+* The DN Common Name (CN) should be `NHS Notify Callbacks`
+* The Subject Alternative Name (SAN) URI should be the correct value for the environment (see table below)
+
+| Environment | CA Certificate | SAN URI |
+| --- | --- | --- |
+| Integration | <a href="data:application/x-pem-file;base64,{{NONPROD_CA_B64}}" download="callbacks-nonprod-ca.crt">Download</a> | `spiffe://callbacks.nonprod.nhsnotify.national.nhs.uk/int/client` |
+| Production | <a href="data:application/x-pem-file;base64,{{PROD_CA_B64}}" download="callbacks-prod-ca.crt">Download</a> | `spiffe://callbacks.prod.nhsnotify.national.nhs.uk/main/client` |
 
 ### HMAC-SHA256 signature checking
 
-If you are still using the older (original) callbacks mechanism, mTLS is not supported.
+If you are still using our older (original) callbacks mechanism, mTLS is not supported, and neither are the new callbacks for `RecipientResponse` and `ReturnedMail`.
 
 Instead, we will send your API key in the `x-api-key` header. Your service should respond with:
 
@@ -223,6 +232,7 @@ Instead, we will send your API key in the `x-api-key` header. Your service shoul
 * `401 Unauthorized` if the API key is invalid
 
 We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from NHS Notify.
+
 This can be achieved by hashing the request body using the HMAC-SHA256 algorithm with a secret value that is comprised of a concatenation of your APIM application ID and the API key that we provide you. The secret takes the following form `[APPLICATION_ID].[API_KEY]`. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
 
 ### Deduplication

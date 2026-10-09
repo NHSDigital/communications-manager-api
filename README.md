@@ -108,6 +108,7 @@ There are `make` commands that alias some of this functionality:
 * `lint` -- Lints the spec and code
 * `publish` -- Outputs the specification as a **single file** into the `build/` directory
 * `serve` -- Serves a preview of the specification in human-readable format - your browser will automatically open the documentation
+* `serve-watch` -- Serves a preview of the specification in human-readable format that is updated as you make changes
 * `build-test-documentation` -- Builds the test documentation that is checked into the repository under `docs/tests`
 
 ## Testing
