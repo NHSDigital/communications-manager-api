@@ -366,21 +366,6 @@
             "id" : "ed012ff6-abd8-49a4-a71e-eb9e160dea7e",
             "item" : [
                {
-                  "event" : [
-                     {
-                        "listen" : "test",
-                        "script" : {
-                           "exec" : [
-                              "pm.test(\"Status code is 200\", () => {",
-                              "    pm.response.to.have.status(200);",
-                              "});"
-                           ],
-                           "id" : "cd9304fc-d712-4e40-8e59-8564be7c4bed",
-                           "packages" : {},
-                           "type" : "text/javascript"
-                        }
-                     }
-                  ],
                   "id" : "f3881d9b-5f4a-4132-88b2-a541494373f3",
                   "name" : "200 - NHS App Account",
                   "protocolProfileBehavior" : {
