@@ -1,3 +1,7 @@
+import os
+
+import pytest
+
 INT_URL = "https://int.api.service.nhs.uk/comms"
 PROD_URL = "https://api.service.nhs.uk/comms"
 VALID_ENDPOINTS = [
@@ -5,7 +9,14 @@ VALID_ENDPOINTS = [
     "/v1/messages",
     "/v1/api/send",
     "/v1/messages/1234",
-    "/v1/message-responses/11111111-1111-4111-8111-111111111111",
+    # ref has no app-response backend; the endpoint is deliberately disabled there
+    pytest.param(
+        "/v1/message-responses/11111111-1111-4111-8111-111111111111",
+        marks=pytest.mark.skipif(
+            os.environ.get("API_ENVIRONMENT") == "ref",
+            reason="message-responses endpoint is not available in ref"
+        ),
+    ),
 ]
 CORS_METHODS = "GET, PUT, POST, PATCH, DELETE"
 CORS_MAX_AGE = "3628800"
