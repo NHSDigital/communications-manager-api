@@ -99,7 +99,7 @@ TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--proxy-name="$(PROXY_NAME)" \
 		-s \
 		--reruns 5 \
-		--reruns-delay 5 \
+		--reruns-delay 30 \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
 		--only-rerun 'AssertionError: Unexpected 401' \
@@ -128,7 +128,7 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--proxy-name="$(PROXY_NAME)" \
 		-s \
 		--reruns 5 \
-		--reruns-delay 5 \
+		--reruns-delay 30 \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
 		--only-rerun 'Datastore Error' \
