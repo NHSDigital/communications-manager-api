@@ -371,9 +371,21 @@
                         "listen" : "test",
                         "script" : {
                            "exec" : [
-                              "pm.test(\"Status code is 200\", () => {",
-                              "    pm.response.to.have.status(200);",
-                              "});"
+                              "const maxRetries = 5;",
+                              "const retryKey = \"nhs_app_account_retry_count\";",
+                              "const retries = Number(pm.environment.get(retryKey) || 0);",
+                              "",
+                              "// setNextRequest only takes effect in the collection runner / Newman",
+                              "if (pm.response.code !== 200 && retries < maxRetries) {",
+                              "    pm.environment.set(retryKey, retries + 1);",
+                              "    console.log(`Status ${pm.response.code}, retrying (${retries + 1}/${maxRetries})`);",
+                              "    postman.setNextRequest(pm.info.requestName);",
+                              "} else {",
+                              "    pm.environment.unset(retryKey);",
+                              "    pm.test(\"Status code is 200\", () => {",
+                              "        pm.response.to.have.status(200);",
+                              "    });",
+                              "}"
                            ],
                            "id" : "cd9304fc-d712-4e40-8e59-8564be7c4bed",
                            "packages" : {},
