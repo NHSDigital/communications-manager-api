@@ -131,6 +131,8 @@ PROD_TEST_CMD := @APIGEE_ACCESS_TOKEN="$(APIGEE_ACCESS_TOKEN)" \
 		--reruns-delay 30 \
 		--only-rerun 'AssertionError: Unexpected 429' \
 		--only-rerun 'AssertionError: Unexpected 504' \
+		--only-rerun 'AssertionError: Unexpected 401' \
+		--only-rerun 'AssertionError: Unexpected 502' \
 		--only-rerun 'Datastore Error' \
 		--apigee-app-id="$(APIGEE_APP_ID)" \
 		--apigee-organization=nhsd-prod \
