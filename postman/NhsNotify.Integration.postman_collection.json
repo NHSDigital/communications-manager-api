@@ -379,7 +379,7 @@
                               "if (pm.response.code !== 200 && retries < maxRetries) {",
                               "    pm.environment.set(retryKey, retries + 1);",
                               "    console.log(`Status ${pm.response.code}, retrying (${retries + 1}/${maxRetries})`);",
-                              "    postman.setNextRequest(pm.info.requestName);",
+                              "    pm.execution.setNextRequest(pm.info.requestName);",
                               "} else {",
                               "    pm.environment.unset(retryKey);",
                               "    pm.test(\"Status code is 200\", () => {",
