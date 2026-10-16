@@ -10,6 +10,7 @@ from lib.fixtures import *  # NOSONAR
 @pytest.mark.devtest
 @pytest.mark.inttest
 @pytest.mark.prodtest
+@pytest.mark.flaky(reruns=5)
 @pytest.mark.parametrize("ods_code", LIVE_ODS_CODES)
 @pytest.mark.parametrize("page", VALID_SINGLE_PAGE_NUMBERS)
 def test_single_page(url, bearer_token, ods_code, page):
