@@ -71,6 +71,7 @@ extends:
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+          APP_RESPONSE_TARGET_SERVER: 'communications-manager-target'
         post_deploy:
           - template: azure/templates/run-tests.yml@self
             parameters:
