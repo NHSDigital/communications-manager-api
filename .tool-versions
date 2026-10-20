@@ -2,3 +2,4 @@ python 3.13.2
 poetry 2.2.1
 jq 1.6
 nodejs 22.22.3
+awscli 2.29.0

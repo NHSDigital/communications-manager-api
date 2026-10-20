@@ -31,28 +31,48 @@ variables:
   - template: project.yml
 
 extends:
-  template: azure/common/apigee-deployment.yml@common
+  # HACK (not for merging): apigee-deployment.yml picks pr.yml or release.yml from the
+  # pipeline definition name, and pr.yml rejects 'ref'. Extend deploy-stages.yml directly
+  # with release.yml, supplying everything apigee-deployment.yml would normally expand.
+  template: azure/common/deploy-stages.yml@common
   parameters:
-    service_name: ${{ variables.service_name }}
-    short_service_name: ${{ variables.short_service_name }}
-    service_base_path: ${{ variables.service_base_path }}
-    hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
+    deploy_template: release.yml
+    deploy_review_sandbox: false
+    spec_file: DEPRECATED
+    portal_api_requires_callback_url: DEPRECATED
+    ping: true
+    prod_requires_approval: true
+    prod_producer_approval: false
+    manual_approval_env: manual-approval
+    python_version: '3.13'
+    agent_pool: AWS-ECS
     apigee_deployments:
-      - environment: internal-dev
+      - environment: ref
+        stage_name: ref
+        depends_on: []
+        service_name: ${{ variables.service_name }}
+        short_service_name: ${{ variables.short_service_name }}
+        service_base_path: ${{ variables.service_base_path }}
+        hosted_target_connection_path_suffix: ${{ variables.hosted_target_connection_path_suffix }}
+        hosted_target_healthcheck_suffix: /_status
+        product_display_name: DEPRECATED
+        product_description: DEPRECATED
+        make_spec_visible: DEPRECATED
+        fully_qualified_service_name: ''
+        proxy_path: live
+        enable_monitoring: false
+        enable_status_monitoring: false
+        secret_file_ids: []
+        secret_ids: []
+        config_ids: []
+        pre_template: []
+        post_template: []
+        pre_deploy: []
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
         post_deploy:
-          - template: ./templates/run-tests.yml
+          - template: azure/templates/run-tests.yml@self
             parameters:
+              environment: 'ref'
               test_command: 'make internal-dev-test'
-      - environment: internal-dev-sandbox
-        proxy_path: sandbox
-        jinja_templates:
-          ENVIRONMENT_TYPE: 'sandbox'
-          ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
-        post_deploy:
-          - template: ./templates/run-tests.yml
-            parameters:
-              test_command: 'make internal-sandbox-test'
-              unit_test_report_name: 'sandbox/sandbox-unit-report.xml'
