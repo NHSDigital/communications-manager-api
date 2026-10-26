@@ -9,12 +9,13 @@ VALID_ENDPOINTS = [
     "/v1/messages",
     "/v1/api/send",
     "/v1/messages/1234",
-    # ref has no app-response backend; the endpoint is deliberately disabled there
     pytest.param(
         "/v1/message-responses/11111111-1111-4111-8111-111111111111",
         marks=pytest.mark.skipif(
-            os.environ.get("API_ENVIRONMENT") == "ref",
-            reason="message-responses endpoint is not available in ref"
+            os.environ.get("API_ENVIRONMENT") not in (
+                "internal-dev", "internal-dev-sandbox"
+            ),
+            reason="message-responses checks run only in internal dev"
         ),
     ),
 ]
