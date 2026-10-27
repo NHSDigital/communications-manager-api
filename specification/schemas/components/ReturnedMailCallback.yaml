@@ -41,7 +41,7 @@ properties:
         example: 'Unable to deliver: address not found'
       timestamp:
         type: string
-        description: Date and time of the returned mail event.
+        description: Date and time NHS Notify processed this callback event.
         format: date-time
         example: '2026-07-01T10:00:00.000Z'
   links:

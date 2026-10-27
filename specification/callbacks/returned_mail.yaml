@@ -1,6 +1,6 @@
 summary: Returned mail
 description: |-
-  The returned mail callback sends a POST request to your service when NHS Notify is notified that a letter is returned.
+  The returned mail callback sends a POST request to your service when NHS Notify is informed that a letter has been returned.
 
   If you're onboarding with NHS Notify and need to use the returned mail callback, contact the onboarding team to tell them you want to subscribe to returned mail events.
 
@@ -8,7 +8,7 @@ description: |-
 
   ### About returned mail
 
-  When NHS Notify is notified that a letter is returned, it sends a callback to your service with the details of the return.
+  When NHS Notify receives information that a letter has been returned, it sends a callback to your service with the details of the return.
 
   The callback includes the return reason code and text, the message it relates to, and the time the callback event was processed.
 
