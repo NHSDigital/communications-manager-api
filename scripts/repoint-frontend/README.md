@@ -9,7 +9,7 @@ This script is especially useful when engineers are testing changes across both 
 The script simplifies this process by automatically:
 
 1. Pointing the APIs to the correct backend environment
-2. Disabling mTLS where necessary
+2. Disabling mTLS where necessaryy
 
 ## Prerequisites
 
