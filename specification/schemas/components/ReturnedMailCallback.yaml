@@ -1,0 +1,65 @@
+type: object
+title: CallbackRequest
+required:
+  - type
+  - attributes
+  - links
+  - meta
+properties:
+  type:
+    type: string
+    enum:
+      - ReturnedMail
+    example: ReturnedMail
+  attributes:
+    type: object
+    required:
+      - messageId
+      - messageReference
+      - channel
+      - reason
+      - reasonText
+      - timestamp
+    properties:
+      messageId:
+        $ref: ../types/KSUID.yaml
+      messageReference:
+        $ref: ../../snippets/MessageReferenceSnippet.yaml
+      channel:
+        type: string
+        description: The channel used for the returned message.
+        enum:
+          - letter
+        example: letter
+      reason:
+        type: string
+        description: Code indicating why the letter was returned.
+        example: UNDELIVERABLE
+      reasonText:
+        type: string
+        description: Text describing why the letter was returned.
+        example: 'Unable to deliver: address not found'
+      timestamp:
+        type: string
+        description: Date and time of the returned mail event.
+        format: date-time
+        example: '2026-07-01T10:00:00.000Z'
+  links:
+    type: object
+    required:
+      - message
+    properties:
+      message:
+        type: string
+        description: URL to retrieve the related message.
+        format: uri
+        example: 'https://api.service.nhs.uk/comms/v1/messages/2WL3qFTEFM0qMY8xjRbt1LIKCzM'
+  meta:
+    type: object
+    required:
+      - idempotencyKey
+    properties:
+      idempotencyKey:
+        type: string
+        description: Value to use to identify duplicate callback events, even if their timestamps differ.
+        example: '2515ae6b3a08339fba3534f3b17cd57cd573c57d25b25b9aae08e42dc9f0a445'

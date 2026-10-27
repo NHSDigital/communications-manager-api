@@ -58,3 +58,7 @@ paths:
     post:
       $ref: callbacks/recipient_response.yaml
       tags: ['Callbacks']
+  /{client-provided-returned-mail-URI}:
+    post:
+      $ref: callbacks/returned_mail.yaml
+      tags: ['Callbacks']

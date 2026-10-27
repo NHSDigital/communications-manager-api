@@ -241,6 +241,10 @@ If you are using the newer callback mechanism, it is also possible to limit the 
 
 Speak to our onboarding team if you need to set a rate limit or extend the retry period.
 
+### Returned mail
+
+If you subscribe to returned mail callbacks, NHS Notify will send you a callback when it receives a returned mail event for a letter sent on your behalf. See [the returned mail callback](#post-/-client-provided-returned-mail-URI-) for the request format and response codes.
+
 ## Two-way messaging
 
 **This feature is currently under development and is not yet ready to use.**
