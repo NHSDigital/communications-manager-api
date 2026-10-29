@@ -4,5 +4,14 @@ additionalProperties: false
 properties:
   odsCode:
     type: string
-    description: ODS code used to identify the sender when using the NHS App channel (allowOdsOverride must be enabled on the corresponding NHS Notify client).
+    description: |-
+      ODS code used to identify the message sender. 
+      
+      Used to determine the sender name for the NHS App and the invoiced party for billable messages.
+
+      For National Programmes, this field can typically be omitted as a default programme code will be used.
+
+      For Primary Care, this should be the ODS code of the sending GP Surgery.
+
+      For Secondary Care, this should be the ODS code of the sending NHS Trust.
     example: 'X26'
