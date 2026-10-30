@@ -10,6 +10,7 @@ The script simplifies this process by automatically:
 
 1. Pointing the APIs to the correct backend environment
 2. Disabling mTLS where necessary
+3. Disabling client certificate verification in the authoriser lambda
 
 ## Prerequisites
 
@@ -23,9 +24,10 @@ Before running the "Repoint Frontend" script, ensure the following prerequisites
 The script performs the following steps:
 
 1. Remove mTLS if set, ensuring it is disabled if previously configured
-2. Create a new branch to contain changes to the proxy
-3. Update proxy files with the necessary configuration changes
-4. Stage, commit, and push changes to the remote repository
+2. Disable client certificate verification by setting `CLIENT_CERTIFICATE_VERIFICATION_MODE=OFF` on the `comms-<environment>-api-oa3-commsapi-apim-authorizer-lambda` lambda
+3. Create a new branch to contain changes to the proxy
+4. Update proxy files with the necessary configuration changes
+5. Stage, commit, and push changes to the remote repository
 
 ## Post-Script Manual Steps
 
