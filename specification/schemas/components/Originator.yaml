@@ -7,7 +7,7 @@ properties:
     description: |-
       ODS code used to identify the message sender. 
       
-      Used to determine the sender name for the NHS App and the invoiced party for billable messages.
+      Used to determine the sender name for the NHS App and to lookup the invoiced party for billable messages.
 
       For National Programmes, this field can typically be omitted as a default programme code will be used.
 
