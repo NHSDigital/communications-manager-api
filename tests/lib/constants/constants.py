@@ -1,3 +1,7 @@
+import os
+
+import pytest
+
 INT_URL = "https://int.api.service.nhs.uk/comms"
 PROD_URL = "https://api.service.nhs.uk/comms"
 VALID_ENDPOINTS = [
@@ -5,7 +9,15 @@ VALID_ENDPOINTS = [
     "/v1/messages",
     "/v1/api/send",
     "/v1/messages/1234",
-    "/v1/message-responses/11111111-1111-4111-8111-111111111111",
+    pytest.param(
+        "/v1/message-responses/11111111-1111-4111-8111-111111111111",
+        marks=pytest.mark.skipif(
+            os.environ.get("API_ENVIRONMENT") not in (
+                "internal-dev", "internal-dev-sandbox"
+            ),
+            reason="message-responses checks run only in internal dev"
+        ),
+    ),
 ]
 CORS_METHODS = "GET, PUT, POST, PATCH, DELETE"
 CORS_MAX_AGE = "3628800"

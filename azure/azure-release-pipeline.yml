@@ -75,6 +75,8 @@ extends:
         jinja_templates:
           ENVIRONMENT_TYPE: 'internal'
           ERROR_ABOUT_LINK: ${{ variables.error_about_link }}
+          # ref has no app-response backend, point at the communications-manager-target instead
+          APP_RESPONSE_TARGET_SERVER: 'communications-manager-target'
         post_deploy:
           - template: ./templates/run-tests.yml
             parameters:
