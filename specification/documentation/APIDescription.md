@@ -205,7 +205,7 @@ We have created an OpenAPI specification detailing the behaviour of the endpoint
 
 ### Mutual TLS
 
-Our new callbacks mechanism uses Mutual TLS (mTLS) to verify the autheticity of the callback to ensure that it has come from NHS Notify.
+Our callbacks mechanism uses Mutual TLS (mTLS) to verify the autheticity of the callback to ensure that it has come from NHS Notify.
 
 Your service must request the client certificate (during the callback connection TLS negotiation) and must verify the following:
 
@@ -222,18 +222,13 @@ We also recommend that you also verify the following fields:
 | Integration | <a href="data:application/x-pem-file;base64,{{NONPROD_CA_B64}}" download="callbacks-nonprod-ca.crt">Download</a> | `spiffe://callbacks.nonprod.nhsnotify.national.nhs.uk/int/client` |
 | Production | <a href="data:application/x-pem-file;base64,{{PROD_CA_B64}}" download="callbacks-prod-ca.crt">Download</a> | `spiffe://callbacks.prod.nhsnotify.national.nhs.uk/main/client` |
 
-### HMAC-SHA256 signature checking
+Note: mTLS is required in order to receive `RecipientResponse` and `ReturnedMail` callbacks.
 
-If you are still using our older (original) callbacks mechanism, mTLS is not supported, and neither are the new callbacks for `RecipientResponse` and `ReturnedMail`.
+#### HMAC-SHA256 signature checking
 
-Instead, we will send your API key in the `x-api-key` header. Your service should respond with:
+If you are still using our older (original) callbacks mechanism, mTLS is not supported. Instead, you must verify your API key and a signature, sent in the `x-api-key` and `x-hmac-sha256-signature` headers.
 
-* `401 Unauthorized` if the API key is not received
-* `401 Unauthorized` if the API key is invalid
-
-We will send you a HMAC-SHA256 signature in the `x-hmac-sha256-signature` header. You will need to validate the signature to verify the response has come from NHS Notify.
-
-This can be achieved by hashing the request body using the HMAC-SHA256 algorithm with a secret value that is comprised of a concatenation of your APIM application ID and the API key that we provide you. The secret takes the following form `[APPLICATION_ID].[API_KEY]`. If you receive a request with an invalid signature you should ignore it and respond with a `403 Forbidden`.
+Note: this is a deprecated mechanism and is replaced by mTLS.
 
 ### Deduplication
 
