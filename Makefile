@@ -81,10 +81,10 @@ serve:
 #Serve the OAS specification with live reload on source edits
 serve-watch:
 	npm run publish
+	npm run build-docs
 	npm run watch & WATCH_PID=$$!; \
 	trap "kill $$WATCH_PID 2>/dev/null" EXIT INT TERM; \
-	(sleep 5; python3 -m webbrowser http://127.0.0.1:5000) & \
-	npm run serve
+	npm run serve-live
 
 #Check dependencies for licensing issues
 .check-licenses:
