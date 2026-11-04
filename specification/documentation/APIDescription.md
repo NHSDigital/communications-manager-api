@@ -205,7 +205,7 @@ We have created an OpenAPI specification detailing the behaviour of the endpoint
 
 ### Mutual TLS
 
-Our callbacks mechanism uses Mutual TLS (mTLS) to verify the autheticity of the callback to ensure that it has come from NHS Notify.
+Our callbacks mechanism uses Mutual TLS (mTLS) to verify the authenticity of the callback to ensure that it has come from NHS Notify.
 
 Your service must request the client certificate (during the callback connection TLS negotiation) and must verify the following:
 
