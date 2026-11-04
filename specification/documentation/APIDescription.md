@@ -222,13 +222,11 @@ We also recommend that you also verify the following fields:
 | Integration | <a href="data:application/x-pem-file;base64,{{NONPROD_CA_B64}}" download="callbacks-nonprod-ca.crt">Download</a> | `spiffe://callbacks.nonprod.nhsnotify.national.nhs.uk/int/client` |
 | Production | <a href="data:application/x-pem-file;base64,{{PROD_CA_B64}}" download="callbacks-prod-ca.crt">Download</a> | `spiffe://callbacks.prod.nhsnotify.national.nhs.uk/main/client` |
 
-Note: mTLS is required in order to receive `RecipientResponse` and `ReturnedMail` callbacks.
-
 #### HMAC-SHA256 signature checking
 
-If you are still using our older (original) callbacks mechanism, mTLS is not supported. Instead, you must verify your API key and a signature, sent in the `x-api-key` and `x-hmac-sha256-signature` headers.
+Legacy callbacks that do not support mTLS must verify the API key and a signature, sent in the `x-api-key` and `x-hmac-sha256-signature` headers.
 
-Note: this is a deprecated mechanism and is replaced by mTLS.
+Note: this is a deprecated mechanism and is replaced by mTLS. It does not support all types of callback (e.g. `RecipientResponse` and `ReturnedMail` callbacks are not supported).
 
 ### Deduplication
 
