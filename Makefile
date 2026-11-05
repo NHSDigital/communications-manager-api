@@ -9,16 +9,19 @@ install-node:
 	npm install --legacy-peer-deps --verbose
 	cd sandbox && npm install --legacy-peer-deps
 
+#Resolves the hooks directory so it also works in submodules, worktrees and with core.hooksPath.
+GIT_HOOKS_DIR := $(shell git rev-parse --git-path hooks)
+
 #Configures Git Hooks, which are scripts that run given a specified event.
-git/hooks/pre-commit:
-	cp scripts/pre-commit .git/hooks/pre-commit
-	chmod +x .git/hooks/pre-commit
+$(GIT_HOOKS_DIR)/pre-commit: scripts/pre-commit
+	cp scripts/pre-commit $@
+	chmod +x $@
 
 #Condensed Target to run all targets above.
-install: install-node install-python git/hooks/pre-commit
+install: install-node install-python install-hooks
 
 #Referenced within readme
-install-hooks: .git/hooks/pre-commit
+install-hooks: $(GIT_HOOKS_DIR)/pre-commit
 
 #Run the npm linting script (specified in package.json). Used to check the syntax and formatting of files.
 lint: .check-licenses .ensure-test-documentation-validity .lint-js .lint-python
