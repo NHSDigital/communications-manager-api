@@ -24,20 +24,7 @@ description: |-
   - need to know exactly how a message has performed in real time with each of your recipients
   - need to know what happened to a message sent using a <a href="https://notify.nhs.uk/using-nhs-notify/routing-plans#secondary-cascades" target="_new">secondary cascade (opens in a new tab)
 operationId: post-v1-channel-callbacks
-parameters:
-    - name: x-hmac-sha256-signature
-      in: header
-      description: Contains a HMAC-SHA256 signature of the request body using a
-          pre-agreed secret
-      schema:
-          type: string
-          example: 9ee8c6aab877a97600e5c0cd8419f52d3dcdc45002e35220873d11123db6486f
-    - name: x-api-key
-      in: header
-      description: Contains the pre-agreed API key.
-      schema:
-          type: string
-          example: 0bb04a0e-d005-42dd-8993-dacf37410a12
+security: []
 requestBody:
   content:
     application/vnd.api+json:

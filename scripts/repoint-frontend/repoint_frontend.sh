@@ -91,7 +91,11 @@ info "initial validation passed"
 step "Remove mTLS (if set)"
 ./scripts/mtls/disable_mtls.sh "$environment"
 
-# Step 2: Create new branch for proxy modifications
+# Step 2: Disable client certificate verification
+step "Disable client certificate verification"
+./scripts/mtls/disable_certificate_verification.sh "$environment"
+
+# Step 3: Create new branch for proxy modifications
 step "create new branch for proxy modifications"
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 info "Current branch is: $current_branch"
@@ -106,11 +110,11 @@ new_branch="CCM-${ticket_id}_REPOINT_DO_NOT_MERGE"
 git checkout -b "$new_branch"
 info "Switched to new branch: $new_branch"
 
-# Step 3: Modify proxy files
+# Step 4: Modify proxy files
 step "modify proxy files"
 python3 scripts/repoint-frontend/update_proxy_files.py "$environment"
 
-# Step 4: Stage, commit, and push changes
+# Step 5: Stage, commit, and push changes
 step "stage, commit, and push changes"
 
 git add proxies
