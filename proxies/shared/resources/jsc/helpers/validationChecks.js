@@ -1,5 +1,6 @@
 // Regex to validate the id is a valid UUID
 const uuidRegex = /^[0-9a-f]{8}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{4}\b-[0-9a-f]{12}$/i
+const ksuidRegex = /^[a-zA-Z0-9]{27}$/
 const nhsNumberRegex = /^\d{10}$/i
 const messageId = context.getVariable("messageid");
 
@@ -57,11 +58,15 @@ const validateUuid = (errors, fieldValue, fieldPointer) => {
     return true
 }
 
-const validateUuidMessageId = (errors, fieldValue, parameter) => {
-    if (typeof fieldValue !== "string" || !uuidRegex.test(fieldValue)) {
+const validateKsuidMessageId = (errors, fieldValue, parameter) => {
+    if (
+        typeof fieldValue !== "string"
+        || fieldValue.length !== 27
+        || !ksuidRegex.test(fieldValue)
+    ) {
         errors.push(invalidParameterError(
             parameter,
-            "The messageId path parameter is not a valid UUID."
+            "The messageId path parameter must be a 27-character alphanumeric KSUID."
         ));
         return false
     }

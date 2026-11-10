@@ -1,7 +1,7 @@
 import { sendError } from './utils.js'
 
-const notFoundMessageId = '00000000-0000-4000-8000-000000000404';
-const badGatewayMessageId = '00000000-0000-4000-8000-000000000502';
+const notFoundMessageId = '3LvExBJJJO7SrRePLH6fr944Jmz';
+const badGatewayMessageId = '3LvF4O1wN0qfE1Fbunt6k5lL0iU';
 const supportedContentTypes = ['application/json', 'application/vnd.api+json'];
 
 export async function messageResponses(req, res, next) {
