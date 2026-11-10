@@ -34,11 +34,11 @@ properties:
       reason:
         type: string
         description: Code indicating why the letter was returned.
-        example: UNDELIVERABLE
+        example: R01
       reasonText:
         type: string
         description: Text describing why the letter was returned.
-        example: 'Unable to deliver: address not found'
+        example: Addressee gone away
       timestamp:
         type: string
         description: Date and time NHS Notify processed this callback event.
