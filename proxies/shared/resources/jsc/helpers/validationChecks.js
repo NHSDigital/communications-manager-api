@@ -59,11 +59,7 @@ const validateUuid = (errors, fieldValue, fieldPointer) => {
 }
 
 const validateKsuidMessageId = (errors, fieldValue, parameter) => {
-    if (
-        typeof fieldValue !== "string"
-        || fieldValue.length !== 27
-        || !ksuidRegex.test(fieldValue)
-    ) {
+    if (typeof fieldValue !== "string" || !ksuidRegex.test(fieldValue)) {
         errors.push(invalidParameterError(
             parameter,
             "The messageId path parameter must be a 27-character alphanumeric KSUID."

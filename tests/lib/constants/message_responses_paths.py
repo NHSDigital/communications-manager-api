@@ -7,7 +7,10 @@ BAD_GATEWAY_MESSAGE_ID = "3LvF4O1wN0qfE1Fbunt6k5lL0iU"
 INVALID_MESSAGE_IDS = [
     "invalid",
     "12345",
-    "invalid_id"
+    "invalid_id",
+    "2WL3qFTEFM0qMY8xjRbt1LIKCz",
+    "2WL3qFTEFM0qMY8xjRbt1LIKCzMA",
+    "2WL3qFTEFM0qMY8xjRbt1LIKCz_"
 ]
 
 CORRELATION_IDS = [None, "228aac39-542d-4803-b28e-5de9e100b9f8"]
