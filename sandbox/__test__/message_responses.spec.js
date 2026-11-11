@@ -3,8 +3,8 @@ import * as uuid from 'uuid';
 import { setup } from './helpers.js'
 
 const VALID_MESSAGE_ID = '2WL3qFTEFM0qMY8xjRbt1LIKCzM';
-const NOT_FOUND_MESSAGE_ID = '3LvExBJJJO7SrRePLH6fr944Jmz';
-const BAD_GATEWAY_MESSAGE_ID = '3LvF4O1wN0qfE1Fbunt6k5lL0iU';
+const NOT_FOUND_MESSAGE_ID = '000000000000000000000000404';
+const BAD_GATEWAY_MESSAGE_ID = '000000000000000000000000502';
 
 describe('/api/response/:messageId', () => {
     let env;

@@ -17,7 +17,7 @@ A successful response returns a JSON:API document containing an array of recipie
       "type": "RecipientResponse",
       "id": "33333333-3333-4333-8333-333333333333",
       "attributes": {
-        "messageId": "3LvExBJJJO7SrRePLH6fr944Jmz",
+        "messageId": "2WL3qFTEFM0qMY8xjRbt1LIKCzM",
         "messageReference": "da0b1495-c7cb-468c-9d81-07dee089d728",
         "channel": "nhsapp",
         "channelStatus": "delivered",
@@ -52,15 +52,14 @@ If no responses exist for the given message, a `404` response is returned.
 
 ### Sandbox
 
-When sending this request on sandbox you can use any 27-character alphanumeric KSUID.
-
 To simulate error responses in the sandbox, use the following message IDs:
 
-* not found - `3LvExBJJJO7SrRePLH6fr944Jmz`
+* not found (404) - `000000000000000000000000404`
+* bad gateway (502) - `000000000000000000000000502`
 
 Here's an example curl command:
 
 ```
-curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-responses/3LvExBJJJO7SrRePLH6fr944Jmz' \
+curl -X GET 'https://sandbox.api.service.nhs.uk/comms/v1/message-responses/000000000000000000000000404' \
      --header 'Accept: application/vnd.api+json'
 ```
