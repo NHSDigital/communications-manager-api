@@ -10,7 +10,7 @@ VALID_ENDPOINTS = [
     "/v1/api/send",
     "/v1/messages/1234",
     pytest.param(
-        "/v1/message-responses/11111111-1111-4111-8111-111111111111",
+        "/v1/message-responses/2WL3qFTEFM0qMY8xjRbt1LIKCzM",
         marks=pytest.mark.skipif(
             os.environ.get("API_ENVIRONMENT") not in (
                 "internal-dev", "internal-dev-sandbox"
@@ -335,7 +335,7 @@ ERROR_MESSAGE_RESPONSES_INVALID_MESSAGE_ID = Error(
     "CM_INVALID_REQUEST",
     "400",
     "Invalid Request",
-    "The messageId path parameter is not a valid UUID."
+    "The messageId path parameter must be a 27-character alphanumeric KSUID."
 )
 
 INVALID_REQUEST_TITLE = "Invalid Request"

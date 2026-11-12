@@ -2,10 +2,9 @@ import request from "supertest"
 import * as uuid from 'uuid';
 import { setup } from './helpers.js'
 
-const VALID_MESSAGE_ID = '11111111-1111-4111-8111-111111111111';
-const NOT_FOUND_MESSAGE_ID = '00000000-0000-4000-8000-000000000404';
-const BAD_GATEWAY_MESSAGE_ID = '00000000-0000-4000-8000-000000000502';
-const UUID_VERSIONS = [1, 2, 3, 4, 5, 6, 7, 8];
+const VALID_MESSAGE_ID = '2WL3qFTEFM0qMY8xjRbt1LIKCzM';
+const NOT_FOUND_MESSAGE_ID = '000000000000000000000000404';
+const BAD_GATEWAY_MESSAGE_ID = '000000000000000000000000502';
 
 describe('/api/response/:messageId', () => {
     let env;
@@ -38,17 +37,6 @@ describe('/api/response/:messageId', () => {
                 error: 'Forbidden'
             })
             .expect('Content-Type', /json/, done);
-    });
-
-    UUID_VERSIONS.forEach((version) => {
-        it(`returns a 200 for a valid UUID v${version} messageId`, (done) => {
-            const messageId = `11111111-1111-${version}111-8111-111111111111`;
-
-            request(server)
-                .get(`/api/response/${messageId}`)
-                .expect(200)
-                .expect('Content-Type', /json/, done);
-        });
     });
 
     it('returns a 404 when no responses are found', (done) => {
@@ -103,7 +91,7 @@ describe('/api/response/:messageId', () => {
             .expect('Content-Type', /json/, done);
     });
 
-    it('returns a 200 with correct response structure for a valid messageId', (done) => {
+    it('returns a 200 with correct response structure for a KSUID messageId', (done) => {
         request(server)
             .get(`/api/response/${VALID_MESSAGE_ID}`)
             .expect(200)
