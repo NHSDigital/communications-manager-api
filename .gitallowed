@@ -9,3 +9,4 @@
 .*Version=*
 .*poetry.lock:*
 .*README.md:*
+specification/documentation/certs/[a-z-]+\.crt:1:-----BEGIN[[:blank:]]CERTIFICATE-----$

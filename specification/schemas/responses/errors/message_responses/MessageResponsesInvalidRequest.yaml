@@ -33,8 +33,8 @@ properties:
         detail:
           type: string
           enum:
-            - The messageId path parameter is not a valid UUID.
-          example: 'The messageId path parameter is not a valid UUID.'
+            - The messageId path parameter must be a 27-character alphanumeric KSUID.
+          example: 'The messageId path parameter must be a 27-character alphanumeric KSUID.'
         source:
           type: object
           additionalProperties: false
