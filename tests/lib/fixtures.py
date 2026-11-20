@@ -80,8 +80,11 @@ def authentication_cache():
 @pytest.fixture
 def bearer_token_internal_dev_test_1(authentication_cache,
                                      api_product_in_nhs_notify_test_client_1,
-                                     nhsd_apim_proxy_url):
-    return authentication_cache.generate_authentication('internal-dev-test-1', nhsd_apim_proxy_url)
+                                     nhsd_apim_proxy_url,
+                                     auth_refresh_report):
+    return authentication_cache.generate_authentication(
+        'internal-dev-test-1', nhsd_apim_proxy_url, report=auth_refresh_report
+    )
 
 
 @pytest.fixture(scope='session')
@@ -111,10 +114,10 @@ def url(api_product_name):
 
 
 @pytest.fixture()
-def bearer_token(authentication_cache, api_product_in_comms_manager_local):
+def bearer_token(authentication_cache, api_product_in_comms_manager_local, auth_refresh_report):
     environment = os.environ['API_ENVIRONMENT']
     if environment == "prod":
         url = PROD_URL
     else:
         url = f"https://{environment}.api.service.nhs.uk/comms"
-    return authentication_cache.generate_authentication(environment, url)
+    return authentication_cache.generate_authentication(environment, url, report=auth_refresh_report)
