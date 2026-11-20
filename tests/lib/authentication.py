@@ -1,6 +1,4 @@
 import uuid
-from datetime import datetime, timezone
-from functools import partial
 from time import time, sleep
 import os
 import jwt
@@ -28,7 +26,7 @@ class AuthenticationCache():
         # How long the token will stay valid
         self.token_validity = 180
 
-    def generate_authentication(self, env, base_url, *, report=print):
+    def generate_authentication(self, env, base_url):
 
         # For the test_url, note that we don't need a message_id that actually exists in
         # the backend. The test will only check that the API doesn't return a 401,
@@ -62,20 +60,17 @@ class AuthenticationCache():
 
         # Generate new token if latest token will expire in 15 seconds
         if env not in self.tokens or latest_token_expiry < int(time()) + 15:
-            reason = "near_expiry" if env in self.tokens else "cache_miss"
-            log_refresh = partial(self._log_refresh, report, env)
-            log_refresh("refresh_started", reason=reason)
-            self.tokens[env] = self.generate_and_test_new_token(api_key, private_key, url, kid, test_url, log_refresh)
+            self.tokens[env] = self.generate_and_test_new_token(api_key, private_key, url, kid, test_url)
 
         bearer_token = self.tokens[env][0]
         return Secret(bearer_token)
 
-    def generate_and_test_new_token(self, api_key, private_key, url, kid, test_url, log_refresh):
+    def generate_and_test_new_token(self, api_key, private_key, url, kid, test_url):
         new_token = None
         valid_auth = False
 
-        for attempt in range(1, self.max_tests + 1):
-            log_refresh("attempt_started", attempt=attempt, new_token=new_token is None)
+        for i in range(self.max_tests):
+            print(f"Testing new token, attemp #{i+1}")
             if new_token is None:
                 new_token = self.generate_new_token(api_key, private_key, url, kid)
                 time_since_new_token = int(time())
@@ -84,7 +79,6 @@ class AuthenticationCache():
                 valid_auth = True
                 break
 
-            log_refresh("attempt_rejected", attempt=attempt, status=401)
             # The test failed, give apigee some time to update its cache.
             sleep(self.time_between_tests)
 
@@ -93,22 +87,11 @@ class AuthenticationCache():
                 new_token = None
 
         if valid_auth:
-            log_refresh("refresh_succeeded", attempt=attempt)
+            print("Token generated successfully")
             return new_token
 
-        log_refresh("refresh_failed")
+        print("Could not generate token")
         raise RuntimeError("Could not generate token")
-
-    @staticmethod
-    def _log_refresh(report, environment, event, **details):
-        record = {
-            "timestamp": datetime.now(timezone.utc).isoformat(timespec="milliseconds"),
-            "worker": os.environ.get("PYTEST_XDIST_WORKER", "main"),
-            "environment": environment,
-            "event": event,
-            **details,
-        }
-        report(json.dumps(record))
 
     def generate_new_token(self, api_key, private_key, url, kid):
         pk_pem = None

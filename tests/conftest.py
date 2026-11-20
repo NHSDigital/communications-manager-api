@@ -25,35 +25,6 @@ def authentication_cache():
     return AuthenticationCache()
 
 
-@pytest.fixture
-def auth_refresh_report(request):
-    def report(line):
-        request.node.add_report_section("setup", "authentication refresh", line)
-
-    return report
-
-
-@pytest.hookimpl(trylast=True)
-def pytest_configure(config):
-    terminal = config.pluginmanager.get_plugin("terminalreporter")
-    if terminal is not None:
-        config.pluginmanager.register(AuthRefreshReporter(terminal))
-
-
-class AuthRefreshReporter:
-    def __init__(self, terminal):
-        self.terminal = terminal
-
-    @pytest.hookimpl(tryfirst=True)
-    def pytest_runtest_logreport(self, report):
-        if report.when != "setup":
-            return
-
-        for heading, line in report.sections:
-            if heading == "Captured authentication refresh setup":
-                self.terminal.write_line(f"[auth-refresh] {line}")
-
-
 def pytest_assertrepr_compare(op, left, right):
     """
     This function overrides pytests function for representing failed assertion statements
