@@ -17,6 +17,14 @@ Add similar lines if you intend to add more helper functions to more directories
 pytest.register_assert_rewrite('lib')
 
 
+# Keep this fixture out of lib.fixtures: wildcard imports register it per test module.
+@pytest.fixture(scope="session")
+def authentication_cache():
+    from lib.authentication import AuthenticationCache
+
+    return AuthenticationCache()
+
+
 @pytest.fixture
 def auth_refresh_report(request):
     def report(line):
