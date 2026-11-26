@@ -1,7 +1,6 @@
 import pytest
 import os
 import re
-from .authentication import AuthenticationCache
 from .app_keys import ensure_api_product_in_application, ensure_api_product_not_in_application
 from .rate_limiting import RateLimiting
 from lib.constants.constants import PROD_URL
@@ -67,14 +66,6 @@ def api_product_in_nhs_notify_test_client_1(developer_app_keys_api, api_product_
                 api_product_name)
     else:
         yield None
-
-
-# By setting the scope to session on the cache but leaving session scope OFF
-# the fixtures for each bearer token, we ensure the cache is checked and has a
-# chance to refresh before any test which might depend on a bearer token
-@pytest.fixture(scope='session')
-def authentication_cache():
-    return AuthenticationCache()
 
 
 @pytest.fixture
